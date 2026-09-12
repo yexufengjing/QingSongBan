@@ -6,8 +6,10 @@ import 'package:qingsongban/core/database/app_database.dart';
 import 'package:qingsongban/core/database/database_provider.dart';
 import 'package:qingsongban/app/app.dart';
 import 'package:qingsongban/features/attendance/application/attendance_group_providers.dart';
+import 'package:qingsongban/features/attendance/application/monthly_roster_providers.dart';
 import 'package:qingsongban/features/attendance/data/attendance_group_repository.dart';
 import 'package:qingsongban/features/attendance/domain/attendance_group_options.dart';
+import 'package:qingsongban/features/attendance/domain/monthly_roster_options.dart';
 import 'package:qingsongban/features/personnel/application/personnel_providers.dart';
 
 void main() {
@@ -43,6 +45,19 @@ void main() {
             (ref, groupId) => Stream.value(<AttendanceGroupMemberView>[]),
           ),
           attendanceGroupAssignableEmployeesProvider.overrideWith(
+            (ref) => Stream.value(<Employee>[]),
+          ),
+          monthlyRosterGroupsProvider.overrideWith(
+            (ref) =>
+                Stream.value(attendanceGroupOverride ?? <AttendanceGroup>[]),
+          ),
+          monthlyRosterEntriesProvider.overrideWith(
+            (ref) => Stream.value(<MonthlyRosterEntryView>[]),
+          ),
+          monthlyRosterCountsProvider.overrideWith(
+            (ref) => Stream.value(const MonthlyRosterCounts()),
+          ),
+          monthlyRosterCandidatesProvider.overrideWith(
             (ref) => Stream.value(<Employee>[]),
           ),
         ],
@@ -151,6 +166,56 @@ void main() {
 
     expect(find.text('司机组'), findsOneWidget);
     expect(find.text('还没有组成员'), findsOneWidget);
+  });
+
+  testWidgets('opens the monthly roster from the attendance tab', (
+    tester,
+  ) async {
+    await pumpApp(tester);
+
+    await tester.tap(find.text('考勤'));
+    await tester.pumpAndSettle();
+    final monthlyEntry = find.text('月度考勤名单');
+    await tester.ensureVisible(monthlyEntry);
+    await tester.tap(monthlyEntry);
+    await tester.pumpAndSettle();
+
+    expect(find.text('月度考勤名单'), findsOneWidget);
+    expect(find.text('暂无考勤组'), findsOneWidget);
+    expect(find.text('去管理考勤组'), findsOneWidget);
+  });
+
+  testWidgets('shows monthly roster selectors and an empty state for a group', (
+    tester,
+  ) async {
+    final group = await AttendanceGroupRepository(database)
+        .save(draft: const AttendanceGroupDraft(name: '月度名单组'));
+    await pumpApp(tester, attendanceGroupOverride: [group]);
+
+    await tester.tap(find.text('考勤'));
+    await tester.pumpAndSettle();
+    final monthlyEntry = find.text('月度考勤名单');
+    await tester.ensureVisible(monthlyEntry);
+    await tester.tap(monthlyEntry);
+    await tester.pumpAndSettle();
+
+    expect(
+      find.byKey(const Key('monthly-roster-month-button')),
+      findsOneWidget,
+    );
+    expect(find.byKey(const Key('monthly-roster-group-field')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('monthly-roster-group-field')));
+    await tester.pumpAndSettle();
+    expect(find.text(group.name), findsWidgets);
+    await tester.tap(find.text(group.name).last);
+    await tester.pumpAndSettle();
+    final emptyRoster = find.text('本月暂无有效人员');
+    await tester.scrollUntilVisible(
+      emptyRoster,
+      450,
+      scrollable: find.byType(Scrollable).last,
+    );
+    expect(emptyRoster, findsOneWidget);
   });
 
   testWidgets('assigns a default attendance group from the personnel form', (

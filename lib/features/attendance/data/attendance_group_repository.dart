@@ -66,6 +66,16 @@ class AttendanceGroupRepository {
     return query.watch();
   }
 
+  Stream<List<AttendanceGroup>> watchAllGroups() {
+    final query = _database.select(_database.attendanceGroups)
+      ..where((table) => table.isDeleted.equals(false))
+      ..orderBy([
+        (table) => OrderingTerm(expression: table.sortOrder),
+        (table) => OrderingTerm(expression: table.name),
+      ]);
+    return query.watch();
+  }
+
   Future<AttendanceGroup?> findById(int id) {
     return (_database.select(_database.attendanceGroups)..where(
           (table) => table.id.equals(id) & table.isDeleted.equals(false),

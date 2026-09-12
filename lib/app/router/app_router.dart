@@ -5,6 +5,7 @@ import '../../features/attendance/presentation/attendance_page.dart';
 import '../../features/attendance/presentation/attendance_group_detail_page.dart';
 import '../../features/attendance/presentation/attendance_group_form_page.dart';
 import '../../features/attendance/presentation/attendance_group_list_page.dart';
+import '../../features/attendance/presentation/monthly_roster_page.dart';
 import '../../features/home/presentation/home_page.dart';
 import '../../features/personnel/presentation/personnel_page.dart';
 import '../../features/personnel/presentation/personnel_detail_page.dart';
@@ -91,6 +92,11 @@ final GoRouter appRouter = GoRouter(
               name: 'attendance',
               builder: (context, state) => const AttendancePage(),
               routes: [
+                GoRoute(
+                  path: 'monthly-roster',
+                  name: 'monthly-roster',
+                  builder: (context, state) => const MonthlyRosterPage(),
+                ),
                 GoRoute(
                   path: 'groups',
                   name: 'attendance-groups',
