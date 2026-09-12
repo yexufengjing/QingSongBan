@@ -16,9 +16,17 @@ part 'app_database.g.dart';
     AttendanceGroupMembers,
     MonthlyAttendanceRosters,
     AttendanceRecords,
+    LeaveRecords,
+    OvertimeRecords,
+    TerminationRecords,
+    MonthlyAttendanceSummaries,
+    InsuranceProfiles,
+    InsuranceChangeRecords,
+    SocialSecurityBaseHistory,
     OperationLogs,
     DictionaryItems,
     AppSettings,
+    Reminders,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -28,7 +36,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting() : super(NativeDatabase.memory());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 7;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -36,10 +44,30 @@ class AppDatabase extends _$AppDatabase {
       await m.createAll();
     },
     onUpgrade: (m, from, to) async {
-      // Version 1 is the initial schema. Keeping the branch explicit gives
-      // later stages a safe place to append incremental migrations.
+      // Version 1 is the initial schema. Version 2 adds independent leave
+      // records while retaining all existing attendance data.
       if (from < 1 && to >= 1) {
         await m.createAll();
+      }
+      if (from < 2 && to >= 2) {
+        await m.createTable(leaveRecords);
+      }
+      if (from < 3 && to >= 3) {
+        await m.createTable(overtimeRecords);
+      }
+      if (from < 4 && to >= 4) {
+        await m.createTable(terminationRecords);
+      }
+      if (from < 5 && to >= 5) {
+        await m.createTable(monthlyAttendanceSummaries);
+      }
+      if (from < 6 && to >= 6) {
+        await m.createTable(insuranceProfiles);
+        await m.createTable(insuranceChangeRecords);
+        await m.createTable(socialSecurityBaseHistory);
+      }
+      if (from < 7 && to >= 7) {
+        await m.createTable(reminders);
       }
     },
     beforeOpen: (details) async {

@@ -151,6 +151,231 @@ class AttendanceRecords extends Table {
   ];
 }
 
+class LeaveRecords extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get employeeId => integer().references(Employees, #id)();
+
+  TextColumn get leaveType =>
+      textEnum<LeaveType>().withDefault(const Constant('personal'))();
+
+  /// Local calendar date of the first leave day.
+  DateTimeColumn get startDate => dateTime()();
+
+  /// Local calendar date of the last leave day.
+  DateTimeColumn get endDate => dateTime()();
+
+  /// Half-day boundary on [startDate].
+  TextColumn get startPeriod =>
+      textEnum<LeaveHalfPeriod>().withDefault(const Constant('morning'))();
+
+  /// Half-day boundary on [endDate].
+  TextColumn get endPeriod =>
+      textEnum<LeaveHalfPeriod>().withDefault(const Constant('afternoon'))();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+}
+
+class OvertimeRecords extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get employeeId => integer().references(Employees, #id)();
+
+  /// Local calendar date used by monthly overtime reports.
+  DateTimeColumn get overtimeDate => dateTime()();
+
+  /// Local date-time of the overtime start.
+  DateTimeColumn get startTime => dateTime()();
+
+  /// Local date-time of the overtime end.
+  DateTimeColumn get endTime => dateTime()();
+
+  IntColumn get durationMinutes => integer()();
+
+  TextColumn get overtimeType =>
+      text().withDefault(const Constant('weekday'))();
+
+  TextColumn get workContent => text().nullable()();
+
+  TextColumn get workLocation => text().nullable()();
+
+  TextColumn get registrant => text().nullable()();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+}
+
+class TerminationRecords extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get employeeId => integer().references(Employees, #id)();
+
+  DateTimeColumn get terminationDate => dateTime()();
+
+  TextColumn get terminationType =>
+      text().withDefault(const Constant('personal'))();
+
+  BoolColumn get isInsuranceStopped =>
+      boolean().withDefault(const Constant(false))();
+
+  TextColumn get stopInsuranceMonth => text().nullable()();
+
+  BoolColumn get toolsReturned =>
+      boolean().withDefault(const Constant(false))();
+
+  BoolColumn get materialsTransferred =>
+      boolean().withDefault(const Constant(false))();
+
+  BoolColumn get hasUnsettledItems =>
+      boolean().withDefault(const Constant(false))();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  /// Revoking a termination is represented by a soft delete.
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+}
+
+class MonthlyAttendanceSummaries extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  TextColumn get yearMonth => text()();
+
+  IntColumn get employeeId => integer().references(Employees, #id)();
+
+  IntColumn get attendanceGroupId =>
+      integer().nullable().references(AttendanceGroups, #id)();
+
+  BoolColumn get participates => boolean().withDefault(const Constant(true))();
+
+  RealColumn get attendanceDays => real().withDefault(const Constant(0.0))();
+
+  RealColumn get leaveDays => real().withDefault(const Constant(0.0))();
+
+  RealColumn get absentDays => real().withDefault(const Constant(0.0))();
+
+  RealColumn get restDays => real().withDefault(const Constant(0.0))();
+
+  RealColumn get stoppedDays => real().withDefault(const Constant(0.0))();
+
+  IntColumn get overtimeCount => integer().withDefault(const Constant(0))();
+
+  IntColumn get overtimeMinutes => integer().withDefault(const Constant(0))();
+
+  TextColumn get monthStartStatus => text().nullable()();
+
+  TextColumn get monthEndStatus => text().nullable()();
+
+  BoolColumn get joinedDuringMonth =>
+      boolean().withDefault(const Constant(false))();
+
+  BoolColumn get terminatedDuringMonth =>
+      boolean().withDefault(const Constant(false))();
+
+  BoolColumn get isComplete => boolean().withDefault(const Constant(false))();
+
+  IntColumn get anomalyCount => integer().withDefault(const Constant(0))();
+
+  TextColumn get status => textEnum<MonthlySummaryStatus>().withDefault(
+    const Constant('notGenerated'),
+  )();
+
+  DateTimeColumn get generatedAt => dateTime().nullable()();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+
+  @override
+  List<Set<Column>> get uniqueKeys => [
+    {yearMonth, employeeId, attendanceGroupId},
+  ];
+}
+
+class InsuranceProfiles extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get employeeId => integer().references(Employees, #id)();
+
+  BoolColumn get isInsured => boolean().withDefault(const Constant(false))();
+
+  TextColumn get insuranceType => text().nullable()();
+
+  RealColumn get contributionBase => real().nullable()();
+
+  TextColumn get effectiveMonth => text().nullable()();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+
+  @override
+  List<Set<Column>> get uniqueKeys => [
+    {employeeId},
+  ];
+}
+
+class InsuranceChangeRecords extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get employeeId => integer().references(Employees, #id)();
+
+  TextColumn get changeType => text()();
+
+  TextColumn get processingStatus =>
+      text().withDefault(const Constant('pending'))();
+
+  TextColumn get insuranceType => text().nullable()();
+
+  RealColumn get contributionBase => real().nullable()();
+
+  TextColumn get effectiveMonth => text()();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+}
+
+class SocialSecurityBaseHistory extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get employeeId => integer().references(Employees, #id)();
+
+  TextColumn get insuranceType => text().nullable()();
+
+  RealColumn get contributionBase => real().nullable()();
+
+  TextColumn get effectiveMonth => text()();
+
+  TextColumn get source => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+}
+
 class OperationLogs extends Table {
   IntColumn get id => integer().autoIncrement()();
 
@@ -200,4 +425,34 @@ class AppSettings extends Table {
   TextColumn get settingValue => text().nullable()();
 
   DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+}
+
+class Reminders extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  TextColumn get title => text()();
+
+  TextColumn get reminderType => text()();
+
+  DateTimeColumn get dueDate => dateTime().nullable()();
+
+  IntColumn get leadDays => integer().withDefault(const Constant(0))();
+
+  TextColumn get repeatRule => text().nullable()();
+
+  BoolColumn get isEnabled => boolean().withDefault(const Constant(true))();
+
+  BoolColumn get isCompleted => boolean().withDefault(const Constant(false))();
+
+  TextColumn get sourceEntityType => text().nullable()();
+
+  IntColumn get sourceEntityId => integer().nullable()();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
 }

@@ -16,7 +16,7 @@ void main() {
     await database.close();
   });
 
-  test('creates the complete version one schema', () async {
+  test('creates the complete version seven schema', () async {
     final rows = await database
         .customSelect(
           "SELECT name FROM sqlite_master "
@@ -25,7 +25,7 @@ void main() {
         .get();
     final tableNames = rows.map((row) => row.read<String>('name')).toSet();
 
-    expect(database.schemaVersion, 1);
+    expect(database.schemaVersion, 7);
     expect(
       tableNames,
       containsAll([
@@ -34,6 +34,14 @@ void main() {
         'attendance_group_members',
         'monthly_attendance_rosters',
         'attendance_records',
+        'leave_records',
+        'overtime_records',
+        'termination_records',
+        'monthly_attendance_summaries',
+        'insurance_profiles',
+        'insurance_change_records',
+        'social_security_base_history',
+        'reminders',
         'operation_logs',
         'dictionary_items',
         'app_settings',

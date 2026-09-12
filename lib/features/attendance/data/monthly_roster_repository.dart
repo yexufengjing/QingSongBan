@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 
 import '../../../core/constants/database_constants.dart';
 import '../../../core/database/app_database.dart';
+import '../../../core/database/database_enums.dart';
 import '../../../core/utils/date_utils.dart';
 import '../domain/monthly_roster_options.dart';
 
@@ -73,6 +74,8 @@ class MonthlyRosterRepository {
       ..where(
         (table) =>
             table.isDeleted.equals(false) &
+            (table.status.equalsValue(EmployeeStatus.active) |
+                table.status.equalsValue(EmployeeStatus.paused)) &
             table.hireDate.isSmallerThanValue(monthEndExclusive),
       )
       ..orderBy([
@@ -166,6 +169,8 @@ class MonthlyRosterRepository {
         await (_database.select(_database.employees)..where(
               (table) =>
                   table.isDeleted.equals(false) &
+                  (table.status.equalsValue(EmployeeStatus.active) |
+                      table.status.equalsValue(EmployeeStatus.paused)) &
                   table.defaultAttendanceGroupId.equals(groupId) &
                   table.hireDate.isSmallerThanValue(
                     _monthStartNext(normalizedMonth),
@@ -262,6 +267,23 @@ class MonthlyRosterRepository {
     if (AppDateUtils.dateOnly(employee.hireDate)
         .isAfter(_monthEnd(yearMonth))) {
       throw StateError('人员入职日期晚于所选月份，不能加入月度名单');
+    }
+    if (employee.status == EmployeeStatus.terminated) {
+      final terminations =
+          await (_database.select(_database.terminationRecords)..where(
+                (table) =>
+                    table.employeeId.equals(employeeId) &
+                    table.isDeleted.equals(false),
+              ))
+              .get();
+      final termination = terminations.isEmpty ? null : terminations.first;
+      if (termination != null &&
+          DateTime(
+            AppDateUtils.parseYearMonth(yearMonth).year,
+            AppDateUtils.parseYearMonth(yearMonth).month,
+          ).isAfter(AppDateUtils.dateOnly(termination.terminationDate))) {
+        throw StateError('已离职人员不能加入离职后的月度名单');
+      }
     }
     return employee;
   }

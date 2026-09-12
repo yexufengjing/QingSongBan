@@ -14,5 +14,11 @@ enum AttendanceHalfStatus {
   terminated,
 }
 
+/// Business category of a leave record.
+enum LeaveType { personal, sick, other, custom }
+
+/// Boundary half-day used to represent a leave date range.
+enum LeaveHalfPeriod { morning, afternoon }
+
 /// Lifecycle of a generated monthly attendance summary.
 enum MonthlySummaryStatus { notGenerated, pendingReview, confirmed, locked }
