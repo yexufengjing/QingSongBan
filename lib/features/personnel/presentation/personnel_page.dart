@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/theme/app_theme.dart';
 import '../../../core/database/app_database.dart';
 import '../../../core/database/database_enums.dart';
+import '../../../core/utils/date_utils.dart';
 import '../application/personnel_providers.dart';
 import 'personnel_widgets.dart';
 
@@ -105,6 +106,9 @@ class _PersonnelHomeContent extends StatelessWidget {
                 icon: Icons.verified_user_outlined,
                 background: AppColors.lightGreen,
                 foreground: AppColors.primary,
+                onTap: () => context.push(
+                  '/personnel/list?status=${EmployeeStatus.active.name}',
+                ),
               ),
               _PersonnelStatCard(
                 label: '暂停工作',
@@ -112,6 +116,9 @@ class _PersonnelHomeContent extends StatelessWidget {
                 icon: Icons.pause_circle_outline,
                 background: AppColors.lightBlue,
                 foreground: AppColors.techBlue,
+                onTap: () => context.push(
+                  '/personnel/list?status=${EmployeeStatus.paused.name}',
+                ),
               ),
               _PersonnelStatCard(
                 label: '已离职',
@@ -119,6 +126,9 @@ class _PersonnelHomeContent extends StatelessWidget {
                 icon: Icons.person_off_outlined,
                 background: AppColors.lightDanger,
                 foreground: AppColors.danger,
+                onTap: () => context.push(
+                  '/personnel/list?status=${EmployeeStatus.terminated.name}',
+                ),
               ),
               _PersonnelStatCard(
                 label: '本月新增',
@@ -126,6 +136,9 @@ class _PersonnelHomeContent extends StatelessWidget {
                 icon: Icons.person_add_alt_1_outlined,
                 background: AppColors.lightOrange,
                 foreground: const Color(0xFFE98500),
+                onTap: () => context.push(
+                  '/personnel/list?hireMonth=${Uri.encodeComponent(AppDateUtils.yearMonth(now))}',
+                ),
               ),
             ],
           ),
@@ -173,7 +186,7 @@ class _PersonnelHomeContent extends StatelessWidget {
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(
-                      '阶段 2 已接入本地人员档案。考勤组、月度考勤名单和每日考勤将在后续阶段接入，人员状态不会替代月度考勤名单。',
+                      '人员档案、人员状态与考勤参与范围独立维护，人员状态不会替代月度考勤名单。',
                       style: Theme.of(context).textTheme.bodyMedium
                           ?.copyWith(color: AppColors.ink),
                     ),
@@ -248,6 +261,7 @@ class _PersonnelStatCard extends StatelessWidget {
     required this.icon,
     required this.background,
     required this.foreground,
+    required this.onTap,
   });
 
   final String label;
@@ -255,36 +269,44 @@ class _PersonnelStatCard extends StatelessWidget {
   final IconData icon;
   final Color background;
   final Color foreground;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(label, style: Theme.of(context).textTheme.bodyMedium),
-                Container(
-                  padding: const EdgeInsets.all(7),
-                  decoration: BoxDecoration(
-                    color: background,
-                    borderRadius: BorderRadius.circular(11),
+      child: InkWell(
+        key: Key('personnel-stat-$label'),
+        borderRadius: BorderRadius.circular(20),
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(label, style: Theme.of(context).textTheme.bodyMedium),
+                  Container(
+                    padding: const EdgeInsets.all(7),
+                    decoration: BoxDecoration(
+                      color: background,
+                      borderRadius: BorderRadius.circular(11),
+                    ),
+                    child: Icon(icon, color: foreground, size: 18),
                   ),
-                  child: Icon(icon, color: foreground, size: 18),
+                ],
+              ),
+              Text(
+                value,
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                  color: AppColors.ink,
+                  fontWeight: FontWeight.w700,
                 ),
-              ],
-            ),
-            Text(
-              value,
-              style: Theme.of(context).textTheme.headlineMedium
-                  ?.copyWith(color: AppColors.ink, fontWeight: FontWeight.w700),
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );

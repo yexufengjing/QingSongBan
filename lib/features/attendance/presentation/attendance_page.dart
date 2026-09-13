@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/theme/app_theme.dart';
-import '../../../core/widgets/stage_placeholder_card.dart';
 
 class AttendancePage extends StatelessWidget {
   const AttendancePage({super.key});
@@ -60,7 +59,7 @@ class AttendancePage extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              '阶段 3 · 已开放',
+                              '管理考勤范围',
                               style: Theme.of(context).textTheme.bodySmall
                                   ?.copyWith(
                                     color: AppColors.primary,
@@ -116,7 +115,7 @@ class AttendancePage extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              '阶段 5 · 已开放',
+                              '按日期登记',
                               style: Theme.of(context).textTheme.bodySmall
                                   ?.copyWith(
                                     color: AppColors.techBlue,
@@ -172,7 +171,7 @@ class AttendancePage extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              '阶段 4 · 已开放',
+                              '按月维护',
                               style: Theme.of(context).textTheme.bodySmall
                                   ?.copyWith(
                                     color: AppColors.techBlue,
@@ -228,7 +227,7 @@ class AttendancePage extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              '阶段 6 · 已开放',
+                              '每日符号矩阵',
                               style: Theme.of(context).textTheme.bodySmall
                                   ?.copyWith(
                                     color: AppColors.primary,
@@ -284,7 +283,7 @@ class AttendancePage extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              '阶段 7 · 已开放',
+                              '独立记录',
                               style: Theme.of(context).textTheme.bodySmall
                                   ?.copyWith(
                                     color: AppColors.purple,
@@ -340,7 +339,7 @@ class AttendancePage extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              '阶段 8 · 已开放',
+                              '分钟级保存',
                               style: Theme.of(context).textTheme.bodySmall
                                   ?.copyWith(
                                     color: AppColors.techBlue,
@@ -396,7 +395,7 @@ class AttendancePage extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              '阶段 9 · 已开放',
+                              '保留历史',
                               style: Theme.of(context).textTheme.bodySmall
                                   ?.copyWith(
                                     color: const Color(0xFFE98500),
@@ -414,11 +413,25 @@ class AttendancePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 14),
-            const StagePlaceholderCard(
-              icon: Icons.event_note_outlined,
-              title: '月度汇总与后续管理',
-              description: '月度汇总、保险和其他管理能力将在后续阶段接入。',
-              accent: AppColors.techBlue,
+            Card(
+              child: InkWell(
+                key: const Key('attendance-reports-entry'),
+                borderRadius: BorderRadius.circular(20),
+                onTap: () => context.push('/reports'),
+                child: const ListTile(
+                  contentPadding: EdgeInsets.all(18),
+                  leading: CircleAvatar(
+                    backgroundColor: AppColors.lightBlue,
+                    child: Icon(
+                      Icons.assessment_outlined,
+                      color: AppColors.techBlue,
+                    ),
+                  ),
+                  title: Text('月度汇总'),
+                  subtitle: Text('查看月度出勤、请假、加班和异常检查结果。'),
+                  trailing: Icon(Icons.chevron_right, color: AppColors.helper),
+                ),
+              ),
             ),
           ],
         ),

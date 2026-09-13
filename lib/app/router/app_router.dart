@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/database/database_enums.dart';
+import '../../core/utils/date_utils.dart';
 import '../../features/attendance/presentation/attendance_page.dart';
 import '../../features/attendance/presentation/attendance_group_detail_page.dart';
 import '../../features/attendance/presentation/attendance_group_form_page.dart';
@@ -8,6 +10,7 @@ import '../../features/attendance/presentation/attendance_group_list_page.dart';
 import '../../features/attendance/presentation/daily_attendance_page.dart';
 import '../../features/attendance/presentation/monthly_roster_page.dart';
 import '../../features/attendance/presentation/monthly_attendance_table_page.dart';
+import '../../features/attachments/presentation/employee_attachments_page.dart';
 import '../../features/leave/presentation/leave_form_page.dart';
 import '../../features/leave/presentation/leave_page.dart';
 import '../../features/overtime/presentation/overtime_form_page.dart';
@@ -28,6 +31,13 @@ import '../../features/personnel/presentation/personnel_detail_page.dart';
 import '../../features/personnel/presentation/personnel_form_page.dart';
 import '../../features/personnel/presentation/personnel_list_page.dart';
 import '../../features/reports/presentation/reports_page.dart';
+import '../../features/payroll/presentation/payroll_detail_page.dart';
+import '../../features/payroll/presentation/payroll_editor_page.dart';
+import '../../features/payroll/presentation/payroll_export_page.dart';
+import '../../features/payroll/presentation/payroll_history_page.dart';
+import '../../features/payroll/presentation/payroll_home_page.dart';
+import '../../features/payroll/presentation/employee_payroll_page.dart';
+import '../../features/payroll/presentation/wage_job_settings_page.dart';
 import '../../features/settings/presentation/settings_page.dart';
 import 'app_shell.dart';
 
@@ -58,7 +68,14 @@ final GoRouter appRouter = GoRouter(
                 GoRoute(
                   path: 'list',
                   name: 'personnel-list',
-                  builder: (context, state) => const PersonnelListPage(),
+                  builder: (context, state) => PersonnelListPage(
+                    initialStatus: _employeeStatusFromQuery(
+                      state.uri.queryParameters['status'],
+                    ),
+                    initialHireMonth: _validHireMonth(
+                      state.uri.queryParameters['hireMonth'],
+                    ),
+                  ),
                 ),
                 GoRoute(
                   path: 'new',
@@ -80,6 +97,30 @@ final GoRouter appRouter = GoRouter(
                     return PersonnelDetailPage(employeeId: employeeId);
                   },
                   routes: [
+                    GoRoute(
+                      path: 'attachments',
+                      name: 'personnel-attachments',
+                      builder: (context, state) {
+                        final employeeId = int.tryParse(
+                          state.pathParameters['employeeId'] ?? '',
+                        );
+                        if (employeeId == null) {
+                          return const Scaffold(
+                            body: Center(child: Text('无效的人员编号')),
+                          );
+                        }
+                        return EmployeeAttachmentsPage(employeeId: employeeId);
+                      },
+                    ),
+                    GoRoute(
+                      path: 'payroll',
+                      name: 'employee-payroll',
+                      builder: (context, state) {
+                        final employeeId = int.tryParse(state.pathParameters['employeeId'] ?? '');
+                        if (employeeId == null) return const Scaffold(body: Center(child: Text('无效的人员编号')));
+                        return EmployeePayrollPage(employeeId: employeeId);
+                      },
+                    ),
                     GoRoute(
                       path: 'edit',
                       name: 'personnel-edit',
@@ -262,6 +303,52 @@ final GoRouter appRouter = GoRouter(
               path: '/reports',
               name: 'reports',
               builder: (context, state) => const ReportsPage(),
+              routes: [
+                GoRoute(
+                  path: 'payroll',
+                  name: 'payroll',
+                  builder: (context, state) => const PayrollHomePage(),
+                  routes: [
+                    GoRoute(
+                      path: 'edit/:batchId',
+                      name: 'payroll-edit',
+                      builder: (context, state) {
+                        final batchId = int.tryParse(state.pathParameters['batchId'] ?? '');
+                        if (batchId == null) return const Scaffold(body: Center(child: Text('无效的工资批次编号')));
+                        return PayrollEditorPage(batchId: batchId);
+                      },
+                    ),
+                    GoRoute(
+                      path: 'item/:itemId',
+                      name: 'payroll-item-detail',
+                      builder: (context, state) {
+                        final itemId = int.tryParse(state.pathParameters['itemId'] ?? '');
+                        if (itemId == null) return const Scaffold(body: Center(child: Text('无效的工资明细编号')));
+                        return PayrollDetailPage(itemId: itemId);
+                      },
+                    ),
+                    GoRoute(
+                      path: 'history',
+                      name: 'payroll-history',
+                      builder: (context, state) => const PayrollHistoryPage(),
+                    ),
+                    GoRoute(
+                      path: 'settings',
+                      name: 'payroll-settings',
+                      builder: (context, state) => const WageJobSettingsPage(),
+                    ),
+                    GoRoute(
+                      path: 'export/:batchId',
+                      name: 'payroll-export',
+                      builder: (context, state) {
+                        final batchId = int.tryParse(state.pathParameters['batchId'] ?? '');
+                        if (batchId == null) return const Scaffold(body: Center(child: Text('无效的工资批次编号')));
+                        return PayrollExportPage(batchId: batchId);
+                      },
+                    ),
+                  ],
+                ),
+              ],
             ),
           ],
         ),
@@ -346,3 +433,22 @@ final GoRouter appRouter = GoRouter(
     ),
   ],
 );
+
+EmployeeStatus? _employeeStatusFromQuery(String? value) {
+  return switch (value) {
+    'active' => EmployeeStatus.active,
+    'paused' => EmployeeStatus.paused,
+    'terminated' => EmployeeStatus.terminated,
+    _ => null,
+  };
+}
+
+String? _validHireMonth(String? value) {
+  if (value == null) return null;
+  try {
+    AppDateUtils.parseYearMonth(value);
+    return value;
+  } on FormatException {
+    return null;
+  }
+}

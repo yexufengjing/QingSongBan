@@ -12,6 +12,13 @@ part 'app_database.g.dart';
 @DriftDatabase(
   tables: [
     Employees,
+    WageJobTypes,
+    WageRateHistory,
+    EmployeeWageProfiles,
+    PayrollBatches,
+    PayrollItems,
+    PayrollAdjustments,
+    EmployeeAttachments,
     AttendanceGroups,
     AttendanceGroupMembers,
     MonthlyAttendanceRosters,
@@ -33,10 +40,11 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(driftDatabase(name: DatabaseConstants.databaseName));
 
   /// In-memory database for repository and migration tests.
-  AppDatabase.forTesting() : super(NativeDatabase.memory());
+  AppDatabase.forTesting({QueryExecutor? executor})
+    : super(executor ?? NativeDatabase.memory());
 
   @override
-  int get schemaVersion => 7;
+  int get schemaVersion => 9;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -68,6 +76,17 @@ class AppDatabase extends _$AppDatabase {
       }
       if (from < 7 && to >= 7) {
         await m.createTable(reminders);
+      }
+      if (from < 8 && to >= 8) {
+        await m.createTable(employeeAttachments);
+      }
+      if (from < 9 && to >= 9) {
+        await m.createTable(wageJobTypes);
+        await m.createTable(wageRateHistory);
+        await m.createTable(employeeWageProfiles);
+        await m.createTable(payrollBatches);
+        await m.createTable(payrollItems);
+        await m.createTable(payrollAdjustments);
       }
     },
     beforeOpen: (details) async {

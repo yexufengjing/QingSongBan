@@ -16,7 +16,7 @@ void main() {
     await database.close();
   });
 
-  test('creates the complete version seven schema', () async {
+  test('creates the complete version nine schema', () async {
     final rows = await database
         .customSelect(
           "SELECT name FROM sqlite_master "
@@ -25,11 +25,18 @@ void main() {
         .get();
     final tableNames = rows.map((row) => row.read<String>('name')).toSet();
 
-    expect(database.schemaVersion, 7);
+    expect(database.schemaVersion, 9);
     expect(
       tableNames,
       containsAll([
         'employees',
+        'wage_job_types',
+        'wage_rate_history',
+        'employee_wage_profiles',
+        'payroll_batches',
+        'payroll_items',
+        'payroll_adjustments',
+        'employee_attachments',
         'attendance_groups',
         'attendance_group_members',
         'monthly_attendance_rosters',

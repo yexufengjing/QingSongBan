@@ -30,7 +30,7 @@ class _BackupPageState extends ConsumerState<BackupPage> {
             child: const Padding(
               padding: EdgeInsets.all(16),
               child: Text(
-                '备份包包含本地 SQLite 数据库、应用配置和版本清单。恢复前会自动生成一份安全备份，恢复完成后请重启应用。',
+                '备份包包含本地 SQLite 数据库、应用配置和附件资料。恢复前会自动生成一份安全备份，恢复完成后请重启应用。',
               ),
             ),
           ),

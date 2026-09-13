@@ -83,6 +83,30 @@ void main() {
     expect(result.single.name, '张三');
   });
 
+  test('filters personnel by hire month', () async {
+    await repository.save(
+      draft: EmployeeDraft(
+        employeeNo: 'EMP-3001',
+        name: '王强',
+        hireDate: DateTime(2026, 9, 1),
+        status: EmployeeStatus.active,
+      ),
+    );
+    await repository.save(
+      draft: EmployeeDraft(
+        employeeNo: 'EMP-3002',
+        name: '赵敏',
+        hireDate: DateTime(2026, 8, 31),
+        status: EmployeeStatus.active,
+      ),
+    );
+
+    final result = await repository.watchEmployees(hireMonth: '2026-09').first;
+
+    expect(result.map((employee) => employee.name), contains('王强'));
+    expect(result.map((employee) => employee.name), isNot(contains('赵敏')));
+  });
+
   test('soft deletes and restores a record through the repository', () async {
     final employee = await repository.save(
       draft: EmployeeDraft(

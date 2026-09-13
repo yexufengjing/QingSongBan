@@ -22,3 +22,6 @@ enum LeaveHalfPeriod { morning, afternoon }
 
 /// Lifecycle of a generated monthly attendance summary.
 enum MonthlySummaryStatus { notGenerated, pendingReview, confirmed, locked }
+
+/// Lifecycle of a generated temporary-worker payroll batch.
+enum PayrollStatus { draft, pendingReview, confirmed, locked }

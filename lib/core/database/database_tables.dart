@@ -49,6 +49,221 @@ class Employees extends Table {
   BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
 }
 
+class WageJobTypes extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  TextColumn get name => text()();
+
+  RealColumn get defaultDailyWage => real().withDefault(const Constant(0.0))();
+
+  BoolColumn get isActive => boolean().withDefault(const Constant(true))();
+
+  IntColumn get sortOrder => integer().withDefault(const Constant(0))();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+}
+
+class WageRateHistory extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get jobTypeId => integer().references(WageJobTypes, #id)();
+
+  RealColumn get dailyWage => real()();
+
+  TextColumn get effectiveMonth => text()();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+
+  @override
+  List<Set<Column>> get uniqueKeys => [
+    {jobTypeId, effectiveMonth},
+  ];
+}
+
+class EmployeeWageProfiles extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get employeeId => integer().references(Employees, #id)();
+
+  BoolColumn get participatesInPayroll =>
+      boolean().withDefault(const Constant(false))();
+
+  IntColumn get jobTypeId =>
+      integer().nullable().references(WageJobTypes, #id)();
+
+  BoolColumn get useJobDefaultWage =>
+      boolean().withDefault(const Constant(true))();
+
+  RealColumn get personalDailyWage => real().nullable()();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+
+  @override
+  List<Set<Column>> get uniqueKeys => [
+    {employeeId},
+  ];
+}
+
+class PayrollBatches extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  TextColumn get payrollMonth => text()();
+
+  TextColumn get name => text()();
+
+  TextColumn get status =>
+      textEnum<PayrollStatus>().withDefault(const Constant('draft'))();
+
+  TextColumn get attendanceSnapshotVersion => text().nullable()();
+
+  IntColumn get employeeCount => integer().withDefault(const Constant(0))();
+
+  IntColumn get attendanceHalfDaysTotal =>
+      integer().withDefault(const Constant(0))();
+
+  RealColumn get baseWageTotal => real().withDefault(const Constant(0.0))();
+
+  RealColumn get subsidyTotal => real().withDefault(const Constant(0.0))();
+
+  RealColumn get insuranceDeductionTotal =>
+      real().withDefault(const Constant(0.0))();
+
+  RealColumn get finalWageTotal => real().withDefault(const Constant(0.0))();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get confirmedAt => dateTime().nullable()();
+
+  DateTimeColumn get lockedAt => dateTime().nullable()();
+
+  TextColumn get remark => text().nullable()();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+
+  @override
+  List<Set<Column>> get uniqueKeys => [
+    {payrollMonth},
+  ];
+}
+
+class PayrollItems extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get payrollBatchId => integer().references(PayrollBatches, #id)();
+
+  IntColumn get employeeId => integer().references(Employees, #id)();
+
+  IntColumn get displayOrder => integer()();
+
+  TextColumn get employeeNameSnapshot => text()();
+
+  TextColumn get employeeNoSnapshot => text()();
+
+  IntColumn get jobTypeId =>
+      integer().nullable().references(WageJobTypes, #id)();
+
+  TextColumn get jobTypeNameSnapshot => text().nullable()();
+
+  IntColumn get attendanceHalfDaysSnapshot => integer()();
+
+  RealColumn get dailyWage => real().withDefault(const Constant(0.0))();
+
+  TextColumn get dailyWageSource =>
+      text().withDefault(const Constant('none'))();
+
+  RealColumn get baseWage => real().withDefault(const Constant(0.0))();
+
+  RealColumn get subsidy => real().withDefault(const Constant(0.0))();
+
+  RealColumn get insuranceDeduction =>
+      real().withDefault(const Constant(0.0))();
+
+  TextColumn get insuranceDeductionSource =>
+      text().withDefault(const Constant('manual'))();
+
+  RealColumn get finalWage => real().withDefault(const Constant(0.0))();
+
+  BoolColumn get isManuallyAdded =>
+      boolean().withDefault(const Constant(false))();
+
+  BoolColumn get isManuallyRemoved =>
+      boolean().withDefault(const Constant(false))();
+
+  BoolColumn get attendanceChanged =>
+      boolean().withDefault(const Constant(false))();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+}
+
+class PayrollAdjustments extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get payrollItemId => integer().references(PayrollItems, #id)();
+
+  TextColumn get type => text()();
+
+  TextColumn get name => text()();
+
+  RealColumn get amount => real()();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+}
+
+/// Files copied into the app-private attachment directory. Only the relative
+/// path is persisted so backups remain portable between devices.
+class EmployeeAttachments extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get employeeId => integer().references(Employees, #id)();
+
+  TextColumn get sourceEntityType =>
+      text().withDefault(const Constant('personnel'))();
+
+  IntColumn get sourceEntityId => integer().nullable()();
+
+  TextColumn get category => text().withDefault(const Constant('other'))();
+
+  TextColumn get originalFileName => text()();
+
+  TextColumn get relativePath => text().unique()();
+
+  TextColumn get extension => text()();
+
+  IntColumn get fileSize => integer()();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+}
+
 class AttendanceGroups extends Table {
   IntColumn get id => integer().autoIncrement()();
 

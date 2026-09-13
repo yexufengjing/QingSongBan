@@ -10,11 +10,39 @@ import '../application/personnel_providers.dart';
 import '../domain/personnel_options.dart';
 import 'personnel_widgets.dart';
 
-class PersonnelListPage extends ConsumerWidget {
-  const PersonnelListPage({super.key});
+class PersonnelListPage extends ConsumerStatefulWidget {
+  const PersonnelListPage({
+    super.key,
+    this.initialStatus,
+    this.initialHireMonth,
+  });
+
+  final EmployeeStatus? initialStatus;
+  final String? initialHireMonth;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<PersonnelListPage> createState() => _PersonnelListPageState();
+}
+
+class _PersonnelListPageState extends ConsumerState<PersonnelListPage> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      if (!mounted) return;
+      ref.read(personnelSearchQueryProvider.notifier).state = '';
+      ref.read(personnelStatusFilterProvider.notifier).state =
+          widget.initialStatus;
+      ref.read(personnelAttendanceGroupFilterProvider.notifier).state = null;
+      ref.read(personnelEmploymentTypeFilterProvider.notifier).state = null;
+      ref.read(personnelHireMonthFilterProvider.notifier).state =
+          widget.initialHireMonth;
+      ref.read(personnelShowDeletedProvider.notifier).state = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final employees = ref.watch(personnelListProvider);
 
     return Scaffold(
@@ -64,6 +92,7 @@ class _PersonnelFilters extends ConsumerWidget {
     final status = ref.watch(personnelStatusFilterProvider);
     final groupId = ref.watch(personnelAttendanceGroupFilterProvider);
     final employmentType = ref.watch(personnelEmploymentTypeFilterProvider);
+    final hireMonth = ref.watch(personnelHireMonthFilterProvider);
     final showDeleted = ref.watch(personnelShowDeletedProvider);
     final allEmployees = ref
         .watch(allPersonnelProvider)
@@ -139,6 +168,21 @@ class _PersonnelFilters extends ConsumerWidget {
                 ],
               ),
             ),
+            if (hireMonth != null) ...[
+              const SizedBox(height: 10),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: InputChip(
+                  avatar: const Icon(Icons.event_outlined, size: 17),
+                  label: Text('入职月份：$hireMonth'),
+                  onDeleted: () =>
+                      ref
+                              .read(personnelHireMonthFilterProvider.notifier)
+                              .state =
+                          null,
+                ),
+              ),
+            ],
             const SizedBox(height: 10),
             Row(
               children: [

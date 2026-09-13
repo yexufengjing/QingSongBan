@@ -23,6 +23,10 @@ final personnelAttendanceGroupFilterProvider = StateProvider.autoDispose<int?>(
 final personnelEmploymentTypeFilterProvider =
     StateProvider.autoDispose<String?>((ref) => null);
 
+final personnelHireMonthFilterProvider = StateProvider.autoDispose<String?>(
+  (ref) => null,
+);
+
 final personnelShowDeletedProvider = StateProvider.autoDispose<bool>(
   (ref) => false,
 );
@@ -35,6 +39,7 @@ final personnelListProvider = StreamProvider.autoDispose<List<Employee>>((ref) {
         status: ref.watch(personnelStatusFilterProvider),
         attendanceGroupId: ref.watch(personnelAttendanceGroupFilterProvider),
         employmentType: ref.watch(personnelEmploymentTypeFilterProvider),
+        hireMonth: ref.watch(personnelHireMonthFilterProvider),
         includeDeleted: ref.watch(personnelShowDeletedProvider),
       );
 });

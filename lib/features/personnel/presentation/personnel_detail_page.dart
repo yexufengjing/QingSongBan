@@ -7,6 +7,7 @@ import '../../../core/database/app_database.dart';
 import '../../../core/utils/date_utils.dart';
 import '../../../core/utils/privacy_utils.dart';
 import '../../attendance/application/attendance_group_providers.dart';
+import '../../attachments/application/attachment_providers.dart';
 import '../application/personnel_providers.dart';
 import '../domain/personnel_options.dart';
 import 'personnel_widgets.dart';
@@ -128,6 +129,9 @@ class _EmployeeDetailContent extends ConsumerWidget {
         : group.isEnabled
         ? group.name
         : '${group.name}（已停用）';
+    final attachmentCount =
+        ref.watch(employeeAttachmentCountProvider(employee.id)).valueOrNull ??
+        0;
 
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(20, 12, 20, 28),
@@ -185,6 +189,31 @@ class _EmployeeDetailContent extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 20),
+          const PersonnelSectionTitle(title: '附件资料'),
+          const SizedBox(height: 10),
+          Card(
+            child: ListTile(
+              key: const Key('personnel-attachments-entry'),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 18,
+                vertical: 8,
+              ),
+              leading: const CircleAvatar(
+                backgroundColor: AppColors.lightBlue,
+                child: Icon(Icons.folder_outlined, color: AppColors.techBlue),
+              ),
+              title: const Text('统一附件中心'),
+              subtitle: Text(
+                attachmentCount == 0
+                    ? '添加身份证、银行卡、保险或离职材料'
+                    : '$attachmentCount 个有效附件',
+              ),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () =>
+                  context.push('/personnel/${employee.id}/attachments'),
+            ),
+          ),
+          const SizedBox(height: 20),
           const PersonnelSectionTitle(title: '工作信息'),
           const SizedBox(height: 10),
           Card(
@@ -211,6 +240,17 @@ class _EmployeeDetailContent extends ConsumerWidget {
                   _InfoRow(label: '默认考勤组', value: groupName, isLast: true),
                 ],
               ),
+            ),
+          ),
+          const SizedBox(height: 14),
+          Card(
+            child: ListTile(
+              key: const Key('personnel-payroll-entry'),
+              leading: const CircleAvatar(child: Icon(Icons.payments_outlined)),
+              title: const Text('工资记录'),
+              subtitle: const Text('维护工资工种、日薪和历史工资'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => context.push('/personnel/${employee.id}/payroll'),
             ),
           ),
           const SizedBox(height: 14),

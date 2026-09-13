@@ -73,8 +73,13 @@ class ReminderRepository {
         _database.reminders,
       )..where((table) => table.id.equals(id))).write(values);
     } else {
-      final existing = await findByType(draft.reminderType);
-      if (existing != null && draft.reminderType != 'custom') {
+      final existing =
+          draft.sourceEntityType != null && draft.sourceEntityId != null
+          ? await findBySource(draft.sourceEntityType!, draft.sourceEntityId!)
+          : await findByType(draft.reminderType);
+      final hasSource =
+          draft.sourceEntityType != null && draft.sourceEntityId != null;
+      if (existing != null && (hasSource || draft.reminderType != 'custom')) {
         reminderId = existing.id;
         await (_database.update(
           _database.reminders,

@@ -641,7 +641,7 @@ class _DailyAttendanceEmployeeCardState
                 const SizedBox(width: 7),
                 Text('加班时长', style: Theme.of(context).textTheme.bodyMedium),
                 const SizedBox(width: 10),
-                Text('阶段 8 开放', style: Theme.of(context).textTheme.bodySmall),
+                Text('上午、下午独立登记', style: Theme.of(context).textTheme.bodySmall),
               ],
             ),
             const SizedBox(height: 10),

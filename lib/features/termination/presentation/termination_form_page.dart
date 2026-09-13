@@ -7,6 +7,9 @@ import '../../../core/database/app_database.dart';
 import '../../../core/database/database_enums.dart';
 import '../../../core/utils/date_utils.dart';
 import '../../personnel/application/personnel_providers.dart';
+import '../../attachments/application/attachment_providers.dart';
+import '../../attachments/domain/attachment_options.dart';
+import '../../attachments/presentation/attachment_picker_card.dart';
 import '../../reminders/application/reminder_providers.dart';
 import '../application/termination_providers.dart';
 import '../domain/termination_options.dart';
@@ -37,6 +40,7 @@ class _TerminationFormPageState extends ConsumerState<TerminationFormPage> {
   bool _hasUnsettledItems = false;
   bool _initialized = false;
   bool _saving = false;
+  List<PendingAttachment> _pendingAttachments = const [];
 
   @override
   void initState() {
@@ -272,6 +276,13 @@ class _TerminationFormPageState extends ConsumerState<TerminationFormPage> {
                 ),
               ),
               const SizedBox(height: 18),
+              AttachmentPickerCard(
+                title: '离职材料',
+                files: _pendingAttachments,
+                onChanged: (value) =>
+                    setState(() => _pendingAttachments = value),
+              ),
+              const SizedBox(height: 18),
               SizedBox(
                 width: double.infinity,
                 child: FilledButton.icon(
@@ -400,6 +411,15 @@ class _TerminationFormPageState extends ConsumerState<TerminationFormPage> {
       if (reminder != null) {
         await ref.read(notificationServiceProvider).sync(reminder);
       }
+      await ref
+          .read(attachmentRepositoryProvider)
+          .importPending(
+            employeeId: saved.employeeId,
+            files: _pendingAttachments,
+            category: 'termination',
+            sourceEntityType: 'termination',
+            sourceEntityId: saved.id,
+          );
       if (mounted) context.go('/attendance/termination');
     } catch (error) {
       if (!mounted) return;

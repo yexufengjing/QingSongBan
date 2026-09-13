@@ -296,7 +296,7 @@ class _PersonnelFormPageState extends ConsumerState<PersonnelFormPage> {
                         prefixIcon: Icon(Icons.groups_outlined),
                       ),
                       child: Text(
-                        '暂无可用考勤组（阶段 3建立）',
+                        '暂无可用考勤组，请先在考勤页建立',
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     )

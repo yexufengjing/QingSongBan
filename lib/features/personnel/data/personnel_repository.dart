@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 
 import '../../../core/database/app_database.dart';
 import '../../../core/database/database_enums.dart';
+import '../../../core/utils/date_utils.dart';
 import '../../attendance/data/attendance_group_repository.dart';
 import '../domain/personnel_options.dart';
 
@@ -15,6 +16,7 @@ class PersonnelRepository {
     EmployeeStatus? status,
     int? attendanceGroupId,
     String? employmentType,
+    String? hireMonth,
     bool includeDeleted = false,
   }) {
     final query = _database.select(_database.employees)
@@ -33,6 +35,15 @@ class PersonnelRepository {
     }
     if (employmentType != null && employmentType.isNotEmpty) {
       query.where((table) => table.employmentType.equals(employmentType));
+    }
+    if (hireMonth != null && hireMonth.isNotEmpty) {
+      final monthStart = AppDateUtils.parseYearMonth(hireMonth);
+      final nextMonth = DateTime(monthStart.year, monthStart.month + 1);
+      query.where(
+        (table) =>
+            table.hireDate.isBiggerOrEqualValue(monthStart) &
+            table.hireDate.isSmallerThanValue(nextMonth),
+      );
     }
     final normalizedSearch = search.trim();
     if (normalizedSearch.isNotEmpty) {

@@ -5,6 +5,9 @@ import 'package:go_router/go_router.dart';
 import '../../../app/theme/app_theme.dart';
 import '../../../core/utils/date_utils.dart';
 import '../../personnel/application/personnel_providers.dart';
+import '../../attachments/application/attachment_providers.dart';
+import '../../attachments/domain/attachment_options.dart';
+import '../../attachments/presentation/attachment_picker_card.dart';
 import '../application/insurance_providers.dart';
 import '../domain/insurance_options.dart';
 
@@ -30,6 +33,7 @@ class _InsuranceChangeFormPageState
   String? _insuranceType;
   bool _saving = false;
   bool _loadingChange = false;
+  List<PendingAttachment> _pendingAttachments = const [];
 
   @override
   void initState() {
@@ -225,6 +229,13 @@ class _InsuranceChangeFormPageState
                         ),
                       ),
                       const SizedBox(height: 18),
+                      AttachmentPickerCard(
+                        title: '保险材料',
+                        files: _pendingAttachments,
+                        onChanged: (value) =>
+                            setState(() => _pendingAttachments = value),
+                      ),
+                      const SizedBox(height: 18),
                       SizedBox(
                         width: double.infinity,
                         child: FilledButton.icon(
@@ -293,7 +304,7 @@ class _InsuranceChangeFormPageState
     }
     setState(() => _saving = true);
     try {
-      await ref
+      final saved = await ref
           .read(insuranceRepositoryProvider)
           .saveChange(
             id: widget.changeId,
@@ -306,6 +317,15 @@ class _InsuranceChangeFormPageState
               contributionBase: base,
               remark: _remarkController.text,
             ),
+          );
+      await ref
+          .read(attachmentRepositoryProvider)
+          .importPending(
+            employeeId: saved.employeeId,
+            files: _pendingAttachments,
+            category: 'insurance',
+            sourceEntityType: 'insurance_change',
+            sourceEntityId: saved.id,
           );
       if (mounted) context.go('/settings/insurance');
     } catch (error) {

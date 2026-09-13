@@ -16,9 +16,13 @@ class BackupRestoreResult {
 }
 
 class BackupService {
-  const BackupService(this._database);
+  const BackupService(
+    this._database, {
+    Future<Directory> Function()? documentsDirectory,
+  }) : _documentsDirectoryLoader = documentsDirectory;
 
   final AppDatabase _database;
+  final Future<Directory> Function()? _documentsDirectoryLoader;
 
   Future<File> createBackup() async {
     final directory = await _documentsDirectory();
@@ -62,13 +66,30 @@ class BackupService {
         ),
       ),
     );
+    final attachmentsRoot = await _attachmentsRoot();
+    var attachmentCount = 0;
+    var attachmentBytes = 0;
+    if (await attachmentsRoot.exists()) {
+      await for (final entity in attachmentsRoot.list(recursive: true)) {
+        if (entity is! File) continue;
+        final relative = _relativePath(attachmentsRoot.path, entity.path);
+        final bytes = await entity.readAsBytes();
+        archive.addFile(
+          ArchiveFile('attachments/$relative', bytes.length, bytes),
+        );
+        attachmentCount++;
+        attachmentBytes += bytes.length;
+      }
+    }
     final manifest = utf8.encode(
       jsonEncode({
         'format': 'qingsongban-backup',
-        'formatVersion': 1,
+        'formatVersion': 2,
         'schemaVersion': _database.schemaVersion,
         'databaseName': DatabaseConstants.databaseName,
         'createdAt': DateTime.now().toIso8601String(),
+        'attachmentCount': attachmentCount,
+        'attachmentBytes': attachmentBytes,
       }),
     );
     archive.addFile(ArchiveFile('manifest.json', manifest.length, manifest));
@@ -87,6 +108,10 @@ class BackupService {
         manifest['format'] != 'qingsongban-backup') {
       throw const FormatException('不是轻松办备份包');
     }
+    final formatVersion = manifest['formatVersion'];
+    if (formatVersion is! int || formatVersion < 1 || formatVersion > 2) {
+      throw const FormatException('备份格式版本不受支持');
+    }
     final schemaVersion = manifest['schemaVersion'];
     if (schemaVersion is! int || schemaVersion > _database.schemaVersion) {
       throw StateError('备份版本高于当前应用，请先升级应用');
@@ -97,6 +122,10 @@ class BackupService {
         utf8.decode(databaseBytes.sublist(0, 16), allowMalformed: true) !=
             sqliteHeader) {
       throw const FormatException('备份中的 SQLite 文件无效');
+    }
+    for (final entry in archive.files) {
+      if (!entry.name.startsWith('attachments/')) continue;
+      _safeArchivePath(entry.name.substring('attachments/'.length));
     }
     return manifest;
   }
@@ -115,6 +144,22 @@ class BackupService {
     if (await wal.exists()) await wal.delete();
     if (await shm.exists()) await shm.delete();
     await current.writeAsBytes(databaseEntry.content as List<int>, flush: true);
+    final attachmentsRoot = await _attachmentsRoot();
+    if (await attachmentsRoot.exists()) {
+      await attachmentsRoot.delete(recursive: true);
+    }
+    await attachmentsRoot.create(recursive: true);
+    for (final entry in archive.files) {
+      if (!entry.name.startsWith('attachments/')) continue;
+      final relative = _safeArchivePath(
+        entry.name.substring('attachments/'.length),
+      );
+      final target = File(
+        '${attachmentsRoot.path}${Platform.pathSeparator}${relative.replaceAll('/', Platform.pathSeparator)}',
+      );
+      await target.parent.create(recursive: true);
+      await target.writeAsBytes(entry.content as List<int>, flush: true);
+    }
     return BackupRestoreResult(safetyBackup: safetyBackup);
   }
 
@@ -125,7 +170,32 @@ class BackupService {
     );
   }
 
-  Future<Directory> _documentsDirectory() => getApplicationDocumentsDirectory();
+  Future<Directory> _documentsDirectory() =>
+      _documentsDirectoryLoader?.call() ?? getApplicationDocumentsDirectory();
+
+  Future<Directory> _attachmentsRoot() async {
+    final directory = await _documentsDirectory();
+    return Directory('${directory.path}${Platform.pathSeparator}attachments');
+  }
+
+  String _relativePath(String root, String file) {
+    final prefix = '$root${Platform.pathSeparator}';
+    return file.startsWith(prefix)
+        ? file.substring(prefix.length).replaceAll('\\', '/')
+        : _safeArchivePath(file);
+  }
+
+  String _safeArchivePath(String value) {
+    final normalized = value.replaceAll('\\', '/');
+    if (normalized.isEmpty ||
+        normalized.startsWith('/') ||
+        normalized.contains('../') ||
+        normalized.contains('/..') ||
+        normalized.contains(':')) {
+      throw const FormatException('备份中的附件路径无效');
+    }
+    return normalized;
+  }
 
   String _timestamp() => DateTime.now().toIso8601String().replaceAll(':', '-');
 }

@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../app/theme/app_theme.dart';
 import '../../../core/database/database_enums.dart';
 import '../application/monthly_summary_providers.dart';
+import '../../excel/application/excel_providers.dart';
 import '../domain/monthly_summary_options.dart';
 
-class ReportsPage extends ConsumerWidget {
+class ReportsPage extends ConsumerStatefulWidget {
   const ReportsPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ReportsPage> createState() => _ReportsPageState();
+}
+
+class _ReportsPageState extends ConsumerState<ReportsPage> {
+  bool _exporting = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final ref = this.ref;
     final month = ref.watch(monthlySummaryMonthProvider);
     final summary = ref.watch(monthlySummaryProvider);
     return SafeArea(
@@ -21,6 +31,12 @@ class ReportsPage extends ConsumerWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                IconButton(
+                  key: const Key('summary-back-to-attendance'),
+                  onPressed: () => _backToAttendance(context),
+                  icon: const Icon(Icons.arrow_back),
+                  tooltip: '返回考勤',
+                ),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,6 +58,26 @@ class ReportsPage extends ConsumerWidget {
                   onPressed: () => _generate(context, ref, month),
                   icon: const Icon(Icons.refresh_outlined),
                   tooltip: '重新生成汇总',
+                ),
+                IconButton(
+                  key: const Key('summary-export-button'),
+                  onPressed: _exporting
+                      ? null
+                      : () => _export(context, ref, month),
+                  icon: _exporting
+                      ? const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : const Icon(Icons.file_download_outlined),
+                  tooltip: '导出当前月份 Excel',
+                ),
+                IconButton(
+                  key: const Key('summary-payroll-button'),
+                  onPressed: () => context.push('/reports/payroll'),
+                  icon: const Icon(Icons.payments_outlined),
+                  tooltip: '临时工薪资',
                 ),
               ],
             ),
@@ -74,6 +110,40 @@ class ReportsPage extends ConsumerWidget {
         ],
       ),
     );
+  }
+
+  void _backToAttendance(BuildContext context) {
+    if (context.canPop()) {
+      context.pop();
+      return;
+    }
+    context.go('/attendance');
+  }
+
+  Future<void> _export(
+    BuildContext context,
+    WidgetRef ref,
+    DateTime month,
+  ) async {
+    setState(() => _exporting = true);
+    try {
+      final yearMonth = _yearMonth(month);
+      final file = await ref
+          .read(excelServiceProvider)
+          .exportToFile(yearMonth: yearMonth);
+      if (context.mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('已导出 $yearMonth：${file.path}')));
+      }
+    } catch (error) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('导出失败：$error')));
+      }
+    } finally {
+      if (mounted) setState(() => _exporting = false);
+    }
   }
 
   Future<void> _generate(

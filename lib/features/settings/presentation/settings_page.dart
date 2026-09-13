@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/theme/app_theme.dart';
-import '../../../core/widgets/stage_placeholder_card.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -56,13 +55,48 @@ class SettingsPage extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              '阶段 11 · 已开放',
+                              '当前参保与历史',
                               style: Theme.of(context).textTheme.bodySmall
                                   ?.copyWith(
                                     color: AppColors.techBlue,
                                     fontWeight: FontWeight.w600,
                                   ),
                             ),
+                          ],
+                        ),
+                      ),
+                      const Icon(Icons.chevron_right, color: AppColors.helper),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 14),
+            Card(
+              child: InkWell(
+                borderRadius: BorderRadius.circular(20),
+                onTap: () => context.push('/reports/payroll'),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 52,
+                        height: 52,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFEAF7EF),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: const Icon(Icons.payments_outlined, color: Colors.teal, size: 28),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('临时工薪资', style: Theme.of(context).textTheme.titleLarge),
+                            const SizedBox(height: 6),
+                            Text('维护工种日薪、工资批次和历史记录。', style: Theme.of(context).textTheme.bodyMedium),
                           ],
                         ),
                       ),
@@ -110,7 +144,7 @@ class SettingsPage extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              '阶段 12 · 已开放',
+                              '导入与导出',
                               style: Theme.of(context).textTheme.bodySmall
                                   ?.copyWith(
                                     color: AppColors.primary,
@@ -164,7 +198,7 @@ class SettingsPage extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              '阶段 13 · 已开放',
+                              '本地通知',
                               style: Theme.of(context).textTheme.bodySmall
                                   ?.copyWith(
                                     color: Colors.orange.shade800,
@@ -218,7 +252,7 @@ class SettingsPage extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              '阶段 14 · 已开放',
+                              '数据安全',
                               style: Theme.of(context).textTheme.bodySmall
                                   ?.copyWith(
                                     color: const Color(0xFF7057C9),
@@ -272,7 +306,7 @@ class SettingsPage extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              '阶段 14 · 已开放',
+                              '关键操作',
                               style: Theme.of(context).textTheme.bodySmall
                                   ?.copyWith(
                                     color: AppColors.body,
@@ -289,12 +323,6 @@ class SettingsPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 14),
-            const StagePlaceholderCard(
-              icon: Icons.settings_outlined,
-              title: '提醒、备份与应用设置',
-              description: '更多自动化业务日志将在后续迭代补充。',
-              accent: AppColors.body,
-            ),
           ],
         ),
       ),

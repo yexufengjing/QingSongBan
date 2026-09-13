@@ -89,42 +89,54 @@ class PersonnelEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 76,
-              height: 76,
-              decoration: const BoxDecoration(
-                color: AppColors.lightGreen,
-                shape: BoxShape.circle,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(32),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 76,
+                      height: 76,
+                      decoration: const BoxDecoration(
+                        color: AppColors.lightGreen,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.person_add_alt_1_outlined,
+                        color: AppColors.primary,
+                        size: 36,
+                      ),
+                    ),
+                    const SizedBox(height: 18),
+                    Text(
+                      '暂无人员档案',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      '先建立一条档案，后续考勤组和月度名单才能继续配置。',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    const SizedBox(height: 18),
+                    FilledButton.icon(
+                      onPressed: onCreate,
+                      icon: const Icon(Icons.add),
+                      label: const Text('新增人员'),
+                    ),
+                  ],
+                ),
               ),
-              child: const Icon(
-                Icons.person_add_alt_1_outlined,
-                color: AppColors.primary,
-                size: 36,
-              ),
             ),
-            const SizedBox(height: 18),
-            Text('暂无人员档案', style: Theme.of(context).textTheme.titleLarge),
-            const SizedBox(height: 8),
-            Text(
-              '先建立一条档案，后续考勤组和月度名单才能继续配置。',
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            const SizedBox(height: 18),
-            FilledButton.icon(
-              onPressed: onCreate,
-              icon: const Icon(Icons.add),
-              label: const Text('新增人员'),
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }
