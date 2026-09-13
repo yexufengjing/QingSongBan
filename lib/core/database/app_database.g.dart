@@ -11763,7 +11763,5763 @@ class MonthlyAttendanceSummary extends DataClass
 class MonthlyAttendanceSummariesCompanion
     extends UpdateCompanion<MonthlyAttendanceSummary> {
   final Value<int> id;
-  final Valu€û˙€¶ÚµÎ(ö+my‹yAttendanceSummariesTableFilterComposer f)
+  final Value<String> yearMonth;
+  final Value<int> employeeId;
+  final Value<int?> attendanceGroupId;
+  final Value<bool> participates;
+  final Value<double> attendanceDays;
+  final Value<double> leaveDays;
+  final Value<double> absentDays;
+  final Value<double> restDays;
+  final Value<double> stoppedDays;
+  final Value<int> overtimeCount;
+  final Value<int> overtimeMinutes;
+  final Value<String?> monthStartStatus;
+  final Value<String?> monthEndStatus;
+  final Value<bool> joinedDuringMonth;
+  final Value<bool> terminatedDuringMonth;
+  final Value<bool> isComplete;
+  final Value<int> anomalyCount;
+  final Value<MonthlySummaryStatus> status;
+  final Value<DateTime?> generatedAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isDeleted;
+  const MonthlyAttendanceSummariesCompanion({
+    this.id = const Value.absent(),
+    this.yearMonth = const Value.absent(),
+    this.employeeId = const Value.absent(),
+    this.attendanceGroupId = const Value.absent(),
+    this.participates = const Value.absent(),
+    this.attendanceDays = const Value.absent(),
+    this.leaveDays = const Value.absent(),
+    this.absentDays = const Value.absent(),
+    this.restDays = const Value.absent(),
+    this.stoppedDays = const Value.absent(),
+    this.overtimeCount = const Value.absent(),
+    this.overtimeMinutes = const Value.absent(),
+    this.monthStartStatus = const Value.absent(),
+    this.monthEndStatus = const Value.absent(),
+    this.joinedDuringMonth = const Value.absent(),
+    this.terminatedDuringMonth = const Value.absent(),
+    this.isComplete = const Value.absent(),
+    this.anomalyCount = const Value.absent(),
+    this.status = const Value.absent(),
+    this.generatedAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  });
+  MonthlyAttendanceSummariesCompanion.insert({
+    this.id = const Value.absent(),
+    required String yearMonth,
+    required int employeeId,
+    this.attendanceGroupId = const Value.absent(),
+    this.participates = const Value.absent(),
+    this.attendanceDays = const Value.absent(),
+    this.leaveDays = const Value.absent(),
+    this.absentDays = const Value.absent(),
+    this.restDays = const Value.absent(),
+    this.stoppedDays = const Value.absent(),
+    this.overtimeCount = const Value.absent(),
+    this.overtimeMinutes = const Value.absent(),
+    this.monthStartStatus = const Value.absent(),
+    this.monthEndStatus = const Value.absent(),
+    this.joinedDuringMonth = const Value.absent(),
+    this.terminatedDuringMonth = const Value.absent(),
+    this.isComplete = const Value.absent(),
+    this.anomalyCount = const Value.absent(),
+    this.status = const Value.absent(),
+    this.generatedAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  }) : yearMonth = Value(yearMonth),
+       employeeId = Value(employeeId);
+  static Insertable<MonthlyAttendanceSummary> custom({
+    Expression<int>? id,
+    Expression<String>? yearMonth,
+    Expression<int>? employeeId,
+    Expression<int>? attendanceGroupId,
+    Expression<bool>? participates,
+    Expression<double>? attendanceDays,
+    Expression<double>? leaveDays,
+    Expression<double>? absentDays,
+    Expression<double>? restDays,
+    Expression<double>? stoppedDays,
+    Expression<int>? overtimeCount,
+    Expression<int>? overtimeMinutes,
+    Expression<String>? monthStartStatus,
+    Expression<String>? monthEndStatus,
+    Expression<bool>? joinedDuringMonth,
+    Expression<bool>? terminatedDuringMonth,
+    Expression<bool>? isComplete,
+    Expression<int>? anomalyCount,
+    Expression<String>? status,
+    Expression<DateTime>? generatedAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isDeleted,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (yearMonth != null) 'year_month': yearMonth,
+      if (employeeId != null) 'employee_id': employeeId,
+      if (attendanceGroupId != null) 'attendance_group_id': attendanceGroupId,
+      if (participates != null) 'participates': participates,
+      if (attendanceDays != null) 'attendance_days': attendanceDays,
+      if (leaveDays != null) 'leave_days': leaveDays,
+      if (absentDays != null) 'absent_days': absentDays,
+      if (restDays != null) 'rest_days': restDays,
+      if (stoppedDays != null) 'stopped_days': stoppedDays,
+      if (overtimeCount != null) 'overtime_count': overtimeCount,
+      if (overtimeMinutes != null) 'overtime_minutes': overtimeMinutes,
+      if (monthStartStatus != null) 'month_start_status': monthStartStatus,
+      if (monthEndStatus != null) 'month_end_status': monthEndStatus,
+      if (joinedDuringMonth != null) 'joined_during_month': joinedDuringMonth,
+      if (terminatedDuringMonth != null)
+        'terminated_during_month': terminatedDuringMonth,
+      if (isComplete != null) 'is_complete': isComplete,
+      if (anomalyCount != null) 'anomaly_count': anomalyCount,
+      if (status != null) 'status': status,
+      if (generatedAt != null) 'generated_at': generatedAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+    });
+  }
+
+  MonthlyAttendanceSummariesCompanion copyWith({
+    Value<int>? id,
+    Value<String>? yearMonth,
+    Value<int>? employeeId,
+    Value<int?>? attendanceGroupId,
+    Value<bool>? participates,
+    Value<double>? attendanceDays,
+    Value<double>? leaveDays,
+    Value<double>? absentDays,
+    Value<double>? restDays,
+    Value<double>? stoppedDays,
+    Value<int>? overtimeCount,
+    Value<int>? overtimeMinutes,
+    Value<String?>? monthStartStatus,
+    Value<String?>? monthEndStatus,
+    Value<bool>? joinedDuringMonth,
+    Value<bool>? terminatedDuringMonth,
+    Value<bool>? isComplete,
+    Value<int>? anomalyCount,
+    Value<MonthlySummaryStatus>? status,
+    Value<DateTime?>? generatedAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isDeleted,
+  }) {
+    return MonthlyAttendanceSummariesCompanion(
+      id: id ?? this.id,
+      yearMonth: yearMonth ?? this.yearMonth,
+      employeeId: employeeId ?? this.employeeId,
+      attendanceGroupId: attendanceGroupId ?? this.attendanceGroupId,
+      participates: participates ?? this.participates,
+      attendanceDays: attendanceDays ?? this.attendanceDays,
+      leaveDays: leaveDays ?? this.leaveDays,
+      absentDays: absentDays ?? this.absentDays,
+      restDays: restDays ?? this.restDays,
+      stoppedDays: stoppedDays ?? this.stoppedDays,
+      overtimeCount: overtimeCount ?? this.overtimeCount,
+      overtimeMinutes: overtimeMinutes ?? this.overtimeMinutes,
+      monthStartStatus: monthStartStatus ?? this.monthStartStatus,
+      monthEndStatus: monthEndStatus ?? this.monthEndStatus,
+      joinedDuringMonth: joinedDuringMonth ?? this.joinedDuringMonth,
+      terminatedDuringMonth:
+          terminatedDuringMonth ?? this.terminatedDuringMonth,
+      isComplete: isComplete ?? this.isComplete,
+      anomalyCount: anomalyCount ?? this.anomalyCount,
+      status: status ?? this.status,
+      generatedAt: generatedAt ?? this.generatedAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (yearMonth.present) {
+      map['year_month'] = Variable<String>(yearMonth.value);
+    }
+    if (employeeId.present) {
+      map['employee_id'] = Variable<int>(employeeId.value);
+    }
+    if (attendanceGroupId.present) {
+      map['attendance_group_id'] = Variable<int>(attendanceGroupId.value);
+    }
+    if (participates.present) {
+      map['participates'] = Variable<bool>(participates.value);
+    }
+    if (attendanceDays.present) {
+      map['attendance_days'] = Variable<double>(attendanceDays.value);
+    }
+    if (leaveDays.present) {
+      map['leave_days'] = Variable<double>(leaveDays.value);
+    }
+    if (absentDays.present) {
+      map['absent_days'] = Variable<double>(absentDays.value);
+    }
+    if (restDays.present) {
+      map['rest_days'] = Variable<double>(restDays.value);
+    }
+    if (stoppedDays.present) {
+      map['stopped_days'] = Variable<double>(stoppedDays.value);
+    }
+    if (overtimeCount.present) {
+      map['overtime_count'] = Variable<int>(overtimeCount.value);
+    }
+    if (overtimeMinutes.present) {
+      map['overtime_minutes'] = Variable<int>(overtimeMinutes.value);
+    }
+    if (monthStartStatus.present) {
+      map['month_start_status'] = Variable<String>(monthStartStatus.value);
+    }
+    if (monthEndStatus.present) {
+      map['month_end_status'] = Variable<String>(monthEndStatus.value);
+    }
+    if (joinedDuringMonth.present) {
+      map['joined_during_month'] = Variable<bool>(joinedDuringMonth.value);
+    }
+    if (terminatedDuringMonth.present) {
+      map['terminated_during_month'] = Variable<bool>(
+        terminatedDuringMonth.value,
+      );
+    }
+    if (isComplete.present) {
+      map['is_complete'] = Variable<bool>(isComplete.value);
+    }
+    if (anomalyCount.present) {
+      map['anomaly_count'] = Variable<int>(anomalyCount.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(
+        $MonthlyAttendanceSummariesTable.$converterstatus.toSql(status.value),
+      );
+    }
+    if (generatedAt.present) {
+      map['generated_at'] = Variable<DateTime>(generatedAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MonthlyAttendanceSummariesCompanion(')
+          ..write('id: $id, ')
+          ..write('yearMonth: $yearMonth, ')
+          ..write('employeeId: $employeeId, ')
+          ..write('attendanceGroupId: $attendanceGroupId, ')
+          ..write('participates: $participates, ')
+          ..write('attendanceDays: $attendanceDays, ')
+          ..write('leaveDays: $leaveDays, ')
+          ..write('absentDays: $absentDays, ')
+          ..write('restDays: $restDays, ')
+          ..write('stoppedDays: $stoppedDays, ')
+          ..write('overtimeCount: $overtimeCount, ')
+          ..write('overtimeMinutes: $overtimeMinutes, ')
+          ..write('monthStartStatus: $monthStartStatus, ')
+          ..write('monthEndStatus: $monthEndStatus, ')
+          ..write('joinedDuringMonth: $joinedDuringMonth, ')
+          ..write('terminatedDuringMonth: $terminatedDuringMonth, ')
+          ..write('isComplete: $isComplete, ')
+          ..write('anomalyCount: $anomalyCount, ')
+          ..write('status: $status, ')
+          ..write('generatedAt: $generatedAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $InsuranceProfilesTable extends InsuranceProfiles
+    with TableInfo<$InsuranceProfilesTable, InsuranceProfile> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $InsuranceProfilesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _employeeIdMeta = const VerificationMeta(
+    'employeeId',
+  );
+  @override
+  late final GeneratedColumn<int> employeeId = GeneratedColumn<int>(
+    'employee_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES employees (id)',
+    ),
+  );
+  static const VerificationMeta _isInsuredMeta = const VerificationMeta(
+    'isInsured',
+  );
+  @override
+  late final GeneratedColumn<bool> isInsured = GeneratedColumn<bool>(
+    'is_insured',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_insured" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _insuranceTypeMeta = const VerificationMeta(
+    'insuranceType',
+  );
+  @override
+  late final GeneratedColumn<String> insuranceType = GeneratedColumn<String>(
+    'insurance_type',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _contributionBaseMeta = const VerificationMeta(
+    'contributionBase',
+  );
+  @override
+  late final GeneratedColumn<double> contributionBase = GeneratedColumn<double>(
+    'contribution_base',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _effectiveMonthMeta = const VerificationMeta(
+    'effectiveMonth',
+  );
+  @override
+  late final GeneratedColumn<String> effectiveMonth = GeneratedColumn<String>(
+    'effective_month',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _remarkMeta = const VerificationMeta('remark');
+  @override
+  late final GeneratedColumn<String> remark = GeneratedColumn<String>(
+    'remark',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    employeeId,
+    isInsured,
+    insuranceType,
+    contributionBase,
+    effectiveMonth,
+    remark,
+    createdAt,
+    updatedAt,
+    isDeleted,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'insurance_profiles';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<InsuranceProfile> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('employee_id')) {
+      context.handle(
+        _employeeIdMeta,
+        employeeId.isAcceptableOrUnknown(data['employee_id']!, _employeeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_employeeIdMeta);
+    }
+    if (data.containsKey('is_insured')) {
+      context.handle(
+        _isInsuredMeta,
+        isInsured.isAcceptableOrUnknown(data['is_insured']!, _isInsuredMeta),
+      );
+    }
+    if (data.containsKey('insurance_type')) {
+      context.handle(
+        _insuranceTypeMeta,
+        insuranceType.isAcceptableOrUnknown(
+          data['insurance_type']!,
+          _insuranceTypeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('contribution_base')) {
+      context.handle(
+        _contributionBaseMeta,
+        contributionBase.isAcceptableOrUnknown(
+          data['contribution_base']!,
+          _contributionBaseMeta,
+        ),
+      );
+    }
+    if (data.containsKey('effective_month')) {
+      context.handle(
+        _effectiveMonthMeta,
+        effectiveMonth.isAcceptableOrUnknown(
+          data['effective_month']!,
+          _effectiveMonthMeta,
+        ),
+      );
+    }
+    if (data.containsKey('remark')) {
+      context.handle(
+        _remarkMeta,
+        remark.isAcceptableOrUnknown(data['remark']!, _remarkMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  List<Set<GeneratedColumn>> get uniqueKeys => [
+    {employeeId},
+  ];
+  @override
+  InsuranceProfile map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return InsuranceProfile(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      employeeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}employee_id'],
+      )!,
+      isInsured: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_insured'],
+      )!,
+      insuranceType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}insurance_type'],
+      ),
+      contributionBase: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}contribution_base'],
+      ),
+      effectiveMonth: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}effective_month'],
+      ),
+      remark: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}remark'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
+    );
+  }
+
+  @override
+  $InsuranceProfilesTable createAlias(String alias) {
+    return $InsuranceProfilesTable(attachedDatabase, alias);
+  }
+}
+
+class InsuranceProfile extends DataClass
+    implements Insertable<InsuranceProfile> {
+  final int id;
+  final int employeeId;
+  final bool isInsured;
+  final String? insuranceType;
+  final double? contributionBase;
+  final String? effectiveMonth;
+  final String? remark;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final bool isDeleted;
+  const InsuranceProfile({
+    required this.id,
+    required this.employeeId,
+    required this.isInsured,
+    this.insuranceType,
+    this.contributionBase,
+    this.effectiveMonth,
+    this.remark,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isDeleted,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['employee_id'] = Variable<int>(employeeId);
+    map['is_insured'] = Variable<bool>(isInsured);
+    if (!nullToAbsent || insuranceType != null) {
+      map['insurance_type'] = Variable<String>(insuranceType);
+    }
+    if (!nullToAbsent || contributionBase != null) {
+      map['contribution_base'] = Variable<double>(contributionBase);
+    }
+    if (!nullToAbsent || effectiveMonth != null) {
+      map['effective_month'] = Variable<String>(effectiveMonth);
+    }
+    if (!nullToAbsent || remark != null) {
+      map['remark'] = Variable<String>(remark);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    return map;
+  }
+
+  InsuranceProfilesCompanion toCompanion(bool nullToAbsent) {
+    return InsuranceProfilesCompanion(
+      id: Value(id),
+      employeeId: Value(employeeId),
+      isInsured: Value(isInsured),
+      insuranceType: insuranceType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(insuranceType),
+      contributionBase: contributionBase == null && nullToAbsent
+          ? const Value.absent()
+          : Value(contributionBase),
+      effectiveMonth: effectiveMonth == null && nullToAbsent
+          ? const Value.absent()
+          : Value(effectiveMonth),
+      remark: remark == null && nullToAbsent
+          ? const Value.absent()
+          : Value(remark),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isDeleted: Value(isDeleted),
+    );
+  }
+
+  factory InsuranceProfile.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return InsuranceProfile(
+      id: serializer.fromJson<int>(json['id']),
+      employeeId: serializer.fromJson<int>(json['employeeId']),
+      isInsured: serializer.fromJson<bool>(json['isInsured']),
+      insuranceType: serializer.fromJson<String?>(json['insuranceType']),
+      contributionBase: serializer.fromJson<double?>(json['contributionBase']),
+      effectiveMonth: serializer.fromJson<String?>(json['effectiveMonth']),
+      remark: serializer.fromJson<String?>(json['remark']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'employeeId': serializer.toJson<int>(employeeId),
+      'isInsured': serializer.toJson<bool>(isInsured),
+      'insuranceType': serializer.toJson<String?>(insuranceType),
+      'contributionBase': serializer.toJson<double?>(contributionBase),
+      'effectiveMonth': serializer.toJson<String?>(effectiveMonth),
+      'remark': serializer.toJson<String?>(remark),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+    };
+  }
+
+  InsuranceProfile copyWith({
+    int? id,
+    int? employeeId,
+    bool? isInsured,
+    Value<String?> insuranceType = const Value.absent(),
+    Value<double?> contributionBase = const Value.absent(),
+    Value<String?> effectiveMonth = const Value.absent(),
+    Value<String?> remark = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? isDeleted,
+  }) => InsuranceProfile(
+    id: id ?? this.id,
+    employeeId: employeeId ?? this.employeeId,
+    isInsured: isInsured ?? this.isInsured,
+    insuranceType: insuranceType.present
+        ? insuranceType.value
+        : this.insuranceType,
+    contributionBase: contributionBase.present
+        ? contributionBase.value
+        : this.contributionBase,
+    effectiveMonth: effectiveMonth.present
+        ? effectiveMonth.value
+        : this.effectiveMonth,
+    remark: remark.present ? remark.value : this.remark,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isDeleted: isDeleted ?? this.isDeleted,
+  );
+  InsuranceProfile copyWithCompanion(InsuranceProfilesCompanion data) {
+    return InsuranceProfile(
+      id: data.id.present ? data.id.value : this.id,
+      employeeId: data.employeeId.present
+          ? data.employeeId.value
+          : this.employeeId,
+      isInsured: data.isInsured.present ? data.isInsured.value : this.isInsured,
+      insuranceType: data.insuranceType.present
+          ? data.insuranceType.value
+          : this.insuranceType,
+      contributionBase: data.contributionBase.present
+          ? data.contributionBase.value
+          : this.contributionBase,
+      effectiveMonth: data.effectiveMonth.present
+          ? data.effectiveMonth.value
+          : this.effectiveMonth,
+      remark: data.remark.present ? data.remark.value : this.remark,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('InsuranceProfile(')
+          ..write('id: $id, ')
+          ..write('employeeId: $employeeId, ')
+          ..write('isInsured: $isInsured, ')
+          ..write('insuranceType: $insuranceType, ')
+          ..write('contributionBase: $contributionBase, ')
+          ..write('effectiveMonth: $effectiveMonth, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    employeeId,
+    isInsured,
+    insuranceType,
+    contributionBase,
+    effectiveMonth,
+    remark,
+    createdAt,
+    updatedAt,
+    isDeleted,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is InsuranceProfile &&
+          other.id == this.id &&
+          other.employeeId == this.employeeId &&
+          other.isInsured == this.isInsured &&
+          other.insuranceType == this.insuranceType &&
+          other.contributionBase == this.contributionBase &&
+          other.effectiveMonth == this.effectiveMonth &&
+          other.remark == this.remark &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isDeleted == this.isDeleted);
+}
+
+class InsuranceProfilesCompanion extends UpdateCompanion<InsuranceProfile> {
+  final Value<int> id;
+  final Value<int> employeeId;
+  final Value<bool> isInsured;
+  final Value<String?> insuranceType;
+  final Value<double?> contributionBase;
+  final Value<String?> effectiveMonth;
+  final Value<String?> remark;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isDeleted;
+  const InsuranceProfilesCompanion({
+    this.id = const Value.absent(),
+    this.employeeId = const Value.absent(),
+    this.isInsured = const Value.absent(),
+    this.insuranceType = const Value.absent(),
+    this.contributionBase = const Value.absent(),
+    this.effectiveMonth = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  });
+  InsuranceProfilesCompanion.insert({
+    this.id = const Value.absent(),
+    required int employeeId,
+    this.isInsured = const Value.absent(),
+    this.insuranceType = const Value.absent(),
+    this.contributionBase = const Value.absent(),
+    this.effectiveMonth = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  }) : employeeId = Value(employeeId);
+  static Insertable<InsuranceProfile> custom({
+    Expression<int>? id,
+    Expression<int>? employeeId,
+    Expression<bool>? isInsured,
+    Expression<String>? insuranceType,
+    Expression<double>? contributionBase,
+    Expression<String>? effectiveMonth,
+    Expression<String>? remark,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isDeleted,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (employeeId != null) 'employee_id': employeeId,
+      if (isInsured != null) 'is_insured': isInsured,
+      if (insuranceType != null) 'insurance_type': insuranceType,
+      if (contributionBase != null) 'contribution_base': contributionBase,
+      if (effectiveMonth != null) 'effective_month': effectiveMonth,
+      if (remark != null) 'remark': remark,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+    });
+  }
+
+  InsuranceProfilesCompanion copyWith({
+    Value<int>? id,
+    Value<int>? employeeId,
+    Value<bool>? isInsured,
+    Value<String?>? insuranceType,
+    Value<double?>? contributionBase,
+    Value<String?>? effectiveMonth,
+    Value<String?>? remark,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isDeleted,
+  }) {
+    return InsuranceProfilesCompanion(
+      id: id ?? this.id,
+      employeeId: employeeId ?? this.employeeId,
+      isInsured: isInsured ?? this.isInsured,
+      insuranceType: insuranceType ?? this.insuranceType,
+      contributionBase: contributionBase ?? this.contributionBase,
+      effectiveMonth: effectiveMonth ?? this.effectiveMonth,
+      remark: remark ?? this.remark,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (employeeId.present) {
+      map['employee_id'] = Variable<int>(employeeId.value);
+    }
+    if (isInsured.present) {
+      map['is_insured'] = Variable<bool>(isInsured.value);
+    }
+    if (insuranceType.present) {
+      map['insurance_type'] = Variable<String>(insuranceType.value);
+    }
+    if (contributionBase.present) {
+      map['contribution_base'] = Variable<double>(contributionBase.value);
+    }
+    if (effectiveMonth.present) {
+      map['effective_month'] = Variable<String>(effectiveMonth.value);
+    }
+    if (remark.present) {
+      map['remark'] = Variable<String>(remark.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('InsuranceProfilesCompanion(')
+          ..write('id: $id, ')
+          ..write('employeeId: $employeeId, ')
+          ..write('isInsured: $isInsured, ')
+          ..write('insuranceType: $insuranceType, ')
+          ..write('contributionBase: $contributionBase, ')
+          ..write('effectiveMonth: $effectiveMonth, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $InsuranceChangeRecordsTable extends InsuranceChangeRecords
+    with TableInfo<$InsuranceChangeRecordsTable, InsuranceChangeRecord> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $InsuranceChangeRecordsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _employeeIdMeta = const VerificationMeta(
+    'employeeId',
+  );
+  @override
+  late final GeneratedColumn<int> employeeId = GeneratedColumn<int>(
+    'employee_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES employees (id)',
+    ),
+  );
+  static const VerificationMeta _changeTypeMeta = const VerificationMeta(
+    'changeType',
+  );
+  @override
+  late final GeneratedColumn<String> changeType = GeneratedColumn<String>(
+    'change_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _processingStatusMeta = const VerificationMeta(
+    'processingStatus',
+  );
+  @override
+  late final GeneratedColumn<String> processingStatus = GeneratedColumn<String>(
+    'processing_status',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('pending'),
+  );
+  static const VerificationMeta _insuranceTypeMeta = const VerificationMeta(
+    'insuranceType',
+  );
+  @override
+  late final GeneratedColumn<String> insuranceType = GeneratedColumn<String>(
+    'insurance_type',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _contributionBaseMeta = const VerificationMeta(
+    'contributionBase',
+  );
+  @override
+  late final GeneratedColumn<double> contributionBase = GeneratedColumn<double>(
+    'contribution_base',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _effectiveMonthMeta = const VerificationMeta(
+    'effectiveMonth',
+  );
+  @override
+  late final GeneratedColumn<String> effectiveMonth = GeneratedColumn<String>(
+    'effective_month',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _remarkMeta = const VerificationMeta('remark');
+  @override
+  late final GeneratedColumn<String> remark = GeneratedColumn<String>(
+    'remark',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    employeeId,
+    changeType,
+    processingStatus,
+    insuranceType,
+    contributionBase,
+    effectiveMonth,
+    remark,
+    createdAt,
+    updatedAt,
+    isDeleted,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'insurance_change_records';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<InsuranceChangeRecord> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('employee_id')) {
+      context.handle(
+        _employeeIdMeta,
+        employeeId.isAcceptableOrUnknown(data['employee_id']!, _employeeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_employeeIdMeta);
+    }
+    if (data.containsKey('change_type')) {
+      context.handle(
+        _changeTypeMeta,
+        changeType.isAcceptableOrUnknown(data['change_type']!, _changeTypeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_changeTypeMeta);
+    }
+    if (data.containsKey('processing_status')) {
+      context.handle(
+        _processingStatusMeta,
+        processingStatus.isAcceptableOrUnknown(
+          data['processing_status']!,
+          _processingStatusMeta,
+        ),
+      );
+    }
+    if (data.containsKey('insurance_type')) {
+      context.handle(
+        _insuranceTypeMeta,
+        insuranceType.isAcceptableOrUnknown(
+          data['insurance_type']!,
+          _insuranceTypeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('contribution_base')) {
+      context.handle(
+        _contributionBaseMeta,
+        contributionBase.isAcceptableOrUnknown(
+          data['contribution_base']!,
+          _contributionBaseMeta,
+        ),
+      );
+    }
+    if (data.containsKey('effective_month')) {
+      context.handle(
+        _effectiveMonthMeta,
+        effectiveMonth.isAcceptableOrUnknown(
+          data['effective_month']!,
+          _effectiveMonthMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_effectiveMonthMeta);
+    }
+    if (data.containsKey('remark')) {
+      context.handle(
+        _remarkMeta,
+        remark.isAcceptableOrUnknown(data['remark']!, _remarkMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  InsuranceChangeRecord map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return InsuranceChangeRecord(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      employeeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}employee_id'],
+      )!,
+      changeType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}change_type'],
+      )!,
+      processingStatus: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}processing_status'],
+      )!,
+      insuranceType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}insurance_type'],
+      ),
+      contributionBase: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}contribution_base'],
+      ),
+      effectiveMonth: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}effective_month'],
+      )!,
+      remark: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}remark'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
+    );
+  }
+
+  @override
+  $InsuranceChangeRecordsTable createAlias(String alias) {
+    return $InsuranceChangeRecordsTable(attachedDatabase, alias);
+  }
+}
+
+class InsuranceChangeRecord extends DataClass
+    implements Insertable<InsuranceChangeRecord> {
+  final int id;
+  final int employeeId;
+  final String changeType;
+  final String processingStatus;
+  final String? insuranceType;
+  final double? contributionBase;
+  final String effectiveMonth;
+  final String? remark;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final bool isDeleted;
+  const InsuranceChangeRecord({
+    required this.id,
+    required this.employeeId,
+    required this.changeType,
+    required this.processingStatus,
+    this.insuranceType,
+    this.contributionBase,
+    required this.effectiveMonth,
+    this.remark,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isDeleted,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['employee_id'] = Variable<int>(employeeId);
+    map['change_type'] = Variable<String>(changeType);
+    map['processing_status'] = Variable<String>(processingStatus);
+    if (!nullToAbsent || insuranceType != null) {
+      map['insurance_type'] = Variable<String>(insuranceType);
+    }
+    if (!nullToAbsent || contributionBase != null) {
+      map['contribution_base'] = Variable<double>(contributionBase);
+    }
+    map['effective_month'] = Variable<String>(effectiveMonth);
+    if (!nullToAbsent || remark != null) {
+      map['remark'] = Variable<String>(remark);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    return map;
+  }
+
+  InsuranceChangeRecordsCompanion toCompanion(bool nullToAbsent) {
+    return InsuranceChangeRecordsCompanion(
+      id: Value(id),
+      employeeId: Value(employeeId),
+      changeType: Value(changeType),
+      processingStatus: Value(processingStatus),
+      insuranceType: insuranceType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(insuranceType),
+      contributionBase: contributionBase == null && nullToAbsent
+          ? const Value.absent()
+          : Value(contributionBase),
+      effectiveMonth: Value(effectiveMonth),
+      remark: remark == null && nullToAbsent
+          ? const Value.absent()
+          : Value(remark),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isDeleted: Value(isDeleted),
+    );
+  }
+
+  factory InsuranceChangeRecord.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return InsuranceChangeRecord(
+      id: serializer.fromJson<int>(json['id']),
+      employeeId: serializer.fromJson<int>(json['employeeId']),
+      changeType: serializer.fromJson<String>(json['changeType']),
+      processingStatus: serializer.fromJson<String>(json['processingStatus']),
+      insuranceType: serializer.fromJson<String?>(json['insuranceType']),
+      contributionBase: serializer.fromJson<double?>(json['contributionBase']),
+      effectiveMonth: serializer.fromJson<String>(json['effectiveMonth']),
+      remark: serializer.fromJson<String?>(json['remark']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'employeeId': serializer.toJson<int>(employeeId),
+      'changeType': serializer.toJson<String>(changeType),
+      'processingStatus': serializer.toJson<String>(processingStatus),
+      'insuranceType': serializer.toJson<String?>(insuranceType),
+      'contributionBase': serializer.toJson<double?>(contributionBase),
+      'effectiveMonth': serializer.toJson<String>(effectiveMonth),
+      'remark': serializer.toJson<String?>(remark),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+    };
+  }
+
+  InsuranceChangeRecord copyWith({
+    int? id,
+    int? employeeId,
+    String? changeType,
+    String? processingStatus,
+    Value<String?> insuranceType = const Value.absent(),
+    Value<double?> contributionBase = const Value.absent(),
+    String? effectiveMonth,
+    Value<String?> remark = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? isDeleted,
+  }) => InsuranceChangeRecord(
+    id: id ?? this.id,
+    employeeId: employeeId ?? this.employeeId,
+    changeType: changeType ?? this.changeType,
+    processingStatus: processingStatus ?? this.processingStatus,
+    insuranceType: insuranceType.present
+        ? insuranceType.value
+        : this.insuranceType,
+    contributionBase: contributionBase.present
+        ? contributionBase.value
+        : this.contributionBase,
+    effectiveMonth: effectiveMonth ?? this.effectiveMonth,
+    remark: remark.present ? remark.value : this.remark,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isDeleted: isDeleted ?? this.isDeleted,
+  );
+  InsuranceChangeRecord copyWithCompanion(
+    InsuranceChangeRecordsCompanion data,
+  ) {
+    return InsuranceChangeRecord(
+      id: data.id.present ? data.id.value : this.id,
+      employeeId: data.employeeId.present
+          ? data.employeeId.value
+          : this.employeeId,
+      changeType: data.changeType.present
+          ? data.changeType.value
+          : this.changeType,
+      processingStatus: data.processingStatus.present
+          ? data.processingStatus.value
+          : this.processingStatus,
+      insuranceType: data.insuranceType.present
+          ? data.insuranceType.value
+          : this.insuranceType,
+      contributionBase: data.contributionBase.present
+          ? data.contributionBase.value
+          : this.contributionBase,
+      effectiveMonth: data.effectiveMonth.present
+          ? data.effectiveMonth.value
+          : this.effectiveMonth,
+      remark: data.remark.present ? data.remark.value : this.remark,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('InsuranceChangeRecord(')
+          ..write('id: $id, ')
+          ..write('employeeId: $employeeId, ')
+          ..write('changeType: $changeType, ')
+          ..write('processingStatus: $processingStatus, ')
+          ..write('insuranceType: $insuranceType, ')
+          ..write('contributionBase: $contributionBase, ')
+          ..write('effectiveMonth: $effectiveMonth, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    employeeId,
+    changeType,
+    processingStatus,
+    insuranceType,
+    contributionBase,
+    effectiveMonth,
+    remark,
+    createdAt,
+    updatedAt,
+    isDeleted,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is InsuranceChangeRecord &&
+          other.id == this.id &&
+          other.employeeId == this.employeeId &&
+          other.changeType == this.changeType &&
+          other.processingStatus == this.processingStatus &&
+          other.insuranceType == this.insuranceType &&
+          other.contributionBase == this.contributionBase &&
+          other.effectiveMonth == this.effectiveMonth &&
+          other.remark == this.remark &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isDeleted == this.isDeleted);
+}
+
+class InsuranceChangeRecordsCompanion
+    extends UpdateCompanion<InsuranceChangeRecord> {
+  final Value<int> id;
+  final Value<int> employeeId;
+  final Value<String> changeType;
+  final Value<String> processingStatus;
+  final Value<String?> insuranceType;
+  final Value<double?> contributionBase;
+  final Value<String> effectiveMonth;
+  final Value<String?> remark;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isDeleted;
+  const InsuranceChangeRecordsCompanion({
+    this.id = const Value.absent(),
+    this.employeeId = const Value.absent(),
+    this.changeType = const Value.absent(),
+    this.processingStatus = const Value.absent(),
+    this.insuranceType = const Value.absent(),
+    this.contributionBase = const Value.absent(),
+    this.effectiveMonth = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  });
+  InsuranceChangeRecordsCompanion.insert({
+    this.id = const Value.absent(),
+    required int employeeId,
+    required String changeType,
+    this.processingStatus = const Value.absent(),
+    this.insuranceType = const Value.absent(),
+    this.contributionBase = const Value.absent(),
+    required String effectiveMonth,
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  }) : employeeId = Value(employeeId),
+       changeType = Value(changeType),
+       effectiveMonth = Value(effectiveMonth);
+  static Insertable<InsuranceChangeRecord> custom({
+    Expression<int>? id,
+    Expression<int>? employeeId,
+    Expression<String>? changeType,
+    Expression<String>? processingStatus,
+    Expression<String>? insuranceType,
+    Expression<double>? contributionBase,
+    Expression<String>? effectiveMonth,
+    Expression<String>? remark,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isDeleted,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (employeeId != null) 'employee_id': employeeId,
+      if (changeType != null) 'change_type': changeType,
+      if (processingStatus != null) 'processing_status': processingStatus,
+      if (insuranceType != null) 'insurance_type': insuranceType,
+      if (contributionBase != null) 'contribution_base': contributionBase,
+      if (effectiveMonth != null) 'effective_month': effectiveMonth,
+      if (remark != null) 'remark': remark,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+    });
+  }
+
+  InsuranceChangeRecordsCompanion copyWith({
+    Value<int>? id,
+    Value<int>? employeeId,
+    Value<String>? changeType,
+    Value<String>? processingStatus,
+    Value<String?>? insuranceType,
+    Value<double?>? contributionBase,
+    Value<String>? effectiveMonth,
+    Value<String?>? remark,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isDeleted,
+  }) {
+    return InsuranceChangeRecordsCompanion(
+      id: id ?? this.id,
+      employeeId: employeeId ?? this.employeeId,
+      changeType: changeType ?? this.changeType,
+      processingStatus: processingStatus ?? this.processingStatus,
+      insuranceType: insuranceType ?? this.insuranceType,
+      contributionBase: contributionBase ?? this.contributionBase,
+      effectiveMonth: effectiveMonth ?? this.effectiveMonth,
+      remark: remark ?? this.remark,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (employeeId.present) {
+      map['employee_id'] = Variable<int>(employeeId.value);
+    }
+    if (changeType.present) {
+      map['change_type'] = Variable<String>(changeType.value);
+    }
+    if (processingStatus.present) {
+      map['processing_status'] = Variable<String>(processingStatus.value);
+    }
+    if (insuranceType.present) {
+      map['insurance_type'] = Variable<String>(insuranceType.value);
+    }
+    if (contributionBase.present) {
+      map['contribution_base'] = Variable<double>(contributionBase.value);
+    }
+    if (effectiveMonth.present) {
+      map['effective_month'] = Variable<String>(effectiveMonth.value);
+    }
+    if (remark.present) {
+      map['remark'] = Variable<String>(remark.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('InsuranceChangeRecordsCompanion(')
+          ..write('id: $id, ')
+          ..write('employeeId: $employeeId, ')
+          ..write('changeType: $changeType, ')
+          ..write('processingStatus: $processingStatus, ')
+          ..write('insuranceType: $insuranceType, ')
+          ..write('contributionBase: $contributionBase, ')
+          ..write('effectiveMonth: $effectiveMonth, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $SocialSecurityBaseHistoryTable extends SocialSecurityBaseHistory
+    with
+        TableInfo<
+          $SocialSecurityBaseHistoryTable,
+          SocialSecurityBaseHistoryData
+        > {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SocialSecurityBaseHistoryTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _employeeIdMeta = const VerificationMeta(
+    'employeeId',
+  );
+  @override
+  late final GeneratedColumn<int> employeeId = GeneratedColumn<int>(
+    'employee_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES employees (id)',
+    ),
+  );
+  static const VerificationMeta _insuranceTypeMeta = const VerificationMeta(
+    'insuranceType',
+  );
+  @override
+  late final GeneratedColumn<String> insuranceType = GeneratedColumn<String>(
+    'insurance_type',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _contributionBaseMeta = const VerificationMeta(
+    'contributionBase',
+  );
+  @override
+  late final GeneratedColumn<double> contributionBase = GeneratedColumn<double>(
+    'contribution_base',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _effectiveMonthMeta = const VerificationMeta(
+    'effectiveMonth',
+  );
+  @override
+  late final GeneratedColumn<String> effectiveMonth = GeneratedColumn<String>(
+    'effective_month',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _sourceMeta = const VerificationMeta('source');
+  @override
+  late final GeneratedColumn<String> source = GeneratedColumn<String>(
+    'source',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    employeeId,
+    insuranceType,
+    contributionBase,
+    effectiveMonth,
+    source,
+    createdAt,
+    isDeleted,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'social_security_base_history';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SocialSecurityBaseHistoryData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('employee_id')) {
+      context.handle(
+        _employeeIdMeta,
+        employeeId.isAcceptableOrUnknown(data['employee_id']!, _employeeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_employeeIdMeta);
+    }
+    if (data.containsKey('insurance_type')) {
+      context.handle(
+        _insuranceTypeMeta,
+        insuranceType.isAcceptableOrUnknown(
+          data['insurance_type']!,
+          _insuranceTypeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('contribution_base')) {
+      context.handle(
+        _contributionBaseMeta,
+        contributionBase.isAcceptableOrUnknown(
+          data['contribution_base']!,
+          _contributionBaseMeta,
+        ),
+      );
+    }
+    if (data.containsKey('effective_month')) {
+      context.handle(
+        _effectiveMonthMeta,
+        effectiveMonth.isAcceptableOrUnknown(
+          data['effective_month']!,
+          _effectiveMonthMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_effectiveMonthMeta);
+    }
+    if (data.containsKey('source')) {
+      context.handle(
+        _sourceMeta,
+        source.isAcceptableOrUnknown(data['source']!, _sourceMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  SocialSecurityBaseHistoryData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SocialSecurityBaseHistoryData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      employeeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}employee_id'],
+      )!,
+      insuranceType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}insurance_type'],
+      ),
+      contributionBase: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}contribution_base'],
+      ),
+      effectiveMonth: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}effective_month'],
+      )!,
+      source: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}source'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
+    );
+  }
+
+  @override
+  $SocialSecurityBaseHistoryTable createAlias(String alias) {
+    return $SocialSecurityBaseHistoryTable(attachedDatabase, alias);
+  }
+}
+
+class SocialSecurityBaseHistoryData extends DataClass
+    implements Insertable<SocialSecurityBaseHistoryData> {
+  final int id;
+  final int employeeId;
+  final String? insuranceType;
+  final double? contributionBase;
+  final String effectiveMonth;
+  final String? source;
+  final DateTime createdAt;
+  final bool isDeleted;
+  const SocialSecurityBaseHistoryData({
+    required this.id,
+    required this.employeeId,
+    this.insuranceType,
+    this.contributionBase,
+    required this.effectiveMonth,
+    this.source,
+    required this.createdAt,
+    required this.isDeleted,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['employee_id'] = Variable<int>(employeeId);
+    if (!nullToAbsent || insuranceType != null) {
+      map['insurance_type'] = Variable<String>(insuranceType);
+    }
+    if (!nullToAbsent || contributionBase != null) {
+      map['contribution_base'] = Variable<double>(contributionBase);
+    }
+    map['effective_month'] = Variable<String>(effectiveMonth);
+    if (!nullToAbsent || source != null) {
+      map['source'] = Variable<String>(source);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    return map;
+  }
+
+  SocialSecurityBaseHistoryCompanion toCompanion(bool nullToAbsent) {
+    return SocialSecurityBaseHistoryCompanion(
+      id: Value(id),
+      employeeId: Value(employeeId),
+      insuranceType: insuranceType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(insuranceType),
+      contributionBase: contributionBase == null && nullToAbsent
+          ? const Value.absent()
+          : Value(contributionBase),
+      effectiveMonth: Value(effectiveMonth),
+      source: source == null && nullToAbsent
+          ? const Value.absent()
+          : Value(source),
+      createdAt: Value(createdAt),
+      isDeleted: Value(isDeleted),
+    );
+  }
+
+  factory SocialSecurityBaseHistoryData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SocialSecurityBaseHistoryData(
+      id: serializer.fromJson<int>(json['id']),
+      employeeId: serializer.fromJson<int>(json['employeeId']),
+      insuranceType: serializer.fromJson<String?>(json['insuranceType']),
+      contributionBase: serializer.fromJson<double?>(json['contributionBase']),
+      effectiveMonth: serializer.fromJson<String>(json['effectiveMonth']),
+      source: serializer.fromJson<String?>(json['source']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'employeeId': serializer.toJson<int>(employeeId),
+      'insuranceType': serializer.toJson<String?>(insuranceType),
+      'contributionBase': serializer.toJson<double?>(contributionBase),
+      'effectiveMonth': serializer.toJson<String>(effectiveMonth),
+      'source': serializer.toJson<String?>(source),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+    };
+  }
+
+  SocialSecurityBaseHistoryData copyWith({
+    int? id,
+    int? employeeId,
+    Value<String?> insuranceType = const Value.absent(),
+    Value<double?> contributionBase = const Value.absent(),
+    String? effectiveMonth,
+    Value<String?> source = const Value.absent(),
+    DateTime? createdAt,
+    bool? isDeleted,
+  }) => SocialSecurityBaseHistoryData(
+    id: id ?? this.id,
+    employeeId: employeeId ?? this.employeeId,
+    insuranceType: insuranceType.present
+        ? insuranceType.value
+        : this.insuranceType,
+    contributionBase: contributionBase.present
+        ? contributionBase.value
+        : this.contributionBase,
+    effectiveMonth: effectiveMonth ?? this.effectiveMonth,
+    source: source.present ? source.value : this.source,
+    createdAt: createdAt ?? this.createdAt,
+    isDeleted: isDeleted ?? this.isDeleted,
+  );
+  SocialSecurityBaseHistoryData copyWithCompanion(
+    SocialSecurityBaseHistoryCompanion data,
+  ) {
+    return SocialSecurityBaseHistoryData(
+      id: data.id.present ? data.id.value : this.id,
+      employeeId: data.employeeId.present
+          ? data.employeeId.value
+          : this.employeeId,
+      insuranceType: data.insuranceType.present
+          ? data.insuranceType.value
+          : this.insuranceType,
+      contributionBase: data.contributionBase.present
+          ? data.contributionBase.value
+          : this.contributionBase,
+      effectiveMonth: data.effectiveMonth.present
+          ? data.effectiveMonth.value
+          : this.effectiveMonth,
+      source: data.source.present ? data.source.value : this.source,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SocialSecurityBaseHistoryData(')
+          ..write('id: $id, ')
+          ..write('employeeId: $employeeId, ')
+          ..write('insuranceType: $insuranceType, ')
+          ..write('contributionBase: $contributionBase, ')
+          ..write('effectiveMonth: $effectiveMonth, ')
+          ..write('source: $source, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    employeeId,
+    insuranceType,
+    contributionBase,
+    effectiveMonth,
+    source,
+    createdAt,
+    isDeleted,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SocialSecurityBaseHistoryData &&
+          other.id == this.id &&
+          other.employeeId == this.employeeId &&
+          other.insuranceType == this.insuranceType &&
+          other.contributionBase == this.contributionBase &&
+          other.effectiveMonth == this.effectiveMonth &&
+          other.source == this.source &&
+          other.createdAt == this.createdAt &&
+          other.isDeleted == this.isDeleted);
+}
+
+class SocialSecurityBaseHistoryCompanion
+    extends UpdateCompanion<SocialSecurityBaseHistoryData> {
+  final Value<int> id;
+  final Value<int> employeeId;
+  final Value<String?> insuranceType;
+  final Value<double?> contributionBase;
+  final Value<String> effectiveMonth;
+  final Value<String?> source;
+  final Value<DateTime> createdAt;
+  final Value<bool> isDeleted;
+  const SocialSecurityBaseHistoryCompanion({
+    this.id = const Value.absent(),
+    this.employeeId = const Value.absent(),
+    this.insuranceType = const Value.absent(),
+    this.contributionBase = const Value.absent(),
+    this.effectiveMonth = const Value.absent(),
+    this.source = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  });
+  SocialSecurityBaseHistoryCompanion.insert({
+    this.id = const Value.absent(),
+    required int employeeId,
+    this.insuranceType = const Value.absent(),
+    this.contributionBase = const Value.absent(),
+    required String effectiveMonth,
+    this.source = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  }) : employeeId = Value(employeeId),
+       effectiveMonth = Value(effectiveMonth);
+  static Insertable<SocialSecurityBaseHistoryData> custom({
+    Expression<int>? id,
+    Expression<int>? employeeId,
+    Expression<String>? insuranceType,
+    Expression<double>? contributionBase,
+    Expression<String>? effectiveMonth,
+    Expression<String>? source,
+    Expression<DateTime>? createdAt,
+    Expression<bool>? isDeleted,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (employeeId != null) 'employee_id': employeeId,
+      if (insuranceType != null) 'insurance_type': insuranceType,
+      if (contributionBase != null) 'contribution_base': contributionBase,
+      if (effectiveMonth != null) 'effective_month': effectiveMonth,
+      if (source != null) 'source': source,
+      if (createdAt != null) 'created_at': createdAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+    });
+  }
+
+  SocialSecurityBaseHistoryCompanion copyWith({
+    Value<int>? id,
+    Value<int>? employeeId,
+    Value<String?>? insuranceType,
+    Value<double?>? contributionBase,
+    Value<String>? effectiveMonth,
+    Value<String?>? source,
+    Value<DateTime>? createdAt,
+    Value<bool>? isDeleted,
+  }) {
+    return SocialSecurityBaseHistoryCompanion(
+      id: id ?? this.id,
+      employeeId: employeeId ?? this.employeeId,
+      insuranceType: insuranceType ?? this.insuranceType,
+      contributionBase: contributionBase ?? this.contributionBase,
+      effectiveMonth: effectiveMonth ?? this.effectiveMonth,
+      source: source ?? this.source,
+      createdAt: createdAt ?? this.createdAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (employeeId.present) {
+      map['employee_id'] = Variable<int>(employeeId.value);
+    }
+    if (insuranceType.present) {
+      map['insurance_type'] = Variable<String>(insuranceType.value);
+    }
+    if (contributionBase.present) {
+      map['contribution_base'] = Variable<double>(contributionBase.value);
+    }
+    if (effectiveMonth.present) {
+      map['effective_month'] = Variable<String>(effectiveMonth.value);
+    }
+    if (source.present) {
+      map['source'] = Variable<String>(source.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SocialSecurityBaseHistoryCompanion(')
+          ..write('id: $id, ')
+          ..write('employeeId: $employeeId, ')
+          ..write('insuranceType: $insuranceType, ')
+          ..write('contributionBase: $contributionBase, ')
+          ..write('effectiveMonth: $effectiveMonth, ')
+          ..write('source: $source, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $OperationLogsTable extends OperationLogs
+    with TableInfo<$OperationLogsTable, OperationLog> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $OperationLogsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _operationTypeMeta = const VerificationMeta(
+    'operationType',
+  );
+  @override
+  late final GeneratedColumn<String> operationType = GeneratedColumn<String>(
+    'operation_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _entityTypeMeta = const VerificationMeta(
+    'entityType',
+  );
+  @override
+  late final GeneratedColumn<String> entityType = GeneratedColumn<String>(
+    'entity_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _entityIdMeta = const VerificationMeta(
+    'entityId',
+  );
+  @override
+  late final GeneratedColumn<int> entityId = GeneratedColumn<int>(
+    'entity_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _detailMeta = const VerificationMeta('detail');
+  @override
+  late final GeneratedColumn<String> detail = GeneratedColumn<String>(
+    'detail',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    operationType,
+    entityType,
+    entityId,
+    detail,
+    createdAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'operation_logs';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<OperationLog> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('operation_type')) {
+      context.handle(
+        _operationTypeMeta,
+        operationType.isAcceptableOrUnknown(
+          data['operation_type']!,
+          _operationTypeMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_operationTypeMeta);
+    }
+    if (data.containsKey('entity_type')) {
+      context.handle(
+        _entityTypeMeta,
+        entityType.isAcceptableOrUnknown(data['entity_type']!, _entityTypeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_entityTypeMeta);
+    }
+    if (data.containsKey('entity_id')) {
+      context.handle(
+        _entityIdMeta,
+        entityId.isAcceptableOrUnknown(data['entity_id']!, _entityIdMeta),
+      );
+    }
+    if (data.containsKey('detail')) {
+      context.handle(
+        _detailMeta,
+        detail.isAcceptableOrUnknown(data['detail']!, _detailMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  OperationLog map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return OperationLog(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      operationType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}operation_type'],
+      )!,
+      entityType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}entity_type'],
+      )!,
+      entityId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}entity_id'],
+      ),
+      detail: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}detail'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $OperationLogsTable createAlias(String alias) {
+    return $OperationLogsTable(attachedDatabase, alias);
+  }
+}
+
+class OperationLog extends DataClass implements Insertable<OperationLog> {
+  final int id;
+  final String operationType;
+  final String entityType;
+  final int? entityId;
+  final String? detail;
+  final DateTime createdAt;
+  const OperationLog({
+    required this.id,
+    required this.operationType,
+    required this.entityType,
+    this.entityId,
+    this.detail,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['operation_type'] = Variable<String>(operationType);
+    map['entity_type'] = Variable<String>(entityType);
+    if (!nullToAbsent || entityId != null) {
+      map['entity_id'] = Variable<int>(entityId);
+    }
+    if (!nullToAbsent || detail != null) {
+      map['detail'] = Variable<String>(detail);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  OperationLogsCompanion toCompanion(bool nullToAbsent) {
+    return OperationLogsCompanion(
+      id: Value(id),
+      operationType: Value(operationType),
+      entityType: Value(entityType),
+      entityId: entityId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(entityId),
+      detail: detail == null && nullToAbsent
+          ? const Value.absent()
+          : Value(detail),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory OperationLog.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return OperationLog(
+      id: serializer.fromJson<int>(json['id']),
+      operationType: serializer.fromJson<String>(json['operationType']),
+      entityType: serializer.fromJson<String>(json['entityType']),
+      entityId: serializer.fromJson<int?>(json['entityId']),
+      detail: serializer.fromJson<String?>(json['detail']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'operationType': serializer.toJson<String>(operationType),
+      'entityType': serializer.toJson<String>(entityType),
+      'entityId': serializer.toJson<int?>(entityId),
+      'detail': serializer.toJson<String?>(detail),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  OperationLog copyWith({
+    int? id,
+    String? operationType,
+    String? entityType,
+    Value<int?> entityId = const Value.absent(),
+    Value<String?> detail = const Value.absent(),
+    DateTime? createdAt,
+  }) => OperationLog(
+    id: id ?? this.id,
+    operationType: operationType ?? this.operationType,
+    entityType: entityType ?? this.entityType,
+    entityId: entityId.present ? entityId.value : this.entityId,
+    detail: detail.present ? detail.value : this.detail,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  OperationLog copyWithCompanion(OperationLogsCompanion data) {
+    return OperationLog(
+      id: data.id.present ? data.id.value : this.id,
+      operationType: data.operationType.present
+          ? data.operationType.value
+          : this.operationType,
+      entityType: data.entityType.present
+          ? data.entityType.value
+          : this.entityType,
+      entityId: data.entityId.present ? data.entityId.value : this.entityId,
+      detail: data.detail.present ? data.detail.value : this.detail,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('OperationLog(')
+          ..write('id: $id, ')
+          ..write('operationType: $operationType, ')
+          ..write('entityType: $entityType, ')
+          ..write('entityId: $entityId, ')
+          ..write('detail: $detail, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, operationType, entityType, entityId, detail, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is OperationLog &&
+          other.id == this.id &&
+          other.operationType == this.operationType &&
+          other.entityType == this.entityType &&
+          other.entityId == this.entityId &&
+          other.detail == this.detail &&
+          other.createdAt == this.createdAt);
+}
+
+class OperationLogsCompanion extends UpdateCompanion<OperationLog> {
+  final Value<int> id;
+  final Value<String> operationType;
+  final Value<String> entityType;
+  final Value<int?> entityId;
+  final Value<String?> detail;
+  final Value<DateTime> createdAt;
+  const OperationLogsCompanion({
+    this.id = const Value.absent(),
+    this.operationType = const Value.absent(),
+    this.entityType = const Value.absent(),
+    this.entityId = const Value.absent(),
+    this.detail = const Value.absent(),
+    this.createdAt = const Value.absent(),
+  });
+  OperationLogsCompanion.insert({
+    this.id = const Value.absent(),
+    required String operationType,
+    required String entityType,
+    this.entityId = const Value.absent(),
+    this.detail = const Value.absent(),
+    this.createdAt = const Value.absent(),
+  }) : operationType = Value(operationType),
+       entityType = Value(entityType);
+  static Insertable<OperationLog> custom({
+    Expression<int>? id,
+    Expression<String>? operationType,
+    Expression<String>? entityType,
+    Expression<int>? entityId,
+    Expression<String>? detail,
+    Expression<DateTime>? createdAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (operationType != null) 'operation_type': operationType,
+      if (entityType != null) 'entity_type': entityType,
+      if (entityId != null) 'entity_id': entityId,
+      if (detail != null) 'detail': detail,
+      if (createdAt != null) 'created_at': createdAt,
+    });
+  }
+
+  OperationLogsCompanion copyWith({
+    Value<int>? id,
+    Value<String>? operationType,
+    Value<String>? entityType,
+    Value<int?>? entityId,
+    Value<String?>? detail,
+    Value<DateTime>? createdAt,
+  }) {
+    return OperationLogsCompanion(
+      id: id ?? this.id,
+      operationType: operationType ?? this.operationType,
+      entityType: entityType ?? this.entityType,
+      entityId: entityId ?? this.entityId,
+      detail: detail ?? this.detail,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (operationType.present) {
+      map['operation_type'] = Variable<String>(operationType.value);
+    }
+    if (entityType.present) {
+      map['entity_type'] = Variable<String>(entityType.value);
+    }
+    if (entityId.present) {
+      map['entity_id'] = Variable<int>(entityId.value);
+    }
+    if (detail.present) {
+      map['detail'] = Variable<String>(detail.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('OperationLogsCompanion(')
+          ..write('id: $id, ')
+          ..write('operationType: $operationType, ')
+          ..write('entityType: $entityType, ')
+          ..write('entityId: $entityId, ')
+          ..write('detail: $detail, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $DictionaryItemsTable extends DictionaryItems
+    with TableInfo<$DictionaryItemsTable, DictionaryItem> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $DictionaryItemsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _dictionaryTypeMeta = const VerificationMeta(
+    'dictionaryType',
+  );
+  @override
+  late final GeneratedColumn<String> dictionaryType = GeneratedColumn<String>(
+    'dictionary_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _itemKeyMeta = const VerificationMeta(
+    'itemKey',
+  );
+  @override
+  late final GeneratedColumn<String> itemKey = GeneratedColumn<String>(
+    'item_key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _itemLabelMeta = const VerificationMeta(
+    'itemLabel',
+  );
+  @override
+  late final GeneratedColumn<String> itemLabel = GeneratedColumn<String>(
+    'item_label',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _sortOrderMeta = const VerificationMeta(
+    'sortOrder',
+  );
+  @override
+  late final GeneratedColumn<int> sortOrder = GeneratedColumn<int>(
+    'sort_order',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _isEnabledMeta = const VerificationMeta(
+    'isEnabled',
+  );
+  @override
+  late final GeneratedColumn<bool> isEnabled = GeneratedColumn<bool>(
+    'is_enabled',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_enabled" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  static const VerificationMeta _remarkMeta = const VerificationMeta('remark');
+  @override
+  late final GeneratedColumn<String> remark = GeneratedColumn<String>(
+    'remark',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    dictionaryType,
+    itemKey,
+    itemLabel,
+    sortOrder,
+    isEnabled,
+    remark,
+    createdAt,
+    updatedAt,
+    isDeleted,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'dictionary_items';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<DictionaryItem> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('dictionary_type')) {
+      context.handle(
+        _dictionaryTypeMeta,
+        dictionaryType.isAcceptableOrUnknown(
+          data['dictionary_type']!,
+          _dictionaryTypeMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_dictionaryTypeMeta);
+    }
+    if (data.containsKey('item_key')) {
+      context.handle(
+        _itemKeyMeta,
+        itemKey.isAcceptableOrUnknown(data['item_key']!, _itemKeyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_itemKeyMeta);
+    }
+    if (data.containsKey('item_label')) {
+      context.handle(
+        _itemLabelMeta,
+        itemLabel.isAcceptableOrUnknown(data['item_label']!, _itemLabelMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_itemLabelMeta);
+    }
+    if (data.containsKey('sort_order')) {
+      context.handle(
+        _sortOrderMeta,
+        sortOrder.isAcceptableOrUnknown(data['sort_order']!, _sortOrderMeta),
+      );
+    }
+    if (data.containsKey('is_enabled')) {
+      context.handle(
+        _isEnabledMeta,
+        isEnabled.isAcceptableOrUnknown(data['is_enabled']!, _isEnabledMeta),
+      );
+    }
+    if (data.containsKey('remark')) {
+      context.handle(
+        _remarkMeta,
+        remark.isAcceptableOrUnknown(data['remark']!, _remarkMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  List<Set<GeneratedColumn>> get uniqueKeys => [
+    {dictionaryType, itemKey},
+  ];
+  @override
+  DictionaryItem map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return DictionaryItem(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      dictionaryType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}dictionary_type'],
+      )!,
+      itemKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}item_key'],
+      )!,
+      itemLabel: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}item_label'],
+      )!,
+      sortOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sort_order'],
+      )!,
+      isEnabled: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_enabled'],
+      )!,
+      remark: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}remark'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
+    );
+  }
+
+  @override
+  $DictionaryItemsTable createAlias(String alias) {
+    return $DictionaryItemsTable(attachedDatabase, alias);
+  }
+}
+
+class DictionaryItem extends DataClass implements Insertable<DictionaryItem> {
+  final int id;
+  final String dictionaryType;
+  final String itemKey;
+  final String itemLabel;
+  final int sortOrder;
+  final bool isEnabled;
+  final String? remark;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final bool isDeleted;
+  const DictionaryItem({
+    required this.id,
+    required this.dictionaryType,
+    required this.itemKey,
+    required this.itemLabel,
+    required this.sortOrder,
+    required this.isEnabled,
+    this.remark,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isDeleted,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['dictionary_type'] = Variable<String>(dictionaryType);
+    map['item_key'] = Variable<String>(itemKey);
+    map['item_label'] = Variable<String>(itemLabel);
+    map['sort_order'] = Variable<int>(sortOrder);
+    map['is_enabled'] = Variable<bool>(isEnabled);
+    if (!nullToAbsent || remark != null) {
+      map['remark'] = Variable<String>(remark);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    return map;
+  }
+
+  DictionaryItemsCompanion toCompanion(bool nullToAbsent) {
+    return DictionaryItemsCompanion(
+      id: Value(id),
+      dictionaryType: Value(dictionaryType),
+      itemKey: Value(itemKey),
+      itemLabel: Value(itemLabel),
+      sortOrder: Value(sortOrder),
+      isEnabled: Value(isEnabled),
+      remark: remark == null && nullToAbsent
+          ? const Value.absent()
+          : Value(remark),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isDeleted: Value(isDeleted),
+    );
+  }
+
+  factory DictionaryItem.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return DictionaryItem(
+      id: serializer.fromJson<int>(json['id']),
+      dictionaryType: serializer.fromJson<String>(json['dictionaryType']),
+      itemKey: serializer.fromJson<String>(json['itemKey']),
+      itemLabel: serializer.fromJson<String>(json['itemLabel']),
+      sortOrder: serializer.fromJson<int>(json['sortOrder']),
+      isEnabled: serializer.fromJson<bool>(json['isEnabled']),
+      remark: serializer.fromJson<String?>(json['remark']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'dictionaryType': serializer.toJson<String>(dictionaryType),
+      'itemKey': serializer.toJson<String>(itemKey),
+      'itemLabel': serializer.toJson<String>(itemLabel),
+      'sortOrder': serializer.toJson<int>(sortOrder),
+      'isEnabled': serializer.toJson<bool>(isEnabled),
+      'remark': serializer.toJson<String?>(remark),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+    };
+  }
+
+  DictionaryItem copyWith({
+    int? id,
+    String? dictionaryType,
+    String? itemKey,
+    String? itemLabel,
+    int? sortOrder,
+    bool? isEnabled,
+    Value<String?> remark = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? isDeleted,
+  }) => DictionaryItem(
+    id: id ?? this.id,
+    dictionaryType: dictionaryType ?? this.dictionaryType,
+    itemKey: itemKey ?? this.itemKey,
+    itemLabel: itemLabel ?? this.itemLabel,
+    sortOrder: sortOrder ?? this.sortOrder,
+    isEnabled: isEnabled ?? this.isEnabled,
+    remark: remark.present ? remark.value : this.remark,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isDeleted: isDeleted ?? this.isDeleted,
+  );
+  DictionaryItem copyWithCompanion(DictionaryItemsCompanion data) {
+    return DictionaryItem(
+      id: data.id.present ? data.id.value : this.id,
+      dictionaryType: data.dictionaryType.present
+          ? data.dictionaryType.value
+          : this.dictionaryType,
+      itemKey: data.itemKey.present ? data.itemKey.value : this.itemKey,
+      itemLabel: data.itemLabel.present ? data.itemLabel.value : this.itemLabel,
+      sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
+      isEnabled: data.isEnabled.present ? data.isEnabled.value : this.isEnabled,
+      remark: data.remark.present ? data.remark.value : this.remark,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DictionaryItem(')
+          ..write('id: $id, ')
+          ..write('dictionaryType: $dictionaryType, ')
+          ..write('itemKey: $itemKey, ')
+          ..write('itemLabel: $itemLabel, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('isEnabled: $isEnabled, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    dictionaryType,
+    itemKey,
+    itemLabel,
+    sortOrder,
+    isEnabled,
+    remark,
+    createdAt,
+    updatedAt,
+    isDeleted,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is DictionaryItem &&
+          other.id == this.id &&
+          other.dictionaryType == this.dictionaryType &&
+          other.itemKey == this.itemKey &&
+          other.itemLabel == this.itemLabel &&
+          other.sortOrder == this.sortOrder &&
+          other.isEnabled == this.isEnabled &&
+          other.remark == this.remark &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isDeleted == this.isDeleted);
+}
+
+class DictionaryItemsCompanion extends UpdateCompanion<DictionaryItem> {
+  final Value<int> id;
+  final Value<String> dictionaryType;
+  final Value<String> itemKey;
+  final Value<String> itemLabel;
+  final Value<int> sortOrder;
+  final Value<bool> isEnabled;
+  final Value<String?> remark;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isDeleted;
+  const DictionaryItemsCompanion({
+    this.id = const Value.absent(),
+    this.dictionaryType = const Value.absent(),
+    this.itemKey = const Value.absent(),
+    this.itemLabel = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.isEnabled = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  });
+  DictionaryItemsCompanion.insert({
+    this.id = const Value.absent(),
+    required String dictionaryType,
+    required String itemKey,
+    required String itemLabel,
+    this.sortOrder = const Value.absent(),
+    this.isEnabled = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  }) : dictionaryType = Value(dictionaryType),
+       itemKey = Value(itemKey),
+       itemLabel = Value(itemLabel);
+  static Insertable<DictionaryItem> custom({
+    Expression<int>? id,
+    Expression<String>? dictionaryType,
+    Expression<String>? itemKey,
+    Expression<String>? itemLabel,
+    Expression<int>? sortOrder,
+    Expression<bool>? isEnabled,
+    Expression<String>? remark,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isDeleted,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (dictionaryType != null) 'dictionary_type': dictionaryType,
+      if (itemKey != null) 'item_key': itemKey,
+      if (itemLabel != null) 'item_label': itemLabel,
+      if (sortOrder != null) 'sort_order': sortOrder,
+      if (isEnabled != null) 'is_enabled': isEnabled,
+      if (remark != null) 'remark': remark,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+    });
+  }
+
+  DictionaryItemsCompanion copyWith({
+    Value<int>? id,
+    Value<String>? dictionaryType,
+    Value<String>? itemKey,
+    Value<String>? itemLabel,
+    Value<int>? sortOrder,
+    Value<bool>? isEnabled,
+    Value<String?>? remark,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isDeleted,
+  }) {
+    return DictionaryItemsCompanion(
+      id: id ?? this.id,
+      dictionaryType: dictionaryType ?? this.dictionaryType,
+      itemKey: itemKey ?? this.itemKey,
+      itemLabel: itemLabel ?? this.itemLabel,
+      sortOrder: sortOrder ?? this.sortOrder,
+      isEnabled: isEnabled ?? this.isEnabled,
+      remark: remark ?? this.remark,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (dictionaryType.present) {
+      map['dictionary_type'] = Variable<String>(dictionaryType.value);
+    }
+    if (itemKey.present) {
+      map['item_key'] = Variable<String>(itemKey.value);
+    }
+    if (itemLabel.present) {
+      map['item_label'] = Variable<String>(itemLabel.value);
+    }
+    if (sortOrder.present) {
+      map['sort_order'] = Variable<int>(sortOrder.value);
+    }
+    if (isEnabled.present) {
+      map['is_enabled'] = Variable<bool>(isEnabled.value);
+    }
+    if (remark.present) {
+      map['remark'] = Variable<String>(remark.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DictionaryItemsCompanion(')
+          ..write('id: $id, ')
+          ..write('dictionaryType: $dictionaryType, ')
+          ..write('itemKey: $itemKey, ')
+          ..write('itemLabel: $itemLabel, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('isEnabled: $isEnabled, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $AppSettingsTable extends AppSettings
+    with TableInfo<$AppSettingsTable, AppSetting> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $AppSettingsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _settingKeyMeta = const VerificationMeta(
+    'settingKey',
+  );
+  @override
+  late final GeneratedColumn<String> settingKey = GeneratedColumn<String>(
+    'setting_key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
+  );
+  static const VerificationMeta _settingValueMeta = const VerificationMeta(
+    'settingValue',
+  );
+  @override
+  late final GeneratedColumn<String> settingValue = GeneratedColumn<String>(
+    'setting_value',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    settingKey,
+    settingValue,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'app_settings';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<AppSetting> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('setting_key')) {
+      context.handle(
+        _settingKeyMeta,
+        settingKey.isAcceptableOrUnknown(data['setting_key']!, _settingKeyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_settingKeyMeta);
+    }
+    if (data.containsKey('setting_value')) {
+      context.handle(
+        _settingValueMeta,
+        settingValue.isAcceptableOrUnknown(
+          data['setting_value']!,
+          _settingValueMeta,
+        ),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  AppSetting map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return AppSetting(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      settingKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}setting_key'],
+      )!,
+      settingValue: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}setting_value'],
+      ),
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $AppSettingsTable createAlias(String alias) {
+    return $AppSettingsTable(attachedDatabase, alias);
+  }
+}
+
+class AppSetting extends DataClass implements Insertable<AppSetting> {
+  final int id;
+  final String settingKey;
+  final String? settingValue;
+  final DateTime updatedAt;
+  const AppSetting({
+    required this.id,
+    required this.settingKey,
+    this.settingValue,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['setting_key'] = Variable<String>(settingKey);
+    if (!nullToAbsent || settingValue != null) {
+      map['setting_value'] = Variable<String>(settingValue);
+    }
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  AppSettingsCompanion toCompanion(bool nullToAbsent) {
+    return AppSettingsCompanion(
+      id: Value(id),
+      settingKey: Value(settingKey),
+      settingValue: settingValue == null && nullToAbsent
+          ? const Value.absent()
+          : Value(settingValue),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory AppSetting.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return AppSetting(
+      id: serializer.fromJson<int>(json['id']),
+      settingKey: serializer.fromJson<String>(json['settingKey']),
+      settingValue: serializer.fromJson<String?>(json['settingValue']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'settingKey': serializer.toJson<String>(settingKey),
+      'settingValue': serializer.toJson<String?>(settingValue),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  AppSetting copyWith({
+    int? id,
+    String? settingKey,
+    Value<String?> settingValue = const Value.absent(),
+    DateTime? updatedAt,
+  }) => AppSetting(
+    id: id ?? this.id,
+    settingKey: settingKey ?? this.settingKey,
+    settingValue: settingValue.present ? settingValue.value : this.settingValue,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  AppSetting copyWithCompanion(AppSettingsCompanion data) {
+    return AppSetting(
+      id: data.id.present ? data.id.value : this.id,
+      settingKey: data.settingKey.present
+          ? data.settingKey.value
+          : this.settingKey,
+      settingValue: data.settingValue.present
+          ? data.settingValue.value
+          : this.settingValue,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AppSetting(')
+          ..write('id: $id, ')
+          ..write('settingKey: $settingKey, ')
+          ..write('settingValue: $settingValue, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, settingKey, settingValue, updatedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppSetting &&
+          other.id == this.id &&
+          other.settingKey == this.settingKey &&
+          other.settingValue == this.settingValue &&
+          other.updatedAt == this.updatedAt);
+}
+
+class AppSettingsCompanion extends UpdateCompanion<AppSetting> {
+  final Value<int> id;
+  final Value<String> settingKey;
+  final Value<String?> settingValue;
+  final Value<DateTime> updatedAt;
+  const AppSettingsCompanion({
+    this.id = const Value.absent(),
+    this.settingKey = const Value.absent(),
+    this.settingValue = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+  });
+  AppSettingsCompanion.insert({
+    this.id = const Value.absent(),
+    required String settingKey,
+    this.settingValue = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+  }) : settingKey = Value(settingKey);
+  static Insertable<AppSetting> custom({
+    Expression<int>? id,
+    Expression<String>? settingKey,
+    Expression<String>? settingValue,
+    Expression<DateTime>? updatedAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (settingKey != null) 'setting_key': settingKey,
+      if (settingValue != null) 'setting_value': settingValue,
+      if (updatedAt != null) 'updated_at': updatedAt,
+    });
+  }
+
+  AppSettingsCompanion copyWith({
+    Value<int>? id,
+    Value<String>? settingKey,
+    Value<String?>? settingValue,
+    Value<DateTime>? updatedAt,
+  }) {
+    return AppSettingsCompanion(
+      id: id ?? this.id,
+      settingKey: settingKey ?? this.settingKey,
+      settingValue: settingValue ?? this.settingValue,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (settingKey.present) {
+      map['setting_key'] = Variable<String>(settingKey.value);
+    }
+    if (settingValue.present) {
+      map['setting_value'] = Variable<String>(settingValue.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AppSettingsCompanion(')
+          ..write('id: $id, ')
+          ..write('settingKey: $settingKey, ')
+          ..write('settingValue: $settingValue, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $RemindersTable extends Reminders
+    with TableInfo<$RemindersTable, Reminder> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $RemindersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _reminderTypeMeta = const VerificationMeta(
+    'reminderType',
+  );
+  @override
+  late final GeneratedColumn<String> reminderType = GeneratedColumn<String>(
+    'reminder_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dueDateMeta = const VerificationMeta(
+    'dueDate',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dueDate = GeneratedColumn<DateTime>(
+    'due_date',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _leadDaysMeta = const VerificationMeta(
+    'leadDays',
+  );
+  @override
+  late final GeneratedColumn<int> leadDays = GeneratedColumn<int>(
+    'lead_days',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _repeatRuleMeta = const VerificationMeta(
+    'repeatRule',
+  );
+  @override
+  late final GeneratedColumn<String> repeatRule = GeneratedColumn<String>(
+    'repeat_rule',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _isEnabledMeta = const VerificationMeta(
+    'isEnabled',
+  );
+  @override
+  late final GeneratedColumn<bool> isEnabled = GeneratedColumn<bool>(
+    'is_enabled',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_enabled" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  static const VerificationMeta _isCompletedMeta = const VerificationMeta(
+    'isCompleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isCompleted = GeneratedColumn<bool>(
+    'is_completed',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_completed" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _sourceEntityTypeMeta = const VerificationMeta(
+    'sourceEntityType',
+  );
+  @override
+  late final GeneratedColumn<String> sourceEntityType = GeneratedColumn<String>(
+    'source_entity_type',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _sourceEntityIdMeta = const VerificationMeta(
+    'sourceEntityId',
+  );
+  @override
+  late final GeneratedColumn<int> sourceEntityId = GeneratedColumn<int>(
+    'source_entity_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _remarkMeta = const VerificationMeta('remark');
+  @override
+  late final GeneratedColumn<String> remark = GeneratedColumn<String>(
+    'remark',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    title,
+    reminderType,
+    dueDate,
+    leadDays,
+    repeatRule,
+    isEnabled,
+    isCompleted,
+    sourceEntityType,
+    sourceEntityId,
+    remark,
+    createdAt,
+    updatedAt,
+    isDeleted,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'reminders';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<Reminder> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('reminder_type')) {
+      context.handle(
+        _reminderTypeMeta,
+        reminderType.isAcceptableOrUnknown(
+          data['reminder_type']!,
+          _reminderTypeMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_reminderTypeMeta);
+    }
+    if (data.containsKey('due_date')) {
+      context.handle(
+        _dueDateMeta,
+        dueDate.isAcceptableOrUnknown(data['due_date']!, _dueDateMeta),
+      );
+    }
+    if (data.containsKey('lead_days')) {
+      context.handle(
+        _leadDaysMeta,
+        leadDays.isAcceptableOrUnknown(data['lead_days']!, _leadDaysMeta),
+      );
+    }
+    if (data.containsKey('repeat_rule')) {
+      context.handle(
+        _repeatRuleMeta,
+        repeatRule.isAcceptableOrUnknown(data['repeat_rule']!, _repeatRuleMeta),
+      );
+    }
+    if (data.containsKey('is_enabled')) {
+      context.handle(
+        _isEnabledMeta,
+        isEnabled.isAcceptableOrUnknown(data['is_enabled']!, _isEnabledMeta),
+      );
+    }
+    if (data.containsKey('is_completed')) {
+      context.handle(
+        _isCompletedMeta,
+        isCompleted.isAcceptableOrUnknown(
+          data['is_completed']!,
+          _isCompletedMeta,
+        ),
+      );
+    }
+    if (data.containsKey('source_entity_type')) {
+      context.handle(
+        _sourceEntityTypeMeta,
+        sourceEntityType.isAcceptableOrUnknown(
+          data['source_entity_type']!,
+          _sourceEntityTypeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('source_entity_id')) {
+      context.handle(
+        _sourceEntityIdMeta,
+        sourceEntityId.isAcceptableOrUnknown(
+          data['source_entity_id']!,
+          _sourceEntityIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('remark')) {
+      context.handle(
+        _remarkMeta,
+        remark.isAcceptableOrUnknown(data['remark']!, _remarkMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Reminder map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Reminder(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
+      reminderType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reminder_type'],
+      )!,
+      dueDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}due_date'],
+      ),
+      leadDays: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}lead_days'],
+      )!,
+      repeatRule: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}repeat_rule'],
+      ),
+      isEnabled: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_enabled'],
+      )!,
+      isCompleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_completed'],
+      )!,
+      sourceEntityType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}source_entity_type'],
+      ),
+      sourceEntityId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}source_entity_id'],
+      ),
+      remark: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}remark'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
+    );
+  }
+
+  @override
+  $RemindersTable createAlias(String alias) {
+    return $RemindersTable(attachedDatabase, alias);
+  }
+}
+
+class Reminder extends DataClass implements Insertable<Reminder> {
+  final int id;
+  final String title;
+  final String reminderType;
+  final DateTime? dueDate;
+  final int leadDays;
+  final String? repeatRule;
+  final bool isEnabled;
+  final bool isCompleted;
+  final String? sourceEntityType;
+  final int? sourceEntityId;
+  final String? remark;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final bool isDeleted;
+  const Reminder({
+    required this.id,
+    required this.title,
+    required this.reminderType,
+    this.dueDate,
+    required this.leadDays,
+    this.repeatRule,
+    required this.isEnabled,
+    required this.isCompleted,
+    this.sourceEntityType,
+    this.sourceEntityId,
+    this.remark,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isDeleted,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['title'] = Variable<String>(title);
+    map['reminder_type'] = Variable<String>(reminderType);
+    if (!nullToAbsent || dueDate != null) {
+      map['due_date'] = Variable<DateTime>(dueDate);
+    }
+    map['lead_days'] = Variable<int>(leadDays);
+    if (!nullToAbsent || repeatRule != null) {
+      map['repeat_rule'] = Variable<String>(repeatRule);
+    }
+    map['is_enabled'] = Variable<bool>(isEnabled);
+    map['is_completed'] = Variable<bool>(isCompleted);
+    if (!nullToAbsent || sourceEntityType != null) {
+      map['source_entity_type'] = Variable<String>(sourceEntityType);
+    }
+    if (!nullToAbsent || sourceEntityId != null) {
+      map['source_entity_id'] = Variable<int>(sourceEntityId);
+    }
+    if (!nullToAbsent || remark != null) {
+      map['remark'] = Variable<String>(remark);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    return map;
+  }
+
+  RemindersCompanion toCompanion(bool nullToAbsent) {
+    return RemindersCompanion(
+      id: Value(id),
+      title: Value(title),
+      reminderType: Value(reminderType),
+      dueDate: dueDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dueDate),
+      leadDays: Value(leadDays),
+      repeatRule: repeatRule == null && nullToAbsent
+          ? const Value.absent()
+          : Value(repeatRule),
+      isEnabled: Value(isEnabled),
+      isCompleted: Value(isCompleted),
+      sourceEntityType: sourceEntityType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(sourceEntityType),
+      sourceEntityId: sourceEntityId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(sourceEntityId),
+      remark: remark == null && nullToAbsent
+          ? const Value.absent()
+          : Value(remark),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isDeleted: Value(isDeleted),
+    );
+  }
+
+  factory Reminder.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Reminder(
+      id: serializer.fromJson<int>(json['id']),
+      title: serializer.fromJson<String>(json['title']),
+      reminderType: serializer.fromJson<String>(json['reminderType']),
+      dueDate: serializer.fromJson<DateTime?>(json['dueDate']),
+      leadDays: serializer.fromJson<int>(json['leadDays']),
+      repeatRule: serializer.fromJson<String?>(json['repeatRule']),
+      isEnabled: serializer.fromJson<bool>(json['isEnabled']),
+      isCompleted: serializer.fromJson<bool>(json['isCompleted']),
+      sourceEntityType: serializer.fromJson<String?>(json['sourceEntityType']),
+      sourceEntityId: serializer.fromJson<int?>(json['sourceEntityId']),
+      remark: serializer.fromJson<String?>(json['remark']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'title': serializer.toJson<String>(title),
+      'reminderType': serializer.toJson<String>(reminderType),
+      'dueDate': serializer.toJson<DateTime?>(dueDate),
+      'leadDays': serializer.toJson<int>(leadDays),
+      'repeatRule': serializer.toJson<String?>(repeatRule),
+      'isEnabled': serializer.toJson<bool>(isEnabled),
+      'isCompleted': serializer.toJson<bool>(isCompleted),
+      'sourceEntityType': serializer.toJson<String?>(sourceEntityType),
+      'sourceEntityId': serializer.toJson<int?>(sourceEntityId),
+      'remark': serializer.toJson<String?>(remark),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+    };
+  }
+
+  Reminder copyWith({
+    int? id,
+    String? title,
+    String? reminderType,
+    Value<DateTime?> dueDate = const Value.absent(),
+    int? leadDays,
+    Value<String?> repeatRule = const Value.absent(),
+    bool? isEnabled,
+    bool? isCompleted,
+    Value<String?> sourceEntityType = const Value.absent(),
+    Value<int?> sourceEntityId = const Value.absent(),
+    Value<String?> remark = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? isDeleted,
+  }) => Reminder(
+    id: id ?? this.id,
+    title: title ?? this.title,
+    reminderType: reminderType ?? this.reminderType,
+    dueDate: dueDate.present ? dueDate.value : this.dueDate,
+    leadDays: leadDays ?? this.leadDays,
+    repeatRule: repeatRule.present ? repeatRule.value : this.repeatRule,
+    isEnabled: isEnabled ?? this.isEnabled,
+    isCompleted: isCompleted ?? this.isCompleted,
+    sourceEntityType: sourceEntityType.present
+        ? sourceEntityType.value
+        : this.sourceEntityType,
+    sourceEntityId: sourceEntityId.present
+        ? sourceEntityId.value
+        : this.sourceEntityId,
+    remark: remark.present ? remark.value : this.remark,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isDeleted: isDeleted ?? this.isDeleted,
+  );
+  Reminder copyWithCompanion(RemindersCompanion data) {
+    return Reminder(
+      id: data.id.present ? data.id.value : this.id,
+      title: data.title.present ? data.title.value : this.title,
+      reminderType: data.reminderType.present
+          ? data.reminderType.value
+          : this.reminderType,
+      dueDate: data.dueDate.present ? data.dueDate.value : this.dueDate,
+      leadDays: data.leadDays.present ? data.leadDays.value : this.leadDays,
+      repeatRule: data.repeatRule.present
+          ? data.repeatRule.value
+          : this.repeatRule,
+      isEnabled: data.isEnabled.present ? data.isEnabled.value : this.isEnabled,
+      isCompleted: data.isCompleted.present
+          ? data.isCompleted.value
+          : this.isCompleted,
+      sourceEntityType: data.sourceEntityType.present
+          ? data.sourceEntityType.value
+          : this.sourceEntityType,
+      sourceEntityId: data.sourceEntityId.present
+          ? data.sourceEntityId.value
+          : this.sourceEntityId,
+      remark: data.remark.present ? data.remark.value : this.remark,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Reminder(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('reminderType: $reminderType, ')
+          ..write('dueDate: $dueDate, ')
+          ..write('leadDays: $leadDays, ')
+          ..write('repeatRule: $repeatRule, ')
+          ..write('isEnabled: $isEnabled, ')
+          ..write('isCompleted: $isCompleted, ')
+          ..write('sourceEntityType: $sourceEntityType, ')
+          ..write('sourceEntityId: $sourceEntityId, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    title,
+    reminderType,
+    dueDate,
+    leadDays,
+    repeatRule,
+    isEnabled,
+    isCompleted,
+    sourceEntityType,
+    sourceEntityId,
+    remark,
+    createdAt,
+    updatedAt,
+    isDeleted,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Reminder &&
+          other.id == this.id &&
+          other.title == this.title &&
+          other.reminderType == this.reminderType &&
+          other.dueDate == this.dueDate &&
+          other.leadDays == this.leadDays &&
+          other.repeatRule == this.repeatRule &&
+          other.isEnabled == this.isEnabled &&
+          other.isCompleted == this.isCompleted &&
+          other.sourceEntityType == this.sourceEntityType &&
+          other.sourceEntityId == this.sourceEntityId &&
+          other.remark == this.remark &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isDeleted == this.isDeleted);
+}
+
+class RemindersCompanion extends UpdateCompanion<Reminder> {
+  final Value<int> id;
+  final Value<String> title;
+  final Value<String> reminderType;
+  final Value<DateTime?> dueDate;
+  final Value<int> leadDays;
+  final Value<String?> repeatRule;
+  final Value<bool> isEnabled;
+  final Value<bool> isCompleted;
+  final Value<String?> sourceEntityType;
+  final Value<int?> sourceEntityId;
+  final Value<String?> remark;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isDeleted;
+  const RemindersCompanion({
+    this.id = const Value.absent(),
+    this.title = const Value.absent(),
+    this.reminderType = const Value.absent(),
+    this.dueDate = const Value.absent(),
+    this.leadDays = const Value.absent(),
+    this.repeatRule = const Value.absent(),
+    this.isEnabled = const Value.absent(),
+    this.isCompleted = const Value.absent(),
+    this.sourceEntityType = const Value.absent(),
+    this.sourceEntityId = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  });
+  RemindersCompanion.insert({
+    this.id = const Value.absent(),
+    required String title,
+    required String reminderType,
+    this.dueDate = const Value.absent(),
+    this.leadDays = const Value.absent(),
+    this.repeatRule = const Value.absent(),
+    this.isEnabled = const Value.absent(),
+    this.isCompleted = const Value.absent(),
+    this.sourceEntityType = const Value.absent(),
+    this.sourceEntityId = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  }) : title = Value(title),
+       reminderType = Value(reminderType);
+  static Insertable<Reminder> custom({
+    Expression<int>? id,
+    Expression<String>? title,
+    Expression<String>? reminderType,
+    Expression<DateTime>? dueDate,
+    Expression<int>? leadDays,
+    Expression<String>? repeatRule,
+    Expression<bool>? isEnabled,
+    Expression<bool>? isCompleted,
+    Expression<String>? sourceEntityType,
+    Expression<int>? sourceEntityId,
+    Expression<String>? remark,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isDeleted,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (title != null) 'title': title,
+      if (reminderType != null) 'reminder_type': reminderType,
+      if (dueDate != null) 'due_date': dueDate,
+      if (leadDays != null) 'lead_days': leadDays,
+      if (repeatRule != null) 'repeat_rule': repeatRule,
+      if (isEnabled != null) 'is_enabled': isEnabled,
+      if (isCompleted != null) 'is_completed': isCompleted,
+      if (sourceEntityType != null) 'source_entity_type': sourceEntityType,
+      if (sourceEntityId != null) 'source_entity_id': sourceEntityId,
+      if (remark != null) 'remark': remark,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+    });
+  }
+
+  RemindersCompanion copyWith({
+    Value<int>? id,
+    Value<String>? title,
+    Value<String>? reminderType,
+    Value<DateTime?>? dueDate,
+    Value<int>? leadDays,
+    Value<String?>? repeatRule,
+    Value<bool>? isEnabled,
+    Value<bool>? isCompleted,
+    Value<String?>? sourceEntityType,
+    Value<int?>? sourceEntityId,
+    Value<String?>? remark,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isDeleted,
+  }) {
+    return RemindersCompanion(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      reminderType: reminderType ?? this.reminderType,
+      dueDate: dueDate ?? this.dueDate,
+      leadDays: leadDays ?? this.leadDays,
+      repeatRule: repeatRule ?? this.repeatRule,
+      isEnabled: isEnabled ?? this.isEnabled,
+      isCompleted: isCompleted ?? this.isCompleted,
+      sourceEntityType: sourceEntityType ?? this.sourceEntityType,
+      sourceEntityId: sourceEntityId ?? this.sourceEntityId,
+      remark: remark ?? this.remark,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (reminderType.present) {
+      map['reminder_type'] = Variable<String>(reminderType.value);
+    }
+    if (dueDate.present) {
+      map['due_date'] = Variable<DateTime>(dueDate.value);
+    }
+    if (leadDays.present) {
+      map['lead_days'] = Variable<int>(leadDays.value);
+    }
+    if (repeatRule.present) {
+      map['repeat_rule'] = Variable<String>(repeatRule.value);
+    }
+    if (isEnabled.present) {
+      map['is_enabled'] = Variable<bool>(isEnabled.value);
+    }
+    if (isCompleted.present) {
+      map['is_completed'] = Variable<bool>(isCompleted.value);
+    }
+    if (sourceEntityType.present) {
+      map['source_entity_type'] = Variable<String>(sourceEntityType.value);
+    }
+    if (sourceEntityId.present) {
+      map['source_entity_id'] = Variable<int>(sourceEntityId.value);
+    }
+    if (remark.present) {
+      map['remark'] = Variable<String>(remark.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RemindersCompanion(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('reminderType: $reminderType, ')
+          ..write('dueDate: $dueDate, ')
+          ..write('leadDays: $leadDays, ')
+          ..write('repeatRule: $repeatRule, ')
+          ..write('isEnabled: $isEnabled, ')
+          ..write('isCompleted: $isCompleted, ')
+          ..write('sourceEntityType: $sourceEntityType, ')
+          ..write('sourceEntityId: $sourceEntityId, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+}
+
+abstract class _$AppDatabase extends GeneratedDatabase {
+  _$AppDatabase(QueryExecutor e) : super(e);
+  $AppDatabaseManager get managers => $AppDatabaseManager(this);
+  late final $AttendanceGroupsTable attendanceGroups = $AttendanceGroupsTable(
+    this,
+  );
+  late final $EmployeesTable employees = $EmployeesTable(this);
+  late final $WageJobTypesTable wageJobTypes = $WageJobTypesTable(this);
+  late final $WageRateHistoryTable wageRateHistory = $WageRateHistoryTable(
+    this,
+  );
+  late final $EmployeeWageProfilesTable employeeWageProfiles =
+      $EmployeeWageProfilesTable(this);
+  late final $PayrollBatchesTable payrollBatches = $PayrollBatchesTable(this);
+  late final $PayrollItemsTable payrollItems = $PayrollItemsTable(this);
+  late final $PayrollAdjustmentsTable payrollAdjustments =
+      $PayrollAdjustmentsTable(this);
+  late final $EmployeeAttachmentsTable employeeAttachments =
+      $EmployeeAttachmentsTable(this);
+  late final $AttendanceGroupMembersTable attendanceGroupMembers =
+      $AttendanceGroupMembersTable(this);
+  late final $MonthlyAttendanceRostersTable monthlyAttendanceRosters =
+      $MonthlyAttendanceRostersTable(this);
+  late final $AttendanceRecordsTable attendanceRecords =
+      $AttendanceRecordsTable(this);
+  late final $LeaveRecordsTable leaveRecords = $LeaveRecordsTable(this);
+  late final $OvertimeRecordsTable overtimeRecords = $OvertimeRecordsTable(
+    this,
+  );
+  late final $TerminationRecordsTable terminationRecords =
+      $TerminationRecordsTable(this);
+  late final $MonthlyAttendanceSummariesTable monthlyAttendanceSummaries =
+      $MonthlyAttendanceSummariesTable(this);
+  late final $InsuranceProfilesTable insuranceProfiles =
+      $InsuranceProfilesTable(this);
+  late final $InsuranceChangeRecordsTable insuranceChangeRecords =
+      $InsuranceChangeRecordsTable(this);
+  late final $SocialSecurityBaseHistoryTable socialSecurityBaseHistory =
+      $SocialSecurityBaseHistoryTable(this);
+  late final $OperationLogsTable operationLogs = $OperationLogsTable(this);
+  late final $DictionaryItemsTable dictionaryItems = $DictionaryItemsTable(
+    this,
+  );
+  late final $AppSettingsTable appSettings = $AppSettingsTable(this);
+  late final $RemindersTable reminders = $RemindersTable(this);
+  @override
+  Iterable<TableInfo<Table, Object?>> get allTables =>
+      allSchemaEntities.whereType<TableInfo<Table, Object?>>();
+  @override
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+    attendanceGroups,
+    employees,
+    wageJobTypes,
+    wageRateHistory,
+    employeeWageProfiles,
+    payrollBatches,
+    payrollItems,
+    payrollAdjustments,
+    employeeAttachments,
+    attendanceGroupMembers,
+    monthlyAttendanceRosters,
+    attendanceRecords,
+    leaveRecords,
+    overtimeRecords,
+    terminationRecords,
+    monthlyAttendanceSummaries,
+    insuranceProfiles,
+    insuranceChangeRecords,
+    socialSecurityBaseHistory,
+    operationLogs,
+    dictionaryItems,
+    appSettings,
+    reminders,
+  ];
+}
+
+typedef $$AttendanceGroupsTableCreateCompanionBuilder =
+    AttendanceGroupsCompanion Function({
+      Value<int> id,
+      required String name,
+      Value<String> groupType,
+      Value<bool> isEnabled,
+      Value<int> sortOrder,
+      Value<String?> remark,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
+    });
+typedef $$AttendanceGroupsTableUpdateCompanionBuilder =
+    AttendanceGroupsCompanion Function({
+      Value<int> id,
+      Value<String> name,
+      Value<String> groupType,
+      Value<bool> isEnabled,
+      Value<int> sortOrder,
+      Value<String?> remark,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
+    });
+
+final class $$AttendanceGroupsTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $AttendanceGroupsTable, AttendanceGroup> {
+  $$AttendanceGroupsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static MultiTypedResultKey<$EmployeesTable, List<Employee>>
+  _employeesRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.employees,
+    aliasName: 'attendance_groups__id__employees__default_attendance_group_id',
+  );
+
+  $$EmployeesTableProcessedTableManager get employeesRefs {
+    final manager = $$EmployeesTableTableManager($_db, $_db.employees).filter(
+      (f) => f.defaultAttendanceGroupId.id.sqlEquals($_itemColumn<int>('id')!),
+    );
+
+    final cache = $_typedResult.readTableOrNull(_employeesRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $AttendanceGroupMembersTable,
+    List<AttendanceGroupMember>
+  >
+  _attendanceGroupMembersRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.attendanceGroupMembers,
+    aliasName:
+        'attendance_groups__id__attendance_group_members__attendance_group_id',
+  );
+
+  $$AttendanceGroupMembersTableProcessedTableManager
+  get attendanceGroupMembersRefs {
+    final manager = $$AttendanceGroupMembersTableTableManager(
+      $_db,
+      $_db.attendanceGroupMembers,
+    ).filter((f) => f.attendanceGroupId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _attendanceGroupMembersRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $MonthlyAttendanceRostersTable,
+    List<MonthlyAttendanceRoster>
+  >
+  _monthlyAttendanceRostersRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.monthlyAttendanceRosters,
+        aliasName: 'attendance_groups__id__monthly_attendance_rosters__attendance_group_id',
+      );
+
+  $$MonthlyAttendanceRostersTableProcessedTableManager
+  get monthlyAttendanceRostersRefs {
+    final manager = $$MonthlyAttendanceRostersTableTableManager(
+      $_db,
+      $_db.monthlyAttendanceRosters,
+    ).filter((f) => f.attendanceGroupId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _monthlyAttendanceRostersRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $MonthlyAttendanceSummariesTable,
+    List<MonthlyAttendanceSummary>
+  >
+  _monthlyAttendanceSummariesRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.monthlyAttendanceSummaries,
+        aliasName: 'attendance_groups__id__monthly_attendance_summaries__attendance_group_id',
+      );
+
+  $$MonthlyAttendanceSummariesTableProcessedTableManager
+  get monthlyAttendanceSummariesRefs {
+    final manager = $$MonthlyAttendanceSummariesTableTableManager(
+      $_db,
+      $_db.monthlyAttendanceSummaries,
+    ).filter((f) => f.attendanceGroupId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _monthlyAttendanceSummariesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$AttendanceGroupsTableFilterComposer
+    extends Composer<_$AppDatabase, $AttendanceGroupsTable> {
+  $$AttendanceGroupsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get groupType => $composableBuilder(
+    column: $table.groupType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isEnabled => $composableBuilder(
+    column: $table.isEnabled,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> employeesRefs(
+    Expression<bool> Function($$EmployeesTableFilterComposer f) f,
+  ) {
+    final $$EmployeesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.employees,
+      getReferencedColumn: (t) => t.defaultAttendanceGroupId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$EmployeesTableFilterComposer(
+            $db: $db,
+            $table: $db.employees,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> attendanceGroupMembersRefs(
+    Expression<bool> Function($$AttendanceGroupMembersTableFilterComposer f) f,
+  ) {
+    final $$AttendanceGroupMembersTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.attendanceGroupMembers,
+          getReferencedColumn: (t) => t.attendanceGroupId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$AttendanceGroupMembersTableFilterComposer(
+                $db: $db,
+                $table: $db.attendanceGroupMembers,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<bool> monthlyAttendanceRostersRefs(
+    Expression<bool> Function($$MonthlyAttendanceRostersTableFilterComposer f)
+    f,
+  ) {
+    final $$MonthlyAttendanceRostersTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.monthlyAttendanceRosters,
+          getReferencedColumn: (t) => t.attendanceGroupId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$MonthlyAttendanceRostersTableFilterComposer(
+                $db: $db,
+                $table: $db.monthlyAttendanceRosters,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<bool> monthlyAttendanceSummariesRefs(
+    Expression<bool> Function($$MonthlyAttendanceSummariesTableFilterComposer f)
+    f,
+  ) {
+    final $$MonthlyAttendanceSummariesTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.monthlyAttendanceSummaries,
+          getReferencedColumn: (t) => t.attendanceGroupId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$MonthlyAttendanceSummariesTableFilterComposer(
+                $db: $db,
+                $table: $db.monthlyAttendanceSummaries,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$AttendanceGroupsTableOrderingComposer
+    extends Composer<_$AppDatabase, $AttendanceGroupsTable> {
+  $$AttendanceGroupsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get groupType => $composableBuilder(
+    column: $table.groupType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isEnabled => $composableBuilder(
+    column: $table.isEnabled,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$AttendanceGroupsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $AttendanceGroupsTable> {
+  $$AttendanceGroupsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get groupType =>
+      $composableBuilder(column: $table.groupType, builder: (column) => column);
+
+  GeneratedColumn<bool> get isEnabled =>
+      $composableBuilder(column: $table.isEnabled, builder: (column) => column);
+
+  GeneratedColumn<int> get sortOrder =>
+      $composableBuilder(column: $table.sortOrder, builder: (column) => column);
+
+  GeneratedColumn<String> get remark =>
+      $composableBuilder(column: $table.remark, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
+  Expression<T> employeesRefs<T extends Object>(
+    Expression<T> Function($$EmployeesTableAnnotationComposer a) f,
+  ) {
+    final $$EmployeesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.employees,
+      getReferencedColumn: (t) => t.defaultAttendanceGroupId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$EmployeesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.employees,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> attendanceGroupMembersRefs<T extends Object>(
+    Expression<T> Function($$AttendanceGroupMembersTableAnnotationComposer a) f,
+  ) {
+    final $$AttendanceGroupMembersTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.attendanceGroupMembers,
+          getReferencedColumn: (t) => t.attendanceGroupId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$AttendanceGroupMembersTableAnnotationComposer(
+                $db: $db,
+                $table: $db.attendanceGroupMembers,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> monthlyAttendanceRostersRefs<T extends Object>(
+    Expression<T> Function($$MonthlyAttendanceRostersTableAnnotationComposer a)
+    f,
+  ) {
+    final $$MonthlyAttendanceRostersTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.monthlyAttendanceRosters,
+          getReferencedColumn: (t) => t.attendanceGroupId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$MonthlyAttendanceRostersTableAnnotationComposer(
+                $db: $db,
+                $table: $db.monthlyAttendanceRosters,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> monthlyAttendanceSummariesRefs<T extends Object>(
+    Expression<T> Function(
+      $$MonthlyAttendanceSummariesTableAnnotationComposer a,
+    )
+    f,
+  ) {
+    final $$MonthlyAttendanceSummariesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.monthlyAttendanceSummaries,
+          getReferencedColumn: (t) => t.attendanceGroupId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$MonthlyAttendanceSummariesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.monthlyAttendanceSummaries,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$AttendanceGroupsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $AttendanceGroupsTable,
+          AttendanceGroup,
+          $$AttendanceGroupsTableFilterComposer,
+          $$AttendanceGroupsTableOrderingComposer,
+          $$AttendanceGroupsTableAnnotationComposer,
+          $$AttendanceGroupsTableCreateCompanionBuilder,
+          $$AttendanceGroupsTableUpdateCompanionBuilder,
+          (AttendanceGroup, $$AttendanceGroupsTableReferences),
+          AttendanceGroup,
+          PrefetchHooks Function({
+            bool employeesRefs,
+            bool attendanceGroupMembersRefs,
+            bool monthlyAttendanceRostersRefs,
+            bool monthlyAttendanceSummariesRefs,
+          })
+        > {
+  $$AttendanceGroupsTableTableManager(
+    _$AppDatabase db,
+    $AttendanceGroupsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$AttendanceGroupsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$AttendanceGroupsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$AttendanceGroupsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> groupType = const Value.absent(),
+                Value<bool> isEnabled = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+                Value<String?> remark = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => AttendanceGroupsCompanion(
+                id: id,
+                name: name,
+                groupType: groupType,
+                isEnabled: isEnabled,
+                sortOrder: sortOrder,
+                remark: remark,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String name,
+                Value<String> groupType = const Value.absent(),
+                Value<bool> isEnabled = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+                Value<String?> remark = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => AttendanceGroupsCompanion.insert(
+                id: id,
+                name: name,
+                groupType: groupType,
+                isEnabled: isEnabled,
+                sortOrder: sortOrder,
+                remark: remark,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$AttendanceGroupsTable, AttendanceGroup>(table),
+                  $$AttendanceGroupsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                employeesRefs = false,
+                attendanceGroupMembersRefs = false,
+                monthlyAttendanceRostersRefs = false,
+                monthlyAttendanceSummariesRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (employeesRefs) db.employees,
+                    if (attendanceGroupMembersRefs) db.attendanceGroupMembers,
+                    if (monthlyAttendanceRostersRefs)
+                      db.monthlyAttendanceRosters,
+                    if (monthlyAttendanceSummariesRefs)
+                      db.monthlyAttendanceSummaries,
+                  ],
+                  addJoins: null,
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (employeesRefs)
+                        await $_getPrefetchedData<
+                          AttendanceGroup,
+                          $AttendanceGroupsTable,
+                          Employee
+                        >(
+                          currentTable: table,
+                          referencedTable: $$AttendanceGroupsTableReferences
+                              ._employeesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$AttendanceGroupsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).employeesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.defaultAttendanceGroupId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (attendanceGroupMembersRefs)
+                        await $_getPrefetchedData<
+                          AttendanceGroup,
+                          $AttendanceGroupsTable,
+                          AttendanceGroupMember
+                        >(
+                          currentTable: table,
+                          referencedTable: $$AttendanceGroupsTableReferences
+                              ._attendanceGroupMembersRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$AttendanceGroupsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).attendanceGroupMembersRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.attendanceGroupId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (monthlyAttendanceRostersRefs)
+                        await $_getPrefetchedData<
+                          AttendanceGroup,
+                          $AttendanceGroupsTable,
+                          MonthlyAttendanceRoster
+                        >(
+                          currentTable: table,
+                          referencedTable: $$AttendanceGroupsTableReferences
+                              ._monthlyAttendanceRostersRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$AttendanceGroupsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).monthlyAttendanceRostersRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.attendanceGroupId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (monthlyAttendanceSummariesRefs)
+                        await $_getPrefetchedData<
+                          AttendanceGroup,
+                          $AttendanceGroupsTable,
+                          MonthlyAttendanceSummary
+                        >(
+                          currentTable: table,
+                          referencedTable: $$AttendanceGroupsTableReferences
+                              ._monthlyAttendanceSummariesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$AttendanceGroupsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).monthlyAttendanceSummariesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.attendanceGroupId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$AttendanceGroupsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $AttendanceGroupsTable,
+      AttendanceGroup,
+      $$AttendanceGroupsTableFilterComposer,
+      $$AttendanceGroupsTableOrderingComposer,
+      $$AttendanceGroupsTableAnnotationComposer,
+      $$AttendanceGroupsTableCreateCompanionBuilder,
+      $$AttendanceGroupsTableUpdateCompanionBuilder,
+      (AttendanceGroup, $$AttendanceGroupsTableReferences),
+      AttendanceGroup,
+      PrefetchHooks Function({
+        bool employeesRefs,
+        bool attendanceGroupMembersRefs,
+        bool monthlyAttendanceRostersRefs,
+        bool monthlyAttendanceSummariesRefs,
+      })
+    >;
+typedef $$EmployeesTableCreateCompanionBuilder = EmployeesCompanion Function({
+  Value<int> id,
+  required String employeeNo,
+  required String name,
+  Value<String?> gender,
+  Value<String?> idCardNumber,
+  Value<DateTime?> birthDate,
+  Value<String?> phone,
+  Value<String?> address,
+  required DateTime hireDate,
+  Value<EmployeeStatus> status,
+  Value<String?> position,
+  Value<String?> team,
+  Value<String?> workArea,
+  Value<String?> manager,
+  Value<String?> employmentType,
+  Value<int?> defaultAttendanceGroupId,
+  Value<String?> remark,
+  Value<DateTime> createdAt,
+  Value<DateTime> updatedAt,
+  Value<bool> isDeleted,
+});
+typedef $$EmployeesTableUpdateCompanionBuilder = EmployeesCompanion Function({
+  Value<int> id,
+  Value<String> employeeNo,
+  Value<String> name,
+  Value<String?> gender,
+  Value<String?> idCardNumber,
+  Value<DateTime?> birthDate,
+  Value<String?> phone,
+  Value<String?> address,
+  Value<DateTime> hireDate,
+  Value<EmployeeStatus> status,
+  Value<String?> position,
+  Value<String?> team,
+  Value<String?> workArea,
+  Value<String?> manager,
+  Value<String?> employmentType,
+  Value<int?> defaultAttendanceGroupId,
+  Value<String?> remark,
+  Value<DateTime> createdAt,
+  Value<DateTime> updatedAt,
+  Value<bool> isDeleted,
+});
+
+final class $$EmployeesTableReferences
+    extends BaseReferences<_$AppDatabase, $EmployeesTable, Employee> {
+  $$EmployeesTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $AttendanceGroupsTable _defaultAttendanceGroupIdTable(
+    _$AppDatabase db,
+  ) => db.attendanceGroups.createAlias(
+    'employees__default_attendance_group_id__attendance_groups__id',
+  );
+
+  $$AttendanceGroupsTableProcessedTableManager? get defaultAttendanceGroupId {
+    final $_column = $_itemColumn<int>('default_attendance_group_id');
+    if ($_column == null) return null;
+    final manager = $$AttendanceGroupsTableTableManager(
+      $_db,
+      $_db.attendanceGroups,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(
+      _defaultAttendanceGroupIdTable($_db),
+    );
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $EmployeeWageProfilesTable,
+    List<EmployeeWageProfile>
+  >
+  _employeeWageProfilesRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.employeeWageProfiles,
+        aliasName: 'employees__id__employee_wage_profiles__employee_id',
+      );
+
+  $$EmployeeWageProfilesTableProcessedTableManager
+  get employeeWageProfilesRefs {
+    final manager = $$EmployeeWageProfilesTableTableManager(
+      $_db,
+      $_db.employeeWageProfiles,
+    ).filter((f) => f.employeeId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _employeeWageProfilesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$PayrollItemsTable, List<PayrollItem>>
+  _payrollItemsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.payrollItems,
+    aliasName: 'employees__id__payroll_items__employee_id',
+  );
+
+  $$PayrollItemsTableProcessedTableManager get payrollItemsRefs {
+    final manager = $$PayrollItemsTableTableManager(
+      $_db,
+      $_db.payrollItems,
+    ).filter((f) => f.employeeId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_payrollItemsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $EmployeeAttachmentsTable,
+    List<EmployeeAttachment>
+  >
+  _employeeAttachmentsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.employeeAttachments,
+        aliasName: 'employees__id__employee_attachments__employee_id',
+      );
+
+  $$EmployeeAttachmentsTableProcessedTableManager get employeeAttachmentsRefs {
+    final manager = $$EmployeeAttachmentsTableTableManager(
+      $_db,
+      $_db.employeeAttachments,
+    ).filter((f) => f.employeeId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _employeeAttachmentsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $AttendanceGroupMembersTable,
+    List<AttendanceGroupMember>
+  >
+  _attendanceGroupMembersRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.attendanceGroupMembers,
+        aliasName: 'employees__id__attendance_group_members__employee_id',
+      );
+
+  $$AttendanceGroupMembersTableProcessedTableManager
+  get attendanceGroupMembersRefs {
+    final manager = $$AttendanceGroupMembersTableTableManager(
+      $_db,
+      $_db.attendanceGroupMembers,
+    ).filter((f) => f.employeeId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _attendanceGroupMembersRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $MonthlyAttendanceRostersTable,
+    List<MonthlyAttendanceRoster>
+  >
+  _monthlyAttendanceRostersRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.monthlyAttendanceRosters,
+        aliasName: 'employees__id__monthly_attendance_rosters__employee_id',
+      );
+
+  $$MonthlyAttendanceRostersTableProcessedTableManager
+  get monthlyAttendanceRostersRefs {
+    final manager = $$MonthlyAttendanceRostersTableTableManager(
+      $_db,
+      $_db.monthlyAttendanceRosters,
+    ).filter((f) => f.employeeId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _monthlyAttendanceRostersRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$AttendanceRecordsTable, List<AttendanceRecord>>
+  _attendanceRecordsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.attendanceRecords,
+        aliasName: 'employees__id__attendance_records__employee_id',
+      );
+
+  $$AttendanceRecordsTableProcessedTableManager get attendanceRecordsRefs {
+    final manager = $$AttendanceRecordsTableTableManager(
+      $_db,
+      $_db.attendanceRecords,
+    ).filter((f) => f.employeeId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _attendanceRecordsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$LeaveRecordsTable, List<LeaveRecord>>
+  _leaveRecordsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.leaveRecords,
+    aliasName: 'employees__id__leave_records__employee_id',
+  );
+
+  $$LeaveRecordsTableProcessedTableManager get leaveRecordsRefs {
+    final manager = $$LeaveRecordsTableTableManager(
+      $_db,
+      $_db.leaveRecords,
+    ).filter((f) => f.employeeId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_leaveRecordsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$OvertimeRecordsTable, List<OvertimeRecord>>
+  _overtimeRecordsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.overtimeRecords,
+    aliasName: 'employees__id__overtime_records__employee_id',
+  );
+
+  $$OvertimeRecordsTableProcessedTableManager get overtimeRecordsRefs {
+    final manager = $$OvertimeRecordsTableTableManager(
+      $_db,
+      $_db.overtimeRecords,
+    ).filter((f) => f.employeeId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _overtimeRecordsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$TerminationRecordsTable, List<TerminationRecord>>
+  _terminationRecordsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.terminationRecords,
+        aliasName: 'employees__id__termination_records__employee_id',
+      );
+
+  $$TerminationRecordsTableProcessedTableManager get terminationRecordsRefs {
+    final manager = $$TerminationRecordsTableTableManager(
+      $_db,
+      $_db.terminationRecords,
+    ).filter((f) => f.employeeId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _terminationRecordsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $MonthlyAttendanceSummariesTable,
+    List<MonthlyAttendanceSummary>
+  >
+  _monthlyAttendanceSummariesRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.monthlyAttendanceSummaries,
+        aliasName: 'employees__id__monthly_attendance_summaries__employee_id',
+      );
+
+  $$MonthlyAttendanceSummariesTableProcessedTableManager
+  get monthlyAttendanceSummariesRefs {
+    final manager = $$MonthlyAttendanceSummariesTableTableManager(
+      $_db,
+      $_db.monthlyAttendanceSummaries,
+    ).filter((f) => f.employeeId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _monthlyAttendanceSummariesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$InsuranceProfilesTable, List<InsuranceProfile>>
+  _insuranceProfilesRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.insuranceProfiles,
+        aliasName: 'employees__id__insurance_profiles__employee_id',
+      );
+
+  $$InsuranceProfilesTableProcessedTableManager get insuranceProfilesRefs {
+    final manager = $$InsuranceProfilesTableTableManager(
+      $_db,
+      $_db.insuranceProfiles,
+    ).filter((f) => f.employeeId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _insuranceProfilesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $InsuranceChangeRecordsTable,
+    List<InsuranceChangeRecord>
+  >
+  _insuranceChangeRecordsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.insuranceChangeRecords,
+        aliasName: 'employees__id__insurance_change_records__employee_id',
+      );
+
+  $$InsuranceChangeRecordsTableProcessedTableManager
+  get insuranceChangeRecordsRefs {
+    final manager = $$InsuranceChangeRecordsTableTableManager(
+      $_db,
+      $_db.insuranceChangeRecords,
+    ).filter((f) => f.employeeId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _insuranceChangeRecordsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $SocialSecurityBaseHistoryTable,
+    List<SocialSecurityBaseHistoryData>
+  >
+  _socialSecurityBaseHistoryRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.socialSecurityBaseHistory,
+        aliasName: 'employees__id__social_security_base_history__employee_id',
+      );
+
+  $$SocialSecurityBaseHistoryTableProcessedTableManager
+  get socialSecurityBaseHistoryRefs {
+    final manager = $$SocialSecurityBaseHistoryTableTableManager(
+      $_db,
+      $_db.socialSecurityBaseHistory,
+    ).filter((f) => f.employeeId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _socialSecurityBaseHistoryRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$EmployeesTableFilterComposer
+    extends Composer<_$AppDatabase, $EmployeesTable> {
+  $$EmployeesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get employeeNo => $composableBuilder(
+    column: $table.employeeNo,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get gender => $composableBuilder(
+    column: $table.gender,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get idCardNumber => $composableBuilder(
+    column: $table.idCardNumber,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get birthDate => $composableBuilder(
+    column: $table.birthDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get phone => $composableBuilder(
+    column: $table.phone,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get address => $composableBuilder(
+    column: $table.address,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get hireDate => $composableBuilder(
+    column: $table.hireDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<EmployeeStatus, EmployeeStatus, String>
+  get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<String> get position => $composableBuilder(
+    column: $table.position,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get team => $composableBuilder(
+    column: $table.team,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get workArea => $composableBuilder(
+    column: $table.workArea,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get manager => $composableBuilder(
+    column: $table.manager,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get employmentType => $composableBuilder(
+    column: $table.employmentType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$AttendanceGroupsTableFilterComposer get defaultAttendanceGroupId {
+    final $$AttendanceGroupsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.defaultAttendanceGroupId,
+      referencedTable: $db.attendanceGroups,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AttendanceGroupsTableFilterComposer(
+            $db: $db,
+            $table: $db.attendanceGroups,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> employeeWageProfilesRefs(
+    Expression<bool> Function($$EmployeeWageProfilesTableFilterComposer f) f,
+  ) {
+    final $$EmployeeWageProfilesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.employeeWageProfiles,
+      getReferencedColumn: (t) => t.employeeId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$EmployeeWageProfilesTableFilterComposer(
+            $db: $db,
+            $table: $db.employeeWageProfiles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> payrollItemsRefs(
+    Expression<bool> Function($$PayrollItemsTableFilterComposer f) f,
+  ) {
+    final $$PayrollItemsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.payrollItems,
+      getReferencedColumn: (t) => t.employeeId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PayrollItemsTableFilterComposer(
+            $db: $db,
+            $table: $db.payrollItems,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> employeeAttachmentsRefs(
+    Expression<bool> Function($$EmployeeAttachmentsTableFilterComposer f) f,
+  ) {
+    final $$EmployeeAttachmentsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.employeeAttachments,
+      getReferencedColumn: (t) => t.employeeId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$EmployeeAttachmentsTableFilterComposer(
+            $db: $db,
+            $table: $db.employeeAttachments,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> attendanceGroupMembersRefs(
+    Expression<bool> Function($$AttendanceGroupMembersTableFilterComposer f) f,
+  ) {
+    final $$AttendanceGroupMembersTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.attendanceGroupMembers,
+          getReferencedColumn: (t) => t.employeeId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$AttendanceGroupMembersTableFilterComposer(
+                $db: $db,
+                $table: $db.attendanceGroupMembers,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<bool> monthlyAttendanceRostersRefs(
+    Expression<bool> Function($$MonthlyAttendanceRostersTableFilterComposer f)
+    f,
+  ) {
+    final $$MonthlyAttendanceRostersTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.monthlyAttendanceRosters,
+          getReferencedColumn: (t) => t.employeeId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$MonthlyAttendanceRostersTableFilterComposer(
+                $db: $db,
+                $table: $db.monthlyAttendanceRosters,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<bool> attendanceRecordsRefs(
+    Expression<bool> Function($$AttendanceRecordsTableFilterComposer f) f,
+  ) {
+    final $$AttendanceRecordsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.attendanceRecords,
+      getReferencedColumn: (t) => t.employeeId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AttendanceRecordsTableFilterComposer(
+            $db: $db,
+            $table: $db.attendanceRecords,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> leaveRecordsRefs(
+    Expression<bool> Function($$LeaveRecordsTableFilterComposer f) f,
+  ) {
+    final $$LeaveRecordsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.leaveRecords,
+      getReferencedColumn: (t) => t.employeeId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LeaveRecordsTableFilterComposer(
+            $db: $db,
+            $table: $db.leaveRecords,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> overtimeRecordsRefs(
+    Expression<bool> Function($$OvertimeRecordsTableFilterComposer f) f,
+  ) {
+    final $$OvertimeRecordsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.overtimeRecords,
+      getReferencedColumn: (t) => t.employeeId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OvertimeRecordsTableFilterComposer(
+            $db: $db,
+            $table: $db.overtimeRecords,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> terminationRecordsRefs(
+    Expression<bool> Function($$TerminationRecordsTableFilterComposer f) f,
+  ) {
+    final $$TerminationRecordsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.terminationRecords,
+      getReferencedColumn: (t) => t.employeeId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TerminationRecordsTableFilterComposer(
+            $db: $db,
+            $table: $db.terminationRecords,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> monthlyAttendanceSummariesRefs(
+    Expression<bool> Function($$MonthlyAttendanceSummariesTableFilterComposer f)
     f,
   ) {
     final $$MonthlyAttendanceSummariesTableFilterComposer composer =

@@ -116,8 +116,14 @@ final GoRouter appRouter = GoRouter(
                       path: 'payroll',
                       name: 'employee-payroll',
                       builder: (context, state) {
-                        final employeeId = int.tryParse(state.pathParameters['employeeId'] ?? '');
-                        if (employeeId == null) return const Scaffold(body: Center(child: Text('无效的人员编号')));
+                        final employeeId = int.tryParse(
+                          state.pathParameters['employeeId'] ?? '',
+                        );
+                        if (employeeId == null) {
+                          return const Scaffold(
+                            body: Center(child: Text('无效的人员编号')),
+                          );
+                        }
                         return EmployeePayrollPage(employeeId: employeeId);
                       },
                     ),
@@ -157,8 +163,20 @@ final GoRouter appRouter = GoRouter(
                 GoRoute(
                   path: 'monthly-table',
                   name: 'monthly-attendance-table',
-                  builder: (context, state) =>
-                      const MonthlyAttendanceTablePage(),
+                  builder: (context, state) {
+                    final value = state.uri.queryParameters['month'];
+                    DateTime? initialMonth;
+                    if (value != null) {
+                      try {
+                        initialMonth = AppDateUtils.parseYearMonth(value);
+                      } on FormatException {
+                        initialMonth = null;
+                      }
+                    }
+                    return MonthlyAttendanceTablePage(
+                      initialMonth: initialMonth,
+                    );
+                  },
                 ),
                 GoRoute(
                   path: 'monthly-roster',
@@ -313,8 +331,14 @@ final GoRouter appRouter = GoRouter(
                       path: 'edit/:batchId',
                       name: 'payroll-edit',
                       builder: (context, state) {
-                        final batchId = int.tryParse(state.pathParameters['batchId'] ?? '');
-                        if (batchId == null) return const Scaffold(body: Center(child: Text('无效的工资批次编号')));
+                        final batchId = int.tryParse(
+                          state.pathParameters['batchId'] ?? '',
+                        );
+                        if (batchId == null) {
+                          return const Scaffold(
+                            body: Center(child: Text('无效的工资批次编号')),
+                          );
+                        }
                         return PayrollEditorPage(batchId: batchId);
                       },
                     ),
@@ -322,8 +346,14 @@ final GoRouter appRouter = GoRouter(
                       path: 'item/:itemId',
                       name: 'payroll-item-detail',
                       builder: (context, state) {
-                        final itemId = int.tryParse(state.pathParameters['itemId'] ?? '');
-                        if (itemId == null) return const Scaffold(body: Center(child: Text('无效的工资明细编号')));
+                        final itemId = int.tryParse(
+                          state.pathParameters['itemId'] ?? '',
+                        );
+                        if (itemId == null) {
+                          return const Scaffold(
+                            body: Center(child: Text('无效的工资明细编号')),
+                          );
+                        }
                         return PayrollDetailPage(itemId: itemId);
                       },
                     ),
@@ -341,8 +371,14 @@ final GoRouter appRouter = GoRouter(
                       path: 'export/:batchId',
                       name: 'payroll-export',
                       builder: (context, state) {
-                        final batchId = int.tryParse(state.pathParameters['batchId'] ?? '');
-                        if (batchId == null) return const Scaffold(body: Center(child: Text('无效的工资批次编号')));
+                        final batchId = int.tryParse(
+                          state.pathParameters['batchId'] ?? '',
+                        );
+                        if (batchId == null) {
+                          return const Scaffold(
+                            body: Center(child: Text('无效的工资批次编号')),
+                          );
+                        }
                         return PayrollExportPage(batchId: batchId);
                       },
                     ),

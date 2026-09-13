@@ -12,11 +12,42 @@ import '../application/monthly_attendance_table_providers.dart';
 import '../domain/daily_attendance_options.dart';
 import '../domain/monthly_attendance_table_options.dart';
 
-class MonthlyAttendanceTablePage extends ConsumerWidget {
-  const MonthlyAttendanceTablePage({super.key});
+class MonthlyAttendanceTablePage extends ConsumerStatefulWidget {
+  const MonthlyAttendanceTablePage({super.key, this.initialMonth});
+
+  final DateTime? initialMonth;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<MonthlyAttendanceTablePage> createState() =>
+      _MonthlyAttendanceTablePageState();
+}
+
+class _MonthlyAttendanceTablePageState
+    extends ConsumerState<MonthlyAttendanceTablePage> {
+  void _applyInitialMonth() {
+    final initialMonth = widget.initialMonth;
+    if (initialMonth == null) return;
+    final current = ref.read(monthlyAttendanceTableMonthProvider);
+    if (current.year == initialMonth.year &&
+        current.month == initialMonth.month) {
+      return;
+    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final current = ref.read(monthlyAttendanceTableMonthProvider);
+      if (current.year != initialMonth.year ||
+          current.month != initialMonth.month) {
+        ref.read(monthlyAttendanceTableMonthProvider.notifier).state = DateTime(
+          initialMonth.year,
+          initialMonth.month,
+        );
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    _applyInitialMonth();
     final groups = ref.watch(monthlyAttendanceTableGroupsProvider);
     return Scaffold(
       appBar: AppBar(

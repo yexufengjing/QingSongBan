@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:excel/excel.dart';
-import 'package:path_provider/path_provider.dart';
 
 import '../../../core/database/app_database.dart';
 import '../../../core/database/database_enums.dart';
 import '../../../core/utils/date_utils.dart';
+import '../../../core/utils/export_file_writer.dart';
 import '../../personnel/domain/personnel_options.dart';
 
 class PersonnelImportIssue {
@@ -70,16 +70,10 @@ class ExcelService {
   final AppDatabase _database;
 
   Future<File> exportToFile({required String yearMonth}) async {
-    final directory = await getApplicationDocumentsDirectory();
-    final exportDirectory = Directory(
-      '${directory.path}${Platform.pathSeparator}exports',
+    return ExportFileWriter.write(
+      fileName: 'qingsongban_$yearMonth.xlsx',
+      bytes: await exportBytes(yearMonth: yearMonth),
     );
-    await exportDirectory.create(recursive: true);
-    final file = File(
-      '${exportDirectory.path}${Platform.pathSeparator}qingsongban_$yearMonth.xlsx',
-    );
-    await file.writeAsBytes(await exportBytes(yearMonth: yearMonth));
-    return file;
   }
 
   Future<Uint8List> exportBytes({required String yearMonth}) async {

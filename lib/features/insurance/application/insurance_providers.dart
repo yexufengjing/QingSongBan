@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/database/app_database.dart';
 import '../../../core/database/database_provider.dart';
 import '../data/insurance_repository.dart';
 import '../domain/insurance_options.dart';
@@ -17,6 +18,12 @@ final insuranceProfilesProvider =
     StreamProvider.autoDispose<List<InsuranceProfileView>>((ref) {
       return ref.watch(insuranceRepositoryProvider).watchProfiles();
     });
+
+final insuranceProfileProvider = FutureProvider.autoDispose
+    .family<InsuranceProfile?, int>(
+      (ref, employeeId) =>
+          ref.watch(insuranceRepositoryProvider).findProfile(employeeId),
+    );
 
 final insuranceChangesProvider =
     StreamProvider.autoDispose<List<InsuranceChangeView>>((ref) {

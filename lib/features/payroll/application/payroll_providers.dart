@@ -31,6 +31,23 @@ final payrollItemsProvider = StreamProvider.autoDispose
           ref.watch(payrollRepositoryProvider).watchItems(batchId),
     );
 
+final payrollBatchGroupsProvider = FutureProvider.autoDispose
+    .family<List<AttendanceGroup>, int>(
+      (ref, batchId) =>
+          ref.watch(payrollRepositoryProvider).listGroupsForBatch(batchId),
+    );
+
+final payrollBatchEmployeeGroupsProvider = FutureProvider.autoDispose
+    .family<Map<int, Set<int>>, int>(
+      (ref, batchId) => ref
+          .watch(payrollRepositoryProvider)
+          .employeeGroupIdsForBatch(batchId),
+    );
+
+final payrollGroupFilterProvider = StateProvider.autoDispose.family<int?, int>(
+  (ref, batchId) => null,
+);
+
 final payrollValidationProvider = FutureProvider.autoDispose
     .family<PayrollValidationResult, int>((ref, batchId) {
       ref.watch(payrollBatchProvider(batchId));

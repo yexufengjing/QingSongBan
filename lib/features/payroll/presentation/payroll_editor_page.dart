@@ -13,6 +13,7 @@ import '../application/payroll_providers.dart';
 import '../domain/payroll_calculator.dart';
 import '../domain/payroll_options.dart';
 import '../domain/payroll_models.dart';
+import 'payroll_group_filter.dart';
 
 class PayrollEditorPage extends ConsumerWidget {
   const PayrollEditorPage({required this.batchId, super.key});
@@ -113,11 +114,36 @@ class _EditorContent extends StatelessWidget {
           ),
         ),
         const Divider(height: 18),
+        PayrollGroupFilter(batchId: batch.id),
         Expanded(
           child: items.when(
             loading: () => const Center(child: CircularProgressIndicator()),
             error: (error, _) => Center(child: Text('工资明细加载失败：$error')),
-            data: (values) => _ItemList(batch: batch, items: values, ref: ref),
+            data: (values) {
+              final selectedGroupId = ref.watch(
+                payrollGroupFilterProvider(batch.id),
+              );
+              final employeeGroups = ref
+                  .watch(payrollBatchEmployeeGroupsProvider(batch.id))
+                  .valueOrNull;
+              final visible = selectedGroupId == null || employeeGroups == null
+                  ? values
+                  : values
+                        .where(
+                          (value) =>
+                              employeeGroups[value.item.employeeId]?.contains(
+                                selectedGroupId,
+                              ) ??
+                              false,
+                        )
+                        .toList();
+              return _ItemList(
+                batch: batch,
+                items: visible,
+                ref: ref,
+                reorderable: selectedGroupId == null,
+              );
+            },
           ),
         ),
         if (editable)
@@ -243,7 +269,9 @@ class _EditorContent extends StatelessWidget {
   }
 
   Future<void> _addEmployee(BuildContext context) async {
-    final employees = await ref.read(allPersonnelProvider.future);
+    final employees = (await ref.read(allPersonnelProvider.future))
+        .where((employee) => employee.employmentType == '临时工')
+        .toList();
     if (!context.mounted) return;
     final selected = await showDialog<Employee>(
       context: context,
@@ -251,9 +279,16 @@ class _EditorContent extends StatelessWidget {
     );
     if (selected == null) return;
     try {
-      await ref
-          .read(payrollRepositoryProvider)
-          .addEmployee(batchId: batch.id, employeeId: selected.id);
+      final repo = ref.read(payrollRepositoryProvider);
+      final attendanceHalfDays = await repo.attendanceHalfDaysForEmployee(
+        batchId: batch.id,
+        employeeId: selected.id,
+      );
+      if (attendanceHalfDays == 0) {
+        final confirmed = await _confirmZeroAttendance(context, selected);
+        if (!confirmed) return;
+      }
+      await repo.addEmployee(batchId: batch.id, employeeId: selected.id);
       ref.invalidate(payrollItemsProvider(batch.id));
       ref.invalidate(payrollBatchProvider(batch.id));
     } catch (error) {
@@ -261,6 +296,30 @@ class _EditorContent extends StatelessWidget {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('增加人员失败：$error')));
     }
+  }
+
+  Future<bool> _confirmZeroAttendance(
+    BuildContext context,
+    Employee employee,
+  ) async {
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('确认加入工资名单？'),
+        content: Text('${employee.name} 本月实际出勤为 0 天，请确认是否仍加入工资造资。'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('取消'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('确认加入'),
+          ),
+        ],
+      ),
+    );
+    return result ?? false;
   }
 
   Future<void> _showValidation(
@@ -331,14 +390,14 @@ class _EditorContent extends StatelessWidget {
   }
 
   Future<String?> _askReason(BuildContext context, String title) async {
-    final controller = TextEditingController();
+    var reasonText = '';
     final result = await showDialog<String>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(title),
         content: TextField(
-          controller: controller,
           autofocus: true,
+          onChanged: (value) => reasonText = value,
           decoration: const InputDecoration(labelText: '原因'),
         ),
         actions: [
@@ -347,13 +406,12 @@ class _EditorContent extends StatelessWidget {
             child: const Text('取消'),
           ),
           FilledButton(
-            onPressed: () => Navigator.of(context).pop(controller.text.trim()),
+            onPressed: () => Navigator.of(context).pop(reasonText.trim()),
             child: const Text('确认'),
           ),
         ],
       ),
     );
-    controller.dispose();
     return result == null || result.isEmpty ? null : result;
   }
 }
@@ -363,11 +421,13 @@ class _ItemList extends StatelessWidget {
     required this.batch,
     required this.items,
     required this.ref,
+    required this.reorderable,
   });
 
   final PayrollBatche batch;
   final List<PayrollItemWithEmployee> items;
   final WidgetRef ref;
+  final bool reorderable;
 
   @override
   Widget build(BuildContext context) {
@@ -375,6 +435,70 @@ class _ItemList extends StatelessWidget {
       return const Center(child: Text('当前工资名单为空，请重新生成或人工增加人员'));
     final jobTypes =
         ref.watch(wageJobTypesProvider).valueOrNull ?? const <WageJobType>[];
+    Widget itemBuilder(BuildContext context, int index) {
+      final value = items[index];
+      final item = value.item;
+      final removed = item.isManuallyRemoved;
+      return Card(
+        key: ValueKey(item.id),
+        color: removed ? Colors.grey.shade100 : null,
+        child: ListTile(
+          onTap: () => _edit(context, value, jobTypes),
+          leading: CircleAvatar(child: Text('${index + 1}')),
+          title: Text(
+            '${item.employeeNameSnapshot} · ${item.employeeNoSnapshot}',
+          ),
+          subtitle: Text(
+            '${item.jobTypeNameSnapshot ?? '未配置工种'} · ${_days(item.attendanceHalfDaysSnapshot)} · 日薪 ${item.dailyWage.toStringAsFixed(2)} · 实发 ${item.finalWage.toStringAsFixed(2)}',
+          ),
+          isThreeLine: true,
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(
+                onPressed: () => context.push(
+                  '/attendance/monthly-table?month=${batch.payrollMonth}',
+                ),
+                icon: const Icon(Icons.calendar_month_outlined),
+                tooltip: '查看本月考勤',
+              ),
+              PopupMenuButton<String>(
+                onSelected: (action) async {
+                  if (action == 'detail') {
+                    if (context.mounted)
+                      context.push('/reports/payroll/item/${item.id}');
+                  } else {
+                    await ref
+                        .read(payrollRepositoryProvider)
+                        .setItemRemoved(
+                          itemId: item.id,
+                          removed: action == 'remove',
+                        );
+                    ref.invalidate(payrollItemsProvider(batch.id));
+                    ref.invalidate(payrollBatchProvider(batch.id));
+                  }
+                },
+                itemBuilder: (context) => [
+                  const PopupMenuItem(value: 'detail', child: Text('查看明细')),
+                  PopupMenuItem(
+                    value: removed ? 'restore' : 'remove',
+                    child: Text(removed ? '恢复到工资名单' : '移出工资名单'),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    if (!reorderable) {
+      return ListView.builder(
+        padding: const EdgeInsets.fromLTRB(16, 4, 16, 12),
+        itemCount: items.length,
+        itemBuilder: itemBuilder,
+      );
+    }
     return ReorderableListView.builder(
       padding: const EdgeInsets.fromLTRB(16, 4, 16, 12),
       itemCount: items.length,
@@ -390,50 +514,7 @@ class _ItemList extends StatelessWidget {
             );
         ref.invalidate(payrollItemsProvider(batch.id));
       },
-      itemBuilder: (context, index) {
-        final value = items[index];
-        final item = value.item;
-        final removed = item.isManuallyRemoved;
-        return Card(
-          key: ValueKey(item.id),
-          color: removed ? Colors.grey.shade100 : null,
-          child: ListTile(
-            onTap: () => _edit(context, value, jobTypes),
-            leading: CircleAvatar(child: Text('${index + 1}')),
-            title: Text(
-              '${item.employeeNameSnapshot} · ${item.employeeNoSnapshot}',
-            ),
-            subtitle: Text(
-              '${item.jobTypeNameSnapshot ?? '未配置工种'} · ${_days(item.attendanceHalfDaysSnapshot)} · 日薪 ${item.dailyWage.toStringAsFixed(2)} · 实发 ${item.finalWage.toStringAsFixed(2)}',
-            ),
-            isThreeLine: true,
-            trailing: PopupMenuButton<String>(
-              onSelected: (action) async {
-                if (action == 'detail') {
-                  if (context.mounted)
-                    context.push('/reports/payroll/item/${item.id}');
-                } else {
-                  await ref
-                      .read(payrollRepositoryProvider)
-                      .setItemRemoved(
-                        itemId: item.id,
-                        removed: action == 'remove',
-                      );
-                  ref.invalidate(payrollItemsProvider(batch.id));
-                  ref.invalidate(payrollBatchProvider(batch.id));
-                }
-              },
-              itemBuilder: (context) => [
-                const PopupMenuItem(value: 'detail', child: Text('查看明细')),
-                PopupMenuItem(
-                  value: removed ? 'restore' : 'remove',
-                  child: Text(removed ? '恢复到工资名单' : '移出工资名单'),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
+      itemBuilder: itemBuilder,
     );
   }
 
@@ -524,10 +605,6 @@ class _ItemList extends StatelessWidget {
       ),
     );
     if (saved != true) {
-      daily.dispose();
-      subsidy.dispose();
-      insurance.dispose();
-      remark.dispose();
       return;
     }
     try {
@@ -552,11 +629,6 @@ class _ItemList extends StatelessWidget {
       if (context.mounted)
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('保存失败：$error')));
-    } finally {
-      daily.dispose();
-      subsidy.dispose();
-      insurance.dispose();
-      remark.dispose();
     }
   }
 

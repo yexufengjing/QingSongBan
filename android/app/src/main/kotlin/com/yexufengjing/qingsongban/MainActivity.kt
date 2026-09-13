@@ -1,5 +1,65 @@
 package com.yexufengjing.qingsongban
 
+import android.content.ContentValues
+import android.os.Build
+import android.provider.MediaStore
+import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.embedding.android.FlutterActivity
+import io.flutter.plugin.common.MethodChannel
 
-class MainActivity : FlutterActivity()
+class MainActivity : FlutterActivity() {
+    private val channelName = "qingsongban/file_exports"
+
+    override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
+        super.configureFlutterEngine(flutterEngine)
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, channelName)
+            .setMethodCallHandler { call, result ->
+                if (call.method != "saveToDownloads") {
+                    result.notImplemented()
+                    return@setMethodCallHandler
+                }
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+                    result.success(null)
+                    return@setMethodCallHandler
+                }
+
+                val fileName = call.argument<String>("fileName")
+                val bytes = call.argument<ByteArray>("bytes")
+                if (fileName.isNullOrBlank() || bytes == null) {
+                    result.error("INVALID_EXPORT", "导出文件参数无效", null)
+                    return@setMethodCallHandler
+                }
+
+                val values = ContentValues().apply {
+                    put(MediaStore.Downloads.DISPLAY_NAME, fileName)
+                    put(
+                        MediaStore.Downloads.MIME_TYPE,
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    )
+                    put(MediaStore.Downloads.IS_PENDING, 1)
+                }
+                val resolver = contentResolver
+                val uri = resolver.insert(
+                    MediaStore.Downloads.EXTERNAL_CONTENT_URI,
+                    values,
+                )
+                if (uri == null) {
+                    result.error("EXPORT_FAILED", "无法创建下载文件", null)
+                    return@setMethodCallHandler
+                }
+
+                try {
+                    resolver.openOutputStream(uri)?.use { output ->
+                        output.write(bytes)
+                    } ?: throw IllegalStateException("无法写入下载文件")
+                    values.clear()
+                    values.put(MediaStore.Downloads.IS_PENDING, 0)
+                    resolver.update(uri, values, null, null)
+                    result.success(uri.toString())
+                } catch (error: Exception) {
+                    resolver.delete(uri, null, null)
+                    result.error("EXPORT_FAILED", error.message, null)
+                }
+            }
+    }
+}

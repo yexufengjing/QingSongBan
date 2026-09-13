@@ -81,7 +81,23 @@ class PayrollValidationService {
           ),
         );
       }
-      if (!item.dailyWage.isFinite || item.dailyWage <= 0) {
+      if (!item.dailyWage.isFinite) {
+        errors.add(
+          PayrollValidationIssue(
+            code: 'invalid_amount',
+            employeeId: item.employeeId,
+            message: '${item.employeeNameSnapshot} 的日薪格式无效',
+          ),
+        );
+      } else if (item.dailyWage < 0) {
+        errors.add(
+          PayrollValidationIssue(
+            code: 'invalid_daily_wage',
+            employeeId: item.employeeId,
+            message: '${item.employeeNameSnapshot} 的日薪不能小于 0',
+          ),
+        );
+      } else if (item.dailyWage == 0) {
         errors.add(
           PayrollValidationIssue(
             code: 'missing_daily_wage',
@@ -90,6 +106,7 @@ class PayrollValidationService {
           ),
         );
       }
+      if (!item.dailyWage.isFinite || item.dailyWage < 0) continue;
       if (item.attendanceHalfDaysSnapshot < 0) {
         errors.add(
           PayrollValidationIssue(
@@ -99,18 +116,65 @@ class PayrollValidationService {
           ),
         );
       }
-      final calculation = PayrollCalculator.calculate(
-        attendanceHalfDays: item.attendanceHalfDaysSnapshot,
-        dailyWage: item.dailyWage,
-        subsidy: item.subsidy,
-        insuranceDeduction: item.insuranceDeduction,
-      );
+      final hasInvalidAmount = [
+        item.subsidy,
+        item.insuranceDeduction,
+        item.baseWage,
+        item.finalWage,
+      ].any((value) => !value.isFinite || value < 0);
+      if (hasInvalidAmount) {
+        errors.add(
+          PayrollValidationIssue(
+            code: 'invalid_amount',
+            employeeId: item.employeeId,
+            message: '${item.employeeNameSnapshot} 存在无效的补助、保险扣除或工资金额',
+          ),
+        );
+        continue;
+      }
+      late final PayrollCalculation calculation;
+      try {
+        calculation = PayrollCalculator.calculate(
+          attendanceHalfDays: item.attendanceHalfDaysSnapshot,
+          dailyWage: item.dailyWage,
+          subsidy: item.subsidy,
+          insuranceDeduction: item.insuranceDeduction,
+        );
+      } on FormatException {
+        errors.add(
+          PayrollValidationIssue(
+            code: 'calculation_failed',
+            employeeId: item.employeeId,
+            message: '${item.employeeNameSnapshot} 工资结果计算失败',
+          ),
+        );
+        continue;
+      }
+      if (calculation.baseWage != item.baseWage ||
+          calculation.finalWage != item.finalWage) {
+        errors.add(
+          PayrollValidationIssue(
+            code: 'calculation_mismatch',
+            employeeId: item.employeeId,
+            message: '${item.employeeNameSnapshot} 保存的工资结果与重新计算结果不一致',
+          ),
+        );
+      }
       if (calculation.insuranceExceedsAvailable) {
         warnings.add(
           PayrollValidationIssue(
             code: 'insurance_exceeds_available',
             employeeId: item.employeeId,
             message: '${item.employeeNameSnapshot} 的保险扣除超过基础工资与补助，最终工资将记为 0.00',
+          ),
+        );
+      }
+      if (item.subsidy > calculation.baseWage) {
+        warnings.add(
+          PayrollValidationIssue(
+            code: 'subsidy_high',
+            employeeId: item.employeeId,
+            message: '${item.employeeNameSnapshot} 的补助高于基础工资，请核对补助金额',
           ),
         );
       }
@@ -142,11 +206,6 @@ class PayrollValidationService {
           ),
         );
       }
-    }
-    if (batch.status == PayrollStatus.locked) {
-      errors.add(
-        const PayrollValidationIssue(code: 'locked', message: '工资批次已锁定'),
-      );
     }
     return PayrollValidationResult(errors: errors, warnings: warnings);
   }

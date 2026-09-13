@@ -359,14 +359,14 @@ class _SummaryStatusCard extends StatelessWidget {
   }
 
   Future<void> _unlock(BuildContext context) async {
-    final controller = TextEditingController();
+    var reasonText = '';
     final reason = await showDialog<String>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('解锁月度汇总'),
         content: TextField(
-          controller: controller,
           autofocus: true,
+          onChanged: (value) => reasonText = value,
           decoration: const InputDecoration(labelText: '解锁原因'),
         ),
         actions: [
@@ -375,13 +375,12 @@ class _SummaryStatusCard extends StatelessWidget {
             child: const Text('取消'),
           ),
           FilledButton(
-            onPressed: () => Navigator.of(context).pop(controller.text),
+            onPressed: () => Navigator.of(context).pop(reasonText),
             child: const Text('确认解锁'),
           ),
         ],
       ),
     );
-    controller.dispose();
     if (reason != null && reason.trim().isNotEmpty) {
       await onStatus(MonthlySummaryStatus.pendingReview, reason);
     }

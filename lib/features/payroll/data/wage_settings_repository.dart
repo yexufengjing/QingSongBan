@@ -189,6 +189,25 @@ class WageSettingsRepository {
     );
   }
 
+  Future<void> activateJobType(int id) async {
+    final old = await _findJobType(id);
+    if (old.isActive) return;
+    await (_database.update(
+      _database.wageJobTypes,
+    )..where((table) => table.id.equals(id))).write(
+      WageJobTypesCompanion(
+        isActive: const Value(true),
+        updatedAt: Value(DateTime.now()),
+      ),
+    );
+    await _record(
+      operationType: 'activate_wage_job_type',
+      entityType: 'wage_job_type',
+      entityId: id,
+      detail: {'oldIsActive': old.isActive, 'newIsActive': true},
+    );
+  }
+
   Future<WageRateHistoryData> saveRate(WageRateDraft draft) async {
     _validateMoney(draft.dailyWage);
     final normalizedWage = PayrollCalculator.roundMoney(draft.dailyWage);
@@ -279,6 +298,9 @@ class WageSettingsRepository {
   Future<EmployeeWageProfile> saveProfile(
     EmployeeWageProfileDraft draft,
   ) async {
+    if (!draft.useJobDefaultWage && draft.personalDailyWage == null) {
+      throw const FormatException('未使用工种默认日薪时，必须填写个人特殊日薪');
+    }
     if (draft.personalDailyWage != null)
       _validateMoney(draft.personalDailyWage!);
     final normalizedPersonalWage = draft.personalDailyWage == null

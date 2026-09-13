@@ -11,6 +11,7 @@ import '../../reminders/data/reminder_repository.dart';
 import '../../reminders/domain/reminder_options.dart';
 import '../domain/payroll_calculator.dart';
 import '../domain/payroll_models.dart';
+import '../domain/payroll_options.dart';
 import 'payroll_validation_service.dart';
 
 class PayrollRepository {
@@ -64,6 +65,48 @@ class PayrollRepository {
     );
   }
 
+  Future<List<AttendanceGroup>> listGroupsForBatch(int batchId) async {
+    final batch = await _requireBatch(batchId);
+    final rosterRows =
+        await (_database.select(_database.monthlyAttendanceRosters)..where(
+              (table) =>
+                  table.yearMonth.equals(batch.payrollMonth) &
+                  table.isActive.equals(true) &
+                  table.isDeleted.equals(false),
+            ))
+            .get();
+    final groupIds = rosterRows.map((row) => row.attendanceGroupId).toSet();
+    if (groupIds.isEmpty) return const <AttendanceGroup>[];
+    return (_database.select(_database.attendanceGroups)
+          ..where(
+            (table) => table.id.isIn(groupIds) & table.isDeleted.equals(false),
+          )
+          ..orderBy([
+            (table) => OrderingTerm(expression: table.sortOrder),
+            (table) => OrderingTerm(expression: table.name),
+          ]))
+        .get();
+  }
+
+  Future<Map<int, Set<int>>> employeeGroupIdsForBatch(int batchId) async {
+    final batch = await _requireBatch(batchId);
+    final rosterRows =
+        await (_database.select(_database.monthlyAttendanceRosters)..where(
+              (table) =>
+                  table.yearMonth.equals(batch.payrollMonth) &
+                  table.isActive.equals(true) &
+                  table.isDeleted.equals(false),
+            ))
+            .get();
+    final result = <int, Set<int>>{};
+    for (final row in rosterRows) {
+      result
+          .putIfAbsent(row.employeeId, () => <int>{})
+          .add(row.attendanceGroupId);
+    }
+    return result;
+  }
+
   Future<PayrollItemWithEmployee> findItemWithEmployee(int itemId) async {
     final items = _database.payrollItems;
     final employees = _database.employees;
@@ -86,6 +129,7 @@ class PayrollRepository {
           ])
           ..where(
             items.employeeId.equals(employeeId) &
+                items.isManuallyRemoved.equals(false) &
                 batches.isDeleted.equals(false),
           )
           ..orderBy([
@@ -261,6 +305,9 @@ class PayrollRepository {
     _requireEditable(batch);
     final employee = await _database.findEmployeeById(employeeId);
     if (employee == null || employee.isDeleted) throw StateError('人员不存在或已被移除');
+    if (employee.employmentType != '临时工') {
+      throw StateError('只有临时工可以加入临时工工资名单');
+    }
     final old =
         await (_database.select(_database.payrollItems)..where(
               (table) =>
@@ -450,6 +497,15 @@ class PayrollRepository {
     });
   }
 
+  Future<int> attendanceHalfDaysForEmployee({
+    required int batchId,
+    required int employeeId,
+  }) async {
+    final batch = await _requireBatch(batchId);
+    final source = await _loadAttendanceSource(batch.payrollMonth);
+    return source.candidates[employeeId]?.attendanceHalfDays ?? 0;
+  }
+
   Future<PayrollBatche> syncAttendance(int batchId) async {
     final batch = await _requireBatch(batchId);
     _requireEditable(batch);
@@ -514,7 +570,7 @@ class PayrollRepository {
     required PayrollStatus status,
     String? reason,
   }) async {
-    final batch = await _requireBatch(batchId);
+    var batch = await _requireBatch(batchId);
     if (status == PayrollStatus.confirmed) {
       final validation = await validate(batchId);
       if (!validation.canConfirm)
@@ -525,6 +581,7 @@ class PayrollRepository {
           (reason == null || reason.trim().isEmpty)) {
         throw StateError('存在工资警告，请填写确认说明后继续');
       }
+      batch = await _requireBatch(batchId);
     }
     if ((batch.status == PayrollStatus.confirmed ||
             batch.status == PayrollStatus.locked) &&
@@ -538,6 +595,7 @@ class PayrollRepository {
     if (status == PayrollStatus.locked &&
         batch.status != PayrollStatus.confirmed)
       throw StateError('工资批次必须先确认后才能锁定');
+    _requireValidStatusTransition(batch.status, status);
     final now = DateTime.now();
     await _database.transaction(() async {
       await (_database.update(
@@ -545,9 +603,11 @@ class PayrollRepository {
       )..where((table) => table.id.equals(batchId))).write(
         PayrollBatchesCompanion(
           status: Value(status),
-          confirmedAt: status == PayrollStatus.confirmed
-              ? Value(now)
-              : const Value(null),
+          confirmedAt: switch (status) {
+            PayrollStatus.confirmed => Value(now),
+            PayrollStatus.locked => Value(batch.confirmedAt),
+            _ => const Value(null),
+          },
           lockedAt: status == PayrollStatus.locked
               ? Value(now)
               : const Value(null),
@@ -768,15 +828,7 @@ class PayrollRepository {
       if (old == null || candidate.attendanceHalfDays > old.attendanceHalfDays)
         candidates[employee.id] = candidate;
     }
-    summaries.sort((first, second) => first.id.compareTo(second.id));
-    final version = summaries.isEmpty
-        ? null
-        : summaries
-              .map(
-                (row) =>
-                    '${row.id}:${row.employeeId}:${row.attendanceGroupId}:${row.attendanceDays.toStringAsFixed(2)}:${row.status.name}:${row.updatedAt.microsecondsSinceEpoch}',
-              )
-              .join('|');
+    final version = _attendanceSnapshotVersion(summaries);
     return _AttendanceSource(
       summaries: summaries,
       employees: byId,
@@ -889,6 +941,27 @@ class PayrollRepository {
     return 'update_payroll_status';
   }
 
+  void _requireValidStatusTransition(
+    PayrollStatus current,
+    PayrollStatus next,
+  ) {
+    if (current == next) return;
+    final allowed = switch (current) {
+      PayrollStatus.draft => {PayrollStatus.pendingReview},
+      PayrollStatus.pendingReview => {PayrollStatus.confirmed},
+      PayrollStatus.confirmed => {
+        PayrollStatus.locked,
+        PayrollStatus.pendingReview,
+      },
+      PayrollStatus.locked => {PayrollStatus.pendingReview},
+    };
+    if (!allowed.contains(next)) {
+      throw StateError(
+        '工资批次不能从${PayrollOptions.statusLabel(current)}变更为${PayrollOptions.statusLabel(next)}',
+      );
+    }
+  }
+
   Future<PayrollValidationResult> _validateBatch(
     PayrollBatche batch,
     _AttendanceSource source,
@@ -957,6 +1030,32 @@ class PayrollRepository {
 
   String _normalizeMonth(String value) =>
       AppDateUtils.yearMonth(AppDateUtils.parseYearMonth(value));
+}
+
+String? _attendanceSnapshotVersion(List<MonthlyAttendanceSummary> summaries) {
+  if (summaries.isEmpty) return null;
+  final snapshots = [
+    for (final row in summaries)
+      jsonEncode([
+        row.employeeId,
+        row.attendanceGroupId,
+        row.participates,
+        row.attendanceDays,
+        row.leaveDays,
+        row.absentDays,
+        row.restDays,
+        row.stoppedDays,
+        row.overtimeCount,
+        row.overtimeMinutes,
+        row.monthStartStatus,
+        row.monthEndStatus,
+        row.joinedDuringMonth,
+        row.terminatedDuringMonth,
+        row.isComplete,
+        row.anomalyCount,
+      ]),
+  ]..sort();
+  return jsonEncode(snapshots);
 }
 
 class _AttendanceSource {

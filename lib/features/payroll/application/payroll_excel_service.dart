@@ -4,9 +4,9 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:excel/excel.dart';
-import 'package:path_provider/path_provider.dart';
 
 import '../../../core/database/app_database.dart';
+import '../../../core/utils/export_file_writer.dart';
 import '../domain/payroll_calculator.dart';
 
 class PayrollExcelService {
@@ -16,16 +16,10 @@ class PayrollExcelService {
 
   Future<File> exportToFile({required int batchId}) async {
     final batch = await _findBatch(batchId);
-    final directory = await getApplicationDocumentsDirectory();
-    final exportDirectory = Directory(
-      '${directory.path}${Platform.pathSeparator}exports',
+    return ExportFileWriter.write(
+      fileName: _fileName(batch.payrollMonth),
+      bytes: await exportBytes(batchId: batchId),
     );
-    await exportDirectory.create(recursive: true);
-    final file = File(
-      '${exportDirectory.path}${Platform.pathSeparator}${_fileName(batch.payrollMonth)}',
-    );
-    await file.writeAsBytes(await exportBytes(batchId: batchId));
-    return file;
   }
 
   Future<Uint8List> exportBytes({required int batchId}) async {

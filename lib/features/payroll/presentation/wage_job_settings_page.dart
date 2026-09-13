@@ -64,6 +64,12 @@ class WageJobSettingsPage extends ConsumerWidget {
                                   .deactivateJobType(type.id);
                               ref.invalidate(wageJobTypesProvider);
                             }
+                            if (action == 'enable') {
+                              await ref
+                                  .read(wageSettingsRepositoryProvider)
+                                  .activateJobType(type.id);
+                              ref.invalidate(wageJobTypesProvider);
+                            }
                           },
                           itemBuilder: (context) => [
                             const PopupMenuItem(
@@ -78,6 +84,11 @@ class WageJobSettingsPage extends ConsumerWidget {
                               const PopupMenuItem(
                                 value: 'disable',
                                 child: Text('停用工种'),
+                              ),
+                            if (!type.isActive)
+                              const PopupMenuItem(
+                                value: 'enable',
+                                child: Text('启用工种'),
                               ),
                           ],
                         ),
@@ -129,41 +140,122 @@ class WageJobSettingsPage extends ConsumerWidget {
     final remark = TextEditingController(text: type?.remark ?? '');
     final saved = await showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(type == null ? '新增工种' : '修改工种'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: name,
-              decoration: const InputDecoration(labelText: '工种名称'),
+      builder: (context) {
+        var isActive = type?.isActive ?? true;
+        return StatefulBuilder(
+          builder: (context, setState) => AlertDialog(
+            insetPadding: const EdgeInsets.symmetric(
+              horizontal: 24,
+              vertical: 24,
             ),
-            TextField(
-              controller: wage,
-              keyboardType: const TextInputType.numberWithOptions(
-                decimal: true,
+            titlePadding: const EdgeInsets.fromLTRB(24, 22, 24, 8),
+            contentPadding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
+            title: Row(
+              children: [
+                Icon(
+                  type == null ? Icons.add_business_outlined : Icons.edit_note,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                const SizedBox(width: 10),
+                Expanded(child: Text(type == null ? '新增工种' : '修改工种')),
+              ],
+            ),
+            content: SizedBox(
+              width: 430,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      type == null
+                          ? '设置工种名称和默认日薪，后续可再添加分月生效的日薪。'
+                          : '修改只影响后续新建或生成的工资批次，已生成工资保留原快照。',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                    const SizedBox(height: 18),
+                    TextField(
+                      controller: name,
+                      textInputAction: TextInputAction.next,
+                      decoration: const InputDecoration(
+                        labelText: '工种名称',
+                        hintText: '例如：夜班保洁',
+                        prefixIcon: Icon(Icons.badge_outlined),
+                      ),
+                    ),
+                    const SizedBox(height: 14),
+                    TextField(
+                      controller: wage,
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                      textInputAction: TextInputAction.next,
+                      decoration: const InputDecoration(
+                        labelText: '默认日薪（元）',
+                        hintText: '请输入大于等于 0 的金额',
+                        prefixIcon: Icon(Icons.payments_outlined),
+                      ),
+                    ),
+                    const SizedBox(height: 14),
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .surfaceContainerHighest
+                            .withValues(alpha: 0.45),
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      child: Material(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(14),
+                        child: SwitchListTile(
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 14,
+                            vertical: 2,
+                          ),
+                          title: const Text('启用工种'),
+                          subtitle: Text(
+                            isActive ? '可用于新工资资料和造资' : '停用后不再用于新的工资资料',
+                          ),
+                          value: isActive,
+                          onChanged: (value) =>
+                              setState(() => isActive = value),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 14),
+                    TextField(
+                      controller: remark,
+                      textInputAction: TextInputAction.done,
+                      maxLines: 2,
+                      decoration: const InputDecoration(
+                        labelText: '备注（可选）',
+                        hintText: '补充适用范围或说明',
+                        prefixIcon: Icon(Icons.notes_outlined),
+                        alignLabelWithHint: true,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+                ),
               ),
-              decoration: const InputDecoration(labelText: '默认日薪（元）'),
             ),
-            TextField(
-              controller: remark,
-              decoration: const InputDecoration(labelText: '备注'),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('取消'),
+            actionsPadding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('取消'),
+              ),
+              FilledButton.icon(
+                onPressed: () => Navigator.of(context).pop(isActive),
+                icon: const Icon(Icons.check),
+                label: const Text('保存工种'),
+              ),
+            ],
           ),
-          FilledButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('保存'),
-          ),
-        ],
-      ),
+        );
+      },
     );
-    if (saved == true) {
+    if (saved != null) {
       try {
         await ref
             .read(wageSettingsRepositoryProvider)
@@ -172,6 +264,8 @@ class WageJobSettingsPage extends ConsumerWidget {
               draft: WageJobTypeDraft(
                 name: name.text,
                 defaultDailyWage: double.tryParse(wage.text) ?? double.nan,
+                isActive: saved,
+                sortOrder: type?.sortOrder ?? 0,
                 remark: remark.text,
               ),
             );
@@ -182,9 +276,6 @@ class WageJobSettingsPage extends ConsumerWidget {
               .showSnackBar(SnackBar(content: Text('保存失败：$error')));
       }
     }
-    name.dispose();
-    wage.dispose();
-    remark.dispose();
   }
 
   Future<void> _addRate(
@@ -199,31 +290,74 @@ class WageJobSettingsPage extends ConsumerWidget {
     final saved = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('${type.name} 生效日薪'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
+        insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+        titlePadding: const EdgeInsets.fromLTRB(24, 22, 24, 8),
+        contentPadding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
+        title: Row(
           children: [
-            TextField(
-              controller: month,
-              decoration: const InputDecoration(labelText: '生效月份（YYYY-MM）'),
+            Icon(
+              Icons.event_repeat_outlined,
+              color: Theme.of(context).colorScheme.primary,
             ),
-            TextField(
-              controller: wage,
-              keyboardType: const TextInputType.numberWithOptions(
-                decimal: true,
-              ),
-              decoration: const InputDecoration(labelText: '日薪（元）'),
-            ),
+            const SizedBox(width: 10),
+            Expanded(child: Text('${type.name} 生效日薪')),
           ],
         ),
+        content: SizedBox(
+          width: 430,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  '设置从某个月开始执行的日薪。同一工种同一月份重复保存会更新原记录。',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                const SizedBox(height: 18),
+                TextField(
+                  controller: month,
+                  readOnly: true,
+                  onTap: () => _pickEffectiveMonth(context, month),
+                  decoration: InputDecoration(
+                    labelText: '生效月份',
+                    hintText: '点击选择月份',
+                    helperText: '按月生效，不区分具体日期',
+                    prefixIcon: const Icon(Icons.calendar_month_outlined),
+                    suffixIcon: IconButton(
+                      onPressed: () => _pickEffectiveMonth(context, month),
+                      icon: const Icon(Icons.edit_calendar_outlined),
+                      tooltip: '选择月份',
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 14),
+                TextField(
+                  controller: wage,
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
+                  textInputAction: TextInputAction.done,
+                  decoration: const InputDecoration(
+                    labelText: '日薪（元）',
+                    hintText: '请输入大于等于 0 的金额',
+                    prefixIcon: Icon(Icons.payments_outlined),
+                  ),
+                ),
+                const SizedBox(height: 8),
+              ],
+            ),
+          ),
+        ),
+        actionsPadding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
+            onPressed: () => Navigator.of(context).pop(),
             child: const Text('取消'),
           ),
-          FilledButton(
+          FilledButton.icon(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('保存'),
+            icon: const Icon(Icons.check),
+            label: const Text('保存日薪'),
           ),
         ],
       ),
@@ -248,7 +382,110 @@ class WageJobSettingsPage extends ConsumerWidget {
               .showSnackBar(SnackBar(content: Text('保存失败：$error')));
       }
     }
-    wage.dispose();
-    month.dispose();
+  }
+
+  Future<void> _pickEffectiveMonth(
+    BuildContext context,
+    TextEditingController controller,
+  ) async {
+    final now = DateTime.now();
+    final picked = await showDialog<DateTime>(
+      context: context,
+      builder: (context) {
+        var year = now.year;
+        var month = now.month;
+        final years = [
+          for (var value = now.year - 10; value <= now.year + 10; value++)
+            value,
+        ];
+        return StatefulBuilder(
+          builder: (context, setState) => AlertDialog(
+            insetPadding: const EdgeInsets.symmetric(
+              horizontal: 24,
+              vertical: 24,
+            ),
+            title: Row(
+              children: [
+                Icon(
+                  Icons.calendar_month_outlined,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                const SizedBox(width: 10),
+                const Expanded(child: Text('选择生效月份')),
+              ],
+            ),
+            content: SizedBox(
+              width: 430,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    '选择从哪一年哪一月开始执行，不需要选择具体日期。',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  const SizedBox(height: 18),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: DropdownButtonFormField<int>(
+                          initialValue: year,
+                          decoration: const InputDecoration(labelText: '年份'),
+                          items: [
+                            for (final value in years)
+                              DropdownMenuItem(
+                                value: value,
+                                child: Text('$value年'),
+                              ),
+                          ],
+                          onChanged: (value) =>
+                              setState(() => year = value ?? year),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: InputDecorator(
+                          decoration: const InputDecoration(labelText: '月份'),
+                          child: Text(
+                            '$month月',
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: [
+                      for (var value = 1; value <= 12; value++)
+                        ChoiceChip(
+                          label: Text('$value月'),
+                          selected: month == value,
+                          onSelected: (_) => setState(() => month = value),
+                        ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('取消'),
+              ),
+              FilledButton.icon(
+                onPressed: () =>
+                    Navigator.of(context).pop(DateTime(year, month)),
+                icon: const Icon(Icons.check),
+                label: const Text('确定月份'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+    if (picked != null) controller.text = payrollYearMonth(picked);
   }
 }

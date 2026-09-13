@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:drift/drift.dart';
 
 import '../utils/date_utils.dart';
 import 'app_database.dart';
 import 'database_enums.dart';
+import '../../features/payroll/domain/payroll_calculator.dart';
 
 /// Inserts a coherent set of Chinese demo records for manual UI verification.
 ///
@@ -288,6 +291,123 @@ abstract final class DemoDataSeeder {
             );
       }
 
+      final jobTypeIds = <String, int>{};
+      const demoJobTypes = [
+        _DemoJobType(
+          name: '绿化工',
+          defaultDailyWage: 128,
+          sortOrder: 1,
+          remark: '演示数据：园区绿化岗位',
+        ),
+        _DemoJobType(
+          name: '环卫工',
+          defaultDailyWage: 115,
+          sortOrder: 2,
+          remark: '演示数据：环境维护岗位',
+        ),
+        _DemoJobType(
+          name: '保洁员',
+          defaultDailyWage: 105,
+          sortOrder: 3,
+          remark: '演示数据：室内保洁岗位',
+        ),
+        _DemoJobType(
+          name: '维修工',
+          defaultDailyWage: 180,
+          sortOrder: 4,
+          remark: '演示数据：设备维护岗位',
+        ),
+        _DemoJobType(
+          name: '司机',
+          defaultDailyWage: 160,
+          sortOrder: 5,
+          remark: '演示数据：运输驾驶岗位',
+        ),
+        _DemoJobType(
+          name: '其他',
+          defaultDailyWage: 95,
+          sortOrder: 6,
+          remark: '演示数据：其他临时岗位',
+        ),
+        _DemoJobType(
+          name: '夜班保洁',
+          defaultDailyWage: 150,
+          isActive: false,
+          sortOrder: 7,
+          remark: '演示数据：停用工种，可从菜单重新启用',
+        ),
+      ];
+      for (final seed in demoJobTypes) {
+        final jobTypeId = await database
+            .into(database.wageJobTypes)
+            .insert(
+              WageJobTypesCompanion.insert(
+                name: seed.name,
+                defaultDailyWage: Value(seed.defaultDailyWage),
+                isActive: Value(seed.isActive),
+                sortOrder: Value(seed.sortOrder),
+                remark: Value(seed.remark),
+                createdAt: Value(now),
+                updatedAt: Value(now),
+              ),
+            );
+        jobTypeIds[seed.name] = jobTypeId;
+        await database
+            .into(database.wageRateHistory)
+            .insert(
+              WageRateHistoryCompanion.insert(
+                jobTypeId: jobTypeId,
+                dailyWage: seed.defaultDailyWage - 5,
+                effectiveMonth: previousMonth,
+                remark: const Value('演示数据：上月生效日薪'),
+                createdAt: Value(now),
+              ),
+            );
+        await database
+            .into(database.wageRateHistory)
+            .insert(
+              WageRateHistoryCompanion.insert(
+                jobTypeId: jobTypeId,
+                dailyWage: seed.defaultDailyWage,
+                effectiveMonth: month,
+                remark: const Value('演示数据：本月生效日薪'),
+                createdAt: Value(now),
+              ),
+            );
+      }
+
+      const demoWageProfiles = [
+        _DemoWageProfile(
+          employeeNo: 'DEMO-007',
+          jobTypeName: '保洁员',
+          useJobDefaultWage: true,
+          remark: '演示数据：按保洁员生效日薪计算',
+        ),
+        _DemoWageProfile(
+          employeeNo: 'DEMO-010',
+          jobTypeName: '绿化工',
+          useJobDefaultWage: false,
+          personalDailyWage: 138,
+          remark: '演示数据：个人特殊日薪',
+        ),
+      ];
+      for (final profile in demoWageProfiles) {
+        await database
+            .into(database.employeeWageProfiles)
+            .insert(
+              EmployeeWageProfilesCompanion.insert(
+                employeeId: employeeIds[profile.employeeNo]!,
+                participatesInPayroll: const Value(true),
+                jobTypeId: Value(jobTypeIds[profile.jobTypeName]),
+                useJobDefaultWage: Value(profile.useJobDefaultWage),
+                personalDailyWage: Value(profile.personalDailyWage),
+                remark: Value(profile.remark),
+                createdAt: Value(now),
+                updatedAt: Value(now),
+              ),
+            );
+      }
+
       final rosterEmployeeIds = [
         for (final seed in employeeSeeds)
           if (seed.hireDate.isBefore(monthStart.add(const Duration(days: 31))))
@@ -296,6 +416,12 @@ abstract final class DemoDataSeeder {
       for (final employeeId in rosterEmployeeIds) {
         final employee = await database.findEmployeeById(employeeId);
         if (employee == null) continue;
+        final attendanceDays = switch (employee.employeeNo) {
+          'DEMO-007' => 18.5,
+          'DEMO-010' => 20.5,
+          _ => 0.0,
+        };
+        final leaveDays = employee.employeeNo == 'DEMO-007' ? 0.5 : 0.0;
         await database
             .into(database.monthlyAttendanceRosters)
             .insert(
@@ -318,8 +444,8 @@ abstract final class DemoDataSeeder {
                   employeeId: employeeId,
                   attendanceGroupId: Value(employee.defaultAttendanceGroupId),
                   participates: const Value(true),
-                  attendanceDays: const Value(0.0),
-                  leaveDays: const Value(0.0),
+                  attendanceDays: Value(attendanceDays),
+                  leaveDays: Value(leaveDays),
                   absentDays: Value(
                     employee.employeeNo == 'DEMO-003' ? 1.0 : 0.0,
                   ),
@@ -345,6 +471,42 @@ abstract final class DemoDataSeeder {
               );
         }
       }
+
+      for (final summary in const [
+        (employeeNo: 'DEMO-007', attendanceDays: 17.5),
+        (employeeNo: 'DEMO-010', attendanceDays: 19.5),
+      ]) {
+        final employee = await database.findEmployeeById(
+          employeeIds[summary.employeeNo]!,
+        );
+        if (employee == null) continue;
+        await database
+            .into(database.monthlyAttendanceSummaries)
+            .insert(
+              MonthlyAttendanceSummariesCompanion.insert(
+                yearMonth: previousMonth,
+                employeeId: employee.id,
+                attendanceGroupId: Value(employee.defaultAttendanceGroupId),
+                participates: const Value(true),
+                attendanceDays: Value(summary.attendanceDays),
+                monthStartStatus: const Value('正常'),
+                monthEndStatus: const Value('正常'),
+                isComplete: const Value(true),
+                status: const Value(MonthlySummaryStatus.confirmed),
+                generatedAt: Value(now),
+                updatedAt: Value(now),
+              ),
+            );
+      }
+
+      await _seedDemoPayroll(
+        database: database,
+        employeeIds: employeeIds,
+        jobTypeIds: jobTypeIds,
+        month: month,
+        previousMonth: previousMonth,
+        now: now,
+      );
 
       final productionEmployeeIds = [
         employeeIds['DEMO-001']!,
@@ -618,6 +780,265 @@ abstract final class DemoDataSeeder {
       return true;
     });
   }
+
+  static Future<void> _seedDemoPayroll({
+    required AppDatabase database,
+    required Map<String, int> employeeIds,
+    required Map<String, int> jobTypeIds,
+    required String month,
+    required String previousMonth,
+    required DateTime now,
+  }) async {
+    const previousRows = [
+      _DemoPayrollRow(
+        employeeNo: 'DEMO-007',
+        employeeName: '黄婷婷',
+        jobTypeName: '保洁员',
+        attendanceHalfDays: 35,
+        dailyWage: 100,
+        dailyWageSource: 'job_history',
+        remark: '演示数据：上月按工种日薪计算',
+      ),
+      _DemoPayrollRow(
+        employeeNo: 'DEMO-010',
+        employeeName: '孙浩',
+        jobTypeName: '绿化工',
+        attendanceHalfDays: 39,
+        dailyWage: 138,
+        dailyWageSource: 'personal',
+        remark: '演示数据：上月个人特殊日薪',
+      ),
+    ];
+    const currentRows = [
+      _DemoPayrollRow(
+        employeeNo: 'DEMO-007',
+        employeeName: '黄婷婷',
+        jobTypeName: '保洁员',
+        attendanceHalfDays: 37,
+        dailyWage: 105,
+        dailyWageSource: 'job_history',
+        subsidy: 200,
+        insuranceDeduction: 150,
+        remark: '演示数据：含交通补助和保险扣除',
+      ),
+      _DemoPayrollRow(
+        employeeNo: 'DEMO-010',
+        employeeName: '孙浩',
+        jobTypeName: '绿化工',
+        attendanceHalfDays: 41,
+        dailyWage: 138,
+        dailyWageSource: 'personal',
+        subsidy: 300,
+        remark: '演示数据：个人特殊日薪并含全勤补助',
+      ),
+    ];
+    await _insertDemoPayrollBatch(
+      database: database,
+      employeeIds: employeeIds,
+      jobTypeIds: jobTypeIds,
+      month: previousMonth,
+      rows: previousRows,
+      status: PayrollStatus.confirmed,
+      confirmedAt: now.subtract(const Duration(days: 8)),
+      remark: '演示数据：上月已确认工资',
+      createdAt: now.subtract(const Duration(days: 10)),
+      updatedAt: now.subtract(const Duration(days: 8)),
+    );
+    await _insertDemoPayrollBatch(
+      database: database,
+      employeeIds: employeeIds,
+      jobTypeIds: jobTypeIds,
+      month: month,
+      rows: currentRows,
+      status: PayrollStatus.draft,
+      remark: '演示数据：本月待检查工资',
+      createdAt: now,
+      updatedAt: now,
+    );
+  }
+
+  static Future<void> _insertDemoPayrollBatch({
+    required AppDatabase database,
+    required Map<String, int> employeeIds,
+    required Map<String, int> jobTypeIds,
+    required String month,
+    required List<_DemoPayrollRow> rows,
+    required PayrollStatus status,
+    required String remark,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    DateTime? confirmedAt,
+  }) async {
+    final attendanceSnapshotVersion = await _attendanceSnapshotVersion(
+      database,
+      month,
+    );
+    final calculations = [
+      for (final row in rows)
+        PayrollCalculator.calculate(
+          attendanceHalfDays: row.attendanceHalfDays,
+          dailyWage: row.dailyWage,
+          subsidy: row.subsidy,
+          insuranceDeduction: row.insuranceDeduction,
+        ),
+    ];
+    final batchId = await database
+        .into(database.payrollBatches)
+        .insert(
+          PayrollBatchesCompanion.insert(
+            payrollMonth: month,
+            name: '${month.substring(0, 4)}年${month.substring(5)}月临时工工资',
+            status: Value(status),
+            employeeCount: Value(rows.length),
+            attendanceHalfDaysTotal: Value(
+              rows.fold(0, (sum, row) => sum + row.attendanceHalfDays),
+            ),
+            baseWageTotal: Value(
+              PayrollCalculator.roundMoney(
+                calculations.fold(0.0, (sum, item) => sum + item.baseWage),
+              ),
+            ),
+            subsidyTotal: Value(
+              PayrollCalculator.roundMoney(
+                rows.fold(0.0, (sum, row) => sum + row.subsidy),
+              ),
+            ),
+            insuranceDeductionTotal: Value(
+              PayrollCalculator.roundMoney(
+                rows.fold(0.0, (sum, row) => sum + row.insuranceDeduction),
+              ),
+            ),
+            finalWageTotal: Value(
+              PayrollCalculator.roundMoney(
+                calculations.fold(0.0, (sum, item) => sum + item.finalWage),
+              ),
+            ),
+            attendanceSnapshotVersion: Value(attendanceSnapshotVersion),
+            confirmedAt: Value(confirmedAt),
+            remark: Value(remark),
+            createdAt: Value(createdAt),
+            updatedAt: Value(updatedAt),
+          ),
+        );
+    for (var index = 0; index < rows.length; index++) {
+      final row = rows[index];
+      final calculation = calculations[index];
+      await database
+          .into(database.payrollItems)
+          .insert(
+            PayrollItemsCompanion.insert(
+              payrollBatchId: batchId,
+              employeeId: employeeIds[row.employeeNo]!,
+              displayOrder: index,
+              employeeNameSnapshot: row.employeeName,
+              employeeNoSnapshot: row.employeeNo,
+              jobTypeId: Value(jobTypeIds[row.jobTypeName]),
+              jobTypeNameSnapshot: Value(row.jobTypeName),
+              attendanceHalfDaysSnapshot: row.attendanceHalfDays,
+              dailyWage: Value(row.dailyWage),
+              dailyWageSource: Value(row.dailyWageSource),
+              baseWage: Value(calculation.baseWage),
+              subsidy: Value(row.subsidy),
+              insuranceDeduction: Value(row.insuranceDeduction),
+              finalWage: Value(calculation.finalWage),
+              remark: Value(row.remark),
+              createdAt: Value(createdAt),
+              updatedAt: Value(updatedAt),
+            ),
+          );
+    }
+  }
+
+  static Future<String?> _attendanceSnapshotVersion(
+    AppDatabase database,
+    String month,
+  ) async {
+    final summaries =
+        await (database.select(database.monthlyAttendanceSummaries)..where(
+              (table) =>
+                  table.yearMonth.equals(month) & table.isDeleted.equals(false),
+            ))
+            .get();
+    if (summaries.isEmpty) return null;
+    final snapshots = [
+      for (final row in summaries)
+        jsonEncode([
+          row.employeeId,
+          row.attendanceGroupId,
+          row.participates,
+          row.attendanceDays,
+          row.leaveDays,
+          row.absentDays,
+          row.restDays,
+          row.stoppedDays,
+          row.overtimeCount,
+          row.overtimeMinutes,
+          row.monthStartStatus,
+          row.monthEndStatus,
+          row.joinedDuringMonth,
+          row.terminatedDuringMonth,
+          row.isComplete,
+          row.anomalyCount,
+        ]),
+    ]..sort();
+    return jsonEncode(snapshots);
+  }
+}
+
+class _DemoJobType {
+  const _DemoJobType({
+    required this.name,
+    required this.defaultDailyWage,
+    required this.sortOrder,
+    required this.remark,
+    this.isActive = true,
+  });
+
+  final String name;
+  final double defaultDailyWage;
+  final int sortOrder;
+  final String remark;
+  final bool isActive;
+}
+
+class _DemoWageProfile {
+  const _DemoWageProfile({
+    required this.employeeNo,
+    required this.jobTypeName,
+    required this.useJobDefaultWage,
+    required this.remark,
+    this.personalDailyWage,
+  });
+
+  final String employeeNo;
+  final String jobTypeName;
+  final bool useJobDefaultWage;
+  final double? personalDailyWage;
+  final String remark;
+}
+
+class _DemoPayrollRow {
+  const _DemoPayrollRow({
+    required this.employeeNo,
+    required this.employeeName,
+    required this.jobTypeName,
+    required this.attendanceHalfDays,
+    required this.dailyWage,
+    required this.dailyWageSource,
+    required this.remark,
+    this.subsidy = 0,
+    this.insuranceDeduction = 0,
+  });
+
+  final String employeeNo;
+  final String employeeName;
+  final String jobTypeName;
+  final int attendanceHalfDays;
+  final double dailyWage;
+  final String dailyWageSource;
+  final double subsidy;
+  final double insuranceDeduction;
+  final String remark;
 }
 
 class _DemoEmployee {

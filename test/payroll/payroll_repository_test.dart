@@ -13,6 +13,7 @@ import 'package:qingsongban/features/personnel/data/personnel_repository.dart';
 import 'package:qingsongban/features/personnel/domain/personnel_options.dart';
 import 'package:qingsongban/features/payroll/data/payroll_repository.dart';
 import 'package:qingsongban/features/payroll/data/wage_settings_repository.dart';
+import 'package:qingsongban/features/reports/data/monthly_summary_repository.dart';
 
 void main() {
   late AppDatabase database;
@@ -88,9 +89,77 @@ void main() {
       expect(item, hasLength(1));
       expect(item.single.item.attendanceHalfDaysSnapshot, 1);
       expect(item.single.item.dailyWage, 120);
+      expect((await payroll.listGroupsForBatch(batch.id)).single.id, group.id);
+      expect(
+        (await payroll.employeeGroupIdsForBatch(batch.id))[employee.id],
+        contains(group.id),
+      );
       expect(summary, isA<int>());
     },
   );
+
+  test('confirms payroll after attendance summary status changes without false warning', () async {
+    final group = await groups.save(
+      draft: const AttendanceGroupDraft(name: '汇总确认测试组'),
+    );
+    final employee = await personnel.save(
+      draft: EmployeeDraft(
+        employeeNo: 'EMP-P001-STATUS',
+        name: '汇总确认测试员',
+        hireDate: DateTime(2026, 9, 1),
+        status: EmployeeStatus.active,
+        employmentType: '临时工',
+      ),
+    );
+    final jobType = await wages.saveJobType(
+      draft: const WageJobTypeDraft(name: '汇总确认工种', defaultDailyWage: 120),
+    );
+    await wages.saveProfile(
+      EmployeeWageProfileDraft(
+        employeeId: employee.id,
+        participatesInPayroll: true,
+        jobTypeId: jobType.id,
+      ),
+    );
+    await rosters.addEmployee(
+      yearMonth: '2026-09',
+      groupId: group.id,
+      employeeId: employee.id,
+    );
+    await attendance.save(
+      DailyAttendanceDraft(
+        employeeId: employee.id,
+        attendanceDate: DateTime(2026, 9, 1),
+        morningStatus: AttendanceHalfStatus.present,
+        afternoonStatus: AttendanceHalfStatus.present,
+      ),
+    );
+    await _generateSummary(database, employee.id, group.id);
+
+    final batch = await payroll.ensureDraft('2026-09');
+    await payroll.generateRoster(batch.id);
+    await (database.update(
+      database.monthlyAttendanceSummaries,
+    )..where((table) => table.employeeId.equals(employee.id))).write(
+      const MonthlyAttendanceSummariesCompanion(
+        status: Value(MonthlySummaryStatus.pendingReview),
+      ),
+    );
+    await MonthlySummaryRepository(
+      database,
+    ).setStatus(yearMonth: '2026-09', status: MonthlySummaryStatus.confirmed);
+
+    final validation = await payroll.previewValidation(batch.id);
+    expect(
+      validation.warnings.any((issue) => issue.code == 'attendance_changed'),
+      isFalse,
+    );
+    await payroll.setStatus(batchId: batch.id, status: PayrollStatus.confirmed);
+    expect(
+      (await payroll.findBatch(batch.id))?.status,
+      PayrollStatus.confirmed,
+    );
+  });
 
   test(
     'preserves manual values while syncing attendance and clamps negative pay',
@@ -321,6 +390,16 @@ void main() {
       expect(batchReminder.isCompleted, isFalse);
       final riskyItem = (await payroll.watchItems(batch.id).first).first.item;
       await payroll.updateItem(itemId: riskyItem.id, insuranceDeduction: 1000);
+      await payroll.updateItem(
+        itemId: riskyItem.id,
+        subsidy: 1000,
+        insuranceDeduction: 0,
+      );
+      final warningPreview = await payroll.previewValidation(batch.id);
+      expect(
+        warningPreview.warnings.any((issue) => issue.code == 'subsidy_high'),
+        isTrue,
+      );
       await expectLater(
         payroll.setStatus(batchId: batch.id, status: PayrollStatus.confirmed),
         throwsA(isA<StateError>()),
@@ -339,6 +418,127 @@ void main() {
       expect(jsonDecode(unlockLog.detail!)['reason'], '重新核对出勤');
     },
   );
+
+  test('requires a personal wage when job default wage is disabled', () async {
+    final employee = await personnel.save(
+      draft: EmployeeDraft(
+        employeeNo: 'EMP-P005',
+        name: '钱七',
+        hireDate: DateTime(2026, 9, 1),
+        status: EmployeeStatus.active,
+        employmentType: '临时工',
+      ),
+    );
+
+    await expectLater(
+      wages.saveProfile(
+        EmployeeWageProfileDraft(
+          employeeId: employee.id,
+          participatesInPayroll: true,
+          useJobDefaultWage: false,
+        ),
+      ),
+      throwsA(isA<FormatException>()),
+    );
+  });
+
+  test('can re-enable a deactivated wage job type', () async {
+    final type = await wages.saveJobType(
+      draft: const WageJobTypeDraft(name: '临时装卸', defaultDailyWage: 140),
+    );
+
+    await wages.deactivateJobType(type.id);
+    expect((await wages.watchJobTypes().first).single.isActive, isFalse);
+
+    await wages.activateJobType(type.id);
+    expect((await wages.watchJobTypes().first).single.isActive, isTrue);
+  });
+
+  test(
+    'keeps confirmation time when locking and rejects invalid rollback',
+    () async {
+      final confirmedAt = DateTime(2026, 9, 20, 10);
+      final batchId = await database
+          .into(database.payrollBatches)
+          .insert(
+            PayrollBatchesCompanion.insert(
+              payrollMonth: '2026-09',
+              name: '2026年09月临时工工资',
+              status: const Value(PayrollStatus.confirmed),
+              confirmedAt: Value(confirmedAt),
+            ),
+          );
+
+      await payroll.setStatus(batchId: batchId, status: PayrollStatus.locked);
+      final locked = await payroll.findBatch(batchId);
+      expect(locked?.confirmedAt, confirmedAt);
+      expect(locked?.lockedAt, isA<DateTime>());
+
+      await expectLater(
+        payroll.setStatus(batchId: batchId, status: PayrollStatus.draft),
+        throwsA(isA<StateError>()),
+      );
+    },
+  );
+
+  test('reports invalid persisted monetary data during validation', () async {
+    final employeeId = await database
+        .into(database.employees)
+        .insert(
+          EmployeesCompanion.insert(
+            employeeNo: 'EMP-P006',
+            name: '孙八',
+            hireDate: DateTime(2026, 9, 1),
+            employmentType: const Value('临时工'),
+          ),
+        );
+    final batchId = await database
+        .into(database.payrollBatches)
+        .insert(
+          PayrollBatchesCompanion.insert(
+            payrollMonth: '2026-09',
+            name: '2026年09月临时工工资',
+          ),
+        );
+    await database
+        .into(database.payrollItems)
+        .insert(
+          PayrollItemsCompanion.insert(
+            payrollBatchId: batchId,
+            employeeId: employeeId,
+            displayOrder: 0,
+            employeeNameSnapshot: '孙八',
+            employeeNoSnapshot: 'EMP-P006',
+            attendanceHalfDaysSnapshot: 1,
+            dailyWage: const Value(100),
+            subsidy: const Value(-1),
+          ),
+        );
+
+    final result = await payroll.validate(batchId);
+    expect(
+      result.errors.any((issue) => issue.code == 'invalid_amount'),
+      isTrue,
+    );
+  });
+
+  test('rejects adding a non-temporary worker to a payroll batch', () async {
+    final employee = await personnel.save(
+      draft: EmployeeDraft(
+        employeeNo: 'EMP-P007',
+        name: '周九',
+        hireDate: DateTime(2026, 9, 1),
+        status: EmployeeStatus.active,
+        employmentType: '正式工',
+      ),
+    );
+    final batch = await payroll.ensureDraft('2026-09');
+
+    await expectLater(
+      payroll.addEmployee(batchId: batch.id, employeeId: employee.id),
+      throwsA(isA<StateError>()),
+    );
+  });
 }
 
 Future<Object?> _generateSummary(

@@ -28,6 +28,13 @@ void main() {
         .select(database.terminationRecords)
         .get();
     final reminders = await database.select(database.reminders).get();
+    final wageJobTypes = await database.select(database.wageJobTypes).get();
+    final wageRates = await database.select(database.wageRateHistory).get();
+    final wageProfiles = await database
+        .select(database.employeeWageProfiles)
+        .get();
+    final payrollBatches = await database.select(database.payrollBatches).get();
+    final payrollItems = await database.select(database.payrollItems).get();
 
     expect(employees, hasLength(10));
     expect(employees.map((employee) => employee.name), contains('张伟'));
@@ -42,6 +49,13 @@ void main() {
     expect(overtime, hasLength(1));
     expect(terminations, hasLength(1));
     expect(reminders, hasLength(3));
+    expect(wageJobTypes, hasLength(7));
+    expect(wageJobTypes.map((type) => type.name), contains('夜班保洁'));
+    expect(wageJobTypes.where((type) => !type.isActive), hasLength(1));
+    expect(wageRates, hasLength(14));
+    expect(wageProfiles, hasLength(2));
+    expect(payrollBatches, hasLength(2));
+    expect(payrollItems, hasLength(4));
 
     expect(await DemoDataSeeder.seed(database), isFalse);
     expect(await database.listEmployees(), hasLength(10));

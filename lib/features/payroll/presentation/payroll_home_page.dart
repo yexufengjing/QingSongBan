@@ -9,6 +9,7 @@ import '../../../core/database/database_enums.dart';
 import '../../reminders/application/reminder_providers.dart';
 import '../application/payroll_providers.dart';
 import '../domain/payroll_options.dart';
+import 'payroll_group_filter.dart';
 
 class PayrollHomePage extends ConsumerWidget {
   const PayrollHomePage({super.key});
@@ -211,6 +212,8 @@ class _BatchContent extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 12),
+        PayrollGroupFilter(batchId: batch.id),
+        const SizedBox(height: 4),
         Wrap(
           spacing: 8,
           runSpacing: 8,
@@ -232,6 +235,8 @@ class _BatchContent extends StatelessWidget {
             ),
           ],
         ),
+        const SizedBox(height: 12),
+        _BatchRosterPreview(batchId: batch.id),
         const SizedBox(height: 20),
         FilledButton.icon(
           onPressed: () =>
@@ -261,6 +266,70 @@ class _BatchContent extends StatelessWidget {
       : '${(halfDays / 2).toStringAsFixed(1)}天';
 
   String _money(double value) => value.toStringAsFixed(2);
+}
+
+class _BatchRosterPreview extends ConsumerWidget {
+  const _BatchRosterPreview({required this.batchId});
+
+  final int batchId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedGroupId = ref.watch(payrollGroupFilterProvider(batchId));
+    final employeeGroups = ref
+        .watch(payrollBatchEmployeeGroupsProvider(batchId))
+        .valueOrNull;
+    final items = ref.watch(payrollItemsProvider(batchId));
+    return items.when(
+      loading: () => const LinearProgressIndicator(minHeight: 2),
+      error: (error, _) => Text('工资名单加载失败：$error'),
+      data: (values) {
+        final visible = selectedGroupId == null || employeeGroups == null
+            ? values
+            : values
+                  .where(
+                    (value) =>
+                        employeeGroups[value.item.employeeId]?.contains(
+                          selectedGroupId,
+                        ) ??
+                        false,
+                  )
+                  .toList();
+        if (visible.isEmpty) {
+          return const Card(
+            child: Padding(
+              padding: EdgeInsets.all(16),
+              child: Text('当前考勤组筛选下没有工资人员'),
+            ),
+          );
+        }
+        return Card(
+          child: Column(
+            children: [
+              const ListTile(
+                leading: Icon(Icons.groups_outlined),
+                title: Text('工资名单'),
+                subtitle: Text('筛选只影响显示，批次汇总仍按全部人员计算'),
+              ),
+              for (final value in visible)
+                ListTile(
+                  dense: true,
+                  title: Text(value.item.employeeNameSnapshot),
+                  subtitle: Text(
+                    '${value.item.employeeNoSnapshot} · ${_days(value.item.attendanceHalfDaysSnapshot)}',
+                  ),
+                  trailing: Text(value.item.finalWage.toStringAsFixed(2)),
+                ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  String _days(int halfDays) => halfDays.isEven
+      ? '${halfDays ~/ 2}天'
+      : '${(halfDays / 2).toStringAsFixed(1)}天';
 }
 
 class _Stat extends StatelessWidget {
