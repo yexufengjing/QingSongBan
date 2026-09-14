@@ -186,9 +186,9 @@ class ItemDistributionRepository {
         );
       }
 
-      final towel = employmentType == '临时工'
-          ? (monthNumber == 1 || monthNumber == 7)
-          : includeFormalTowels;
+      final towel = monthNumber == 1 ||
+          monthNumber == 7 ||
+          (employmentType == '正式工' && includeFormalTowels);
       if (towel) {
         await _insertEntry(
           batchId: batchId,
