@@ -44,12 +44,13 @@ class AppDatabase extends _$AppDatabase {
     : super(executor ?? NativeDatabase.memory());
 
   @override
-  int get schemaVersion => 9;
+  int get schemaVersion => 10;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
     onCreate: (m) async {
       await m.createAll();
+      await _createItemDistributionTables();
     },
     onUpgrade: (m, from, to) async {
       // Version 1 is the initial schema. Version 2 adds independent leave
@@ -88,11 +89,76 @@ class AppDatabase extends _$AppDatabase {
         await m.createTable(payrollItems);
         await m.createTable(payrollAdjustments);
       }
+      if (from < 10 && to >= 10) {
+        await _createItemDistributionTables();
+      }
     },
     beforeOpen: (details) async {
       await customStatement('PRAGMA foreign_keys = ON');
     },
   );
+
+  Future<void> _createItemDistributionTables() async {
+    await customStatement('''
+      CREATE TABLE IF NOT EXISTS item_distribution_batches (
+        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+        benefit_month TEXT NOT NULL,
+        category TEXT NOT NULL,
+        title TEXT NOT NULL,
+        status TEXT NOT NULL DEFAULT 'active',
+        created_at TEXT NOT NULL,
+        updated_at TEXT NOT NULL,
+        is_deleted INTEGER NOT NULL DEFAULT 0
+      )
+    ''');
+    await customStatement('''
+      CREATE INDEX IF NOT EXISTS idx_item_distribution_batches_month
+      ON item_distribution_batches(benefit_month, category, is_deleted)
+    ''');
+    await customStatement('''
+      CREATE TABLE IF NOT EXISTS item_distribution_entries (
+        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+        batch_id INTEGER NOT NULL,
+        recipient_type TEXT NOT NULL,
+        recipient_key TEXT NOT NULL,
+        employee_id INTEGER,
+        recipient_name TEXT NOT NULL,
+        employment_type TEXT,
+        item_code TEXT NOT NULL,
+        item_name TEXT NOT NULL,
+        quantity REAL NOT NULL DEFAULT 1,
+        unit TEXT NOT NULL DEFAULT '件',
+        status TEXT NOT NULL DEFAULT 'pending',
+        signed_at TEXT,
+        note TEXT,
+        created_at TEXT NOT NULL,
+        updated_at TEXT NOT NULL,
+        is_deleted INTEGER NOT NULL DEFAULT 0,
+        FOREIGN KEY(batch_id) REFERENCES item_distribution_batches(id),
+        FOREIGN KEY(employee_id) REFERENCES employees(id),
+        UNIQUE(batch_id, recipient_type, recipient_key, item_code)
+      )
+    ''');
+    await customStatement('''
+      CREATE INDEX IF NOT EXISTS idx_item_distribution_entries_recipient
+      ON item_distribution_entries(recipient_key, status, is_deleted)
+    ''');
+    await customStatement('''
+      CREATE TABLE IF NOT EXISTS item_distribution_settings (
+        setting_key TEXT NOT NULL PRIMARY KEY,
+        setting_value TEXT,
+        updated_at TEXT NOT NULL
+      )
+    ''');
+    await customStatement('''
+      INSERT OR IGNORE INTO item_distribution_settings(setting_key, setting_value, updated_at)
+      VALUES ('distribution.sweeper_count', '6', CURRENT_TIMESTAMP)
+    ''');
+    await customStatement('''
+      INSERT OR IGNORE INTO item_distribution_settings(setting_key, setting_value, updated_at)
+      VALUES ('distribution.public_count', '1', CURRENT_TIMESTAMP)
+    ''');
+  }
 
   Future<int> insertEmployee(EmployeesCompanion employee) {
     return into(employees).insert(employee);
