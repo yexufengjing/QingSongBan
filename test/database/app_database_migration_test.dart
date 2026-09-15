@@ -94,7 +94,7 @@ void main() {
         1,
         DateTime(2026, 9, 1),
       );
-      expect(upgraded.schemaVersion, 9);
+      expect(upgraded.schemaVersion, 11);
       expect(employee?.name, '迁移人员');
       expect(rawAttendance, hasLength(1));
       expect(rawAttendance.single.read<int>('employee_id'), 1);

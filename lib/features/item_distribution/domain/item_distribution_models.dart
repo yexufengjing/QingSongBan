@@ -1,6 +1,6 @@
 enum DistributionCategory { welfare, office, tool }
 
-enum DistributionStatus { pending, received, notReceived }
+enum DistributionStatus { notReceived, received }
 
 class DistributionEntry {
   const DistributionEntry({
@@ -16,7 +16,11 @@ class DistributionEntry {
     required this.status,
     this.employeeId,
     this.employmentType,
+    this.welfarePosition,
     this.signedAt,
+    this.createdAt,
+    this.actualDistributionMonth,
+    this.standardQuantity,
     this.note,
   });
 
@@ -27,12 +31,16 @@ class DistributionEntry {
   final int? employeeId;
   final String recipientName;
   final String? employmentType;
+  final String? welfarePosition;
   final String itemCode;
   final String itemName;
   final double quantity;
   final String unit;
   final DistributionStatus status;
   final DateTime? signedAt;
+  final DateTime? createdAt;
+  final String? actualDistributionMonth;
+  final double? standardQuantity;
   final String? note;
 }
 
@@ -44,6 +52,7 @@ class DistributionRecipientGroup {
     required this.entries,
     this.employeeId,
     this.employmentType,
+    this.welfarePosition,
   });
 
   final String recipientKey;
@@ -51,25 +60,33 @@ class DistributionRecipientGroup {
   final String recipientType;
   final int? employeeId;
   final String? employmentType;
+  final String? welfarePosition;
   final List<DistributionEntry> entries;
 
-  bool get allReceived => entries.isNotEmpty && entries.every((e) => e.status == DistributionStatus.received);
-  bool get hasNotReceived => entries.any((e) => e.status == DistributionStatus.notReceived);
-  bool get hasPending => entries.any((e) => e.status == DistributionStatus.pending);
+  bool get allReceived =>
+      entries.isNotEmpty &&
+      entries.every((e) => e.status == DistributionStatus.received);
+  bool get hasNotReceived =>
+      entries.any((e) => e.status == DistributionStatus.notReceived);
+  bool get hasPending => hasNotReceived;
 }
 
 class DistributionSummary {
   const DistributionSummary({
     required this.recipientCount,
     required this.receivedCount,
-    required this.pendingCount,
     required this.notReceivedCount,
+    required this.entryReceivedCount,
+    required this.entryNotReceivedCount,
   });
 
   final int recipientCount;
   final int receivedCount;
-  final int pendingCount;
   final int notReceivedCount;
+  final int entryReceivedCount;
+  final int entryNotReceivedCount;
+
+  int get pendingCount => notReceivedCount;
 }
 
 class WelfareCandidate {

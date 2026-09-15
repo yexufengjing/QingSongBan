@@ -44,7 +44,7 @@ class AppDatabase extends _$AppDatabase {
     : super(executor ?? NativeDatabase.memory());
 
   @override
-  int get schemaVersion => 10;
+  int get schemaVersion => 11;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -92,6 +92,23 @@ class AppDatabase extends _$AppDatabase {
       if (from < 10 && to >= 10) {
         await _createItemDistributionTables();
       }
+      if (from < 11 && to >= 11) {
+        await _addColumnIfMissing(
+          'item_distribution_entries',
+          'welfare_position',
+          'TEXT',
+        );
+        await _addColumnIfMissing(
+          'item_distribution_entries',
+          'actual_distribution_month',
+          'TEXT',
+        );
+        await _addColumnIfMissing(
+          'item_distribution_entries',
+          'standard_quantity',
+          'REAL',
+        );
+      }
     },
     beforeOpen: (details) async {
       await customStatement('PRAGMA foreign_keys = ON');
@@ -124,12 +141,15 @@ class AppDatabase extends _$AppDatabase {
         employee_id INTEGER,
         recipient_name TEXT NOT NULL,
         employment_type TEXT,
+        welfare_position TEXT,
         item_code TEXT NOT NULL,
         item_name TEXT NOT NULL,
         quantity REAL NOT NULL DEFAULT 1,
+        standard_quantity REAL,
         unit TEXT NOT NULL DEFAULT '件',
-        status TEXT NOT NULL DEFAULT 'pending',
+        status TEXT NOT NULL DEFAULT 'not_received',
         signed_at TEXT,
+        actual_distribution_month TEXT,
         note TEXT,
         created_at TEXT NOT NULL,
         updated_at TEXT NOT NULL,
@@ -158,6 +178,16 @@ class AppDatabase extends _$AppDatabase {
       INSERT OR IGNORE INTO item_distribution_settings(setting_key, setting_value, updated_at)
       VALUES ('distribution.public_count', '1', CURRENT_TIMESTAMP)
     ''');
+  }
+
+  Future<void> _addColumnIfMissing(
+    String table,
+    String column,
+    String definition,
+  ) async {
+    final columns = await customSelect('PRAGMA table_info($table)').get();
+    if (columns.any((row) => row.data['name'] == column)) return;
+    await customStatement('ALTER TABLE $table ADD COLUMN $column $definition');
   }
 
   Future<int> insertEmployee(EmployeesCompanion employee) {

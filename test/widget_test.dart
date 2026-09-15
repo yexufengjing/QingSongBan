@@ -341,6 +341,15 @@ void main() {
     expect(find.byKey(const Key('summary-export-button')), findsOneWidget);
     expect(find.byKey(const Key('summary-back-to-attendance')), findsOneWidget);
 
+    await tester.tap(find.byKey(const Key('summary-month-label')));
+    await tester.pumpAndSettle();
+    expect(find.text('选择汇总月份'), findsOneWidget);
+    expect(find.text('2026年09月'), findsAtLeastNWidgets(1));
+    expect(find.text('9月'), findsOneWidget);
+    await tester.tap(find.text('取消'));
+    await tester.pumpAndSettle();
+    expect(find.text('选择汇总月份'), findsNothing);
+
     await tester.tap(find.byKey(const Key('summary-back-to-attendance')));
     await tester.pumpAndSettle();
     expect(find.text('考勤组管理'), findsOneWidget);
