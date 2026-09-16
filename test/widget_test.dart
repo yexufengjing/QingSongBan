@@ -167,7 +167,7 @@ void main() {
       '本月离职': '离职管理',
       '今日已登记': '每日考勤',
       '异常记录': '本月尚未生成汇总',
-      '待处理提醒': '本地提醒',
+      '待处理提醒': '备忘提醒',
     };
 
     for (final entry in markers.entries) {
@@ -546,12 +546,12 @@ void main() {
 
     await tester.tap(find.text('我的'));
     await tester.pumpAndSettle();
-    final reminderEntry = find.text('本地提醒');
+    final reminderEntry = find.text('备忘提醒');
     await tester.ensureVisible(reminderEntry);
     await tester.tap(reminderEntry);
     await tester.pumpAndSettle();
 
-    expect(find.text('本地提醒'), findsOneWidget);
+    expect(find.text('备忘提醒'), findsOneWidget);
     final reminderTestButton = find.byKey(
       const Key('reminder-test-button'),
       skipOffstage: false,
