@@ -72,7 +72,12 @@ Future<HomeDashboardStats> _loadDashboardStats(AppDatabase database) async {
         )
         .length,
     pendingReminders: reminders
-        .where((reminder) => reminder.isEnabled && !reminder.isCompleted)
+        .where(
+          (reminder) =>
+              reminder.isEnabled &&
+              !reminder.isCompleted &&
+              reminder.dueDate != null,
+        )
         .length,
   );
 }
