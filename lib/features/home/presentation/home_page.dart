@@ -210,6 +210,12 @@ class _QuickActions extends StatelessWidget {
         '/reports/payroll',
         AppColors.primary,
       ),
+      (
+        '新建提醒',
+        Icons.add_alert_outlined,
+        '/settings/reminders/new',
+        AppColors.purple,
+      ),
     ];
     return GridView.count(
       crossAxisCount: 2,
