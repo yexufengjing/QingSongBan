@@ -43,16 +43,22 @@ class NotificationService {
       return;
     }
     final due = reminder.dueDate!;
-    var scheduleAt = tz.TZDateTime(
+    final dueAt = tz.TZDateTime(
       tz.local,
       due.year,
       due.month,
       due.day,
-      9,
-    ).subtract(Duration(days: reminder.leadDays));
-    if (!scheduleAt.isAfter(tz.TZDateTime.now(tz.local))) {
-      return;
-    }
+      due.hour,
+      due.minute,
+    );
+    final preferredScheduleAt = dueAt.subtract(
+      Duration(days: reminder.leadDays),
+    );
+    final now = tz.TZDateTime.now(tz.local);
+    final scheduleAt = preferredScheduleAt.isAfter(now)
+        ? preferredScheduleAt
+        : dueAt;
+    if (!scheduleAt.isAfter(now)) return;
     await _plugin.zonedSchedule(
       reminder.id,
       reminder.title,
