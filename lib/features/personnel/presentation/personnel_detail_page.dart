@@ -8,6 +8,7 @@ import '../../../core/utils/date_utils.dart';
 import '../../../core/utils/privacy_utils.dart';
 import '../../attendance/application/attendance_group_providers.dart';
 import '../../attachments/application/attachment_providers.dart';
+import '../../reminders/application/reminder_providers.dart';
 import '../application/personnel_providers.dart';
 import '../domain/personnel_options.dart';
 import 'personnel_widgets.dart';
@@ -132,6 +133,9 @@ class _EmployeeDetailContent extends ConsumerWidget {
     final attachmentCount =
         ref.watch(employeeAttachmentCountProvider(employee.id)).valueOrNull ??
         0;
+    final employeeReminders = ref.watch(
+      employeeReminderItemsProvider(employee.id),
+    );
 
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(20, 12, 20, 28),
@@ -241,6 +245,68 @@ class _EmployeeDetailContent extends ConsumerWidget {
                 ],
               ),
             ),
+          ),
+          const SizedBox(height: 14),
+          const PersonnelSectionTitle(title: '相关提醒'),
+          const SizedBox(height: 10),
+          employeeReminders.when(
+            loading: () => const Card(
+              child: Padding(
+                padding: EdgeInsets.all(18),
+                child: LinearProgressIndicator(),
+              ),
+            ),
+            error: (_, _) => const Card(
+              child: ListTile(
+                leading: Icon(Icons.info_outline),
+                title: Text('相关提醒暂时无法加载'),
+              ),
+            ),
+            data: (items) {
+              final pending = items.where((item) => item.isPending).toList();
+              return Card(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 14),
+                  child: Column(
+                    children: [
+                      if (pending.isEmpty)
+                        const ListTile(
+                          contentPadding: EdgeInsets.zero,
+                          leading: Icon(Icons.notifications_none_outlined),
+                          title: Text('暂无待处理提醒'),
+                        )
+                      else
+                        for (final item in pending.take(3))
+                          ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            leading: const Icon(
+                              Icons.alarm_outlined,
+                              color: AppColors.techBlue,
+                            ),
+                            title: Text(item.reminder.title),
+                            subtitle: Text(
+                              '${item.scheduledAt.month}月${item.scheduledAt.day}日 ${item.scheduledAt.hour.toString().padLeft(2, '0')}:${item.scheduledAt.minute.toString().padLeft(2, '0')}',
+                            ),
+                            onTap: () => context.push(
+                              '/home/reminders/${item.reminder.id}?occurrenceId=${item.occurrence.id}',
+                            ),
+                          ),
+                      const SizedBox(height: 4),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: OutlinedButton.icon(
+                          onPressed: () => context.push(
+                            '/home/reminders/new?employeeId=${employee.id}',
+                          ),
+                          icon: const Icon(Icons.add),
+                          label: const Text('为此人员新建提醒'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
           ),
           const SizedBox(height: 14),
           Card(

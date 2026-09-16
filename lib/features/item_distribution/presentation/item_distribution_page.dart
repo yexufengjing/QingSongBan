@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../app/theme/app_theme.dart';
 import '../application/item_distribution_providers.dart';
@@ -7,7 +8,9 @@ import '../data/item_distribution_repository.dart';
 import '../domain/item_distribution_models.dart';
 
 class ItemDistributionPage extends ConsumerStatefulWidget {
-  const ItemDistributionPage({super.key});
+  const ItemDistributionPage({super.key, this.fromHomeShortcut = false});
+
+  final bool fromHomeShortcut;
 
   @override
   ConsumerState<ItemDistributionPage> createState() =>
@@ -52,36 +55,56 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
     final groupsAsync = ref.watch(
       categoryDistributionGroupsProvider('$_monthKey|$_tab'),
     );
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('物品领取'),
-        actions: [
-          IconButton(
-            tooltip: '更多操作',
-            onPressed: _showMoreMenu,
-            icon: const Icon(Icons.more_vert),
+    return _withBackBehavior(
+      Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            tooltip: widget.fromHomeShortcut ? '返回首页' : '返回',
+            onPressed: () =>
+                widget.fromHomeShortcut ? context.go('/home') : context.pop(),
+            icon: const Icon(Icons.arrow_back),
           ),
-        ],
-      ),
-      body: Column(
-        children: [
-          _topTabs(),
-          Expanded(
-            child: _category == DistributionCategory.welfare
-                ? _welfareBody(groupsAsync)
-                : _manualBody(groupsAsync),
-          ),
-        ],
-      ),
-      floatingActionButton: _category == DistributionCategory.welfare
-          ? null
-          : FloatingActionButton.extended(
-              onPressed: _showManualDistribution,
-              icon: const Icon(Icons.add),
-              label: Text(
-                _category == DistributionCategory.tool ? '新增工具领用' : '新增办公用品',
-              ),
+          title: const Text('物品领取'),
+          actions: [
+            IconButton(
+              tooltip: '更多操作',
+              onPressed: _showMoreMenu,
+              icon: const Icon(Icons.more_vert),
             ),
+          ],
+        ),
+        body: Column(
+          children: [
+            _topTabs(),
+            Expanded(
+              child: _category == DistributionCategory.welfare
+                  ? _welfareBody(groupsAsync)
+                  : _manualBody(groupsAsync),
+            ),
+          ],
+        ),
+        floatingActionButton: _category == DistributionCategory.welfare
+            ? null
+            : FloatingActionButton.extended(
+                onPressed: _showManualDistribution,
+                icon: const Icon(Icons.add),
+                label: Text(
+                  _category == DistributionCategory.tool ? '新增工具领用' : '新增办公用品',
+                ),
+              ),
+      ),
+    );
+  }
+
+  Widget _withBackBehavior(Widget child) {
+    return PopScope(
+      canPop: !widget.fromHomeShortcut,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop && widget.fromHomeShortcut && mounted) {
+          context.go('/home');
+        }
+      },
+      child: child,
     );
   }
 

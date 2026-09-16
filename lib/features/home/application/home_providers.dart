@@ -41,6 +41,12 @@ Future<HomeDashboardStats> _loadDashboardStats(AppDatabase database) async {
   final summaries = await (database.select(
     database.monthlyAttendanceSummaries,
   )..where((table) => table.isDeleted.equals(false))).get();
+  final pendingOccurrences = await (database.select(
+    database.reminderOccurrences,
+  )..where((table) => table.status.equals('pending'))).get();
+  final pendingReminderIds = pendingOccurrences
+      .map((occurrence) => occurrence.reminderId)
+      .toSet();
   final reminders = await (database.select(
     database.reminders,
   )..where((table) => table.isDeleted.equals(false))).get();
@@ -71,8 +77,16 @@ Future<HomeDashboardStats> _loadDashboardStats(AppDatabase database) async {
           (summary) => summary.yearMonth == month && summary.anomalyCount > 0,
         )
         .length,
-    pendingReminders: reminders
-        .where((reminder) => reminder.isEnabled && !reminder.isCompleted)
-        .length,
+    pendingReminders:
+        pendingOccurrences.length +
+        reminders
+            .where(
+              (reminder) =>
+                  reminder.isEnabled &&
+                  !reminder.isCompleted &&
+                  reminder.dueDate != null &&
+                  !pendingReminderIds.contains(reminder.id),
+            )
+            .length,
   );
 }

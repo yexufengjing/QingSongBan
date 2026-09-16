@@ -16,7 +16,7 @@ void main() {
     await database.close();
   });
 
-  test('creates the complete version eleven schema', () async {
+  test('creates the complete version twelve schema', () async {
     final rows = await database
         .customSelect(
           "SELECT name FROM sqlite_master "
@@ -25,7 +25,7 @@ void main() {
         .get();
     final tableNames = rows.map((row) => row.read<String>('name')).toSet();
 
-    expect(database.schemaVersion, 11);
+    expect(database.schemaVersion, 12);
     expect(
       tableNames,
       containsAll([
@@ -49,6 +49,9 @@ void main() {
         'insurance_change_records',
         'social_security_base_history',
         'reminders',
+        'reminder_occurrences',
+        'reminder_alert_rules',
+        'reminder_links',
         'operation_logs',
         'dictionary_items',
         'app_settings',

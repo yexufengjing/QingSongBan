@@ -34,6 +34,9 @@ part 'app_database.g.dart';
     DictionaryItems,
     AppSettings,
     Reminders,
+    ReminderOccurrences,
+    ReminderAlertRules,
+    ReminderLinks,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -44,7 +47,7 @@ class AppDatabase extends _$AppDatabase {
     : super(executor ?? NativeDatabase.memory());
 
   @override
-  int get schemaVersion => 11;
+  int get schemaVersion => 12;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -108,6 +111,37 @@ class AppDatabase extends _$AppDatabase {
           'standard_quantity',
           'REAL',
         );
+      }
+      if (from < 12 && to >= 12) {
+        if (await _tableExists('reminders')) {
+          await _addColumnIfMissing(
+            'reminders',
+            'priority',
+            "TEXT NOT NULL DEFAULT 'normal'",
+          );
+          await _addColumnIfMissing(
+            'reminders',
+            'category',
+            "TEXT NOT NULL DEFAULT 'general'",
+          );
+          await _addColumnIfMissing(
+            'reminders',
+            'repeat_mode',
+            "TEXT NOT NULL DEFAULT 'fixedSchedule'",
+          );
+          await _addColumnIfMissing('reminders', 'repeat_ends_at', 'INTEGER');
+          await _addColumnIfMissing('reminders', 'repeat_count', 'INTEGER');
+          await _addColumnIfMissing('reminders', 'timezone_id', 'TEXT');
+          await _addColumnIfMissing('reminders', 'archived_at', 'INTEGER');
+        } else {
+          // Some older test/partial export files omit optional feature tables;
+          // create the current table instead of attempting ALTER TABLE on it.
+          await m.createTable(reminders);
+        }
+        await m.createTable(reminderOccurrences);
+        await m.createTable(reminderAlertRules);
+        await m.createTable(reminderLinks);
+        await _migrateLegacyReminders();
       }
     },
     beforeOpen: (details) async {
@@ -188,6 +222,44 @@ class AppDatabase extends _$AppDatabase {
     final columns = await customSelect('PRAGMA table_info($table)').get();
     if (columns.any((row) => row.data['name'] == column)) return;
     await customStatement('ALTER TABLE $table ADD COLUMN $column $definition');
+  }
+
+  Future<bool> _tableExists(String table) async {
+    final rows = await customSelect(
+      "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = ?",
+      variables: [Variable.withString(table)],
+    ).get();
+    return rows.isNotEmpty;
+  }
+
+  Future<void> _migrateLegacyReminders() async {
+    // Existing v7-v11 reminders are preserved as a series owner, its first
+    // execution (when a due date exists), and one equivalent lead-time rule.
+    // INSERT OR IGNORE makes the migration safe if a partially upgraded file
+    // is opened again.
+    await customStatement('''
+      INSERT OR IGNORE INTO reminder_occurrences
+        (reminder_id, scheduled_at, status, completed_at, created_at, updated_at)
+      SELECT id,
+             due_date,
+             CASE WHEN is_completed = 1 THEN 'completed' ELSE 'pending' END,
+             CASE WHEN is_completed = 1 THEN updated_at ELSE NULL END,
+             created_at,
+             updated_at
+      FROM reminders
+      WHERE due_date IS NOT NULL AND is_deleted = 0
+    ''');
+    await customStatement('''
+      INSERT INTO reminder_alert_rules
+        (reminder_id, offset_minutes, is_nag_rule, sort_order, is_enabled,
+         created_at, updated_at)
+      SELECT r.id, r.lead_days * -1440, 0, 0, r.is_enabled,
+             r.created_at, r.updated_at
+      FROM reminders r
+      WHERE NOT EXISTS (
+        SELECT 1 FROM reminder_alert_rules a WHERE a.reminder_id = r.id
+      )
+    ''');
   }
 
   Future<int> insertEmployee(EmployeesCompanion employee) {

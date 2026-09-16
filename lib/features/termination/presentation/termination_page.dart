@@ -104,7 +104,7 @@ class TerminationPage extends ConsumerWidget {
           .findBySource('termination', item.termination.id);
       await ref.read(terminationRepositoryProvider).revoke(item.termination.id);
       if (reminder != null) {
-        await ref.read(notificationServiceProvider).cancel(reminder.id);
+        await ref.read(reminderSchedulerProvider).rescheduleAll();
       }
       if (context.mounted) {
         ScaffoldMessenger.of(context)

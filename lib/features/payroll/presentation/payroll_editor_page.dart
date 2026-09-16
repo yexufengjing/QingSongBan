@@ -214,7 +214,7 @@ class _EditorContent extends StatelessWidget {
               .read(reminderRepositoryProvider)
               .findBySource('payroll_batch', batch.id);
           if (reminder != null) {
-            await ref.read(notificationServiceProvider).cancel(reminder.id);
+            await ref.read(reminderSchedulerProvider).rescheduleAll();
           }
           await repo.deleteDraft(batch.id);
           if (context.mounted) context.pop();
@@ -243,7 +243,7 @@ class _EditorContent extends StatelessWidget {
         .read(reminderRepositoryProvider)
         .findBySource('payroll_batch', batchId);
     if (reminder != null) {
-      await ref.read(notificationServiceProvider).sync(reminder);
+      await ref.read(reminderSchedulerProvider).reschedule(reminder.id);
     }
   }
 

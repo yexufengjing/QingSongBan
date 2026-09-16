@@ -11,9 +11,10 @@ import '../application/leave_providers.dart';
 import '../domain/leave_options.dart';
 
 class LeaveFormPage extends ConsumerStatefulWidget {
-  const LeaveFormPage({super.key, this.leaveId});
+  const LeaveFormPage({super.key, this.leaveId, this.fromHomeShortcut = false});
 
   final int? leaveId;
+  final bool fromHomeShortcut;
 
   bool get isEditing => leaveId != null;
 
@@ -54,26 +55,49 @@ class _LeaveFormPageState extends ConsumerState<LeaveFormPage> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<LeaveRecord?>(
-      future: _leaveFuture,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState != ConnectionState.done) {
-          return _loadingScaffold();
+    return _withBackBehavior(
+      FutureBuilder<LeaveRecord?>(
+        future: _leaveFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) {
+            return _loadingScaffold();
+          }
+          if (snapshot.hasError) {
+            return _errorScaffold('请假记录加载失败：${snapshot.error}');
+          }
+          if (widget.isEditing && snapshot.data == null) {
+            return _errorScaffold('请假记录不存在或已被删除');
+          }
+          _initialize(snapshot.data);
+          final employees = ref.watch(allPersonnelProvider);
+          return employees.when(
+            loading: () => _loadingScaffold(),
+            error: (error, _) => _errorScaffold('人员列表加载失败：$error'),
+            data: (items) => _buildForm(context, items),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _withBackBehavior(Widget child) {
+    return PopScope(
+      canPop: !widget.fromHomeShortcut,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop && widget.fromHomeShortcut && mounted) {
+          context.go('/home');
         }
-        if (snapshot.hasError) {
-          return _errorScaffold('请假记录加载失败：${snapshot.error}');
-        }
-        if (widget.isEditing && snapshot.data == null) {
-          return _errorScaffold('请假记录不存在或已被删除');
-        }
-        _initialize(snapshot.data);
-        final employees = ref.watch(allPersonnelProvider);
-        return employees.when(
-          loading: () => _loadingScaffold(),
-          error: (error, _) => _errorScaffold('人员列表加载失败：$error'),
-          data: (items) => _buildForm(context, items),
-        );
       },
+      child: child,
+    );
+  }
+
+  Widget _backButton(BuildContext context) {
+    return IconButton(
+      tooltip: widget.fromHomeShortcut ? '返回首页' : '返回',
+      onPressed: () =>
+          widget.fromHomeShortcut ? context.go('/home') : context.pop(),
+      icon: const Icon(Icons.arrow_back),
     );
   }
 
@@ -95,6 +119,7 @@ class _LeaveFormPageState extends ConsumerState<LeaveFormPage> {
   Widget _buildForm(BuildContext context, List<Employee> employees) {
     return Scaffold(
       appBar: AppBar(
+        leading: _backButton(context),
         title: Text(widget.isEditing ? '编辑请假' : '新增请假'),
         actions: [
           Padding(
@@ -445,7 +470,9 @@ class _LeaveFormPageState extends ConsumerState<LeaveFormPage> {
               remark: _remarkController.text,
             ),
           );
-      if (mounted) context.go('/attendance/leave');
+      if (mounted) {
+        context.go(widget.fromHomeShortcut ? '/home' : '/attendance/leave');
+      }
     } catch (error) {
       if (!mounted) return;
       setState(() => _saving = false);
@@ -456,14 +483,20 @@ class _LeaveFormPageState extends ConsumerState<LeaveFormPage> {
 
   Scaffold _loadingScaffold() {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.isEditing ? '编辑请假' : '新增请假')),
+      appBar: AppBar(
+        leading: _backButton(context),
+        title: Text(widget.isEditing ? '编辑请假' : '新增请假'),
+      ),
       body: const Center(child: CircularProgressIndicator()),
     );
   }
 
   Scaffold _errorScaffold(String message) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.isEditing ? '编辑请假' : '新增请假')),
+      appBar: AppBar(
+        leading: _backButton(context),
+        title: Text(widget.isEditing ? '编辑请假' : '新增请假'),
+      ),
       body: Center(child: Text(message)),
     );
   }

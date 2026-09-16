@@ -11,9 +11,14 @@ import '../application/personnel_providers.dart';
 import '../domain/personnel_options.dart';
 
 class PersonnelFormPage extends ConsumerStatefulWidget {
-  const PersonnelFormPage({this.employeeId, super.key});
+  const PersonnelFormPage({
+    this.employeeId,
+    this.fromHomeShortcut = false,
+    super.key,
+  });
 
   final int? employeeId;
+  final bool fromHomeShortcut;
 
   bool get isEditing => employeeId != null;
 
@@ -70,48 +75,80 @@ class _PersonnelFormPageState extends ConsumerState<PersonnelFormPage> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Employee?>(
-      future: _employeeFuture,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState != ConnectionState.done) {
-          return Scaffold(
-            appBar: AppBar(title: Text(widget.isEditing ? '编辑人员' : '新增人员')),
-            body: const Center(child: CircularProgressIndicator()),
-          );
-        }
-        if (snapshot.hasError) {
-          return Scaffold(
-            appBar: AppBar(title: Text(widget.isEditing ? '编辑人员' : '新增人员')),
-            body: Center(child: Text('档案加载失败：${snapshot.error}')),
-          );
-        }
-        if (widget.isEditing && snapshot.data == null) {
-          return Scaffold(
-            appBar: AppBar(title: const Text('编辑人员')),
-            body: const Center(child: Text('档案不存在或已被移除')),
-          );
-        }
-
-        _initialize(snapshot.data);
-        final activeGroups = ref
-            .watch(attendanceGroupsProvider)
-            .maybeWhen(
-              data: (items) => items,
-              orElse: () => const <AttendanceGroup>[],
+    return _withBackBehavior(
+      FutureBuilder<Employee?>(
+        future: _employeeFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) {
+            return Scaffold(
+              appBar: AppBar(
+                leading: _backButton(context),
+                title: Text(widget.isEditing ? '编辑人员' : '新增人员'),
+              ),
+              body: const Center(child: CircularProgressIndicator()),
             );
-        final currentGroup = _attendanceGroupId == null
-            ? null
-            : ref
-                  .watch(attendanceGroupProvider(_attendanceGroupId!))
-                  .maybeWhen(data: (item) => item, orElse: () => null);
-        final groups = [
-          ...activeGroups,
-          if (currentGroup != null &&
-              !activeGroups.any((group) => group.id == currentGroup.id))
-            currentGroup,
-        ];
-        return _buildForm(context, groups);
+          }
+          if (snapshot.hasError) {
+            return Scaffold(
+              appBar: AppBar(
+                leading: _backButton(context),
+                title: Text(widget.isEditing ? '编辑人员' : '新增人员'),
+              ),
+              body: Center(child: Text('档案加载失败：${snapshot.error}')),
+            );
+          }
+          if (widget.isEditing && snapshot.data == null) {
+            return Scaffold(
+              appBar: AppBar(
+                leading: _backButton(context),
+                title: const Text('编辑人员'),
+              ),
+              body: const Center(child: Text('档案不存在或已被移除')),
+            );
+          }
+
+          _initialize(snapshot.data);
+          final activeGroups = ref
+              .watch(attendanceGroupsProvider)
+              .maybeWhen(
+                data: (items) => items,
+                orElse: () => const <AttendanceGroup>[],
+              );
+          final currentGroup = _attendanceGroupId == null
+              ? null
+              : ref
+                    .watch(attendanceGroupProvider(_attendanceGroupId!))
+                    .maybeWhen(data: (item) => item, orElse: () => null);
+          final groups = [
+            ...activeGroups,
+            if (currentGroup != null &&
+                !activeGroups.any((group) => group.id == currentGroup.id))
+              currentGroup,
+          ];
+          return _buildForm(context, groups);
+        },
+      ),
+    );
+  }
+
+  Widget _withBackBehavior(Widget child) {
+    return PopScope(
+      canPop: !widget.fromHomeShortcut,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop && widget.fromHomeShortcut && mounted) {
+          context.go('/home');
+        }
       },
+      child: child,
+    );
+  }
+
+  Widget _backButton(BuildContext context) {
+    return IconButton(
+      tooltip: widget.fromHomeShortcut ? '返回首页' : '返回',
+      onPressed: () =>
+          widget.fromHomeShortcut ? context.go('/home') : context.pop(),
+      icon: const Icon(Icons.arrow_back),
     );
   }
 
@@ -141,6 +178,7 @@ class _PersonnelFormPageState extends ConsumerState<PersonnelFormPage> {
   Widget _buildForm(BuildContext context, List<AttendanceGroup> groups) {
     return Scaffold(
       appBar: AppBar(
+        leading: _backButton(context),
         title: Text(widget.isEditing ? '编辑人员' : '新增人员'),
         actions: [
           if (!widget.isEditing)
@@ -515,7 +553,9 @@ class _PersonnelFormPageState extends ConsumerState<PersonnelFormPage> {
       if (widget.employeeId != null) {
         ref.invalidate(employeeProvider(widget.employeeId!));
       }
-      context.go('/personnel/${employee.id}');
+      context.go(
+        widget.fromHomeShortcut ? '/home' : '/personnel/${employee.id}',
+      );
     } catch (error) {
       if (mounted) {
         setState(() => _saving = false);

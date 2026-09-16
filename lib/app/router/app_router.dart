@@ -23,7 +23,9 @@ import '../../features/insurance/presentation/insurance_page.dart';
 import '../../features/insurance/presentation/insurance_profile_form_page.dart';
 import '../../features/excel/presentation/excel_page.dart';
 import '../../features/reminders/presentation/reminder_form_page.dart';
+import '../../features/reminders/presentation/reminder_detail_page.dart';
 import '../../features/reminders/presentation/reminder_page.dart';
+import '../../features/reminders/presentation/reminder_settings_page.dart';
 import '../../features/backup/presentation/backup_page.dart';
 import '../../features/operation_logs/presentation/operation_log_page.dart';
 import '../../features/personnel/presentation/personnel_page.dart';
@@ -56,6 +58,52 @@ final GoRouter appRouter = GoRouter(
               path: '/home',
               name: 'home',
               builder: (context, state) => const HomePage(),
+              routes: [
+                GoRoute(
+                  path: 'reminders',
+                  name: 'home-reminders',
+                  builder: (context, state) => const ReminderPage(),
+                  routes: [
+                    GoRoute(
+                      path: 'new',
+                      name: 'home-reminder-new',
+                      builder: (context, state) => ReminderFormPage(
+                        initialEmployeeId: int.tryParse(
+                          state.uri.queryParameters['employeeId'] ?? '',
+                        ),
+                        copyFromId: int.tryParse(
+                          state.uri.queryParameters['copyFrom'] ?? '',
+                        ),
+                      ),
+                    ),
+                    GoRoute(
+                      path: ':reminderId',
+                      name: 'home-reminder-detail',
+                      builder: (context, state) => ReminderDetailPage(
+                        reminderId:
+                            int.tryParse(
+                              state.pathParameters['reminderId'] ?? '',
+                            ) ??
+                            -1,
+                        occurrenceId: int.tryParse(
+                          state.uri.queryParameters['occurrenceId'] ?? '',
+                        ),
+                      ),
+                      routes: [
+                        GoRoute(
+                          path: 'edit',
+                          name: 'home-reminder-edit',
+                          builder: (context, state) => ReminderFormPage(
+                            reminderId: int.tryParse(
+                              state.pathParameters['reminderId'] ?? '',
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
             ),
           ],
         ),
@@ -81,7 +129,10 @@ final GoRouter appRouter = GoRouter(
                 GoRoute(
                   path: 'new',
                   name: 'personnel-new',
-                  builder: (context, state) => const PersonnelFormPage(),
+                  builder: (context, state) => PersonnelFormPage(
+                    fromHomeShortcut:
+                        state.uri.queryParameters['from'] == 'home',
+                  ),
                 ),
                 GoRoute(
                   path: ':employeeId',
@@ -159,7 +210,10 @@ final GoRouter appRouter = GoRouter(
                 GoRoute(
                   path: 'daily',
                   name: 'daily-attendance',
-                  builder: (context, state) => const DailyAttendancePage(),
+                  builder: (context, state) => DailyAttendancePage(
+                    fromHomeShortcut:
+                        state.uri.queryParameters['from'] == 'home',
+                  ),
                 ),
                 GoRoute(
                   path: 'monthly-table',
@@ -192,7 +246,10 @@ final GoRouter appRouter = GoRouter(
                     GoRoute(
                       path: 'new',
                       name: 'leave-new',
-                      builder: (context, state) => const LeaveFormPage(),
+                      builder: (context, state) => LeaveFormPage(
+                        fromHomeShortcut:
+                            state.uri.queryParameters['from'] == 'home',
+                      ),
                     ),
                     GoRoute(
                       path: ':leaveId/edit',
@@ -219,7 +276,10 @@ final GoRouter appRouter = GoRouter(
                     GoRoute(
                       path: 'new',
                       name: 'overtime-new',
-                      builder: (context, state) => const OvertimeFormPage(),
+                      builder: (context, state) => OvertimeFormPage(
+                        fromHomeShortcut:
+                            state.uri.queryParameters['from'] == 'home',
+                      ),
                     ),
                     GoRoute(
                       path: ':overtimeId/edit',
@@ -246,7 +306,10 @@ final GoRouter appRouter = GoRouter(
                     GoRoute(
                       path: 'new',
                       name: 'termination-new',
-                      builder: (context, state) => const TerminationFormPage(),
+                      builder: (context, state) => TerminationFormPage(
+                        fromHomeShortcut:
+                            state.uri.queryParameters['from'] == 'home',
+                      ),
                     ),
                     GoRoute(
                       path: ':terminationId/edit',
@@ -326,7 +389,10 @@ final GoRouter appRouter = GoRouter(
                 GoRoute(
                   path: 'payroll',
                   name: 'payroll',
-                  builder: (context, state) => const PayrollHomePage(),
+                  builder: (context, state) => PayrollHomePage(
+                    fromHomeShortcut:
+                        state.uri.queryParameters['from'] == 'home',
+                  ),
                   routes: [
                     GoRoute(
                       path: 'edit/:batchId',
@@ -413,8 +479,10 @@ final GoRouter appRouter = GoRouter(
                     GoRoute(
                       path: 'change',
                       name: 'insurance-change',
-                      builder: (context, state) =>
-                          const InsuranceChangeFormPage(),
+                      builder: (context, state) => InsuranceChangeFormPage(
+                        fromHomeShortcut:
+                            state.uri.queryParameters['from'] == 'home',
+                      ),
                       routes: [
                         GoRoute(
                           path: ':changeId/edit',
@@ -443,12 +511,19 @@ final GoRouter appRouter = GoRouter(
                 GoRoute(
                   path: 'reminders',
                   name: 'reminders',
-                  builder: (context, state) => const ReminderPage(),
+                  builder: (context, state) => const ReminderSettingsPage(),
                   routes: [
                     GoRoute(
                       path: 'new',
                       name: 'reminder-new',
-                      builder: (context, state) => const ReminderFormPage(),
+                      builder: (context, state) => ReminderFormPage(
+                        initialEmployeeId: int.tryParse(
+                          state.uri.queryParameters['employeeId'] ?? '',
+                        ),
+                        copyFromId: int.tryParse(
+                          state.uri.queryParameters['copyFrom'] ?? '',
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -469,9 +544,52 @@ final GoRouter appRouter = GoRouter(
       ],
     ),
     GoRoute(
+      path: '/reminders',
+      name: 'reminder-inbox',
+      builder: (context, state) => const ReminderPage(),
+      routes: [
+        GoRoute(
+          path: 'new',
+          name: 'reminder-inbox-new',
+          builder: (context, state) => ReminderFormPage(
+            initialEmployeeId: int.tryParse(
+              state.uri.queryParameters['employeeId'] ?? '',
+            ),
+            copyFromId: int.tryParse(
+              state.uri.queryParameters['copyFrom'] ?? '',
+            ),
+          ),
+        ),
+        GoRoute(
+          path: ':reminderId',
+          name: 'reminder-detail',
+          builder: (context, state) => ReminderDetailPage(
+            reminderId:
+                int.tryParse(state.pathParameters['reminderId'] ?? '') ?? -1,
+            occurrenceId: int.tryParse(
+              state.uri.queryParameters['occurrenceId'] ?? '',
+            ),
+          ),
+          routes: [
+            GoRoute(
+              path: 'edit',
+              name: 'reminder-edit',
+              builder: (context, state) => ReminderFormPage(
+                reminderId: int.tryParse(
+                  state.pathParameters['reminderId'] ?? '',
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+    GoRoute(
       path: '/items',
       name: 'item-distribution',
-      builder: (context, state) => const ItemDistributionPage(),
+      builder: (context, state) => ItemDistributionPage(
+        fromHomeShortcut: state.uri.queryParameters['from'] == 'home',
+      ),
     ),
   ],
 );

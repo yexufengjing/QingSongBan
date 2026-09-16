@@ -26,7 +26,13 @@ class HomePage extends ConsumerWidget {
                   loading: () => const _DashboardLoading(),
                   error: (error, _) =>
                       _DashboardError(message: error.toString()),
-                  data: (stats) => _Dashboard(stats: stats),
+                  data: (stats) => Column(
+                    children: [
+                      _Dashboard(stats: stats),
+                      const SizedBox(height: 14),
+                      _ReminderShortcut(pending: stats.pendingReminders),
+                    ],
+                  ),
                 ),
             const SizedBox(height: 20),
             Text('快捷操作', style: Theme.of(context).textTheme.headlineMedium),
@@ -112,7 +118,7 @@ class _Dashboard extends StatelessWidget {
             label: '待处理提醒',
             value: stats.pendingReminders,
             color: AppColors.purple,
-            route: '/settings/reminders',
+            route: '/home/reminders',
           ),
         ],
       ),
@@ -169,51 +175,57 @@ class _QuickActions extends StatelessWidget {
   Widget build(BuildContext context) {
     const actions = [
       (
+        '备忘提醒',
+        Icons.checklist_rtl_outlined,
+        '/home/reminders',
+        AppColors.primary,
+      ),
+      (
         '新增人员',
         Icons.person_add_alt_1_outlined,
-        '/personnel/new',
+        '/personnel/new?from=home',
         AppColors.primary,
       ),
       (
         '今日考勤',
         Icons.fact_check_outlined,
-        '/attendance/daily',
+        '/attendance/daily?from=home',
         AppColors.techBlue,
       ),
       (
         '物品领取',
         Icons.inventory_2_outlined,
-        '/items',
+        '/items?from=home',
         AppColors.primary,
       ),
       (
         '请假登记',
         Icons.event_busy_outlined,
-        '/attendance/leave/new',
+        '/attendance/leave/new?from=home',
         Color(0xFFE98500),
       ),
       (
         '加班登记',
         Icons.more_time_outlined,
-        '/attendance/overtime/new',
+        '/attendance/overtime/new?from=home',
         AppColors.purple,
       ),
       (
         '离职登记',
         Icons.person_remove_outlined,
-        '/attendance/termination/new',
+        '/attendance/termination/new?from=home',
         AppColors.danger,
       ),
       (
         '保险变更',
         Icons.health_and_safety_outlined,
-        '/settings/insurance/change',
+        '/settings/insurance/change?from=home',
         AppColors.techBlue,
       ),
       (
         '工资造资',
         Icons.payments_outlined,
-        '/reports/payroll',
+        '/reports/payroll?from=home',
         AppColors.primary,
       ),
     ];
@@ -244,6 +256,63 @@ class _QuickActions extends StatelessWidget {
       ],
     );
   }
+}
+
+class _ReminderShortcut extends StatelessWidget {
+  const _ReminderShortcut({required this.pending});
+
+  final int pending;
+
+  @override
+  Widget build(BuildContext context) => Card(
+    color: AppColors.card,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20),
+      side: const BorderSide(color: AppColors.lightGreen, width: 1.5),
+    ),
+    child: InkWell(
+      borderRadius: BorderRadius.circular(20),
+      onTap: () => context.push('/home/reminders'),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(18, 15, 14, 15),
+        child: Row(
+          children: [
+            Container(
+              width: 44,
+              height: 44,
+              decoration: BoxDecoration(
+                color: AppColors.primary,
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: const Icon(
+                Icons.checklist_rtl_outlined,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('备忘提醒', style: Theme.of(context).textTheme.titleLarge),
+                  const SizedBox(height: 3),
+                  Text(
+                    '$pending 件待处理 · 今天别忘了要紧的事',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ],
+              ),
+            ),
+            const Icon(
+              Icons.arrow_forward_ios,
+              color: AppColors.primary,
+              size: 17,
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }
 
 class _HomeHero extends StatelessWidget {

@@ -12,9 +12,14 @@ import '../application/insurance_providers.dart';
 import '../domain/insurance_options.dart';
 
 class InsuranceChangeFormPage extends ConsumerStatefulWidget {
-  const InsuranceChangeFormPage({super.key, this.changeId});
+  const InsuranceChangeFormPage({
+    super.key,
+    this.changeId,
+    this.fromHomeShortcut = false,
+  });
 
   final int? changeId;
+  final bool fromHomeShortcut;
 
   @override
   ConsumerState<InsuranceChangeFormPage> createState() =>
@@ -54,212 +59,244 @@ class _InsuranceChangeFormPageState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.changeId == null ? '登记保险变更' : '编辑保险变更'),
-      ),
-      body: ref
-          .watch(allPersonnelProvider)
-          .when(
-            loading: () => const Center(child: CircularProgressIndicator()),
-            error: (error, _) => Center(child: Text('人员列表加载失败：$error')),
-            data: (employees) {
-              if (employees.isEmpty) {
-                return const Center(child: Text('暂无人员，请先建立人员档案。'));
-              }
-              if (_loadingChange) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              return Form(
-                key: _formKey,
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
-                  child: Column(
-                    children: [
-                      Card(
-                        color: AppColors.lightBlue,
-                        child: const Padding(
-                          padding: EdgeInsets.all(16),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Icon(
-                                Icons.info_outline,
-                                color: AppColors.techBlue,
-                              ),
-                              SizedBox(width: 10),
-                              Expanded(
-                                child: Text(
-                                  '保险变更先记录办理状态，标记为“已完成”时才会更新当前参保信息和基数历史。',
+    return _withBackBehavior(
+      Scaffold(
+        appBar: AppBar(
+          leading: _backButton(context),
+          title: Text(widget.changeId == null ? '登记保险变更' : '编辑保险变更'),
+        ),
+        body: ref
+            .watch(allPersonnelProvider)
+            .when(
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (error, _) => Center(child: Text('人员列表加载失败：$error')),
+              data: (employees) {
+                if (employees.isEmpty) {
+                  return const Center(child: Text('暂无人员，请先建立人员档案。'));
+                }
+                if (_loadingChange) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                return Form(
+                  key: _formKey,
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
+                    child: Column(
+                      children: [
+                        Card(
+                          color: AppColors.lightBlue,
+                          child: const Padding(
+                            padding: EdgeInsets.all(16),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Icon(
+                                  Icons.info_outline,
+                                  color: AppColors.techBlue,
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(18),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '变更信息',
-                                style: Theme.of(context).textTheme.titleLarge,
-                              ),
-                              const SizedBox(height: 16),
-                              DropdownButtonFormField<int>(
-                                key: const Key(
-                                  'insurance-change-employee-field',
-                                ),
-                                initialValue: _employeeId,
-                                isExpanded: true,
-                                decoration: const InputDecoration(
-                                  labelText: '人员',
-                                ),
-                                hint: const Text('请选择人员'),
-                                validator: (value) =>
-                                    value == null ? '请选择人员' : null,
-                                items: [
-                                  for (final employee in employees)
-                                    DropdownMenuItem(
-                                      value: employee.id,
-                                      child: Text(
-                                        '${employee.name} · ${employee.employeeNo}',
-                                      ),
-                                    ),
-                                ],
-                                onChanged: (value) =>
-                                    setState(() => _employeeId = value),
-                              ),
-                              const SizedBox(height: 16),
-                              _choiceChips(
-                                context: context,
-                                label: '变更类型',
-                                options: InsuranceOptions.changeTypes,
-                                selected: _changeType,
-                                labelBuilder: InsuranceOptions.changeTypeLabel,
-                                onSelected: (value) =>
-                                    setState(() => _changeType = value),
-                              ),
-                              const SizedBox(height: 16),
-                              DropdownButtonFormField<String>(
-                                key: const Key('insurance-change-status-field'),
-                                initialValue: _processingStatus,
-                                decoration: const InputDecoration(
-                                  labelText: '办理状态',
-                                ),
-                                items: [
-                                  for (final status
-                                      in InsuranceOptions.processingStatuses)
-                                    DropdownMenuItem(
-                                      value: status,
-                                      child: Text(
-                                        InsuranceOptions.statusLabel(status),
-                                      ),
-                                    ),
-                                ],
-                                onChanged: (value) =>
-                                    setState(() => _processingStatus = value!),
-                              ),
-                              const SizedBox(height: 12),
-                              TextFormField(
-                                key: const Key('insurance-change-month-field'),
-                                controller: _monthController,
-                                decoration: const InputDecoration(
-                                  labelText: '生效月份',
-                                  hintText: 'YYYY-MM，例如 2026-09',
-                                ),
-                                validator: (value) {
-                                  try {
-                                    AppDateUtils.parseYearMonth(
-                                      value?.trim() ?? '',
-                                    );
-                                    return null;
-                                  } catch (_) {
-                                    return '请输入有效的 YYYY-MM';
-                                  }
-                                },
-                              ),
-                              const SizedBox(height: 12),
-                              DropdownButtonFormField<String>(
-                                key: const Key('insurance-change-type-field'),
-                                initialValue: _insuranceType,
-                                isExpanded: true,
-                                decoration: const InputDecoration(
-                                  labelText: '保险类型（可选）',
-                                ),
-                                hint: const Text('请选择或留空'),
-                                items: [
-                                  for (final type in InsuranceOptions.types)
-                                    DropdownMenuItem(
-                                      value: type,
-                                      child: Text(
-                                        InsuranceOptions.typeLabel(type),
-                                      ),
-                                    ),
-                                ],
-                                onChanged: (value) =>
-                                    setState(() => _insuranceType = value),
-                              ),
-                              const SizedBox(height: 12),
-                              TextFormField(
-                                key: const Key('insurance-change-base-field'),
-                                controller: _baseController,
-                                keyboardType:
-                                    const TextInputType.numberWithOptions(
-                                      decimal: true,
-                                    ),
-                                decoration: const InputDecoration(
-                                  labelText: '缴费基数（可选）',
-                                ),
-                              ),
-                              const SizedBox(height: 12),
-                              TextFormField(
-                                key: const Key('insurance-change-remark-field'),
-                                controller: _remarkController,
-                                maxLines: 3,
-                                decoration: const InputDecoration(
-                                  labelText: '备注',
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 18),
-                      AttachmentPickerCard(
-                        title: '保险材料',
-                        files: _pendingAttachments,
-                        onChanged: (value) =>
-                            setState(() => _pendingAttachments = value),
-                      ),
-                      const SizedBox(height: 18),
-                      SizedBox(
-                        width: double.infinity,
-                        child: FilledButton.icon(
-                          key: const Key('insurance-change-save-button'),
-                          onPressed: _saving ? null : _save,
-                          icon: _saving
-                              ? const SizedBox(
-                                  width: 18,
-                                  height: 18,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: Colors.white,
+                                SizedBox(width: 10),
+                                Expanded(
+                                  child: Text(
+                                    '保险变更先记录办理状态，标记为“已完成”时才会更新当前参保信息和基数历史。',
                                   ),
-                                )
-                              : const Icon(Icons.save_outlined),
-                          label: Text(_saving ? '保存中…' : '保存保险变更'),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 16),
+                        Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(18),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '变更信息',
+                                  style: Theme.of(context).textTheme.titleLarge,
+                                ),
+                                const SizedBox(height: 16),
+                                DropdownButtonFormField<int>(
+                                  key: const Key(
+                                    'insurance-change-employee-field',
+                                  ),
+                                  initialValue: _employeeId,
+                                  isExpanded: true,
+                                  decoration: const InputDecoration(
+                                    labelText: '人员',
+                                  ),
+                                  hint: const Text('请选择人员'),
+                                  validator: (value) =>
+                                      value == null ? '请选择人员' : null,
+                                  items: [
+                                    for (final employee in employees)
+                                      DropdownMenuItem(
+                                        value: employee.id,
+                                        child: Text(
+                                          '${employee.name} · ${employee.employeeNo}',
+                                        ),
+                                      ),
+                                  ],
+                                  onChanged: (value) =>
+                                      setState(() => _employeeId = value),
+                                ),
+                                const SizedBox(height: 16),
+                                _choiceChips(
+                                  context: context,
+                                  label: '变更类型',
+                                  options: InsuranceOptions.changeTypes,
+                                  selected: _changeType,
+                                  labelBuilder:
+                                      InsuranceOptions.changeTypeLabel,
+                                  onSelected: (value) =>
+                                      setState(() => _changeType = value),
+                                ),
+                                const SizedBox(height: 16),
+                                DropdownButtonFormField<String>(
+                                  key: const Key(
+                                    'insurance-change-status-field',
+                                  ),
+                                  initialValue: _processingStatus,
+                                  decoration: const InputDecoration(
+                                    labelText: '办理状态',
+                                  ),
+                                  items: [
+                                    for (final status
+                                        in InsuranceOptions.processingStatuses)
+                                      DropdownMenuItem(
+                                        value: status,
+                                        child: Text(
+                                          InsuranceOptions.statusLabel(status),
+                                        ),
+                                      ),
+                                  ],
+                                  onChanged: (value) => setState(
+                                    () => _processingStatus = value!,
+                                  ),
+                                ),
+                                const SizedBox(height: 12),
+                                TextFormField(
+                                  key: const Key(
+                                    'insurance-change-month-field',
+                                  ),
+                                  controller: _monthController,
+                                  decoration: const InputDecoration(
+                                    labelText: '生效月份',
+                                    hintText: 'YYYY-MM，例如 2026-09',
+                                  ),
+                                  validator: (value) {
+                                    try {
+                                      AppDateUtils.parseYearMonth(
+                                        value?.trim() ?? '',
+                                      );
+                                      return null;
+                                    } catch (_) {
+                                      return '请输入有效的 YYYY-MM';
+                                    }
+                                  },
+                                ),
+                                const SizedBox(height: 12),
+                                DropdownButtonFormField<String>(
+                                  key: const Key('insurance-change-type-field'),
+                                  initialValue: _insuranceType,
+                                  isExpanded: true,
+                                  decoration: const InputDecoration(
+                                    labelText: '保险类型（可选）',
+                                  ),
+                                  hint: const Text('请选择或留空'),
+                                  items: [
+                                    for (final type in InsuranceOptions.types)
+                                      DropdownMenuItem(
+                                        value: type,
+                                        child: Text(
+                                          InsuranceOptions.typeLabel(type),
+                                        ),
+                                      ),
+                                  ],
+                                  onChanged: (value) =>
+                                      setState(() => _insuranceType = value),
+                                ),
+                                const SizedBox(height: 12),
+                                TextFormField(
+                                  key: const Key('insurance-change-base-field'),
+                                  controller: _baseController,
+                                  keyboardType:
+                                      const TextInputType.numberWithOptions(
+                                        decimal: true,
+                                      ),
+                                  decoration: const InputDecoration(
+                                    labelText: '缴费基数（可选）',
+                                  ),
+                                ),
+                                const SizedBox(height: 12),
+                                TextFormField(
+                                  key: const Key(
+                                    'insurance-change-remark-field',
+                                  ),
+                                  controller: _remarkController,
+                                  maxLines: 3,
+                                  decoration: const InputDecoration(
+                                    labelText: '备注',
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 18),
+                        AttachmentPickerCard(
+                          title: '保险材料',
+                          files: _pendingAttachments,
+                          onChanged: (value) =>
+                              setState(() => _pendingAttachments = value),
+                        ),
+                        const SizedBox(height: 18),
+                        SizedBox(
+                          width: double.infinity,
+                          child: FilledButton.icon(
+                            key: const Key('insurance-change-save-button'),
+                            onPressed: _saving ? null : _save,
+                            icon: _saving
+                                ? const SizedBox(
+                                    width: 18,
+                                    height: 18,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                : const Icon(Icons.save_outlined),
+                            label: Text(_saving ? '保存中…' : '保存保险变更'),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            },
-          ),
+                );
+              },
+            ),
+      ),
+    );
+  }
+
+  Widget _withBackBehavior(Widget child) {
+    return PopScope(
+      canPop: !widget.fromHomeShortcut,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop && widget.fromHomeShortcut && mounted) {
+          context.go('/home');
+        }
+      },
+      child: child,
+    );
+  }
+
+  Widget _backButton(BuildContext context) {
+    return IconButton(
+      tooltip: widget.fromHomeShortcut ? '返回首页' : '返回',
+      onPressed: () =>
+          widget.fromHomeShortcut ? context.go('/home') : context.pop(),
+      icon: const Icon(Icons.arrow_back),
     );
   }
 
@@ -327,7 +364,9 @@ class _InsuranceChangeFormPageState
             sourceEntityType: 'insurance_change',
             sourceEntityId: saved.id,
           );
-      if (mounted) context.go('/settings/insurance');
+      if (mounted) {
+        context.go(widget.fromHomeShortcut ? '/home' : '/settings/insurance');
+      }
     } catch (error) {
       if (!mounted) return;
       setState(() => _saving = false);

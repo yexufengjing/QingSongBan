@@ -158,6 +158,66 @@ void main() {
     }
   });
 
+  testWidgets('returns directly to home from home shortcut pages', (
+    tester,
+  ) async {
+    await pumpApp(tester);
+
+    const shortcuts = {
+      '新增人员': '新增人员',
+      '请假登记': '新增请假',
+      '加班登记': '新增加班',
+      '离职登记': '登记离职',
+      '保险变更': '登记保险变更',
+    };
+    for (final entry in shortcuts.entries) {
+      appRouter.go('/home');
+      await tester.pumpAndSettle();
+      final action = find.byKey(Key('home-action-${entry.key}'));
+      await tester.ensureVisible(action);
+      await tester.tap(action);
+      await tester.pumpAndSettle();
+
+      expect(find.text(entry.value), findsOneWidget);
+      final backButton = find.byTooltip('返回首页');
+      expect(backButton, findsOneWidget);
+      await tester.tap(backButton);
+      await tester.pumpAndSettle();
+      expect(find.text('快捷操作'), findsOneWidget);
+    }
+  });
+
+  testWidgets('returns home after saving a leave from a home shortcut', (
+    tester,
+  ) async {
+    final employeeId = await database.insertEmployee(
+      EmployeesCompanion.insert(
+        employeeNo: 'EMP-HOME01',
+        name: '张三',
+        hireDate: DateTime(2026, 1, 1),
+      ),
+    );
+    final employee = (await database.findEmployeeById(employeeId))!;
+    await pumpApp(tester, personnelOverride: [employee]);
+
+    final leaveShortcut = find.byKey(const Key('home-action-请假登记'));
+    await tester.ensureVisible(leaveShortcut);
+    await tester.tap(leaveShortcut);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('leave-employee-field')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('张三 · EMP-HOME01').last);
+    await tester.pumpAndSettle();
+    final saveLeave = find.byKey(const Key('leave-save-button'));
+    await tester.ensureVisible(saveLeave);
+    await tester.tap(saveLeave);
+    await tester.pumpAndSettle();
+
+    expect(find.text('今日概览'), findsOneWidget);
+    expect(find.text('快捷操作'), findsOneWidget);
+    expect(await database.select(database.leaveRecords).get(), hasLength(1));
+  });
+
   testWidgets('navigates from every home dashboard metric', (tester) async {
     await pumpApp(tester);
 
@@ -568,6 +628,39 @@ void main() {
     await tester.ensureVisible(reminderTestButton);
     expect(reminderTestButton, findsOneWidget);
     expect(find.byKey(const Key('reminder-add-button')), findsOneWidget);
+  });
+
+  testWidgets('shows and validates the inline custom reminder alert input', (
+    tester,
+  ) async {
+    await pumpApp(tester);
+
+    await tester.tap(find.text('我的'));
+    await tester.pumpAndSettle();
+    final reminderEntry = find.text('本地提醒');
+    await tester.ensureVisible(reminderEntry);
+    await tester.tap(reminderEntry);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('reminder-add-button')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('自定义'));
+    await tester.pumpAndSettle();
+    expect(find.text('填写自定义提前时间'), findsOneWidget);
+    expect(find.text('请输入提前天数'), findsNothing);
+
+    await tester.tap(find.text('添加'));
+    await tester.pump();
+    expect(find.text('请输入提前天数'), findsOneWidget);
+
+    final customAlertField = find.byWidgetPredicate(
+      (widget) => widget is TextField && widget.decoration?.labelText == '提前天数',
+    );
+    await tester.enterText(customAlertField, '2');
+    await tester.tap(find.text('添加'));
+    await tester.pumpAndSettle();
+    expect(find.text('提前 2 天'), findsOneWidget);
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('opens backup and restore from settings', (tester) async {

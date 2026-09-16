@@ -15,9 +15,14 @@ import '../application/termination_providers.dart';
 import '../domain/termination_options.dart';
 
 class TerminationFormPage extends ConsumerStatefulWidget {
-  const TerminationFormPage({super.key, this.terminationId});
+  const TerminationFormPage({
+    super.key,
+    this.terminationId,
+    this.fromHomeShortcut = false,
+  });
 
   final int? terminationId;
+  final bool fromHomeShortcut;
 
   bool get isEditing => terminationId != null;
 
@@ -62,27 +67,50 @@ class _TerminationFormPageState extends ConsumerState<TerminationFormPage> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<TerminationRecord?>(
-      future: _terminationFuture,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState != ConnectionState.done) {
-          return _loadingScaffold();
+    return _withBackBehavior(
+      FutureBuilder<TerminationRecord?>(
+        future: _terminationFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) {
+            return _loadingScaffold();
+          }
+          if (snapshot.hasError) {
+            return _errorScaffold('离职记录加载失败：${snapshot.error}');
+          }
+          if (widget.isEditing && snapshot.data == null) {
+            return _errorScaffold('离职记录不存在或已被撤销');
+          }
+          _initialize(snapshot.data);
+          return ref
+              .watch(allPersonnelProvider)
+              .when(
+                loading: () => _loadingScaffold(),
+                error: (error, _) => _errorScaffold('人员列表加载失败：$error'),
+                data: (items) => _buildForm(context, items),
+              );
+        },
+      ),
+    );
+  }
+
+  Widget _withBackBehavior(Widget child) {
+    return PopScope(
+      canPop: !widget.fromHomeShortcut,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop && widget.fromHomeShortcut && mounted) {
+          context.go('/home');
         }
-        if (snapshot.hasError) {
-          return _errorScaffold('离职记录加载失败：${snapshot.error}');
-        }
-        if (widget.isEditing && snapshot.data == null) {
-          return _errorScaffold('离职记录不存在或已被撤销');
-        }
-        _initialize(snapshot.data);
-        return ref
-            .watch(allPersonnelProvider)
-            .when(
-              loading: () => _loadingScaffold(),
-              error: (error, _) => _errorScaffold('人员列表加载失败：$error'),
-              data: (items) => _buildForm(context, items),
-            );
       },
+      child: child,
+    );
+  }
+
+  Widget _backButton(BuildContext context) {
+    return IconButton(
+      tooltip: widget.fromHomeShortcut ? '返回首页' : '返回',
+      onPressed: () =>
+          widget.fromHomeShortcut ? context.go('/home') : context.pop(),
+      icon: const Icon(Icons.arrow_back),
     );
   }
 
@@ -114,6 +142,7 @@ class _TerminationFormPageState extends ConsumerState<TerminationFormPage> {
     ];
     return Scaffold(
       appBar: AppBar(
+        leading: _backButton(context),
         title: Text(widget.isEditing ? '编辑离职' : '登记离职'),
         actions: [
           Padding(
@@ -409,7 +438,7 @@ class _TerminationFormPageState extends ConsumerState<TerminationFormPage> {
           .read(reminderRepositoryProvider)
           .findBySource('termination', saved.id);
       if (reminder != null) {
-        await ref.read(notificationServiceProvider).sync(reminder);
+        await ref.read(reminderSchedulerProvider).reschedule(reminder.id);
       }
       await ref
           .read(attachmentRepositoryProvider)
@@ -420,7 +449,11 @@ class _TerminationFormPageState extends ConsumerState<TerminationFormPage> {
             sourceEntityType: 'termination',
             sourceEntityId: saved.id,
           );
-      if (mounted) context.go('/attendance/termination');
+      if (mounted) {
+        context.go(
+          widget.fromHomeShortcut ? '/home' : '/attendance/termination',
+        );
+      }
     } catch (error) {
       if (!mounted) return;
       setState(() => _saving = false);
@@ -431,14 +464,20 @@ class _TerminationFormPageState extends ConsumerState<TerminationFormPage> {
 
   Scaffold _loadingScaffold() {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.isEditing ? '编辑离职' : '登记离职')),
+      appBar: AppBar(
+        leading: _backButton(context),
+        title: Text(widget.isEditing ? '编辑离职' : '登记离职'),
+      ),
       body: const Center(child: CircularProgressIndicator()),
     );
   }
 
   Scaffold _errorScaffold(String message) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.isEditing ? '编辑离职' : '登记离职')),
+      appBar: AppBar(
+        leading: _backButton(context),
+        title: Text(widget.isEditing ? '编辑离职' : '登记离职'),
+      ),
       body: Center(child: Text(message)),
     );
   }

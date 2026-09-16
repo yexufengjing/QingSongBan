@@ -12,71 +12,83 @@ import '../domain/payroll_options.dart';
 import 'payroll_group_filter.dart';
 
 class PayrollHomePage extends ConsumerWidget {
-  const PayrollHomePage({super.key});
+  const PayrollHomePage({super.key, this.fromHomeShortcut = false});
+
+  final bool fromHomeShortcut;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final month = ref.watch(payrollMonthProvider);
     final batches = ref.watch(payrollBatchesProvider);
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 24, 20, 28),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                IconButton(
-                  onPressed: () => context.pop(),
-                  icon: const Icon(Icons.arrow_back),
-                  tooltip: '返回汇总',
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '临时工薪资',
-                        style: Theme.of(context).textTheme.headlineLarge,
-                      ),
-                      const SizedBox(height: 5),
-                      Text(
-                        '按月造资、核算、确认和导出',
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ],
+    return PopScope(
+      canPop: !fromHomeShortcut,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop && fromHomeShortcut) {
+          context.go('/home');
+        }
+      },
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 24, 20, 28),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: () =>
+                        fromHomeShortcut ? context.go('/home') : context.pop(),
+                    icon: const Icon(Icons.arrow_back),
+                    tooltip: fromHomeShortcut ? '返回首页' : '返回汇总',
                   ),
-                ),
-                IconButton(
-                  onPressed: () => context.push('/reports/payroll/settings'),
-                  icon: const Icon(Icons.settings_outlined),
-                  tooltip: '工种与日薪设置',
-                ),
-              ],
-            ),
-            const SizedBox(height: 18),
-            _MonthSelector(
-              month: month,
-              onChanged: (value) =>
-                  ref.read(payrollMonthProvider.notifier).state = value,
-            ),
-            const SizedBox(height: 14),
-            Expanded(
-              child: batches.when(
-                loading: () => const Center(child: CircularProgressIndicator()),
-                error: (error, _) => Center(child: Text('工资批次加载失败：$error')),
-                data: (values) {
-                  final yearMonth = payrollYearMonth(month);
-                  final batch = values.cast<dynamic>().firstWhere(
-                    (value) => value.payrollMonth == yearMonth,
-                    orElse: () => null,
-                  );
-                  if (batch == null) return _NoBatch(month: month);
-                  return _BatchContent(batch: batch, ref: ref);
-                },
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '临时工薪资',
+                          style: Theme.of(context).textTheme.headlineLarge,
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          '按月造资、核算、确认和导出',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ],
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () => context.push('/reports/payroll/settings'),
+                    icon: const Icon(Icons.settings_outlined),
+                    tooltip: '工种与日薪设置',
+                  ),
+                ],
               ),
-            ),
-          ],
+              const SizedBox(height: 18),
+              _MonthSelector(
+                month: month,
+                onChanged: (value) =>
+                    ref.read(payrollMonthProvider.notifier).state = value,
+              ),
+              const SizedBox(height: 14),
+              Expanded(
+                child: batches.when(
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
+                  error: (error, _) => Center(child: Text('工资批次加载失败：$error')),
+                  data: (values) {
+                    final yearMonth = payrollYearMonth(month);
+                    final batch = values.cast<dynamic>().firstWhere(
+                      (value) => value.payrollMonth == yearMonth,
+                      orElse: () => null,
+                    );
+                    if (batch == null) return _NoBatch(month: month);
+                    return _BatchContent(batch: batch, ref: ref);
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -169,7 +181,7 @@ class _NoBatch extends ConsumerWidget {
           .read(reminderRepositoryProvider)
           .findBySource('payroll_batch', batch.id);
       if (reminder != null) {
-        await ref.read(notificationServiceProvider).sync(reminder);
+        await ref.read(reminderSchedulerProvider).reschedule(reminder.id);
       }
       ref.invalidate(payrollBatchesProvider);
       if (context.mounted) context.push('/reports/payroll/edit/${batch.id}');

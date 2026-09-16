@@ -10,9 +10,14 @@ import '../application/overtime_providers.dart';
 import '../domain/overtime_options.dart';
 
 class OvertimeFormPage extends ConsumerStatefulWidget {
-  const OvertimeFormPage({super.key, this.overtimeId});
+  const OvertimeFormPage({
+    super.key,
+    this.overtimeId,
+    this.fromHomeShortcut = false,
+  });
 
   final int? overtimeId;
+  final bool fromHomeShortcut;
 
   bool get isEditing => overtimeId != null;
 
@@ -58,27 +63,50 @@ class _OvertimeFormPageState extends ConsumerState<OvertimeFormPage> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<OvertimeRecord?>(
-      future: _overtimeFuture,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState != ConnectionState.done) {
-          return _loadingScaffold();
+    return _withBackBehavior(
+      FutureBuilder<OvertimeRecord?>(
+        future: _overtimeFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) {
+            return _loadingScaffold();
+          }
+          if (snapshot.hasError) {
+            return _errorScaffold('加班记录加载失败：${snapshot.error}');
+          }
+          if (widget.isEditing && snapshot.data == null) {
+            return _errorScaffold('加班记录不存在或已被删除');
+          }
+          _initialize(snapshot.data);
+          return ref
+              .watch(allPersonnelProvider)
+              .when(
+                loading: () => _loadingScaffold(),
+                error: (error, _) => _errorScaffold('人员列表加载失败：$error'),
+                data: (items) => _buildForm(context, items),
+              );
+        },
+      ),
+    );
+  }
+
+  Widget _withBackBehavior(Widget child) {
+    return PopScope(
+      canPop: !widget.fromHomeShortcut,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop && widget.fromHomeShortcut && mounted) {
+          context.go('/home');
         }
-        if (snapshot.hasError) {
-          return _errorScaffold('加班记录加载失败：${snapshot.error}');
-        }
-        if (widget.isEditing && snapshot.data == null) {
-          return _errorScaffold('加班记录不存在或已被删除');
-        }
-        _initialize(snapshot.data);
-        return ref
-            .watch(allPersonnelProvider)
-            .when(
-              loading: () => _loadingScaffold(),
-              error: (error, _) => _errorScaffold('人员列表加载失败：$error'),
-              data: (items) => _buildForm(context, items),
-            );
       },
+      child: child,
+    );
+  }
+
+  Widget _backButton(BuildContext context) {
+    return IconButton(
+      tooltip: widget.fromHomeShortcut ? '返回首页' : '返回',
+      onPressed: () =>
+          widget.fromHomeShortcut ? context.go('/home') : context.pop(),
+      icon: const Icon(Icons.arrow_back),
     );
   }
 
@@ -103,6 +131,7 @@ class _OvertimeFormPageState extends ConsumerState<OvertimeFormPage> {
   Widget _buildForm(BuildContext context, List<Employee> employees) {
     return Scaffold(
       appBar: AppBar(
+        leading: _backButton(context),
         title: Text(widget.isEditing ? '编辑加班' : '新增加班'),
         actions: [
           Padding(
@@ -442,7 +471,9 @@ class _OvertimeFormPageState extends ConsumerState<OvertimeFormPage> {
               remark: _remarkController.text,
             ),
           );
-      if (mounted) context.go('/attendance/overtime');
+      if (mounted) {
+        context.go(widget.fromHomeShortcut ? '/home' : '/attendance/overtime');
+      }
     } catch (error) {
       if (!mounted) return;
       setState(() => _saving = false);
@@ -453,14 +484,20 @@ class _OvertimeFormPageState extends ConsumerState<OvertimeFormPage> {
 
   Scaffold _loadingScaffold() {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.isEditing ? '编辑加班' : '新增加班')),
+      appBar: AppBar(
+        leading: _backButton(context),
+        title: Text(widget.isEditing ? '编辑加班' : '新增加班'),
+      ),
       body: const Center(child: CircularProgressIndicator()),
     );
   }
 
   Scaffold _errorScaffold(String message) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.isEditing ? '编辑加班' : '新增加班')),
+      appBar: AppBar(
+        leading: _backButton(context),
+        title: Text(widget.isEditing ? '编辑加班' : '新增加班'),
+      ),
       body: Center(child: Text(message)),
     );
   }

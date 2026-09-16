@@ -46,6 +46,8 @@ dependencies:
   archive: ^3.6.1
   flutter_local_notifications: ^19.4.0
   timezone: ^0.10.1
+  rrule: ^0.2.18
+  flutter_timezone: ^5.1.0
 
 dev_dependencies:
   flutter_test:

@@ -11,35 +11,51 @@ import '../application/daily_attendance_providers.dart';
 import '../domain/daily_attendance_options.dart';
 
 class DailyAttendancePage extends ConsumerWidget {
-  const DailyAttendancePage({super.key});
+  const DailyAttendancePage({super.key, this.fromHomeShortcut = false});
+
+  final bool fromHomeShortcut;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final groups = ref.watch(dailyAttendanceGroupsProvider);
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('每日考勤'),
-        actions: [
-          IconButton(
-            onPressed: () => context.push('/attendance/monthly-roster'),
-            icon: const Icon(Icons.calendar_month_outlined),
-            tooltip: '月度考勤名单',
+    return PopScope(
+      canPop: !fromHomeShortcut,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop && fromHomeShortcut) {
+          context.go('/home');
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            tooltip: fromHomeShortcut ? '返回首页' : '返回',
+            onPressed: () =>
+                fromHomeShortcut ? context.go('/home') : context.pop(),
+            icon: const Icon(Icons.arrow_back),
           ),
-        ],
-      ),
-      body: groups.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (_, _) => _DailyAttendanceError(
-          onRetry: () => ref.invalidate(dailyAttendanceGroupsProvider),
+          title: const Text('每日考勤'),
+          actions: [
+            IconButton(
+              onPressed: () => context.push('/attendance/monthly-roster'),
+              icon: const Icon(Icons.calendar_month_outlined),
+              tooltip: '月度考勤名单',
+            ),
+          ],
         ),
-        data: (items) {
-          if (items.isEmpty) {
-            return _NoDailyAttendanceGroup(
-              onManage: () => context.push('/attendance/groups'),
-            );
-          }
-          return _DailyAttendanceContent(groups: items);
-        },
+        body: groups.when(
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (_, _) => _DailyAttendanceError(
+            onRetry: () => ref.invalidate(dailyAttendanceGroupsProvider),
+          ),
+          data: (items) {
+            if (items.isEmpty) {
+              return _NoDailyAttendanceGroup(
+                onManage: () => context.push('/attendance/groups'),
+              );
+            }
+            return _DailyAttendanceContent(groups: items);
+          },
+        ),
       ),
     );
   }
