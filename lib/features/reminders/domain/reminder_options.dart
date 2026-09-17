@@ -37,6 +37,10 @@ class ReminderDraft {
     this.sourceEntityType,
     this.sourceEntityId,
     this.remark,
+    this.priority = 'normal',
+    this.category = 'general',
+    this.timezoneId,
+    this.links = const <ReminderLinkDraft>[],
   });
 
   final String title;
@@ -48,10 +52,60 @@ class ReminderDraft {
   final String? sourceEntityType;
   final int? sourceEntityId;
   final String? remark;
+  final String priority;
+  final String category;
+  final String? timezoneId;
+  final List<ReminderLinkDraft> links;
 }
 
-class ReminderView {
-  const ReminderView(this.reminder);
+class ReminderLinkDraft {
+  const ReminderLinkDraft({
+    required this.entityType,
+    required this.entityId,
+    required this.displayName,
+  });
+
+  final String entityType;
+  final int entityId;
+  final String displayName;
+}
+
+class ReminderItem {
+  const ReminderItem({
+    required this.reminder,
+    required this.links,
+    this.occurrence,
+  });
 
   final Reminder reminder;
+  final ReminderOccurrence? occurrence;
+  final List<ReminderLink> links;
+
+  DateTime? get scheduledAt => occurrence?.scheduledAt ?? reminder.dueDate;
+  String get status =>
+      occurrence?.status ?? (reminder.isCompleted ? 'completed' : 'pending');
+  bool get isCompleted => status == 'completed';
+  bool get isPending => status == 'pending';
+  bool get isSkipped => status == 'skipped';
+}
+
+abstract final class ReminderPriorities {
+  static const values = <String>['normal', 'important', 'urgent'];
+
+  static String label(String value) => switch (value) {
+    'important' => '重要',
+    'urgent' => '紧急',
+    _ => '普通',
+  };
+}
+
+abstract final class ReminderCategories {
+  static const values = <String>['general', 'plan', 'periodic', 'custom'];
+
+  static String label(String value) => switch (value) {
+    'plan' => '工作计划',
+    'periodic' => '定期事项',
+    'custom' => '自定义',
+    _ => '临时事项',
+  };
 }

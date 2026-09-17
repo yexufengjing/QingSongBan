@@ -44,6 +44,16 @@ Future<HomeDashboardStats> _loadDashboardStats(AppDatabase database) async {
   final reminders = await (database.select(
     database.reminders,
   )..where((table) => table.isDeleted.equals(false))).get();
+  final reminderOccurrences = await (database.select(
+    database.reminderOccurrences,
+  )..where((table) => table.status.equals('pending'))).get();
+  final visibleReminderIds = reminders
+      .where(
+        (reminder) => reminder.isEnabled && reminder.reminderType == 'custom',
+      )
+      .map((reminder) => reminder.id)
+      .toSet();
+  final todayEnd = DateTime(now.year, now.month, now.day, 23, 59, 59);
   return HomeDashboardStats(
     activeEmployees: employees
         .where((employee) => employee.status == EmployeeStatus.active)
@@ -71,13 +81,14 @@ Future<HomeDashboardStats> _loadDashboardStats(AppDatabase database) async {
           (summary) => summary.yearMonth == month && summary.anomalyCount > 0,
         )
         .length,
-    pendingReminders: reminders
+    pendingReminders: reminderOccurrences
         .where(
-          (reminder) =>
-              reminder.isEnabled &&
-              !reminder.isCompleted &&
-              reminder.dueDate != null,
+          (occurrence) =>
+              visibleReminderIds.contains(occurrence.reminderId) &&
+              !occurrence.scheduledAt.isAfter(todayEnd),
         )
+        .map((occurrence) => occurrence.reminderId)
+        .toSet()
         .length,
   );
 }

@@ -1,4 +1,5 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -12,20 +13,27 @@ class NotificationService {
   static const _alertsPerOccurrence = 20;
   final FlutterLocalNotificationsPlugin _plugin;
   bool _initialized = false;
+  String _deviceTimezoneId = 'Etc/UTC';
 
   Future<void> initialize() async {
     if (_initialized) return;
     tz.initializeTimeZones();
     try {
-      tz.setLocalLocation(tz.getLocation('Asia/Shanghai'));
+      _deviceTimezoneId = (await FlutterTimezone.getLocalTimezone()).identifier;
+      tz.setLocalLocation(tz.getLocation(_deviceTimezoneId));
     } catch (_) {
-      // Keep the package default location if a platform timezone is unavailable.
+      tz.setLocalLocation(tz.getLocation('Etc/UTC'));
     }
     const settings = InitializationSettings(
       android: AndroidInitializationSettings('@mipmap/ic_launcher'),
     );
     await _plugin.initialize(settings);
     _initialized = true;
+  }
+
+  Future<String> currentTimezoneId() async {
+    await initialize();
+    return _deviceTimezoneId;
   }
 
   Future<void> requestPermission() async {
@@ -37,10 +45,15 @@ class NotificationService {
         ?.requestNotificationsPermission();
   }
 
-  Future<void> sync(Reminder reminder) async {
+  Future<void> sync(
+    Reminder reminder, {
+    Iterable<DateTime>? pendingOccurrences,
+  }) async {
     await initialize();
     await cancel(reminder.id);
-    if (!reminder.isEnabled || reminder.isCompleted || reminder.dueDate == null) {
+    if (!reminder.isEnabled ||
+        reminder.isCompleted ||
+        reminder.dueDate == null) {
       return;
     }
 
@@ -48,30 +61,37 @@ class NotificationService {
       reminder.repeatRule,
       legacyLeadDays: reminder.leadDays,
     );
-    final now = tz.TZDateTime.now(tz.local);
-    final occurrences = schedule.upcoming(
-      reminder.dueDate!,
-      limit: _occurrenceLimit,
-    );
+    final location = _locationFor(reminder.timezoneId);
+    final now = tz.TZDateTime.now(location);
+    final occurrences =
+        (pendingOccurrences ?? schedule.upcoming(reminder.dueDate!))
+            .take(_occurrenceLimit)
+            .toList();
     final alerts = schedule.alertMinutes.toSet().toList()
       ..sort((a, b) => b.compareTo(a));
 
-    for (var occurrenceIndex = 0;
-        occurrenceIndex < occurrences.length;
-        occurrenceIndex++) {
+    for (
+      var occurrenceIndex = 0;
+      occurrenceIndex < occurrences.length;
+      occurrenceIndex++
+    ) {
       final occurrence = occurrences[occurrenceIndex];
       final dueAt = tz.TZDateTime(
-        tz.local,
+        location,
         occurrence.year,
         occurrence.month,
         occurrence.day,
         occurrence.hour,
         occurrence.minute,
       );
-      for (var alertIndex = 0;
-          alertIndex < alerts.length && alertIndex < _alertsPerOccurrence;
-          alertIndex++) {
-        final scheduleAt = dueAt.subtract(Duration(minutes: alerts[alertIndex]));
+      for (
+        var alertIndex = 0;
+        alertIndex < alerts.length && alertIndex < _alertsPerOccurrence;
+        alertIndex++
+      ) {
+        final scheduleAt = dueAt.subtract(
+          Duration(minutes: alerts[alertIndex]),
+        );
         if (!scheduleAt.isAfter(now)) continue;
         await _plugin.zonedSchedule(
           _notificationId(reminder.id, occurrenceIndex, alertIndex),
@@ -133,5 +153,14 @@ class NotificationService {
   String _notificationBody(int minutes, int occurrenceIndex) {
     final prefix = occurrenceIndex == 0 ? '' : '重复事项 · ';
     return '$prefix${ReminderSchedule.alertMinuteLabel(minutes)}';
+  }
+
+  tz.Location _locationFor(String? timezoneId) {
+    if (timezoneId == null || timezoneId.isEmpty) return tz.local;
+    try {
+      return tz.getLocation(timezoneId);
+    } catch (_) {
+      return tz.local;
+    }
   }
 }
