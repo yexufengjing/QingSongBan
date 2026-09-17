@@ -38,6 +38,7 @@ import '../../features/payroll/presentation/payroll_history_page.dart';
 import '../../features/payroll/presentation/payroll_home_page.dart';
 import '../../features/payroll/presentation/employee_payroll_page.dart';
 import '../../features/payroll/presentation/wage_job_settings_page.dart';
+import '../../features/item_distribution/presentation/item_distribution_page.dart';
 import '../../features/settings/presentation/settings_page.dart';
 import 'app_shell.dart';
 
@@ -466,6 +467,11 @@ final GoRouter appRouter = GoRouter(
           ],
         ),
       ],
+    ),
+    GoRoute(
+      path: '/items',
+      name: 'item-distribution',
+      builder: (context, state) => const ItemDistributionPage(),
     ),
   ],
 );

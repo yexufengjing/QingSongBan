@@ -649,11 +649,28 @@ class Reminders extends Table {
 
   TextColumn get reminderType => text()();
 
+  /// A stable, user-facing urgency value. Keep this as text so future values
+  /// can be added without a destructive database migration.
+  TextColumn get priority => text().withDefault(const Constant('normal'))();
+
+  /// General/plan/personnel/etc. are domain categories, not notification
+  /// implementations. Unknown values remain forward compatible.
+  TextColumn get category => text().withDefault(const Constant('general'))();
+
   DateTimeColumn get dueDate => dateTime().nullable()();
 
   IntColumn get leadDays => integer().withDefault(const Constant(0))();
 
   TextColumn get repeatRule => text().nullable()();
+
+  TextColumn get repeatMode =>
+      text().withDefault(const Constant('fixedSchedule'))();
+
+  DateTimeColumn get repeatEndsAt => dateTime().nullable()();
+
+  IntColumn get repeatCount => integer().nullable()();
+
+  TextColumn get timezoneId => text().nullable()();
 
   BoolColumn get isEnabled => boolean().withDefault(const Constant(true))();
 
@@ -669,5 +686,79 @@ class Reminders extends Table {
 
   DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
 
+  DateTimeColumn get archivedAt => dateTime().nullable()();
+
   BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+}
+
+/// One planned execution of a reminder series. A recurring reminder never
+/// mutates its previous occurrence; it creates a new row for each period.
+class ReminderOccurrences extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get reminderId => integer().references(Reminders, #id)();
+
+  DateTimeColumn get scheduledAt => dateTime()();
+
+  TextColumn get status => text().withDefault(const Constant('pending'))();
+
+  DateTimeColumn get completedAt => dateTime().nullable()();
+
+  DateTimeColumn get snoozedUntil => dateTime().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  @override
+  List<Set<Column>> get uniqueKeys => [
+    {reminderId, scheduledAt},
+  ];
+}
+
+/// Relative notifications attached to a reminder. Negative offsets are
+/// before due time; nag rules use a positive interval after due time.
+class ReminderAlertRules extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get reminderId => integer().references(Reminders, #id)();
+
+  IntColumn get offsetMinutes => integer().withDefault(const Constant(0))();
+
+  BoolColumn get isNagRule => boolean().withDefault(const Constant(false))();
+
+  IntColumn get repeatIntervalMinutes => integer().nullable()();
+
+  IntColumn get maxRepeatCount => integer().nullable()();
+
+  IntColumn get nagEndsAfterMinutes => integer().nullable()();
+
+  IntColumn get sortOrder => integer().withDefault(const Constant(0))();
+
+  BoolColumn get isEnabled => boolean().withDefault(const Constant(true))();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+}
+
+/// Polymorphic links let reminders reference employees today and future
+/// vehicle/equipment/material modules without inventing foreign keys.
+class ReminderLinks extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get reminderId => integer().references(Reminders, #id)();
+
+  TextColumn get entityType => text()();
+
+  IntColumn get entityId => integer()();
+
+  TextColumn get displayNameSnapshot => text()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  @override
+  List<Set<Column>> get uniqueKeys => [
+    {reminderId, entityType, entityId},
+  ];
 }

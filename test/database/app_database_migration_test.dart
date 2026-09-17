@@ -94,7 +94,7 @@ void main() {
         1,
         DateTime(2026, 9, 1),
       );
-      expect(upgraded.schemaVersion, 9);
+      expect(upgraded.schemaVersion, 12);
       expect(employee?.name, '迁移人员');
       expect(rawAttendance, hasLength(1));
       expect(rawAttendance.single.read<int>('employee_id'), 1);
@@ -105,6 +105,58 @@ void main() {
       await directory.delete(recursive: true);
     },
   );
+
+  test('migrates legacy reminders into occurrences and alert rules', () async {
+    final directory = await Directory.systemTemp.createTemp(
+      'qsb-reminder-migration-',
+    );
+    final file = File(
+      '${directory.path}${Platform.pathSeparator}legacy.sqlite',
+    );
+    final legacy = AppDatabase.forTesting(
+      executor: NativeDatabase(
+        file,
+        enableMigrations: false,
+        setup: (raw) {
+          raw.execute('''
+          CREATE TABLE reminders (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            reminder_type TEXT NOT NULL,
+            due_date INTEGER,
+            lead_days INTEGER NOT NULL DEFAULT 0,
+            repeat_rule TEXT,
+            is_enabled INTEGER NOT NULL DEFAULT 1,
+            is_completed INTEGER NOT NULL DEFAULT 0,
+            source_entity_type TEXT,
+            source_entity_id INTEGER,
+            remark TEXT,
+            created_at INTEGER NOT NULL DEFAULT 0,
+            updated_at INTEGER NOT NULL DEFAULT 0,
+            is_deleted INTEGER NOT NULL DEFAULT 0
+          )
+        ''');
+          raw.execute('PRAGMA user_version = 11');
+        },
+      ),
+    );
+    await legacy.customStatement(
+      'INSERT INTO reminders(title, reminder_type, due_date, lead_days, is_completed, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      ['旧提醒', 'custom', _unixSeconds(DateTime(2026, 9, 20, 10)), 3, 1, 0, 0],
+    );
+    await legacy.close();
+
+    final upgraded = AppDatabase.forTesting(executor: NativeDatabase(file));
+    final occurrence = await upgraded
+        .select(upgraded.reminderOccurrences)
+        .getSingle();
+    final rule = await upgraded.select(upgraded.reminderAlertRules).getSingle();
+    expect(upgraded.schemaVersion, 12);
+    expect(occurrence.status, 'completed');
+    expect(rule.offsetMinutes, -4320);
+    await upgraded.close();
+    await directory.delete(recursive: true);
+  });
 }
 
 int _unixSeconds(DateTime value) => value.millisecondsSinceEpoch ~/ 1000;
