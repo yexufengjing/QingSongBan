@@ -150,10 +150,19 @@ void main() {
     expect(find.text('设计基线'), findsNothing);
   });
 
-  testWidgets('shows all six home shortcuts', (tester) async {
+  testWidgets('shows the home shortcuts', (tester) async {
     await pumpApp(tester);
 
-    for (final label in ['新增人员', '今日考勤', '请假登记', '加班登记', '离职登记', '保险变更']) {
+    for (final label in [
+      '新增人员',
+      '今日考勤',
+      '请假登记',
+      '加班登记',
+      '离职登记',
+      '保险变更',
+      '工资造资',
+      '新建提醒',
+    ]) {
       expect(find.byKey(Key('home-action-$label')), findsOneWidget);
     }
   });
@@ -167,7 +176,7 @@ void main() {
       '本月离职': '离职管理',
       '今日已登记': '每日考勤',
       '异常记录': '本月尚未生成汇总',
-      '待处理提醒': '本地提醒',
+      '待处理提醒': '备忘提醒',
     };
 
     for (final entry in markers.entries) {
@@ -546,12 +555,12 @@ void main() {
 
     await tester.tap(find.text('我的'));
     await tester.pumpAndSettle();
-    final reminderEntry = find.text('本地提醒');
+    final reminderEntry = find.text('备忘提醒');
     await tester.ensureVisible(reminderEntry);
     await tester.tap(reminderEntry);
     await tester.pumpAndSettle();
 
-    expect(find.text('本地提醒'), findsOneWidget);
+    expect(find.text('备忘提醒'), findsOneWidget);
     final reminderTestButton = find.byKey(
       const Key('reminder-test-button'),
       skipOffstage: false,
@@ -559,6 +568,9 @@ void main() {
     await tester.ensureVisible(reminderTestButton);
     expect(reminderTestButton, findsOneWidget);
     expect(find.byKey(const Key('reminder-add-button')), findsOneWidget);
+    expect(find.byKey(const Key('reminder-filter-pending')), findsOneWidget);
+    expect(find.text('把事情记下来，到点提醒'), findsOneWidget);
+    expect(find.text('业务提醒偏好'), findsOneWidget);
   });
 
   testWidgets('opens backup and restore from settings', (tester) async {

@@ -16,7 +16,7 @@ class SettingsPage extends StatelessWidget {
           children: [
             Text('我的', style: Theme.of(context).textTheme.headlineLarge),
             const SizedBox(height: 6),
-            Text('本地设置、提醒和备份恢复', style: Theme.of(context).textTheme.bodyMedium),
+            Text('业务工具、提醒和备份恢复', style: Theme.of(context).textTheme.bodyMedium),
             const SizedBox(height: 24),
             Card(
               child: InkWell(
@@ -188,17 +188,17 @@ class SettingsPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '本地提醒',
+                              '备忘提醒',
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
                             const SizedBox(height: 6),
                             Text(
-                              '设置业务提醒开关、提前天数和自定义通知。',
+                              '查看待办事项，创建临时任务和工作计划提醒。',
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              '本地通知',
+                              '事项与通知',
                               style: Theme.of(context).textTheme.bodySmall
                                   ?.copyWith(
                                     color: Colors.orange.shade800,
