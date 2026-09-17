@@ -87,16 +87,26 @@ class SettingsPage extends StatelessWidget {
                           color: const Color(0xFFEAF7EF),
                           borderRadius: BorderRadius.circular(16),
                         ),
-                        child: const Icon(Icons.payments_outlined, color: Colors.teal, size: 28),
+                        child: const Icon(
+                          Icons.payments_outlined,
+                          color: Colors.teal,
+                          size: 28,
+                        ),
                       ),
                       const SizedBox(width: 16),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('临时工薪资', style: Theme.of(context).textTheme.titleLarge),
+                            Text(
+                              '临时工薪资',
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
                             const SizedBox(height: 6),
-                            Text('维护工种日薪、工资批次和历史记录。', style: Theme.of(context).textTheme.bodyMedium),
+                            Text(
+                              '维护工种日薪、工资批次和历史记录。',
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
                           ],
                         ),
                       ),
@@ -193,7 +203,7 @@ class SettingsPage extends StatelessWidget {
                             ),
                             const SizedBox(height: 6),
                             Text(
-                              '查看待办事项，创建临时任务和工作计划提醒。',
+                              '管理通知偏好，并进入备忘提醒查看待办。',
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                             const SizedBox(height: 10),
