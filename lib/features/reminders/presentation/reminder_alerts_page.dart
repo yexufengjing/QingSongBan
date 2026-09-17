@@ -18,8 +18,8 @@ class _ReminderAlertsPageState extends State<ReminderAlertsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final custom = _selected.where((value) => !_presets.contains(value)).toList()
-      ..sort();
+    final custom =
+        _selected.where((value) => !_presets.contains(value)).toList()..sort();
     return Scaffold(
       appBar: AppBar(
         title: const Text('提醒'),
@@ -30,55 +30,57 @@ class _ReminderAlertsPageState extends State<ReminderAlertsPage> {
           ),
         ],
       ),
-      body: ListView(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 28),
-        children: [
-          Text(
-            '可设置多个提醒',
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-          const SizedBox(height: 12),
-          Card(
-            child: Column(
-              children: [
-                for (final minutes in _presets)
-                  CheckboxListTile(
-                    key: Key('reminder-alert-$minutes'),
-                    title: Text(ReminderSchedule.alertMinuteLabel(minutes)),
-                    value: _selected.contains(minutes),
-                    controlAffinity: ListTileControlAffinity.trailing,
-                    onChanged: (_) => _toggle(minutes),
-                  ),
-              ],
+        child: Column(
+          children: [
+            Text(
+              '可设置多个提醒',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
-          ),
-          if (custom.isNotEmpty) ...[
             const SizedBox(height: 12),
             Card(
               child: Column(
                 children: [
-                  for (final minutes in custom)
+                  for (final minutes in _presets)
                     CheckboxListTile(
+                      key: Key('reminder-alert-$minutes'),
                       title: Text(ReminderSchedule.alertMinuteLabel(minutes)),
-                      value: true,
+                      value: _selected.contains(minutes),
                       controlAffinity: ListTileControlAffinity.trailing,
                       onChanged: (_) => _toggle(minutes),
                     ),
                 ],
               ),
             ),
-          ],
-          const SizedBox(height: 16),
-          Card(
-            child: ListTile(
-              key: const Key('reminder-alert-custom'),
-              title: const Text('添加自定义'),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: _addCustom,
+            if (custom.isNotEmpty) ...[
+              const SizedBox(height: 12),
+              Card(
+                child: Column(
+                  children: [
+                    for (final minutes in custom)
+                      CheckboxListTile(
+                        title: Text(ReminderSchedule.alertMinuteLabel(minutes)),
+                        value: true,
+                        controlAffinity: ListTileControlAffinity.trailing,
+                        onChanged: (_) => _toggle(minutes),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+            const SizedBox(height: 16),
+            Card(
+              child: ListTile(
+                key: const Key('reminder-alert-custom'),
+                title: const Text('添加自定义'),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: _addCustom,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -115,13 +117,19 @@ class _ReminderAlertsPageState extends State<ReminderAlertsPage> {
                         child: Text(
                           '自定义提前时间',
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                       TextButton(
                         onPressed: () {
                           const multipliers = [1, 60, 1440, 10080];
-                          Navigator.pop(context, amount * multipliers[unitIndex]);
+                          Navigator.pop(
+                            context,
+                            amount * multipliers[unitIndex],
+                          );
                         },
                         child: const Text('确定'),
                       ),
@@ -135,15 +143,22 @@ class _ReminderAlertsPageState extends State<ReminderAlertsPage> {
                       Expanded(
                         child: CupertinoPicker(
                           itemExtent: 48,
-                          scrollController: FixedExtentScrollController(initialItem: amount - 1),
-                          onSelectedItemChanged: (index) => setSheetState(() => amount = index + 1),
-                          children: [for (var value = 1; value <= 60; value++) Center(child: Text('$value'))],
+                          scrollController: FixedExtentScrollController(
+                            initialItem: amount - 1,
+                          ),
+                          onSelectedItemChanged: (index) =>
+                              setSheetState(() => amount = index + 1),
+                          children: [
+                            for (var value = 1; value <= 60; value++)
+                              Center(child: Text('$value')),
+                          ],
                         ),
                       ),
                       Expanded(
                         child: CupertinoPicker(
                           itemExtent: 48,
-                          onSelectedItemChanged: (index) => setSheetState(() => unitIndex = index),
+                          onSelectedItemChanged: (index) =>
+                              setSheetState(() => unitIndex = index),
                           children: const [
                             Center(child: Text('分钟')),
                             Center(child: Text('小时')),

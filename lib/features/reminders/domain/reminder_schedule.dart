@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:rrule/rrule.dart';
+
 enum ReminderRepeatUnit { day, week, month, year }
 
 enum ReminderRepeatEnd { never, date, count }
@@ -85,12 +87,13 @@ class ReminderSchedule {
     try {
       final map = jsonDecode(value) as Map<String, dynamic>;
       final unitName = map['repeatUnit'] as String?;
-      final alerts = (map['alertMinutes'] as List<dynamic>? ?? const [0])
-          .whereType<num>()
-          .map((value) => value.toInt().clamp(0, 525600).toInt())
-          .toSet()
-          .toList()
-        ..sort();
+      final alerts =
+          (map['alertMinutes'] as List<dynamic>? ?? const [0])
+              .whereType<num>()
+              .map((value) => value.toInt().clamp(0, 525600).toInt())
+              .toSet()
+              .toList()
+            ..sort();
       return ReminderSchedule(
         repeatUnit: ReminderRepeatUnit.values
             .where((unit) => unit.name == unitName)
@@ -108,9 +111,10 @@ class ReminderSchedule {
             .map((value) => value.toInt())
             .where((value) => value >= 1 && value <= 31)
             .toSet(),
-        repeatEnd: ReminderRepeatEnd.values
-            .where((end) => end.name == map['repeatEnd'])
-            .firstOrNull ??
+        repeatEnd:
+            ReminderRepeatEnd.values
+                .where((end) => end.name == map['repeatEnd'])
+                .firstOrNull ??
             ReminderRepeatEnd.never,
         endDate: DateTime.tryParse(map['endDate'] as String? ?? ''),
         endCount: (map['endCount'] as num?)?.toInt(),
@@ -157,43 +161,54 @@ class ReminderSchedule {
 
   List<DateTime> upcoming(DateTime start, {int limit = 12}) {
     if (!repeats) return <DateTime>[start];
-    final result = <DateTime>[];
-    var cursor = start;
-    final maxEnd = start.add(const Duration(days: 3660));
-    while (result.length < limit && !cursor.isAfter(maxEnd)) {
-      if (_matches(start, cursor)) {
-        if (repeatEnd == ReminderRepeatEnd.date &&
-            endDate != null &&
-            cursor.isAfter(_endOfDay(endDate!))) {
-          break;
-        }
-        result.add(cursor);
-        if (repeatEnd == ReminderRepeatEnd.count &&
-            endCount != null &&
-            result.length >= endCount!) {
-          break;
-        }
-      }
-      cursor = cursor.add(const Duration(days: 1));
-    }
-    return result;
-  }
-
-  bool _matches(DateTime start, DateTime value) {
-    if (value.isBefore(start)) return false;
-    return switch (repeatUnit!) {
-      ReminderRepeatUnit.day => value.difference(start).inDays % interval == 0,
-      ReminderRepeatUnit.week =>
-        (value.difference(_weekStart(start)).inDays ~/ 7) % interval == 0 &&
-            (weekdays.isEmpty ? {start.weekday} : weekdays).contains(value.weekday),
-      ReminderRepeatUnit.month =>
-        _monthDistance(start, value) % interval == 0 &&
-            (monthDays.isEmpty ? {start.day} : monthDays).contains(value.day),
-      ReminderRepeatUnit.year =>
-        (value.year - start.year) % interval == 0 &&
-            value.month == start.month &&
-            value.day == start.day,
-    };
+    final utcStart = DateTime.utc(
+      start.year,
+      start.month,
+      start.day,
+      start.hour,
+      start.minute,
+    );
+    final rule = RecurrenceRule(
+      frequency: switch (repeatUnit!) {
+        ReminderRepeatUnit.day => Frequency.daily,
+        ReminderRepeatUnit.week => Frequency.weekly,
+        ReminderRepeatUnit.month => Frequency.monthly,
+        ReminderRepeatUnit.year => Frequency.yearly,
+      },
+      interval: interval,
+      byWeekDays: repeatUnit == ReminderRepeatUnit.week
+          ? (weekdays.isEmpty ? {start.weekday} : weekdays)
+                .map(ByWeekDayEntry.new)
+                .toList()
+          : const [],
+      byMonthDays: repeatUnit == ReminderRepeatUnit.month
+          ? (monthDays.isEmpty ? <int>[start.day] : monthDays.toList())
+          : const [],
+      until: repeatEnd == ReminderRepeatEnd.date && endDate != null
+          ? DateTime.utc(
+              endDate!.year,
+              endDate!.month,
+              endDate!.day,
+              23,
+              59,
+              59,
+            )
+          : null,
+      count: repeatEnd == ReminderRepeatEnd.count ? endCount : null,
+    );
+    return rule
+        .getInstances(start: utcStart)
+        .take(limit)
+        .map(
+          (value) => DateTime(
+            value.year,
+            value.month,
+            value.day,
+            value.hour,
+            value.minute,
+          ),
+        )
+        .toList();
   }
 
   String _weekdaySuffix(DateTime start) {
@@ -207,20 +222,6 @@ class ReminderSchedule {
     return values.map((value) => '$value 日').join('、');
   }
 }
-
-DateTime _weekStart(DateTime value) => DateTime(
-  value.year,
-  value.month,
-  value.day - value.weekday + 1,
-  value.hour,
-  value.minute,
-);
-
-DateTime _endOfDay(DateTime value) =>
-    DateTime(value.year, value.month, value.day, 23, 59, 59);
-
-int _monthDistance(DateTime start, DateTime value) =>
-    (value.year - start.year) * 12 + value.month - start.month;
 
 extension _FirstOrNull<T> on Iterable<T> {
   T? get firstOrNull => isEmpty ? null : first;
