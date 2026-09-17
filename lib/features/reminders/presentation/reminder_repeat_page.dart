@@ -256,63 +256,81 @@ class _CustomRepeatPageState extends State<CustomRepeatPage> {
   Future<void> _pickFrequency() async {
     var interval = _value.interval;
     var unit = _value.repeatUnit ?? ReminderRepeatUnit.week;
-    final result = await showModalBottomSheet<({int interval, ReminderRepeatUnit unit})>(
-      context: context,
-      showDragHandle: true,
-      builder: (context) => StatefulBuilder(
-        builder: (context, setSheetState) => SafeArea(
-          child: SizedBox(
-            height: 330,
-            child: Column(
-              children: [
-                _SheetHeader(
-                  title: '重复频率',
-                  onCancel: () => Navigator.pop(context),
-                  onConfirm: () => Navigator.pop(context, (interval: interval, unit: unit)),
-                ),
-                Expanded(
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: CupertinoPicker(
-                          itemExtent: 48,
-                          scrollController: FixedExtentScrollController(initialItem: interval - 1),
-                          onSelectedItemChanged: (index) => setSheetState(() => interval = index + 1),
-                          children: [for (var value = 1; value <= 20; value++) Center(child: Text('$value'))],
-                        ),
+    final result =
+        await showModalBottomSheet<({int interval, ReminderRepeatUnit unit})>(
+          context: context,
+          showDragHandle: true,
+          builder: (context) => StatefulBuilder(
+            builder: (context, setSheetState) => SafeArea(
+              child: SizedBox(
+                height: 330,
+                child: Column(
+                  children: [
+                    _SheetHeader(
+                      title: '重复频率',
+                      onCancel: () => Navigator.pop(context),
+                      onConfirm: () => Navigator.pop(context, (
+                        interval: interval,
+                        unit: unit,
+                      )),
+                    ),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: CupertinoPicker(
+                              itemExtent: 48,
+                              scrollController: FixedExtentScrollController(
+                                initialItem: interval - 1,
+                              ),
+                              onSelectedItemChanged: (index) =>
+                                  setSheetState(() => interval = index + 1),
+                              children: [
+                                for (var value = 1; value <= 20; value++)
+                                  Center(child: Text('$value')),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: CupertinoPicker(
+                              itemExtent: 48,
+                              scrollController: FixedExtentScrollController(
+                                initialItem: unit.index,
+                              ),
+                              onSelectedItemChanged: (index) => setSheetState(
+                                () => unit = ReminderRepeatUnit.values[index],
+                              ),
+                              children: const [
+                                Center(child: Text('天')),
+                                Center(child: Text('周')),
+                                Center(child: Text('月')),
+                                Center(child: Text('年')),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                      Expanded(
-                        child: CupertinoPicker(
-                          itemExtent: 48,
-                          scrollController: FixedExtentScrollController(initialItem: unit.index),
-                          onSelectedItemChanged: (index) => setSheetState(() => unit = ReminderRepeatUnit.values[index]),
-                          children: const [
-                            Center(child: Text('天')),
-                            Center(child: Text('周')),
-                            Center(child: Text('月')),
-                            Center(child: Text('年')),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
-    );
+        );
     if (result == null || !mounted) return;
     setState(() {
       _value = _value.copyWith(
         interval: result.interval,
         repeatUnit: result.unit,
         weekdays: result.unit == ReminderRepeatUnit.week
-            ? (_value.weekdays.isEmpty ? {widget.startDate.weekday} : _value.weekdays)
+            ? (_value.weekdays.isEmpty
+                  ? {widget.startDate.weekday}
+                  : _value.weekdays)
             : {},
         monthDays: result.unit == ReminderRepeatUnit.month
-            ? (_value.monthDays.isEmpty ? {widget.startDate.day} : _value.monthDays)
+            ? (_value.monthDays.isEmpty
+                  ? {widget.startDate.day}
+                  : _value.monthDays)
             : {},
       );
     });
@@ -328,7 +346,10 @@ class _CustomRepeatPageState extends State<CustomRepeatPage> {
           children: [
             const Padding(
               padding: EdgeInsets.all(16),
-              child: Text('结束重复', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
+              child: Text(
+                '结束重复',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+              ),
             ),
             for (final end in ReminderRepeatEnd.values)
               RadioListTile<ReminderRepeatEnd>(
@@ -350,23 +371,42 @@ class _CustomRepeatPageState extends State<CustomRepeatPage> {
     if (result == ReminderRepeatEnd.date) {
       final date = await showDatePicker(
         context: context,
-        initialDate: _value.endDate ?? widget.startDate.add(const Duration(days: 30)),
+        initialDate:
+            _value.endDate ?? widget.startDate.add(const Duration(days: 30)),
         firstDate: widget.startDate,
         lastDate: widget.startDate.add(const Duration(days: 3650)),
       );
       if (date != null && mounted) {
-        setState(() => _value = _value.copyWith(repeatEnd: result, endDate: date, clearEndCount: true));
+        setState(
+          () => _value = _value.copyWith(
+            repeatEnd: result,
+            endDate: date,
+            clearEndCount: true,
+          ),
+        );
       }
       return;
     }
     if (result == ReminderRepeatEnd.count) {
       final count = await _pickCount();
       if (count != null && mounted) {
-        setState(() => _value = _value.copyWith(repeatEnd: result, endCount: count, clearEndDate: true));
+        setState(
+          () => _value = _value.copyWith(
+            repeatEnd: result,
+            endCount: count,
+            clearEndDate: true,
+          ),
+        );
       }
       return;
     }
-    setState(() => _value = _value.copyWith(repeatEnd: result, clearEndDate: true, clearEndCount: true));
+    setState(
+      () => _value = _value.copyWith(
+        repeatEnd: result,
+        clearEndDate: true,
+        clearEndCount: true,
+      ),
+    );
   }
 
   Future<int?> _pickCount() {
@@ -387,9 +427,14 @@ class _CustomRepeatPageState extends State<CustomRepeatPage> {
               Expanded(
                 child: CupertinoPicker(
                   itemExtent: 48,
-                  scrollController: FixedExtentScrollController(initialItem: count - 1),
+                  scrollController: FixedExtentScrollController(
+                    initialItem: count - 1,
+                  ),
                   onSelectedItemChanged: (index) => count = index + 1,
-                  children: [for (var value = 1; value <= 100; value++) Center(child: Text('$value 次'))],
+                  children: [
+                    for (var value = 1; value <= 100; value++)
+                      Center(child: Text('$value 次')),
+                  ],
                 ),
               ),
             ],
@@ -402,20 +447,23 @@ class _CustomRepeatPageState extends State<CustomRepeatPage> {
   void _toggleWeekday(int day) {
     final values = {..._value.weekdays};
     values.contains(day) ? values.remove(day) : values.add(day);
-    if (values.isNotEmpty) setState(() => _value = _value.copyWith(weekdays: values));
+    if (values.isNotEmpty)
+      setState(() => _value = _value.copyWith(weekdays: values));
   }
 
   void _toggleMonthDay(int day) {
     final values = {..._value.monthDays};
     values.contains(day) ? values.remove(day) : values.add(day);
-    if (values.isNotEmpty) setState(() => _value = _value.copyWith(monthDays: values));
+    if (values.isNotEmpty)
+      setState(() => _value = _value.copyWith(monthDays: values));
   }
 
   String _endLabel() => switch (_value.repeatEnd) {
     ReminderRepeatEnd.never => '永不结束',
-    ReminderRepeatEnd.date => _value.endDate == null
-        ? '按日期'
-        : '${_value.endDate!.year}年${_value.endDate!.month}月${_value.endDate!.day}日',
+    ReminderRepeatEnd.date =>
+      _value.endDate == null
+          ? '按日期'
+          : '${_value.endDate!.year}年${_value.endDate!.month}月${_value.endDate!.day}日',
     ReminderRepeatEnd.count => '重复 ${_value.endCount ?? 1} 次',
   };
 }
