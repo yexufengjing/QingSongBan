@@ -26,6 +26,7 @@ import 'package:qingsongban/features/reports/domain/monthly_summary_options.dart
 import 'package:qingsongban/features/insurance/application/insurance_providers.dart';
 import 'package:qingsongban/features/insurance/domain/insurance_options.dart';
 import 'package:qingsongban/features/reminders/application/reminder_providers.dart';
+import 'package:qingsongban/features/reminders/domain/reminder_options.dart';
 import 'package:qingsongban/features/operation_logs/application/operation_log_providers.dart';
 
 void main() {
@@ -123,6 +124,9 @@ void main() {
             (ref) => Stream.value(<InsuranceHistoryView>[]),
           ),
           remindersProvider.overrideWith((ref) => Stream.value(<Reminder>[])),
+          reminderItemsProvider.overrideWith(
+            (ref) => Stream.value(<ReminderItem>[]),
+          ),
           operationLogsProvider.overrideWith(
             (ref) => Stream.value(<OperationLog>[]),
           ),
@@ -561,16 +565,18 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('备忘提醒'), findsOneWidget);
+    expect(find.byKey(const Key('reminder-add-button')), findsOneWidget);
+    expect(find.byKey(const Key('reminder-filter-pending')), findsOneWidget);
+    expect(find.text('把事情记下来，到点提醒'), findsOneWidget);
+    await tester.drag(find.byType(ListView).last, const Offset(0, -500));
+    await tester.pumpAndSettle();
+    expect(find.text('业务提醒偏好'), findsOneWidget);
     final reminderTestButton = find.byKey(
       const Key('reminder-test-button'),
       skipOffstage: false,
     );
     await tester.ensureVisible(reminderTestButton);
     expect(reminderTestButton, findsOneWidget);
-    expect(find.byKey(const Key('reminder-add-button')), findsOneWidget);
-    expect(find.byKey(const Key('reminder-filter-pending')), findsOneWidget);
-    expect(find.text('把事情记下来，到点提醒'), findsOneWidget);
-    expect(find.text('业务提醒偏好'), findsOneWidget);
   });
 
   testWidgets('opens backup and restore from settings', (tester) async {
