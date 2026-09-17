@@ -6,6 +6,7 @@ import '../../../app/theme/app_theme.dart';
 import '../../../core/database/app_database.dart';
 import '../application/reminder_providers.dart';
 import '../domain/reminder_options.dart';
+import '../domain/reminder_schedule.dart';
 
 enum _ReminderFilter { pending, completed }
 
@@ -363,9 +364,15 @@ class _ReminderTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dueText = _formatDueDate(reminder.dueDate);
+    final schedule = ReminderSchedule.decode(
+      reminder.repeatRule,
+      legacyLeadDays: reminder.leadDays,
+    );
     final detailParts = <String>[
       dueText,
-      ReminderOptions.leadLabel(reminder.leadDays),
+      if (reminder.dueDate != null) schedule.repeatLabel(reminder.dueDate!),
+      schedule.alertLabel,
+      if (!schedule.ringEnabled) '静音',
       if (!reminder.isEnabled) '通知已关闭',
     ];
     return Card(
