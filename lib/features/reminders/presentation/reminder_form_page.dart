@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import '../../../app/theme/app_theme.dart';
 import '../application/reminder_providers.dart';
 import '../domain/reminder_options.dart';
+import '../domain/reminder_schedule.dart';
+import 'reminder_schedule_page.dart';
 
 class ReminderFormPage extends ConsumerStatefulWidget {
   const ReminderFormPage({super.key});
@@ -14,13 +16,10 @@ class ReminderFormPage extends ConsumerStatefulWidget {
 }
 
 class _ReminderFormPageState extends ConsumerState<ReminderFormPage> {
-  final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _remarkController = TextEditingController();
-  DateTime? _dueDate;
-  TimeOfDay _time = const TimeOfDay(hour: 9, minute: 0);
-  int _leadDays = 0;
-  bool _enabled = true;
+  late DateTime _dueDate = _defaultDueDate();
+  ReminderSchedule _schedule = const ReminderSchedule();
   bool _saving = false;
 
   @override
@@ -33,215 +32,199 @@ class _ReminderFormPageState extends ConsumerState<ReminderFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('新建提醒')),
-      body: Form(
-        key: _formKey,
-        child: ListView(
-          padding: const EdgeInsets.fromLTRB(20, 14, 20, 28),
-          children: [
-            Card(
-              color: AppColors.lightBlue,
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+      appBar: AppBar(
+        leading: TextButton(
+          onPressed: _saving ? null : () => context.pop(),
+          child: const Text('取消'),
+        ),
+        leadingWidth: 72,
+        title: const Text('新建待办'),
+        centerTitle: true,
+        actions: [
+          TextButton(
+            key: const Key('reminder-save-button'),
+            onPressed: _saving ? null : _save,
+            child: Text(_saving ? '保存中…' : '完成'),
+          ),
+        ],
+      ),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(20, 12, 20, 32),
+        children: [
+          Container(
+            padding: const EdgeInsets.fromLTRB(20, 14, 20, 16),
+            decoration: BoxDecoration(
+              color: AppColors.lightOrange,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0x18000000),
+                  blurRadius: 18,
+                  offset: Offset(0, 8),
+                ),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextField(
+                  key: const Key('reminder-title-field'),
+                  controller: _titleController,
+                  autofocus: true,
+                  minLines: 3,
+                  maxLines: 6,
+                  style: Theme.of(context).textTheme.headlineMedium,
+                  decoration: const InputDecoration(
+                    hintText: '请输入要做的事情',
+                    filled: false,
+                    border: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    contentPadding: EdgeInsets.zero,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
                   children: [
-                    const Icon(
-                      Icons.lightbulb_outline,
-                      color: AppColors.techBlue,
+                    ActionChip(
+                      key: const Key('reminder-custom-time'),
+                      avatar: const Icon(Icons.calendar_today_outlined, size: 18),
+                      label: Text(_scheduleChipLabel()),
+                      onPressed: _editSchedule,
                     ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        '先写要做什么，再选择提醒时间。保存后会在通知栏提醒你。',
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
+                    const Chip(
+                      avatar: Icon(Icons.flag_outlined, size: 18),
+                      label: Text('普通'),
                     ),
                   ],
                 ),
-              ),
+              ],
             ),
-            const SizedBox(height: 22),
-            Text('要做什么', style: Theme.of(context).textTheme.titleLarge),
-            const SizedBox(height: 10),
-            TextFormField(
-              key: const Key('reminder-title-field'),
-              controller: _titleController,
-              autofocus: true,
-              textInputAction: TextInputAction.next,
-              decoration: const InputDecoration(
-                labelText: '事项标题',
-                hintText: '例如：提交月度报表',
-              ),
-              validator: (value) =>
-                  value == null || value.trim().isEmpty ? '请输入事项标题' : null,
-            ),
-            const SizedBox(height: 22),
-            Text('什么时候提醒', style: Theme.of(context).textTheme.titleLarge),
-            const SizedBox(height: 8),
-            Wrap(
-              spacing: 8,
+          ),
+          const SizedBox(height: 20),
+          Card(
+            child: Column(
               children: [
-                ActionChip(
-                  key: const Key('reminder-date-today'),
-                  label: const Text('今天'),
-                  onPressed: () => _setQuickDate(0),
+                ListTile(
+                  leading: const Icon(Icons.schedule_outlined),
+                  title: const Text('时间与提醒'),
+                  subtitle: Text(
+                    '${_fullDateLabel(_dueDate)} · ${_schedule.repeatLabel(_dueDate)} · ${_schedule.alertLabel}',
+                  ),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: _editSchedule,
                 ),
-                ActionChip(
-                  key: const Key('reminder-date-tomorrow'),
-                  label: const Text('明天'),
-                  onPressed: () => _setQuickDate(1),
-                ),
-                ActionChip(
-                  key: const Key('reminder-date-next-week'),
-                  label: const Text('一周后'),
-                  onPressed: () => _setQuickDate(7),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Card(
-              child: Column(
-                children: [
-                  ListTile(
-                    key: const Key('reminder-date-field'),
-                    title: const Text('日期'),
-                    subtitle: Text(
-                      _dueDate == null ? '请选择提醒日期' : _formatDate(_dueDate!),
+                const Divider(),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: TextField(
+                    controller: _remarkController,
+                    minLines: 2,
+                    maxLines: 4,
+                    decoration: const InputDecoration(
+                      labelText: '补充说明（选填）',
+                      hintText: '地点、联系人、车辆或需要准备的材料',
                     ),
-                    trailing: const Icon(Icons.calendar_month_outlined),
-                    onTap: _pickDate,
                   ),
-                  const Divider(),
-                  ListTile(
-                    key: const Key('reminder-time-field'),
-                    title: const Text('时间'),
-                    subtitle: Text(_time.format(context)),
-                    trailing: const Icon(Icons.schedule_outlined),
-                    onTap: _pickTime,
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 18),
-            DropdownButtonFormField<int>(
-              key: const Key('reminder-lead-field'),
-              initialValue: _leadDays,
-              decoration: const InputDecoration(
-                labelText: '提前提醒',
-                helperText: '如果提前时间已经过去，将在事项到期时提醒。',
-              ),
-              items: [
-                for (final days in [0, 1, 3, 7])
-                  DropdownMenuItem(
-                    value: days,
-                    child: Text(ReminderOptions.leadLabel(days)),
-                  ),
+                ),
               ],
-              onChanged: (value) => setState(() => _leadDays = value ?? 0),
             ),
-            const SizedBox(height: 10),
-            SwitchListTile(
-              contentPadding: EdgeInsets.zero,
-              title: const Text('通知栏提醒'),
-              subtitle: const Text('关闭后事项仍会保存，但手机不会弹出通知。'),
-              value: _enabled,
-              onChanged: (value) => setState(() => _enabled = value),
-            ),
-            const SizedBox(height: 14),
-            Text('补充说明（选填）', style: Theme.of(context).textTheme.titleLarge),
-            const SizedBox(height: 10),
-            TextFormField(
-              controller: _remarkController,
-              minLines: 3,
-              maxLines: 5,
-              decoration: const InputDecoration(
-                hintText: '记录地点、联系人或需要准备的材料',
-              ),
-            ),
-            const SizedBox(height: 24),
-            FilledButton.icon(
-              key: const Key('reminder-save-button'),
-              onPressed: _saving ? null : _save,
-              icon: const Icon(Icons.save_outlined),
-              label: Text(_saving ? '保存中…' : '保存提醒'),
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 14),
+          Text(
+            '点击时间卡片，可设置滚轮日期和时间、重复频率、多个提前提醒及响铃。',
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ],
       ),
     );
   }
 
-  void _setQuickDate(int daysFromToday) {
-    final date = DateTime.now().add(Duration(days: daysFromToday));
-    setState(() => _dueDate = DateTime(date.year, date.month, date.day));
-  }
-
-  Future<void> _pickDate() async {
-    final picked = await showDatePicker(
-      context: context,
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(const Duration(days: 3650)),
-      initialDate: _dueDate ?? DateTime.now(),
+  Future<void> _editSchedule() async {
+    final result = await Navigator.push<ReminderScheduleResult>(
+      context,
+      MaterialPageRoute(
+        builder: (_) => ReminderSchedulePage(
+          initialDate: _dueDate,
+          initialSchedule: _schedule,
+        ),
+      ),
     );
-    if (picked != null) setState(() => _dueDate = picked);
-  }
-
-  Future<void> _pickTime() async {
-    final picked = await showTimePicker(context: context, initialTime: _time);
-    if (picked != null) setState(() => _time = picked);
+    if (result != null && mounted) {
+      setState(() {
+        _dueDate = result.dueDate;
+        _schedule = result.schedule;
+      });
+    }
   }
 
   Future<void> _save() async {
-    if (!(_formKey.currentState?.validate() ?? false)) return;
-    if (_dueDate == null) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('请选择提醒日期')));
+    final title = _titleController.text.trim();
+    if (title.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('请先输入要做的事情')),
+      );
       return;
     }
-    final dueDate = DateTime(
-      _dueDate!.year,
-      _dueDate!.month,
-      _dueDate!.day,
-      _time.hour,
-      _time.minute,
-    );
-    if (!dueDate.isAfter(DateTime.now())) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('提醒时间必须晚于当前时间')));
+    if (!_dueDate.isAfter(DateTime.now())) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('提醒时间必须晚于当前时间')),
+      );
+      return;
+    }
+    if (_schedule.alertMinutes.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('请至少选择一个提醒时间')),
+      );
       return;
     }
     setState(() => _saving = true);
     try {
-      final reminder = await ref
-          .read(reminderRepositoryProvider)
-          .save(
-            draft: ReminderDraft(
-              title: _titleController.text,
-              reminderType: 'custom',
-              dueDate: dueDate,
-              leadDays: _leadDays,
-              isEnabled: _enabled,
-              remark: _remarkController.text,
-            ),
-          );
+      final reminder = await ref.read(reminderRepositoryProvider).save(
+        draft: ReminderDraft(
+          title: title,
+          reminderType: 'custom',
+          dueDate: _dueDate,
+          leadDays: 0,
+          repeatRule: _schedule.encode(),
+          isEnabled: true,
+          remark: _remarkController.text,
+        ),
+      );
       final notificationService = ref.read(notificationServiceProvider);
-      if (_enabled) await notificationService.requestPermission();
+      await notificationService.requestPermission();
       await notificationService.sync(reminder);
       if (mounted) context.pop();
     } catch (error) {
-      if (mounted) {
-        setState(() => _saving = false);
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('保存失败：$error')));
-      }
+      if (!mounted) return;
+      setState(() => _saving = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('保存失败：$error')),
+      );
     }
+  }
+
+  String _scheduleChipLabel() {
+    final now = DateTime.now();
+    final date = _sameDay(_dueDate, now)
+        ? '今天'
+        : _sameDay(_dueDate, now.add(const Duration(days: 1)))
+        ? '明天'
+        : '${_dueDate.month}月${_dueDate.day}日';
+    return '$date ${_dueDate.hour.toString().padLeft(2, '0')}:${_dueDate.minute.toString().padLeft(2, '0')}';
   }
 }
 
-String _formatDate(DateTime date) {
-  return '${date.year}年${date.month}月${date.day}日';
+DateTime _defaultDueDate() {
+  final value = DateTime.now().add(const Duration(hours: 1));
+  return DateTime(value.year, value.month, value.day, value.hour, 0);
 }
+
+bool _sameDay(DateTime a, DateTime b) =>
+    a.year == b.year && a.month == b.month && a.day == b.day;
+
+String _fullDateLabel(DateTime value) =>
+    '${value.year}年${value.month}月${value.day}日 '
+    '${value.hour.toString().padLeft(2, '0')}:${value.minute.toString().padLeft(2, '0')}';
