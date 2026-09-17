@@ -52,114 +52,128 @@ class _ReminderSchedulePageState extends State<ReminderSchedulePage> {
           ),
         ],
       ),
-      body: ListView(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(20, 10, 20, 28),
-        children: [
-          Card(
-            child: Column(
-              children: [
-                ListTile(
-                  title: const Text('开始'),
-                  trailing: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
-                      borderRadius: BorderRadius.circular(24),
-                    ),
-                    child: Text(
-                      _dateLabel(_date),
-                      style: const TextStyle(color: Colors.white),
+        child: Column(
+          children: [
+            Card(
+              child: Column(
+                children: [
+                  ListTile(
+                    title: const Text('开始'),
+                    trailing: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 8,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primary,
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      child: Text(
+                        _dateLabel(_date),
+                        style: const TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
-                ),
-                const Divider(),
-                SizedBox(
-                  height: 320,
-                  child: Stack(
-                    children: [
-                      CalendarDatePicker(
-                        key: ValueKey('${_date.year}-${_date.month}'),
-                        initialDate: _date,
-                        firstDate: DateTime.now().subtract(const Duration(days: 1)),
-                        lastDate: DateTime.now().add(const Duration(days: 3650)),
-                        onDateChanged: (value) => setState(() => _date = DateTime(
-                          value.year,
-                          value.month,
-                          value.day,
-                          _date.hour,
-                          _date.minute,
-                        )),
-                      ),
-                      Positioned(
-                        top: 3,
-                        left: 88,
-                        right: 88,
-                        child: GestureDetector(
-                          key: const Key('reminder-year-month-wheel'),
-                          behavior: HitTestBehavior.opaque,
-                          onTap: _pickDateWheel,
-                          child: Container(
-                            height: 42,
-                            alignment: Alignment.center,
-                            color: Theme.of(context).colorScheme.surface,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  '${_date.year}年${_date.month}月',
-                                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                                ),
-                                const SizedBox(width: 4),
-                                const Icon(Icons.arrow_drop_down, size: 20),
-                              ],
+                  const Divider(),
+                  SizedBox(
+                    height: 240,
+                    child: Stack(
+                      children: [
+                        CalendarDatePicker(
+                          key: ValueKey('${_date.year}-${_date.month}'),
+                          initialDate: _date,
+                          firstDate: DateTime.now().subtract(
+                            const Duration(days: 1),
+                          ),
+                          lastDate: DateTime.now().add(
+                            const Duration(days: 3650),
+                          ),
+                          onDateChanged: (value) => setState(
+                            () => _date = DateTime(
+                              value.year,
+                              value.month,
+                              value.day,
+                              _date.hour,
+                              _date.minute,
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                        Positioned(
+                          top: 3,
+                          left: 88,
+                          right: 88,
+                          child: GestureDetector(
+                            key: const Key('reminder-year-month-wheel'),
+                            behavior: HitTestBehavior.opaque,
+                            onTap: _pickDateWheel,
+                            child: Container(
+                              height: 42,
+                              alignment: Alignment.center,
+                              color: Theme.of(context).colorScheme.surface,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    '${_date.year}年${_date.month}月',
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 4),
+                                  const Icon(Icons.arrow_drop_down, size: 20),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                const Divider(),
-                _OptionTile(
-                  tileKey: const Key('reminder-schedule-time'),
-                  title: '时间',
-                  value: _timeLabel(_date),
-                  onTap: _pickTime,
-                ),
-                const Divider(),
-                _OptionTile(
-                  tileKey: const Key('reminder-schedule-repeat'),
-                  title: '重复',
-                  value: _schedule.repeatLabel(_date),
-                  onTap: _pickRepeat,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 16),
-          Card(
-            child: Column(
-              children: [
-                _OptionTile(
-                  tileKey: const Key('reminder-schedule-alerts'),
-                  title: '提醒',
-                  value: _schedule.alertLabel,
-                  onTap: _pickAlerts,
-                ),
-                const Divider(),
-                SwitchListTile(
-                  key: const Key('reminder-ring-switch'),
-                  title: const Text('响铃提醒'),
-                  subtitle: const Text('关闭后仍显示通知，但不播放提示音'),
-                  value: _schedule.ringEnabled,
-                  onChanged: (value) => setState(
-                    () => _schedule = _schedule.copyWith(ringEnabled: value),
+                  const Divider(),
+                  _OptionTile(
+                    tileKey: const Key('reminder-schedule-time'),
+                    title: '时间',
+                    value: _timeLabel(_date),
+                    onTap: _pickTime,
                   ),
-                ),
-              ],
+                  const Divider(),
+                  _OptionTile(
+                    tileKey: const Key('reminder-schedule-repeat'),
+                    title: '重复',
+                    value: _schedule.repeatLabel(_date),
+                    onTap: _pickRepeat,
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+            const SizedBox(height: 16),
+            Card(
+              child: Column(
+                children: [
+                  _OptionTile(
+                    tileKey: const Key('reminder-schedule-alerts'),
+                    title: '提醒',
+                    value: _schedule.alertLabel,
+                    onTap: _pickAlerts,
+                  ),
+                  const Divider(),
+                  SwitchListTile(
+                    key: const Key('reminder-ring-switch'),
+                    title: const Text('响铃提醒'),
+                    subtitle: const Text('关闭后仍显示通知，但不播放提示音'),
+                    value: _schedule.ringEnabled,
+                    onChanged: (value) => setState(
+                      () => _schedule = _schedule.copyWith(ringEnabled: value),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -183,7 +197,8 @@ class _ReminderSchedulePageState extends State<ReminderSchedulePage> {
                   _PickerHeader(
                     title: '选择日期',
                     onCancel: () => Navigator.pop(context),
-                    onConfirm: () => Navigator.pop(context, DateTime(year, month, day)),
+                    onConfirm: () =>
+                        Navigator.pop(context, DateTime(year, month, day)),
                   ),
                   Expanded(
                     child: Row(
@@ -191,26 +206,49 @@ class _ReminderSchedulePageState extends State<ReminderSchedulePage> {
                         Expanded(
                           child: CupertinoPicker(
                             itemExtent: 48,
-                            scrollController: FixedExtentScrollController(initialItem: year - DateTime.now().year),
-                            onSelectedItemChanged: (index) => setSheetState(() => year = DateTime.now().year + index),
-                            children: [for (var value = DateTime.now().year; value <= DateTime.now().year + 10; value++) Center(child: Text('$value年'))],
+                            scrollController: FixedExtentScrollController(
+                              initialItem: year - DateTime.now().year,
+                            ),
+                            onSelectedItemChanged: (index) => setSheetState(
+                              () => year = DateTime.now().year + index,
+                            ),
+                            children: [
+                              for (
+                                var value = DateTime.now().year;
+                                value <= DateTime.now().year + 10;
+                                value++
+                              )
+                                Center(child: Text('$value年')),
+                            ],
                           ),
                         ),
                         Expanded(
                           child: CupertinoPicker(
                             itemExtent: 48,
-                            scrollController: FixedExtentScrollController(initialItem: month - 1),
-                            onSelectedItemChanged: (index) => setSheetState(() => month = index + 1),
-                            children: [for (var value = 1; value <= 12; value++) Center(child: Text('$value月'))],
+                            scrollController: FixedExtentScrollController(
+                              initialItem: month - 1,
+                            ),
+                            onSelectedItemChanged: (index) =>
+                                setSheetState(() => month = index + 1),
+                            children: [
+                              for (var value = 1; value <= 12; value++)
+                                Center(child: Text('$value月')),
+                            ],
                           ),
                         ),
                         Expanded(
                           child: CupertinoPicker(
                             key: ValueKey('$year-$month-$maxDay'),
                             itemExtent: 48,
-                            scrollController: FixedExtentScrollController(initialItem: day - 1),
-                            onSelectedItemChanged: (index) => setSheetState(() => day = index + 1),
-                            children: [for (var value = 1; value <= maxDay; value++) Center(child: Text('$value日'))],
+                            scrollController: FixedExtentScrollController(
+                              initialItem: day - 1,
+                            ),
+                            onSelectedItemChanged: (index) =>
+                                setSheetState(() => day = index + 1),
+                            children: [
+                              for (var value = 1; value <= maxDay; value++)
+                                Center(child: Text('$value日')),
+                            ],
                           ),
                         ),
                       ],
@@ -224,7 +262,15 @@ class _ReminderSchedulePageState extends State<ReminderSchedulePage> {
       ),
     );
     if (result != null && mounted) {
-      setState(() => _date = DateTime(result.year, result.month, result.day, _date.hour, _date.minute));
+      setState(
+        () => _date = DateTime(
+          result.year,
+          result.month,
+          result.day,
+          _date.hour,
+          _date.minute,
+        ),
+      );
     }
   }
 
@@ -242,7 +288,10 @@ class _ReminderSchedulePageState extends State<ReminderSchedulePage> {
               _PickerHeader(
                 title: '选择时间',
                 onCancel: () => Navigator.pop(context),
-                onConfirm: () => Navigator.pop(context, TimeOfDay(hour: hour, minute: minute)),
+                onConfirm: () => Navigator.pop(
+                  context,
+                  TimeOfDay(hour: hour, minute: minute),
+                ),
               ),
               Expanded(
                 child: Row(
@@ -250,17 +299,31 @@ class _ReminderSchedulePageState extends State<ReminderSchedulePage> {
                     Expanded(
                       child: CupertinoPicker(
                         itemExtent: 48,
-                        scrollController: FixedExtentScrollController(initialItem: hour),
+                        scrollController: FixedExtentScrollController(
+                          initialItem: hour,
+                        ),
                         onSelectedItemChanged: (index) => hour = index,
-                        children: [for (var value = 0; value < 24; value++) Center(child: Text(value.toString().padLeft(2, '0')))],
+                        children: [
+                          for (var value = 0; value < 24; value++)
+                            Center(
+                              child: Text(value.toString().padLeft(2, '0')),
+                            ),
+                        ],
                       ),
                     ),
                     Expanded(
                       child: CupertinoPicker(
                         itemExtent: 48,
-                        scrollController: FixedExtentScrollController(initialItem: minute),
+                        scrollController: FixedExtentScrollController(
+                          initialItem: minute,
+                        ),
                         onSelectedItemChanged: (index) => minute = index,
-                        children: [for (var value = 0; value < 60; value++) Center(child: Text(value.toString().padLeft(2, '0')))],
+                        children: [
+                          for (var value = 0; value < 60; value++)
+                            Center(
+                              child: Text(value.toString().padLeft(2, '0')),
+                            ),
+                        ],
                       ),
                     ),
                   ],
@@ -272,7 +335,15 @@ class _ReminderSchedulePageState extends State<ReminderSchedulePage> {
       ),
     );
     if (result != null && mounted) {
-      setState(() => _date = DateTime(_date.year, _date.month, _date.day, result.hour, result.minute));
+      setState(
+        () => _date = DateTime(
+          _date.year,
+          _date.month,
+          _date.day,
+          result.hour,
+          result.minute,
+        ),
+      );
     }
   }
 
@@ -280,7 +351,8 @@ class _ReminderSchedulePageState extends State<ReminderSchedulePage> {
     final result = await Navigator.push<ReminderSchedule>(
       context,
       MaterialPageRoute(
-        builder: (_) => ReminderRepeatPage(initial: _schedule, startDate: _date),
+        builder: (_) =>
+            ReminderRepeatPage(initial: _schedule, startDate: _date),
       ),
     );
     if (result != null && mounted) setState(() => _schedule = result);
@@ -290,7 +362,8 @@ class _ReminderSchedulePageState extends State<ReminderSchedulePage> {
     final result = await Navigator.push<List<int>>(
       context,
       MaterialPageRoute(
-        builder: (_) => ReminderAlertsPage(initialMinutes: _schedule.alertMinutes),
+        builder: (_) =>
+            ReminderAlertsPage(initialMinutes: _schedule.alertMinutes),
       ),
     );
     if (result != null && mounted) {
@@ -362,7 +435,8 @@ class _PickerHeader extends StatelessWidget {
   }
 }
 
-String _dateLabel(DateTime value) => '${value.year}年${value.month}月${value.day}日';
+String _dateLabel(DateTime value) =>
+    '${value.year}年${value.month}月${value.day}日';
 
 String _timeLabel(DateTime value) =>
     '${value.hour.toString().padLeft(2, '0')}:${value.minute.toString().padLeft(2, '0')}';
