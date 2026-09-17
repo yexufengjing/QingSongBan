@@ -450,6 +450,15 @@ final GoRouter appRouter = GoRouter(
                       name: 'reminder-new',
                       builder: (context, state) => const ReminderFormPage(),
                     ),
+                    GoRoute(
+                      path: ':id/edit',
+                      name: 'reminder-edit',
+                      builder: (context, state) => ReminderFormPage(
+                        reminderId: int.tryParse(
+                          state.pathParameters['id'] ?? '',
+                        ),
+                      ),
+                    ),
                   ],
                 ),
                 GoRoute(
