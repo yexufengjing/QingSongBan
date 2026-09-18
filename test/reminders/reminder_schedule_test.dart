@@ -64,4 +64,13 @@ void main() {
     expect(decoded.repeatUnit, ReminderRepeatUnit.month);
     expect(decoded.alertMinutes, [4320]);
   });
+
+  test('preserves an explicit no-reminder schedule and disables ringing', () {
+    final decoded = ReminderSchedule.decode(
+      const ReminderSchedule(alertMinutes: <int>[], ringEnabled: true).encode(),
+    );
+
+    expect(decoded.alertMinutes, isEmpty);
+    expect(decoded.ringEnabled, isFalse);
+  });
 }

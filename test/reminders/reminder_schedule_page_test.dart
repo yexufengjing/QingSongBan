@@ -26,7 +26,9 @@ void main() {
     await tester.tap(find.text('取消').last);
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byKey(const Key('reminder-schedule-repeat')));
+    final repeatTile = find.byKey(const Key('reminder-schedule-repeat'));
+    await tester.ensureVisible(repeatTile);
+    await tester.tap(repeatTile);
     await tester.pumpAndSettle();
     expect(find.text('仅一次'), findsOneWidget);
     expect(find.text('每两周'), findsOneWidget);
@@ -34,7 +36,9 @@ void main() {
     await tester.pageBack();
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byKey(const Key('reminder-schedule-alerts')));
+    final alertsTile = find.byKey(const Key('reminder-schedule-alerts'));
+    await tester.ensureVisible(alertsTile);
+    await tester.tap(alertsTile);
     await tester.pumpAndSettle();
     expect(find.text('可设置多个提醒'), findsOneWidget);
     expect(find.text('15 分钟前'), findsOneWidget);
