@@ -984,6 +984,18 @@ class PayrollRepository {
     if (batch.status == PayrollStatus.locked) {
       if (existing != null && !existing.isCompleted) {
         await reminders.complete(existing.id);
+        // A payroll reminder is stored with a recurring schedule so that
+        // unlocked batches continue to surface monthly. Once this specific
+        // batch is locked, the reminder itself is complete regardless of the
+        // recurring schedule used by the generic reminder workflow.
+        await (_database.update(
+          _database.reminders,
+        )..where((table) => table.id.equals(existing.id))).write(
+          RemindersCompanion(
+            isCompleted: const Value(true),
+            updatedAt: Value(DateTime.now()),
+          ),
+        );
       }
       return;
     }
