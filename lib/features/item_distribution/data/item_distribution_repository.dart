@@ -645,8 +645,9 @@ class ItemDistributionRepository {
     for (final row in rows) {
       final data = row.data;
       final id = data['id'] as int;
-      if (includeEmployeeIds != null && !includeEmployeeIds.contains(id))
+      if (includeEmployeeIds != null && !includeEmployeeIds.contains(id)) {
         continue;
+      }
       final name = data['name'] as String;
       final key = 'employee:$id';
       final rawPosition = (data['position'] as String?)?.trim();
