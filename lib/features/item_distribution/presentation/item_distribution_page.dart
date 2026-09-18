@@ -200,7 +200,7 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
                   const SizedBox(height: 18),
                   summaryAsync.when(
                     loading: () => const LinearProgressIndicator(),
-                    error: (_, __) => const SizedBox.shrink(),
+                    error: (_, _) => const SizedBox.shrink(),
                     data: _monthlySummary,
                   ),
                 ],
@@ -418,7 +418,7 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
-                if (trailing != null) trailing,
+                ?trailing,
               ],
             ),
           ),
@@ -638,7 +638,7 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
                   children: [
                     Expanded(
                       child: Text(
-                        '$count辆 · ${assignments.length}份 · 洗衣膏${count}袋',
+                        '$count辆 · ${assignments.length}份 · 洗衣膏$count袋',
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
@@ -1045,10 +1045,12 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
   }
 
   String _sourceSubtitle(DistributionRecipientGroup group) {
-    if (group.recipientType == 'sweeper')
+    if (group.recipientType == 'sweeper') {
       return '扫路车福利 · ${group.welfarePosition ?? '司机'}';
-    if (group.recipientType == 'public')
+    }
+    if (group.recipientType == 'public') {
       return '公用福利 · ${group.welfarePosition ?? '实际领取人'}';
+    }
     return '${group.employmentType ?? '人员'} · ${group.welfarePosition ?? '其他'}';
   }
 
@@ -1133,8 +1135,9 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
         ],
       ),
     );
-    if (confirmed == true)
+    if (confirmed == true) {
       await _setSourceStatus(group, DistributionStatus.notReceived);
+    }
   }
 
   Future<void> _showQuantityDetails(
@@ -1414,11 +1417,12 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
                                 );
                                 if (keep != true) return;
                               }
-                              if (sheetContext.mounted)
+                              if (sheetContext.mounted) {
                                 Navigator.pop(
                                   sheetContext,
                                   Set<int>.from(selected),
                                 );
+                              }
                             },
                       child: Text(
                         selected.length > count
@@ -1439,9 +1443,10 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
       await repo.saveSweeperAssignments(_monthKey, result);
       _refresh();
     } catch (error) {
-      if (mounted)
+      if (mounted) {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('$error')));
+      }
     }
   }
 
@@ -1695,8 +1700,9 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
       lastDate: DateTime(DateTime.now().year + 2, 12),
       helpText: '选择福利归属月份',
     );
-    if (selected != null)
+    if (selected != null) {
       setState(() => _month = DateTime(selected.year, selected.month, 1));
+    }
   }
 }
 
