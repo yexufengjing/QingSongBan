@@ -28,7 +28,7 @@ class ReminderSchedulePage extends StatefulWidget {
 
 class _ReminderSchedulePageState extends State<ReminderSchedulePage> {
   late DateTime _date = widget.initialDate;
-  late ReminderSchedule _schedule = widget.initialSchedule;
+  late ReminderSchedule _schedule = _normalizeSchedule(widget.initialSchedule);
 
   @override
   Widget build(BuildContext context) {
@@ -72,13 +72,19 @@ class _ReminderSchedulePageState extends State<ReminderSchedulePage> {
                       ),
                       child: Text(
                         _dateLabel(_date),
-                        style: const TextStyle(color: Colors.white),
+                        maxLines: 1,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          height: 1.15,
+                        ),
                       ),
                     ),
                   ),
                   const Divider(),
                   SizedBox(
-                    height: 240,
+                    height: 388,
                     child: Stack(
                       children: [
                         CalendarDatePicker(
@@ -101,32 +107,14 @@ class _ReminderSchedulePageState extends State<ReminderSchedulePage> {
                           ),
                         ),
                         Positioned(
-                          top: 3,
-                          left: 88,
-                          right: 88,
+                          top: 0,
+                          left: 12,
+                          width: 180,
                           child: GestureDetector(
                             key: const Key('reminder-year-month-wheel'),
                             behavior: HitTestBehavior.opaque,
                             onTap: _pickDateWheel,
-                            child: Container(
-                              height: 42,
-                              alignment: Alignment.center,
-                              color: Theme.of(context).colorScheme.surface,
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    '${_date.year}年${_date.month}月',
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 4),
-                                  const Icon(Icons.arrow_drop_down, size: 20),
-                                ],
-                              ),
-                            ),
+                            child: const SizedBox(height: 52),
                           ),
                         ),
                       ],
@@ -164,10 +152,16 @@ class _ReminderSchedulePageState extends State<ReminderSchedulePage> {
                     key: const Key('reminder-ring-switch'),
                     title: const Text('响铃提醒'),
                     subtitle: const Text('关闭后仍显示通知，但不播放提示音'),
-                    value: _schedule.ringEnabled,
-                    onChanged: (value) => setState(
-                      () => _schedule = _schedule.copyWith(ringEnabled: value),
-                    ),
+                    value:
+                        _schedule.alertMinutes.isNotEmpty &&
+                        _schedule.ringEnabled,
+                    onChanged: _schedule.alertMinutes.isEmpty
+                        ? null
+                        : (value) => setState(
+                            () => _schedule = _schedule.copyWith(
+                              ringEnabled: value,
+                            ),
+                          ),
                   ),
                 ],
               ),
@@ -367,9 +361,21 @@ class _ReminderSchedulePageState extends State<ReminderSchedulePage> {
       ),
     );
     if (result != null && mounted) {
-      setState(() => _schedule = _schedule.copyWith(alertMinutes: result));
+      setState(
+        () => _schedule = _schedule.copyWith(
+          alertMinutes: result,
+          ringEnabled: result.isEmpty ? false : _schedule.ringEnabled,
+        ),
+      );
     }
   }
+}
+
+ReminderSchedule _normalizeSchedule(ReminderSchedule schedule) {
+  if (schedule.alertMinutes.isEmpty && schedule.ringEnabled) {
+    return schedule.copyWith(ringEnabled: false);
+  }
+  return schedule;
 }
 
 class _OptionTile extends StatelessWidget {
@@ -389,13 +395,18 @@ class _OptionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       key: tileKey,
-      title: Text(title),
+      title: Text(title, style: Theme.of(context).textTheme.bodyLarge),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 220),
-            child: Text(value, overflow: TextOverflow.ellipsis),
+            child: Text(
+              value,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyMedium
+                  ?.copyWith(fontSize: 15, fontWeight: FontWeight.w500),
+            ),
           ),
           const SizedBox(width: 6),
           const Icon(Icons.chevron_right),

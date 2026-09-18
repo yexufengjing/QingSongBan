@@ -282,15 +282,15 @@ class _ReminderFormPageState extends ConsumerState<ReminderFormPage> {
   }
 
   Future<void> _editSchedule() async {
-    final result = await Navigator.push<ReminderScheduleResult>(
-      context,
-      MaterialPageRoute(
-        builder: (_) => ReminderSchedulePage(
-          initialDate: _dueDate,
-          initialSchedule: _schedule,
-        ),
-      ),
-    );
+    final result = await Navigator.of(context, rootNavigator: true)
+        .push<ReminderScheduleResult>(
+          MaterialPageRoute(
+            builder: (_) => ReminderSchedulePage(
+              initialDate: _dueDate,
+              initialSchedule: _schedule,
+            ),
+          ),
+        );
     if (result != null && mounted) {
       setState(() {
         _dueDate = result.dueDate;

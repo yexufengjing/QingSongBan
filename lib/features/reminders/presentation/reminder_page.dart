@@ -627,7 +627,7 @@ class _ReminderTile extends StatelessWidget {
 
   Future<void> _delete(BuildContext context) async {
     final confirmed = await showDialog<bool>(
-      context,
+      context: context,
       builder: (context) => AlertDialog(
         title: const Text('删除提醒？'),
         content: Text('“${item.reminder.title}”的未来通知会一并取消，完成记录不再显示。'),

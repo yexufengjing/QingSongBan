@@ -447,15 +447,17 @@ class _CustomRepeatPageState extends State<CustomRepeatPage> {
   void _toggleWeekday(int day) {
     final values = {..._value.weekdays};
     values.contains(day) ? values.remove(day) : values.add(day);
-    if (values.isNotEmpty)
+    if (values.isNotEmpty) {
       setState(() => _value = _value.copyWith(weekdays: values));
+    }
   }
 
   void _toggleMonthDay(int day) {
     final values = {..._value.monthDays};
     values.contains(day) ? values.remove(day) : values.add(day);
-    if (values.isNotEmpty)
+    if (values.isNotEmpty) {
       setState(() => _value = _value.copyWith(monthDays: values));
+    }
   }
 
   String _endLabel() => switch (_value.repeatEnd) {
