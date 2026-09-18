@@ -45,6 +45,7 @@ class ReminderSchedule {
     List<int>? alertMinutes,
     bool? ringEnabled,
   }) {
+    final nextAlertMinutes = alertMinutes ?? this.alertMinutes;
     return ReminderSchedule(
       repeatUnit: clearRepeatUnit ? null : repeatUnit ?? this.repeatUnit,
       interval: interval ?? this.interval,
@@ -53,8 +54,10 @@ class ReminderSchedule {
       repeatEnd: repeatEnd ?? this.repeatEnd,
       endDate: clearEndDate ? null : endDate ?? this.endDate,
       endCount: clearEndCount ? null : endCount ?? this.endCount,
-      alertMinutes: alertMinutes ?? this.alertMinutes,
-      ringEnabled: ringEnabled ?? this.ringEnabled,
+      alertMinutes: nextAlertMinutes,
+      ringEnabled: nextAlertMinutes.isEmpty
+          ? false
+          : ringEnabled ?? this.ringEnabled,
     );
   }
 
@@ -68,7 +71,7 @@ class ReminderSchedule {
     'endDate': endDate?.toIso8601String(),
     'endCount': endCount,
     'alertMinutes': alertMinutes.toSet().toList()..sort(),
-    'ringEnabled': ringEnabled,
+    'ringEnabled': alertMinutes.isNotEmpty && ringEnabled,
   });
 
   static ReminderSchedule decode(String? value, {int legacyLeadDays = 0}) {
@@ -118,8 +121,10 @@ class ReminderSchedule {
             ReminderRepeatEnd.never,
         endDate: DateTime.tryParse(map['endDate'] as String? ?? ''),
         endCount: (map['endCount'] as num?)?.toInt(),
-        alertMinutes: alerts.isEmpty ? const [0] : alerts,
-        ringEnabled: map['ringEnabled'] as bool? ?? true,
+        alertMinutes: alerts,
+        ringEnabled: alerts.isEmpty
+            ? false
+            : map['ringEnabled'] as bool? ?? true,
       );
     } catch (_) {
       return fallback;
