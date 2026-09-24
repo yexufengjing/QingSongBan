@@ -30,11 +30,45 @@ android {
         versionName = flutter.versionName
     }
 
+    val releaseStoreFilePath = providers.environmentVariable("QSB_RELEASE_STORE_FILE").orNull
+    val releaseStorePassword = providers.environmentVariable("QSB_RELEASE_STORE_PASSWORD").orNull
+    val releaseKeyAlias = providers.environmentVariable("QSB_RELEASE_KEY_ALIAS").orNull
+    val releaseKeyPassword = providers.environmentVariable("QSB_RELEASE_KEY_PASSWORD").orNull
+    val releaseSigningReady = listOf(
+        releaseStoreFilePath,
+        releaseStorePassword,
+        releaseKeyAlias,
+        releaseKeyPassword,
+    ).all { !it.isNullOrBlank() }
+
+    if (releaseSigningReady) {
+        signingConfigs.create("qsbRelease") {
+            storeFile = file(releaseStoreFilePath!!)
+            storePassword = releaseStorePassword
+            keyAlias = releaseKeyAlias
+            keyPassword = releaseKeyPassword
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            if (releaseSigningReady) {
+                signingConfig = signingConfigs.getByName("qsbRelease")
+            }
+        }
+    }
+
+    if (!releaseSigningReady) {
+        tasks.configureEach {
+            if (name == "assembleRelease" || name == "bundleRelease") {
+                doFirst {
+                    error(
+                        "Release signing requires QSB_RELEASE_STORE_FILE, " +
+                            "QSB_RELEASE_STORE_PASSWORD, QSB_RELEASE_KEY_ALIAS and " +
+                            "QSB_RELEASE_KEY_PASSWORD",
+                    )
+                }
+            }
         }
     }
 }
