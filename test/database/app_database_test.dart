@@ -16,7 +16,7 @@ void main() {
     await database.close();
   });
 
-  test('creates the complete version twelve schema', () async {
+  test('creates the complete version eighteen schema', () async {
     final rows = await database
         .customSelect(
           "SELECT name FROM sqlite_master "
@@ -25,11 +25,27 @@ void main() {
         .get();
     final tableNames = rows.map((row) => row.read<String>('name')).toSet();
 
-    expect(database.schemaVersion, 12);
+    expect(database.schemaVersion, 18);
     expect(
       tableNames,
       containsAll([
         'employees',
+        'vehicles',
+        'vehicle_condition_snapshots',
+        'vehicle_condition_items',
+        'tires',
+        'tire_installations',
+        'tire_repairs',
+        'repair_orders',
+        'repair_cost_items',
+        'repair_parts',
+        'vehicle_attachments',
+        'fuel_monthly_records',
+        'manual_vehicle_expenses',
+        'maintenance_templates',
+        'vehicle_maintenance_items',
+        'maintenance_records',
+        'component_lifecycle_records',
         'wage_job_types',
         'wage_rate_history',
         'employee_wage_profiles',

@@ -94,7 +94,8 @@ void main() {
         1,
         DateTime(2026, 9, 1),
       );
-      expect(upgraded.schemaVersion, 12);
+      expect(upgraded.schemaVersion, 18);
+      expect(await upgraded.select(upgraded.vehicles).get(), isEmpty);
       expect(employee?.name, '迁移人员');
       expect(rawAttendance, hasLength(1));
       expect(rawAttendance.single.read<int>('employee_id'), 1);
@@ -151,7 +152,7 @@ void main() {
         .select(upgraded.reminderOccurrences)
         .getSingle();
     final rule = await upgraded.select(upgraded.reminderAlertRules).getSingle();
-    expect(upgraded.schemaVersion, 12);
+    expect(upgraded.schemaVersion, 18);
     expect(occurrence.status, 'completed');
     expect(rule.offsetMinutes, -4320);
     await upgraded.close();
