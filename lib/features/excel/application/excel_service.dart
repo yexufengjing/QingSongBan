@@ -8,6 +8,7 @@ import '../../../core/database/database_enums.dart';
 import '../../../core/utils/date_utils.dart';
 import '../../../core/utils/export_file_writer.dart';
 import '../../personnel/domain/personnel_options.dart';
+import '../../vehicles/application/fuel_year_summary_service.dart';
 
 class PersonnelImportIssue {
   const PersonnelImportIssue({required this.rowNumber, required this.message});
@@ -92,6 +93,133 @@ class ExcelService {
 
     final encoded = excel.encode();
     if (encoded == null) throw StateError('Excel 文件生成失败');
+    return Uint8List.fromList(encoded);
+  }
+
+  Future<File> exportVehiclesToFile({required int year}) async {
+    return ExportFileWriter.write(
+      fileName: 'qingsongban_车辆_${year.toString()}.xlsx',
+      bytes: await exportVehiclesBytes(year: year),
+    );
+  }
+
+  Future<Uint8List> exportVehiclesBytes({required int year}) async {
+    final excel = Excel.createExcel();
+    excel.delete('Sheet1');
+    final summary = await FuelYearSummaryService(_database).build(year);
+    final rows =
+        await (_database.select(_database.fuelMonthlyRecords)
+              ..where(
+                (table) =>
+                    table.year.equals(year) & table.isDeleted.equals(false),
+              )
+              ..orderBy([
+                (table) => OrderingTerm(expression: table.vehicleId),
+                (table) => OrderingTerm(expression: table.month),
+              ]))
+            .get();
+    final vehicles = summary.vehicles;
+
+    final pivot = excel['年度油耗费用汇总'];
+    final header = <Object?>['月份'];
+    for (final vehicle in vehicles) {
+      header.add('${vehicle.vehicle.name} 油耗/L');
+      header.add('${vehicle.vehicle.name} 金额/元');
+    }
+    header.addAll(['月份油耗总计', '月份金额总计']);
+    pivot.appendRow(_row(header));
+    for (final month in summary.months) {
+      final row = <Object?>['${month.month}月'];
+      for (final vehicle in vehicles) {
+        final record = vehicle.recordsByMonth[month.month];
+        row.add(record?.liters);
+        row.add(record == null ? null : record.amountCents / 100);
+      }
+      row.add(month.totalLiters);
+      row.add(month.totalAmountCents / 100);
+      pivot.appendRow(_row(row));
+    }
+    final totalRow = <Object?>['车辆总计'];
+    for (final vehicle in vehicles) {
+      totalRow.add(vehicle.totalLiters);
+      totalRow.add(vehicle.totalAmountCents / 100);
+    }
+    totalRow.add(summary.totalLiters);
+    totalRow.add(summary.totalAmountCents / 100);
+    pivot.appendRow(_row(totalRow));
+    final averageRow = <Object?>['有效月份平均'];
+    for (final vehicle in vehicles) {
+      averageRow.add(vehicle.averageLiters);
+      averageRow.add(vehicle.averageAmountCents / 100);
+    }
+    averageRow.add(null);
+    averageRow.add(null);
+    pivot.appendRow(_row(averageRow));
+
+    final detail = excel['油耗明细'];
+    detail.appendRow(
+      _row([
+        '车辆',
+        '车辆编号',
+        '年份',
+        '月份',
+        '油耗量/L',
+        '金额/元',
+        '平均油价/元/L',
+        '备注',
+        '创建时间',
+        '更新时间',
+      ]),
+    );
+    final vehiclesById = {
+      for (final item in vehicles) item.vehicle.id: item.vehicle,
+    };
+    for (final row in rows) {
+      final vehicle = vehiclesById[row.vehicleId];
+      detail.appendRow(
+        _row([
+          vehicle?.name ?? '未知车辆',
+          vehicle?.vehicleNo ?? row.vehicleId,
+          row.year,
+          row.month,
+          row.liters,
+          row.amountCents / 100,
+          row.liters == 0 ? null : row.amountCents / 100 / row.liters,
+          row.remark,
+          row.createdAt,
+          row.updatedAt,
+        ]),
+      );
+    }
+
+    final anomaly = excel['异常与缺失数据'];
+    anomaly.appendRow(_row(['类型', '车辆', '月份', '变化', '说明', '数据完整度']));
+    for (final item in summary.anomalies) {
+      anomaly.appendRow(
+        _row([
+          '异常',
+          item.vehicleName,
+          item.month,
+          item.changePercent,
+          item.message,
+          summary.completenessPercent,
+        ]),
+      );
+    }
+    for (final item in summary.missingRecords) {
+      anomaly.appendRow(
+        _row([
+          '缺失',
+          item.vehicleName,
+          item.month,
+          null,
+          '尚未录入油耗',
+          summary.completenessPercent,
+        ]),
+      );
+    }
+    final encoded = excel.encode();
+    if (encoded == null) throw StateError('车辆 Excel 文件生成失败');
     return Uint8List.fromList(encoded);
   }
 
