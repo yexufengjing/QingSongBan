@@ -42,8 +42,11 @@ dependencies:
   go_router: ^16.2.0
   excel: ^4.0.6
   file_picker: ^12.3.0
+  open_filex: ^4.7.0
   path_provider: ^2.1.5
   archive: ^3.6.1
+  crypto: ^3.0.6
+  cryptography: ^2.7.0
   flutter_local_notifications: ^19.4.0
   timezone: ^0.10.1
   rrule: ^0.2.18
@@ -72,6 +75,12 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  assets:
+    - assets/vehicles/sweeper-truck.png
+    - assets/vehicles/water-truck.png
+    - assets/vehicles/sweeper-angles.png
+    - assets/vehicles/water-angles.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
