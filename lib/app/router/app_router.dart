@@ -40,6 +40,14 @@ import '../../features/payroll/presentation/employee_payroll_page.dart';
 import '../../features/payroll/presentation/wage_job_settings_page.dart';
 import '../../features/item_distribution/presentation/item_distribution_page.dart';
 import '../../features/settings/presentation/settings_page.dart';
+import '../../features/vehicles/presentation/vehicle_detail_page.dart';
+import '../../features/vehicles/presentation/vehicle_archive_page.dart';
+import '../../features/vehicles/presentation/vehicle_reminder_page.dart';
+import '../../features/vehicles/presentation/vehicle_fuel_summary_page.dart';
+import '../../features/vehicles/presentation/vehicle_attachments_page.dart';
+import '../../features/vehicles/presentation/vehicle_form_page.dart';
+import '../../features/vehicles/presentation/vehicle_page.dart';
+import '../../features/vehicles/presentation/vehicle_repair_form_page.dart';
 import 'app_shell.dart';
 
 final GoRouter appRouter = GoRouter(
@@ -481,6 +489,103 @@ final GoRouter appRouter = GoRouter(
       path: '/items',
       name: 'item-distribution',
       builder: (context, state) => const ItemDistributionPage(),
+    ),
+    GoRoute(
+      path: '/vehicles',
+      name: 'vehicles',
+      builder: (context, state) => const VehiclePage(),
+      routes: [
+        GoRoute(
+          path: 'archive',
+          name: 'vehicle-archive',
+          builder: (context, state) => const VehicleArchivePage(),
+        ),
+        GoRoute(
+          path: 'reminders',
+          name: 'vehicle-reminders',
+          builder: (context, state) => const VehicleReminderPage(),
+        ),
+        GoRoute(
+          path: 'fuel-summary',
+          name: 'vehicle-fuel-summary',
+          builder: (context, state) => const VehicleFuelSummaryPage(),
+        ),
+        GoRoute(
+          path: 'new',
+          name: 'vehicle-new',
+          builder: (context, state) => const VehicleFormPage(),
+        ),
+        GoRoute(
+          path: ':vehicleId',
+          name: 'vehicle-detail',
+          builder: (context, state) {
+            final vehicleId = int.tryParse(
+              state.pathParameters['vehicleId'] ?? '',
+            );
+            if (vehicleId == null) {
+              return const Scaffold(body: Center(child: Text('无效的车辆编号')));
+            }
+            final query = state.uri.queryParameters;
+            final fuelYear = int.tryParse(query['year'] ?? '');
+            final fuelMonth = int.tryParse(query['month'] ?? '');
+            return VehicleDetailPage(
+              vehicleId: vehicleId,
+              initialTab: query['tab'],
+              initialFuelYear: fuelYear,
+              initialFuelMonth:
+                  fuelMonth != null && fuelMonth >= 1 && fuelMonth <= 12
+                  ? fuelMonth
+                  : null,
+            );
+          },
+          routes: [
+            GoRoute(
+              path: 'edit',
+              name: 'vehicle-edit',
+              builder: (context, state) {
+                final vehicleId = int.tryParse(
+                  state.pathParameters['vehicleId'] ?? '',
+                );
+                if (vehicleId == null) {
+                  return const Scaffold(body: Center(child: Text('无效的车辆编号')));
+                }
+                return VehicleFormPage(vehicleId: vehicleId);
+              },
+            ),
+            GoRoute(
+              path: 'repair/new',
+              name: 'vehicle-repair-new',
+              builder: (context, state) {
+                final vehicleId = int.tryParse(
+                  state.pathParameters['vehicleId'] ?? '',
+                );
+                if (vehicleId == null) {
+                  return const Scaffold(body: Center(child: Text('无效的车辆编号')));
+                }
+                return VehicleRepairFormPage(vehicleId: vehicleId);
+              },
+            ),
+            GoRoute(
+              path: 'attachments',
+              name: 'vehicle-attachments',
+              builder: (context, state) {
+                final vehicleId = int.tryParse(
+                  state.pathParameters['vehicleId'] ?? '',
+                );
+                if (vehicleId == null) {
+                  return const Scaffold(body: Center(child: Text('无效的车辆编号')));
+                }
+                return VehicleAttachmentsPage(
+                  vehicleId: vehicleId,
+                  repairOrderId: int.tryParse(
+                    state.uri.queryParameters['repairOrderId'] ?? '',
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ],
     ),
   ],
 );
