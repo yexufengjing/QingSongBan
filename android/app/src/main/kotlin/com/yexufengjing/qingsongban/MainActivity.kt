@@ -1,7 +1,10 @@
 package com.yexufengjing.qingsongban
 
 import android.content.ContentValues
+import android.content.Intent
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.embedding.android.FlutterActivity
@@ -9,6 +12,8 @@ import io.flutter.plugin.common.MethodChannel
 
 class MainActivity : FlutterActivity() {
     private val channelName = "qingsongban/file_exports"
+    private val lifecycleChannelName = "qingsongban/app_lifecycle"
+    private val mainHandler = Handler(Looper.getMainLooper())
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
@@ -60,6 +65,29 @@ class MainActivity : FlutterActivity() {
                     resolver.delete(uri, null, null)
                     result.error("EXPORT_FAILED", error.message, null)
                 }
+            }
+
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, lifecycleChannelName)
+            .setMethodCallHandler { call, result ->
+                if (call.method != "restartApp") {
+                    result.notImplemented()
+                    return@setMethodCallHandler
+                }
+                val launchIntent = packageManager.getLaunchIntentForPackage(packageName)
+                if (launchIntent == null) {
+                    result.error("RESTART_FAILED", "无法找到应用启动入口", null)
+                    return@setMethodCallHandler
+                }
+                launchIntent.addFlags(
+                    Intent.FLAG_ACTIVITY_NEW_TASK or
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                        Intent.FLAG_ACTIVITY_CLEAR_TOP,
+                )
+                result.success(null)
+                mainHandler.postDelayed({
+                    startActivity(launchIntent)
+                    finishAffinity()
+                }, 250L)
             }
     }
 }
