@@ -180,12 +180,7 @@ class _QuickActions extends StatelessWidget {
         '/attendance/daily',
         AppColors.techBlue,
       ),
-      (
-        '物品领取',
-        Icons.inventory_2_outlined,
-        '/items',
-        AppColors.primary,
-      ),
+      ('物品领取', Icons.inventory_2_outlined, '/items', AppColors.primary),
       (
         '请假登记',
         Icons.event_busy_outlined,
@@ -210,17 +205,19 @@ class _QuickActions extends StatelessWidget {
         '/settings/insurance/change',
         AppColors.techBlue,
       ),
-      (
-        '工资造资',
-        Icons.payments_outlined,
-        '/reports/payroll',
-        AppColors.primary,
-      ),
+      ('工资造资', Icons.payments_outlined, '/reports/payroll', AppColors.primary),
       (
         '新建提醒',
         Icons.add_alert_outlined,
         '/settings/reminders/new',
         AppColors.purple,
+      ),
+      ('车辆管理', Icons.local_shipping_outlined, '/vehicles', AppColors.techBlue),
+      (
+        '年度油耗汇总',
+        Icons.table_chart_outlined,
+        '/vehicles/fuel-summary',
+        AppColors.techBlue,
       ),
     ];
     return GridView.count(
