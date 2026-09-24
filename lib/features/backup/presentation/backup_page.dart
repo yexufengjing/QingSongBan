@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/theme/app_theme.dart';
+import '../../../core/platform/app_restart.dart';
 import '../application/backup_providers.dart';
 
 class BackupPage extends ConsumerStatefulWidget {
@@ -81,9 +82,13 @@ class _BackupPageState extends ConsumerState<BackupPage> {
   }
 
   Future<void> _createBackup() async {
+    final password = await _requestPassword(confirm: true);
+    if (!mounted || password == null) return;
     setState(() => _busy = true);
     try {
-      final file = await ref.read(backupServiceProvider).createBackup();
+      final file = await ref
+          .read(backupServiceProvider)
+          .createBackup(password: password);
       if (mounted) {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('备份已创建：${file.path}')));
@@ -123,26 +128,36 @@ class _BackupPageState extends ConsumerState<BackupPage> {
       ),
     );
     if (confirmed != true) return;
+    final password = await _requestPassword();
+    if (!mounted || password == null) return;
     setState(() => _busy = true);
     try {
       final result = await ref
           .read(backupServiceProvider)
-          .restoreFromFile(File(path));
+          .restoreFromFile(File(path), password: password);
       if (!mounted) return;
       await showDialog<void>(
         context: context,
         builder: (context) => AlertDialog(
           title: const Text('恢复完成'),
-          content: Text('已生成恢复前安全备份：${result.safetyBackup.path}\n请关闭并重新打开应用。'),
+          content: Text(
+            '已生成恢复前安全备份：${result.safetyBackup.path}\n点击确认后应用将安全重启。',
+          ),
           actions: [
             FilledButton(
-              onPressed: () => context.pop(),
-              child: const Text('知道了'),
+              onPressed: () {
+                context.pop();
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  if (mounted) {
+                    AppRestart.restart();
+                  }
+                });
+              },
+              child: const Text('重启应用'),
             ),
           ],
         ),
       );
-      if (mounted) context.pop();
     } catch (error) {
       if (mounted) {
         ScaffoldMessenger.of(context)
@@ -151,5 +166,57 @@ class _BackupPageState extends ConsumerState<BackupPage> {
     } finally {
       if (mounted) setState(() => _busy = false);
     }
+  }
+
+  Future<String?> _requestPassword({bool confirm = false}) async {
+    final passwordController = TextEditingController();
+    final confirmationController = TextEditingController();
+    final result = await showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(confirm ? '设置备份密码' : '输入备份密码'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: passwordController,
+              obscureText: true,
+              autofocus: true,
+              decoration: const InputDecoration(labelText: '密码（至少 8 个字符）'),
+            ),
+            if (confirm)
+              TextField(
+                controller: confirmationController,
+                obscureText: true,
+                decoration: const InputDecoration(labelText: '再次输入密码'),
+              ),
+          ],
+        ),
+        actions: [
+          TextButton(onPressed: () => context.pop(), child: const Text('取消')),
+          FilledButton(
+            onPressed: () {
+              final password = passwordController.text;
+              if (password.length < 8 ||
+                  (confirm && password != confirmationController.text)) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      confirm ? '密码至少 8 个字符且两次输入必须一致' : '密码至少需要 8 个字符',
+                    ),
+                  ),
+                );
+                return;
+              }
+              context.pop(password);
+            },
+            child: const Text('继续'),
+          ),
+        ],
+      ),
+    );
+    passwordController.dispose();
+    confirmationController.dispose();
+    return result;
   }
 }
