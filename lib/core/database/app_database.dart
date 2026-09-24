@@ -12,6 +12,22 @@ part 'app_database.g.dart';
 @DriftDatabase(
   tables: [
     Employees,
+    Vehicles,
+    VehicleConditionSnapshots,
+    VehicleConditionItems,
+    Tires,
+    TireInstallations,
+    TireRepairs,
+    RepairOrders,
+    RepairCostItems,
+    RepairParts,
+    VehicleAttachments,
+    MaintenanceTemplates,
+    VehicleMaintenanceItems,
+    MaintenanceRecords,
+    ComponentLifecycleRecords,
+    FuelMonthlyRecords,
+    ManualVehicleExpenses,
     WageJobTypes,
     WageRateHistory,
     EmployeeWageProfiles,
@@ -47,7 +63,7 @@ class AppDatabase extends _$AppDatabase {
     : super(executor ?? NativeDatabase.memory());
 
   @override
-  int get schemaVersion => 12;
+  int get schemaVersion => 18;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -142,6 +158,46 @@ class AppDatabase extends _$AppDatabase {
         await m.createTable(reminderAlertRules);
         await m.createTable(reminderLinks);
         await _migrateLegacyReminders();
+      }
+      if (from < 13 && to >= 13) {
+        await m.createTable(vehicles);
+      }
+      if (from < 14 && to >= 14) {
+        await m.createTable(vehicleConditionSnapshots);
+        await m.createTable(vehicleConditionItems);
+        await m.createTable(tires);
+        await m.createTable(tireInstallations);
+        await m.createTable(tireRepairs);
+      }
+      if (from < 15 && to >= 15) {
+        await m.createTable(repairOrders);
+        await m.createTable(repairCostItems);
+        await m.createTable(repairParts);
+        await m.createTable(vehicleAttachments);
+      }
+      if (from < 16 && to >= 16) {
+        await m.createTable(maintenanceTemplates);
+        await m.createTable(vehicleMaintenanceItems);
+        await m.createTable(maintenanceRecords);
+        await m.createTable(componentLifecycleRecords);
+      }
+      if (from < 17 && to >= 17) {
+        await m.createTable(fuelMonthlyRecords);
+        await m.createTable(manualVehicleExpenses);
+      }
+      if (from < 18 && to >= 18) {
+        await _addColumnIfMissing(
+          'vehicle_attachments',
+          'stored_file_name',
+          "TEXT NOT NULL DEFAULT ''",
+        );
+        await _addColumnIfMissing('vehicle_attachments', 'mime_type', 'TEXT');
+        await _addColumnIfMissing('vehicle_attachments', 'file_hash', 'TEXT');
+        await _addColumnIfMissing(
+          'vehicle_attachments',
+          'deleted_at',
+          'INTEGER',
+        );
       }
     },
     beforeOpen: (details) async {

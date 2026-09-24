@@ -49,6 +49,466 @@ class Employees extends Table {
   BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
 }
 
+class Vehicles extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  TextColumn get name => text()();
+
+  TextColumn get vehicleNo => text().unique()();
+
+  TextColumn get licensePlate => text().nullable().unique()();
+
+  TextColumn get vehicleType =>
+      textEnum<VehicleType>().withDefault(const Constant('sweeper'))();
+
+  TextColumn get brand => text().nullable()();
+
+  TextColumn get model => text().nullable()();
+
+  DateTimeColumn get purchaseDate => dateTime().nullable()();
+
+  TextColumn get department => text().nullable()();
+
+  TextColumn get workArea => text().nullable()();
+
+  TextColumn get responsiblePerson => text().nullable()();
+
+  TextColumn get status =>
+      textEnum<VehicleStatus>().withDefault(const Constant('normal'))();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+}
+
+class VehicleConditionSnapshots extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get vehicleId => integer().references(Vehicles, #id)();
+
+  DateTimeColumn get checkedAt => dateTime()();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+}
+
+class VehicleConditionItems extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get vehicleId => integer().references(Vehicles, #id)();
+
+  IntColumn get snapshotId =>
+      integer().nullable().references(VehicleConditionSnapshots, #id)();
+
+  TextColumn get componentType => text()();
+
+  TextColumn get componentKey => text()();
+
+  TextColumn get status => textEnum<VehicleConditionStatus>()();
+
+  TextColumn get issueTagsJson => text().nullable()();
+
+  TextColumn get detail => text().nullable()();
+
+  DateTimeColumn get observedAt => dateTime()();
+
+  DateTimeColumn get resolvedAt => dateTime().nullable()();
+
+  BoolColumn get isCurrent => boolean().withDefault(const Constant(true))();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+}
+
+class Tires extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  TextColumn get tireNo => text().unique()();
+
+  TextColumn get brand => text().nullable()();
+
+  TextColumn get specification => text().nullable()();
+
+  TextColumn get condition =>
+      textEnum<TireCondition>().withDefault(const Constant('newTire'))();
+
+  DateTimeColumn get firstUseDate => dateTime().nullable()();
+
+  TextColumn get status =>
+      textEnum<TireAssetStatus>().withDefault(const Constant('spare'))();
+
+  IntColumn get repairCount => integer().withDefault(const Constant(0))();
+
+  TextColumn get wearLevel =>
+      textEnum<TireWearLevel>().withDefault(const Constant('good'))();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+}
+
+class TireInstallations extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get tireId => integer().references(Tires, #id)();
+
+  IntColumn get vehicleId => integer().references(Vehicles, #id)();
+
+  TextColumn get position => textEnum<TirePosition>()();
+
+  DateTimeColumn get installDate => dateTime()();
+
+  DateTimeColumn get removeDate => dateTime().nullable()();
+
+  TextColumn get installReason => textEnum<TireInstallReason>()();
+
+  TextColumn get removeReason => text().nullable()();
+
+  TextColumn get sourcePosition => text().nullable()();
+
+  TextColumn get note => text().nullable()();
+
+  BoolColumn get isActive => boolean().withDefault(const Constant(true))();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+}
+
+class TireRepairs extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get tireId => integer().references(Tires, #id)();
+
+  DateTimeColumn get repairDate => dateTime()();
+
+  TextColumn get repairType => textEnum<TireRepairType>()();
+
+  TextColumn get repairPosition => text().nullable()();
+
+  TextColumn get severity => textEnum<TireRepairSeverity>()();
+
+  IntColumn get amountCents => integer().withDefault(const Constant(0))();
+
+  TextColumn get vendor => text().nullable()();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+}
+
+class RepairOrders extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  TextColumn get repairNo => text().unique()();
+
+  IntColumn get vehicleId => integer().references(Vehicles, #id)();
+
+  DateTimeColumn get reportDate => dateTime()();
+
+  DateTimeColumn get faultFoundAt => dateTime()();
+
+  TextColumn get symptom => text()();
+
+  TextColumn get cause => text().nullable()();
+
+  TextColumn get project => text().nullable()();
+
+  DateTimeColumn get departAt => dateTime().nullable()();
+
+  TextColumn get vendor => text().nullable()();
+
+  TextColumn get manager => text().nullable()();
+
+  IntColumn get reportedAmountCents =>
+      integer().withDefault(const Constant(0))();
+
+  IntColumn get actualAmountCents => integer().withDefault(const Constant(0))();
+
+  TextColumn get ticketStatus => textEnum<RepairTicketStatus>()();
+
+  TextColumn get status =>
+      textEnum<VehicleRepairStatus>().withDefault(const Constant('reported'))();
+
+  DateTimeColumn get completedAt => dateTime().nullable()();
+
+  TextColumn get recordText => text().nullable()();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+}
+
+class RepairCostItems extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get repairOrderId => integer().references(RepairOrders, #id)();
+
+  TextColumn get content => text()();
+
+  RealColumn get quantity => real().withDefault(const Constant(1.0))();
+
+  TextColumn get unit => text().withDefault(const Constant('项'))();
+
+  IntColumn get unitPriceCents => integer()();
+
+  IntColumn get subtotalCents => integer()();
+
+  TextColumn get costType => textEnum<RepairCostType>()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+}
+
+class RepairParts extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get repairOrderId => integer().references(RepairOrders, #id)();
+
+  IntColumn get costItemId =>
+      integer().nullable().references(RepairCostItems, #id)();
+
+  IntColumn get tireId => integer().nullable().references(Tires, #id)();
+
+  TextColumn get name => text()();
+
+  RealColumn get quantity => real().withDefault(const Constant(1.0))();
+
+  TextColumn get unit => text().withDefault(const Constant('件'))();
+
+  IntColumn get amountCents => integer().withDefault(const Constant(0))();
+
+  TextColumn get componentType => text().nullable()();
+
+  TextColumn get remark => text().nullable()();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+}
+
+class VehicleAttachments extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get vehicleId => integer().references(Vehicles, #id)();
+
+  IntColumn get repairOrderId =>
+      integer().nullable().references(RepairOrders, #id)();
+
+  TextColumn get category => text().withDefault(const Constant('other'))();
+
+  TextColumn get originalFileName => text()();
+
+  TextColumn get storedFileName => text().withDefault(const Constant(''))();
+
+  TextColumn get relativePath => text().unique()();
+
+  TextColumn get mimeType => text().nullable()();
+
+  TextColumn get extension => text()();
+
+  IntColumn get fileSize => integer()();
+
+  TextColumn get fileHash => text().nullable()();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get deletedAt => dateTime().nullable()();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+}
+
+class MaintenanceTemplates extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  TextColumn get name => text()();
+
+  TextColumn get componentType => text().nullable()();
+
+  IntColumn get intervalValue => integer()();
+
+  TextColumn get intervalUnit => textEnum<MaintenanceIntervalUnit>()();
+
+  IntColumn get leadDays => integer().withDefault(const Constant(30))();
+
+  IntColumn get overdueDays => integer().withDefault(const Constant(15))();
+
+  IntColumn get sortOrder => integer().withDefault(const Constant(0))();
+
+  BoolColumn get isActive => boolean().withDefault(const Constant(true))();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+}
+
+class VehicleMaintenanceItems extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get vehicleId => integer().references(Vehicles, #id)();
+
+  IntColumn get templateId =>
+      integer().nullable().references(MaintenanceTemplates, #id)();
+
+  TextColumn get name => text()();
+
+  TextColumn get componentType => text().nullable()();
+
+  IntColumn get intervalValue => integer()();
+
+  TextColumn get intervalUnit => textEnum<MaintenanceIntervalUnit>()();
+
+  IntColumn get leadDays => integer().withDefault(const Constant(30))();
+
+  IntColumn get overdueDays => integer().withDefault(const Constant(15))();
+
+  DateTimeColumn get lastServiceDate => dateTime().nullable()();
+
+  DateTimeColumn get nextDueDate => dateTime().nullable()();
+
+  BoolColumn get isActive => boolean().withDefault(const Constant(true))();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+}
+
+class MaintenanceRecords extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get maintenanceItemId =>
+      integer().references(VehicleMaintenanceItems, #id)();
+
+  IntColumn get vehicleId => integer().references(Vehicles, #id)();
+
+  DateTimeColumn get serviceDate => dateTime()();
+
+  IntColumn get materialCostCents => integer().withDefault(const Constant(0))();
+
+  IntColumn get laborCostCents => integer().withDefault(const Constant(0))();
+
+  IntColumn get totalCostCents => integer().withDefault(const Constant(0))();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+}
+
+class ComponentLifecycleRecords extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get vehicleId => integer().references(Vehicles, #id)();
+
+  TextColumn get componentType => text()();
+
+  TextColumn get componentKey => text()();
+
+  TextColumn get name => text()();
+
+  DateTimeColumn get installedDate => dateTime()();
+
+  DateTimeColumn get removedDate => dateTime().nullable()();
+
+  TextColumn get status =>
+      textEnum<LifecycleStatus>().withDefault(const Constant('inUse'))();
+
+  IntColumn get thresholdDays => integer().nullable()();
+
+  DateTimeColumn get lastServiceDate => dateTime().nullable()();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+}
+
+class FuelMonthlyRecords extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get vehicleId => integer().references(Vehicles, #id)();
+
+  IntColumn get year => integer()();
+
+  IntColumn get month => integer()();
+
+  RealColumn get liters => real()();
+
+  IntColumn get amountCents => integer()();
+
+  IntColumn get workDays => integer().nullable()();
+
+  RealColumn get workMileage => real().nullable()();
+
+  RealColumn get workHours => real().nullable()();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+
+  @override
+  List<Set<Column>> get uniqueKeys => [
+    {vehicleId, year, month},
+  ];
+}
+
+class ManualVehicleExpenses extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get vehicleId => integer().references(Vehicles, #id)();
+
+  DateTimeColumn get expenseDate => dateTime()();
+
+  TextColumn get expenseType => text()();
+
+  IntColumn get amountCents => integer()();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+}
+
 class WageJobTypes extends Table {
   IntColumn get id => integer().autoIncrement()();
 

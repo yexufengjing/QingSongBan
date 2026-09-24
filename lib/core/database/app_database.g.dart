@@ -1659,6 +1659,12182 @@ class EmployeesCompanion extends UpdateCompanion<Employee> {
   }
 }
 
+class $VehiclesTable extends Vehicles with TableInfo<$VehiclesTable, Vehicle> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $VehiclesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _vehicleNoMeta = const VerificationMeta(
+    'vehicleNo',
+  );
+  @override
+  late final GeneratedColumn<String> vehicleNo = GeneratedColumn<String>(
+    'vehicle_no',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
+  );
+  static const VerificationMeta _licensePlateMeta = const VerificationMeta(
+    'licensePlate',
+  );
+  @override
+  late final GeneratedColumn<String> licensePlate = GeneratedColumn<String>(
+    'license_plate',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<VehicleType, String> vehicleType =
+      GeneratedColumn<String>(
+        'vehicle_type',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        defaultValue: const Constant('sweeper'),
+      ).withConverter<VehicleType>($VehiclesTable.$convertervehicleType);
+  static const VerificationMeta _brandMeta = const VerificationMeta('brand');
+  @override
+  late final GeneratedColumn<String> brand = GeneratedColumn<String>(
+    'brand',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _modelMeta = const VerificationMeta('model');
+  @override
+  late final GeneratedColumn<String> model = GeneratedColumn<String>(
+    'model',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _purchaseDateMeta = const VerificationMeta(
+    'purchaseDate',
+  );
+  @override
+  late final GeneratedColumn<DateTime> purchaseDate = GeneratedColumn<DateTime>(
+    'purchase_date',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _departmentMeta = const VerificationMeta(
+    'department',
+  );
+  @override
+  late final GeneratedColumn<String> department = GeneratedColumn<String>(
+    'department',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _workAreaMeta = const VerificationMeta(
+    'workArea',
+  );
+  @override
+  late final GeneratedColumn<String> workArea = GeneratedColumn<String>(
+    'work_area',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _responsiblePersonMeta = const VerificationMeta(
+    'responsiblePerson',
+  );
+  @override
+  late final GeneratedColumn<String> responsiblePerson =
+      GeneratedColumn<String>(
+        'responsible_person',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  @override
+  late final GeneratedColumnWithTypeConverter<VehicleStatus, String> status =
+      GeneratedColumn<String>(
+        'status',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        defaultValue: const Constant('normal'),
+      ).withConverter<VehicleStatus>($VehiclesTable.$converterstatus);
+  static const VerificationMeta _remarkMeta = const VerificationMeta('remark');
+  @override
+  late final GeneratedColumn<String> remark = GeneratedColumn<String>(
+    'remark',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    vehicleNo,
+    licensePlate,
+    vehicleType,
+    brand,
+    model,
+    purchaseDate,
+    department,
+    workArea,
+    responsiblePerson,
+    status,
+    remark,
+    createdAt,
+    updatedAt,
+    isDeleted,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'vehicles';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<Vehicle> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('vehicle_no')) {
+      context.handle(
+        _vehicleNoMeta,
+        vehicleNo.isAcceptableOrUnknown(data['vehicle_no']!, _vehicleNoMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_vehicleNoMeta);
+    }
+    if (data.containsKey('license_plate')) {
+      context.handle(
+        _licensePlateMeta,
+        licensePlate.isAcceptableOrUnknown(
+          data['license_plate']!,
+          _licensePlateMeta,
+        ),
+      );
+    }
+    if (data.containsKey('brand')) {
+      context.handle(
+        _brandMeta,
+        brand.isAcceptableOrUnknown(data['brand']!, _brandMeta),
+      );
+    }
+    if (data.containsKey('model')) {
+      context.handle(
+        _modelMeta,
+        model.isAcceptableOrUnknown(data['model']!, _modelMeta),
+      );
+    }
+    if (data.containsKey('purchase_date')) {
+      context.handle(
+        _purchaseDateMeta,
+        purchaseDate.isAcceptableOrUnknown(
+          data['purchase_date']!,
+          _purchaseDateMeta,
+        ),
+      );
+    }
+    if (data.containsKey('department')) {
+      context.handle(
+        _departmentMeta,
+        department.isAcceptableOrUnknown(data['department']!, _departmentMeta),
+      );
+    }
+    if (data.containsKey('work_area')) {
+      context.handle(
+        _workAreaMeta,
+        workArea.isAcceptableOrUnknown(data['work_area']!, _workAreaMeta),
+      );
+    }
+    if (data.containsKey('responsible_person')) {
+      context.handle(
+        _responsiblePersonMeta,
+        responsiblePerson.isAcceptableOrUnknown(
+          data['responsible_person']!,
+          _responsiblePersonMeta,
+        ),
+      );
+    }
+    if (data.containsKey('remark')) {
+      context.handle(
+        _remarkMeta,
+        remark.isAcceptableOrUnknown(data['remark']!, _remarkMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Vehicle map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Vehicle(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      vehicleNo: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}vehicle_no'],
+      )!,
+      licensePlate: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}license_plate'],
+      ),
+      vehicleType: $VehiclesTable.$convertervehicleType.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}vehicle_type'],
+        )!,
+      ),
+      brand: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}brand'],
+      ),
+      model: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}model'],
+      ),
+      purchaseDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}purchase_date'],
+      ),
+      department: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}department'],
+      ),
+      workArea: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}work_area'],
+      ),
+      responsiblePerson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}responsible_person'],
+      ),
+      status: $VehiclesTable.$converterstatus.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}status'],
+        )!,
+      ),
+      remark: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}remark'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
+    );
+  }
+
+  @override
+  $VehiclesTable createAlias(String alias) {
+    return $VehiclesTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<VehicleType, String, String> $convertervehicleType =
+      const EnumNameConverter<VehicleType>(VehicleType.values);
+  static JsonTypeConverter2<VehicleStatus, String, String> $converterstatus =
+      const EnumNameConverter<VehicleStatus>(VehicleStatus.values);
+}
+
+class Vehicle extends DataClass implements Insertable<Vehicle> {
+  final int id;
+  final String name;
+  final String vehicleNo;
+  final String? licensePlate;
+  final VehicleType vehicleType;
+  final String? brand;
+  final String? model;
+  final DateTime? purchaseDate;
+  final String? department;
+  final String? workArea;
+  final String? responsiblePerson;
+  final VehicleStatus status;
+  final String? remark;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final bool isDeleted;
+  const Vehicle({
+    required this.id,
+    required this.name,
+    required this.vehicleNo,
+    this.licensePlate,
+    required this.vehicleType,
+    this.brand,
+    this.model,
+    this.purchaseDate,
+    this.department,
+    this.workArea,
+    this.responsiblePerson,
+    required this.status,
+    this.remark,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isDeleted,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['name'] = Variable<String>(name);
+    map['vehicle_no'] = Variable<String>(vehicleNo);
+    if (!nullToAbsent || licensePlate != null) {
+      map['license_plate'] = Variable<String>(licensePlate);
+    }
+    {
+      map['vehicle_type'] = Variable<String>(
+        $VehiclesTable.$convertervehicleType.toSql(vehicleType),
+      );
+    }
+    if (!nullToAbsent || brand != null) {
+      map['brand'] = Variable<String>(brand);
+    }
+    if (!nullToAbsent || model != null) {
+      map['model'] = Variable<String>(model);
+    }
+    if (!nullToAbsent || purchaseDate != null) {
+      map['purchase_date'] = Variable<DateTime>(purchaseDate);
+    }
+    if (!nullToAbsent || department != null) {
+      map['department'] = Variable<String>(department);
+    }
+    if (!nullToAbsent || workArea != null) {
+      map['work_area'] = Variable<String>(workArea);
+    }
+    if (!nullToAbsent || responsiblePerson != null) {
+      map['responsible_person'] = Variable<String>(responsiblePerson);
+    }
+    {
+      map['status'] = Variable<String>(
+        $VehiclesTable.$converterstatus.toSql(status),
+      );
+    }
+    if (!nullToAbsent || remark != null) {
+      map['remark'] = Variable<String>(remark);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    return map;
+  }
+
+  VehiclesCompanion toCompanion(bool nullToAbsent) {
+    return VehiclesCompanion(
+      id: Value(id),
+      name: Value(name),
+      vehicleNo: Value(vehicleNo),
+      licensePlate: licensePlate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(licensePlate),
+      vehicleType: Value(vehicleType),
+      brand: brand == null && nullToAbsent
+          ? const Value.absent()
+          : Value(brand),
+      model: model == null && nullToAbsent
+          ? const Value.absent()
+          : Value(model),
+      purchaseDate: purchaseDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(purchaseDate),
+      department: department == null && nullToAbsent
+          ? const Value.absent()
+          : Value(department),
+      workArea: workArea == null && nullToAbsent
+          ? const Value.absent()
+          : Value(workArea),
+      responsiblePerson: responsiblePerson == null && nullToAbsent
+          ? const Value.absent()
+          : Value(responsiblePerson),
+      status: Value(status),
+      remark: remark == null && nullToAbsent
+          ? const Value.absent()
+          : Value(remark),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isDeleted: Value(isDeleted),
+    );
+  }
+
+  factory Vehicle.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Vehicle(
+      id: serializer.fromJson<int>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      vehicleNo: serializer.fromJson<String>(json['vehicleNo']),
+      licensePlate: serializer.fromJson<String?>(json['licensePlate']),
+      vehicleType: $VehiclesTable.$convertervehicleType.fromJson(
+        serializer.fromJson<String>(json['vehicleType']),
+      ),
+      brand: serializer.fromJson<String?>(json['brand']),
+      model: serializer.fromJson<String?>(json['model']),
+      purchaseDate: serializer.fromJson<DateTime?>(json['purchaseDate']),
+      department: serializer.fromJson<String?>(json['department']),
+      workArea: serializer.fromJson<String?>(json['workArea']),
+      responsiblePerson: serializer.fromJson<String?>(
+        json['responsiblePerson'],
+      ),
+      status: $VehiclesTable.$converterstatus.fromJson(
+        serializer.fromJson<String>(json['status']),
+      ),
+      remark: serializer.fromJson<String?>(json['remark']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'name': serializer.toJson<String>(name),
+      'vehicleNo': serializer.toJson<String>(vehicleNo),
+      'licensePlate': serializer.toJson<String?>(licensePlate),
+      'vehicleType': serializer.toJson<String>(
+        $VehiclesTable.$convertervehicleType.toJson(vehicleType),
+      ),
+      'brand': serializer.toJson<String?>(brand),
+      'model': serializer.toJson<String?>(model),
+      'purchaseDate': serializer.toJson<DateTime?>(purchaseDate),
+      'department': serializer.toJson<String?>(department),
+      'workArea': serializer.toJson<String?>(workArea),
+      'responsiblePerson': serializer.toJson<String?>(responsiblePerson),
+      'status': serializer.toJson<String>(
+        $VehiclesTable.$converterstatus.toJson(status),
+      ),
+      'remark': serializer.toJson<String?>(remark),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+    };
+  }
+
+  Vehicle copyWith({
+    int? id,
+    String? name,
+    String? vehicleNo,
+    Value<String?> licensePlate = const Value.absent(),
+    VehicleType? vehicleType,
+    Value<String?> brand = const Value.absent(),
+    Value<String?> model = const Value.absent(),
+    Value<DateTime?> purchaseDate = const Value.absent(),
+    Value<String?> department = const Value.absent(),
+    Value<String?> workArea = const Value.absent(),
+    Value<String?> responsiblePerson = const Value.absent(),
+    VehicleStatus? status,
+    Value<String?> remark = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? isDeleted,
+  }) => Vehicle(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    vehicleNo: vehicleNo ?? this.vehicleNo,
+    licensePlate: licensePlate.present ? licensePlate.value : this.licensePlate,
+    vehicleType: vehicleType ?? this.vehicleType,
+    brand: brand.present ? brand.value : this.brand,
+    model: model.present ? model.value : this.model,
+    purchaseDate: purchaseDate.present ? purchaseDate.value : this.purchaseDate,
+    department: department.present ? department.value : this.department,
+    workArea: workArea.present ? workArea.value : this.workArea,
+    responsiblePerson: responsiblePerson.present
+        ? responsiblePerson.value
+        : this.responsiblePerson,
+    status: status ?? this.status,
+    remark: remark.present ? remark.value : this.remark,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isDeleted: isDeleted ?? this.isDeleted,
+  );
+  Vehicle copyWithCompanion(VehiclesCompanion data) {
+    return Vehicle(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      vehicleNo: data.vehicleNo.present ? data.vehicleNo.value : this.vehicleNo,
+      licensePlate: data.licensePlate.present
+          ? data.licensePlate.value
+          : this.licensePlate,
+      vehicleType: data.vehicleType.present
+          ? data.vehicleType.value
+          : this.vehicleType,
+      brand: data.brand.present ? data.brand.value : this.brand,
+      model: data.model.present ? data.model.value : this.model,
+      purchaseDate: data.purchaseDate.present
+          ? data.purchaseDate.value
+          : this.purchaseDate,
+      department: data.department.present
+          ? data.department.value
+          : this.department,
+      workArea: data.workArea.present ? data.workArea.value : this.workArea,
+      responsiblePerson: data.responsiblePerson.present
+          ? data.responsiblePerson.value
+          : this.responsiblePerson,
+      status: data.status.present ? data.status.value : this.status,
+      remark: data.remark.present ? data.remark.value : this.remark,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Vehicle(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('vehicleNo: $vehicleNo, ')
+          ..write('licensePlate: $licensePlate, ')
+          ..write('vehicleType: $vehicleType, ')
+          ..write('brand: $brand, ')
+          ..write('model: $model, ')
+          ..write('purchaseDate: $purchaseDate, ')
+          ..write('department: $department, ')
+          ..write('workArea: $workArea, ')
+          ..write('responsiblePerson: $responsiblePerson, ')
+          ..write('status: $status, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    name,
+    vehicleNo,
+    licensePlate,
+    vehicleType,
+    brand,
+    model,
+    purchaseDate,
+    department,
+    workArea,
+    responsiblePerson,
+    status,
+    remark,
+    createdAt,
+    updatedAt,
+    isDeleted,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Vehicle &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.vehicleNo == this.vehicleNo &&
+          other.licensePlate == this.licensePlate &&
+          other.vehicleType == this.vehicleType &&
+          other.brand == this.brand &&
+          other.model == this.model &&
+          other.purchaseDate == this.purchaseDate &&
+          other.department == this.department &&
+          other.workArea == this.workArea &&
+          other.responsiblePerson == this.responsiblePerson &&
+          other.status == this.status &&
+          other.remark == this.remark &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isDeleted == this.isDeleted);
+}
+
+class VehiclesCompanion extends UpdateCompanion<Vehicle> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<String> vehicleNo;
+  final Value<String?> licensePlate;
+  final Value<VehicleType> vehicleType;
+  final Value<String?> brand;
+  final Value<String?> model;
+  final Value<DateTime?> purchaseDate;
+  final Value<String?> department;
+  final Value<String?> workArea;
+  final Value<String?> responsiblePerson;
+  final Value<VehicleStatus> status;
+  final Value<String?> remark;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isDeleted;
+  const VehiclesCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.vehicleNo = const Value.absent(),
+    this.licensePlate = const Value.absent(),
+    this.vehicleType = const Value.absent(),
+    this.brand = const Value.absent(),
+    this.model = const Value.absent(),
+    this.purchaseDate = const Value.absent(),
+    this.department = const Value.absent(),
+    this.workArea = const Value.absent(),
+    this.responsiblePerson = const Value.absent(),
+    this.status = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  });
+  VehiclesCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    required String vehicleNo,
+    this.licensePlate = const Value.absent(),
+    this.vehicleType = const Value.absent(),
+    this.brand = const Value.absent(),
+    this.model = const Value.absent(),
+    this.purchaseDate = const Value.absent(),
+    this.department = const Value.absent(),
+    this.workArea = const Value.absent(),
+    this.responsiblePerson = const Value.absent(),
+    this.status = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  }) : name = Value(name),
+       vehicleNo = Value(vehicleNo);
+  static Insertable<Vehicle> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+    Expression<String>? vehicleNo,
+    Expression<String>? licensePlate,
+    Expression<String>? vehicleType,
+    Expression<String>? brand,
+    Expression<String>? model,
+    Expression<DateTime>? purchaseDate,
+    Expression<String>? department,
+    Expression<String>? workArea,
+    Expression<String>? responsiblePerson,
+    Expression<String>? status,
+    Expression<String>? remark,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isDeleted,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (vehicleNo != null) 'vehicle_no': vehicleNo,
+      if (licensePlate != null) 'license_plate': licensePlate,
+      if (vehicleType != null) 'vehicle_type': vehicleType,
+      if (brand != null) 'brand': brand,
+      if (model != null) 'model': model,
+      if (purchaseDate != null) 'purchase_date': purchaseDate,
+      if (department != null) 'department': department,
+      if (workArea != null) 'work_area': workArea,
+      if (responsiblePerson != null) 'responsible_person': responsiblePerson,
+      if (status != null) 'status': status,
+      if (remark != null) 'remark': remark,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+    });
+  }
+
+  VehiclesCompanion copyWith({
+    Value<int>? id,
+    Value<String>? name,
+    Value<String>? vehicleNo,
+    Value<String?>? licensePlate,
+    Value<VehicleType>? vehicleType,
+    Value<String?>? brand,
+    Value<String?>? model,
+    Value<DateTime?>? purchaseDate,
+    Value<String?>? department,
+    Value<String?>? workArea,
+    Value<String?>? responsiblePerson,
+    Value<VehicleStatus>? status,
+    Value<String?>? remark,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isDeleted,
+  }) {
+    return VehiclesCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      vehicleNo: vehicleNo ?? this.vehicleNo,
+      licensePlate: licensePlate ?? this.licensePlate,
+      vehicleType: vehicleType ?? this.vehicleType,
+      brand: brand ?? this.brand,
+      model: model ?? this.model,
+      purchaseDate: purchaseDate ?? this.purchaseDate,
+      department: department ?? this.department,
+      workArea: workArea ?? this.workArea,
+      responsiblePerson: responsiblePerson ?? this.responsiblePerson,
+      status: status ?? this.status,
+      remark: remark ?? this.remark,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (vehicleNo.present) {
+      map['vehicle_no'] = Variable<String>(vehicleNo.value);
+    }
+    if (licensePlate.present) {
+      map['license_plate'] = Variable<String>(licensePlate.value);
+    }
+    if (vehicleType.present) {
+      map['vehicle_type'] = Variable<String>(
+        $VehiclesTable.$convertervehicleType.toSql(vehicleType.value),
+      );
+    }
+    if (brand.present) {
+      map['brand'] = Variable<String>(brand.value);
+    }
+    if (model.present) {
+      map['model'] = Variable<String>(model.value);
+    }
+    if (purchaseDate.present) {
+      map['purchase_date'] = Variable<DateTime>(purchaseDate.value);
+    }
+    if (department.present) {
+      map['department'] = Variable<String>(department.value);
+    }
+    if (workArea.present) {
+      map['work_area'] = Variable<String>(workArea.value);
+    }
+    if (responsiblePerson.present) {
+      map['responsible_person'] = Variable<String>(responsiblePerson.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(
+        $VehiclesTable.$converterstatus.toSql(status.value),
+      );
+    }
+    if (remark.present) {
+      map['remark'] = Variable<String>(remark.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VehiclesCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('vehicleNo: $vehicleNo, ')
+          ..write('licensePlate: $licensePlate, ')
+          ..write('vehicleType: $vehicleType, ')
+          ..write('brand: $brand, ')
+          ..write('model: $model, ')
+          ..write('purchaseDate: $purchaseDate, ')
+          ..write('department: $department, ')
+          ..write('workArea: $workArea, ')
+          ..write('responsiblePerson: $responsiblePerson, ')
+          ..write('status: $status, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $VehicleConditionSnapshotsTable extends VehicleConditionSnapshots
+    with TableInfo<$VehicleConditionSnapshotsTable, VehicleConditionSnapshot> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $VehicleConditionSnapshotsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _vehicleIdMeta = const VerificationMeta(
+    'vehicleId',
+  );
+  @override
+  late final GeneratedColumn<int> vehicleId = GeneratedColumn<int>(
+    'vehicle_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES vehicles (id)',
+    ),
+  );
+  static const VerificationMeta _checkedAtMeta = const VerificationMeta(
+    'checkedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> checkedAt = GeneratedColumn<DateTime>(
+    'checked_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _remarkMeta = const VerificationMeta('remark');
+  @override
+  late final GeneratedColumn<String> remark = GeneratedColumn<String>(
+    'remark',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    vehicleId,
+    checkedAt,
+    remark,
+    createdAt,
+    isDeleted,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'vehicle_condition_snapshots';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<VehicleConditionSnapshot> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('vehicle_id')) {
+      context.handle(
+        _vehicleIdMeta,
+        vehicleId.isAcceptableOrUnknown(data['vehicle_id']!, _vehicleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_vehicleIdMeta);
+    }
+    if (data.containsKey('checked_at')) {
+      context.handle(
+        _checkedAtMeta,
+        checkedAt.isAcceptableOrUnknown(data['checked_at']!, _checkedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_checkedAtMeta);
+    }
+    if (data.containsKey('remark')) {
+      context.handle(
+        _remarkMeta,
+        remark.isAcceptableOrUnknown(data['remark']!, _remarkMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  VehicleConditionSnapshot map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return VehicleConditionSnapshot(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      vehicleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}vehicle_id'],
+      )!,
+      checkedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}checked_at'],
+      )!,
+      remark: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}remark'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
+    );
+  }
+
+  @override
+  $VehicleConditionSnapshotsTable createAlias(String alias) {
+    return $VehicleConditionSnapshotsTable(attachedDatabase, alias);
+  }
+}
+
+class VehicleConditionSnapshot extends DataClass
+    implements Insertable<VehicleConditionSnapshot> {
+  final int id;
+  final int vehicleId;
+  final DateTime checkedAt;
+  final String? remark;
+  final DateTime createdAt;
+  final bool isDeleted;
+  const VehicleConditionSnapshot({
+    required this.id,
+    required this.vehicleId,
+    required this.checkedAt,
+    this.remark,
+    required this.createdAt,
+    required this.isDeleted,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['vehicle_id'] = Variable<int>(vehicleId);
+    map['checked_at'] = Variable<DateTime>(checkedAt);
+    if (!nullToAbsent || remark != null) {
+      map['remark'] = Variable<String>(remark);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    return map;
+  }
+
+  VehicleConditionSnapshotsCompanion toCompanion(bool nullToAbsent) {
+    return VehicleConditionSnapshotsCompanion(
+      id: Value(id),
+      vehicleId: Value(vehicleId),
+      checkedAt: Value(checkedAt),
+      remark: remark == null && nullToAbsent
+          ? const Value.absent()
+          : Value(remark),
+      createdAt: Value(createdAt),
+      isDeleted: Value(isDeleted),
+    );
+  }
+
+  factory VehicleConditionSnapshot.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return VehicleConditionSnapshot(
+      id: serializer.fromJson<int>(json['id']),
+      vehicleId: serializer.fromJson<int>(json['vehicleId']),
+      checkedAt: serializer.fromJson<DateTime>(json['checkedAt']),
+      remark: serializer.fromJson<String?>(json['remark']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'vehicleId': serializer.toJson<int>(vehicleId),
+      'checkedAt': serializer.toJson<DateTime>(checkedAt),
+      'remark': serializer.toJson<String?>(remark),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+    };
+  }
+
+  VehicleConditionSnapshot copyWith({
+    int? id,
+    int? vehicleId,
+    DateTime? checkedAt,
+    Value<String?> remark = const Value.absent(),
+    DateTime? createdAt,
+    bool? isDeleted,
+  }) => VehicleConditionSnapshot(
+    id: id ?? this.id,
+    vehicleId: vehicleId ?? this.vehicleId,
+    checkedAt: checkedAt ?? this.checkedAt,
+    remark: remark.present ? remark.value : this.remark,
+    createdAt: createdAt ?? this.createdAt,
+    isDeleted: isDeleted ?? this.isDeleted,
+  );
+  VehicleConditionSnapshot copyWithCompanion(
+    VehicleConditionSnapshotsCompanion data,
+  ) {
+    return VehicleConditionSnapshot(
+      id: data.id.present ? data.id.value : this.id,
+      vehicleId: data.vehicleId.present ? data.vehicleId.value : this.vehicleId,
+      checkedAt: data.checkedAt.present ? data.checkedAt.value : this.checkedAt,
+      remark: data.remark.present ? data.remark.value : this.remark,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VehicleConditionSnapshot(')
+          ..write('id: $id, ')
+          ..write('vehicleId: $vehicleId, ')
+          ..write('checkedAt: $checkedAt, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, vehicleId, checkedAt, remark, createdAt, isDeleted);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is VehicleConditionSnapshot &&
+          other.id == this.id &&
+          other.vehicleId == this.vehicleId &&
+          other.checkedAt == this.checkedAt &&
+          other.remark == this.remark &&
+          other.createdAt == this.createdAt &&
+          other.isDeleted == this.isDeleted);
+}
+
+class VehicleConditionSnapshotsCompanion
+    extends UpdateCompanion<VehicleConditionSnapshot> {
+  final Value<int> id;
+  final Value<int> vehicleId;
+  final Value<DateTime> checkedAt;
+  final Value<String?> remark;
+  final Value<DateTime> createdAt;
+  final Value<bool> isDeleted;
+  const VehicleConditionSnapshotsCompanion({
+    this.id = const Value.absent(),
+    this.vehicleId = const Value.absent(),
+    this.checkedAt = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  });
+  VehicleConditionSnapshotsCompanion.insert({
+    this.id = const Value.absent(),
+    required int vehicleId,
+    required DateTime checkedAt,
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  }) : vehicleId = Value(vehicleId),
+       checkedAt = Value(checkedAt);
+  static Insertable<VehicleConditionSnapshot> custom({
+    Expression<int>? id,
+    Expression<int>? vehicleId,
+    Expression<DateTime>? checkedAt,
+    Expression<String>? remark,
+    Expression<DateTime>? createdAt,
+    Expression<bool>? isDeleted,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (vehicleId != null) 'vehicle_id': vehicleId,
+      if (checkedAt != null) 'checked_at': checkedAt,
+      if (remark != null) 'remark': remark,
+      if (createdAt != null) 'created_at': createdAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+    });
+  }
+
+  VehicleConditionSnapshotsCompanion copyWith({
+    Value<int>? id,
+    Value<int>? vehicleId,
+    Value<DateTime>? checkedAt,
+    Value<String?>? remark,
+    Value<DateTime>? createdAt,
+    Value<bool>? isDeleted,
+  }) {
+    return VehicleConditionSnapshotsCompanion(
+      id: id ?? this.id,
+      vehicleId: vehicleId ?? this.vehicleId,
+      checkedAt: checkedAt ?? this.checkedAt,
+      remark: remark ?? this.remark,
+      createdAt: createdAt ?? this.createdAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (vehicleId.present) {
+      map['vehicle_id'] = Variable<int>(vehicleId.value);
+    }
+    if (checkedAt.present) {
+      map['checked_at'] = Variable<DateTime>(checkedAt.value);
+    }
+    if (remark.present) {
+      map['remark'] = Variable<String>(remark.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VehicleConditionSnapshotsCompanion(')
+          ..write('id: $id, ')
+          ..write('vehicleId: $vehicleId, ')
+          ..write('checkedAt: $checkedAt, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $VehicleConditionItemsTable extends VehicleConditionItems
+    with TableInfo<$VehicleConditionItemsTable, VehicleConditionItem> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $VehicleConditionItemsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _vehicleIdMeta = const VerificationMeta(
+    'vehicleId',
+  );
+  @override
+  late final GeneratedColumn<int> vehicleId = GeneratedColumn<int>(
+    'vehicle_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES vehicles (id)',
+    ),
+  );
+  static const VerificationMeta _snapshotIdMeta = const VerificationMeta(
+    'snapshotId',
+  );
+  @override
+  late final GeneratedColumn<int> snapshotId = GeneratedColumn<int>(
+    'snapshot_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES vehicle_condition_snapshots (id)',
+    ),
+  );
+  static const VerificationMeta _componentTypeMeta = const VerificationMeta(
+    'componentType',
+  );
+  @override
+  late final GeneratedColumn<String> componentType = GeneratedColumn<String>(
+    'component_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _componentKeyMeta = const VerificationMeta(
+    'componentKey',
+  );
+  @override
+  late final GeneratedColumn<String> componentKey = GeneratedColumn<String>(
+    'component_key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<VehicleConditionStatus, String>
+  status =
+      GeneratedColumn<String>(
+        'status',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<VehicleConditionStatus>(
+        $VehicleConditionItemsTable.$converterstatus,
+      );
+  static const VerificationMeta _issueTagsJsonMeta = const VerificationMeta(
+    'issueTagsJson',
+  );
+  @override
+  late final GeneratedColumn<String> issueTagsJson = GeneratedColumn<String>(
+    'issue_tags_json',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _detailMeta = const VerificationMeta('detail');
+  @override
+  late final GeneratedColumn<String> detail = GeneratedColumn<String>(
+    'detail',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _observedAtMeta = const VerificationMeta(
+    'observedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> observedAt = GeneratedColumn<DateTime>(
+    'observed_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _resolvedAtMeta = const VerificationMeta(
+    'resolvedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> resolvedAt = GeneratedColumn<DateTime>(
+    'resolved_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _isCurrentMeta = const VerificationMeta(
+    'isCurrent',
+  );
+  @override
+  late final GeneratedColumn<bool> isCurrent = GeneratedColumn<bool>(
+    'is_current',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_current" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    vehicleId,
+    snapshotId,
+    componentType,
+    componentKey,
+    status,
+    issueTagsJson,
+    detail,
+    observedAt,
+    resolvedAt,
+    isCurrent,
+    createdAt,
+    updatedAt,
+    isDeleted,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'vehicle_condition_items';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<VehicleConditionItem> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('vehicle_id')) {
+      context.handle(
+        _vehicleIdMeta,
+        vehicleId.isAcceptableOrUnknown(data['vehicle_id']!, _vehicleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_vehicleIdMeta);
+    }
+    if (data.containsKey('snapshot_id')) {
+      context.handle(
+        _snapshotIdMeta,
+        snapshotId.isAcceptableOrUnknown(data['snapshot_id']!, _snapshotIdMeta),
+      );
+    }
+    if (data.containsKey('component_type')) {
+      context.handle(
+        _componentTypeMeta,
+        componentType.isAcceptableOrUnknown(
+          data['component_type']!,
+          _componentTypeMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_componentTypeMeta);
+    }
+    if (data.containsKey('component_key')) {
+      context.handle(
+        _componentKeyMeta,
+        componentKey.isAcceptableOrUnknown(
+          data['component_key']!,
+          _componentKeyMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_componentKeyMeta);
+    }
+    if (data.containsKey('issue_tags_json')) {
+      context.handle(
+        _issueTagsJsonMeta,
+        issueTagsJson.isAcceptableOrUnknown(
+          data['issue_tags_json']!,
+          _issueTagsJsonMeta,
+        ),
+      );
+    }
+    if (data.containsKey('detail')) {
+      context.handle(
+        _detailMeta,
+        detail.isAcceptableOrUnknown(data['detail']!, _detailMeta),
+      );
+    }
+    if (data.containsKey('observed_at')) {
+      context.handle(
+        _observedAtMeta,
+        observedAt.isAcceptableOrUnknown(data['observed_at']!, _observedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_observedAtMeta);
+    }
+    if (data.containsKey('resolved_at')) {
+      context.handle(
+        _resolvedAtMeta,
+        resolvedAt.isAcceptableOrUnknown(data['resolved_at']!, _resolvedAtMeta),
+      );
+    }
+    if (data.containsKey('is_current')) {
+      context.handle(
+        _isCurrentMeta,
+        isCurrent.isAcceptableOrUnknown(data['is_current']!, _isCurrentMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  VehicleConditionItem map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return VehicleConditionItem(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      vehicleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}vehicle_id'],
+      )!,
+      snapshotId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}snapshot_id'],
+      ),
+      componentType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}component_type'],
+      )!,
+      componentKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}component_key'],
+      )!,
+      status: $VehicleConditionItemsTable.$converterstatus.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}status'],
+        )!,
+      ),
+      issueTagsJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}issue_tags_json'],
+      ),
+      detail: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}detail'],
+      ),
+      observedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}observed_at'],
+      )!,
+      resolvedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}resolved_at'],
+      ),
+      isCurrent: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_current'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
+    );
+  }
+
+  @override
+  $VehicleConditionItemsTable createAlias(String alias) {
+    return $VehicleConditionItemsTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<VehicleConditionStatus, String, String>
+  $converterstatus = const EnumNameConverter<VehicleConditionStatus>(
+    VehicleConditionStatus.values,
+  );
+}
+
+class VehicleConditionItem extends DataClass
+    implements Insertable<VehicleConditionItem> {
+  final int id;
+  final int vehicleId;
+  final int? snapshotId;
+  final String componentType;
+  final String componentKey;
+  final VehicleConditionStatus status;
+  final String? issueTagsJson;
+  final String? detail;
+  final DateTime observedAt;
+  final DateTime? resolvedAt;
+  final bool isCurrent;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final bool isDeleted;
+  const VehicleConditionItem({
+    required this.id,
+    required this.vehicleId,
+    this.snapshotId,
+    required this.componentType,
+    required this.componentKey,
+    required this.status,
+    this.issueTagsJson,
+    this.detail,
+    required this.observedAt,
+    this.resolvedAt,
+    required this.isCurrent,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isDeleted,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['vehicle_id'] = Variable<int>(vehicleId);
+    if (!nullToAbsent || snapshotId != null) {
+      map['snapshot_id'] = Variable<int>(snapshotId);
+    }
+    map['component_type'] = Variable<String>(componentType);
+    map['component_key'] = Variable<String>(componentKey);
+    {
+      map['status'] = Variable<String>(
+        $VehicleConditionItemsTable.$converterstatus.toSql(status),
+      );
+    }
+    if (!nullToAbsent || issueTagsJson != null) {
+      map['issue_tags_json'] = Variable<String>(issueTagsJson);
+    }
+    if (!nullToAbsent || detail != null) {
+      map['detail'] = Variable<String>(detail);
+    }
+    map['observed_at'] = Variable<DateTime>(observedAt);
+    if (!nullToAbsent || resolvedAt != null) {
+      map['resolved_at'] = Variable<DateTime>(resolvedAt);
+    }
+    map['is_current'] = Variable<bool>(isCurrent);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    return map;
+  }
+
+  VehicleConditionItemsCompanion toCompanion(bool nullToAbsent) {
+    return VehicleConditionItemsCompanion(
+      id: Value(id),
+      vehicleId: Value(vehicleId),
+      snapshotId: snapshotId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(snapshotId),
+      componentType: Value(componentType),
+      componentKey: Value(componentKey),
+      status: Value(status),
+      issueTagsJson: issueTagsJson == null && nullToAbsent
+          ? const Value.absent()
+          : Value(issueTagsJson),
+      detail: detail == null && nullToAbsent
+          ? const Value.absent()
+          : Value(detail),
+      observedAt: Value(observedAt),
+      resolvedAt: resolvedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(resolvedAt),
+      isCurrent: Value(isCurrent),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isDeleted: Value(isDeleted),
+    );
+  }
+
+  factory VehicleConditionItem.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return VehicleConditionItem(
+      id: serializer.fromJson<int>(json['id']),
+      vehicleId: serializer.fromJson<int>(json['vehicleId']),
+      snapshotId: serializer.fromJson<int?>(json['snapshotId']),
+      componentType: serializer.fromJson<String>(json['componentType']),
+      componentKey: serializer.fromJson<String>(json['componentKey']),
+      status: $VehicleConditionItemsTable.$converterstatus.fromJson(
+        serializer.fromJson<String>(json['status']),
+      ),
+      issueTagsJson: serializer.fromJson<String?>(json['issueTagsJson']),
+      detail: serializer.fromJson<String?>(json['detail']),
+      observedAt: serializer.fromJson<DateTime>(json['observedAt']),
+      resolvedAt: serializer.fromJson<DateTime?>(json['resolvedAt']),
+      isCurrent: serializer.fromJson<bool>(json['isCurrent']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'vehicleId': serializer.toJson<int>(vehicleId),
+      'snapshotId': serializer.toJson<int?>(snapshotId),
+      'componentType': serializer.toJson<String>(componentType),
+      'componentKey': serializer.toJson<String>(componentKey),
+      'status': serializer.toJson<String>(
+        $VehicleConditionItemsTable.$converterstatus.toJson(status),
+      ),
+      'issueTagsJson': serializer.toJson<String?>(issueTagsJson),
+      'detail': serializer.toJson<String?>(detail),
+      'observedAt': serializer.toJson<DateTime>(observedAt),
+      'resolvedAt': serializer.toJson<DateTime?>(resolvedAt),
+      'isCurrent': serializer.toJson<bool>(isCurrent),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+    };
+  }
+
+  VehicleConditionItem copyWith({
+    int? id,
+    int? vehicleId,
+    Value<int?> snapshotId = const Value.absent(),
+    String? componentType,
+    String? componentKey,
+    VehicleConditionStatus? status,
+    Value<String?> issueTagsJson = const Value.absent(),
+    Value<String?> detail = const Value.absent(),
+    DateTime? observedAt,
+    Value<DateTime?> resolvedAt = const Value.absent(),
+    bool? isCurrent,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? isDeleted,
+  }) => VehicleConditionItem(
+    id: id ?? this.id,
+    vehicleId: vehicleId ?? this.vehicleId,
+    snapshotId: snapshotId.present ? snapshotId.value : this.snapshotId,
+    componentType: componentType ?? this.componentType,
+    componentKey: componentKey ?? this.componentKey,
+    status: status ?? this.status,
+    issueTagsJson: issueTagsJson.present
+        ? issueTagsJson.value
+        : this.issueTagsJson,
+    detail: detail.present ? detail.value : this.detail,
+    observedAt: observedAt ?? this.observedAt,
+    resolvedAt: resolvedAt.present ? resolvedAt.value : this.resolvedAt,
+    isCurrent: isCurrent ?? this.isCurrent,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isDeleted: isDeleted ?? this.isDeleted,
+  );
+  VehicleConditionItem copyWithCompanion(VehicleConditionItemsCompanion data) {
+    return VehicleConditionItem(
+      id: data.id.present ? data.id.value : this.id,
+      vehicleId: data.vehicleId.present ? data.vehicleId.value : this.vehicleId,
+      snapshotId: data.snapshotId.present
+          ? data.snapshotId.value
+          : this.snapshotId,
+      componentType: data.componentType.present
+          ? data.componentType.value
+          : this.componentType,
+      componentKey: data.componentKey.present
+          ? data.componentKey.value
+          : this.componentKey,
+      status: data.status.present ? data.status.value : this.status,
+      issueTagsJson: data.issueTagsJson.present
+          ? data.issueTagsJson.value
+          : this.issueTagsJson,
+      detail: data.detail.present ? data.detail.value : this.detail,
+      observedAt: data.observedAt.present
+          ? data.observedAt.value
+          : this.observedAt,
+      resolvedAt: data.resolvedAt.present
+          ? data.resolvedAt.value
+          : this.resolvedAt,
+      isCurrent: data.isCurrent.present ? data.isCurrent.value : this.isCurrent,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VehicleConditionItem(')
+          ..write('id: $id, ')
+          ..write('vehicleId: $vehicleId, ')
+          ..write('snapshotId: $snapshotId, ')
+          ..write('componentType: $componentType, ')
+          ..write('componentKey: $componentKey, ')
+          ..write('status: $status, ')
+          ..write('issueTagsJson: $issueTagsJson, ')
+          ..write('detail: $detail, ')
+          ..write('observedAt: $observedAt, ')
+          ..write('resolvedAt: $resolvedAt, ')
+          ..write('isCurrent: $isCurrent, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    vehicleId,
+    snapshotId,
+    componentType,
+    componentKey,
+    status,
+    issueTagsJson,
+    detail,
+    observedAt,
+    resolvedAt,
+    isCurrent,
+    createdAt,
+    updatedAt,
+    isDeleted,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is VehicleConditionItem &&
+          other.id == this.id &&
+          other.vehicleId == this.vehicleId &&
+          other.snapshotId == this.snapshotId &&
+          other.componentType == this.componentType &&
+          other.componentKey == this.componentKey &&
+          other.status == this.status &&
+          other.issueTagsJson == this.issueTagsJson &&
+          other.detail == this.detail &&
+          other.observedAt == this.observedAt &&
+          other.resolvedAt == this.resolvedAt &&
+          other.isCurrent == this.isCurrent &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isDeleted == this.isDeleted);
+}
+
+class VehicleConditionItemsCompanion
+    extends UpdateCompanion<VehicleConditionItem> {
+  final Value<int> id;
+  final Value<int> vehicleId;
+  final Value<int?> snapshotId;
+  final Value<String> componentType;
+  final Value<String> componentKey;
+  final Value<VehicleConditionStatus> status;
+  final Value<String?> issueTagsJson;
+  final Value<String?> detail;
+  final Value<DateTime> observedAt;
+  final Value<DateTime?> resolvedAt;
+  final Value<bool> isCurrent;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isDeleted;
+  const VehicleConditionItemsCompanion({
+    this.id = const Value.absent(),
+    this.vehicleId = const Value.absent(),
+    this.snapshotId = const Value.absent(),
+    this.componentType = const Value.absent(),
+    this.componentKey = const Value.absent(),
+    this.status = const Value.absent(),
+    this.issueTagsJson = const Value.absent(),
+    this.detail = const Value.absent(),
+    this.observedAt = const Value.absent(),
+    this.resolvedAt = const Value.absent(),
+    this.isCurrent = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  });
+  VehicleConditionItemsCompanion.insert({
+    this.id = const Value.absent(),
+    required int vehicleId,
+    this.snapshotId = const Value.absent(),
+    required String componentType,
+    required String componentKey,
+    required VehicleConditionStatus status,
+    this.issueTagsJson = const Value.absent(),
+    this.detail = const Value.absent(),
+    required DateTime observedAt,
+    this.resolvedAt = const Value.absent(),
+    this.isCurrent = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  }) : vehicleId = Value(vehicleId),
+       componentType = Value(componentType),
+       componentKey = Value(componentKey),
+       status = Value(status),
+       observedAt = Value(observedAt);
+  static Insertable<VehicleConditionItem> custom({
+    Expression<int>? id,
+    Expression<int>? vehicleId,
+    Expression<int>? snapshotId,
+    Expression<String>? componentType,
+    Expression<String>? componentKey,
+    Expression<String>? status,
+    Expression<String>? issueTagsJson,
+    Expression<String>? detail,
+    Expression<DateTime>? observedAt,
+    Expression<DateTime>? resolvedAt,
+    Expression<bool>? isCurrent,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isDeleted,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (vehicleId != null) 'vehicle_id': vehicleId,
+      if (snapshotId != null) 'snapshot_id': snapshotId,
+      if (componentType != null) 'component_type': componentType,
+      if (componentKey != null) 'component_key': componentKey,
+      if (status != null) 'status': status,
+      if (issueTagsJson != null) 'issue_tags_json': issueTagsJson,
+      if (detail != null) 'detail': detail,
+      if (observedAt != null) 'observed_at': observedAt,
+      if (resolvedAt != null) 'resolved_at': resolvedAt,
+      if (isCurrent != null) 'is_current': isCurrent,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+    });
+  }
+
+  VehicleConditionItemsCompanion copyWith({
+    Value<int>? id,
+    Value<int>? vehicleId,
+    Value<int?>? snapshotId,
+    Value<String>? componentType,
+    Value<String>? componentKey,
+    Value<VehicleConditionStatus>? status,
+    Value<String?>? issueTagsJson,
+    Value<String?>? detail,
+    Value<DateTime>? observedAt,
+    Value<DateTime?>? resolvedAt,
+    Value<bool>? isCurrent,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isDeleted,
+  }) {
+    return VehicleConditionItemsCompanion(
+      id: id ?? this.id,
+      vehicleId: vehicleId ?? this.vehicleId,
+      snapshotId: snapshotId ?? this.snapshotId,
+      componentType: componentType ?? this.componentType,
+      componentKey: componentKey ?? this.componentKey,
+      status: status ?? this.status,
+      issueTagsJson: issueTagsJson ?? this.issueTagsJson,
+      detail: detail ?? this.detail,
+      observedAt: observedAt ?? this.observedAt,
+      resolvedAt: resolvedAt ?? this.resolvedAt,
+      isCurrent: isCurrent ?? this.isCurrent,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (vehicleId.present) {
+      map['vehicle_id'] = Variable<int>(vehicleId.value);
+    }
+    if (snapshotId.present) {
+      map['snapshot_id'] = Variable<int>(snapshotId.value);
+    }
+    if (componentType.present) {
+      map['component_type'] = Variable<String>(componentType.value);
+    }
+    if (componentKey.present) {
+      map['component_key'] = Variable<String>(componentKey.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(
+        $VehicleConditionItemsTable.$converterstatus.toSql(status.value),
+      );
+    }
+    if (issueTagsJson.present) {
+      map['issue_tags_json'] = Variable<String>(issueTagsJson.value);
+    }
+    if (detail.present) {
+      map['detail'] = Variable<String>(detail.value);
+    }
+    if (observedAt.present) {
+      map['observed_at'] = Variable<DateTime>(observedAt.value);
+    }
+    if (resolvedAt.present) {
+      map['resolved_at'] = Variable<DateTime>(resolvedAt.value);
+    }
+    if (isCurrent.present) {
+      map['is_current'] = Variable<bool>(isCurrent.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VehicleConditionItemsCompanion(')
+          ..write('id: $id, ')
+          ..write('vehicleId: $vehicleId, ')
+          ..write('snapshotId: $snapshotId, ')
+          ..write('componentType: $componentType, ')
+          ..write('componentKey: $componentKey, ')
+          ..write('status: $status, ')
+          ..write('issueTagsJson: $issueTagsJson, ')
+          ..write('detail: $detail, ')
+          ..write('observedAt: $observedAt, ')
+          ..write('resolvedAt: $resolvedAt, ')
+          ..write('isCurrent: $isCurrent, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TiresTable extends Tires with TableInfo<$TiresTable, Tire> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TiresTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _tireNoMeta = const VerificationMeta('tireNo');
+  @override
+  late final GeneratedColumn<String> tireNo = GeneratedColumn<String>(
+    'tire_no',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
+  );
+  static const VerificationMeta _brandMeta = const VerificationMeta('brand');
+  @override
+  late final GeneratedColumn<String> brand = GeneratedColumn<String>(
+    'brand',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _specificationMeta = const VerificationMeta(
+    'specification',
+  );
+  @override
+  late final GeneratedColumn<String> specification = GeneratedColumn<String>(
+    'specification',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<TireCondition, String> condition =
+      GeneratedColumn<String>(
+        'condition',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        defaultValue: const Constant('newTire'),
+      ).withConverter<TireCondition>($TiresTable.$convertercondition);
+  static const VerificationMeta _firstUseDateMeta = const VerificationMeta(
+    'firstUseDate',
+  );
+  @override
+  late final GeneratedColumn<DateTime> firstUseDate = GeneratedColumn<DateTime>(
+    'first_use_date',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<TireAssetStatus, String> status =
+      GeneratedColumn<String>(
+        'status',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        defaultValue: const Constant('spare'),
+      ).withConverter<TireAssetStatus>($TiresTable.$converterstatus);
+  static const VerificationMeta _repairCountMeta = const VerificationMeta(
+    'repairCount',
+  );
+  @override
+  late final GeneratedColumn<int> repairCount = GeneratedColumn<int>(
+    'repair_count',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<TireWearLevel, String> wearLevel =
+      GeneratedColumn<String>(
+        'wear_level',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        defaultValue: const Constant('good'),
+      ).withConverter<TireWearLevel>($TiresTable.$converterwearLevel);
+  static const VerificationMeta _remarkMeta = const VerificationMeta('remark');
+  @override
+  late final GeneratedColumn<String> remark = GeneratedColumn<String>(
+    'remark',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    tireNo,
+    brand,
+    specification,
+    condition,
+    firstUseDate,
+    status,
+    repairCount,
+    wearLevel,
+    remark,
+    createdAt,
+    updatedAt,
+    isDeleted,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'tires';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<Tire> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('tire_no')) {
+      context.handle(
+        _tireNoMeta,
+        tireNo.isAcceptableOrUnknown(data['tire_no']!, _tireNoMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_tireNoMeta);
+    }
+    if (data.containsKey('brand')) {
+      context.handle(
+        _brandMeta,
+        brand.isAcceptableOrUnknown(data['brand']!, _brandMeta),
+      );
+    }
+    if (data.containsKey('specification')) {
+      context.handle(
+        _specificationMeta,
+        specification.isAcceptableOrUnknown(
+          data['specification']!,
+          _specificationMeta,
+        ),
+      );
+    }
+    if (data.containsKey('first_use_date')) {
+      context.handle(
+        _firstUseDateMeta,
+        firstUseDate.isAcceptableOrUnknown(
+          data['first_use_date']!,
+          _firstUseDateMeta,
+        ),
+      );
+    }
+    if (data.containsKey('repair_count')) {
+      context.handle(
+        _repairCountMeta,
+        repairCount.isAcceptableOrUnknown(
+          data['repair_count']!,
+          _repairCountMeta,
+        ),
+      );
+    }
+    if (data.containsKey('remark')) {
+      context.handle(
+        _remarkMeta,
+        remark.isAcceptableOrUnknown(data['remark']!, _remarkMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Tire map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Tire(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      tireNo: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tire_no'],
+      )!,
+      brand: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}brand'],
+      ),
+      specification: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}specification'],
+      ),
+      condition: $TiresTable.$convertercondition.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}condition'],
+        )!,
+      ),
+      firstUseDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}first_use_date'],
+      ),
+      status: $TiresTable.$converterstatus.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}status'],
+        )!,
+      ),
+      repairCount: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}repair_count'],
+      )!,
+      wearLevel: $TiresTable.$converterwearLevel.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}wear_level'],
+        )!,
+      ),
+      remark: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}remark'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
+    );
+  }
+
+  @override
+  $TiresTable createAlias(String alias) {
+    return $TiresTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<TireCondition, String, String> $convertercondition =
+      const EnumNameConverter<TireCondition>(TireCondition.values);
+  static JsonTypeConverter2<TireAssetStatus, String, String> $converterstatus =
+      const EnumNameConverter<TireAssetStatus>(TireAssetStatus.values);
+  static JsonTypeConverter2<TireWearLevel, String, String> $converterwearLevel =
+      const EnumNameConverter<TireWearLevel>(TireWearLevel.values);
+}
+
+class Tire extends DataClass implements Insertable<Tire> {
+  final int id;
+  final String tireNo;
+  final String? brand;
+  final String? specification;
+  final TireCondition condition;
+  final DateTime? firstUseDate;
+  final TireAssetStatus status;
+  final int repairCount;
+  final TireWearLevel wearLevel;
+  final String? remark;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final bool isDeleted;
+  const Tire({
+    required this.id,
+    required this.tireNo,
+    this.brand,
+    this.specification,
+    required this.condition,
+    this.firstUseDate,
+    required this.status,
+    required this.repairCount,
+    required this.wearLevel,
+    this.remark,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isDeleted,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['tire_no'] = Variable<String>(tireNo);
+    if (!nullToAbsent || brand != null) {
+      map['brand'] = Variable<String>(brand);
+    }
+    if (!nullToAbsent || specification != null) {
+      map['specification'] = Variable<String>(specification);
+    }
+    {
+      map['condition'] = Variable<String>(
+        $TiresTable.$convertercondition.toSql(condition),
+      );
+    }
+    if (!nullToAbsent || firstUseDate != null) {
+      map['first_use_date'] = Variable<DateTime>(firstUseDate);
+    }
+    {
+      map['status'] = Variable<String>(
+        $TiresTable.$converterstatus.toSql(status),
+      );
+    }
+    map['repair_count'] = Variable<int>(repairCount);
+    {
+      map['wear_level'] = Variable<String>(
+        $TiresTable.$converterwearLevel.toSql(wearLevel),
+      );
+    }
+    if (!nullToAbsent || remark != null) {
+      map['remark'] = Variable<String>(remark);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    return map;
+  }
+
+  TiresCompanion toCompanion(bool nullToAbsent) {
+    return TiresCompanion(
+      id: Value(id),
+      tireNo: Value(tireNo),
+      brand: brand == null && nullToAbsent
+          ? const Value.absent()
+          : Value(brand),
+      specification: specification == null && nullToAbsent
+          ? const Value.absent()
+          : Value(specification),
+      condition: Value(condition),
+      firstUseDate: firstUseDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(firstUseDate),
+      status: Value(status),
+      repairCount: Value(repairCount),
+      wearLevel: Value(wearLevel),
+      remark: remark == null && nullToAbsent
+          ? const Value.absent()
+          : Value(remark),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isDeleted: Value(isDeleted),
+    );
+  }
+
+  factory Tire.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Tire(
+      id: serializer.fromJson<int>(json['id']),
+      tireNo: serializer.fromJson<String>(json['tireNo']),
+      brand: serializer.fromJson<String?>(json['brand']),
+      specification: serializer.fromJson<String?>(json['specification']),
+      condition: $TiresTable.$convertercondition.fromJson(
+        serializer.fromJson<String>(json['condition']),
+      ),
+      firstUseDate: serializer.fromJson<DateTime?>(json['firstUseDate']),
+      status: $TiresTable.$converterstatus.fromJson(
+        serializer.fromJson<String>(json['status']),
+      ),
+      repairCount: serializer.fromJson<int>(json['repairCount']),
+      wearLevel: $TiresTable.$converterwearLevel.fromJson(
+        serializer.fromJson<String>(json['wearLevel']),
+      ),
+      remark: serializer.fromJson<String?>(json['remark']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'tireNo': serializer.toJson<String>(tireNo),
+      'brand': serializer.toJson<String?>(brand),
+      'specification': serializer.toJson<String?>(specification),
+      'condition': serializer.toJson<String>(
+        $TiresTable.$convertercondition.toJson(condition),
+      ),
+      'firstUseDate': serializer.toJson<DateTime?>(firstUseDate),
+      'status': serializer.toJson<String>(
+        $TiresTable.$converterstatus.toJson(status),
+      ),
+      'repairCount': serializer.toJson<int>(repairCount),
+      'wearLevel': serializer.toJson<String>(
+        $TiresTable.$converterwearLevel.toJson(wearLevel),
+      ),
+      'remark': serializer.toJson<String?>(remark),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+    };
+  }
+
+  Tire copyWith({
+    int? id,
+    String? tireNo,
+    Value<String?> brand = const Value.absent(),
+    Value<String?> specification = const Value.absent(),
+    TireCondition? condition,
+    Value<DateTime?> firstUseDate = const Value.absent(),
+    TireAssetStatus? status,
+    int? repairCount,
+    TireWearLevel? wearLevel,
+    Value<String?> remark = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? isDeleted,
+  }) => Tire(
+    id: id ?? this.id,
+    tireNo: tireNo ?? this.tireNo,
+    brand: brand.present ? brand.value : this.brand,
+    specification: specification.present
+        ? specification.value
+        : this.specification,
+    condition: condition ?? this.condition,
+    firstUseDate: firstUseDate.present ? firstUseDate.value : this.firstUseDate,
+    status: status ?? this.status,
+    repairCount: repairCount ?? this.repairCount,
+    wearLevel: wearLevel ?? this.wearLevel,
+    remark: remark.present ? remark.value : this.remark,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isDeleted: isDeleted ?? this.isDeleted,
+  );
+  Tire copyWithCompanion(TiresCompanion data) {
+    return Tire(
+      id: data.id.present ? data.id.value : this.id,
+      tireNo: data.tireNo.present ? data.tireNo.value : this.tireNo,
+      brand: data.brand.present ? data.brand.value : this.brand,
+      specification: data.specification.present
+          ? data.specification.value
+          : this.specification,
+      condition: data.condition.present ? data.condition.value : this.condition,
+      firstUseDate: data.firstUseDate.present
+          ? data.firstUseDate.value
+          : this.firstUseDate,
+      status: data.status.present ? data.status.value : this.status,
+      repairCount: data.repairCount.present
+          ? data.repairCount.value
+          : this.repairCount,
+      wearLevel: data.wearLevel.present ? data.wearLevel.value : this.wearLevel,
+      remark: data.remark.present ? data.remark.value : this.remark,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Tire(')
+          ..write('id: $id, ')
+          ..write('tireNo: $tireNo, ')
+          ..write('brand: $brand, ')
+          ..write('specification: $specification, ')
+          ..write('condition: $condition, ')
+          ..write('firstUseDate: $firstUseDate, ')
+          ..write('status: $status, ')
+          ..write('repairCount: $repairCount, ')
+          ..write('wearLevel: $wearLevel, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    tireNo,
+    brand,
+    specification,
+    condition,
+    firstUseDate,
+    status,
+    repairCount,
+    wearLevel,
+    remark,
+    createdAt,
+    updatedAt,
+    isDeleted,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Tire &&
+          other.id == this.id &&
+          other.tireNo == this.tireNo &&
+          other.brand == this.brand &&
+          other.specification == this.specification &&
+          other.condition == this.condition &&
+          other.firstUseDate == this.firstUseDate &&
+          other.status == this.status &&
+          other.repairCount == this.repairCount &&
+          other.wearLevel == this.wearLevel &&
+          other.remark == this.remark &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isDeleted == this.isDeleted);
+}
+
+class TiresCompanion extends UpdateCompanion<Tire> {
+  final Value<int> id;
+  final Value<String> tireNo;
+  final Value<String?> brand;
+  final Value<String?> specification;
+  final Value<TireCondition> condition;
+  final Value<DateTime?> firstUseDate;
+  final Value<TireAssetStatus> status;
+  final Value<int> repairCount;
+  final Value<TireWearLevel> wearLevel;
+  final Value<String?> remark;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isDeleted;
+  const TiresCompanion({
+    this.id = const Value.absent(),
+    this.tireNo = const Value.absent(),
+    this.brand = const Value.absent(),
+    this.specification = const Value.absent(),
+    this.condition = const Value.absent(),
+    this.firstUseDate = const Value.absent(),
+    this.status = const Value.absent(),
+    this.repairCount = const Value.absent(),
+    this.wearLevel = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  });
+  TiresCompanion.insert({
+    this.id = const Value.absent(),
+    required String tireNo,
+    this.brand = const Value.absent(),
+    this.specification = const Value.absent(),
+    this.condition = const Value.absent(),
+    this.firstUseDate = const Value.absent(),
+    this.status = const Value.absent(),
+    this.repairCount = const Value.absent(),
+    this.wearLevel = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  }) : tireNo = Value(tireNo);
+  static Insertable<Tire> custom({
+    Expression<int>? id,
+    Expression<String>? tireNo,
+    Expression<String>? brand,
+    Expression<String>? specification,
+    Expression<String>? condition,
+    Expression<DateTime>? firstUseDate,
+    Expression<String>? status,
+    Expression<int>? repairCount,
+    Expression<String>? wearLevel,
+    Expression<String>? remark,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isDeleted,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (tireNo != null) 'tire_no': tireNo,
+      if (brand != null) 'brand': brand,
+      if (specification != null) 'specification': specification,
+      if (condition != null) 'condition': condition,
+      if (firstUseDate != null) 'first_use_date': firstUseDate,
+      if (status != null) 'status': status,
+      if (repairCount != null) 'repair_count': repairCount,
+      if (wearLevel != null) 'wear_level': wearLevel,
+      if (remark != null) 'remark': remark,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+    });
+  }
+
+  TiresCompanion copyWith({
+    Value<int>? id,
+    Value<String>? tireNo,
+    Value<String?>? brand,
+    Value<String?>? specification,
+    Value<TireCondition>? condition,
+    Value<DateTime?>? firstUseDate,
+    Value<TireAssetStatus>? status,
+    Value<int>? repairCount,
+    Value<TireWearLevel>? wearLevel,
+    Value<String?>? remark,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isDeleted,
+  }) {
+    return TiresCompanion(
+      id: id ?? this.id,
+      tireNo: tireNo ?? this.tireNo,
+      brand: brand ?? this.brand,
+      specification: specification ?? this.specification,
+      condition: condition ?? this.condition,
+      firstUseDate: firstUseDate ?? this.firstUseDate,
+      status: status ?? this.status,
+      repairCount: repairCount ?? this.repairCount,
+      wearLevel: wearLevel ?? this.wearLevel,
+      remark: remark ?? this.remark,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (tireNo.present) {
+      map['tire_no'] = Variable<String>(tireNo.value);
+    }
+    if (brand.present) {
+      map['brand'] = Variable<String>(brand.value);
+    }
+    if (specification.present) {
+      map['specification'] = Variable<String>(specification.value);
+    }
+    if (condition.present) {
+      map['condition'] = Variable<String>(
+        $TiresTable.$convertercondition.toSql(condition.value),
+      );
+    }
+    if (firstUseDate.present) {
+      map['first_use_date'] = Variable<DateTime>(firstUseDate.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(
+        $TiresTable.$converterstatus.toSql(status.value),
+      );
+    }
+    if (repairCount.present) {
+      map['repair_count'] = Variable<int>(repairCount.value);
+    }
+    if (wearLevel.present) {
+      map['wear_level'] = Variable<String>(
+        $TiresTable.$converterwearLevel.toSql(wearLevel.value),
+      );
+    }
+    if (remark.present) {
+      map['remark'] = Variable<String>(remark.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TiresCompanion(')
+          ..write('id: $id, ')
+          ..write('tireNo: $tireNo, ')
+          ..write('brand: $brand, ')
+          ..write('specification: $specification, ')
+          ..write('condition: $condition, ')
+          ..write('firstUseDate: $firstUseDate, ')
+          ..write('status: $status, ')
+          ..write('repairCount: $repairCount, ')
+          ..write('wearLevel: $wearLevel, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TireInstallationsTable extends TireInstallations
+    with TableInfo<$TireInstallationsTable, TireInstallation> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TireInstallationsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _tireIdMeta = const VerificationMeta('tireId');
+  @override
+  late final GeneratedColumn<int> tireId = GeneratedColumn<int>(
+    'tire_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES tires (id)',
+    ),
+  );
+  static const VerificationMeta _vehicleIdMeta = const VerificationMeta(
+    'vehicleId',
+  );
+  @override
+  late final GeneratedColumn<int> vehicleId = GeneratedColumn<int>(
+    'vehicle_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES vehicles (id)',
+    ),
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<TirePosition, String> position =
+      GeneratedColumn<String>(
+        'position',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<TirePosition>($TireInstallationsTable.$converterposition);
+  static const VerificationMeta _installDateMeta = const VerificationMeta(
+    'installDate',
+  );
+  @override
+  late final GeneratedColumn<DateTime> installDate = GeneratedColumn<DateTime>(
+    'install_date',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _removeDateMeta = const VerificationMeta(
+    'removeDate',
+  );
+  @override
+  late final GeneratedColumn<DateTime> removeDate = GeneratedColumn<DateTime>(
+    'remove_date',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<TireInstallReason, String>
+  installReason =
+      GeneratedColumn<String>(
+        'install_reason',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<TireInstallReason>(
+        $TireInstallationsTable.$converterinstallReason,
+      );
+  static const VerificationMeta _removeReasonMeta = const VerificationMeta(
+    'removeReason',
+  );
+  @override
+  late final GeneratedColumn<String> removeReason = GeneratedColumn<String>(
+    'remove_reason',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _sourcePositionMeta = const VerificationMeta(
+    'sourcePosition',
+  );
+  @override
+  late final GeneratedColumn<String> sourcePosition = GeneratedColumn<String>(
+    'source_position',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _noteMeta = const VerificationMeta('note');
+  @override
+  late final GeneratedColumn<String> note = GeneratedColumn<String>(
+    'note',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _isActiveMeta = const VerificationMeta(
+    'isActive',
+  );
+  @override
+  late final GeneratedColumn<bool> isActive = GeneratedColumn<bool>(
+    'is_active',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_active" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    tireId,
+    vehicleId,
+    position,
+    installDate,
+    removeDate,
+    installReason,
+    removeReason,
+    sourcePosition,
+    note,
+    isActive,
+    createdAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'tire_installations';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TireInstallation> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('tire_id')) {
+      context.handle(
+        _tireIdMeta,
+        tireId.isAcceptableOrUnknown(data['tire_id']!, _tireIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_tireIdMeta);
+    }
+    if (data.containsKey('vehicle_id')) {
+      context.handle(
+        _vehicleIdMeta,
+        vehicleId.isAcceptableOrUnknown(data['vehicle_id']!, _vehicleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_vehicleIdMeta);
+    }
+    if (data.containsKey('install_date')) {
+      context.handle(
+        _installDateMeta,
+        installDate.isAcceptableOrUnknown(
+          data['install_date']!,
+          _installDateMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_installDateMeta);
+    }
+    if (data.containsKey('remove_date')) {
+      context.handle(
+        _removeDateMeta,
+        removeDate.isAcceptableOrUnknown(data['remove_date']!, _removeDateMeta),
+      );
+    }
+    if (data.containsKey('remove_reason')) {
+      context.handle(
+        _removeReasonMeta,
+        removeReason.isAcceptableOrUnknown(
+          data['remove_reason']!,
+          _removeReasonMeta,
+        ),
+      );
+    }
+    if (data.containsKey('source_position')) {
+      context.handle(
+        _sourcePositionMeta,
+        sourcePosition.isAcceptableOrUnknown(
+          data['source_position']!,
+          _sourcePositionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('note')) {
+      context.handle(
+        _noteMeta,
+        note.isAcceptableOrUnknown(data['note']!, _noteMeta),
+      );
+    }
+    if (data.containsKey('is_active')) {
+      context.handle(
+        _isActiveMeta,
+        isActive.isAcceptableOrUnknown(data['is_active']!, _isActiveMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TireInstallation map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TireInstallation(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      tireId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}tire_id'],
+      )!,
+      vehicleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}vehicle_id'],
+      )!,
+      position: $TireInstallationsTable.$converterposition.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}position'],
+        )!,
+      ),
+      installDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}install_date'],
+      )!,
+      removeDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}remove_date'],
+      ),
+      installReason: $TireInstallationsTable.$converterinstallReason.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}install_reason'],
+        )!,
+      ),
+      removeReason: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}remove_reason'],
+      ),
+      sourcePosition: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}source_position'],
+      ),
+      note: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}note'],
+      ),
+      isActive: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_active'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $TireInstallationsTable createAlias(String alias) {
+    return $TireInstallationsTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<TirePosition, String, String> $converterposition =
+      const EnumNameConverter<TirePosition>(TirePosition.values);
+  static JsonTypeConverter2<TireInstallReason, String, String>
+  $converterinstallReason = const EnumNameConverter<TireInstallReason>(
+    TireInstallReason.values,
+  );
+}
+
+class TireInstallation extends DataClass
+    implements Insertable<TireInstallation> {
+  final int id;
+  final int tireId;
+  final int vehicleId;
+  final TirePosition position;
+  final DateTime installDate;
+  final DateTime? removeDate;
+  final TireInstallReason installReason;
+  final String? removeReason;
+  final String? sourcePosition;
+  final String? note;
+  final bool isActive;
+  final DateTime createdAt;
+  const TireInstallation({
+    required this.id,
+    required this.tireId,
+    required this.vehicleId,
+    required this.position,
+    required this.installDate,
+    this.removeDate,
+    required this.installReason,
+    this.removeReason,
+    this.sourcePosition,
+    this.note,
+    required this.isActive,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['tire_id'] = Variable<int>(tireId);
+    map['vehicle_id'] = Variable<int>(vehicleId);
+    {
+      map['position'] = Variable<String>(
+        $TireInstallationsTable.$converterposition.toSql(position),
+      );
+    }
+    map['install_date'] = Variable<DateTime>(installDate);
+    if (!nullToAbsent || removeDate != null) {
+      map['remove_date'] = Variable<DateTime>(removeDate);
+    }
+    {
+      map['install_reason'] = Variable<String>(
+        $TireInstallationsTable.$converterinstallReason.toSql(installReason),
+      );
+    }
+    if (!nullToAbsent || removeReason != null) {
+      map['remove_reason'] = Variable<String>(removeReason);
+    }
+    if (!nullToAbsent || sourcePosition != null) {
+      map['source_position'] = Variable<String>(sourcePosition);
+    }
+    if (!nullToAbsent || note != null) {
+      map['note'] = Variable<String>(note);
+    }
+    map['is_active'] = Variable<bool>(isActive);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  TireInstallationsCompanion toCompanion(bool nullToAbsent) {
+    return TireInstallationsCompanion(
+      id: Value(id),
+      tireId: Value(tireId),
+      vehicleId: Value(vehicleId),
+      position: Value(position),
+      installDate: Value(installDate),
+      removeDate: removeDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(removeDate),
+      installReason: Value(installReason),
+      removeReason: removeReason == null && nullToAbsent
+          ? const Value.absent()
+          : Value(removeReason),
+      sourcePosition: sourcePosition == null && nullToAbsent
+          ? const Value.absent()
+          : Value(sourcePosition),
+      note: note == null && nullToAbsent ? const Value.absent() : Value(note),
+      isActive: Value(isActive),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory TireInstallation.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TireInstallation(
+      id: serializer.fromJson<int>(json['id']),
+      tireId: serializer.fromJson<int>(json['tireId']),
+      vehicleId: serializer.fromJson<int>(json['vehicleId']),
+      position: $TireInstallationsTable.$converterposition.fromJson(
+        serializer.fromJson<String>(json['position']),
+      ),
+      installDate: serializer.fromJson<DateTime>(json['installDate']),
+      removeDate: serializer.fromJson<DateTime?>(json['removeDate']),
+      installReason: $TireInstallationsTable.$converterinstallReason.fromJson(
+        serializer.fromJson<String>(json['installReason']),
+      ),
+      removeReason: serializer.fromJson<String?>(json['removeReason']),
+      sourcePosition: serializer.fromJson<String?>(json['sourcePosition']),
+      note: serializer.fromJson<String?>(json['note']),
+      isActive: serializer.fromJson<bool>(json['isActive']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'tireId': serializer.toJson<int>(tireId),
+      'vehicleId': serializer.toJson<int>(vehicleId),
+      'position': serializer.toJson<String>(
+        $TireInstallationsTable.$converterposition.toJson(position),
+      ),
+      'installDate': serializer.toJson<DateTime>(installDate),
+      'removeDate': serializer.toJson<DateTime?>(removeDate),
+      'installReason': serializer.toJson<String>(
+        $TireInstallationsTable.$converterinstallReason.toJson(installReason),
+      ),
+      'removeReason': serializer.toJson<String?>(removeReason),
+      'sourcePosition': serializer.toJson<String?>(sourcePosition),
+      'note': serializer.toJson<String?>(note),
+      'isActive': serializer.toJson<bool>(isActive),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  TireInstallation copyWith({
+    int? id,
+    int? tireId,
+    int? vehicleId,
+    TirePosition? position,
+    DateTime? installDate,
+    Value<DateTime?> removeDate = const Value.absent(),
+    TireInstallReason? installReason,
+    Value<String?> removeReason = const Value.absent(),
+    Value<String?> sourcePosition = const Value.absent(),
+    Value<String?> note = const Value.absent(),
+    bool? isActive,
+    DateTime? createdAt,
+  }) => TireInstallation(
+    id: id ?? this.id,
+    tireId: tireId ?? this.tireId,
+    vehicleId: vehicleId ?? this.vehicleId,
+    position: position ?? this.position,
+    installDate: installDate ?? this.installDate,
+    removeDate: removeDate.present ? removeDate.value : this.removeDate,
+    installReason: installReason ?? this.installReason,
+    removeReason: removeReason.present ? removeReason.value : this.removeReason,
+    sourcePosition: sourcePosition.present
+        ? sourcePosition.value
+        : this.sourcePosition,
+    note: note.present ? note.value : this.note,
+    isActive: isActive ?? this.isActive,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  TireInstallation copyWithCompanion(TireInstallationsCompanion data) {
+    return TireInstallation(
+      id: data.id.present ? data.id.value : this.id,
+      tireId: data.tireId.present ? data.tireId.value : this.tireId,
+      vehicleId: data.vehicleId.present ? data.vehicleId.value : this.vehicleId,
+      position: data.position.present ? data.position.value : this.position,
+      installDate: data.installDate.present
+          ? data.installDate.value
+          : this.installDate,
+      removeDate: data.removeDate.present
+          ? data.removeDate.value
+          : this.removeDate,
+      installReason: data.installReason.present
+          ? data.installReason.value
+          : this.installReason,
+      removeReason: data.removeReason.present
+          ? data.removeReason.value
+          : this.removeReason,
+      sourcePosition: data.sourcePosition.present
+          ? data.sourcePosition.value
+          : this.sourcePosition,
+      note: data.note.present ? data.note.value : this.note,
+      isActive: data.isActive.present ? data.isActive.value : this.isActive,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TireInstallation(')
+          ..write('id: $id, ')
+          ..write('tireId: $tireId, ')
+          ..write('vehicleId: $vehicleId, ')
+          ..write('position: $position, ')
+          ..write('installDate: $installDate, ')
+          ..write('removeDate: $removeDate, ')
+          ..write('installReason: $installReason, ')
+          ..write('removeReason: $removeReason, ')
+          ..write('sourcePosition: $sourcePosition, ')
+          ..write('note: $note, ')
+          ..write('isActive: $isActive, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    tireId,
+    vehicleId,
+    position,
+    installDate,
+    removeDate,
+    installReason,
+    removeReason,
+    sourcePosition,
+    note,
+    isActive,
+    createdAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TireInstallation &&
+          other.id == this.id &&
+          other.tireId == this.tireId &&
+          other.vehicleId == this.vehicleId &&
+          other.position == this.position &&
+          other.installDate == this.installDate &&
+          other.removeDate == this.removeDate &&
+          other.installReason == this.installReason &&
+          other.removeReason == this.removeReason &&
+          other.sourcePosition == this.sourcePosition &&
+          other.note == this.note &&
+          other.isActive == this.isActive &&
+          other.createdAt == this.createdAt);
+}
+
+class TireInstallationsCompanion extends UpdateCompanion<TireInstallation> {
+  final Value<int> id;
+  final Value<int> tireId;
+  final Value<int> vehicleId;
+  final Value<TirePosition> position;
+  final Value<DateTime> installDate;
+  final Value<DateTime?> removeDate;
+  final Value<TireInstallReason> installReason;
+  final Value<String?> removeReason;
+  final Value<String?> sourcePosition;
+  final Value<String?> note;
+  final Value<bool> isActive;
+  final Value<DateTime> createdAt;
+  const TireInstallationsCompanion({
+    this.id = const Value.absent(),
+    this.tireId = const Value.absent(),
+    this.vehicleId = const Value.absent(),
+    this.position = const Value.absent(),
+    this.installDate = const Value.absent(),
+    this.removeDate = const Value.absent(),
+    this.installReason = const Value.absent(),
+    this.removeReason = const Value.absent(),
+    this.sourcePosition = const Value.absent(),
+    this.note = const Value.absent(),
+    this.isActive = const Value.absent(),
+    this.createdAt = const Value.absent(),
+  });
+  TireInstallationsCompanion.insert({
+    this.id = const Value.absent(),
+    required int tireId,
+    required int vehicleId,
+    required TirePosition position,
+    required DateTime installDate,
+    this.removeDate = const Value.absent(),
+    required TireInstallReason installReason,
+    this.removeReason = const Value.absent(),
+    this.sourcePosition = const Value.absent(),
+    this.note = const Value.absent(),
+    this.isActive = const Value.absent(),
+    this.createdAt = const Value.absent(),
+  }) : tireId = Value(tireId),
+       vehicleId = Value(vehicleId),
+       position = Value(position),
+       installDate = Value(installDate),
+       installReason = Value(installReason);
+  static Insertable<TireInstallation> custom({
+    Expression<int>? id,
+    Expression<int>? tireId,
+    Expression<int>? vehicleId,
+    Expression<String>? position,
+    Expression<DateTime>? installDate,
+    Expression<DateTime>? removeDate,
+    Expression<String>? installReason,
+    Expression<String>? removeReason,
+    Expression<String>? sourcePosition,
+    Expression<String>? note,
+    Expression<bool>? isActive,
+    Expression<DateTime>? createdAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (tireId != null) 'tire_id': tireId,
+      if (vehicleId != null) 'vehicle_id': vehicleId,
+      if (position != null) 'position': position,
+      if (installDate != null) 'install_date': installDate,
+      if (removeDate != null) 'remove_date': removeDate,
+      if (installReason != null) 'install_reason': installReason,
+      if (removeReason != null) 'remove_reason': removeReason,
+      if (sourcePosition != null) 'source_position': sourcePosition,
+      if (note != null) 'note': note,
+      if (isActive != null) 'is_active': isActive,
+      if (createdAt != null) 'created_at': createdAt,
+    });
+  }
+
+  TireInstallationsCompanion copyWith({
+    Value<int>? id,
+    Value<int>? tireId,
+    Value<int>? vehicleId,
+    Value<TirePosition>? position,
+    Value<DateTime>? installDate,
+    Value<DateTime?>? removeDate,
+    Value<TireInstallReason>? installReason,
+    Value<String?>? removeReason,
+    Value<String?>? sourcePosition,
+    Value<String?>? note,
+    Value<bool>? isActive,
+    Value<DateTime>? createdAt,
+  }) {
+    return TireInstallationsCompanion(
+      id: id ?? this.id,
+      tireId: tireId ?? this.tireId,
+      vehicleId: vehicleId ?? this.vehicleId,
+      position: position ?? this.position,
+      installDate: installDate ?? this.installDate,
+      removeDate: removeDate ?? this.removeDate,
+      installReason: installReason ?? this.installReason,
+      removeReason: removeReason ?? this.removeReason,
+      sourcePosition: sourcePosition ?? this.sourcePosition,
+      note: note ?? this.note,
+      isActive: isActive ?? this.isActive,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (tireId.present) {
+      map['tire_id'] = Variable<int>(tireId.value);
+    }
+    if (vehicleId.present) {
+      map['vehicle_id'] = Variable<int>(vehicleId.value);
+    }
+    if (position.present) {
+      map['position'] = Variable<String>(
+        $TireInstallationsTable.$converterposition.toSql(position.value),
+      );
+    }
+    if (installDate.present) {
+      map['install_date'] = Variable<DateTime>(installDate.value);
+    }
+    if (removeDate.present) {
+      map['remove_date'] = Variable<DateTime>(removeDate.value);
+    }
+    if (installReason.present) {
+      map['install_reason'] = Variable<String>(
+        $TireInstallationsTable.$converterinstallReason.toSql(
+          installReason.value,
+        ),
+      );
+    }
+    if (removeReason.present) {
+      map['remove_reason'] = Variable<String>(removeReason.value);
+    }
+    if (sourcePosition.present) {
+      map['source_position'] = Variable<String>(sourcePosition.value);
+    }
+    if (note.present) {
+      map['note'] = Variable<String>(note.value);
+    }
+    if (isActive.present) {
+      map['is_active'] = Variable<bool>(isActive.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TireInstallationsCompanion(')
+          ..write('id: $id, ')
+          ..write('tireId: $tireId, ')
+          ..write('vehicleId: $vehicleId, ')
+          ..write('position: $position, ')
+          ..write('installDate: $installDate, ')
+          ..write('removeDate: $removeDate, ')
+          ..write('installReason: $installReason, ')
+          ..write('removeReason: $removeReason, ')
+          ..write('sourcePosition: $sourcePosition, ')
+          ..write('note: $note, ')
+          ..write('isActive: $isActive, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TireRepairsTable extends TireRepairs
+    with TableInfo<$TireRepairsTable, TireRepair> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TireRepairsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _tireIdMeta = const VerificationMeta('tireId');
+  @override
+  late final GeneratedColumn<int> tireId = GeneratedColumn<int>(
+    'tire_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES tires (id)',
+    ),
+  );
+  static const VerificationMeta _repairDateMeta = const VerificationMeta(
+    'repairDate',
+  );
+  @override
+  late final GeneratedColumn<DateTime> repairDate = GeneratedColumn<DateTime>(
+    'repair_date',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<TireRepairType, String>
+  repairType = GeneratedColumn<String>(
+    'repair_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  ).withConverter<TireRepairType>($TireRepairsTable.$converterrepairType);
+  static const VerificationMeta _repairPositionMeta = const VerificationMeta(
+    'repairPosition',
+  );
+  @override
+  late final GeneratedColumn<String> repairPosition = GeneratedColumn<String>(
+    'repair_position',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<TireRepairSeverity, String>
+  severity = GeneratedColumn<String>(
+    'severity',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  ).withConverter<TireRepairSeverity>($TireRepairsTable.$converterseverity);
+  static const VerificationMeta _amountCentsMeta = const VerificationMeta(
+    'amountCents',
+  );
+  @override
+  late final GeneratedColumn<int> amountCents = GeneratedColumn<int>(
+    'amount_cents',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _vendorMeta = const VerificationMeta('vendor');
+  @override
+  late final GeneratedColumn<String> vendor = GeneratedColumn<String>(
+    'vendor',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _remarkMeta = const VerificationMeta('remark');
+  @override
+  late final GeneratedColumn<String> remark = GeneratedColumn<String>(
+    'remark',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    tireId,
+    repairDate,
+    repairType,
+    repairPosition,
+    severity,
+    amountCents,
+    vendor,
+    remark,
+    createdAt,
+    isDeleted,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'tire_repairs';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TireRepair> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('tire_id')) {
+      context.handle(
+        _tireIdMeta,
+        tireId.isAcceptableOrUnknown(data['tire_id']!, _tireIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_tireIdMeta);
+    }
+    if (data.containsKey('repair_date')) {
+      context.handle(
+        _repairDateMeta,
+        repairDate.isAcceptableOrUnknown(data['repair_date']!, _repairDateMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_repairDateMeta);
+    }
+    if (data.containsKey('repair_position')) {
+      context.handle(
+        _repairPositionMeta,
+        repairPosition.isAcceptableOrUnknown(
+          data['repair_position']!,
+          _repairPositionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('amount_cents')) {
+      context.handle(
+        _amountCentsMeta,
+        amountCents.isAcceptableOrUnknown(
+          data['amount_cents']!,
+          _amountCentsMeta,
+        ),
+      );
+    }
+    if (data.containsKey('vendor')) {
+      context.handle(
+        _vendorMeta,
+        vendor.isAcceptableOrUnknown(data['vendor']!, _vendorMeta),
+      );
+    }
+    if (data.containsKey('remark')) {
+      context.handle(
+        _remarkMeta,
+        remark.isAcceptableOrUnknown(data['remark']!, _remarkMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TireRepair map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TireRepair(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      tireId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}tire_id'],
+      )!,
+      repairDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}repair_date'],
+      )!,
+      repairType: $TireRepairsTable.$converterrepairType.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}repair_type'],
+        )!,
+      ),
+      repairPosition: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}repair_position'],
+      ),
+      severity: $TireRepairsTable.$converterseverity.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}severity'],
+        )!,
+      ),
+      amountCents: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}amount_cents'],
+      )!,
+      vendor: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}vendor'],
+      ),
+      remark: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}remark'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
+    );
+  }
+
+  @override
+  $TireRepairsTable createAlias(String alias) {
+    return $TireRepairsTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<TireRepairType, String, String>
+  $converterrepairType = const EnumNameConverter<TireRepairType>(
+    TireRepairType.values,
+  );
+  static JsonTypeConverter2<TireRepairSeverity, String, String>
+  $converterseverity = const EnumNameConverter<TireRepairSeverity>(
+    TireRepairSeverity.values,
+  );
+}
+
+class TireRepair extends DataClass implements Insertable<TireRepair> {
+  final int id;
+  final int tireId;
+  final DateTime repairDate;
+  final TireRepairType repairType;
+  final String? repairPosition;
+  final TireRepairSeverity severity;
+  final int amountCents;
+  final String? vendor;
+  final String? remark;
+  final DateTime createdAt;
+  final bool isDeleted;
+  const TireRepair({
+    required this.id,
+    required this.tireId,
+    required this.repairDate,
+    required this.repairType,
+    this.repairPosition,
+    required this.severity,
+    required this.amountCents,
+    this.vendor,
+    this.remark,
+    required this.createdAt,
+    required this.isDeleted,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['tire_id'] = Variable<int>(tireId);
+    map['repair_date'] = Variable<DateTime>(repairDate);
+    {
+      map['repair_type'] = Variable<String>(
+        $TireRepairsTable.$converterrepairType.toSql(repairType),
+      );
+    }
+    if (!nullToAbsent || repairPosition != null) {
+      map['repair_position'] = Variable<String>(repairPosition);
+    }
+    {
+      map['severity'] = Variable<String>(
+        $TireRepairsTable.$converterseverity.toSql(severity),
+      );
+    }
+    map['amount_cents'] = Variable<int>(amountCents);
+    if (!nullToAbsent || vendor != null) {
+      map['vendor'] = Variable<String>(vendor);
+    }
+    if (!nullToAbsent || remark != null) {
+      map['remark'] = Variable<String>(remark);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    return map;
+  }
+
+  TireRepairsCompanion toCompanion(bool nullToAbsent) {
+    return TireRepairsCompanion(
+      id: Value(id),
+      tireId: Value(tireId),
+      repairDate: Value(repairDate),
+      repairType: Value(repairType),
+      repairPosition: repairPosition == null && nullToAbsent
+          ? const Value.absent()
+          : Value(repairPosition),
+      severity: Value(severity),
+      amountCents: Value(amountCents),
+      vendor: vendor == null && nullToAbsent
+          ? const Value.absent()
+          : Value(vendor),
+      remark: remark == null && nullToAbsent
+          ? const Value.absent()
+          : Value(remark),
+      createdAt: Value(createdAt),
+      isDeleted: Value(isDeleted),
+    );
+  }
+
+  factory TireRepair.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TireRepair(
+      id: serializer.fromJson<int>(json['id']),
+      tireId: serializer.fromJson<int>(json['tireId']),
+      repairDate: serializer.fromJson<DateTime>(json['repairDate']),
+      repairType: $TireRepairsTable.$converterrepairType.fromJson(
+        serializer.fromJson<String>(json['repairType']),
+      ),
+      repairPosition: serializer.fromJson<String?>(json['repairPosition']),
+      severity: $TireRepairsTable.$converterseverity.fromJson(
+        serializer.fromJson<String>(json['severity']),
+      ),
+      amountCents: serializer.fromJson<int>(json['amountCents']),
+      vendor: serializer.fromJson<String?>(json['vendor']),
+      remark: serializer.fromJson<String?>(json['remark']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'tireId': serializer.toJson<int>(tireId),
+      'repairDate': serializer.toJson<DateTime>(repairDate),
+      'repairType': serializer.toJson<String>(
+        $TireRepairsTable.$converterrepairType.toJson(repairType),
+      ),
+      'repairPosition': serializer.toJson<String?>(repairPosition),
+      'severity': serializer.toJson<String>(
+        $TireRepairsTable.$converterseverity.toJson(severity),
+      ),
+      'amountCents': serializer.toJson<int>(amountCents),
+      'vendor': serializer.toJson<String?>(vendor),
+      'remark': serializer.toJson<String?>(remark),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+    };
+  }
+
+  TireRepair copyWith({
+    int? id,
+    int? tireId,
+    DateTime? repairDate,
+    TireRepairType? repairType,
+    Value<String?> repairPosition = const Value.absent(),
+    TireRepairSeverity? severity,
+    int? amountCents,
+    Value<String?> vendor = const Value.absent(),
+    Value<String?> remark = const Value.absent(),
+    DateTime? createdAt,
+    bool? isDeleted,
+  }) => TireRepair(
+    id: id ?? this.id,
+    tireId: tireId ?? this.tireId,
+    repairDate: repairDate ?? this.repairDate,
+    repairType: repairType ?? this.repairType,
+    repairPosition: repairPosition.present
+        ? repairPosition.value
+        : this.repairPosition,
+    severity: severity ?? this.severity,
+    amountCents: amountCents ?? this.amountCents,
+    vendor: vendor.present ? vendor.value : this.vendor,
+    remark: remark.present ? remark.value : this.remark,
+    createdAt: createdAt ?? this.createdAt,
+    isDeleted: isDeleted ?? this.isDeleted,
+  );
+  TireRepair copyWithCompanion(TireRepairsCompanion data) {
+    return TireRepair(
+      id: data.id.present ? data.id.value : this.id,
+      tireId: data.tireId.present ? data.tireId.value : this.tireId,
+      repairDate: data.repairDate.present
+          ? data.repairDate.value
+          : this.repairDate,
+      repairType: data.repairType.present
+          ? data.repairType.value
+          : this.repairType,
+      repairPosition: data.repairPosition.present
+          ? data.repairPosition.value
+          : this.repairPosition,
+      severity: data.severity.present ? data.severity.value : this.severity,
+      amountCents: data.amountCents.present
+          ? data.amountCents.value
+          : this.amountCents,
+      vendor: data.vendor.present ? data.vendor.value : this.vendor,
+      remark: data.remark.present ? data.remark.value : this.remark,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TireRepair(')
+          ..write('id: $id, ')
+          ..write('tireId: $tireId, ')
+          ..write('repairDate: $repairDate, ')
+          ..write('repairType: $repairType, ')
+          ..write('repairPosition: $repairPosition, ')
+          ..write('severity: $severity, ')
+          ..write('amountCents: $amountCents, ')
+          ..write('vendor: $vendor, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    tireId,
+    repairDate,
+    repairType,
+    repairPosition,
+    severity,
+    amountCents,
+    vendor,
+    remark,
+    createdAt,
+    isDeleted,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TireRepair &&
+          other.id == this.id &&
+          other.tireId == this.tireId &&
+          other.repairDate == this.repairDate &&
+          other.repairType == this.repairType &&
+          other.repairPosition == this.repairPosition &&
+          other.severity == this.severity &&
+          other.amountCents == this.amountCents &&
+          other.vendor == this.vendor &&
+          other.remark == this.remark &&
+          other.createdAt == this.createdAt &&
+          other.isDeleted == this.isDeleted);
+}
+
+class TireRepairsCompanion extends UpdateCompanion<TireRepair> {
+  final Value<int> id;
+  final Value<int> tireId;
+  final Value<DateTime> repairDate;
+  final Value<TireRepairType> repairType;
+  final Value<String?> repairPosition;
+  final Value<TireRepairSeverity> severity;
+  final Value<int> amountCents;
+  final Value<String?> vendor;
+  final Value<String?> remark;
+  final Value<DateTime> createdAt;
+  final Value<bool> isDeleted;
+  const TireRepairsCompanion({
+    this.id = const Value.absent(),
+    this.tireId = const Value.absent(),
+    this.repairDate = const Value.absent(),
+    this.repairType = const Value.absent(),
+    this.repairPosition = const Value.absent(),
+    this.severity = const Value.absent(),
+    this.amountCents = const Value.absent(),
+    this.vendor = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  });
+  TireRepairsCompanion.insert({
+    this.id = const Value.absent(),
+    required int tireId,
+    required DateTime repairDate,
+    required TireRepairType repairType,
+    this.repairPosition = const Value.absent(),
+    required TireRepairSeverity severity,
+    this.amountCents = const Value.absent(),
+    this.vendor = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  }) : tireId = Value(tireId),
+       repairDate = Value(repairDate),
+       repairType = Value(repairType),
+       severity = Value(severity);
+  static Insertable<TireRepair> custom({
+    Expression<int>? id,
+    Expression<int>? tireId,
+    Expression<DateTime>? repairDate,
+    Expression<String>? repairType,
+    Expression<String>? repairPosition,
+    Expression<String>? severity,
+    Expression<int>? amountCents,
+    Expression<String>? vendor,
+    Expression<String>? remark,
+    Expression<DateTime>? createdAt,
+    Expression<bool>? isDeleted,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (tireId != null) 'tire_id': tireId,
+      if (repairDate != null) 'repair_date': repairDate,
+      if (repairType != null) 'repair_type': repairType,
+      if (repairPosition != null) 'repair_position': repairPosition,
+      if (severity != null) 'severity': severity,
+      if (amountCents != null) 'amount_cents': amountCents,
+      if (vendor != null) 'vendor': vendor,
+      if (remark != null) 'remark': remark,
+      if (createdAt != null) 'created_at': createdAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+    });
+  }
+
+  TireRepairsCompanion copyWith({
+    Value<int>? id,
+    Value<int>? tireId,
+    Value<DateTime>? repairDate,
+    Value<TireRepairType>? repairType,
+    Value<String?>? repairPosition,
+    Value<TireRepairSeverity>? severity,
+    Value<int>? amountCents,
+    Value<String?>? vendor,
+    Value<String?>? remark,
+    Value<DateTime>? createdAt,
+    Value<bool>? isDeleted,
+  }) {
+    return TireRepairsCompanion(
+      id: id ?? this.id,
+      tireId: tireId ?? this.tireId,
+      repairDate: repairDate ?? this.repairDate,
+      repairType: repairType ?? this.repairType,
+      repairPosition: repairPosition ?? this.repairPosition,
+      severity: severity ?? this.severity,
+      amountCents: amountCents ?? this.amountCents,
+      vendor: vendor ?? this.vendor,
+      remark: remark ?? this.remark,
+      createdAt: createdAt ?? this.createdAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (tireId.present) {
+      map['tire_id'] = Variable<int>(tireId.value);
+    }
+    if (repairDate.present) {
+      map['repair_date'] = Variable<DateTime>(repairDate.value);
+    }
+    if (repairType.present) {
+      map['repair_type'] = Variable<String>(
+        $TireRepairsTable.$converterrepairType.toSql(repairType.value),
+      );
+    }
+    if (repairPosition.present) {
+      map['repair_position'] = Variable<String>(repairPosition.value);
+    }
+    if (severity.present) {
+      map['severity'] = Variable<String>(
+        $TireRepairsTable.$converterseverity.toSql(severity.value),
+      );
+    }
+    if (amountCents.present) {
+      map['amount_cents'] = Variable<int>(amountCents.value);
+    }
+    if (vendor.present) {
+      map['vendor'] = Variable<String>(vendor.value);
+    }
+    if (remark.present) {
+      map['remark'] = Variable<String>(remark.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TireRepairsCompanion(')
+          ..write('id: $id, ')
+          ..write('tireId: $tireId, ')
+          ..write('repairDate: $repairDate, ')
+          ..write('repairType: $repairType, ')
+          ..write('repairPosition: $repairPosition, ')
+          ..write('severity: $severity, ')
+          ..write('amountCents: $amountCents, ')
+          ..write('vendor: $vendor, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $RepairOrdersTable extends RepairOrders
+    with TableInfo<$RepairOrdersTable, RepairOrder> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $RepairOrdersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _repairNoMeta = const VerificationMeta(
+    'repairNo',
+  );
+  @override
+  late final GeneratedColumn<String> repairNo = GeneratedColumn<String>(
+    'repair_no',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
+  );
+  static const VerificationMeta _vehicleIdMeta = const VerificationMeta(
+    'vehicleId',
+  );
+  @override
+  late final GeneratedColumn<int> vehicleId = GeneratedColumn<int>(
+    'vehicle_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES vehicles (id)',
+    ),
+  );
+  static const VerificationMeta _reportDateMeta = const VerificationMeta(
+    'reportDate',
+  );
+  @override
+  late final GeneratedColumn<DateTime> reportDate = GeneratedColumn<DateTime>(
+    'report_date',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _faultFoundAtMeta = const VerificationMeta(
+    'faultFoundAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> faultFoundAt = GeneratedColumn<DateTime>(
+    'fault_found_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _symptomMeta = const VerificationMeta(
+    'symptom',
+  );
+  @override
+  late final GeneratedColumn<String> symptom = GeneratedColumn<String>(
+    'symptom',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _causeMeta = const VerificationMeta('cause');
+  @override
+  late final GeneratedColumn<String> cause = GeneratedColumn<String>(
+    'cause',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _projectMeta = const VerificationMeta(
+    'project',
+  );
+  @override
+  late final GeneratedColumn<String> project = GeneratedColumn<String>(
+    'project',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _departAtMeta = const VerificationMeta(
+    'departAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> departAt = GeneratedColumn<DateTime>(
+    'depart_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _vendorMeta = const VerificationMeta('vendor');
+  @override
+  late final GeneratedColumn<String> vendor = GeneratedColumn<String>(
+    'vendor',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _managerMeta = const VerificationMeta(
+    'manager',
+  );
+  @override
+  late final GeneratedColumn<String> manager = GeneratedColumn<String>(
+    'manager',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _reportedAmountCentsMeta =
+      const VerificationMeta('reportedAmountCents');
+  @override
+  late final GeneratedColumn<int> reportedAmountCents = GeneratedColumn<int>(
+    'reported_amount_cents',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _actualAmountCentsMeta = const VerificationMeta(
+    'actualAmountCents',
+  );
+  @override
+  late final GeneratedColumn<int> actualAmountCents = GeneratedColumn<int>(
+    'actual_amount_cents',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<RepairTicketStatus, String>
+  ticketStatus =
+      GeneratedColumn<String>(
+        'ticket_status',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<RepairTicketStatus>(
+        $RepairOrdersTable.$converterticketStatus,
+      );
+  @override
+  late final GeneratedColumnWithTypeConverter<VehicleRepairStatus, String>
+  status = GeneratedColumn<String>(
+    'status',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('reported'),
+  ).withConverter<VehicleRepairStatus>($RepairOrdersTable.$converterstatus);
+  static const VerificationMeta _completedAtMeta = const VerificationMeta(
+    'completedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> completedAt = GeneratedColumn<DateTime>(
+    'completed_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _recordTextMeta = const VerificationMeta(
+    'recordText',
+  );
+  @override
+  late final GeneratedColumn<String> recordText = GeneratedColumn<String>(
+    'record_text',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _remarkMeta = const VerificationMeta('remark');
+  @override
+  late final GeneratedColumn<String> remark = GeneratedColumn<String>(
+    'remark',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    repairNo,
+    vehicleId,
+    reportDate,
+    faultFoundAt,
+    symptom,
+    cause,
+    project,
+    departAt,
+    vendor,
+    manager,
+    reportedAmountCents,
+    actualAmountCents,
+    ticketStatus,
+    status,
+    completedAt,
+    recordText,
+    remark,
+    createdAt,
+    updatedAt,
+    isDeleted,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'repair_orders';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<RepairOrder> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('repair_no')) {
+      context.handle(
+        _repairNoMeta,
+        repairNo.isAcceptableOrUnknown(data['repair_no']!, _repairNoMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_repairNoMeta);
+    }
+    if (data.containsKey('vehicle_id')) {
+      context.handle(
+        _vehicleIdMeta,
+        vehicleId.isAcceptableOrUnknown(data['vehicle_id']!, _vehicleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_vehicleIdMeta);
+    }
+    if (data.containsKey('report_date')) {
+      context.handle(
+        _reportDateMeta,
+        reportDate.isAcceptableOrUnknown(data['report_date']!, _reportDateMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_reportDateMeta);
+    }
+    if (data.containsKey('fault_found_at')) {
+      context.handle(
+        _faultFoundAtMeta,
+        faultFoundAt.isAcceptableOrUnknown(
+          data['fault_found_at']!,
+          _faultFoundAtMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_faultFoundAtMeta);
+    }
+    if (data.containsKey('symptom')) {
+      context.handle(
+        _symptomMeta,
+        symptom.isAcceptableOrUnknown(data['symptom']!, _symptomMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_symptomMeta);
+    }
+    if (data.containsKey('cause')) {
+      context.handle(
+        _causeMeta,
+        cause.isAcceptableOrUnknown(data['cause']!, _causeMeta),
+      );
+    }
+    if (data.containsKey('project')) {
+      context.handle(
+        _projectMeta,
+        project.isAcceptableOrUnknown(data['project']!, _projectMeta),
+      );
+    }
+    if (data.containsKey('depart_at')) {
+      context.handle(
+        _departAtMeta,
+        departAt.isAcceptableOrUnknown(data['depart_at']!, _departAtMeta),
+      );
+    }
+    if (data.containsKey('vendor')) {
+      context.handle(
+        _vendorMeta,
+        vendor.isAcceptableOrUnknown(data['vendor']!, _vendorMeta),
+      );
+    }
+    if (data.containsKey('manager')) {
+      context.handle(
+        _managerMeta,
+        manager.isAcceptableOrUnknown(data['manager']!, _managerMeta),
+      );
+    }
+    if (data.containsKey('reported_amount_cents')) {
+      context.handle(
+        _reportedAmountCentsMeta,
+        reportedAmountCents.isAcceptableOrUnknown(
+          data['reported_amount_cents']!,
+          _reportedAmountCentsMeta,
+        ),
+      );
+    }
+    if (data.containsKey('actual_amount_cents')) {
+      context.handle(
+        _actualAmountCentsMeta,
+        actualAmountCents.isAcceptableOrUnknown(
+          data['actual_amount_cents']!,
+          _actualAmountCentsMeta,
+        ),
+      );
+    }
+    if (data.containsKey('completed_at')) {
+      context.handle(
+        _completedAtMeta,
+        completedAt.isAcceptableOrUnknown(
+          data['completed_at']!,
+          _completedAtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('record_text')) {
+      context.handle(
+        _recordTextMeta,
+        recordText.isAcceptableOrUnknown(data['record_text']!, _recordTextMeta),
+      );
+    }
+    if (data.containsKey('remark')) {
+      context.handle(
+        _remarkMeta,
+        remark.isAcceptableOrUnknown(data['remark']!, _remarkMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  RepairOrder map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return RepairOrder(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      repairNo: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}repair_no'],
+      )!,
+      vehicleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}vehicle_id'],
+      )!,
+      reportDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}report_date'],
+      )!,
+      faultFoundAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}fault_found_at'],
+      )!,
+      symptom: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}symptom'],
+      )!,
+      cause: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}cause'],
+      ),
+      project: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}project'],
+      ),
+      departAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}depart_at'],
+      ),
+      vendor: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}vendor'],
+      ),
+      manager: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}manager'],
+      ),
+      reportedAmountCents: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}reported_amount_cents'],
+      )!,
+      actualAmountCents: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}actual_amount_cents'],
+      )!,
+      ticketStatus: $RepairOrdersTable.$converterticketStatus.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}ticket_status'],
+        )!,
+      ),
+      status: $RepairOrdersTable.$converterstatus.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}status'],
+        )!,
+      ),
+      completedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}completed_at'],
+      ),
+      recordText: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}record_text'],
+      ),
+      remark: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}remark'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
+    );
+  }
+
+  @override
+  $RepairOrdersTable createAlias(String alias) {
+    return $RepairOrdersTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<RepairTicketStatus, String, String>
+  $converterticketStatus = const EnumNameConverter<RepairTicketStatus>(
+    RepairTicketStatus.values,
+  );
+  static JsonTypeConverter2<VehicleRepairStatus, String, String>
+  $converterstatus = const EnumNameConverter<VehicleRepairStatus>(
+    VehicleRepairStatus.values,
+  );
+}
+
+class RepairOrder extends DataClass implements Insertable<RepairOrder> {
+  final int id;
+  final String repairNo;
+  final int vehicleId;
+  final DateTime reportDate;
+  final DateTime faultFoundAt;
+  final String symptom;
+  final String? cause;
+  final String? project;
+  final DateTime? departAt;
+  final String? vendor;
+  final String? manager;
+  final int reportedAmountCents;
+  final int actualAmountCents;
+  final RepairTicketStatus ticketStatus;
+  final VehicleRepairStatus status;
+  final DateTime? completedAt;
+  final String? recordText;
+  final String? remark;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final bool isDeleted;
+  const RepairOrder({
+    required this.id,
+    required this.repairNo,
+    required this.vehicleId,
+    required this.reportDate,
+    required this.faultFoundAt,
+    required this.symptom,
+    this.cause,
+    this.project,
+    this.departAt,
+    this.vendor,
+    this.manager,
+    required this.reportedAmountCents,
+    required this.actualAmountCents,
+    required this.ticketStatus,
+    required this.status,
+    this.completedAt,
+    this.recordText,
+    this.remark,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isDeleted,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['repair_no'] = Variable<String>(repairNo);
+    map['vehicle_id'] = Variable<int>(vehicleId);
+    map['report_date'] = Variable<DateTime>(reportDate);
+    map['fault_found_at'] = Variable<DateTime>(faultFoundAt);
+    map['symptom'] = Variable<String>(symptom);
+    if (!nullToAbsent || cause != null) {
+      map['cause'] = Variable<String>(cause);
+    }
+    if (!nullToAbsent || project != null) {
+      map['project'] = Variable<String>(project);
+    }
+    if (!nullToAbsent || departAt != null) {
+      map['depart_at'] = Variable<DateTime>(departAt);
+    }
+    if (!nullToAbsent || vendor != null) {
+      map['vendor'] = Variable<String>(vendor);
+    }
+    if (!nullToAbsent || manager != null) {
+      map['manager'] = Variable<String>(manager);
+    }
+    map['reported_amount_cents'] = Variable<int>(reportedAmountCents);
+    map['actual_amount_cents'] = Variable<int>(actualAmountCents);
+    {
+      map['ticket_status'] = Variable<String>(
+        $RepairOrdersTable.$converterticketStatus.toSql(ticketStatus),
+      );
+    }
+    {
+      map['status'] = Variable<String>(
+        $RepairOrdersTable.$converterstatus.toSql(status),
+      );
+    }
+    if (!nullToAbsent || completedAt != null) {
+      map['completed_at'] = Variable<DateTime>(completedAt);
+    }
+    if (!nullToAbsent || recordText != null) {
+      map['record_text'] = Variable<String>(recordText);
+    }
+    if (!nullToAbsent || remark != null) {
+      map['remark'] = Variable<String>(remark);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    return map;
+  }
+
+  RepairOrdersCompanion toCompanion(bool nullToAbsent) {
+    return RepairOrdersCompanion(
+      id: Value(id),
+      repairNo: Value(repairNo),
+      vehicleId: Value(vehicleId),
+      reportDate: Value(reportDate),
+      faultFoundAt: Value(faultFoundAt),
+      symptom: Value(symptom),
+      cause: cause == null && nullToAbsent
+          ? const Value.absent()
+          : Value(cause),
+      project: project == null && nullToAbsent
+          ? const Value.absent()
+          : Value(project),
+      departAt: departAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(departAt),
+      vendor: vendor == null && nullToAbsent
+          ? const Value.absent()
+          : Value(vendor),
+      manager: manager == null && nullToAbsent
+          ? const Value.absent()
+          : Value(manager),
+      reportedAmountCents: Value(reportedAmountCents),
+      actualAmountCents: Value(actualAmountCents),
+      ticketStatus: Value(ticketStatus),
+      status: Value(status),
+      completedAt: completedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(completedAt),
+      recordText: recordText == null && nullToAbsent
+          ? const Value.absent()
+          : Value(recordText),
+      remark: remark == null && nullToAbsent
+          ? const Value.absent()
+          : Value(remark),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isDeleted: Value(isDeleted),
+    );
+  }
+
+  factory RepairOrder.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return RepairOrder(
+      id: serializer.fromJson<int>(json['id']),
+      repairNo: serializer.fromJson<String>(json['repairNo']),
+      vehicleId: serializer.fromJson<int>(json['vehicleId']),
+      reportDate: serializer.fromJson<DateTime>(json['reportDate']),
+      faultFoundAt: serializer.fromJson<DateTime>(json['faultFoundAt']),
+      symptom: serializer.fromJson<String>(json['symptom']),
+      cause: serializer.fromJson<String?>(json['cause']),
+      project: serializer.fromJson<String?>(json['project']),
+      departAt: serializer.fromJson<DateTime?>(json['departAt']),
+      vendor: serializer.fromJson<String?>(json['vendor']),
+      manager: serializer.fromJson<String?>(json['manager']),
+      reportedAmountCents: serializer.fromJson<int>(
+        json['reportedAmountCents'],
+      ),
+      actualAmountCents: serializer.fromJson<int>(json['actualAmountCents']),
+      ticketStatus: $RepairOrdersTable.$converterticketStatus.fromJson(
+        serializer.fromJson<String>(json['ticketStatus']),
+      ),
+      status: $RepairOrdersTable.$converterstatus.fromJson(
+        serializer.fromJson<String>(json['status']),
+      ),
+      completedAt: serializer.fromJson<DateTime?>(json['completedAt']),
+      recordText: serializer.fromJson<String?>(json['recordText']),
+      remark: serializer.fromJson<String?>(json['remark']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'repairNo': serializer.toJson<String>(repairNo),
+      'vehicleId': serializer.toJson<int>(vehicleId),
+      'reportDate': serializer.toJson<DateTime>(reportDate),
+      'faultFoundAt': serializer.toJson<DateTime>(faultFoundAt),
+      'symptom': serializer.toJson<String>(symptom),
+      'cause': serializer.toJson<String?>(cause),
+      'project': serializer.toJson<String?>(project),
+      'departAt': serializer.toJson<DateTime?>(departAt),
+      'vendor': serializer.toJson<String?>(vendor),
+      'manager': serializer.toJson<String?>(manager),
+      'reportedAmountCents': serializer.toJson<int>(reportedAmountCents),
+      'actualAmountCents': serializer.toJson<int>(actualAmountCents),
+      'ticketStatus': serializer.toJson<String>(
+        $RepairOrdersTable.$converterticketStatus.toJson(ticketStatus),
+      ),
+      'status': serializer.toJson<String>(
+        $RepairOrdersTable.$converterstatus.toJson(status),
+      ),
+      'completedAt': serializer.toJson<DateTime?>(completedAt),
+      'recordText': serializer.toJson<String?>(recordText),
+      'remark': serializer.toJson<String?>(remark),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+    };
+  }
+
+  RepairOrder copyWith({
+    int? id,
+    String? repairNo,
+    int? vehicleId,
+    DateTime? reportDate,
+    DateTime? faultFoundAt,
+    String? symptom,
+    Value<String?> cause = const Value.absent(),
+    Value<String?> project = const Value.absent(),
+    Value<DateTime?> departAt = const Value.absent(),
+    Value<String?> vendor = const Value.absent(),
+    Value<String?> manager = const Value.absent(),
+    int? reportedAmountCents,
+    int? actualAmountCents,
+    RepairTicketStatus? ticketStatus,
+    VehicleRepairStatus? status,
+    Value<DateTime?> completedAt = const Value.absent(),
+    Value<String?> recordText = const Value.absent(),
+    Value<String?> remark = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? isDeleted,
+  }) => RepairOrder(
+    id: id ?? this.id,
+    repairNo: repairNo ?? this.repairNo,
+    vehicleId: vehicleId ?? this.vehicleId,
+    reportDate: reportDate ?? this.reportDate,
+    faultFoundAt: faultFoundAt ?? this.faultFoundAt,
+    symptom: symptom ?? this.symptom,
+    cause: cause.present ? cause.value : this.cause,
+    project: project.present ? project.value : this.project,
+    departAt: departAt.present ? departAt.value : this.departAt,
+    vendor: vendor.present ? vendor.value : this.vendor,
+    manager: manager.present ? manager.value : this.manager,
+    reportedAmountCents: reportedAmountCents ?? this.reportedAmountCents,
+    actualAmountCents: actualAmountCents ?? this.actualAmountCents,
+    ticketStatus: ticketStatus ?? this.ticketStatus,
+    status: status ?? this.status,
+    completedAt: completedAt.present ? completedAt.value : this.completedAt,
+    recordText: recordText.present ? recordText.value : this.recordText,
+    remark: remark.present ? remark.value : this.remark,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isDeleted: isDeleted ?? this.isDeleted,
+  );
+  RepairOrder copyWithCompanion(RepairOrdersCompanion data) {
+    return RepairOrder(
+      id: data.id.present ? data.id.value : this.id,
+      repairNo: data.repairNo.present ? data.repairNo.value : this.repairNo,
+      vehicleId: data.vehicleId.present ? data.vehicleId.value : this.vehicleId,
+      reportDate: data.reportDate.present
+          ? data.reportDate.value
+          : this.reportDate,
+      faultFoundAt: data.faultFoundAt.present
+          ? data.faultFoundAt.value
+          : this.faultFoundAt,
+      symptom: data.symptom.present ? data.symptom.value : this.symptom,
+      cause: data.cause.present ? data.cause.value : this.cause,
+      project: data.project.present ? data.project.value : this.project,
+      departAt: data.departAt.present ? data.departAt.value : this.departAt,
+      vendor: data.vendor.present ? data.vendor.value : this.vendor,
+      manager: data.manager.present ? data.manager.value : this.manager,
+      reportedAmountCents: data.reportedAmountCents.present
+          ? data.reportedAmountCents.value
+          : this.reportedAmountCents,
+      actualAmountCents: data.actualAmountCents.present
+          ? data.actualAmountCents.value
+          : this.actualAmountCents,
+      ticketStatus: data.ticketStatus.present
+          ? data.ticketStatus.value
+          : this.ticketStatus,
+      status: data.status.present ? data.status.value : this.status,
+      completedAt: data.completedAt.present
+          ? data.completedAt.value
+          : this.completedAt,
+      recordText: data.recordText.present
+          ? data.recordText.value
+          : this.recordText,
+      remark: data.remark.present ? data.remark.value : this.remark,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RepairOrder(')
+          ..write('id: $id, ')
+          ..write('repairNo: $repairNo, ')
+          ..write('vehicleId: $vehicleId, ')
+          ..write('reportDate: $reportDate, ')
+          ..write('faultFoundAt: $faultFoundAt, ')
+          ..write('symptom: $symptom, ')
+          ..write('cause: $cause, ')
+          ..write('project: $project, ')
+          ..write('departAt: $departAt, ')
+          ..write('vendor: $vendor, ')
+          ..write('manager: $manager, ')
+          ..write('reportedAmountCents: $reportedAmountCents, ')
+          ..write('actualAmountCents: $actualAmountCents, ')
+          ..write('ticketStatus: $ticketStatus, ')
+          ..write('status: $status, ')
+          ..write('completedAt: $completedAt, ')
+          ..write('recordText: $recordText, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+    repairNo,
+    vehicleId,
+    reportDate,
+    faultFoundAt,
+    symptom,
+    cause,
+    project,
+    departAt,
+    vendor,
+    manager,
+    reportedAmountCents,
+    actualAmountCents,
+    ticketStatus,
+    status,
+    completedAt,
+    recordText,
+    remark,
+    createdAt,
+    updatedAt,
+    isDeleted,
+  ]);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is RepairOrder &&
+          other.id == this.id &&
+          other.repairNo == this.repairNo &&
+          other.vehicleId == this.vehicleId &&
+          other.reportDate == this.reportDate &&
+          other.faultFoundAt == this.faultFoundAt &&
+          other.symptom == this.symptom &&
+          other.cause == this.cause &&
+          other.project == this.project &&
+          other.departAt == this.departAt &&
+          other.vendor == this.vendor &&
+          other.manager == this.manager &&
+          other.reportedAmountCents == this.reportedAmountCents &&
+          other.actualAmountCents == this.actualAmountCents &&
+          other.ticketStatus == this.ticketStatus &&
+          other.status == this.status &&
+          other.completedAt == this.completedAt &&
+          other.recordText == this.recordText &&
+          other.remark == this.remark &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isDeleted == this.isDeleted);
+}
+
+class RepairOrdersCompanion extends UpdateCompanion<RepairOrder> {
+  final Value<int> id;
+  final Value<String> repairNo;
+  final Value<int> vehicleId;
+  final Value<DateTime> reportDate;
+  final Value<DateTime> faultFoundAt;
+  final Value<String> symptom;
+  final Value<String?> cause;
+  final Value<String?> project;
+  final Value<DateTime?> departAt;
+  final Value<String?> vendor;
+  final Value<String?> manager;
+  final Value<int> reportedAmountCents;
+  final Value<int> actualAmountCents;
+  final Value<RepairTicketStatus> ticketStatus;
+  final Value<VehicleRepairStatus> status;
+  final Value<DateTime?> completedAt;
+  final Value<String?> recordText;
+  final Value<String?> remark;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isDeleted;
+  const RepairOrdersCompanion({
+    this.id = const Value.absent(),
+    this.repairNo = const Value.absent(),
+    this.vehicleId = const Value.absent(),
+    this.reportDate = const Value.absent(),
+    this.faultFoundAt = const Value.absent(),
+    this.symptom = const Value.absent(),
+    this.cause = const Value.absent(),
+    this.project = const Value.absent(),
+    this.departAt = const Value.absent(),
+    this.vendor = const Value.absent(),
+    this.manager = const Value.absent(),
+    this.reportedAmountCents = const Value.absent(),
+    this.actualAmountCents = const Value.absent(),
+    this.ticketStatus = const Value.absent(),
+    this.status = const Value.absent(),
+    this.completedAt = const Value.absent(),
+    this.recordText = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  });
+  RepairOrdersCompanion.insert({
+    this.id = const Value.absent(),
+    required String repairNo,
+    required int vehicleId,
+    required DateTime reportDate,
+    required DateTime faultFoundAt,
+    required String symptom,
+    this.cause = const Value.absent(),
+    this.project = const Value.absent(),
+    this.departAt = const Value.absent(),
+    this.vendor = const Value.absent(),
+    this.manager = const Value.absent(),
+    this.reportedAmountCents = const Value.absent(),
+    this.actualAmountCents = const Value.absent(),
+    required RepairTicketStatus ticketStatus,
+    this.status = const Value.absent(),
+    this.completedAt = const Value.absent(),
+    this.recordText = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  }) : repairNo = Value(repairNo),
+       vehicleId = Value(vehicleId),
+       reportDate = Value(reportDate),
+       faultFoundAt = Value(faultFoundAt),
+       symptom = Value(symptom),
+       ticketStatus = Value(ticketStatus);
+  static Insertable<RepairOrder> custom({
+    Expression<int>? id,
+    Expression<String>? repairNo,
+    Expression<int>? vehicleId,
+    Expression<DateTime>? reportDate,
+    Expression<DateTime>? faultFoundAt,
+    Expression<String>? symptom,
+    Expression<String>? cause,
+    Expression<String>? project,
+    Expression<DateTime>? departAt,
+    Expression<String>? vendor,
+    Expression<String>? manager,
+    Expression<int>? reportedAmountCents,
+    Expression<int>? actualAmountCents,
+    Expression<String>? ticketStatus,
+    Expression<String>? status,
+    Expression<DateTime>? completedAt,
+    Expression<String>? recordText,
+    Expression<String>? remark,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isDeleted,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (repairNo != null) 'repair_no': repairNo,
+      if (vehicleId != null) 'vehicle_id': vehicleId,
+      if (reportDate != null) 'report_date': reportDate,
+      if (faultFoundAt != null) 'fault_found_at': faultFoundAt,
+      if (symptom != null) 'symptom': symptom,
+      if (cause != null) 'cause': cause,
+      if (project != null) 'project': project,
+      if (departAt != null) 'depart_at': departAt,
+      if (vendor != null) 'vendor': vendor,
+      if (manager != null) 'manager': manager,
+      if (reportedAmountCents != null)
+        'reported_amount_cents': reportedAmountCents,
+      if (actualAmountCents != null) 'actual_amount_cents': actualAmountCents,
+      if (ticketStatus != null) 'ticket_status': ticketStatus,
+      if (status != null) 'status': status,
+      if (completedAt != null) 'completed_at': completedAt,
+      if (recordText != null) 'record_text': recordText,
+      if (remark != null) 'remark': remark,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+    });
+  }
+
+  RepairOrdersCompanion copyWith({
+    Value<int>? id,
+    Value<String>? repairNo,
+    Value<int>? vehicleId,
+    Value<DateTime>? reportDate,
+    Value<DateTime>? faultFoundAt,
+    Value<String>? symptom,
+    Value<String?>? cause,
+    Value<String?>? project,
+    Value<DateTime?>? departAt,
+    Value<String?>? vendor,
+    Value<String?>? manager,
+    Value<int>? reportedAmountCents,
+    Value<int>? actualAmountCents,
+    Value<RepairTicketStatus>? ticketStatus,
+    Value<VehicleRepairStatus>? status,
+    Value<DateTime?>? completedAt,
+    Value<String?>? recordText,
+    Value<String?>? remark,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isDeleted,
+  }) {
+    return RepairOrdersCompanion(
+      id: id ?? this.id,
+      repairNo: repairNo ?? this.repairNo,
+      vehicleId: vehicleId ?? this.vehicleId,
+      reportDate: reportDate ?? this.reportDate,
+      faultFoundAt: faultFoundAt ?? this.faultFoundAt,
+      symptom: symptom ?? this.symptom,
+      cause: cause ?? this.cause,
+      project: project ?? this.project,
+      departAt: departAt ?? this.departAt,
+      vendor: vendor ?? this.vendor,
+      manager: manager ?? this.manager,
+      reportedAmountCents: reportedAmountCents ?? this.reportedAmountCents,
+      actualAmountCents: actualAmountCents ?? this.actualAmountCents,
+      ticketStatus: ticketStatus ?? this.ticketStatus,
+      status: status ?? this.status,
+      completedAt: completedAt ?? this.completedAt,
+      recordText: recordText ?? this.recordText,
+      remark: remark ?? this.remark,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (repairNo.present) {
+      map['repair_no'] = Variable<String>(repairNo.value);
+    }
+    if (vehicleId.present) {
+      map['vehicle_id'] = Variable<int>(vehicleId.value);
+    }
+    if (reportDate.present) {
+      map['report_date'] = Variable<DateTime>(reportDate.value);
+    }
+    if (faultFoundAt.present) {
+      map['fault_found_at'] = Variable<DateTime>(faultFoundAt.value);
+    }
+    if (symptom.present) {
+      map['symptom'] = Variable<String>(symptom.value);
+    }
+    if (cause.present) {
+      map['cause'] = Variable<String>(cause.value);
+    }
+    if (project.present) {
+      map['project'] = Variable<String>(project.value);
+    }
+    if (departAt.present) {
+      map['depart_at'] = Variable<DateTime>(departAt.value);
+    }
+    if (vendor.present) {
+      map['vendor'] = Variable<String>(vendor.value);
+    }
+    if (manager.present) {
+      map['manager'] = Variable<String>(manager.value);
+    }
+    if (reportedAmountCents.present) {
+      map['reported_amount_cents'] = Variable<int>(reportedAmountCents.value);
+    }
+    if (actualAmountCents.present) {
+      map['actual_amount_cents'] = Variable<int>(actualAmountCents.value);
+    }
+    if (ticketStatus.present) {
+      map['ticket_status'] = Variable<String>(
+        $RepairOrdersTable.$converterticketStatus.toSql(ticketStatus.value),
+      );
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(
+        $RepairOrdersTable.$converterstatus.toSql(status.value),
+      );
+    }
+    if (completedAt.present) {
+      map['completed_at'] = Variable<DateTime>(completedAt.value);
+    }
+    if (recordText.present) {
+      map['record_text'] = Variable<String>(recordText.value);
+    }
+    if (remark.present) {
+      map['remark'] = Variable<String>(remark.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RepairOrdersCompanion(')
+          ..write('id: $id, ')
+          ..write('repairNo: $repairNo, ')
+          ..write('vehicleId: $vehicleId, ')
+          ..write('reportDate: $reportDate, ')
+          ..write('faultFoundAt: $faultFoundAt, ')
+          ..write('symptom: $symptom, ')
+          ..write('cause: $cause, ')
+          ..write('project: $project, ')
+          ..write('departAt: $departAt, ')
+          ..write('vendor: $vendor, ')
+          ..write('manager: $manager, ')
+          ..write('reportedAmountCents: $reportedAmountCents, ')
+          ..write('actualAmountCents: $actualAmountCents, ')
+          ..write('ticketStatus: $ticketStatus, ')
+          ..write('status: $status, ')
+          ..write('completedAt: $completedAt, ')
+          ..write('recordText: $recordText, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $RepairCostItemsTable extends RepairCostItems
+    with TableInfo<$RepairCostItemsTable, RepairCostItem> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $RepairCostItemsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _repairOrderIdMeta = const VerificationMeta(
+    'repairOrderId',
+  );
+  @override
+  late final GeneratedColumn<int> repairOrderId = GeneratedColumn<int>(
+    'repair_order_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES repair_orders (id)',
+    ),
+  );
+  static const VerificationMeta _contentMeta = const VerificationMeta(
+    'content',
+  );
+  @override
+  late final GeneratedColumn<String> content = GeneratedColumn<String>(
+    'content',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _quantityMeta = const VerificationMeta(
+    'quantity',
+  );
+  @override
+  late final GeneratedColumn<double> quantity = GeneratedColumn<double>(
+    'quantity',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(1.0),
+  );
+  static const VerificationMeta _unitMeta = const VerificationMeta('unit');
+  @override
+  late final GeneratedColumn<String> unit = GeneratedColumn<String>(
+    'unit',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('项'),
+  );
+  static const VerificationMeta _unitPriceCentsMeta = const VerificationMeta(
+    'unitPriceCents',
+  );
+  @override
+  late final GeneratedColumn<int> unitPriceCents = GeneratedColumn<int>(
+    'unit_price_cents',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _subtotalCentsMeta = const VerificationMeta(
+    'subtotalCents',
+  );
+  @override
+  late final GeneratedColumn<int> subtotalCents = GeneratedColumn<int>(
+    'subtotal_cents',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<RepairCostType, String> costType =
+      GeneratedColumn<String>(
+        'cost_type',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<RepairCostType>($RepairCostItemsTable.$convertercostType);
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    repairOrderId,
+    content,
+    quantity,
+    unit,
+    unitPriceCents,
+    subtotalCents,
+    costType,
+    createdAt,
+    updatedAt,
+    isDeleted,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'repair_cost_items';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<RepairCostItem> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('repair_order_id')) {
+      context.handle(
+        _repairOrderIdMeta,
+        repairOrderId.isAcceptableOrUnknown(
+          data['repair_order_id']!,
+          _repairOrderIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_repairOrderIdMeta);
+    }
+    if (data.containsKey('content')) {
+      context.handle(
+        _contentMeta,
+        content.isAcceptableOrUnknown(data['content']!, _contentMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_contentMeta);
+    }
+    if (data.containsKey('quantity')) {
+      context.handle(
+        _quantityMeta,
+        quantity.isAcceptableOrUnknown(data['quantity']!, _quantityMeta),
+      );
+    }
+    if (data.containsKey('unit')) {
+      context.handle(
+        _unitMeta,
+        unit.isAcceptableOrUnknown(data['unit']!, _unitMeta),
+      );
+    }
+    if (data.containsKey('unit_price_cents')) {
+      context.handle(
+        _unitPriceCentsMeta,
+        unitPriceCents.isAcceptableOrUnknown(
+          data['unit_price_cents']!,
+          _unitPriceCentsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_unitPriceCentsMeta);
+    }
+    if (data.containsKey('subtotal_cents')) {
+      context.handle(
+        _subtotalCentsMeta,
+        subtotalCents.isAcceptableOrUnknown(
+          data['subtotal_cents']!,
+          _subtotalCentsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_subtotalCentsMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  RepairCostItem map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return RepairCostItem(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      repairOrderId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}repair_order_id'],
+      )!,
+      content: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}content'],
+      )!,
+      quantity: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}quantity'],
+      )!,
+      unit: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}unit'],
+      )!,
+      unitPriceCents: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}unit_price_cents'],
+      )!,
+      subtotalCents: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}subtotal_cents'],
+      )!,
+      costType: $RepairCostItemsTable.$convertercostType.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}cost_type'],
+        )!,
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
+    );
+  }
+
+  @override
+  $RepairCostItemsTable createAlias(String alias) {
+    return $RepairCostItemsTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<RepairCostType, String, String> $convertercostType =
+      const EnumNameConverter<RepairCostType>(RepairCostType.values);
+}
+
+class RepairCostItem extends DataClass implements Insertable<RepairCostItem> {
+  final int id;
+  final int repairOrderId;
+  final String content;
+  final double quantity;
+  final String unit;
+  final int unitPriceCents;
+  final int subtotalCents;
+  final RepairCostType costType;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final bool isDeleted;
+  const RepairCostItem({
+    required this.id,
+    required this.repairOrderId,
+    required this.content,
+    required this.quantity,
+    required this.unit,
+    required this.unitPriceCents,
+    required this.subtotalCents,
+    required this.costType,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isDeleted,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['repair_order_id'] = Variable<int>(repairOrderId);
+    map['content'] = Variable<String>(content);
+    map['quantity'] = Variable<double>(quantity);
+    map['unit'] = Variable<String>(unit);
+    map['unit_price_cents'] = Variable<int>(unitPriceCents);
+    map['subtotal_cents'] = Variable<int>(subtotalCents);
+    {
+      map['cost_type'] = Variable<String>(
+        $RepairCostItemsTable.$convertercostType.toSql(costType),
+      );
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    return map;
+  }
+
+  RepairCostItemsCompanion toCompanion(bool nullToAbsent) {
+    return RepairCostItemsCompanion(
+      id: Value(id),
+      repairOrderId: Value(repairOrderId),
+      content: Value(content),
+      quantity: Value(quantity),
+      unit: Value(unit),
+      unitPriceCents: Value(unitPriceCents),
+      subtotalCents: Value(subtotalCents),
+      costType: Value(costType),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isDeleted: Value(isDeleted),
+    );
+  }
+
+  factory RepairCostItem.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return RepairCostItem(
+      id: serializer.fromJson<int>(json['id']),
+      repairOrderId: serializer.fromJson<int>(json['repairOrderId']),
+      content: serializer.fromJson<String>(json['content']),
+      quantity: serializer.fromJson<double>(json['quantity']),
+      unit: serializer.fromJson<String>(json['unit']),
+      unitPriceCents: serializer.fromJson<int>(json['unitPriceCents']),
+      subtotalCents: serializer.fromJson<int>(json['subtotalCents']),
+      costType: $RepairCostItemsTable.$convertercostType.fromJson(
+        serializer.fromJson<String>(json['costType']),
+      ),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'repairOrderId': serializer.toJson<int>(repairOrderId),
+      'content': serializer.toJson<String>(content),
+      'quantity': serializer.toJson<double>(quantity),
+      'unit': serializer.toJson<String>(unit),
+      'unitPriceCents': serializer.toJson<int>(unitPriceCents),
+      'subtotalCents': serializer.toJson<int>(subtotalCents),
+      'costType': serializer.toJson<String>(
+        $RepairCostItemsTable.$convertercostType.toJson(costType),
+      ),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+    };
+  }
+
+  RepairCostItem copyWith({
+    int? id,
+    int? repairOrderId,
+    String? content,
+    double? quantity,
+    String? unit,
+    int? unitPriceCents,
+    int? subtotalCents,
+    RepairCostType? costType,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? isDeleted,
+  }) => RepairCostItem(
+    id: id ?? this.id,
+    repairOrderId: repairOrderId ?? this.repairOrderId,
+    content: content ?? this.content,
+    quantity: quantity ?? this.quantity,
+    unit: unit ?? this.unit,
+    unitPriceCents: unitPriceCents ?? this.unitPriceCents,
+    subtotalCents: subtotalCents ?? this.subtotalCents,
+    costType: costType ?? this.costType,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isDeleted: isDeleted ?? this.isDeleted,
+  );
+  RepairCostItem copyWithCompanion(RepairCostItemsCompanion data) {
+    return RepairCostItem(
+      id: data.id.present ? data.id.value : this.id,
+      repairOrderId: data.repairOrderId.present
+          ? data.repairOrderId.value
+          : this.repairOrderId,
+      content: data.content.present ? data.content.value : this.content,
+      quantity: data.quantity.present ? data.quantity.value : this.quantity,
+      unit: data.unit.present ? data.unit.value : this.unit,
+      unitPriceCents: data.unitPriceCents.present
+          ? data.unitPriceCents.value
+          : this.unitPriceCents,
+      subtotalCents: data.subtotalCents.present
+          ? data.subtotalCents.value
+          : this.subtotalCents,
+      costType: data.costType.present ? data.costType.value : this.costType,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RepairCostItem(')
+          ..write('id: $id, ')
+          ..write('repairOrderId: $repairOrderId, ')
+          ..write('content: $content, ')
+          ..write('quantity: $quantity, ')
+          ..write('unit: $unit, ')
+          ..write('unitPriceCents: $unitPriceCents, ')
+          ..write('subtotalCents: $subtotalCents, ')
+          ..write('costType: $costType, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    repairOrderId,
+    content,
+    quantity,
+    unit,
+    unitPriceCents,
+    subtotalCents,
+    costType,
+    createdAt,
+    updatedAt,
+    isDeleted,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is RepairCostItem &&
+          other.id == this.id &&
+          other.repairOrderId == this.repairOrderId &&
+          other.content == this.content &&
+          other.quantity == this.quantity &&
+          other.unit == this.unit &&
+          other.unitPriceCents == this.unitPriceCents &&
+          other.subtotalCents == this.subtotalCents &&
+          other.costType == this.costType &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isDeleted == this.isDeleted);
+}
+
+class RepairCostItemsCompanion extends UpdateCompanion<RepairCostItem> {
+  final Value<int> id;
+  final Value<int> repairOrderId;
+  final Value<String> content;
+  final Value<double> quantity;
+  final Value<String> unit;
+  final Value<int> unitPriceCents;
+  final Value<int> subtotalCents;
+  final Value<RepairCostType> costType;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isDeleted;
+  const RepairCostItemsCompanion({
+    this.id = const Value.absent(),
+    this.repairOrderId = const Value.absent(),
+    this.content = const Value.absent(),
+    this.quantity = const Value.absent(),
+    this.unit = const Value.absent(),
+    this.unitPriceCents = const Value.absent(),
+    this.subtotalCents = const Value.absent(),
+    this.costType = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  });
+  RepairCostItemsCompanion.insert({
+    this.id = const Value.absent(),
+    required int repairOrderId,
+    required String content,
+    this.quantity = const Value.absent(),
+    this.unit = const Value.absent(),
+    required int unitPriceCents,
+    required int subtotalCents,
+    required RepairCostType costType,
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  }) : repairOrderId = Value(repairOrderId),
+       content = Value(content),
+       unitPriceCents = Value(unitPriceCents),
+       subtotalCents = Value(subtotalCents),
+       costType = Value(costType);
+  static Insertable<RepairCostItem> custom({
+    Expression<int>? id,
+    Expression<int>? repairOrderId,
+    Expression<String>? content,
+    Expression<double>? quantity,
+    Expression<String>? unit,
+    Expression<int>? unitPriceCents,
+    Expression<int>? subtotalCents,
+    Expression<String>? costType,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isDeleted,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (repairOrderId != null) 'repair_order_id': repairOrderId,
+      if (content != null) 'content': content,
+      if (quantity != null) 'quantity': quantity,
+      if (unit != null) 'unit': unit,
+      if (unitPriceCents != null) 'unit_price_cents': unitPriceCents,
+      if (subtotalCents != null) 'subtotal_cents': subtotalCents,
+      if (costType != null) 'cost_type': costType,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+    });
+  }
+
+  RepairCostItemsCompanion copyWith({
+    Value<int>? id,
+    Value<int>? repairOrderId,
+    Value<String>? content,
+    Value<double>? quantity,
+    Value<String>? unit,
+    Value<int>? unitPriceCents,
+    Value<int>? subtotalCents,
+    Value<RepairCostType>? costType,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isDeleted,
+  }) {
+    return RepairCostItemsCompanion(
+      id: id ?? this.id,
+      repairOrderId: repairOrderId ?? this.repairOrderId,
+      content: content ?? this.content,
+      quantity: quantity ?? this.quantity,
+      unit: unit ?? this.unit,
+      unitPriceCents: unitPriceCents ?? this.unitPriceCents,
+      subtotalCents: subtotalCents ?? this.subtotalCents,
+      costType: costType ?? this.costType,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (repairOrderId.present) {
+      map['repair_order_id'] = Variable<int>(repairOrderId.value);
+    }
+    if (content.present) {
+      map['content'] = Variable<String>(content.value);
+    }
+    if (quantity.present) {
+      map['quantity'] = Variable<double>(quantity.value);
+    }
+    if (unit.present) {
+      map['unit'] = Variable<String>(unit.value);
+    }
+    if (unitPriceCents.present) {
+      map['unit_price_cents'] = Variable<int>(unitPriceCents.value);
+    }
+    if (subtotalCents.present) {
+      map['subtotal_cents'] = Variable<int>(subtotalCents.value);
+    }
+    if (costType.present) {
+      map['cost_type'] = Variable<String>(
+        $RepairCostItemsTable.$convertercostType.toSql(costType.value),
+      );
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RepairCostItemsCompanion(')
+          ..write('id: $id, ')
+          ..write('repairOrderId: $repairOrderId, ')
+          ..write('content: $content, ')
+          ..write('quantity: $quantity, ')
+          ..write('unit: $unit, ')
+          ..write('unitPriceCents: $unitPriceCents, ')
+          ..write('subtotalCents: $subtotalCents, ')
+          ..write('costType: $costType, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $RepairPartsTable extends RepairParts
+    with TableInfo<$RepairPartsTable, RepairPart> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $RepairPartsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _repairOrderIdMeta = const VerificationMeta(
+    'repairOrderId',
+  );
+  @override
+  late final GeneratedColumn<int> repairOrderId = GeneratedColumn<int>(
+    'repair_order_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES repair_orders (id)',
+    ),
+  );
+  static const VerificationMeta _costItemIdMeta = const VerificationMeta(
+    'costItemId',
+  );
+  @override
+  late final GeneratedColumn<int> costItemId = GeneratedColumn<int>(
+    'cost_item_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES repair_cost_items (id)',
+    ),
+  );
+  static const VerificationMeta _tireIdMeta = const VerificationMeta('tireId');
+  @override
+  late final GeneratedColumn<int> tireId = GeneratedColumn<int>(
+    'tire_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES tires (id)',
+    ),
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _quantityMeta = const VerificationMeta(
+    'quantity',
+  );
+  @override
+  late final GeneratedColumn<double> quantity = GeneratedColumn<double>(
+    'quantity',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(1.0),
+  );
+  static const VerificationMeta _unitMeta = const VerificationMeta('unit');
+  @override
+  late final GeneratedColumn<String> unit = GeneratedColumn<String>(
+    'unit',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('件'),
+  );
+  static const VerificationMeta _amountCentsMeta = const VerificationMeta(
+    'amountCents',
+  );
+  @override
+  late final GeneratedColumn<int> amountCents = GeneratedColumn<int>(
+    'amount_cents',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _componentTypeMeta = const VerificationMeta(
+    'componentType',
+  );
+  @override
+  late final GeneratedColumn<String> componentType = GeneratedColumn<String>(
+    'component_type',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _remarkMeta = const VerificationMeta('remark');
+  @override
+  late final GeneratedColumn<String> remark = GeneratedColumn<String>(
+    'remark',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    repairOrderId,
+    costItemId,
+    tireId,
+    name,
+    quantity,
+    unit,
+    amountCents,
+    componentType,
+    remark,
+    isDeleted,
+    createdAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'repair_parts';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<RepairPart> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('repair_order_id')) {
+      context.handle(
+        _repairOrderIdMeta,
+        repairOrderId.isAcceptableOrUnknown(
+          data['repair_order_id']!,
+          _repairOrderIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_repairOrderIdMeta);
+    }
+    if (data.containsKey('cost_item_id')) {
+      context.handle(
+        _costItemIdMeta,
+        costItemId.isAcceptableOrUnknown(
+          data['cost_item_id']!,
+          _costItemIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('tire_id')) {
+      context.handle(
+        _tireIdMeta,
+        tireId.isAcceptableOrUnknown(data['tire_id']!, _tireIdMeta),
+      );
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('quantity')) {
+      context.handle(
+        _quantityMeta,
+        quantity.isAcceptableOrUnknown(data['quantity']!, _quantityMeta),
+      );
+    }
+    if (data.containsKey('unit')) {
+      context.handle(
+        _unitMeta,
+        unit.isAcceptableOrUnknown(data['unit']!, _unitMeta),
+      );
+    }
+    if (data.containsKey('amount_cents')) {
+      context.handle(
+        _amountCentsMeta,
+        amountCents.isAcceptableOrUnknown(
+          data['amount_cents']!,
+          _amountCentsMeta,
+        ),
+      );
+    }
+    if (data.containsKey('component_type')) {
+      context.handle(
+        _componentTypeMeta,
+        componentType.isAcceptableOrUnknown(
+          data['component_type']!,
+          _componentTypeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('remark')) {
+      context.handle(
+        _remarkMeta,
+        remark.isAcceptableOrUnknown(data['remark']!, _remarkMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  RepairPart map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return RepairPart(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      repairOrderId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}repair_order_id'],
+      )!,
+      costItemId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}cost_item_id'],
+      ),
+      tireId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}tire_id'],
+      ),
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      quantity: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}quantity'],
+      )!,
+      unit: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}unit'],
+      )!,
+      amountCents: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}amount_cents'],
+      )!,
+      componentType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}component_type'],
+      ),
+      remark: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}remark'],
+      ),
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $RepairPartsTable createAlias(String alias) {
+    return $RepairPartsTable(attachedDatabase, alias);
+  }
+}
+
+class RepairPart extends DataClass implements Insertable<RepairPart> {
+  final int id;
+  final int repairOrderId;
+  final int? costItemId;
+  final int? tireId;
+  final String name;
+  final double quantity;
+  final String unit;
+  final int amountCents;
+  final String? componentType;
+  final String? remark;
+  final bool isDeleted;
+  final DateTime createdAt;
+  const RepairPart({
+    required this.id,
+    required this.repairOrderId,
+    this.costItemId,
+    this.tireId,
+    required this.name,
+    required this.quantity,
+    required this.unit,
+    required this.amountCents,
+    this.componentType,
+    this.remark,
+    required this.isDeleted,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['repair_order_id'] = Variable<int>(repairOrderId);
+    if (!nullToAbsent || costItemId != null) {
+      map['cost_item_id'] = Variable<int>(costItemId);
+    }
+    if (!nullToAbsent || tireId != null) {
+      map['tire_id'] = Variable<int>(tireId);
+    }
+    map['name'] = Variable<String>(name);
+    map['quantity'] = Variable<double>(quantity);
+    map['unit'] = Variable<String>(unit);
+    map['amount_cents'] = Variable<int>(amountCents);
+    if (!nullToAbsent || componentType != null) {
+      map['component_type'] = Variable<String>(componentType);
+    }
+    if (!nullToAbsent || remark != null) {
+      map['remark'] = Variable<String>(remark);
+    }
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  RepairPartsCompanion toCompanion(bool nullToAbsent) {
+    return RepairPartsCompanion(
+      id: Value(id),
+      repairOrderId: Value(repairOrderId),
+      costItemId: costItemId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(costItemId),
+      tireId: tireId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tireId),
+      name: Value(name),
+      quantity: Value(quantity),
+      unit: Value(unit),
+      amountCents: Value(amountCents),
+      componentType: componentType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(componentType),
+      remark: remark == null && nullToAbsent
+          ? const Value.absent()
+          : Value(remark),
+      isDeleted: Value(isDeleted),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory RepairPart.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return RepairPart(
+      id: serializer.fromJson<int>(json['id']),
+      repairOrderId: serializer.fromJson<int>(json['repairOrderId']),
+      costItemId: serializer.fromJson<int?>(json['costItemId']),
+      tireId: serializer.fromJson<int?>(json['tireId']),
+      name: serializer.fromJson<String>(json['name']),
+      quantity: serializer.fromJson<double>(json['quantity']),
+      unit: serializer.fromJson<String>(json['unit']),
+      amountCents: serializer.fromJson<int>(json['amountCents']),
+      componentType: serializer.fromJson<String?>(json['componentType']),
+      remark: serializer.fromJson<String?>(json['remark']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'repairOrderId': serializer.toJson<int>(repairOrderId),
+      'costItemId': serializer.toJson<int?>(costItemId),
+      'tireId': serializer.toJson<int?>(tireId),
+      'name': serializer.toJson<String>(name),
+      'quantity': serializer.toJson<double>(quantity),
+      'unit': serializer.toJson<String>(unit),
+      'amountCents': serializer.toJson<int>(amountCents),
+      'componentType': serializer.toJson<String?>(componentType),
+      'remark': serializer.toJson<String?>(remark),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  RepairPart copyWith({
+    int? id,
+    int? repairOrderId,
+    Value<int?> costItemId = const Value.absent(),
+    Value<int?> tireId = const Value.absent(),
+    String? name,
+    double? quantity,
+    String? unit,
+    int? amountCents,
+    Value<String?> componentType = const Value.absent(),
+    Value<String?> remark = const Value.absent(),
+    bool? isDeleted,
+    DateTime? createdAt,
+  }) => RepairPart(
+    id: id ?? this.id,
+    repairOrderId: repairOrderId ?? this.repairOrderId,
+    costItemId: costItemId.present ? costItemId.value : this.costItemId,
+    tireId: tireId.present ? tireId.value : this.tireId,
+    name: name ?? this.name,
+    quantity: quantity ?? this.quantity,
+    unit: unit ?? this.unit,
+    amountCents: amountCents ?? this.amountCents,
+    componentType: componentType.present
+        ? componentType.value
+        : this.componentType,
+    remark: remark.present ? remark.value : this.remark,
+    isDeleted: isDeleted ?? this.isDeleted,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  RepairPart copyWithCompanion(RepairPartsCompanion data) {
+    return RepairPart(
+      id: data.id.present ? data.id.value : this.id,
+      repairOrderId: data.repairOrderId.present
+          ? data.repairOrderId.value
+          : this.repairOrderId,
+      costItemId: data.costItemId.present
+          ? data.costItemId.value
+          : this.costItemId,
+      tireId: data.tireId.present ? data.tireId.value : this.tireId,
+      name: data.name.present ? data.name.value : this.name,
+      quantity: data.quantity.present ? data.quantity.value : this.quantity,
+      unit: data.unit.present ? data.unit.value : this.unit,
+      amountCents: data.amountCents.present
+          ? data.amountCents.value
+          : this.amountCents,
+      componentType: data.componentType.present
+          ? data.componentType.value
+          : this.componentType,
+      remark: data.remark.present ? data.remark.value : this.remark,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RepairPart(')
+          ..write('id: $id, ')
+          ..write('repairOrderId: $repairOrderId, ')
+          ..write('costItemId: $costItemId, ')
+          ..write('tireId: $tireId, ')
+          ..write('name: $name, ')
+          ..write('quantity: $quantity, ')
+          ..write('unit: $unit, ')
+          ..write('amountCents: $amountCents, ')
+          ..write('componentType: $componentType, ')
+          ..write('remark: $remark, ')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    repairOrderId,
+    costItemId,
+    tireId,
+    name,
+    quantity,
+    unit,
+    amountCents,
+    componentType,
+    remark,
+    isDeleted,
+    createdAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is RepairPart &&
+          other.id == this.id &&
+          other.repairOrderId == this.repairOrderId &&
+          other.costItemId == this.costItemId &&
+          other.tireId == this.tireId &&
+          other.name == this.name &&
+          other.quantity == this.quantity &&
+          other.unit == this.unit &&
+          other.amountCents == this.amountCents &&
+          other.componentType == this.componentType &&
+          other.remark == this.remark &&
+          other.isDeleted == this.isDeleted &&
+          other.createdAt == this.createdAt);
+}
+
+class RepairPartsCompanion extends UpdateCompanion<RepairPart> {
+  final Value<int> id;
+  final Value<int> repairOrderId;
+  final Value<int?> costItemId;
+  final Value<int?> tireId;
+  final Value<String> name;
+  final Value<double> quantity;
+  final Value<String> unit;
+  final Value<int> amountCents;
+  final Value<String?> componentType;
+  final Value<String?> remark;
+  final Value<bool> isDeleted;
+  final Value<DateTime> createdAt;
+  const RepairPartsCompanion({
+    this.id = const Value.absent(),
+    this.repairOrderId = const Value.absent(),
+    this.costItemId = const Value.absent(),
+    this.tireId = const Value.absent(),
+    this.name = const Value.absent(),
+    this.quantity = const Value.absent(),
+    this.unit = const Value.absent(),
+    this.amountCents = const Value.absent(),
+    this.componentType = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+  });
+  RepairPartsCompanion.insert({
+    this.id = const Value.absent(),
+    required int repairOrderId,
+    this.costItemId = const Value.absent(),
+    this.tireId = const Value.absent(),
+    required String name,
+    this.quantity = const Value.absent(),
+    this.unit = const Value.absent(),
+    this.amountCents = const Value.absent(),
+    this.componentType = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+  }) : repairOrderId = Value(repairOrderId),
+       name = Value(name);
+  static Insertable<RepairPart> custom({
+    Expression<int>? id,
+    Expression<int>? repairOrderId,
+    Expression<int>? costItemId,
+    Expression<int>? tireId,
+    Expression<String>? name,
+    Expression<double>? quantity,
+    Expression<String>? unit,
+    Expression<int>? amountCents,
+    Expression<String>? componentType,
+    Expression<String>? remark,
+    Expression<bool>? isDeleted,
+    Expression<DateTime>? createdAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (repairOrderId != null) 'repair_order_id': repairOrderId,
+      if (costItemId != null) 'cost_item_id': costItemId,
+      if (tireId != null) 'tire_id': tireId,
+      if (name != null) 'name': name,
+      if (quantity != null) 'quantity': quantity,
+      if (unit != null) 'unit': unit,
+      if (amountCents != null) 'amount_cents': amountCents,
+      if (componentType != null) 'component_type': componentType,
+      if (remark != null) 'remark': remark,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+      if (createdAt != null) 'created_at': createdAt,
+    });
+  }
+
+  RepairPartsCompanion copyWith({
+    Value<int>? id,
+    Value<int>? repairOrderId,
+    Value<int?>? costItemId,
+    Value<int?>? tireId,
+    Value<String>? name,
+    Value<double>? quantity,
+    Value<String>? unit,
+    Value<int>? amountCents,
+    Value<String?>? componentType,
+    Value<String?>? remark,
+    Value<bool>? isDeleted,
+    Value<DateTime>? createdAt,
+  }) {
+    return RepairPartsCompanion(
+      id: id ?? this.id,
+      repairOrderId: repairOrderId ?? this.repairOrderId,
+      costItemId: costItemId ?? this.costItemId,
+      tireId: tireId ?? this.tireId,
+      name: name ?? this.name,
+      quantity: quantity ?? this.quantity,
+      unit: unit ?? this.unit,
+      amountCents: amountCents ?? this.amountCents,
+      componentType: componentType ?? this.componentType,
+      remark: remark ?? this.remark,
+      isDeleted: isDeleted ?? this.isDeleted,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (repairOrderId.present) {
+      map['repair_order_id'] = Variable<int>(repairOrderId.value);
+    }
+    if (costItemId.present) {
+      map['cost_item_id'] = Variable<int>(costItemId.value);
+    }
+    if (tireId.present) {
+      map['tire_id'] = Variable<int>(tireId.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (quantity.present) {
+      map['quantity'] = Variable<double>(quantity.value);
+    }
+    if (unit.present) {
+      map['unit'] = Variable<String>(unit.value);
+    }
+    if (amountCents.present) {
+      map['amount_cents'] = Variable<int>(amountCents.value);
+    }
+    if (componentType.present) {
+      map['component_type'] = Variable<String>(componentType.value);
+    }
+    if (remark.present) {
+      map['remark'] = Variable<String>(remark.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RepairPartsCompanion(')
+          ..write('id: $id, ')
+          ..write('repairOrderId: $repairOrderId, ')
+          ..write('costItemId: $costItemId, ')
+          ..write('tireId: $tireId, ')
+          ..write('name: $name, ')
+          ..write('quantity: $quantity, ')
+          ..write('unit: $unit, ')
+          ..write('amountCents: $amountCents, ')
+          ..write('componentType: $componentType, ')
+          ..write('remark: $remark, ')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $VehicleAttachmentsTable extends VehicleAttachments
+    with TableInfo<$VehicleAttachmentsTable, VehicleAttachment> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $VehicleAttachmentsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _vehicleIdMeta = const VerificationMeta(
+    'vehicleId',
+  );
+  @override
+  late final GeneratedColumn<int> vehicleId = GeneratedColumn<int>(
+    'vehicle_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES vehicles (id)',
+    ),
+  );
+  static const VerificationMeta _repairOrderIdMeta = const VerificationMeta(
+    'repairOrderId',
+  );
+  @override
+  late final GeneratedColumn<int> repairOrderId = GeneratedColumn<int>(
+    'repair_order_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES repair_orders (id)',
+    ),
+  );
+  static const VerificationMeta _categoryMeta = const VerificationMeta(
+    'category',
+  );
+  @override
+  late final GeneratedColumn<String> category = GeneratedColumn<String>(
+    'category',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('other'),
+  );
+  static const VerificationMeta _originalFileNameMeta = const VerificationMeta(
+    'originalFileName',
+  );
+  @override
+  late final GeneratedColumn<String> originalFileName = GeneratedColumn<String>(
+    'original_file_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _storedFileNameMeta = const VerificationMeta(
+    'storedFileName',
+  );
+  @override
+  late final GeneratedColumn<String> storedFileName = GeneratedColumn<String>(
+    'stored_file_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _relativePathMeta = const VerificationMeta(
+    'relativePath',
+  );
+  @override
+  late final GeneratedColumn<String> relativePath = GeneratedColumn<String>(
+    'relative_path',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
+  );
+  static const VerificationMeta _mimeTypeMeta = const VerificationMeta(
+    'mimeType',
+  );
+  @override
+  late final GeneratedColumn<String> mimeType = GeneratedColumn<String>(
+    'mime_type',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _extensionMeta = const VerificationMeta(
+    'extension',
+  );
+  @override
+  late final GeneratedColumn<String> extension = GeneratedColumn<String>(
+    'extension',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fileSizeMeta = const VerificationMeta(
+    'fileSize',
+  );
+  @override
+  late final GeneratedColumn<int> fileSize = GeneratedColumn<int>(
+    'file_size',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fileHashMeta = const VerificationMeta(
+    'fileHash',
+  );
+  @override
+  late final GeneratedColumn<String> fileHash = GeneratedColumn<String>(
+    'file_hash',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _remarkMeta = const VerificationMeta('remark');
+  @override
+  late final GeneratedColumn<String> remark = GeneratedColumn<String>(
+    'remark',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _deletedAtMeta = const VerificationMeta(
+    'deletedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+    'deleted_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    vehicleId,
+    repairOrderId,
+    category,
+    originalFileName,
+    storedFileName,
+    relativePath,
+    mimeType,
+    extension,
+    fileSize,
+    fileHash,
+    remark,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    isDeleted,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'vehicle_attachments';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<VehicleAttachment> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('vehicle_id')) {
+      context.handle(
+        _vehicleIdMeta,
+        vehicleId.isAcceptableOrUnknown(data['vehicle_id']!, _vehicleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_vehicleIdMeta);
+    }
+    if (data.containsKey('repair_order_id')) {
+      context.handle(
+        _repairOrderIdMeta,
+        repairOrderId.isAcceptableOrUnknown(
+          data['repair_order_id']!,
+          _repairOrderIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('category')) {
+      context.handle(
+        _categoryMeta,
+        category.isAcceptableOrUnknown(data['category']!, _categoryMeta),
+      );
+    }
+    if (data.containsKey('original_file_name')) {
+      context.handle(
+        _originalFileNameMeta,
+        originalFileName.isAcceptableOrUnknown(
+          data['original_file_name']!,
+          _originalFileNameMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_originalFileNameMeta);
+    }
+    if (data.containsKey('stored_file_name')) {
+      context.handle(
+        _storedFileNameMeta,
+        storedFileName.isAcceptableOrUnknown(
+          data['stored_file_name']!,
+          _storedFileNameMeta,
+        ),
+      );
+    }
+    if (data.containsKey('relative_path')) {
+      context.handle(
+        _relativePathMeta,
+        relativePath.isAcceptableOrUnknown(
+          data['relative_path']!,
+          _relativePathMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_relativePathMeta);
+    }
+    if (data.containsKey('mime_type')) {
+      context.handle(
+        _mimeTypeMeta,
+        mimeType.isAcceptableOrUnknown(data['mime_type']!, _mimeTypeMeta),
+      );
+    }
+    if (data.containsKey('extension')) {
+      context.handle(
+        _extensionMeta,
+        extension.isAcceptableOrUnknown(data['extension']!, _extensionMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_extensionMeta);
+    }
+    if (data.containsKey('file_size')) {
+      context.handle(
+        _fileSizeMeta,
+        fileSize.isAcceptableOrUnknown(data['file_size']!, _fileSizeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fileSizeMeta);
+    }
+    if (data.containsKey('file_hash')) {
+      context.handle(
+        _fileHashMeta,
+        fileHash.isAcceptableOrUnknown(data['file_hash']!, _fileHashMeta),
+      );
+    }
+    if (data.containsKey('remark')) {
+      context.handle(
+        _remarkMeta,
+        remark.isAcceptableOrUnknown(data['remark']!, _remarkMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(
+        _deletedAtMeta,
+        deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  VehicleAttachment map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return VehicleAttachment(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      vehicleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}vehicle_id'],
+      )!,
+      repairOrderId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}repair_order_id'],
+      ),
+      category: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}category'],
+      )!,
+      originalFileName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}original_file_name'],
+      )!,
+      storedFileName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}stored_file_name'],
+      )!,
+      relativePath: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}relative_path'],
+      )!,
+      mimeType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}mime_type'],
+      ),
+      extension: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}extension'],
+      )!,
+      fileSize: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}file_size'],
+      )!,
+      fileHash: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}file_hash'],
+      ),
+      remark: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}remark'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
+    );
+  }
+
+  @override
+  $VehicleAttachmentsTable createAlias(String alias) {
+    return $VehicleAttachmentsTable(attachedDatabase, alias);
+  }
+}
+
+class VehicleAttachment extends DataClass
+    implements Insertable<VehicleAttachment> {
+  final int id;
+  final int vehicleId;
+  final int? repairOrderId;
+  final String category;
+  final String originalFileName;
+  final String storedFileName;
+  final String relativePath;
+  final String? mimeType;
+  final String extension;
+  final int fileSize;
+  final String? fileHash;
+  final String? remark;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime? deletedAt;
+  final bool isDeleted;
+  const VehicleAttachment({
+    required this.id,
+    required this.vehicleId,
+    this.repairOrderId,
+    required this.category,
+    required this.originalFileName,
+    required this.storedFileName,
+    required this.relativePath,
+    this.mimeType,
+    required this.extension,
+    required this.fileSize,
+    this.fileHash,
+    this.remark,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.isDeleted,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['vehicle_id'] = Variable<int>(vehicleId);
+    if (!nullToAbsent || repairOrderId != null) {
+      map['repair_order_id'] = Variable<int>(repairOrderId);
+    }
+    map['category'] = Variable<String>(category);
+    map['original_file_name'] = Variable<String>(originalFileName);
+    map['stored_file_name'] = Variable<String>(storedFileName);
+    map['relative_path'] = Variable<String>(relativePath);
+    if (!nullToAbsent || mimeType != null) {
+      map['mime_type'] = Variable<String>(mimeType);
+    }
+    map['extension'] = Variable<String>(extension);
+    map['file_size'] = Variable<int>(fileSize);
+    if (!nullToAbsent || fileHash != null) {
+      map['file_hash'] = Variable<String>(fileHash);
+    }
+    if (!nullToAbsent || remark != null) {
+      map['remark'] = Variable<String>(remark);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    return map;
+  }
+
+  VehicleAttachmentsCompanion toCompanion(bool nullToAbsent) {
+    return VehicleAttachmentsCompanion(
+      id: Value(id),
+      vehicleId: Value(vehicleId),
+      repairOrderId: repairOrderId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(repairOrderId),
+      category: Value(category),
+      originalFileName: Value(originalFileName),
+      storedFileName: Value(storedFileName),
+      relativePath: Value(relativePath),
+      mimeType: mimeType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(mimeType),
+      extension: Value(extension),
+      fileSize: Value(fileSize),
+      fileHash: fileHash == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fileHash),
+      remark: remark == null && nullToAbsent
+          ? const Value.absent()
+          : Value(remark),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      isDeleted: Value(isDeleted),
+    );
+  }
+
+  factory VehicleAttachment.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return VehicleAttachment(
+      id: serializer.fromJson<int>(json['id']),
+      vehicleId: serializer.fromJson<int>(json['vehicleId']),
+      repairOrderId: serializer.fromJson<int?>(json['repairOrderId']),
+      category: serializer.fromJson<String>(json['category']),
+      originalFileName: serializer.fromJson<String>(json['originalFileName']),
+      storedFileName: serializer.fromJson<String>(json['storedFileName']),
+      relativePath: serializer.fromJson<String>(json['relativePath']),
+      mimeType: serializer.fromJson<String?>(json['mimeType']),
+      extension: serializer.fromJson<String>(json['extension']),
+      fileSize: serializer.fromJson<int>(json['fileSize']),
+      fileHash: serializer.fromJson<String?>(json['fileHash']),
+      remark: serializer.fromJson<String?>(json['remark']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'vehicleId': serializer.toJson<int>(vehicleId),
+      'repairOrderId': serializer.toJson<int?>(repairOrderId),
+      'category': serializer.toJson<String>(category),
+      'originalFileName': serializer.toJson<String>(originalFileName),
+      'storedFileName': serializer.toJson<String>(storedFileName),
+      'relativePath': serializer.toJson<String>(relativePath),
+      'mimeType': serializer.toJson<String?>(mimeType),
+      'extension': serializer.toJson<String>(extension),
+      'fileSize': serializer.toJson<int>(fileSize),
+      'fileHash': serializer.toJson<String?>(fileHash),
+      'remark': serializer.toJson<String?>(remark),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+    };
+  }
+
+  VehicleAttachment copyWith({
+    int? id,
+    int? vehicleId,
+    Value<int?> repairOrderId = const Value.absent(),
+    String? category,
+    String? originalFileName,
+    String? storedFileName,
+    String? relativePath,
+    Value<String?> mimeType = const Value.absent(),
+    String? extension,
+    int? fileSize,
+    Value<String?> fileHash = const Value.absent(),
+    Value<String?> remark = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<DateTime?> deletedAt = const Value.absent(),
+    bool? isDeleted,
+  }) => VehicleAttachment(
+    id: id ?? this.id,
+    vehicleId: vehicleId ?? this.vehicleId,
+    repairOrderId: repairOrderId.present
+        ? repairOrderId.value
+        : this.repairOrderId,
+    category: category ?? this.category,
+    originalFileName: originalFileName ?? this.originalFileName,
+    storedFileName: storedFileName ?? this.storedFileName,
+    relativePath: relativePath ?? this.relativePath,
+    mimeType: mimeType.present ? mimeType.value : this.mimeType,
+    extension: extension ?? this.extension,
+    fileSize: fileSize ?? this.fileSize,
+    fileHash: fileHash.present ? fileHash.value : this.fileHash,
+    remark: remark.present ? remark.value : this.remark,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    isDeleted: isDeleted ?? this.isDeleted,
+  );
+  VehicleAttachment copyWithCompanion(VehicleAttachmentsCompanion data) {
+    return VehicleAttachment(
+      id: data.id.present ? data.id.value : this.id,
+      vehicleId: data.vehicleId.present ? data.vehicleId.value : this.vehicleId,
+      repairOrderId: data.repairOrderId.present
+          ? data.repairOrderId.value
+          : this.repairOrderId,
+      category: data.category.present ? data.category.value : this.category,
+      originalFileName: data.originalFileName.present
+          ? data.originalFileName.value
+          : this.originalFileName,
+      storedFileName: data.storedFileName.present
+          ? data.storedFileName.value
+          : this.storedFileName,
+      relativePath: data.relativePath.present
+          ? data.relativePath.value
+          : this.relativePath,
+      mimeType: data.mimeType.present ? data.mimeType.value : this.mimeType,
+      extension: data.extension.present ? data.extension.value : this.extension,
+      fileSize: data.fileSize.present ? data.fileSize.value : this.fileSize,
+      fileHash: data.fileHash.present ? data.fileHash.value : this.fileHash,
+      remark: data.remark.present ? data.remark.value : this.remark,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VehicleAttachment(')
+          ..write('id: $id, ')
+          ..write('vehicleId: $vehicleId, ')
+          ..write('repairOrderId: $repairOrderId, ')
+          ..write('category: $category, ')
+          ..write('originalFileName: $originalFileName, ')
+          ..write('storedFileName: $storedFileName, ')
+          ..write('relativePath: $relativePath, ')
+          ..write('mimeType: $mimeType, ')
+          ..write('extension: $extension, ')
+          ..write('fileSize: $fileSize, ')
+          ..write('fileHash: $fileHash, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    vehicleId,
+    repairOrderId,
+    category,
+    originalFileName,
+    storedFileName,
+    relativePath,
+    mimeType,
+    extension,
+    fileSize,
+    fileHash,
+    remark,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    isDeleted,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is VehicleAttachment &&
+          other.id == this.id &&
+          other.vehicleId == this.vehicleId &&
+          other.repairOrderId == this.repairOrderId &&
+          other.category == this.category &&
+          other.originalFileName == this.originalFileName &&
+          other.storedFileName == this.storedFileName &&
+          other.relativePath == this.relativePath &&
+          other.mimeType == this.mimeType &&
+          other.extension == this.extension &&
+          other.fileSize == this.fileSize &&
+          other.fileHash == this.fileHash &&
+          other.remark == this.remark &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.isDeleted == this.isDeleted);
+}
+
+class VehicleAttachmentsCompanion extends UpdateCompanion<VehicleAttachment> {
+  final Value<int> id;
+  final Value<int> vehicleId;
+  final Value<int?> repairOrderId;
+  final Value<String> category;
+  final Value<String> originalFileName;
+  final Value<String> storedFileName;
+  final Value<String> relativePath;
+  final Value<String?> mimeType;
+  final Value<String> extension;
+  final Value<int> fileSize;
+  final Value<String?> fileHash;
+  final Value<String?> remark;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<DateTime?> deletedAt;
+  final Value<bool> isDeleted;
+  const VehicleAttachmentsCompanion({
+    this.id = const Value.absent(),
+    this.vehicleId = const Value.absent(),
+    this.repairOrderId = const Value.absent(),
+    this.category = const Value.absent(),
+    this.originalFileName = const Value.absent(),
+    this.storedFileName = const Value.absent(),
+    this.relativePath = const Value.absent(),
+    this.mimeType = const Value.absent(),
+    this.extension = const Value.absent(),
+    this.fileSize = const Value.absent(),
+    this.fileHash = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  });
+  VehicleAttachmentsCompanion.insert({
+    this.id = const Value.absent(),
+    required int vehicleId,
+    this.repairOrderId = const Value.absent(),
+    this.category = const Value.absent(),
+    required String originalFileName,
+    this.storedFileName = const Value.absent(),
+    required String relativePath,
+    this.mimeType = const Value.absent(),
+    required String extension,
+    required int fileSize,
+    this.fileHash = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  }) : vehicleId = Value(vehicleId),
+       originalFileName = Value(originalFileName),
+       relativePath = Value(relativePath),
+       extension = Value(extension),
+       fileSize = Value(fileSize);
+  static Insertable<VehicleAttachment> custom({
+    Expression<int>? id,
+    Expression<int>? vehicleId,
+    Expression<int>? repairOrderId,
+    Expression<String>? category,
+    Expression<String>? originalFileName,
+    Expression<String>? storedFileName,
+    Expression<String>? relativePath,
+    Expression<String>? mimeType,
+    Expression<String>? extension,
+    Expression<int>? fileSize,
+    Expression<String>? fileHash,
+    Expression<String>? remark,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime>? deletedAt,
+    Expression<bool>? isDeleted,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (vehicleId != null) 'vehicle_id': vehicleId,
+      if (repairOrderId != null) 'repair_order_id': repairOrderId,
+      if (category != null) 'category': category,
+      if (originalFileName != null) 'original_file_name': originalFileName,
+      if (storedFileName != null) 'stored_file_name': storedFileName,
+      if (relativePath != null) 'relative_path': relativePath,
+      if (mimeType != null) 'mime_type': mimeType,
+      if (extension != null) 'extension': extension,
+      if (fileSize != null) 'file_size': fileSize,
+      if (fileHash != null) 'file_hash': fileHash,
+      if (remark != null) 'remark': remark,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+    });
+  }
+
+  VehicleAttachmentsCompanion copyWith({
+    Value<int>? id,
+    Value<int>? vehicleId,
+    Value<int?>? repairOrderId,
+    Value<String>? category,
+    Value<String>? originalFileName,
+    Value<String>? storedFileName,
+    Value<String>? relativePath,
+    Value<String?>? mimeType,
+    Value<String>? extension,
+    Value<int>? fileSize,
+    Value<String?>? fileHash,
+    Value<String?>? remark,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<DateTime?>? deletedAt,
+    Value<bool>? isDeleted,
+  }) {
+    return VehicleAttachmentsCompanion(
+      id: id ?? this.id,
+      vehicleId: vehicleId ?? this.vehicleId,
+      repairOrderId: repairOrderId ?? this.repairOrderId,
+      category: category ?? this.category,
+      originalFileName: originalFileName ?? this.originalFileName,
+      storedFileName: storedFileName ?? this.storedFileName,
+      relativePath: relativePath ?? this.relativePath,
+      mimeType: mimeType ?? this.mimeType,
+      extension: extension ?? this.extension,
+      fileSize: fileSize ?? this.fileSize,
+      fileHash: fileHash ?? this.fileHash,
+      remark: remark ?? this.remark,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (vehicleId.present) {
+      map['vehicle_id'] = Variable<int>(vehicleId.value);
+    }
+    if (repairOrderId.present) {
+      map['repair_order_id'] = Variable<int>(repairOrderId.value);
+    }
+    if (category.present) {
+      map['category'] = Variable<String>(category.value);
+    }
+    if (originalFileName.present) {
+      map['original_file_name'] = Variable<String>(originalFileName.value);
+    }
+    if (storedFileName.present) {
+      map['stored_file_name'] = Variable<String>(storedFileName.value);
+    }
+    if (relativePath.present) {
+      map['relative_path'] = Variable<String>(relativePath.value);
+    }
+    if (mimeType.present) {
+      map['mime_type'] = Variable<String>(mimeType.value);
+    }
+    if (extension.present) {
+      map['extension'] = Variable<String>(extension.value);
+    }
+    if (fileSize.present) {
+      map['file_size'] = Variable<int>(fileSize.value);
+    }
+    if (fileHash.present) {
+      map['file_hash'] = Variable<String>(fileHash.value);
+    }
+    if (remark.present) {
+      map['remark'] = Variable<String>(remark.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VehicleAttachmentsCompanion(')
+          ..write('id: $id, ')
+          ..write('vehicleId: $vehicleId, ')
+          ..write('repairOrderId: $repairOrderId, ')
+          ..write('category: $category, ')
+          ..write('originalFileName: $originalFileName, ')
+          ..write('storedFileName: $storedFileName, ')
+          ..write('relativePath: $relativePath, ')
+          ..write('mimeType: $mimeType, ')
+          ..write('extension: $extension, ')
+          ..write('fileSize: $fileSize, ')
+          ..write('fileHash: $fileHash, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $MaintenanceTemplatesTable extends MaintenanceTemplates
+    with TableInfo<$MaintenanceTemplatesTable, MaintenanceTemplate> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MaintenanceTemplatesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _componentTypeMeta = const VerificationMeta(
+    'componentType',
+  );
+  @override
+  late final GeneratedColumn<String> componentType = GeneratedColumn<String>(
+    'component_type',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _intervalValueMeta = const VerificationMeta(
+    'intervalValue',
+  );
+  @override
+  late final GeneratedColumn<int> intervalValue = GeneratedColumn<int>(
+    'interval_value',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<MaintenanceIntervalUnit, String>
+  intervalUnit =
+      GeneratedColumn<String>(
+        'interval_unit',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<MaintenanceIntervalUnit>(
+        $MaintenanceTemplatesTable.$converterintervalUnit,
+      );
+  static const VerificationMeta _leadDaysMeta = const VerificationMeta(
+    'leadDays',
+  );
+  @override
+  late final GeneratedColumn<int> leadDays = GeneratedColumn<int>(
+    'lead_days',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(30),
+  );
+  static const VerificationMeta _overdueDaysMeta = const VerificationMeta(
+    'overdueDays',
+  );
+  @override
+  late final GeneratedColumn<int> overdueDays = GeneratedColumn<int>(
+    'overdue_days',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(15),
+  );
+  static const VerificationMeta _sortOrderMeta = const VerificationMeta(
+    'sortOrder',
+  );
+  @override
+  late final GeneratedColumn<int> sortOrder = GeneratedColumn<int>(
+    'sort_order',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _isActiveMeta = const VerificationMeta(
+    'isActive',
+  );
+  @override
+  late final GeneratedColumn<bool> isActive = GeneratedColumn<bool>(
+    'is_active',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_active" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    componentType,
+    intervalValue,
+    intervalUnit,
+    leadDays,
+    overdueDays,
+    sortOrder,
+    isActive,
+    createdAt,
+    updatedAt,
+    isDeleted,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'maintenance_templates';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<MaintenanceTemplate> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('component_type')) {
+      context.handle(
+        _componentTypeMeta,
+        componentType.isAcceptableOrUnknown(
+          data['component_type']!,
+          _componentTypeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('interval_value')) {
+      context.handle(
+        _intervalValueMeta,
+        intervalValue.isAcceptableOrUnknown(
+          data['interval_value']!,
+          _intervalValueMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_intervalValueMeta);
+    }
+    if (data.containsKey('lead_days')) {
+      context.handle(
+        _leadDaysMeta,
+        leadDays.isAcceptableOrUnknown(data['lead_days']!, _leadDaysMeta),
+      );
+    }
+    if (data.containsKey('overdue_days')) {
+      context.handle(
+        _overdueDaysMeta,
+        overdueDays.isAcceptableOrUnknown(
+          data['overdue_days']!,
+          _overdueDaysMeta,
+        ),
+      );
+    }
+    if (data.containsKey('sort_order')) {
+      context.handle(
+        _sortOrderMeta,
+        sortOrder.isAcceptableOrUnknown(data['sort_order']!, _sortOrderMeta),
+      );
+    }
+    if (data.containsKey('is_active')) {
+      context.handle(
+        _isActiveMeta,
+        isActive.isAcceptableOrUnknown(data['is_active']!, _isActiveMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  MaintenanceTemplate map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MaintenanceTemplate(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      componentType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}component_type'],
+      ),
+      intervalValue: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}interval_value'],
+      )!,
+      intervalUnit: $MaintenanceTemplatesTable.$converterintervalUnit.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}interval_unit'],
+        )!,
+      ),
+      leadDays: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}lead_days'],
+      )!,
+      overdueDays: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}overdue_days'],
+      )!,
+      sortOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sort_order'],
+      )!,
+      isActive: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_active'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
+    );
+  }
+
+  @override
+  $MaintenanceTemplatesTable createAlias(String alias) {
+    return $MaintenanceTemplatesTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<MaintenanceIntervalUnit, String, String>
+  $converterintervalUnit = const EnumNameConverter<MaintenanceIntervalUnit>(
+    MaintenanceIntervalUnit.values,
+  );
+}
+
+class MaintenanceTemplate extends DataClass
+    implements Insertable<MaintenanceTemplate> {
+  final int id;
+  final String name;
+  final String? componentType;
+  final int intervalValue;
+  final MaintenanceIntervalUnit intervalUnit;
+  final int leadDays;
+  final int overdueDays;
+  final int sortOrder;
+  final bool isActive;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final bool isDeleted;
+  const MaintenanceTemplate({
+    required this.id,
+    required this.name,
+    this.componentType,
+    required this.intervalValue,
+    required this.intervalUnit,
+    required this.leadDays,
+    required this.overdueDays,
+    required this.sortOrder,
+    required this.isActive,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isDeleted,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || componentType != null) {
+      map['component_type'] = Variable<String>(componentType);
+    }
+    map['interval_value'] = Variable<int>(intervalValue);
+    {
+      map['interval_unit'] = Variable<String>(
+        $MaintenanceTemplatesTable.$converterintervalUnit.toSql(intervalUnit),
+      );
+    }
+    map['lead_days'] = Variable<int>(leadDays);
+    map['overdue_days'] = Variable<int>(overdueDays);
+    map['sort_order'] = Variable<int>(sortOrder);
+    map['is_active'] = Variable<bool>(isActive);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    return map;
+  }
+
+  MaintenanceTemplatesCompanion toCompanion(bool nullToAbsent) {
+    return MaintenanceTemplatesCompanion(
+      id: Value(id),
+      name: Value(name),
+      componentType: componentType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(componentType),
+      intervalValue: Value(intervalValue),
+      intervalUnit: Value(intervalUnit),
+      leadDays: Value(leadDays),
+      overdueDays: Value(overdueDays),
+      sortOrder: Value(sortOrder),
+      isActive: Value(isActive),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isDeleted: Value(isDeleted),
+    );
+  }
+
+  factory MaintenanceTemplate.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MaintenanceTemplate(
+      id: serializer.fromJson<int>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      componentType: serializer.fromJson<String?>(json['componentType']),
+      intervalValue: serializer.fromJson<int>(json['intervalValue']),
+      intervalUnit: $MaintenanceTemplatesTable.$converterintervalUnit.fromJson(
+        serializer.fromJson<String>(json['intervalUnit']),
+      ),
+      leadDays: serializer.fromJson<int>(json['leadDays']),
+      overdueDays: serializer.fromJson<int>(json['overdueDays']),
+      sortOrder: serializer.fromJson<int>(json['sortOrder']),
+      isActive: serializer.fromJson<bool>(json['isActive']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'name': serializer.toJson<String>(name),
+      'componentType': serializer.toJson<String?>(componentType),
+      'intervalValue': serializer.toJson<int>(intervalValue),
+      'intervalUnit': serializer.toJson<String>(
+        $MaintenanceTemplatesTable.$converterintervalUnit.toJson(intervalUnit),
+      ),
+      'leadDays': serializer.toJson<int>(leadDays),
+      'overdueDays': serializer.toJson<int>(overdueDays),
+      'sortOrder': serializer.toJson<int>(sortOrder),
+      'isActive': serializer.toJson<bool>(isActive),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+    };
+  }
+
+  MaintenanceTemplate copyWith({
+    int? id,
+    String? name,
+    Value<String?> componentType = const Value.absent(),
+    int? intervalValue,
+    MaintenanceIntervalUnit? intervalUnit,
+    int? leadDays,
+    int? overdueDays,
+    int? sortOrder,
+    bool? isActive,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? isDeleted,
+  }) => MaintenanceTemplate(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    componentType: componentType.present
+        ? componentType.value
+        : this.componentType,
+    intervalValue: intervalValue ?? this.intervalValue,
+    intervalUnit: intervalUnit ?? this.intervalUnit,
+    leadDays: leadDays ?? this.leadDays,
+    overdueDays: overdueDays ?? this.overdueDays,
+    sortOrder: sortOrder ?? this.sortOrder,
+    isActive: isActive ?? this.isActive,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isDeleted: isDeleted ?? this.isDeleted,
+  );
+  MaintenanceTemplate copyWithCompanion(MaintenanceTemplatesCompanion data) {
+    return MaintenanceTemplate(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      componentType: data.componentType.present
+          ? data.componentType.value
+          : this.componentType,
+      intervalValue: data.intervalValue.present
+          ? data.intervalValue.value
+          : this.intervalValue,
+      intervalUnit: data.intervalUnit.present
+          ? data.intervalUnit.value
+          : this.intervalUnit,
+      leadDays: data.leadDays.present ? data.leadDays.value : this.leadDays,
+      overdueDays: data.overdueDays.present
+          ? data.overdueDays.value
+          : this.overdueDays,
+      sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
+      isActive: data.isActive.present ? data.isActive.value : this.isActive,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MaintenanceTemplate(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('componentType: $componentType, ')
+          ..write('intervalValue: $intervalValue, ')
+          ..write('intervalUnit: $intervalUnit, ')
+          ..write('leadDays: $leadDays, ')
+          ..write('overdueDays: $overdueDays, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('isActive: $isActive, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    name,
+    componentType,
+    intervalValue,
+    intervalUnit,
+    leadDays,
+    overdueDays,
+    sortOrder,
+    isActive,
+    createdAt,
+    updatedAt,
+    isDeleted,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MaintenanceTemplate &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.componentType == this.componentType &&
+          other.intervalValue == this.intervalValue &&
+          other.intervalUnit == this.intervalUnit &&
+          other.leadDays == this.leadDays &&
+          other.overdueDays == this.overdueDays &&
+          other.sortOrder == this.sortOrder &&
+          other.isActive == this.isActive &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isDeleted == this.isDeleted);
+}
+
+class MaintenanceTemplatesCompanion
+    extends UpdateCompanion<MaintenanceTemplate> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<String?> componentType;
+  final Value<int> intervalValue;
+  final Value<MaintenanceIntervalUnit> intervalUnit;
+  final Value<int> leadDays;
+  final Value<int> overdueDays;
+  final Value<int> sortOrder;
+  final Value<bool> isActive;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isDeleted;
+  const MaintenanceTemplatesCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.componentType = const Value.absent(),
+    this.intervalValue = const Value.absent(),
+    this.intervalUnit = const Value.absent(),
+    this.leadDays = const Value.absent(),
+    this.overdueDays = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.isActive = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  });
+  MaintenanceTemplatesCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    this.componentType = const Value.absent(),
+    required int intervalValue,
+    required MaintenanceIntervalUnit intervalUnit,
+    this.leadDays = const Value.absent(),
+    this.overdueDays = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.isActive = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  }) : name = Value(name),
+       intervalValue = Value(intervalValue),
+       intervalUnit = Value(intervalUnit);
+  static Insertable<MaintenanceTemplate> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+    Expression<String>? componentType,
+    Expression<int>? intervalValue,
+    Expression<String>? intervalUnit,
+    Expression<int>? leadDays,
+    Expression<int>? overdueDays,
+    Expression<int>? sortOrder,
+    Expression<bool>? isActive,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isDeleted,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (componentType != null) 'component_type': componentType,
+      if (intervalValue != null) 'interval_value': intervalValue,
+      if (intervalUnit != null) 'interval_unit': intervalUnit,
+      if (leadDays != null) 'lead_days': leadDays,
+      if (overdueDays != null) 'overdue_days': overdueDays,
+      if (sortOrder != null) 'sort_order': sortOrder,
+      if (isActive != null) 'is_active': isActive,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+    });
+  }
+
+  MaintenanceTemplatesCompanion copyWith({
+    Value<int>? id,
+    Value<String>? name,
+    Value<String?>? componentType,
+    Value<int>? intervalValue,
+    Value<MaintenanceIntervalUnit>? intervalUnit,
+    Value<int>? leadDays,
+    Value<int>? overdueDays,
+    Value<int>? sortOrder,
+    Value<bool>? isActive,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isDeleted,
+  }) {
+    return MaintenanceTemplatesCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      componentType: componentType ?? this.componentType,
+      intervalValue: intervalValue ?? this.intervalValue,
+      intervalUnit: intervalUnit ?? this.intervalUnit,
+      leadDays: leadDays ?? this.leadDays,
+      overdueDays: overdueDays ?? this.overdueDays,
+      sortOrder: sortOrder ?? this.sortOrder,
+      isActive: isActive ?? this.isActive,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (componentType.present) {
+      map['component_type'] = Variable<String>(componentType.value);
+    }
+    if (intervalValue.present) {
+      map['interval_value'] = Variable<int>(intervalValue.value);
+    }
+    if (intervalUnit.present) {
+      map['interval_unit'] = Variable<String>(
+        $MaintenanceTemplatesTable.$converterintervalUnit.toSql(
+          intervalUnit.value,
+        ),
+      );
+    }
+    if (leadDays.present) {
+      map['lead_days'] = Variable<int>(leadDays.value);
+    }
+    if (overdueDays.present) {
+      map['overdue_days'] = Variable<int>(overdueDays.value);
+    }
+    if (sortOrder.present) {
+      map['sort_order'] = Variable<int>(sortOrder.value);
+    }
+    if (isActive.present) {
+      map['is_active'] = Variable<bool>(isActive.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MaintenanceTemplatesCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('componentType: $componentType, ')
+          ..write('intervalValue: $intervalValue, ')
+          ..write('intervalUnit: $intervalUnit, ')
+          ..write('leadDays: $leadDays, ')
+          ..write('overdueDays: $overdueDays, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('isActive: $isActive, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $VehicleMaintenanceItemsTable extends VehicleMaintenanceItems
+    with TableInfo<$VehicleMaintenanceItemsTable, VehicleMaintenanceItem> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $VehicleMaintenanceItemsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _vehicleIdMeta = const VerificationMeta(
+    'vehicleId',
+  );
+  @override
+  late final GeneratedColumn<int> vehicleId = GeneratedColumn<int>(
+    'vehicle_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES vehicles (id)',
+    ),
+  );
+  static const VerificationMeta _templateIdMeta = const VerificationMeta(
+    'templateId',
+  );
+  @override
+  late final GeneratedColumn<int> templateId = GeneratedColumn<int>(
+    'template_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES maintenance_templates (id)',
+    ),
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _componentTypeMeta = const VerificationMeta(
+    'componentType',
+  );
+  @override
+  late final GeneratedColumn<String> componentType = GeneratedColumn<String>(
+    'component_type',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _intervalValueMeta = const VerificationMeta(
+    'intervalValue',
+  );
+  @override
+  late final GeneratedColumn<int> intervalValue = GeneratedColumn<int>(
+    'interval_value',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<MaintenanceIntervalUnit, String>
+  intervalUnit =
+      GeneratedColumn<String>(
+        'interval_unit',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<MaintenanceIntervalUnit>(
+        $VehicleMaintenanceItemsTable.$converterintervalUnit,
+      );
+  static const VerificationMeta _leadDaysMeta = const VerificationMeta(
+    'leadDays',
+  );
+  @override
+  late final GeneratedColumn<int> leadDays = GeneratedColumn<int>(
+    'lead_days',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(30),
+  );
+  static const VerificationMeta _overdueDaysMeta = const VerificationMeta(
+    'overdueDays',
+  );
+  @override
+  late final GeneratedColumn<int> overdueDays = GeneratedColumn<int>(
+    'overdue_days',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(15),
+  );
+  static const VerificationMeta _lastServiceDateMeta = const VerificationMeta(
+    'lastServiceDate',
+  );
+  @override
+  late final GeneratedColumn<DateTime> lastServiceDate =
+      GeneratedColumn<DateTime>(
+        'last_service_date',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _nextDueDateMeta = const VerificationMeta(
+    'nextDueDate',
+  );
+  @override
+  late final GeneratedColumn<DateTime> nextDueDate = GeneratedColumn<DateTime>(
+    'next_due_date',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _isActiveMeta = const VerificationMeta(
+    'isActive',
+  );
+  @override
+  late final GeneratedColumn<bool> isActive = GeneratedColumn<bool>(
+    'is_active',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_active" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    vehicleId,
+    templateId,
+    name,
+    componentType,
+    intervalValue,
+    intervalUnit,
+    leadDays,
+    overdueDays,
+    lastServiceDate,
+    nextDueDate,
+    isActive,
+    createdAt,
+    updatedAt,
+    isDeleted,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'vehicle_maintenance_items';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<VehicleMaintenanceItem> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('vehicle_id')) {
+      context.handle(
+        _vehicleIdMeta,
+        vehicleId.isAcceptableOrUnknown(data['vehicle_id']!, _vehicleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_vehicleIdMeta);
+    }
+    if (data.containsKey('template_id')) {
+      context.handle(
+        _templateIdMeta,
+        templateId.isAcceptableOrUnknown(data['template_id']!, _templateIdMeta),
+      );
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('component_type')) {
+      context.handle(
+        _componentTypeMeta,
+        componentType.isAcceptableOrUnknown(
+          data['component_type']!,
+          _componentTypeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('interval_value')) {
+      context.handle(
+        _intervalValueMeta,
+        intervalValue.isAcceptableOrUnknown(
+          data['interval_value']!,
+          _intervalValueMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_intervalValueMeta);
+    }
+    if (data.containsKey('lead_days')) {
+      context.handle(
+        _leadDaysMeta,
+        leadDays.isAcceptableOrUnknown(data['lead_days']!, _leadDaysMeta),
+      );
+    }
+    if (data.containsKey('overdue_days')) {
+      context.handle(
+        _overdueDaysMeta,
+        overdueDays.isAcceptableOrUnknown(
+          data['overdue_days']!,
+          _overdueDaysMeta,
+        ),
+      );
+    }
+    if (data.containsKey('last_service_date')) {
+      context.handle(
+        _lastServiceDateMeta,
+        lastServiceDate.isAcceptableOrUnknown(
+          data['last_service_date']!,
+          _lastServiceDateMeta,
+        ),
+      );
+    }
+    if (data.containsKey('next_due_date')) {
+      context.handle(
+        _nextDueDateMeta,
+        nextDueDate.isAcceptableOrUnknown(
+          data['next_due_date']!,
+          _nextDueDateMeta,
+        ),
+      );
+    }
+    if (data.containsKey('is_active')) {
+      context.handle(
+        _isActiveMeta,
+        isActive.isAcceptableOrUnknown(data['is_active']!, _isActiveMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  VehicleMaintenanceItem map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return VehicleMaintenanceItem(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      vehicleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}vehicle_id'],
+      )!,
+      templateId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}template_id'],
+      ),
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      componentType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}component_type'],
+      ),
+      intervalValue: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}interval_value'],
+      )!,
+      intervalUnit: $VehicleMaintenanceItemsTable.$converterintervalUnit
+          .fromSql(
+            attachedDatabase.typeMapping.read(
+              DriftSqlType.string,
+              data['${effectivePrefix}interval_unit'],
+            )!,
+          ),
+      leadDays: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}lead_days'],
+      )!,
+      overdueDays: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}overdue_days'],
+      )!,
+      lastServiceDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}last_service_date'],
+      ),
+      nextDueDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}next_due_date'],
+      ),
+      isActive: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_active'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
+    );
+  }
+
+  @override
+  $VehicleMaintenanceItemsTable createAlias(String alias) {
+    return $VehicleMaintenanceItemsTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<MaintenanceIntervalUnit, String, String>
+  $converterintervalUnit = const EnumNameConverter<MaintenanceIntervalUnit>(
+    MaintenanceIntervalUnit.values,
+  );
+}
+
+class VehicleMaintenanceItem extends DataClass
+    implements Insertable<VehicleMaintenanceItem> {
+  final int id;
+  final int vehicleId;
+  final int? templateId;
+  final String name;
+  final String? componentType;
+  final int intervalValue;
+  final MaintenanceIntervalUnit intervalUnit;
+  final int leadDays;
+  final int overdueDays;
+  final DateTime? lastServiceDate;
+  final DateTime? nextDueDate;
+  final bool isActive;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final bool isDeleted;
+  const VehicleMaintenanceItem({
+    required this.id,
+    required this.vehicleId,
+    this.templateId,
+    required this.name,
+    this.componentType,
+    required this.intervalValue,
+    required this.intervalUnit,
+    required this.leadDays,
+    required this.overdueDays,
+    this.lastServiceDate,
+    this.nextDueDate,
+    required this.isActive,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isDeleted,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['vehicle_id'] = Variable<int>(vehicleId);
+    if (!nullToAbsent || templateId != null) {
+      map['template_id'] = Variable<int>(templateId);
+    }
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || componentType != null) {
+      map['component_type'] = Variable<String>(componentType);
+    }
+    map['interval_value'] = Variable<int>(intervalValue);
+    {
+      map['interval_unit'] = Variable<String>(
+        $VehicleMaintenanceItemsTable.$converterintervalUnit.toSql(
+          intervalUnit,
+        ),
+      );
+    }
+    map['lead_days'] = Variable<int>(leadDays);
+    map['overdue_days'] = Variable<int>(overdueDays);
+    if (!nullToAbsent || lastServiceDate != null) {
+      map['last_service_date'] = Variable<DateTime>(lastServiceDate);
+    }
+    if (!nullToAbsent || nextDueDate != null) {
+      map['next_due_date'] = Variable<DateTime>(nextDueDate);
+    }
+    map['is_active'] = Variable<bool>(isActive);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    return map;
+  }
+
+  VehicleMaintenanceItemsCompanion toCompanion(bool nullToAbsent) {
+    return VehicleMaintenanceItemsCompanion(
+      id: Value(id),
+      vehicleId: Value(vehicleId),
+      templateId: templateId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(templateId),
+      name: Value(name),
+      componentType: componentType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(componentType),
+      intervalValue: Value(intervalValue),
+      intervalUnit: Value(intervalUnit),
+      leadDays: Value(leadDays),
+      overdueDays: Value(overdueDays),
+      lastServiceDate: lastServiceDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastServiceDate),
+      nextDueDate: nextDueDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(nextDueDate),
+      isActive: Value(isActive),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isDeleted: Value(isDeleted),
+    );
+  }
+
+  factory VehicleMaintenanceItem.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return VehicleMaintenanceItem(
+      id: serializer.fromJson<int>(json['id']),
+      vehicleId: serializer.fromJson<int>(json['vehicleId']),
+      templateId: serializer.fromJson<int?>(json['templateId']),
+      name: serializer.fromJson<String>(json['name']),
+      componentType: serializer.fromJson<String?>(json['componentType']),
+      intervalValue: serializer.fromJson<int>(json['intervalValue']),
+      intervalUnit: $VehicleMaintenanceItemsTable.$converterintervalUnit
+          .fromJson(serializer.fromJson<String>(json['intervalUnit'])),
+      leadDays: serializer.fromJson<int>(json['leadDays']),
+      overdueDays: serializer.fromJson<int>(json['overdueDays']),
+      lastServiceDate: serializer.fromJson<DateTime?>(json['lastServiceDate']),
+      nextDueDate: serializer.fromJson<DateTime?>(json['nextDueDate']),
+      isActive: serializer.fromJson<bool>(json['isActive']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'vehicleId': serializer.toJson<int>(vehicleId),
+      'templateId': serializer.toJson<int?>(templateId),
+      'name': serializer.toJson<String>(name),
+      'componentType': serializer.toJson<String?>(componentType),
+      'intervalValue': serializer.toJson<int>(intervalValue),
+      'intervalUnit': serializer.toJson<String>(
+        $VehicleMaintenanceItemsTable.$converterintervalUnit.toJson(
+          intervalUnit,
+        ),
+      ),
+      'leadDays': serializer.toJson<int>(leadDays),
+      'overdueDays': serializer.toJson<int>(overdueDays),
+      'lastServiceDate': serializer.toJson<DateTime?>(lastServiceDate),
+      'nextDueDate': serializer.toJson<DateTime?>(nextDueDate),
+      'isActive': serializer.toJson<bool>(isActive),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+    };
+  }
+
+  VehicleMaintenanceItem copyWith({
+    int? id,
+    int? vehicleId,
+    Value<int?> templateId = const Value.absent(),
+    String? name,
+    Value<String?> componentType = const Value.absent(),
+    int? intervalValue,
+    MaintenanceIntervalUnit? intervalUnit,
+    int? leadDays,
+    int? overdueDays,
+    Value<DateTime?> lastServiceDate = const Value.absent(),
+    Value<DateTime?> nextDueDate = const Value.absent(),
+    bool? isActive,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? isDeleted,
+  }) => VehicleMaintenanceItem(
+    id: id ?? this.id,
+    vehicleId: vehicleId ?? this.vehicleId,
+    templateId: templateId.present ? templateId.value : this.templateId,
+    name: name ?? this.name,
+    componentType: componentType.present
+        ? componentType.value
+        : this.componentType,
+    intervalValue: intervalValue ?? this.intervalValue,
+    intervalUnit: intervalUnit ?? this.intervalUnit,
+    leadDays: leadDays ?? this.leadDays,
+    overdueDays: overdueDays ?? this.overdueDays,
+    lastServiceDate: lastServiceDate.present
+        ? lastServiceDate.value
+        : this.lastServiceDate,
+    nextDueDate: nextDueDate.present ? nextDueDate.value : this.nextDueDate,
+    isActive: isActive ?? this.isActive,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isDeleted: isDeleted ?? this.isDeleted,
+  );
+  VehicleMaintenanceItem copyWithCompanion(
+    VehicleMaintenanceItemsCompanion data,
+  ) {
+    return VehicleMaintenanceItem(
+      id: data.id.present ? data.id.value : this.id,
+      vehicleId: data.vehicleId.present ? data.vehicleId.value : this.vehicleId,
+      templateId: data.templateId.present
+          ? data.templateId.value
+          : this.templateId,
+      name: data.name.present ? data.name.value : this.name,
+      componentType: data.componentType.present
+          ? data.componentType.value
+          : this.componentType,
+      intervalValue: data.intervalValue.present
+          ? data.intervalValue.value
+          : this.intervalValue,
+      intervalUnit: data.intervalUnit.present
+          ? data.intervalUnit.value
+          : this.intervalUnit,
+      leadDays: data.leadDays.present ? data.leadDays.value : this.leadDays,
+      overdueDays: data.overdueDays.present
+          ? data.overdueDays.value
+          : this.overdueDays,
+      lastServiceDate: data.lastServiceDate.present
+          ? data.lastServiceDate.value
+          : this.lastServiceDate,
+      nextDueDate: data.nextDueDate.present
+          ? data.nextDueDate.value
+          : this.nextDueDate,
+      isActive: data.isActive.present ? data.isActive.value : this.isActive,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VehicleMaintenanceItem(')
+          ..write('id: $id, ')
+          ..write('vehicleId: $vehicleId, ')
+          ..write('templateId: $templateId, ')
+          ..write('name: $name, ')
+          ..write('componentType: $componentType, ')
+          ..write('intervalValue: $intervalValue, ')
+          ..write('intervalUnit: $intervalUnit, ')
+          ..write('leadDays: $leadDays, ')
+          ..write('overdueDays: $overdueDays, ')
+          ..write('lastServiceDate: $lastServiceDate, ')
+          ..write('nextDueDate: $nextDueDate, ')
+          ..write('isActive: $isActive, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    vehicleId,
+    templateId,
+    name,
+    componentType,
+    intervalValue,
+    intervalUnit,
+    leadDays,
+    overdueDays,
+    lastServiceDate,
+    nextDueDate,
+    isActive,
+    createdAt,
+    updatedAt,
+    isDeleted,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is VehicleMaintenanceItem &&
+          other.id == this.id &&
+          other.vehicleId == this.vehicleId &&
+          other.templateId == this.templateId &&
+          other.name == this.name &&
+          other.componentType == this.componentType &&
+          other.intervalValue == this.intervalValue &&
+          other.intervalUnit == this.intervalUnit &&
+          other.leadDays == this.leadDays &&
+          other.overdueDays == this.overdueDays &&
+          other.lastServiceDate == this.lastServiceDate &&
+          other.nextDueDate == this.nextDueDate &&
+          other.isActive == this.isActive &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isDeleted == this.isDeleted);
+}
+
+class VehicleMaintenanceItemsCompanion
+    extends UpdateCompanion<VehicleMaintenanceItem> {
+  final Value<int> id;
+  final Value<int> vehicleId;
+  final Value<int?> templateId;
+  final Value<String> name;
+  final Value<String?> componentType;
+  final Value<int> intervalValue;
+  final Value<MaintenanceIntervalUnit> intervalUnit;
+  final Value<int> leadDays;
+  final Value<int> overdueDays;
+  final Value<DateTime?> lastServiceDate;
+  final Value<DateTime?> nextDueDate;
+  final Value<bool> isActive;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isDeleted;
+  const VehicleMaintenanceItemsCompanion({
+    this.id = const Value.absent(),
+    this.vehicleId = const Value.absent(),
+    this.templateId = const Value.absent(),
+    this.name = const Value.absent(),
+    this.componentType = const Value.absent(),
+    this.intervalValue = const Value.absent(),
+    this.intervalUnit = const Value.absent(),
+    this.leadDays = const Value.absent(),
+    this.overdueDays = const Value.absent(),
+    this.lastServiceDate = const Value.absent(),
+    this.nextDueDate = const Value.absent(),
+    this.isActive = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  });
+  VehicleMaintenanceItemsCompanion.insert({
+    this.id = const Value.absent(),
+    required int vehicleId,
+    this.templateId = const Value.absent(),
+    required String name,
+    this.componentType = const Value.absent(),
+    required int intervalValue,
+    required MaintenanceIntervalUnit intervalUnit,
+    this.leadDays = const Value.absent(),
+    this.overdueDays = const Value.absent(),
+    this.lastServiceDate = const Value.absent(),
+    this.nextDueDate = const Value.absent(),
+    this.isActive = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  }) : vehicleId = Value(vehicleId),
+       name = Value(name),
+       intervalValue = Value(intervalValue),
+       intervalUnit = Value(intervalUnit);
+  static Insertable<VehicleMaintenanceItem> custom({
+    Expression<int>? id,
+    Expression<int>? vehicleId,
+    Expression<int>? templateId,
+    Expression<String>? name,
+    Expression<String>? componentType,
+    Expression<int>? intervalValue,
+    Expression<String>? intervalUnit,
+    Expression<int>? leadDays,
+    Expression<int>? overdueDays,
+    Expression<DateTime>? lastServiceDate,
+    Expression<DateTime>? nextDueDate,
+    Expression<bool>? isActive,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isDeleted,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (vehicleId != null) 'vehicle_id': vehicleId,
+      if (templateId != null) 'template_id': templateId,
+      if (name != null) 'name': name,
+      if (componentType != null) 'component_type': componentType,
+      if (intervalValue != null) 'interval_value': intervalValue,
+      if (intervalUnit != null) 'interval_unit': intervalUnit,
+      if (leadDays != null) 'lead_days': leadDays,
+      if (overdueDays != null) 'overdue_days': overdueDays,
+      if (lastServiceDate != null) 'last_service_date': lastServiceDate,
+      if (nextDueDate != null) 'next_due_date': nextDueDate,
+      if (isActive != null) 'is_active': isActive,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+    });
+  }
+
+  VehicleMaintenanceItemsCompanion copyWith({
+    Value<int>? id,
+    Value<int>? vehicleId,
+    Value<int?>? templateId,
+    Value<String>? name,
+    Value<String?>? componentType,
+    Value<int>? intervalValue,
+    Value<MaintenanceIntervalUnit>? intervalUnit,
+    Value<int>? leadDays,
+    Value<int>? overdueDays,
+    Value<DateTime?>? lastServiceDate,
+    Value<DateTime?>? nextDueDate,
+    Value<bool>? isActive,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isDeleted,
+  }) {
+    return VehicleMaintenanceItemsCompanion(
+      id: id ?? this.id,
+      vehicleId: vehicleId ?? this.vehicleId,
+      templateId: templateId ?? this.templateId,
+      name: name ?? this.name,
+      componentType: componentType ?? this.componentType,
+      intervalValue: intervalValue ?? this.intervalValue,
+      intervalUnit: intervalUnit ?? this.intervalUnit,
+      leadDays: leadDays ?? this.leadDays,
+      overdueDays: overdueDays ?? this.overdueDays,
+      lastServiceDate: lastServiceDate ?? this.lastServiceDate,
+      nextDueDate: nextDueDate ?? this.nextDueDate,
+      isActive: isActive ?? this.isActive,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (vehicleId.present) {
+      map['vehicle_id'] = Variable<int>(vehicleId.value);
+    }
+    if (templateId.present) {
+      map['template_id'] = Variable<int>(templateId.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (componentType.present) {
+      map['component_type'] = Variable<String>(componentType.value);
+    }
+    if (intervalValue.present) {
+      map['interval_value'] = Variable<int>(intervalValue.value);
+    }
+    if (intervalUnit.present) {
+      map['interval_unit'] = Variable<String>(
+        $VehicleMaintenanceItemsTable.$converterintervalUnit.toSql(
+          intervalUnit.value,
+        ),
+      );
+    }
+    if (leadDays.present) {
+      map['lead_days'] = Variable<int>(leadDays.value);
+    }
+    if (overdueDays.present) {
+      map['overdue_days'] = Variable<int>(overdueDays.value);
+    }
+    if (lastServiceDate.present) {
+      map['last_service_date'] = Variable<DateTime>(lastServiceDate.value);
+    }
+    if (nextDueDate.present) {
+      map['next_due_date'] = Variable<DateTime>(nextDueDate.value);
+    }
+    if (isActive.present) {
+      map['is_active'] = Variable<bool>(isActive.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VehicleMaintenanceItemsCompanion(')
+          ..write('id: $id, ')
+          ..write('vehicleId: $vehicleId, ')
+          ..write('templateId: $templateId, ')
+          ..write('name: $name, ')
+          ..write('componentType: $componentType, ')
+          ..write('intervalValue: $intervalValue, ')
+          ..write('intervalUnit: $intervalUnit, ')
+          ..write('leadDays: $leadDays, ')
+          ..write('overdueDays: $overdueDays, ')
+          ..write('lastServiceDate: $lastServiceDate, ')
+          ..write('nextDueDate: $nextDueDate, ')
+          ..write('isActive: $isActive, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $MaintenanceRecordsTable extends MaintenanceRecords
+    with TableInfo<$MaintenanceRecordsTable, MaintenanceRecord> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MaintenanceRecordsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _maintenanceItemIdMeta = const VerificationMeta(
+    'maintenanceItemId',
+  );
+  @override
+  late final GeneratedColumn<int> maintenanceItemId = GeneratedColumn<int>(
+    'maintenance_item_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES vehicle_maintenance_items (id)',
+    ),
+  );
+  static const VerificationMeta _vehicleIdMeta = const VerificationMeta(
+    'vehicleId',
+  );
+  @override
+  late final GeneratedColumn<int> vehicleId = GeneratedColumn<int>(
+    'vehicle_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES vehicles (id)',
+    ),
+  );
+  static const VerificationMeta _serviceDateMeta = const VerificationMeta(
+    'serviceDate',
+  );
+  @override
+  late final GeneratedColumn<DateTime> serviceDate = GeneratedColumn<DateTime>(
+    'service_date',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _materialCostCentsMeta = const VerificationMeta(
+    'materialCostCents',
+  );
+  @override
+  late final GeneratedColumn<int> materialCostCents = GeneratedColumn<int>(
+    'material_cost_cents',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _laborCostCentsMeta = const VerificationMeta(
+    'laborCostCents',
+  );
+  @override
+  late final GeneratedColumn<int> laborCostCents = GeneratedColumn<int>(
+    'labor_cost_cents',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _totalCostCentsMeta = const VerificationMeta(
+    'totalCostCents',
+  );
+  @override
+  late final GeneratedColumn<int> totalCostCents = GeneratedColumn<int>(
+    'total_cost_cents',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _remarkMeta = const VerificationMeta('remark');
+  @override
+  late final GeneratedColumn<String> remark = GeneratedColumn<String>(
+    'remark',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    maintenanceItemId,
+    vehicleId,
+    serviceDate,
+    materialCostCents,
+    laborCostCents,
+    totalCostCents,
+    remark,
+    createdAt,
+    isDeleted,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'maintenance_records';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<MaintenanceRecord> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('maintenance_item_id')) {
+      context.handle(
+        _maintenanceItemIdMeta,
+        maintenanceItemId.isAcceptableOrUnknown(
+          data['maintenance_item_id']!,
+          _maintenanceItemIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_maintenanceItemIdMeta);
+    }
+    if (data.containsKey('vehicle_id')) {
+      context.handle(
+        _vehicleIdMeta,
+        vehicleId.isAcceptableOrUnknown(data['vehicle_id']!, _vehicleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_vehicleIdMeta);
+    }
+    if (data.containsKey('service_date')) {
+      context.handle(
+        _serviceDateMeta,
+        serviceDate.isAcceptableOrUnknown(
+          data['service_date']!,
+          _serviceDateMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_serviceDateMeta);
+    }
+    if (data.containsKey('material_cost_cents')) {
+      context.handle(
+        _materialCostCentsMeta,
+        materialCostCents.isAcceptableOrUnknown(
+          data['material_cost_cents']!,
+          _materialCostCentsMeta,
+        ),
+      );
+    }
+    if (data.containsKey('labor_cost_cents')) {
+      context.handle(
+        _laborCostCentsMeta,
+        laborCostCents.isAcceptableOrUnknown(
+          data['labor_cost_cents']!,
+          _laborCostCentsMeta,
+        ),
+      );
+    }
+    if (data.containsKey('total_cost_cents')) {
+      context.handle(
+        _totalCostCentsMeta,
+        totalCostCents.isAcceptableOrUnknown(
+          data['total_cost_cents']!,
+          _totalCostCentsMeta,
+        ),
+      );
+    }
+    if (data.containsKey('remark')) {
+      context.handle(
+        _remarkMeta,
+        remark.isAcceptableOrUnknown(data['remark']!, _remarkMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  MaintenanceRecord map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MaintenanceRecord(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      maintenanceItemId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}maintenance_item_id'],
+      )!,
+      vehicleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}vehicle_id'],
+      )!,
+      serviceDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}service_date'],
+      )!,
+      materialCostCents: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}material_cost_cents'],
+      )!,
+      laborCostCents: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}labor_cost_cents'],
+      )!,
+      totalCostCents: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}total_cost_cents'],
+      )!,
+      remark: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}remark'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
+    );
+  }
+
+  @override
+  $MaintenanceRecordsTable createAlias(String alias) {
+    return $MaintenanceRecordsTable(attachedDatabase, alias);
+  }
+}
+
+class MaintenanceRecord extends DataClass
+    implements Insertable<MaintenanceRecord> {
+  final int id;
+  final int maintenanceItemId;
+  final int vehicleId;
+  final DateTime serviceDate;
+  final int materialCostCents;
+  final int laborCostCents;
+  final int totalCostCents;
+  final String? remark;
+  final DateTime createdAt;
+  final bool isDeleted;
+  const MaintenanceRecord({
+    required this.id,
+    required this.maintenanceItemId,
+    required this.vehicleId,
+    required this.serviceDate,
+    required this.materialCostCents,
+    required this.laborCostCents,
+    required this.totalCostCents,
+    this.remark,
+    required this.createdAt,
+    required this.isDeleted,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['maintenance_item_id'] = Variable<int>(maintenanceItemId);
+    map['vehicle_id'] = Variable<int>(vehicleId);
+    map['service_date'] = Variable<DateTime>(serviceDate);
+    map['material_cost_cents'] = Variable<int>(materialCostCents);
+    map['labor_cost_cents'] = Variable<int>(laborCostCents);
+    map['total_cost_cents'] = Variable<int>(totalCostCents);
+    if (!nullToAbsent || remark != null) {
+      map['remark'] = Variable<String>(remark);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    return map;
+  }
+
+  MaintenanceRecordsCompanion toCompanion(bool nullToAbsent) {
+    return MaintenanceRecordsCompanion(
+      id: Value(id),
+      maintenanceItemId: Value(maintenanceItemId),
+      vehicleId: Value(vehicleId),
+      serviceDate: Value(serviceDate),
+      materialCostCents: Value(materialCostCents),
+      laborCostCents: Value(laborCostCents),
+      totalCostCents: Value(totalCostCents),
+      remark: remark == null && nullToAbsent
+          ? const Value.absent()
+          : Value(remark),
+      createdAt: Value(createdAt),
+      isDeleted: Value(isDeleted),
+    );
+  }
+
+  factory MaintenanceRecord.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MaintenanceRecord(
+      id: serializer.fromJson<int>(json['id']),
+      maintenanceItemId: serializer.fromJson<int>(json['maintenanceItemId']),
+      vehicleId: serializer.fromJson<int>(json['vehicleId']),
+      serviceDate: serializer.fromJson<DateTime>(json['serviceDate']),
+      materialCostCents: serializer.fromJson<int>(json['materialCostCents']),
+      laborCostCents: serializer.fromJson<int>(json['laborCostCents']),
+      totalCostCents: serializer.fromJson<int>(json['totalCostCents']),
+      remark: serializer.fromJson<String?>(json['remark']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'maintenanceItemId': serializer.toJson<int>(maintenanceItemId),
+      'vehicleId': serializer.toJson<int>(vehicleId),
+      'serviceDate': serializer.toJson<DateTime>(serviceDate),
+      'materialCostCents': serializer.toJson<int>(materialCostCents),
+      'laborCostCents': serializer.toJson<int>(laborCostCents),
+      'totalCostCents': serializer.toJson<int>(totalCostCents),
+      'remark': serializer.toJson<String?>(remark),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+    };
+  }
+
+  MaintenanceRecord copyWith({
+    int? id,
+    int? maintenanceItemId,
+    int? vehicleId,
+    DateTime? serviceDate,
+    int? materialCostCents,
+    int? laborCostCents,
+    int? totalCostCents,
+    Value<String?> remark = const Value.absent(),
+    DateTime? createdAt,
+    bool? isDeleted,
+  }) => MaintenanceRecord(
+    id: id ?? this.id,
+    maintenanceItemId: maintenanceItemId ?? this.maintenanceItemId,
+    vehicleId: vehicleId ?? this.vehicleId,
+    serviceDate: serviceDate ?? this.serviceDate,
+    materialCostCents: materialCostCents ?? this.materialCostCents,
+    laborCostCents: laborCostCents ?? this.laborCostCents,
+    totalCostCents: totalCostCents ?? this.totalCostCents,
+    remark: remark.present ? remark.value : this.remark,
+    createdAt: createdAt ?? this.createdAt,
+    isDeleted: isDeleted ?? this.isDeleted,
+  );
+  MaintenanceRecord copyWithCompanion(MaintenanceRecordsCompanion data) {
+    return MaintenanceRecord(
+      id: data.id.present ? data.id.value : this.id,
+      maintenanceItemId: data.maintenanceItemId.present
+          ? data.maintenanceItemId.value
+          : this.maintenanceItemId,
+      vehicleId: data.vehicleId.present ? data.vehicleId.value : this.vehicleId,
+      serviceDate: data.serviceDate.present
+          ? data.serviceDate.value
+          : this.serviceDate,
+      materialCostCents: data.materialCostCents.present
+          ? data.materialCostCents.value
+          : this.materialCostCents,
+      laborCostCents: data.laborCostCents.present
+          ? data.laborCostCents.value
+          : this.laborCostCents,
+      totalCostCents: data.totalCostCents.present
+          ? data.totalCostCents.value
+          : this.totalCostCents,
+      remark: data.remark.present ? data.remark.value : this.remark,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MaintenanceRecord(')
+          ..write('id: $id, ')
+          ..write('maintenanceItemId: $maintenanceItemId, ')
+          ..write('vehicleId: $vehicleId, ')
+          ..write('serviceDate: $serviceDate, ')
+          ..write('materialCostCents: $materialCostCents, ')
+          ..write('laborCostCents: $laborCostCents, ')
+          ..write('totalCostCents: $totalCostCents, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    maintenanceItemId,
+    vehicleId,
+    serviceDate,
+    materialCostCents,
+    laborCostCents,
+    totalCostCents,
+    remark,
+    createdAt,
+    isDeleted,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MaintenanceRecord &&
+          other.id == this.id &&
+          other.maintenanceItemId == this.maintenanceItemId &&
+          other.vehicleId == this.vehicleId &&
+          other.serviceDate == this.serviceDate &&
+          other.materialCostCents == this.materialCostCents &&
+          other.laborCostCents == this.laborCostCents &&
+          other.totalCostCents == this.totalCostCents &&
+          other.remark == this.remark &&
+          other.createdAt == this.createdAt &&
+          other.isDeleted == this.isDeleted);
+}
+
+class MaintenanceRecordsCompanion extends UpdateCompanion<MaintenanceRecord> {
+  final Value<int> id;
+  final Value<int> maintenanceItemId;
+  final Value<int> vehicleId;
+  final Value<DateTime> serviceDate;
+  final Value<int> materialCostCents;
+  final Value<int> laborCostCents;
+  final Value<int> totalCostCents;
+  final Value<String?> remark;
+  final Value<DateTime> createdAt;
+  final Value<bool> isDeleted;
+  const MaintenanceRecordsCompanion({
+    this.id = const Value.absent(),
+    this.maintenanceItemId = const Value.absent(),
+    this.vehicleId = const Value.absent(),
+    this.serviceDate = const Value.absent(),
+    this.materialCostCents = const Value.absent(),
+    this.laborCostCents = const Value.absent(),
+    this.totalCostCents = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  });
+  MaintenanceRecordsCompanion.insert({
+    this.id = const Value.absent(),
+    required int maintenanceItemId,
+    required int vehicleId,
+    required DateTime serviceDate,
+    this.materialCostCents = const Value.absent(),
+    this.laborCostCents = const Value.absent(),
+    this.totalCostCents = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  }) : maintenanceItemId = Value(maintenanceItemId),
+       vehicleId = Value(vehicleId),
+       serviceDate = Value(serviceDate);
+  static Insertable<MaintenanceRecord> custom({
+    Expression<int>? id,
+    Expression<int>? maintenanceItemId,
+    Expression<int>? vehicleId,
+    Expression<DateTime>? serviceDate,
+    Expression<int>? materialCostCents,
+    Expression<int>? laborCostCents,
+    Expression<int>? totalCostCents,
+    Expression<String>? remark,
+    Expression<DateTime>? createdAt,
+    Expression<bool>? isDeleted,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (maintenanceItemId != null) 'maintenance_item_id': maintenanceItemId,
+      if (vehicleId != null) 'vehicle_id': vehicleId,
+      if (serviceDate != null) 'service_date': serviceDate,
+      if (materialCostCents != null) 'material_cost_cents': materialCostCents,
+      if (laborCostCents != null) 'labor_cost_cents': laborCostCents,
+      if (totalCostCents != null) 'total_cost_cents': totalCostCents,
+      if (remark != null) 'remark': remark,
+      if (createdAt != null) 'created_at': createdAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+    });
+  }
+
+  MaintenanceRecordsCompanion copyWith({
+    Value<int>? id,
+    Value<int>? maintenanceItemId,
+    Value<int>? vehicleId,
+    Value<DateTime>? serviceDate,
+    Value<int>? materialCostCents,
+    Value<int>? laborCostCents,
+    Value<int>? totalCostCents,
+    Value<String?>? remark,
+    Value<DateTime>? createdAt,
+    Value<bool>? isDeleted,
+  }) {
+    return MaintenanceRecordsCompanion(
+      id: id ?? this.id,
+      maintenanceItemId: maintenanceItemId ?? this.maintenanceItemId,
+      vehicleId: vehicleId ?? this.vehicleId,
+      serviceDate: serviceDate ?? this.serviceDate,
+      materialCostCents: materialCostCents ?? this.materialCostCents,
+      laborCostCents: laborCostCents ?? this.laborCostCents,
+      totalCostCents: totalCostCents ?? this.totalCostCents,
+      remark: remark ?? this.remark,
+      createdAt: createdAt ?? this.createdAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (maintenanceItemId.present) {
+      map['maintenance_item_id'] = Variable<int>(maintenanceItemId.value);
+    }
+    if (vehicleId.present) {
+      map['vehicle_id'] = Variable<int>(vehicleId.value);
+    }
+    if (serviceDate.present) {
+      map['service_date'] = Variable<DateTime>(serviceDate.value);
+    }
+    if (materialCostCents.present) {
+      map['material_cost_cents'] = Variable<int>(materialCostCents.value);
+    }
+    if (laborCostCents.present) {
+      map['labor_cost_cents'] = Variable<int>(laborCostCents.value);
+    }
+    if (totalCostCents.present) {
+      map['total_cost_cents'] = Variable<int>(totalCostCents.value);
+    }
+    if (remark.present) {
+      map['remark'] = Variable<String>(remark.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MaintenanceRecordsCompanion(')
+          ..write('id: $id, ')
+          ..write('maintenanceItemId: $maintenanceItemId, ')
+          ..write('vehicleId: $vehicleId, ')
+          ..write('serviceDate: $serviceDate, ')
+          ..write('materialCostCents: $materialCostCents, ')
+          ..write('laborCostCents: $laborCostCents, ')
+          ..write('totalCostCents: $totalCostCents, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ComponentLifecycleRecordsTable extends ComponentLifecycleRecords
+    with TableInfo<$ComponentLifecycleRecordsTable, ComponentLifecycleRecord> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ComponentLifecycleRecordsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _vehicleIdMeta = const VerificationMeta(
+    'vehicleId',
+  );
+  @override
+  late final GeneratedColumn<int> vehicleId = GeneratedColumn<int>(
+    'vehicle_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES vehicles (id)',
+    ),
+  );
+  static const VerificationMeta _componentTypeMeta = const VerificationMeta(
+    'componentType',
+  );
+  @override
+  late final GeneratedColumn<String> componentType = GeneratedColumn<String>(
+    'component_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _componentKeyMeta = const VerificationMeta(
+    'componentKey',
+  );
+  @override
+  late final GeneratedColumn<String> componentKey = GeneratedColumn<String>(
+    'component_key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _installedDateMeta = const VerificationMeta(
+    'installedDate',
+  );
+  @override
+  late final GeneratedColumn<DateTime> installedDate =
+      GeneratedColumn<DateTime>(
+        'installed_date',
+        aliasedName,
+        false,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _removedDateMeta = const VerificationMeta(
+    'removedDate',
+  );
+  @override
+  late final GeneratedColumn<DateTime> removedDate = GeneratedColumn<DateTime>(
+    'removed_date',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<LifecycleStatus, String> status =
+      GeneratedColumn<String>(
+        'status',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        defaultValue: const Constant('inUse'),
+      ).withConverter<LifecycleStatus>(
+        $ComponentLifecycleRecordsTable.$converterstatus,
+      );
+  static const VerificationMeta _thresholdDaysMeta = const VerificationMeta(
+    'thresholdDays',
+  );
+  @override
+  late final GeneratedColumn<int> thresholdDays = GeneratedColumn<int>(
+    'threshold_days',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _lastServiceDateMeta = const VerificationMeta(
+    'lastServiceDate',
+  );
+  @override
+  late final GeneratedColumn<DateTime> lastServiceDate =
+      GeneratedColumn<DateTime>(
+        'last_service_date',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _remarkMeta = const VerificationMeta('remark');
+  @override
+  late final GeneratedColumn<String> remark = GeneratedColumn<String>(
+    'remark',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    vehicleId,
+    componentType,
+    componentKey,
+    name,
+    installedDate,
+    removedDate,
+    status,
+    thresholdDays,
+    lastServiceDate,
+    remark,
+    createdAt,
+    updatedAt,
+    isDeleted,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'component_lifecycle_records';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ComponentLifecycleRecord> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('vehicle_id')) {
+      context.handle(
+        _vehicleIdMeta,
+        vehicleId.isAcceptableOrUnknown(data['vehicle_id']!, _vehicleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_vehicleIdMeta);
+    }
+    if (data.containsKey('component_type')) {
+      context.handle(
+        _componentTypeMeta,
+        componentType.isAcceptableOrUnknown(
+          data['component_type']!,
+          _componentTypeMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_componentTypeMeta);
+    }
+    if (data.containsKey('component_key')) {
+      context.handle(
+        _componentKeyMeta,
+        componentKey.isAcceptableOrUnknown(
+          data['component_key']!,
+          _componentKeyMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_componentKeyMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('installed_date')) {
+      context.handle(
+        _installedDateMeta,
+        installedDate.isAcceptableOrUnknown(
+          data['installed_date']!,
+          _installedDateMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_installedDateMeta);
+    }
+    if (data.containsKey('removed_date')) {
+      context.handle(
+        _removedDateMeta,
+        removedDate.isAcceptableOrUnknown(
+          data['removed_date']!,
+          _removedDateMeta,
+        ),
+      );
+    }
+    if (data.containsKey('threshold_days')) {
+      context.handle(
+        _thresholdDaysMeta,
+        thresholdDays.isAcceptableOrUnknown(
+          data['threshold_days']!,
+          _thresholdDaysMeta,
+        ),
+      );
+    }
+    if (data.containsKey('last_service_date')) {
+      context.handle(
+        _lastServiceDateMeta,
+        lastServiceDate.isAcceptableOrUnknown(
+          data['last_service_date']!,
+          _lastServiceDateMeta,
+        ),
+      );
+    }
+    if (data.containsKey('remark')) {
+      context.handle(
+        _remarkMeta,
+        remark.isAcceptableOrUnknown(data['remark']!, _remarkMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ComponentLifecycleRecord map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ComponentLifecycleRecord(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      vehicleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}vehicle_id'],
+      )!,
+      componentType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}component_type'],
+      )!,
+      componentKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}component_key'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      installedDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}installed_date'],
+      )!,
+      removedDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}removed_date'],
+      ),
+      status: $ComponentLifecycleRecordsTable.$converterstatus.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}status'],
+        )!,
+      ),
+      thresholdDays: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}threshold_days'],
+      ),
+      lastServiceDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}last_service_date'],
+      ),
+      remark: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}remark'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
+    );
+  }
+
+  @override
+  $ComponentLifecycleRecordsTable createAlias(String alias) {
+    return $ComponentLifecycleRecordsTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<LifecycleStatus, String, String> $converterstatus =
+      const EnumNameConverter<LifecycleStatus>(LifecycleStatus.values);
+}
+
+class ComponentLifecycleRecord extends DataClass
+    implements Insertable<ComponentLifecycleRecord> {
+  final int id;
+  final int vehicleId;
+  final String componentType;
+  final String componentKey;
+  final String name;
+  final DateTime installedDate;
+  final DateTime? removedDate;
+  final LifecycleStatus status;
+  final int? thresholdDays;
+  final DateTime? lastServiceDate;
+  final String? remark;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final bool isDeleted;
+  const ComponentLifecycleRecord({
+    required this.id,
+    required this.vehicleId,
+    required this.componentType,
+    required this.componentKey,
+    required this.name,
+    required this.installedDate,
+    this.removedDate,
+    required this.status,
+    this.thresholdDays,
+    this.lastServiceDate,
+    this.remark,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isDeleted,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['vehicle_id'] = Variable<int>(vehicleId);
+    map['component_type'] = Variable<String>(componentType);
+    map['component_key'] = Variable<String>(componentKey);
+    map['name'] = Variable<String>(name);
+    map['installed_date'] = Variable<DateTime>(installedDate);
+    if (!nullToAbsent || removedDate != null) {
+      map['removed_date'] = Variable<DateTime>(removedDate);
+    }
+    {
+      map['status'] = Variable<String>(
+        $ComponentLifecycleRecordsTable.$converterstatus.toSql(status),
+      );
+    }
+    if (!nullToAbsent || thresholdDays != null) {
+      map['threshold_days'] = Variable<int>(thresholdDays);
+    }
+    if (!nullToAbsent || lastServiceDate != null) {
+      map['last_service_date'] = Variable<DateTime>(lastServiceDate);
+    }
+    if (!nullToAbsent || remark != null) {
+      map['remark'] = Variable<String>(remark);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    return map;
+  }
+
+  ComponentLifecycleRecordsCompanion toCompanion(bool nullToAbsent) {
+    return ComponentLifecycleRecordsCompanion(
+      id: Value(id),
+      vehicleId: Value(vehicleId),
+      componentType: Value(componentType),
+      componentKey: Value(componentKey),
+      name: Value(name),
+      installedDate: Value(installedDate),
+      removedDate: removedDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(removedDate),
+      status: Value(status),
+      thresholdDays: thresholdDays == null && nullToAbsent
+          ? const Value.absent()
+          : Value(thresholdDays),
+      lastServiceDate: lastServiceDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastServiceDate),
+      remark: remark == null && nullToAbsent
+          ? const Value.absent()
+          : Value(remark),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isDeleted: Value(isDeleted),
+    );
+  }
+
+  factory ComponentLifecycleRecord.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ComponentLifecycleRecord(
+      id: serializer.fromJson<int>(json['id']),
+      vehicleId: serializer.fromJson<int>(json['vehicleId']),
+      componentType: serializer.fromJson<String>(json['componentType']),
+      componentKey: serializer.fromJson<String>(json['componentKey']),
+      name: serializer.fromJson<String>(json['name']),
+      installedDate: serializer.fromJson<DateTime>(json['installedDate']),
+      removedDate: serializer.fromJson<DateTime?>(json['removedDate']),
+      status: $ComponentLifecycleRecordsTable.$converterstatus.fromJson(
+        serializer.fromJson<String>(json['status']),
+      ),
+      thresholdDays: serializer.fromJson<int?>(json['thresholdDays']),
+      lastServiceDate: serializer.fromJson<DateTime?>(json['lastServiceDate']),
+      remark: serializer.fromJson<String?>(json['remark']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'vehicleId': serializer.toJson<int>(vehicleId),
+      'componentType': serializer.toJson<String>(componentType),
+      'componentKey': serializer.toJson<String>(componentKey),
+      'name': serializer.toJson<String>(name),
+      'installedDate': serializer.toJson<DateTime>(installedDate),
+      'removedDate': serializer.toJson<DateTime?>(removedDate),
+      'status': serializer.toJson<String>(
+        $ComponentLifecycleRecordsTable.$converterstatus.toJson(status),
+      ),
+      'thresholdDays': serializer.toJson<int?>(thresholdDays),
+      'lastServiceDate': serializer.toJson<DateTime?>(lastServiceDate),
+      'remark': serializer.toJson<String?>(remark),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+    };
+  }
+
+  ComponentLifecycleRecord copyWith({
+    int? id,
+    int? vehicleId,
+    String? componentType,
+    String? componentKey,
+    String? name,
+    DateTime? installedDate,
+    Value<DateTime?> removedDate = const Value.absent(),
+    LifecycleStatus? status,
+    Value<int?> thresholdDays = const Value.absent(),
+    Value<DateTime?> lastServiceDate = const Value.absent(),
+    Value<String?> remark = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? isDeleted,
+  }) => ComponentLifecycleRecord(
+    id: id ?? this.id,
+    vehicleId: vehicleId ?? this.vehicleId,
+    componentType: componentType ?? this.componentType,
+    componentKey: componentKey ?? this.componentKey,
+    name: name ?? this.name,
+    installedDate: installedDate ?? this.installedDate,
+    removedDate: removedDate.present ? removedDate.value : this.removedDate,
+    status: status ?? this.status,
+    thresholdDays: thresholdDays.present
+        ? thresholdDays.value
+        : this.thresholdDays,
+    lastServiceDate: lastServiceDate.present
+        ? lastServiceDate.value
+        : this.lastServiceDate,
+    remark: remark.present ? remark.value : this.remark,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isDeleted: isDeleted ?? this.isDeleted,
+  );
+  ComponentLifecycleRecord copyWithCompanion(
+    ComponentLifecycleRecordsCompanion data,
+  ) {
+    return ComponentLifecycleRecord(
+      id: data.id.present ? data.id.value : this.id,
+      vehicleId: data.vehicleId.present ? data.vehicleId.value : this.vehicleId,
+      componentType: data.componentType.present
+          ? data.componentType.value
+          : this.componentType,
+      componentKey: data.componentKey.present
+          ? data.componentKey.value
+          : this.componentKey,
+      name: data.name.present ? data.name.value : this.name,
+      installedDate: data.installedDate.present
+          ? data.installedDate.value
+          : this.installedDate,
+      removedDate: data.removedDate.present
+          ? data.removedDate.value
+          : this.removedDate,
+      status: data.status.present ? data.status.value : this.status,
+      thresholdDays: data.thresholdDays.present
+          ? data.thresholdDays.value
+          : this.thresholdDays,
+      lastServiceDate: data.lastServiceDate.present
+          ? data.lastServiceDate.value
+          : this.lastServiceDate,
+      remark: data.remark.present ? data.remark.value : this.remark,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ComponentLifecycleRecord(')
+          ..write('id: $id, ')
+          ..write('vehicleId: $vehicleId, ')
+          ..write('componentType: $componentType, ')
+          ..write('componentKey: $componentKey, ')
+          ..write('name: $name, ')
+          ..write('installedDate: $installedDate, ')
+          ..write('removedDate: $removedDate, ')
+          ..write('status: $status, ')
+          ..write('thresholdDays: $thresholdDays, ')
+          ..write('lastServiceDate: $lastServiceDate, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    vehicleId,
+    componentType,
+    componentKey,
+    name,
+    installedDate,
+    removedDate,
+    status,
+    thresholdDays,
+    lastServiceDate,
+    remark,
+    createdAt,
+    updatedAt,
+    isDeleted,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ComponentLifecycleRecord &&
+          other.id == this.id &&
+          other.vehicleId == this.vehicleId &&
+          other.componentType == this.componentType &&
+          other.componentKey == this.componentKey &&
+          other.name == this.name &&
+          other.installedDate == this.installedDate &&
+          other.removedDate == this.removedDate &&
+          other.status == this.status &&
+          other.thresholdDays == this.thresholdDays &&
+          other.lastServiceDate == this.lastServiceDate &&
+          other.remark == this.remark &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isDeleted == this.isDeleted);
+}
+
+class ComponentLifecycleRecordsCompanion
+    extends UpdateCompanion<ComponentLifecycleRecord> {
+  final Value<int> id;
+  final Value<int> vehicleId;
+  final Value<String> componentType;
+  final Value<String> componentKey;
+  final Value<String> name;
+  final Value<DateTime> installedDate;
+  final Value<DateTime?> removedDate;
+  final Value<LifecycleStatus> status;
+  final Value<int?> thresholdDays;
+  final Value<DateTime?> lastServiceDate;
+  final Value<String?> remark;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isDeleted;
+  const ComponentLifecycleRecordsCompanion({
+    this.id = const Value.absent(),
+    this.vehicleId = const Value.absent(),
+    this.componentType = const Value.absent(),
+    this.componentKey = const Value.absent(),
+    this.name = const Value.absent(),
+    this.installedDate = const Value.absent(),
+    this.removedDate = const Value.absent(),
+    this.status = const Value.absent(),
+    this.thresholdDays = const Value.absent(),
+    this.lastServiceDate = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  });
+  ComponentLifecycleRecordsCompanion.insert({
+    this.id = const Value.absent(),
+    required int vehicleId,
+    required String componentType,
+    required String componentKey,
+    required String name,
+    required DateTime installedDate,
+    this.removedDate = const Value.absent(),
+    this.status = const Value.absent(),
+    this.thresholdDays = const Value.absent(),
+    this.lastServiceDate = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  }) : vehicleId = Value(vehicleId),
+       componentType = Value(componentType),
+       componentKey = Value(componentKey),
+       name = Value(name),
+       installedDate = Value(installedDate);
+  static Insertable<ComponentLifecycleRecord> custom({
+    Expression<int>? id,
+    Expression<int>? vehicleId,
+    Expression<String>? componentType,
+    Expression<String>? componentKey,
+    Expression<String>? name,
+    Expression<DateTime>? installedDate,
+    Expression<DateTime>? removedDate,
+    Expression<String>? status,
+    Expression<int>? thresholdDays,
+    Expression<DateTime>? lastServiceDate,
+    Expression<String>? remark,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isDeleted,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (vehicleId != null) 'vehicle_id': vehicleId,
+      if (componentType != null) 'component_type': componentType,
+      if (componentKey != null) 'component_key': componentKey,
+      if (name != null) 'name': name,
+      if (installedDate != null) 'installed_date': installedDate,
+      if (removedDate != null) 'removed_date': removedDate,
+      if (status != null) 'status': status,
+      if (thresholdDays != null) 'threshold_days': thresholdDays,
+      if (lastServiceDate != null) 'last_service_date': lastServiceDate,
+      if (remark != null) 'remark': remark,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+    });
+  }
+
+  ComponentLifecycleRecordsCompanion copyWith({
+    Value<int>? id,
+    Value<int>? vehicleId,
+    Value<String>? componentType,
+    Value<String>? componentKey,
+    Value<String>? name,
+    Value<DateTime>? installedDate,
+    Value<DateTime?>? removedDate,
+    Value<LifecycleStatus>? status,
+    Value<int?>? thresholdDays,
+    Value<DateTime?>? lastServiceDate,
+    Value<String?>? remark,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isDeleted,
+  }) {
+    return ComponentLifecycleRecordsCompanion(
+      id: id ?? this.id,
+      vehicleId: vehicleId ?? this.vehicleId,
+      componentType: componentType ?? this.componentType,
+      componentKey: componentKey ?? this.componentKey,
+      name: name ?? this.name,
+      installedDate: installedDate ?? this.installedDate,
+      removedDate: removedDate ?? this.removedDate,
+      status: status ?? this.status,
+      thresholdDays: thresholdDays ?? this.thresholdDays,
+      lastServiceDate: lastServiceDate ?? this.lastServiceDate,
+      remark: remark ?? this.remark,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (vehicleId.present) {
+      map['vehicle_id'] = Variable<int>(vehicleId.value);
+    }
+    if (componentType.present) {
+      map['component_type'] = Variable<String>(componentType.value);
+    }
+    if (componentKey.present) {
+      map['component_key'] = Variable<String>(componentKey.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (installedDate.present) {
+      map['installed_date'] = Variable<DateTime>(installedDate.value);
+    }
+    if (removedDate.present) {
+      map['removed_date'] = Variable<DateTime>(removedDate.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(
+        $ComponentLifecycleRecordsTable.$converterstatus.toSql(status.value),
+      );
+    }
+    if (thresholdDays.present) {
+      map['threshold_days'] = Variable<int>(thresholdDays.value);
+    }
+    if (lastServiceDate.present) {
+      map['last_service_date'] = Variable<DateTime>(lastServiceDate.value);
+    }
+    if (remark.present) {
+      map['remark'] = Variable<String>(remark.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ComponentLifecycleRecordsCompanion(')
+          ..write('id: $id, ')
+          ..write('vehicleId: $vehicleId, ')
+          ..write('componentType: $componentType, ')
+          ..write('componentKey: $componentKey, ')
+          ..write('name: $name, ')
+          ..write('installedDate: $installedDate, ')
+          ..write('removedDate: $removedDate, ')
+          ..write('status: $status, ')
+          ..write('thresholdDays: $thresholdDays, ')
+          ..write('lastServiceDate: $lastServiceDate, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $FuelMonthlyRecordsTable extends FuelMonthlyRecords
+    with TableInfo<$FuelMonthlyRecordsTable, FuelMonthlyRecord> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $FuelMonthlyRecordsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _vehicleIdMeta = const VerificationMeta(
+    'vehicleId',
+  );
+  @override
+  late final GeneratedColumn<int> vehicleId = GeneratedColumn<int>(
+    'vehicle_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES vehicles (id)',
+    ),
+  );
+  static const VerificationMeta _yearMeta = const VerificationMeta('year');
+  @override
+  late final GeneratedColumn<int> year = GeneratedColumn<int>(
+    'year',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _monthMeta = const VerificationMeta('month');
+  @override
+  late final GeneratedColumn<int> month = GeneratedColumn<int>(
+    'month',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _litersMeta = const VerificationMeta('liters');
+  @override
+  late final GeneratedColumn<double> liters = GeneratedColumn<double>(
+    'liters',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _amountCentsMeta = const VerificationMeta(
+    'amountCents',
+  );
+  @override
+  late final GeneratedColumn<int> amountCents = GeneratedColumn<int>(
+    'amount_cents',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _workDaysMeta = const VerificationMeta(
+    'workDays',
+  );
+  @override
+  late final GeneratedColumn<int> workDays = GeneratedColumn<int>(
+    'work_days',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _workMileageMeta = const VerificationMeta(
+    'workMileage',
+  );
+  @override
+  late final GeneratedColumn<double> workMileage = GeneratedColumn<double>(
+    'work_mileage',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _workHoursMeta = const VerificationMeta(
+    'workHours',
+  );
+  @override
+  late final GeneratedColumn<double> workHours = GeneratedColumn<double>(
+    'work_hours',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _remarkMeta = const VerificationMeta('remark');
+  @override
+  late final GeneratedColumn<String> remark = GeneratedColumn<String>(
+    'remark',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    vehicleId,
+    year,
+    month,
+    liters,
+    amountCents,
+    workDays,
+    workMileage,
+    workHours,
+    remark,
+    createdAt,
+    updatedAt,
+    isDeleted,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'fuel_monthly_records';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<FuelMonthlyRecord> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('vehicle_id')) {
+      context.handle(
+        _vehicleIdMeta,
+        vehicleId.isAcceptableOrUnknown(data['vehicle_id']!, _vehicleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_vehicleIdMeta);
+    }
+    if (data.containsKey('year')) {
+      context.handle(
+        _yearMeta,
+        year.isAcceptableOrUnknown(data['year']!, _yearMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_yearMeta);
+    }
+    if (data.containsKey('month')) {
+      context.handle(
+        _monthMeta,
+        month.isAcceptableOrUnknown(data['month']!, _monthMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_monthMeta);
+    }
+    if (data.containsKey('liters')) {
+      context.handle(
+        _litersMeta,
+        liters.isAcceptableOrUnknown(data['liters']!, _litersMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_litersMeta);
+    }
+    if (data.containsKey('amount_cents')) {
+      context.handle(
+        _amountCentsMeta,
+        amountCents.isAcceptableOrUnknown(
+          data['amount_cents']!,
+          _amountCentsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_amountCentsMeta);
+    }
+    if (data.containsKey('work_days')) {
+      context.handle(
+        _workDaysMeta,
+        workDays.isAcceptableOrUnknown(data['work_days']!, _workDaysMeta),
+      );
+    }
+    if (data.containsKey('work_mileage')) {
+      context.handle(
+        _workMileageMeta,
+        workMileage.isAcceptableOrUnknown(
+          data['work_mileage']!,
+          _workMileageMeta,
+        ),
+      );
+    }
+    if (data.containsKey('work_hours')) {
+      context.handle(
+        _workHoursMeta,
+        workHours.isAcceptableOrUnknown(data['work_hours']!, _workHoursMeta),
+      );
+    }
+    if (data.containsKey('remark')) {
+      context.handle(
+        _remarkMeta,
+        remark.isAcceptableOrUnknown(data['remark']!, _remarkMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  List<Set<GeneratedColumn>> get uniqueKeys => [
+    {vehicleId, year, month},
+  ];
+  @override
+  FuelMonthlyRecord map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return FuelMonthlyRecord(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      vehicleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}vehicle_id'],
+      )!,
+      year: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}year'],
+      )!,
+      month: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}month'],
+      )!,
+      liters: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}liters'],
+      )!,
+      amountCents: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}amount_cents'],
+      )!,
+      workDays: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}work_days'],
+      ),
+      workMileage: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}work_mileage'],
+      ),
+      workHours: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}work_hours'],
+      ),
+      remark: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}remark'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
+    );
+  }
+
+  @override
+  $FuelMonthlyRecordsTable createAlias(String alias) {
+    return $FuelMonthlyRecordsTable(attachedDatabase, alias);
+  }
+}
+
+class FuelMonthlyRecord extends DataClass
+    implements Insertable<FuelMonthlyRecord> {
+  final int id;
+  final int vehicleId;
+  final int year;
+  final int month;
+  final double liters;
+  final int amountCents;
+  final int? workDays;
+  final double? workMileage;
+  final double? workHours;
+  final String? remark;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final bool isDeleted;
+  const FuelMonthlyRecord({
+    required this.id,
+    required this.vehicleId,
+    required this.year,
+    required this.month,
+    required this.liters,
+    required this.amountCents,
+    this.workDays,
+    this.workMileage,
+    this.workHours,
+    this.remark,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isDeleted,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['vehicle_id'] = Variable<int>(vehicleId);
+    map['year'] = Variable<int>(year);
+    map['month'] = Variable<int>(month);
+    map['liters'] = Variable<double>(liters);
+    map['amount_cents'] = Variable<int>(amountCents);
+    if (!nullToAbsent || workDays != null) {
+      map['work_days'] = Variable<int>(workDays);
+    }
+    if (!nullToAbsent || workMileage != null) {
+      map['work_mileage'] = Variable<double>(workMileage);
+    }
+    if (!nullToAbsent || workHours != null) {
+      map['work_hours'] = Variable<double>(workHours);
+    }
+    if (!nullToAbsent || remark != null) {
+      map['remark'] = Variable<String>(remark);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    return map;
+  }
+
+  FuelMonthlyRecordsCompanion toCompanion(bool nullToAbsent) {
+    return FuelMonthlyRecordsCompanion(
+      id: Value(id),
+      vehicleId: Value(vehicleId),
+      year: Value(year),
+      month: Value(month),
+      liters: Value(liters),
+      amountCents: Value(amountCents),
+      workDays: workDays == null && nullToAbsent
+          ? const Value.absent()
+          : Value(workDays),
+      workMileage: workMileage == null && nullToAbsent
+          ? const Value.absent()
+          : Value(workMileage),
+      workHours: workHours == null && nullToAbsent
+          ? const Value.absent()
+          : Value(workHours),
+      remark: remark == null && nullToAbsent
+          ? const Value.absent()
+          : Value(remark),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isDeleted: Value(isDeleted),
+    );
+  }
+
+  factory FuelMonthlyRecord.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return FuelMonthlyRecord(
+      id: serializer.fromJson<int>(json['id']),
+      vehicleId: serializer.fromJson<int>(json['vehicleId']),
+      year: serializer.fromJson<int>(json['year']),
+      month: serializer.fromJson<int>(json['month']),
+      liters: serializer.fromJson<double>(json['liters']),
+      amountCents: serializer.fromJson<int>(json['amountCents']),
+      workDays: serializer.fromJson<int?>(json['workDays']),
+      workMileage: serializer.fromJson<double?>(json['workMileage']),
+      workHours: serializer.fromJson<double?>(json['workHours']),
+      remark: serializer.fromJson<String?>(json['remark']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'vehicleId': serializer.toJson<int>(vehicleId),
+      'year': serializer.toJson<int>(year),
+      'month': serializer.toJson<int>(month),
+      'liters': serializer.toJson<double>(liters),
+      'amountCents': serializer.toJson<int>(amountCents),
+      'workDays': serializer.toJson<int?>(workDays),
+      'workMileage': serializer.toJson<double?>(workMileage),
+      'workHours': serializer.toJson<double?>(workHours),
+      'remark': serializer.toJson<String?>(remark),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+    };
+  }
+
+  FuelMonthlyRecord copyWith({
+    int? id,
+    int? vehicleId,
+    int? year,
+    int? month,
+    double? liters,
+    int? amountCents,
+    Value<int?> workDays = const Value.absent(),
+    Value<double?> workMileage = const Value.absent(),
+    Value<double?> workHours = const Value.absent(),
+    Value<String?> remark = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? isDeleted,
+  }) => FuelMonthlyRecord(
+    id: id ?? this.id,
+    vehicleId: vehicleId ?? this.vehicleId,
+    year: year ?? this.year,
+    month: month ?? this.month,
+    liters: liters ?? this.liters,
+    amountCents: amountCents ?? this.amountCents,
+    workDays: workDays.present ? workDays.value : this.workDays,
+    workMileage: workMileage.present ? workMileage.value : this.workMileage,
+    workHours: workHours.present ? workHours.value : this.workHours,
+    remark: remark.present ? remark.value : this.remark,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isDeleted: isDeleted ?? this.isDeleted,
+  );
+  FuelMonthlyRecord copyWithCompanion(FuelMonthlyRecordsCompanion data) {
+    return FuelMonthlyRecord(
+      id: data.id.present ? data.id.value : this.id,
+      vehicleId: data.vehicleId.present ? data.vehicleId.value : this.vehicleId,
+      year: data.year.present ? data.year.value : this.year,
+      month: data.month.present ? data.month.value : this.month,
+      liters: data.liters.present ? data.liters.value : this.liters,
+      amountCents: data.amountCents.present
+          ? data.amountCents.value
+          : this.amountCents,
+      workDays: data.workDays.present ? data.workDays.value : this.workDays,
+      workMileage: data.workMileage.present
+          ? data.workMileage.value
+          : this.workMileage,
+      workHours: data.workHours.present ? data.workHours.value : this.workHours,
+      remark: data.remark.present ? data.remark.value : this.remark,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FuelMonthlyRecord(')
+          ..write('id: $id, ')
+          ..write('vehicleId: $vehicleId, ')
+          ..write('year: $year, ')
+          ..write('month: $month, ')
+          ..write('liters: $liters, ')
+          ..write('amountCents: $amountCents, ')
+          ..write('workDays: $workDays, ')
+          ..write('workMileage: $workMileage, ')
+          ..write('workHours: $workHours, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    vehicleId,
+    year,
+    month,
+    liters,
+    amountCents,
+    workDays,
+    workMileage,
+    workHours,
+    remark,
+    createdAt,
+    updatedAt,
+    isDeleted,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is FuelMonthlyRecord &&
+          other.id == this.id &&
+          other.vehicleId == this.vehicleId &&
+          other.year == this.year &&
+          other.month == this.month &&
+          other.liters == this.liters &&
+          other.amountCents == this.amountCents &&
+          other.workDays == this.workDays &&
+          other.workMileage == this.workMileage &&
+          other.workHours == this.workHours &&
+          other.remark == this.remark &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isDeleted == this.isDeleted);
+}
+
+class FuelMonthlyRecordsCompanion extends UpdateCompanion<FuelMonthlyRecord> {
+  final Value<int> id;
+  final Value<int> vehicleId;
+  final Value<int> year;
+  final Value<int> month;
+  final Value<double> liters;
+  final Value<int> amountCents;
+  final Value<int?> workDays;
+  final Value<double?> workMileage;
+  final Value<double?> workHours;
+  final Value<String?> remark;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isDeleted;
+  const FuelMonthlyRecordsCompanion({
+    this.id = const Value.absent(),
+    this.vehicleId = const Value.absent(),
+    this.year = const Value.absent(),
+    this.month = const Value.absent(),
+    this.liters = const Value.absent(),
+    this.amountCents = const Value.absent(),
+    this.workDays = const Value.absent(),
+    this.workMileage = const Value.absent(),
+    this.workHours = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  });
+  FuelMonthlyRecordsCompanion.insert({
+    this.id = const Value.absent(),
+    required int vehicleId,
+    required int year,
+    required int month,
+    required double liters,
+    required int amountCents,
+    this.workDays = const Value.absent(),
+    this.workMileage = const Value.absent(),
+    this.workHours = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  }) : vehicleId = Value(vehicleId),
+       year = Value(year),
+       month = Value(month),
+       liters = Value(liters),
+       amountCents = Value(amountCents);
+  static Insertable<FuelMonthlyRecord> custom({
+    Expression<int>? id,
+    Expression<int>? vehicleId,
+    Expression<int>? year,
+    Expression<int>? month,
+    Expression<double>? liters,
+    Expression<int>? amountCents,
+    Expression<int>? workDays,
+    Expression<double>? workMileage,
+    Expression<double>? workHours,
+    Expression<String>? remark,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isDeleted,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (vehicleId != null) 'vehicle_id': vehicleId,
+      if (year != null) 'year': year,
+      if (month != null) 'month': month,
+      if (liters != null) 'liters': liters,
+      if (amountCents != null) 'amount_cents': amountCents,
+      if (workDays != null) 'work_days': workDays,
+      if (workMileage != null) 'work_mileage': workMileage,
+      if (workHours != null) 'work_hours': workHours,
+      if (remark != null) 'remark': remark,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+    });
+  }
+
+  FuelMonthlyRecordsCompanion copyWith({
+    Value<int>? id,
+    Value<int>? vehicleId,
+    Value<int>? year,
+    Value<int>? month,
+    Value<double>? liters,
+    Value<int>? amountCents,
+    Value<int?>? workDays,
+    Value<double?>? workMileage,
+    Value<double?>? workHours,
+    Value<String?>? remark,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isDeleted,
+  }) {
+    return FuelMonthlyRecordsCompanion(
+      id: id ?? this.id,
+      vehicleId: vehicleId ?? this.vehicleId,
+      year: year ?? this.year,
+      month: month ?? this.month,
+      liters: liters ?? this.liters,
+      amountCents: amountCents ?? this.amountCents,
+      workDays: workDays ?? this.workDays,
+      workMileage: workMileage ?? this.workMileage,
+      workHours: workHours ?? this.workHours,
+      remark: remark ?? this.remark,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (vehicleId.present) {
+      map['vehicle_id'] = Variable<int>(vehicleId.value);
+    }
+    if (year.present) {
+      map['year'] = Variable<int>(year.value);
+    }
+    if (month.present) {
+      map['month'] = Variable<int>(month.value);
+    }
+    if (liters.present) {
+      map['liters'] = Variable<double>(liters.value);
+    }
+    if (amountCents.present) {
+      map['amount_cents'] = Variable<int>(amountCents.value);
+    }
+    if (workDays.present) {
+      map['work_days'] = Variable<int>(workDays.value);
+    }
+    if (workMileage.present) {
+      map['work_mileage'] = Variable<double>(workMileage.value);
+    }
+    if (workHours.present) {
+      map['work_hours'] = Variable<double>(workHours.value);
+    }
+    if (remark.present) {
+      map['remark'] = Variable<String>(remark.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FuelMonthlyRecordsCompanion(')
+          ..write('id: $id, ')
+          ..write('vehicleId: $vehicleId, ')
+          ..write('year: $year, ')
+          ..write('month: $month, ')
+          ..write('liters: $liters, ')
+          ..write('amountCents: $amountCents, ')
+          ..write('workDays: $workDays, ')
+          ..write('workMileage: $workMileage, ')
+          ..write('workHours: $workHours, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ManualVehicleExpensesTable extends ManualVehicleExpenses
+    with TableInfo<$ManualVehicleExpensesTable, ManualVehicleExpense> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ManualVehicleExpensesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _vehicleIdMeta = const VerificationMeta(
+    'vehicleId',
+  );
+  @override
+  late final GeneratedColumn<int> vehicleId = GeneratedColumn<int>(
+    'vehicle_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES vehicles (id)',
+    ),
+  );
+  static const VerificationMeta _expenseDateMeta = const VerificationMeta(
+    'expenseDate',
+  );
+  @override
+  late final GeneratedColumn<DateTime> expenseDate = GeneratedColumn<DateTime>(
+    'expense_date',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _expenseTypeMeta = const VerificationMeta(
+    'expenseType',
+  );
+  @override
+  late final GeneratedColumn<String> expenseType = GeneratedColumn<String>(
+    'expense_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _amountCentsMeta = const VerificationMeta(
+    'amountCents',
+  );
+  @override
+  late final GeneratedColumn<int> amountCents = GeneratedColumn<int>(
+    'amount_cents',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _remarkMeta = const VerificationMeta('remark');
+  @override
+  late final GeneratedColumn<String> remark = GeneratedColumn<String>(
+    'remark',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    vehicleId,
+    expenseDate,
+    expenseType,
+    amountCents,
+    remark,
+    createdAt,
+    updatedAt,
+    isDeleted,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'manual_vehicle_expenses';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ManualVehicleExpense> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('vehicle_id')) {
+      context.handle(
+        _vehicleIdMeta,
+        vehicleId.isAcceptableOrUnknown(data['vehicle_id']!, _vehicleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_vehicleIdMeta);
+    }
+    if (data.containsKey('expense_date')) {
+      context.handle(
+        _expenseDateMeta,
+        expenseDate.isAcceptableOrUnknown(
+          data['expense_date']!,
+          _expenseDateMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_expenseDateMeta);
+    }
+    if (data.containsKey('expense_type')) {
+      context.handle(
+        _expenseTypeMeta,
+        expenseType.isAcceptableOrUnknown(
+          data['expense_type']!,
+          _expenseTypeMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_expenseTypeMeta);
+    }
+    if (data.containsKey('amount_cents')) {
+      context.handle(
+        _amountCentsMeta,
+        amountCents.isAcceptableOrUnknown(
+          data['amount_cents']!,
+          _amountCentsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_amountCentsMeta);
+    }
+    if (data.containsKey('remark')) {
+      context.handle(
+        _remarkMeta,
+        remark.isAcceptableOrUnknown(data['remark']!, _remarkMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ManualVehicleExpense map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ManualVehicleExpense(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      vehicleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}vehicle_id'],
+      )!,
+      expenseDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}expense_date'],
+      )!,
+      expenseType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}expense_type'],
+      )!,
+      amountCents: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}amount_cents'],
+      )!,
+      remark: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}remark'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
+    );
+  }
+
+  @override
+  $ManualVehicleExpensesTable createAlias(String alias) {
+    return $ManualVehicleExpensesTable(attachedDatabase, alias);
+  }
+}
+
+class ManualVehicleExpense extends DataClass
+    implements Insertable<ManualVehicleExpense> {
+  final int id;
+  final int vehicleId;
+  final DateTime expenseDate;
+  final String expenseType;
+  final int amountCents;
+  final String? remark;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final bool isDeleted;
+  const ManualVehicleExpense({
+    required this.id,
+    required this.vehicleId,
+    required this.expenseDate,
+    required this.expenseType,
+    required this.amountCents,
+    this.remark,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isDeleted,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['vehicle_id'] = Variable<int>(vehicleId);
+    map['expense_date'] = Variable<DateTime>(expenseDate);
+    map['expense_type'] = Variable<String>(expenseType);
+    map['amount_cents'] = Variable<int>(amountCents);
+    if (!nullToAbsent || remark != null) {
+      map['remark'] = Variable<String>(remark);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    return map;
+  }
+
+  ManualVehicleExpensesCompanion toCompanion(bool nullToAbsent) {
+    return ManualVehicleExpensesCompanion(
+      id: Value(id),
+      vehicleId: Value(vehicleId),
+      expenseDate: Value(expenseDate),
+      expenseType: Value(expenseType),
+      amountCents: Value(amountCents),
+      remark: remark == null && nullToAbsent
+          ? const Value.absent()
+          : Value(remark),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isDeleted: Value(isDeleted),
+    );
+  }
+
+  factory ManualVehicleExpense.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ManualVehicleExpense(
+      id: serializer.fromJson<int>(json['id']),
+      vehicleId: serializer.fromJson<int>(json['vehicleId']),
+      expenseDate: serializer.fromJson<DateTime>(json['expenseDate']),
+      expenseType: serializer.fromJson<String>(json['expenseType']),
+      amountCents: serializer.fromJson<int>(json['amountCents']),
+      remark: serializer.fromJson<String?>(json['remark']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'vehicleId': serializer.toJson<int>(vehicleId),
+      'expenseDate': serializer.toJson<DateTime>(expenseDate),
+      'expenseType': serializer.toJson<String>(expenseType),
+      'amountCents': serializer.toJson<int>(amountCents),
+      'remark': serializer.toJson<String?>(remark),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+    };
+  }
+
+  ManualVehicleExpense copyWith({
+    int? id,
+    int? vehicleId,
+    DateTime? expenseDate,
+    String? expenseType,
+    int? amountCents,
+    Value<String?> remark = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? isDeleted,
+  }) => ManualVehicleExpense(
+    id: id ?? this.id,
+    vehicleId: vehicleId ?? this.vehicleId,
+    expenseDate: expenseDate ?? this.expenseDate,
+    expenseType: expenseType ?? this.expenseType,
+    amountCents: amountCents ?? this.amountCents,
+    remark: remark.present ? remark.value : this.remark,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isDeleted: isDeleted ?? this.isDeleted,
+  );
+  ManualVehicleExpense copyWithCompanion(ManualVehicleExpensesCompanion data) {
+    return ManualVehicleExpense(
+      id: data.id.present ? data.id.value : this.id,
+      vehicleId: data.vehicleId.present ? data.vehicleId.value : this.vehicleId,
+      expenseDate: data.expenseDate.present
+          ? data.expenseDate.value
+          : this.expenseDate,
+      expenseType: data.expenseType.present
+          ? data.expenseType.value
+          : this.expenseType,
+      amountCents: data.amountCents.present
+          ? data.amountCents.value
+          : this.amountCents,
+      remark: data.remark.present ? data.remark.value : this.remark,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ManualVehicleExpense(')
+          ..write('id: $id, ')
+          ..write('vehicleId: $vehicleId, ')
+          ..write('expenseDate: $expenseDate, ')
+          ..write('expenseType: $expenseType, ')
+          ..write('amountCents: $amountCents, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    vehicleId,
+    expenseDate,
+    expenseType,
+    amountCents,
+    remark,
+    createdAt,
+    updatedAt,
+    isDeleted,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ManualVehicleExpense &&
+          other.id == this.id &&
+          other.vehicleId == this.vehicleId &&
+          other.expenseDate == this.expenseDate &&
+          other.expenseType == this.expenseType &&
+          other.amountCents == this.amountCents &&
+          other.remark == this.remark &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isDeleted == this.isDeleted);
+}
+
+class ManualVehicleExpensesCompanion
+    extends UpdateCompanion<ManualVehicleExpense> {
+  final Value<int> id;
+  final Value<int> vehicleId;
+  final Value<DateTime> expenseDate;
+  final Value<String> expenseType;
+  final Value<int> amountCents;
+  final Value<String?> remark;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isDeleted;
+  const ManualVehicleExpensesCompanion({
+    this.id = const Value.absent(),
+    this.vehicleId = const Value.absent(),
+    this.expenseDate = const Value.absent(),
+    this.expenseType = const Value.absent(),
+    this.amountCents = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  });
+  ManualVehicleExpensesCompanion.insert({
+    this.id = const Value.absent(),
+    required int vehicleId,
+    required DateTime expenseDate,
+    required String expenseType,
+    required int amountCents,
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+  }) : vehicleId = Value(vehicleId),
+       expenseDate = Value(expenseDate),
+       expenseType = Value(expenseType),
+       amountCents = Value(amountCents);
+  static Insertable<ManualVehicleExpense> custom({
+    Expression<int>? id,
+    Expression<int>? vehicleId,
+    Expression<DateTime>? expenseDate,
+    Expression<String>? expenseType,
+    Expression<int>? amountCents,
+    Expression<String>? remark,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isDeleted,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (vehicleId != null) 'vehicle_id': vehicleId,
+      if (expenseDate != null) 'expense_date': expenseDate,
+      if (expenseType != null) 'expense_type': expenseType,
+      if (amountCents != null) 'amount_cents': amountCents,
+      if (remark != null) 'remark': remark,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+    });
+  }
+
+  ManualVehicleExpensesCompanion copyWith({
+    Value<int>? id,
+    Value<int>? vehicleId,
+    Value<DateTime>? expenseDate,
+    Value<String>? expenseType,
+    Value<int>? amountCents,
+    Value<String?>? remark,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isDeleted,
+  }) {
+    return ManualVehicleExpensesCompanion(
+      id: id ?? this.id,
+      vehicleId: vehicleId ?? this.vehicleId,
+      expenseDate: expenseDate ?? this.expenseDate,
+      expenseType: expenseType ?? this.expenseType,
+      amountCents: amountCents ?? this.amountCents,
+      remark: remark ?? this.remark,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (vehicleId.present) {
+      map['vehicle_id'] = Variable<int>(vehicleId.value);
+    }
+    if (expenseDate.present) {
+      map['expense_date'] = Variable<DateTime>(expenseDate.value);
+    }
+    if (expenseType.present) {
+      map['expense_type'] = Variable<String>(expenseType.value);
+    }
+    if (amountCents.present) {
+      map['amount_cents'] = Variable<int>(amountCents.value);
+    }
+    if (remark.present) {
+      map['remark'] = Variable<String>(remark.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ManualVehicleExpensesCompanion(')
+          ..write('id: $id, ')
+          ..write('vehicleId: $vehicleId, ')
+          ..write('expenseDate: $expenseDate, ')
+          ..write('expenseType: $expenseType, ')
+          ..write('amountCents: $amountCents, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $WageJobTypesTable extends WageJobTypes
     with TableInfo<$WageJobTypesTable, WageJobType> {
   @override
@@ -18008,6 +30184,34 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     this,
   );
   late final $EmployeesTable employees = $EmployeesTable(this);
+  late final $VehiclesTable vehicles = $VehiclesTable(this);
+  late final $VehicleConditionSnapshotsTable vehicleConditionSnapshots =
+      $VehicleConditionSnapshotsTable(this);
+  late final $VehicleConditionItemsTable vehicleConditionItems =
+      $VehicleConditionItemsTable(this);
+  late final $TiresTable tires = $TiresTable(this);
+  late final $TireInstallationsTable tireInstallations =
+      $TireInstallationsTable(this);
+  late final $TireRepairsTable tireRepairs = $TireRepairsTable(this);
+  late final $RepairOrdersTable repairOrders = $RepairOrdersTable(this);
+  late final $RepairCostItemsTable repairCostItems = $RepairCostItemsTable(
+    this,
+  );
+  late final $RepairPartsTable repairParts = $RepairPartsTable(this);
+  late final $VehicleAttachmentsTable vehicleAttachments =
+      $VehicleAttachmentsTable(this);
+  late final $MaintenanceTemplatesTable maintenanceTemplates =
+      $MaintenanceTemplatesTable(this);
+  late final $VehicleMaintenanceItemsTable vehicleMaintenanceItems =
+      $VehicleMaintenanceItemsTable(this);
+  late final $MaintenanceRecordsTable maintenanceRecords =
+      $MaintenanceRecordsTable(this);
+  late final $ComponentLifecycleRecordsTable componentLifecycleRecords =
+      $ComponentLifecycleRecordsTable(this);
+  late final $FuelMonthlyRecordsTable fuelMonthlyRecords =
+      $FuelMonthlyRecordsTable(this);
+  late final $ManualVehicleExpensesTable manualVehicleExpenses =
+      $ManualVehicleExpensesTable(this);
   late final $WageJobTypesTable wageJobTypes = $WageJobTypesTable(this);
   late final $WageRateHistoryTable wageRateHistory = $WageRateHistoryTable(
     this,
@@ -18058,6 +30262,22 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   List<DatabaseSchemaEntity> get allSchemaEntities => [
     attendanceGroups,
     employees,
+    vehicles,
+    vehicleConditionSnapshots,
+    vehicleConditionItems,
+    tires,
+    tireInstallations,
+    tireRepairs,
+    repairOrders,
+    repairCostItems,
+    repairParts,
+    vehicleAttachments,
+    maintenanceTemplates,
+    vehicleMaintenanceItems,
+    maintenanceRecords,
+    componentLifecycleRecords,
+    fuelMonthlyRecords,
+    manualVehicleExpenses,
     wageJobTypes,
     wageRateHistory,
     employeeWageProfiles,
@@ -20695,6 +32915,10007 @@ typedef $$EmployeesTableProcessedTableManager =
         bool insuranceChangeRecordsRefs,
         bool socialSecurityBaseHistoryRefs,
       })
+    >;
+typedef $$VehiclesTableCreateCompanionBuilder = VehiclesCompanion Function({
+  Value<int> id,
+  required String name,
+  required String vehicleNo,
+  Value<String?> licensePlate,
+  Value<VehicleType> vehicleType,
+  Value<String?> brand,
+  Value<String?> model,
+  Value<DateTime?> purchaseDate,
+  Value<String?> department,
+  Value<String?> workArea,
+  Value<String?> responsiblePerson,
+  Value<VehicleStatus> status,
+  Value<String?> remark,
+  Value<DateTime> createdAt,
+  Value<DateTime> updatedAt,
+  Value<bool> isDeleted,
+});
+typedef $$VehiclesTableUpdateCompanionBuilder = VehiclesCompanion Function({
+  Value<int> id,
+  Value<String> name,
+  Value<String> vehicleNo,
+  Value<String?> licensePlate,
+  Value<VehicleType> vehicleType,
+  Value<String?> brand,
+  Value<String?> model,
+  Value<DateTime?> purchaseDate,
+  Value<String?> department,
+  Value<String?> workArea,
+  Value<String?> responsiblePerson,
+  Value<VehicleStatus> status,
+  Value<String?> remark,
+  Value<DateTime> createdAt,
+  Value<DateTime> updatedAt,
+  Value<bool> isDeleted,
+});
+
+final class $$VehiclesTableReferences
+    extends BaseReferences<_$AppDatabase, $VehiclesTable, Vehicle> {
+  $$VehiclesTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<
+    $VehicleConditionSnapshotsTable,
+    List<VehicleConditionSnapshot>
+  >
+  _vehicleConditionSnapshotsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.vehicleConditionSnapshots,
+        aliasName: 'vehicles__id__vehicle_condition_snapshots__vehicle_id',
+      );
+
+  $$VehicleConditionSnapshotsTableProcessedTableManager
+  get vehicleConditionSnapshotsRefs {
+    final manager = $$VehicleConditionSnapshotsTableTableManager(
+      $_db,
+      $_db.vehicleConditionSnapshots,
+    ).filter((f) => f.vehicleId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _vehicleConditionSnapshotsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $VehicleConditionItemsTable,
+    List<VehicleConditionItem>
+  >
+  _vehicleConditionItemsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.vehicleConditionItems,
+        aliasName: 'vehicles__id__vehicle_condition_items__vehicle_id',
+      );
+
+  $$VehicleConditionItemsTableProcessedTableManager
+  get vehicleConditionItemsRefs {
+    final manager = $$VehicleConditionItemsTableTableManager(
+      $_db,
+      $_db.vehicleConditionItems,
+    ).filter((f) => f.vehicleId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _vehicleConditionItemsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$TireInstallationsTable, List<TireInstallation>>
+  _tireInstallationsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.tireInstallations,
+        aliasName: 'vehicles__id__tire_installations__vehicle_id',
+      );
+
+  $$TireInstallationsTableProcessedTableManager get tireInstallationsRefs {
+    final manager = $$TireInstallationsTableTableManager(
+      $_db,
+      $_db.tireInstallations,
+    ).filter((f) => f.vehicleId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _tireInstallationsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$RepairOrdersTable, List<RepairOrder>>
+  _repairOrdersRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.repairOrders,
+    aliasName: 'vehicles__id__repair_orders__vehicle_id',
+  );
+
+  $$RepairOrdersTableProcessedTableManager get repairOrdersRefs {
+    final manager = $$RepairOrdersTableTableManager(
+      $_db,
+      $_db.repairOrders,
+    ).filter((f) => f.vehicleId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_repairOrdersRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$VehicleAttachmentsTable, List<VehicleAttachment>>
+  _vehicleAttachmentsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.vehicleAttachments,
+        aliasName: 'vehicles__id__vehicle_attachments__vehicle_id',
+      );
+
+  $$VehicleAttachmentsTableProcessedTableManager get vehicleAttachmentsRefs {
+    final manager = $$VehicleAttachmentsTableTableManager(
+      $_db,
+      $_db.vehicleAttachments,
+    ).filter((f) => f.vehicleId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _vehicleAttachmentsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $VehicleMaintenanceItemsTable,
+    List<VehicleMaintenanceItem>
+  >
+  _vehicleMaintenanceItemsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.vehicleMaintenanceItems,
+        aliasName: 'vehicles__id__vehicle_maintenance_items__vehicle_id',
+      );
+
+  $$VehicleMaintenanceItemsTableProcessedTableManager
+  get vehicleMaintenanceItemsRefs {
+    final manager = $$VehicleMaintenanceItemsTableTableManager(
+      $_db,
+      $_db.vehicleMaintenanceItems,
+    ).filter((f) => f.vehicleId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _vehicleMaintenanceItemsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$MaintenanceRecordsTable, List<MaintenanceRecord>>
+  _maintenanceRecordsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.maintenanceRecords,
+        aliasName: 'vehicles__id__maintenance_records__vehicle_id',
+      );
+
+  $$MaintenanceRecordsTableProcessedTableManager get maintenanceRecordsRefs {
+    final manager = $$MaintenanceRecordsTableTableManager(
+      $_db,
+      $_db.maintenanceRecords,
+    ).filter((f) => f.vehicleId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _maintenanceRecordsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $ComponentLifecycleRecordsTable,
+    List<ComponentLifecycleRecord>
+  >
+  _componentLifecycleRecordsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.componentLifecycleRecords,
+        aliasName: 'vehicles__id__component_lifecycle_records__vehicle_id',
+      );
+
+  $$ComponentLifecycleRecordsTableProcessedTableManager
+  get componentLifecycleRecordsRefs {
+    final manager = $$ComponentLifecycleRecordsTableTableManager(
+      $_db,
+      $_db.componentLifecycleRecords,
+    ).filter((f) => f.vehicleId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _componentLifecycleRecordsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$FuelMonthlyRecordsTable, List<FuelMonthlyRecord>>
+  _fuelMonthlyRecordsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.fuelMonthlyRecords,
+        aliasName: 'vehicles__id__fuel_monthly_records__vehicle_id',
+      );
+
+  $$FuelMonthlyRecordsTableProcessedTableManager get fuelMonthlyRecordsRefs {
+    final manager = $$FuelMonthlyRecordsTableTableManager(
+      $_db,
+      $_db.fuelMonthlyRecords,
+    ).filter((f) => f.vehicleId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _fuelMonthlyRecordsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $ManualVehicleExpensesTable,
+    List<ManualVehicleExpense>
+  >
+  _manualVehicleExpensesRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.manualVehicleExpenses,
+        aliasName: 'vehicles__id__manual_vehicle_expenses__vehicle_id',
+      );
+
+  $$ManualVehicleExpensesTableProcessedTableManager
+  get manualVehicleExpensesRefs {
+    final manager = $$ManualVehicleExpensesTableTableManager(
+      $_db,
+      $_db.manualVehicleExpenses,
+    ).filter((f) => f.vehicleId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _manualVehicleExpensesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$VehiclesTableFilterComposer
+    extends Composer<_$AppDatabase, $VehiclesTable> {
+  $$VehiclesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get vehicleNo => $composableBuilder(
+    column: $table.vehicleNo,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get licensePlate => $composableBuilder(
+    column: $table.licensePlate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<VehicleType, VehicleType, String>
+  get vehicleType => $composableBuilder(
+    column: $table.vehicleType,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<String> get brand => $composableBuilder(
+    column: $table.brand,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get model => $composableBuilder(
+    column: $table.model,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get purchaseDate => $composableBuilder(
+    column: $table.purchaseDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get department => $composableBuilder(
+    column: $table.department,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get workArea => $composableBuilder(
+    column: $table.workArea,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get responsiblePerson => $composableBuilder(
+    column: $table.responsiblePerson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<VehicleStatus, VehicleStatus, String>
+  get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> vehicleConditionSnapshotsRefs(
+    Expression<bool> Function($$VehicleConditionSnapshotsTableFilterComposer f)
+    f,
+  ) {
+    final $$VehicleConditionSnapshotsTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.vehicleConditionSnapshots,
+          getReferencedColumn: (t) => t.vehicleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$VehicleConditionSnapshotsTableFilterComposer(
+                $db: $db,
+                $table: $db.vehicleConditionSnapshots,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<bool> vehicleConditionItemsRefs(
+    Expression<bool> Function($$VehicleConditionItemsTableFilterComposer f) f,
+  ) {
+    final $$VehicleConditionItemsTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.vehicleConditionItems,
+          getReferencedColumn: (t) => t.vehicleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$VehicleConditionItemsTableFilterComposer(
+                $db: $db,
+                $table: $db.vehicleConditionItems,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<bool> tireInstallationsRefs(
+    Expression<bool> Function($$TireInstallationsTableFilterComposer f) f,
+  ) {
+    final $$TireInstallationsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.tireInstallations,
+      getReferencedColumn: (t) => t.vehicleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TireInstallationsTableFilterComposer(
+            $db: $db,
+            $table: $db.tireInstallations,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> repairOrdersRefs(
+    Expression<bool> Function($$RepairOrdersTableFilterComposer f) f,
+  ) {
+    final $$RepairOrdersTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.repairOrders,
+      getReferencedColumn: (t) => t.vehicleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RepairOrdersTableFilterComposer(
+            $db: $db,
+            $table: $db.repairOrders,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> vehicleAttachmentsRefs(
+    Expression<bool> Function($$VehicleAttachmentsTableFilterComposer f) f,
+  ) {
+    final $$VehicleAttachmentsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.vehicleAttachments,
+      getReferencedColumn: (t) => t.vehicleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehicleAttachmentsTableFilterComposer(
+            $db: $db,
+            $table: $db.vehicleAttachments,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> vehicleMaintenanceItemsRefs(
+    Expression<bool> Function($$VehicleMaintenanceItemsTableFilterComposer f) f,
+  ) {
+    final $$VehicleMaintenanceItemsTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.vehicleMaintenanceItems,
+          getReferencedColumn: (t) => t.vehicleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$VehicleMaintenanceItemsTableFilterComposer(
+                $db: $db,
+                $table: $db.vehicleMaintenanceItems,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<bool> maintenanceRecordsRefs(
+    Expression<bool> Function($$MaintenanceRecordsTableFilterComposer f) f,
+  ) {
+    final $$MaintenanceRecordsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.maintenanceRecords,
+      getReferencedColumn: (t) => t.vehicleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MaintenanceRecordsTableFilterComposer(
+            $db: $db,
+            $table: $db.maintenanceRecords,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> componentLifecycleRecordsRefs(
+    Expression<bool> Function($$ComponentLifecycleRecordsTableFilterComposer f)
+    f,
+  ) {
+    final $$ComponentLifecycleRecordsTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.componentLifecycleRecords,
+          getReferencedColumn: (t) => t.vehicleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ComponentLifecycleRecordsTableFilterComposer(
+                $db: $db,
+                $table: $db.componentLifecycleRecords,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<bool> fuelMonthlyRecordsRefs(
+    Expression<bool> Function($$FuelMonthlyRecordsTableFilterComposer f) f,
+  ) {
+    final $$FuelMonthlyRecordsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.fuelMonthlyRecords,
+      getReferencedColumn: (t) => t.vehicleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FuelMonthlyRecordsTableFilterComposer(
+            $db: $db,
+            $table: $db.fuelMonthlyRecords,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> manualVehicleExpensesRefs(
+    Expression<bool> Function($$ManualVehicleExpensesTableFilterComposer f) f,
+  ) {
+    final $$ManualVehicleExpensesTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.manualVehicleExpenses,
+          getReferencedColumn: (t) => t.vehicleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ManualVehicleExpensesTableFilterComposer(
+                $db: $db,
+                $table: $db.manualVehicleExpenses,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$VehiclesTableOrderingComposer
+    extends Composer<_$AppDatabase, $VehiclesTable> {
+  $$VehiclesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get vehicleNo => $composableBuilder(
+    column: $table.vehicleNo,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get licensePlate => $composableBuilder(
+    column: $table.licensePlate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get vehicleType => $composableBuilder(
+    column: $table.vehicleType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get brand => $composableBuilder(
+    column: $table.brand,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get model => $composableBuilder(
+    column: $table.model,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get purchaseDate => $composableBuilder(
+    column: $table.purchaseDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get department => $composableBuilder(
+    column: $table.department,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get workArea => $composableBuilder(
+    column: $table.workArea,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get responsiblePerson => $composableBuilder(
+    column: $table.responsiblePerson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$VehiclesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $VehiclesTable> {
+  $$VehiclesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get vehicleNo =>
+      $composableBuilder(column: $table.vehicleNo, builder: (column) => column);
+
+  GeneratedColumn<String> get licensePlate => $composableBuilder(
+    column: $table.licensePlate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumnWithTypeConverter<VehicleType, String> get vehicleType =>
+      $composableBuilder(
+        column: $table.vehicleType,
+        builder: (column) => column,
+      );
+
+  GeneratedColumn<String> get brand =>
+      $composableBuilder(column: $table.brand, builder: (column) => column);
+
+  GeneratedColumn<String> get model =>
+      $composableBuilder(column: $table.model, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get purchaseDate => $composableBuilder(
+    column: $table.purchaseDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get department => $composableBuilder(
+    column: $table.department,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get workArea =>
+      $composableBuilder(column: $table.workArea, builder: (column) => column);
+
+  GeneratedColumn<String> get responsiblePerson => $composableBuilder(
+    column: $table.responsiblePerson,
+    builder: (column) => column,
+  );
+
+  GeneratedColumnWithTypeConverter<VehicleStatus, String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
+  GeneratedColumn<String> get remark =>
+      $composableBuilder(column: $table.remark, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
+  Expression<T> vehicleConditionSnapshotsRefs<T extends Object>(
+    Expression<T> Function($$VehicleConditionSnapshotsTableAnnotationComposer a)
+    f,
+  ) {
+    final $$VehicleConditionSnapshotsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.vehicleConditionSnapshots,
+          getReferencedColumn: (t) => t.vehicleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$VehicleConditionSnapshotsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.vehicleConditionSnapshots,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> vehicleConditionItemsRefs<T extends Object>(
+    Expression<T> Function($$VehicleConditionItemsTableAnnotationComposer a) f,
+  ) {
+    final $$VehicleConditionItemsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.vehicleConditionItems,
+          getReferencedColumn: (t) => t.vehicleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$VehicleConditionItemsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.vehicleConditionItems,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> tireInstallationsRefs<T extends Object>(
+    Expression<T> Function($$TireInstallationsTableAnnotationComposer a) f,
+  ) {
+    final $$TireInstallationsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.tireInstallations,
+          getReferencedColumn: (t) => t.vehicleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$TireInstallationsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.tireInstallations,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> repairOrdersRefs<T extends Object>(
+    Expression<T> Function($$RepairOrdersTableAnnotationComposer a) f,
+  ) {
+    final $$RepairOrdersTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.repairOrders,
+      getReferencedColumn: (t) => t.vehicleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RepairOrdersTableAnnotationComposer(
+            $db: $db,
+            $table: $db.repairOrders,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> vehicleAttachmentsRefs<T extends Object>(
+    Expression<T> Function($$VehicleAttachmentsTableAnnotationComposer a) f,
+  ) {
+    final $$VehicleAttachmentsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.vehicleAttachments,
+          getReferencedColumn: (t) => t.vehicleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$VehicleAttachmentsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.vehicleAttachments,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> vehicleMaintenanceItemsRefs<T extends Object>(
+    Expression<T> Function($$VehicleMaintenanceItemsTableAnnotationComposer a)
+    f,
+  ) {
+    final $$VehicleMaintenanceItemsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.vehicleMaintenanceItems,
+          getReferencedColumn: (t) => t.vehicleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$VehicleMaintenanceItemsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.vehicleMaintenanceItems,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> maintenanceRecordsRefs<T extends Object>(
+    Expression<T> Function($$MaintenanceRecordsTableAnnotationComposer a) f,
+  ) {
+    final $$MaintenanceRecordsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.maintenanceRecords,
+          getReferencedColumn: (t) => t.vehicleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$MaintenanceRecordsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.maintenanceRecords,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> componentLifecycleRecordsRefs<T extends Object>(
+    Expression<T> Function($$ComponentLifecycleRecordsTableAnnotationComposer a)
+    f,
+  ) {
+    final $$ComponentLifecycleRecordsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.componentLifecycleRecords,
+          getReferencedColumn: (t) => t.vehicleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ComponentLifecycleRecordsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.componentLifecycleRecords,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> fuelMonthlyRecordsRefs<T extends Object>(
+    Expression<T> Function($$FuelMonthlyRecordsTableAnnotationComposer a) f,
+  ) {
+    final $$FuelMonthlyRecordsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.fuelMonthlyRecords,
+          getReferencedColumn: (t) => t.vehicleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$FuelMonthlyRecordsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.fuelMonthlyRecords,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> manualVehicleExpensesRefs<T extends Object>(
+    Expression<T> Function($$ManualVehicleExpensesTableAnnotationComposer a) f,
+  ) {
+    final $$ManualVehicleExpensesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.manualVehicleExpenses,
+          getReferencedColumn: (t) => t.vehicleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ManualVehicleExpensesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.manualVehicleExpenses,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$VehiclesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $VehiclesTable,
+          Vehicle,
+          $$VehiclesTableFilterComposer,
+          $$VehiclesTableOrderingComposer,
+          $$VehiclesTableAnnotationComposer,
+          $$VehiclesTableCreateCompanionBuilder,
+          $$VehiclesTableUpdateCompanionBuilder,
+          (Vehicle, $$VehiclesTableReferences),
+          Vehicle,
+          PrefetchHooks Function({
+            bool vehicleConditionSnapshotsRefs,
+            bool vehicleConditionItemsRefs,
+            bool tireInstallationsRefs,
+            bool repairOrdersRefs,
+            bool vehicleAttachmentsRefs,
+            bool vehicleMaintenanceItemsRefs,
+            bool maintenanceRecordsRefs,
+            bool componentLifecycleRecordsRefs,
+            bool fuelMonthlyRecordsRefs,
+            bool manualVehicleExpensesRefs,
+          })
+        > {
+  $$VehiclesTableTableManager(_$AppDatabase db, $VehiclesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$VehiclesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$VehiclesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$VehiclesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> vehicleNo = const Value.absent(),
+                Value<String?> licensePlate = const Value.absent(),
+                Value<VehicleType> vehicleType = const Value.absent(),
+                Value<String?> brand = const Value.absent(),
+                Value<String?> model = const Value.absent(),
+                Value<DateTime?> purchaseDate = const Value.absent(),
+                Value<String?> department = const Value.absent(),
+                Value<String?> workArea = const Value.absent(),
+                Value<String?> responsiblePerson = const Value.absent(),
+                Value<VehicleStatus> status = const Value.absent(),
+                Value<String?> remark = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => VehiclesCompanion(
+                id: id,
+                name: name,
+                vehicleNo: vehicleNo,
+                licensePlate: licensePlate,
+                vehicleType: vehicleType,
+                brand: brand,
+                model: model,
+                purchaseDate: purchaseDate,
+                department: department,
+                workArea: workArea,
+                responsiblePerson: responsiblePerson,
+                status: status,
+                remark: remark,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String name,
+                required String vehicleNo,
+                Value<String?> licensePlate = const Value.absent(),
+                Value<VehicleType> vehicleType = const Value.absent(),
+                Value<String?> brand = const Value.absent(),
+                Value<String?> model = const Value.absent(),
+                Value<DateTime?> purchaseDate = const Value.absent(),
+                Value<String?> department = const Value.absent(),
+                Value<String?> workArea = const Value.absent(),
+                Value<String?> responsiblePerson = const Value.absent(),
+                Value<VehicleStatus> status = const Value.absent(),
+                Value<String?> remark = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => VehiclesCompanion.insert(
+                id: id,
+                name: name,
+                vehicleNo: vehicleNo,
+                licensePlate: licensePlate,
+                vehicleType: vehicleType,
+                brand: brand,
+                model: model,
+                purchaseDate: purchaseDate,
+                department: department,
+                workArea: workArea,
+                responsiblePerson: responsiblePerson,
+                status: status,
+                remark: remark,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$VehiclesTable, Vehicle>(table),
+                  $$VehiclesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                vehicleConditionSnapshotsRefs = false,
+                vehicleConditionItemsRefs = false,
+                tireInstallationsRefs = false,
+                repairOrdersRefs = false,
+                vehicleAttachmentsRefs = false,
+                vehicleMaintenanceItemsRefs = false,
+                maintenanceRecordsRefs = false,
+                componentLifecycleRecordsRefs = false,
+                fuelMonthlyRecordsRefs = false,
+                manualVehicleExpensesRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (vehicleConditionSnapshotsRefs)
+                      db.vehicleConditionSnapshots,
+                    if (vehicleConditionItemsRefs) db.vehicleConditionItems,
+                    if (tireInstallationsRefs) db.tireInstallations,
+                    if (repairOrdersRefs) db.repairOrders,
+                    if (vehicleAttachmentsRefs) db.vehicleAttachments,
+                    if (vehicleMaintenanceItemsRefs) db.vehicleMaintenanceItems,
+                    if (maintenanceRecordsRefs) db.maintenanceRecords,
+                    if (componentLifecycleRecordsRefs)
+                      db.componentLifecycleRecords,
+                    if (fuelMonthlyRecordsRefs) db.fuelMonthlyRecords,
+                    if (manualVehicleExpensesRefs) db.manualVehicleExpenses,
+                  ],
+                  addJoins: null,
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (vehicleConditionSnapshotsRefs)
+                        await $_getPrefetchedData<
+                          Vehicle,
+                          $VehiclesTable,
+                          VehicleConditionSnapshot
+                        >(
+                          currentTable: table,
+                          referencedTable: $$VehiclesTableReferences
+                              ._vehicleConditionSnapshotsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$VehiclesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).vehicleConditionSnapshotsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.vehicleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (vehicleConditionItemsRefs)
+                        await $_getPrefetchedData<
+                          Vehicle,
+                          $VehiclesTable,
+                          VehicleConditionItem
+                        >(
+                          currentTable: table,
+                          referencedTable: $$VehiclesTableReferences
+                              ._vehicleConditionItemsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$VehiclesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).vehicleConditionItemsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.vehicleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (tireInstallationsRefs)
+                        await $_getPrefetchedData<
+                          Vehicle,
+                          $VehiclesTable,
+                          TireInstallation
+                        >(
+                          currentTable: table,
+                          referencedTable: $$VehiclesTableReferences
+                              ._tireInstallationsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$VehiclesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).tireInstallationsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.vehicleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (repairOrdersRefs)
+                        await $_getPrefetchedData<
+                          Vehicle,
+                          $VehiclesTable,
+                          RepairOrder
+                        >(
+                          currentTable: table,
+                          referencedTable: $$VehiclesTableReferences
+                              ._repairOrdersRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$VehiclesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).repairOrdersRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.vehicleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (vehicleAttachmentsRefs)
+                        await $_getPrefetchedData<
+                          Vehicle,
+                          $VehiclesTable,
+                          VehicleAttachment
+                        >(
+                          currentTable: table,
+                          referencedTable: $$VehiclesTableReferences
+                              ._vehicleAttachmentsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$VehiclesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).vehicleAttachmentsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.vehicleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (vehicleMaintenanceItemsRefs)
+                        await $_getPrefetchedData<
+                          Vehicle,
+                          $VehiclesTable,
+                          VehicleMaintenanceItem
+                        >(
+                          currentTable: table,
+                          referencedTable: $$VehiclesTableReferences
+                              ._vehicleMaintenanceItemsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$VehiclesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).vehicleMaintenanceItemsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.vehicleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (maintenanceRecordsRefs)
+                        await $_getPrefetchedData<
+                          Vehicle,
+                          $VehiclesTable,
+                          MaintenanceRecord
+                        >(
+                          currentTable: table,
+                          referencedTable: $$VehiclesTableReferences
+                              ._maintenanceRecordsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$VehiclesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).maintenanceRecordsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.vehicleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (componentLifecycleRecordsRefs)
+                        await $_getPrefetchedData<
+                          Vehicle,
+                          $VehiclesTable,
+                          ComponentLifecycleRecord
+                        >(
+                          currentTable: table,
+                          referencedTable: $$VehiclesTableReferences
+                              ._componentLifecycleRecordsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$VehiclesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).componentLifecycleRecordsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.vehicleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (fuelMonthlyRecordsRefs)
+                        await $_getPrefetchedData<
+                          Vehicle,
+                          $VehiclesTable,
+                          FuelMonthlyRecord
+                        >(
+                          currentTable: table,
+                          referencedTable: $$VehiclesTableReferences
+                              ._fuelMonthlyRecordsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$VehiclesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).fuelMonthlyRecordsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.vehicleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (manualVehicleExpensesRefs)
+                        await $_getPrefetchedData<
+                          Vehicle,
+                          $VehiclesTable,
+                          ManualVehicleExpense
+                        >(
+                          currentTable: table,
+                          referencedTable: $$VehiclesTableReferences
+                              ._manualVehicleExpensesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$VehiclesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).manualVehicleExpensesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.vehicleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$VehiclesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $VehiclesTable,
+      Vehicle,
+      $$VehiclesTableFilterComposer,
+      $$VehiclesTableOrderingComposer,
+      $$VehiclesTableAnnotationComposer,
+      $$VehiclesTableCreateCompanionBuilder,
+      $$VehiclesTableUpdateCompanionBuilder,
+      (Vehicle, $$VehiclesTableReferences),
+      Vehicle,
+      PrefetchHooks Function({
+        bool vehicleConditionSnapshotsRefs,
+        bool vehicleConditionItemsRefs,
+        bool tireInstallationsRefs,
+        bool repairOrdersRefs,
+        bool vehicleAttachmentsRefs,
+        bool vehicleMaintenanceItemsRefs,
+        bool maintenanceRecordsRefs,
+        bool componentLifecycleRecordsRefs,
+        bool fuelMonthlyRecordsRefs,
+        bool manualVehicleExpensesRefs,
+      })
+    >;
+typedef $$VehicleConditionSnapshotsTableCreateCompanionBuilder =
+    VehicleConditionSnapshotsCompanion Function({
+      Value<int> id,
+      required int vehicleId,
+      required DateTime checkedAt,
+      Value<String?> remark,
+      Value<DateTime> createdAt,
+      Value<bool> isDeleted,
+    });
+typedef $$VehicleConditionSnapshotsTableUpdateCompanionBuilder =
+    VehicleConditionSnapshotsCompanion Function({
+      Value<int> id,
+      Value<int> vehicleId,
+      Value<DateTime> checkedAt,
+      Value<String?> remark,
+      Value<DateTime> createdAt,
+      Value<bool> isDeleted,
+    });
+
+final class $$VehicleConditionSnapshotsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $VehicleConditionSnapshotsTable,
+          VehicleConditionSnapshot
+        > {
+  $$VehicleConditionSnapshotsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $VehiclesTable _vehicleIdTable(_$AppDatabase db) => db.vehicles
+      .createAlias('vehicle_condition_snapshots__vehicle_id__vehicles__id');
+
+  $$VehiclesTableProcessedTableManager get vehicleId {
+    final $_column = $_itemColumn<int>('vehicle_id')!;
+
+    final manager = $$VehiclesTableTableManager(
+      $_db,
+      $_db.vehicles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_vehicleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $VehicleConditionItemsTable,
+    List<VehicleConditionItem>
+  >
+  _vehicleConditionItemsRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.vehicleConditionItems,
+    aliasName:
+        'vehicle_condition_snapshots__id__vehicle_condition_items__snapshot_id',
+  );
+
+  $$VehicleConditionItemsTableProcessedTableManager
+  get vehicleConditionItemsRefs {
+    final manager = $$VehicleConditionItemsTableTableManager(
+      $_db,
+      $_db.vehicleConditionItems,
+    ).filter((f) => f.snapshotId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _vehicleConditionItemsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$VehicleConditionSnapshotsTableFilterComposer
+    extends Composer<_$AppDatabase, $VehicleConditionSnapshotsTable> {
+  $$VehicleConditionSnapshotsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get checkedAt => $composableBuilder(
+    column: $table.checkedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$VehiclesTableFilterComposer get vehicleId {
+    final $$VehiclesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableFilterComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> vehicleConditionItemsRefs(
+    Expression<bool> Function($$VehicleConditionItemsTableFilterComposer f) f,
+  ) {
+    final $$VehicleConditionItemsTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.vehicleConditionItems,
+          getReferencedColumn: (t) => t.snapshotId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$VehicleConditionItemsTableFilterComposer(
+                $db: $db,
+                $table: $db.vehicleConditionItems,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$VehicleConditionSnapshotsTableOrderingComposer
+    extends Composer<_$AppDatabase, $VehicleConditionSnapshotsTable> {
+  $$VehicleConditionSnapshotsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get checkedAt => $composableBuilder(
+    column: $table.checkedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$VehiclesTableOrderingComposer get vehicleId {
+    final $$VehiclesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableOrderingComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$VehicleConditionSnapshotsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $VehicleConditionSnapshotsTable> {
+  $$VehicleConditionSnapshotsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get checkedAt =>
+      $composableBuilder(column: $table.checkedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get remark =>
+      $composableBuilder(column: $table.remark, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
+  $$VehiclesTableAnnotationComposer get vehicleId {
+    final $$VehiclesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<T> vehicleConditionItemsRefs<T extends Object>(
+    Expression<T> Function($$VehicleConditionItemsTableAnnotationComposer a) f,
+  ) {
+    final $$VehicleConditionItemsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.vehicleConditionItems,
+          getReferencedColumn: (t) => t.snapshotId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$VehicleConditionItemsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.vehicleConditionItems,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$VehicleConditionSnapshotsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $VehicleConditionSnapshotsTable,
+          VehicleConditionSnapshot,
+          $$VehicleConditionSnapshotsTableFilterComposer,
+          $$VehicleConditionSnapshotsTableOrderingComposer,
+          $$VehicleConditionSnapshotsTableAnnotationComposer,
+          $$VehicleConditionSnapshotsTableCreateCompanionBuilder,
+          $$VehicleConditionSnapshotsTableUpdateCompanionBuilder,
+          (
+            VehicleConditionSnapshot,
+            $$VehicleConditionSnapshotsTableReferences,
+          ),
+          VehicleConditionSnapshot,
+          PrefetchHooks Function({
+            bool vehicleId,
+            bool vehicleConditionItemsRefs,
+          })
+        > {
+  $$VehicleConditionSnapshotsTableTableManager(
+    _$AppDatabase db,
+    $VehicleConditionSnapshotsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$VehicleConditionSnapshotsTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$VehicleConditionSnapshotsTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$VehicleConditionSnapshotsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> vehicleId = const Value.absent(),
+                Value<DateTime> checkedAt = const Value.absent(),
+                Value<String?> remark = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => VehicleConditionSnapshotsCompanion(
+                id: id,
+                vehicleId: vehicleId,
+                checkedAt: checkedAt,
+                remark: remark,
+                createdAt: createdAt,
+                isDeleted: isDeleted,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int vehicleId,
+                required DateTime checkedAt,
+                Value<String?> remark = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => VehicleConditionSnapshotsCompanion.insert(
+                id: id,
+                vehicleId: vehicleId,
+                checkedAt: checkedAt,
+                remark: remark,
+                createdAt: createdAt,
+                isDeleted: isDeleted,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<
+                    $VehicleConditionSnapshotsTable,
+                    VehicleConditionSnapshot
+                  >(table),
+                  $$VehicleConditionSnapshotsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({vehicleId = false, vehicleConditionItemsRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (vehicleConditionItemsRefs) db.vehicleConditionItems,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (vehicleId) {
+                          state = state.withJoin(
+                            currentTable: table,
+                            currentColumn: table.vehicleId,
+                            referencedTable:
+                                $$VehicleConditionSnapshotsTableReferences
+                                    ._vehicleIdTable(db),
+                            referencedColumn:
+                                $$VehicleConditionSnapshotsTableReferences
+                                    ._vehicleIdTable(db)
+                                    .id,
+                          ) as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (vehicleConditionItemsRefs)
+                        await $_getPrefetchedData<
+                          VehicleConditionSnapshot,
+                          $VehicleConditionSnapshotsTable,
+                          VehicleConditionItem
+                        >(
+                          currentTable: table,
+                          referencedTable:
+                              $$VehicleConditionSnapshotsTableReferences
+                                  ._vehicleConditionItemsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$VehicleConditionSnapshotsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).vehicleConditionItemsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.snapshotId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$VehicleConditionSnapshotsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $VehicleConditionSnapshotsTable,
+      VehicleConditionSnapshot,
+      $$VehicleConditionSnapshotsTableFilterComposer,
+      $$VehicleConditionSnapshotsTableOrderingComposer,
+      $$VehicleConditionSnapshotsTableAnnotationComposer,
+      $$VehicleConditionSnapshotsTableCreateCompanionBuilder,
+      $$VehicleConditionSnapshotsTableUpdateCompanionBuilder,
+      (VehicleConditionSnapshot, $$VehicleConditionSnapshotsTableReferences),
+      VehicleConditionSnapshot,
+      PrefetchHooks Function({bool vehicleId, bool vehicleConditionItemsRefs})
+    >;
+typedef $$VehicleConditionItemsTableCreateCompanionBuilder =
+    VehicleConditionItemsCompanion Function({
+      Value<int> id,
+      required int vehicleId,
+      Value<int?> snapshotId,
+      required String componentType,
+      required String componentKey,
+      required VehicleConditionStatus status,
+      Value<String?> issueTagsJson,
+      Value<String?> detail,
+      required DateTime observedAt,
+      Value<DateTime?> resolvedAt,
+      Value<bool> isCurrent,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
+    });
+typedef $$VehicleConditionItemsTableUpdateCompanionBuilder =
+    VehicleConditionItemsCompanion Function({
+      Value<int> id,
+      Value<int> vehicleId,
+      Value<int?> snapshotId,
+      Value<String> componentType,
+      Value<String> componentKey,
+      Value<VehicleConditionStatus> status,
+      Value<String?> issueTagsJson,
+      Value<String?> detail,
+      Value<DateTime> observedAt,
+      Value<DateTime?> resolvedAt,
+      Value<bool> isCurrent,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
+    });
+
+final class $$VehicleConditionItemsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $VehicleConditionItemsTable,
+          VehicleConditionItem
+        > {
+  $$VehicleConditionItemsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $VehiclesTable _vehicleIdTable(_$AppDatabase db) => db.vehicles
+      .createAlias('vehicle_condition_items__vehicle_id__vehicles__id');
+
+  $$VehiclesTableProcessedTableManager get vehicleId {
+    final $_column = $_itemColumn<int>('vehicle_id')!;
+
+    final manager = $$VehiclesTableTableManager(
+      $_db,
+      $_db.vehicles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_vehicleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $VehicleConditionSnapshotsTable _snapshotIdTable(_$AppDatabase db) =>
+      db.vehicleConditionSnapshots.createAlias(
+        'vehicle_condition_items__snapshot_id__vehicle_condition_snapshots__id',
+      );
+
+  $$VehicleConditionSnapshotsTableProcessedTableManager? get snapshotId {
+    final $_column = $_itemColumn<int>('snapshot_id');
+    if ($_column == null) return null;
+    final manager = $$VehicleConditionSnapshotsTableTableManager(
+      $_db,
+      $_db.vehicleConditionSnapshots,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_snapshotIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$VehicleConditionItemsTableFilterComposer
+    extends Composer<_$AppDatabase, $VehicleConditionItemsTable> {
+  $$VehicleConditionItemsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get componentType => $composableBuilder(
+    column: $table.componentType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get componentKey => $composableBuilder(
+    column: $table.componentKey,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<
+    VehicleConditionStatus,
+    VehicleConditionStatus,
+    String
+  >
+  get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<String> get issueTagsJson => $composableBuilder(
+    column: $table.issueTagsJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get detail => $composableBuilder(
+    column: $table.detail,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get observedAt => $composableBuilder(
+    column: $table.observedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get resolvedAt => $composableBuilder(
+    column: $table.resolvedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isCurrent => $composableBuilder(
+    column: $table.isCurrent,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$VehiclesTableFilterComposer get vehicleId {
+    final $$VehiclesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableFilterComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$VehicleConditionSnapshotsTableFilterComposer get snapshotId {
+    final $$VehicleConditionSnapshotsTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.snapshotId,
+          referencedTable: $db.vehicleConditionSnapshots,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$VehicleConditionSnapshotsTableFilterComposer(
+                $db: $db,
+                $table: $db.vehicleConditionSnapshots,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$VehicleConditionItemsTableOrderingComposer
+    extends Composer<_$AppDatabase, $VehicleConditionItemsTable> {
+  $$VehicleConditionItemsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get componentType => $composableBuilder(
+    column: $table.componentType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get componentKey => $composableBuilder(
+    column: $table.componentKey,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get issueTagsJson => $composableBuilder(
+    column: $table.issueTagsJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get detail => $composableBuilder(
+    column: $table.detail,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get observedAt => $composableBuilder(
+    column: $table.observedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get resolvedAt => $composableBuilder(
+    column: $table.resolvedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isCurrent => $composableBuilder(
+    column: $table.isCurrent,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$VehiclesTableOrderingComposer get vehicleId {
+    final $$VehiclesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableOrderingComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$VehicleConditionSnapshotsTableOrderingComposer get snapshotId {
+    final $$VehicleConditionSnapshotsTableOrderingComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.snapshotId,
+          referencedTable: $db.vehicleConditionSnapshots,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$VehicleConditionSnapshotsTableOrderingComposer(
+                $db: $db,
+                $table: $db.vehicleConditionSnapshots,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$VehicleConditionItemsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $VehicleConditionItemsTable> {
+  $$VehicleConditionItemsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get componentType => $composableBuilder(
+    column: $table.componentType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get componentKey => $composableBuilder(
+    column: $table.componentKey,
+    builder: (column) => column,
+  );
+
+  GeneratedColumnWithTypeConverter<VehicleConditionStatus, String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
+  GeneratedColumn<String> get issueTagsJson => $composableBuilder(
+    column: $table.issueTagsJson,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get detail =>
+      $composableBuilder(column: $table.detail, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get observedAt => $composableBuilder(
+    column: $table.observedAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get resolvedAt => $composableBuilder(
+    column: $table.resolvedAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get isCurrent =>
+      $composableBuilder(column: $table.isCurrent, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
+  $$VehiclesTableAnnotationComposer get vehicleId {
+    final $$VehiclesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$VehicleConditionSnapshotsTableAnnotationComposer get snapshotId {
+    final $$VehicleConditionSnapshotsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.snapshotId,
+          referencedTable: $db.vehicleConditionSnapshots,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$VehicleConditionSnapshotsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.vehicleConditionSnapshots,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$VehicleConditionItemsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $VehicleConditionItemsTable,
+          VehicleConditionItem,
+          $$VehicleConditionItemsTableFilterComposer,
+          $$VehicleConditionItemsTableOrderingComposer,
+          $$VehicleConditionItemsTableAnnotationComposer,
+          $$VehicleConditionItemsTableCreateCompanionBuilder,
+          $$VehicleConditionItemsTableUpdateCompanionBuilder,
+          (VehicleConditionItem, $$VehicleConditionItemsTableReferences),
+          VehicleConditionItem,
+          PrefetchHooks Function({bool vehicleId, bool snapshotId})
+        > {
+  $$VehicleConditionItemsTableTableManager(
+    _$AppDatabase db,
+    $VehicleConditionItemsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$VehicleConditionItemsTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$VehicleConditionItemsTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$VehicleConditionItemsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> vehicleId = const Value.absent(),
+                Value<int?> snapshotId = const Value.absent(),
+                Value<String> componentType = const Value.absent(),
+                Value<String> componentKey = const Value.absent(),
+                Value<VehicleConditionStatus> status = const Value.absent(),
+                Value<String?> issueTagsJson = const Value.absent(),
+                Value<String?> detail = const Value.absent(),
+                Value<DateTime> observedAt = const Value.absent(),
+                Value<DateTime?> resolvedAt = const Value.absent(),
+                Value<bool> isCurrent = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => VehicleConditionItemsCompanion(
+                id: id,
+                vehicleId: vehicleId,
+                snapshotId: snapshotId,
+                componentType: componentType,
+                componentKey: componentKey,
+                status: status,
+                issueTagsJson: issueTagsJson,
+                detail: detail,
+                observedAt: observedAt,
+                resolvedAt: resolvedAt,
+                isCurrent: isCurrent,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int vehicleId,
+                Value<int?> snapshotId = const Value.absent(),
+                required String componentType,
+                required String componentKey,
+                required VehicleConditionStatus status,
+                Value<String?> issueTagsJson = const Value.absent(),
+                Value<String?> detail = const Value.absent(),
+                required DateTime observedAt,
+                Value<DateTime?> resolvedAt = const Value.absent(),
+                Value<bool> isCurrent = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => VehicleConditionItemsCompanion.insert(
+                id: id,
+                vehicleId: vehicleId,
+                snapshotId: snapshotId,
+                componentType: componentType,
+                componentKey: componentKey,
+                status: status,
+                issueTagsJson: issueTagsJson,
+                detail: detail,
+                observedAt: observedAt,
+                resolvedAt: resolvedAt,
+                isCurrent: isCurrent,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<
+                    $VehicleConditionItemsTable,
+                    VehicleConditionItem
+                  >(table),
+                  $$VehicleConditionItemsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({vehicleId = false, snapshotId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (vehicleId) {
+                      state = state.withJoin(
+                        currentTable: table,
+                        currentColumn: table.vehicleId,
+                        referencedTable: $$VehicleConditionItemsTableReferences
+                            ._vehicleIdTable(db),
+                        referencedColumn: $$VehicleConditionItemsTableReferences
+                            ._vehicleIdTable(db)
+                            .id,
+                      ) as T;
+                    }
+                    if (snapshotId) {
+                      state = state.withJoin(
+                        currentTable: table,
+                        currentColumn: table.snapshotId,
+                        referencedTable: $$VehicleConditionItemsTableReferences
+                            ._snapshotIdTable(db),
+                        referencedColumn: $$VehicleConditionItemsTableReferences
+                            ._snapshotIdTable(db)
+                            .id,
+                      ) as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$VehicleConditionItemsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $VehicleConditionItemsTable,
+      VehicleConditionItem,
+      $$VehicleConditionItemsTableFilterComposer,
+      $$VehicleConditionItemsTableOrderingComposer,
+      $$VehicleConditionItemsTableAnnotationComposer,
+      $$VehicleConditionItemsTableCreateCompanionBuilder,
+      $$VehicleConditionItemsTableUpdateCompanionBuilder,
+      (VehicleConditionItem, $$VehicleConditionItemsTableReferences),
+      VehicleConditionItem,
+      PrefetchHooks Function({bool vehicleId, bool snapshotId})
+    >;
+typedef $$TiresTableCreateCompanionBuilder = TiresCompanion Function({
+  Value<int> id,
+  required String tireNo,
+  Value<String?> brand,
+  Value<String?> specification,
+  Value<TireCondition> condition,
+  Value<DateTime?> firstUseDate,
+  Value<TireAssetStatus> status,
+  Value<int> repairCount,
+  Value<TireWearLevel> wearLevel,
+  Value<String?> remark,
+  Value<DateTime> createdAt,
+  Value<DateTime> updatedAt,
+  Value<bool> isDeleted,
+});
+typedef $$TiresTableUpdateCompanionBuilder = TiresCompanion Function({
+  Value<int> id,
+  Value<String> tireNo,
+  Value<String?> brand,
+  Value<String?> specification,
+  Value<TireCondition> condition,
+  Value<DateTime?> firstUseDate,
+  Value<TireAssetStatus> status,
+  Value<int> repairCount,
+  Value<TireWearLevel> wearLevel,
+  Value<String?> remark,
+  Value<DateTime> createdAt,
+  Value<DateTime> updatedAt,
+  Value<bool> isDeleted,
+});
+
+final class $$TiresTableReferences
+    extends BaseReferences<_$AppDatabase, $TiresTable, Tire> {
+  $$TiresTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<$TireInstallationsTable, List<TireInstallation>>
+  _tireInstallationsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.tireInstallations,
+        aliasName: 'tires__id__tire_installations__tire_id',
+      );
+
+  $$TireInstallationsTableProcessedTableManager get tireInstallationsRefs {
+    final manager = $$TireInstallationsTableTableManager(
+      $_db,
+      $_db.tireInstallations,
+    ).filter((f) => f.tireId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _tireInstallationsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$TireRepairsTable, List<TireRepair>>
+  _tireRepairsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.tireRepairs,
+    aliasName: 'tires__id__tire_repairs__tire_id',
+  );
+
+  $$TireRepairsTableProcessedTableManager get tireRepairsRefs {
+    final manager = $$TireRepairsTableTableManager(
+      $_db,
+      $_db.tireRepairs,
+    ).filter((f) => f.tireId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_tireRepairsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$RepairPartsTable, List<RepairPart>>
+  _repairPartsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.repairParts,
+    aliasName: 'tires__id__repair_parts__tire_id',
+  );
+
+  $$RepairPartsTableProcessedTableManager get repairPartsRefs {
+    final manager = $$RepairPartsTableTableManager(
+      $_db,
+      $_db.repairParts,
+    ).filter((f) => f.tireId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_repairPartsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$TiresTableFilterComposer extends Composer<_$AppDatabase, $TiresTable> {
+  $$TiresTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get tireNo => $composableBuilder(
+    column: $table.tireNo,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get brand => $composableBuilder(
+    column: $table.brand,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get specification => $composableBuilder(
+    column: $table.specification,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<TireCondition, TireCondition, String>
+  get condition => $composableBuilder(
+    column: $table.condition,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<DateTime> get firstUseDate => $composableBuilder(
+    column: $table.firstUseDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<TireAssetStatus, TireAssetStatus, String>
+  get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<int> get repairCount => $composableBuilder(
+    column: $table.repairCount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<TireWearLevel, TireWearLevel, String>
+  get wearLevel => $composableBuilder(
+    column: $table.wearLevel,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> tireInstallationsRefs(
+    Expression<bool> Function($$TireInstallationsTableFilterComposer f) f,
+  ) {
+    final $$TireInstallationsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.tireInstallations,
+      getReferencedColumn: (t) => t.tireId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TireInstallationsTableFilterComposer(
+            $db: $db,
+            $table: $db.tireInstallations,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> tireRepairsRefs(
+    Expression<bool> Function($$TireRepairsTableFilterComposer f) f,
+  ) {
+    final $$TireRepairsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.tireRepairs,
+      getReferencedColumn: (t) => t.tireId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TireRepairsTableFilterComposer(
+            $db: $db,
+            $table: $db.tireRepairs,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> repairPartsRefs(
+    Expression<bool> Function($$RepairPartsTableFilterComposer f) f,
+  ) {
+    final $$RepairPartsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.repairParts,
+      getReferencedColumn: (t) => t.tireId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RepairPartsTableFilterComposer(
+            $db: $db,
+            $table: $db.repairParts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$TiresTableOrderingComposer
+    extends Composer<_$AppDatabase, $TiresTable> {
+  $$TiresTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get tireNo => $composableBuilder(
+    column: $table.tireNo,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get brand => $composableBuilder(
+    column: $table.brand,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get specification => $composableBuilder(
+    column: $table.specification,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get condition => $composableBuilder(
+    column: $table.condition,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get firstUseDate => $composableBuilder(
+    column: $table.firstUseDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get repairCount => $composableBuilder(
+    column: $table.repairCount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get wearLevel => $composableBuilder(
+    column: $table.wearLevel,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$TiresTableAnnotationComposer
+    extends Composer<_$AppDatabase, $TiresTable> {
+  $$TiresTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get tireNo =>
+      $composableBuilder(column: $table.tireNo, builder: (column) => column);
+
+  GeneratedColumn<String> get brand =>
+      $composableBuilder(column: $table.brand, builder: (column) => column);
+
+  GeneratedColumn<String> get specification => $composableBuilder(
+    column: $table.specification,
+    builder: (column) => column,
+  );
+
+  GeneratedColumnWithTypeConverter<TireCondition, String> get condition =>
+      $composableBuilder(column: $table.condition, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get firstUseDate => $composableBuilder(
+    column: $table.firstUseDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumnWithTypeConverter<TireAssetStatus, String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
+  GeneratedColumn<int> get repairCount => $composableBuilder(
+    column: $table.repairCount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumnWithTypeConverter<TireWearLevel, String> get wearLevel =>
+      $composableBuilder(column: $table.wearLevel, builder: (column) => column);
+
+  GeneratedColumn<String> get remark =>
+      $composableBuilder(column: $table.remark, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
+  Expression<T> tireInstallationsRefs<T extends Object>(
+    Expression<T> Function($$TireInstallationsTableAnnotationComposer a) f,
+  ) {
+    final $$TireInstallationsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.tireInstallations,
+          getReferencedColumn: (t) => t.tireId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$TireInstallationsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.tireInstallations,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> tireRepairsRefs<T extends Object>(
+    Expression<T> Function($$TireRepairsTableAnnotationComposer a) f,
+  ) {
+    final $$TireRepairsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.tireRepairs,
+      getReferencedColumn: (t) => t.tireId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TireRepairsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.tireRepairs,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> repairPartsRefs<T extends Object>(
+    Expression<T> Function($$RepairPartsTableAnnotationComposer a) f,
+  ) {
+    final $$RepairPartsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.repairParts,
+      getReferencedColumn: (t) => t.tireId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RepairPartsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.repairParts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$TiresTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $TiresTable,
+          Tire,
+          $$TiresTableFilterComposer,
+          $$TiresTableOrderingComposer,
+          $$TiresTableAnnotationComposer,
+          $$TiresTableCreateCompanionBuilder,
+          $$TiresTableUpdateCompanionBuilder,
+          (Tire, $$TiresTableReferences),
+          Tire,
+          PrefetchHooks Function({
+            bool tireInstallationsRefs,
+            bool tireRepairsRefs,
+            bool repairPartsRefs,
+          })
+        > {
+  $$TiresTableTableManager(_$AppDatabase db, $TiresTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TiresTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TiresTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TiresTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> tireNo = const Value.absent(),
+                Value<String?> brand = const Value.absent(),
+                Value<String?> specification = const Value.absent(),
+                Value<TireCondition> condition = const Value.absent(),
+                Value<DateTime?> firstUseDate = const Value.absent(),
+                Value<TireAssetStatus> status = const Value.absent(),
+                Value<int> repairCount = const Value.absent(),
+                Value<TireWearLevel> wearLevel = const Value.absent(),
+                Value<String?> remark = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => TiresCompanion(
+                id: id,
+                tireNo: tireNo,
+                brand: brand,
+                specification: specification,
+                condition: condition,
+                firstUseDate: firstUseDate,
+                status: status,
+                repairCount: repairCount,
+                wearLevel: wearLevel,
+                remark: remark,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String tireNo,
+                Value<String?> brand = const Value.absent(),
+                Value<String?> specification = const Value.absent(),
+                Value<TireCondition> condition = const Value.absent(),
+                Value<DateTime?> firstUseDate = const Value.absent(),
+                Value<TireAssetStatus> status = const Value.absent(),
+                Value<int> repairCount = const Value.absent(),
+                Value<TireWearLevel> wearLevel = const Value.absent(),
+                Value<String?> remark = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => TiresCompanion.insert(
+                id: id,
+                tireNo: tireNo,
+                brand: brand,
+                specification: specification,
+                condition: condition,
+                firstUseDate: firstUseDate,
+                status: status,
+                repairCount: repairCount,
+                wearLevel: wearLevel,
+                remark: remark,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$TiresTable, Tire>(table),
+                  $$TiresTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                tireInstallationsRefs = false,
+                tireRepairsRefs = false,
+                repairPartsRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (tireInstallationsRefs) db.tireInstallations,
+                    if (tireRepairsRefs) db.tireRepairs,
+                    if (repairPartsRefs) db.repairParts,
+                  ],
+                  addJoins: null,
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (tireInstallationsRefs)
+                        await $_getPrefetchedData<
+                          Tire,
+                          $TiresTable,
+                          TireInstallation
+                        >(
+                          currentTable: table,
+                          referencedTable: $$TiresTableReferences
+                              ._tireInstallationsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$TiresTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).tireInstallationsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.tireId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (tireRepairsRefs)
+                        await $_getPrefetchedData<
+                          Tire,
+                          $TiresTable,
+                          TireRepair
+                        >(
+                          currentTable: table,
+                          referencedTable: $$TiresTableReferences
+                              ._tireRepairsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$TiresTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).tireRepairsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.tireId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (repairPartsRefs)
+                        await $_getPrefetchedData<
+                          Tire,
+                          $TiresTable,
+                          RepairPart
+                        >(
+                          currentTable: table,
+                          referencedTable: $$TiresTableReferences
+                              ._repairPartsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$TiresTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).repairPartsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.tireId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$TiresTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $TiresTable,
+      Tire,
+      $$TiresTableFilterComposer,
+      $$TiresTableOrderingComposer,
+      $$TiresTableAnnotationComposer,
+      $$TiresTableCreateCompanionBuilder,
+      $$TiresTableUpdateCompanionBuilder,
+      (Tire, $$TiresTableReferences),
+      Tire,
+      PrefetchHooks Function({
+        bool tireInstallationsRefs,
+        bool tireRepairsRefs,
+        bool repairPartsRefs,
+      })
+    >;
+typedef $$TireInstallationsTableCreateCompanionBuilder =
+    TireInstallationsCompanion Function({
+      Value<int> id,
+      required int tireId,
+      required int vehicleId,
+      required TirePosition position,
+      required DateTime installDate,
+      Value<DateTime?> removeDate,
+      required TireInstallReason installReason,
+      Value<String?> removeReason,
+      Value<String?> sourcePosition,
+      Value<String?> note,
+      Value<bool> isActive,
+      Value<DateTime> createdAt,
+    });
+typedef $$TireInstallationsTableUpdateCompanionBuilder =
+    TireInstallationsCompanion Function({
+      Value<int> id,
+      Value<int> tireId,
+      Value<int> vehicleId,
+      Value<TirePosition> position,
+      Value<DateTime> installDate,
+      Value<DateTime?> removeDate,
+      Value<TireInstallReason> installReason,
+      Value<String?> removeReason,
+      Value<String?> sourcePosition,
+      Value<String?> note,
+      Value<bool> isActive,
+      Value<DateTime> createdAt,
+    });
+
+final class $$TireInstallationsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $TireInstallationsTable,
+          TireInstallation
+        > {
+  $$TireInstallationsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $TiresTable _tireIdTable(_$AppDatabase db) =>
+      db.tires.createAlias('tire_installations__tire_id__tires__id');
+
+  $$TiresTableProcessedTableManager get tireId {
+    final $_column = $_itemColumn<int>('tire_id')!;
+
+    final manager = $$TiresTableTableManager(
+      $_db,
+      $_db.tires,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_tireIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $VehiclesTable _vehicleIdTable(_$AppDatabase db) =>
+      db.vehicles.createAlias('tire_installations__vehicle_id__vehicles__id');
+
+  $$VehiclesTableProcessedTableManager get vehicleId {
+    final $_column = $_itemColumn<int>('vehicle_id')!;
+
+    final manager = $$VehiclesTableTableManager(
+      $_db,
+      $_db.vehicles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_vehicleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$TireInstallationsTableFilterComposer
+    extends Composer<_$AppDatabase, $TireInstallationsTable> {
+  $$TireInstallationsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<TirePosition, TirePosition, String>
+  get position => $composableBuilder(
+    column: $table.position,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<DateTime> get installDate => $composableBuilder(
+    column: $table.installDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get removeDate => $composableBuilder(
+    column: $table.removeDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<TireInstallReason, TireInstallReason, String>
+  get installReason => $composableBuilder(
+    column: $table.installReason,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<String> get removeReason => $composableBuilder(
+    column: $table.removeReason,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get sourcePosition => $composableBuilder(
+    column: $table.sourcePosition,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isActive => $composableBuilder(
+    column: $table.isActive,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$TiresTableFilterComposer get tireId {
+    final $$TiresTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.tireId,
+      referencedTable: $db.tires,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TiresTableFilterComposer(
+            $db: $db,
+            $table: $db.tires,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$VehiclesTableFilterComposer get vehicleId {
+    final $$VehiclesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableFilterComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TireInstallationsTableOrderingComposer
+    extends Composer<_$AppDatabase, $TireInstallationsTable> {
+  $$TireInstallationsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get position => $composableBuilder(
+    column: $table.position,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get installDate => $composableBuilder(
+    column: $table.installDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get removeDate => $composableBuilder(
+    column: $table.removeDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get installReason => $composableBuilder(
+    column: $table.installReason,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get removeReason => $composableBuilder(
+    column: $table.removeReason,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get sourcePosition => $composableBuilder(
+    column: $table.sourcePosition,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isActive => $composableBuilder(
+    column: $table.isActive,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$TiresTableOrderingComposer get tireId {
+    final $$TiresTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.tireId,
+      referencedTable: $db.tires,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TiresTableOrderingComposer(
+            $db: $db,
+            $table: $db.tires,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$VehiclesTableOrderingComposer get vehicleId {
+    final $$VehiclesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableOrderingComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TireInstallationsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $TireInstallationsTable> {
+  $$TireInstallationsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<TirePosition, String> get position =>
+      $composableBuilder(column: $table.position, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get installDate => $composableBuilder(
+    column: $table.installDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get removeDate => $composableBuilder(
+    column: $table.removeDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumnWithTypeConverter<TireInstallReason, String>
+  get installReason => $composableBuilder(
+    column: $table.installReason,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get removeReason => $composableBuilder(
+    column: $table.removeReason,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get sourcePosition => $composableBuilder(
+    column: $table.sourcePosition,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get note =>
+      $composableBuilder(column: $table.note, builder: (column) => column);
+
+  GeneratedColumn<bool> get isActive =>
+      $composableBuilder(column: $table.isActive, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  $$TiresTableAnnotationComposer get tireId {
+    final $$TiresTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.tireId,
+      referencedTable: $db.tires,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TiresTableAnnotationComposer(
+            $db: $db,
+            $table: $db.tires,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$VehiclesTableAnnotationComposer get vehicleId {
+    final $$VehiclesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TireInstallationsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $TireInstallationsTable,
+          TireInstallation,
+          $$TireInstallationsTableFilterComposer,
+          $$TireInstallationsTableOrderingComposer,
+          $$TireInstallationsTableAnnotationComposer,
+          $$TireInstallationsTableCreateCompanionBuilder,
+          $$TireInstallationsTableUpdateCompanionBuilder,
+          (TireInstallation, $$TireInstallationsTableReferences),
+          TireInstallation,
+          PrefetchHooks Function({bool tireId, bool vehicleId})
+        > {
+  $$TireInstallationsTableTableManager(
+    _$AppDatabase db,
+    $TireInstallationsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TireInstallationsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TireInstallationsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TireInstallationsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> tireId = const Value.absent(),
+                Value<int> vehicleId = const Value.absent(),
+                Value<TirePosition> position = const Value.absent(),
+                Value<DateTime> installDate = const Value.absent(),
+                Value<DateTime?> removeDate = const Value.absent(),
+                Value<TireInstallReason> installReason = const Value.absent(),
+                Value<String?> removeReason = const Value.absent(),
+                Value<String?> sourcePosition = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                Value<bool> isActive = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+              }) => TireInstallationsCompanion(
+                id: id,
+                tireId: tireId,
+                vehicleId: vehicleId,
+                position: position,
+                installDate: installDate,
+                removeDate: removeDate,
+                installReason: installReason,
+                removeReason: removeReason,
+                sourcePosition: sourcePosition,
+                note: note,
+                isActive: isActive,
+                createdAt: createdAt,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int tireId,
+                required int vehicleId,
+                required TirePosition position,
+                required DateTime installDate,
+                Value<DateTime?> removeDate = const Value.absent(),
+                required TireInstallReason installReason,
+                Value<String?> removeReason = const Value.absent(),
+                Value<String?> sourcePosition = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                Value<bool> isActive = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+              }) => TireInstallationsCompanion.insert(
+                id: id,
+                tireId: tireId,
+                vehicleId: vehicleId,
+                position: position,
+                installDate: installDate,
+                removeDate: removeDate,
+                installReason: installReason,
+                removeReason: removeReason,
+                sourcePosition: sourcePosition,
+                note: note,
+                isActive: isActive,
+                createdAt: createdAt,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$TireInstallationsTable, TireInstallation>(table),
+                  $$TireInstallationsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({tireId = false, vehicleId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (tireId) {
+                      state = state.withJoin(
+                        currentTable: table,
+                        currentColumn: table.tireId,
+                        referencedTable: $$TireInstallationsTableReferences
+                            ._tireIdTable(db),
+                        referencedColumn: $$TireInstallationsTableReferences
+                            ._tireIdTable(db)
+                            .id,
+                      ) as T;
+                    }
+                    if (vehicleId) {
+                      state = state.withJoin(
+                        currentTable: table,
+                        currentColumn: table.vehicleId,
+                        referencedTable: $$TireInstallationsTableReferences
+                            ._vehicleIdTable(db),
+                        referencedColumn: $$TireInstallationsTableReferences
+                            ._vehicleIdTable(db)
+                            .id,
+                      ) as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$TireInstallationsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $TireInstallationsTable,
+      TireInstallation,
+      $$TireInstallationsTableFilterComposer,
+      $$TireInstallationsTableOrderingComposer,
+      $$TireInstallationsTableAnnotationComposer,
+      $$TireInstallationsTableCreateCompanionBuilder,
+      $$TireInstallationsTableUpdateCompanionBuilder,
+      (TireInstallation, $$TireInstallationsTableReferences),
+      TireInstallation,
+      PrefetchHooks Function({bool tireId, bool vehicleId})
+    >;
+typedef $$TireRepairsTableCreateCompanionBuilder =
+    TireRepairsCompanion Function({
+      Value<int> id,
+      required int tireId,
+      required DateTime repairDate,
+      required TireRepairType repairType,
+      Value<String?> repairPosition,
+      required TireRepairSeverity severity,
+      Value<int> amountCents,
+      Value<String?> vendor,
+      Value<String?> remark,
+      Value<DateTime> createdAt,
+      Value<bool> isDeleted,
+    });
+typedef $$TireRepairsTableUpdateCompanionBuilder =
+    TireRepairsCompanion Function({
+      Value<int> id,
+      Value<int> tireId,
+      Value<DateTime> repairDate,
+      Value<TireRepairType> repairType,
+      Value<String?> repairPosition,
+      Value<TireRepairSeverity> severity,
+      Value<int> amountCents,
+      Value<String?> vendor,
+      Value<String?> remark,
+      Value<DateTime> createdAt,
+      Value<bool> isDeleted,
+    });
+
+final class $$TireRepairsTableReferences
+    extends BaseReferences<_$AppDatabase, $TireRepairsTable, TireRepair> {
+  $$TireRepairsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $TiresTable _tireIdTable(_$AppDatabase db) =>
+      db.tires.createAlias('tire_repairs__tire_id__tires__id');
+
+  $$TiresTableProcessedTableManager get tireId {
+    final $_column = $_itemColumn<int>('tire_id')!;
+
+    final manager = $$TiresTableTableManager(
+      $_db,
+      $_db.tires,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_tireIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$TireRepairsTableFilterComposer
+    extends Composer<_$AppDatabase, $TireRepairsTable> {
+  $$TireRepairsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get repairDate => $composableBuilder(
+    column: $table.repairDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<TireRepairType, TireRepairType, String>
+  get repairType => $composableBuilder(
+    column: $table.repairType,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<String> get repairPosition => $composableBuilder(
+    column: $table.repairPosition,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<TireRepairSeverity, TireRepairSeverity, String>
+  get severity => $composableBuilder(
+    column: $table.severity,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<int> get amountCents => $composableBuilder(
+    column: $table.amountCents,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get vendor => $composableBuilder(
+    column: $table.vendor,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$TiresTableFilterComposer get tireId {
+    final $$TiresTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.tireId,
+      referencedTable: $db.tires,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TiresTableFilterComposer(
+            $db: $db,
+            $table: $db.tires,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TireRepairsTableOrderingComposer
+    extends Composer<_$AppDatabase, $TireRepairsTable> {
+  $$TireRepairsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get repairDate => $composableBuilder(
+    column: $table.repairDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get repairType => $composableBuilder(
+    column: $table.repairType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get repairPosition => $composableBuilder(
+    column: $table.repairPosition,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get severity => $composableBuilder(
+    column: $table.severity,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get amountCents => $composableBuilder(
+    column: $table.amountCents,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get vendor => $composableBuilder(
+    column: $table.vendor,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$TiresTableOrderingComposer get tireId {
+    final $$TiresTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.tireId,
+      referencedTable: $db.tires,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TiresTableOrderingComposer(
+            $db: $db,
+            $table: $db.tires,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TireRepairsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $TireRepairsTable> {
+  $$TireRepairsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get repairDate => $composableBuilder(
+    column: $table.repairDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumnWithTypeConverter<TireRepairType, String> get repairType =>
+      $composableBuilder(
+        column: $table.repairType,
+        builder: (column) => column,
+      );
+
+  GeneratedColumn<String> get repairPosition => $composableBuilder(
+    column: $table.repairPosition,
+    builder: (column) => column,
+  );
+
+  GeneratedColumnWithTypeConverter<TireRepairSeverity, String> get severity =>
+      $composableBuilder(column: $table.severity, builder: (column) => column);
+
+  GeneratedColumn<int> get amountCents => $composableBuilder(
+    column: $table.amountCents,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get vendor =>
+      $composableBuilder(column: $table.vendor, builder: (column) => column);
+
+  GeneratedColumn<String> get remark =>
+      $composableBuilder(column: $table.remark, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
+  $$TiresTableAnnotationComposer get tireId {
+    final $$TiresTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.tireId,
+      referencedTable: $db.tires,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TiresTableAnnotationComposer(
+            $db: $db,
+            $table: $db.tires,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TireRepairsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $TireRepairsTable,
+          TireRepair,
+          $$TireRepairsTableFilterComposer,
+          $$TireRepairsTableOrderingComposer,
+          $$TireRepairsTableAnnotationComposer,
+          $$TireRepairsTableCreateCompanionBuilder,
+          $$TireRepairsTableUpdateCompanionBuilder,
+          (TireRepair, $$TireRepairsTableReferences),
+          TireRepair,
+          PrefetchHooks Function({bool tireId})
+        > {
+  $$TireRepairsTableTableManager(_$AppDatabase db, $TireRepairsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TireRepairsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TireRepairsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TireRepairsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> tireId = const Value.absent(),
+                Value<DateTime> repairDate = const Value.absent(),
+                Value<TireRepairType> repairType = const Value.absent(),
+                Value<String?> repairPosition = const Value.absent(),
+                Value<TireRepairSeverity> severity = const Value.absent(),
+                Value<int> amountCents = const Value.absent(),
+                Value<String?> vendor = const Value.absent(),
+                Value<String?> remark = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => TireRepairsCompanion(
+                id: id,
+                tireId: tireId,
+                repairDate: repairDate,
+                repairType: repairType,
+                repairPosition: repairPosition,
+                severity: severity,
+                amountCents: amountCents,
+                vendor: vendor,
+                remark: remark,
+                createdAt: createdAt,
+                isDeleted: isDeleted,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int tireId,
+                required DateTime repairDate,
+                required TireRepairType repairType,
+                Value<String?> repairPosition = const Value.absent(),
+                required TireRepairSeverity severity,
+                Value<int> amountCents = const Value.absent(),
+                Value<String?> vendor = const Value.absent(),
+                Value<String?> remark = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => TireRepairsCompanion.insert(
+                id: id,
+                tireId: tireId,
+                repairDate: repairDate,
+                repairType: repairType,
+                repairPosition: repairPosition,
+                severity: severity,
+                amountCents: amountCents,
+                vendor: vendor,
+                remark: remark,
+                createdAt: createdAt,
+                isDeleted: isDeleted,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$TireRepairsTable, TireRepair>(table),
+                  $$TireRepairsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({tireId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (tireId) {
+                      state = state.withJoin(
+                        currentTable: table,
+                        currentColumn: table.tireId,
+                        referencedTable: $$TireRepairsTableReferences
+                            ._tireIdTable(db),
+                        referencedColumn: $$TireRepairsTableReferences
+                            ._tireIdTable(db)
+                            .id,
+                      ) as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$TireRepairsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $TireRepairsTable,
+      TireRepair,
+      $$TireRepairsTableFilterComposer,
+      $$TireRepairsTableOrderingComposer,
+      $$TireRepairsTableAnnotationComposer,
+      $$TireRepairsTableCreateCompanionBuilder,
+      $$TireRepairsTableUpdateCompanionBuilder,
+      (TireRepair, $$TireRepairsTableReferences),
+      TireRepair,
+      PrefetchHooks Function({bool tireId})
+    >;
+typedef $$RepairOrdersTableCreateCompanionBuilder =
+    RepairOrdersCompanion Function({
+      Value<int> id,
+      required String repairNo,
+      required int vehicleId,
+      required DateTime reportDate,
+      required DateTime faultFoundAt,
+      required String symptom,
+      Value<String?> cause,
+      Value<String?> project,
+      Value<DateTime?> departAt,
+      Value<String?> vendor,
+      Value<String?> manager,
+      Value<int> reportedAmountCents,
+      Value<int> actualAmountCents,
+      required RepairTicketStatus ticketStatus,
+      Value<VehicleRepairStatus> status,
+      Value<DateTime?> completedAt,
+      Value<String?> recordText,
+      Value<String?> remark,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
+    });
+typedef $$RepairOrdersTableUpdateCompanionBuilder =
+    RepairOrdersCompanion Function({
+      Value<int> id,
+      Value<String> repairNo,
+      Value<int> vehicleId,
+      Value<DateTime> reportDate,
+      Value<DateTime> faultFoundAt,
+      Value<String> symptom,
+      Value<String?> cause,
+      Value<String?> project,
+      Value<DateTime?> departAt,
+      Value<String?> vendor,
+      Value<String?> manager,
+      Value<int> reportedAmountCents,
+      Value<int> actualAmountCents,
+      Value<RepairTicketStatus> ticketStatus,
+      Value<VehicleRepairStatus> status,
+      Value<DateTime?> completedAt,
+      Value<String?> recordText,
+      Value<String?> remark,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
+    });
+
+final class $$RepairOrdersTableReferences
+    extends BaseReferences<_$AppDatabase, $RepairOrdersTable, RepairOrder> {
+  $$RepairOrdersTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $VehiclesTable _vehicleIdTable(_$AppDatabase db) =>
+      db.vehicles.createAlias('repair_orders__vehicle_id__vehicles__id');
+
+  $$VehiclesTableProcessedTableManager get vehicleId {
+    final $_column = $_itemColumn<int>('vehicle_id')!;
+
+    final manager = $$VehiclesTableTableManager(
+      $_db,
+      $_db.vehicles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_vehicleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<$RepairCostItemsTable, List<RepairCostItem>>
+  _repairCostItemsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.repairCostItems,
+    aliasName: 'repair_orders__id__repair_cost_items__repair_order_id',
+  );
+
+  $$RepairCostItemsTableProcessedTableManager get repairCostItemsRefs {
+    final manager = $$RepairCostItemsTableTableManager(
+      $_db,
+      $_db.repairCostItems,
+    ).filter((f) => f.repairOrderId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _repairCostItemsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$RepairPartsTable, List<RepairPart>>
+  _repairPartsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.repairParts,
+    aliasName: 'repair_orders__id__repair_parts__repair_order_id',
+  );
+
+  $$RepairPartsTableProcessedTableManager get repairPartsRefs {
+    final manager = $$RepairPartsTableTableManager(
+      $_db,
+      $_db.repairParts,
+    ).filter((f) => f.repairOrderId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_repairPartsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$VehicleAttachmentsTable, List<VehicleAttachment>>
+  _vehicleAttachmentsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.vehicleAttachments,
+        aliasName: 'repair_orders__id__vehicle_attachments__repair_order_id',
+      );
+
+  $$VehicleAttachmentsTableProcessedTableManager get vehicleAttachmentsRefs {
+    final manager = $$VehicleAttachmentsTableTableManager(
+      $_db,
+      $_db.vehicleAttachments,
+    ).filter((f) => f.repairOrderId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _vehicleAttachmentsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$RepairOrdersTableFilterComposer
+    extends Composer<_$AppDatabase, $RepairOrdersTable> {
+  $$RepairOrdersTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get repairNo => $composableBuilder(
+    column: $table.repairNo,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get reportDate => $composableBuilder(
+    column: $table.reportDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get faultFoundAt => $composableBuilder(
+    column: $table.faultFoundAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get symptom => $composableBuilder(
+    column: $table.symptom,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get cause => $composableBuilder(
+    column: $table.cause,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get project => $composableBuilder(
+    column: $table.project,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get departAt => $composableBuilder(
+    column: $table.departAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get vendor => $composableBuilder(
+    column: $table.vendor,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get manager => $composableBuilder(
+    column: $table.manager,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get reportedAmountCents => $composableBuilder(
+    column: $table.reportedAmountCents,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get actualAmountCents => $composableBuilder(
+    column: $table.actualAmountCents,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<RepairTicketStatus, RepairTicketStatus, String>
+  get ticketStatus => $composableBuilder(
+    column: $table.ticketStatus,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<
+    VehicleRepairStatus,
+    VehicleRepairStatus,
+    String
+  >
+  get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<DateTime> get completedAt => $composableBuilder(
+    column: $table.completedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get recordText => $composableBuilder(
+    column: $table.recordText,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$VehiclesTableFilterComposer get vehicleId {
+    final $$VehiclesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableFilterComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> repairCostItemsRefs(
+    Expression<bool> Function($$RepairCostItemsTableFilterComposer f) f,
+  ) {
+    final $$RepairCostItemsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.repairCostItems,
+      getReferencedColumn: (t) => t.repairOrderId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RepairCostItemsTableFilterComposer(
+            $db: $db,
+            $table: $db.repairCostItems,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> repairPartsRefs(
+    Expression<bool> Function($$RepairPartsTableFilterComposer f) f,
+  ) {
+    final $$RepairPartsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.repairParts,
+      getReferencedColumn: (t) => t.repairOrderId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RepairPartsTableFilterComposer(
+            $db: $db,
+            $table: $db.repairParts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> vehicleAttachmentsRefs(
+    Expression<bool> Function($$VehicleAttachmentsTableFilterComposer f) f,
+  ) {
+    final $$VehicleAttachmentsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.vehicleAttachments,
+      getReferencedColumn: (t) => t.repairOrderId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehicleAttachmentsTableFilterComposer(
+            $db: $db,
+            $table: $db.vehicleAttachments,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$RepairOrdersTableOrderingComposer
+    extends Composer<_$AppDatabase, $RepairOrdersTable> {
+  $$RepairOrdersTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get repairNo => $composableBuilder(
+    column: $table.repairNo,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get reportDate => $composableBuilder(
+    column: $table.reportDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get faultFoundAt => $composableBuilder(
+    column: $table.faultFoundAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get symptom => $composableBuilder(
+    column: $table.symptom,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get cause => $composableBuilder(
+    column: $table.cause,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get project => $composableBuilder(
+    column: $table.project,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get departAt => $composableBuilder(
+    column: $table.departAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get vendor => $composableBuilder(
+    column: $table.vendor,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get manager => $composableBuilder(
+    column: $table.manager,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get reportedAmountCents => $composableBuilder(
+    column: $table.reportedAmountCents,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get actualAmountCents => $composableBuilder(
+    column: $table.actualAmountCents,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get ticketStatus => $composableBuilder(
+    column: $table.ticketStatus,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get completedAt => $composableBuilder(
+    column: $table.completedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get recordText => $composableBuilder(
+    column: $table.recordText,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$VehiclesTableOrderingComposer get vehicleId {
+    final $$VehiclesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableOrderingComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$RepairOrdersTableAnnotationComposer
+    extends Composer<_$AppDatabase, $RepairOrdersTable> {
+  $$RepairOrdersTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get repairNo =>
+      $composableBuilder(column: $table.repairNo, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get reportDate => $composableBuilder(
+    column: $table.reportDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get faultFoundAt => $composableBuilder(
+    column: $table.faultFoundAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get symptom =>
+      $composableBuilder(column: $table.symptom, builder: (column) => column);
+
+  GeneratedColumn<String> get cause =>
+      $composableBuilder(column: $table.cause, builder: (column) => column);
+
+  GeneratedColumn<String> get project =>
+      $composableBuilder(column: $table.project, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get departAt =>
+      $composableBuilder(column: $table.departAt, builder: (column) => column);
+
+  GeneratedColumn<String> get vendor =>
+      $composableBuilder(column: $table.vendor, builder: (column) => column);
+
+  GeneratedColumn<String> get manager =>
+      $composableBuilder(column: $table.manager, builder: (column) => column);
+
+  GeneratedColumn<int> get reportedAmountCents => $composableBuilder(
+    column: $table.reportedAmountCents,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get actualAmountCents => $composableBuilder(
+    column: $table.actualAmountCents,
+    builder: (column) => column,
+  );
+
+  GeneratedColumnWithTypeConverter<RepairTicketStatus, String>
+  get ticketStatus => $composableBuilder(
+    column: $table.ticketStatus,
+    builder: (column) => column,
+  );
+
+  GeneratedColumnWithTypeConverter<VehicleRepairStatus, String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get completedAt => $composableBuilder(
+    column: $table.completedAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get recordText => $composableBuilder(
+    column: $table.recordText,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get remark =>
+      $composableBuilder(column: $table.remark, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
+  $$VehiclesTableAnnotationComposer get vehicleId {
+    final $$VehiclesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<T> repairCostItemsRefs<T extends Object>(
+    Expression<T> Function($$RepairCostItemsTableAnnotationComposer a) f,
+  ) {
+    final $$RepairCostItemsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.repairCostItems,
+      getReferencedColumn: (t) => t.repairOrderId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RepairCostItemsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.repairCostItems,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> repairPartsRefs<T extends Object>(
+    Expression<T> Function($$RepairPartsTableAnnotationComposer a) f,
+  ) {
+    final $$RepairPartsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.repairParts,
+      getReferencedColumn: (t) => t.repairOrderId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RepairPartsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.repairParts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> vehicleAttachmentsRefs<T extends Object>(
+    Expression<T> Function($$VehicleAttachmentsTableAnnotationComposer a) f,
+  ) {
+    final $$VehicleAttachmentsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.vehicleAttachments,
+          getReferencedColumn: (t) => t.repairOrderId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$VehicleAttachmentsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.vehicleAttachments,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$RepairOrdersTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $RepairOrdersTable,
+          RepairOrder,
+          $$RepairOrdersTableFilterComposer,
+          $$RepairOrdersTableOrderingComposer,
+          $$RepairOrdersTableAnnotationComposer,
+          $$RepairOrdersTableCreateCompanionBuilder,
+          $$RepairOrdersTableUpdateCompanionBuilder,
+          (RepairOrder, $$RepairOrdersTableReferences),
+          RepairOrder,
+          PrefetchHooks Function({
+            bool vehicleId,
+            bool repairCostItemsRefs,
+            bool repairPartsRefs,
+            bool vehicleAttachmentsRefs,
+          })
+        > {
+  $$RepairOrdersTableTableManager(_$AppDatabase db, $RepairOrdersTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$RepairOrdersTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$RepairOrdersTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$RepairOrdersTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> repairNo = const Value.absent(),
+                Value<int> vehicleId = const Value.absent(),
+                Value<DateTime> reportDate = const Value.absent(),
+                Value<DateTime> faultFoundAt = const Value.absent(),
+                Value<String> symptom = const Value.absent(),
+                Value<String?> cause = const Value.absent(),
+                Value<String?> project = const Value.absent(),
+                Value<DateTime?> departAt = const Value.absent(),
+                Value<String?> vendor = const Value.absent(),
+                Value<String?> manager = const Value.absent(),
+                Value<int> reportedAmountCents = const Value.absent(),
+                Value<int> actualAmountCents = const Value.absent(),
+                Value<RepairTicketStatus> ticketStatus = const Value.absent(),
+                Value<VehicleRepairStatus> status = const Value.absent(),
+                Value<DateTime?> completedAt = const Value.absent(),
+                Value<String?> recordText = const Value.absent(),
+                Value<String?> remark = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => RepairOrdersCompanion(
+                id: id,
+                repairNo: repairNo,
+                vehicleId: vehicleId,
+                reportDate: reportDate,
+                faultFoundAt: faultFoundAt,
+                symptom: symptom,
+                cause: cause,
+                project: project,
+                departAt: departAt,
+                vendor: vendor,
+                manager: manager,
+                reportedAmountCents: reportedAmountCents,
+                actualAmountCents: actualAmountCents,
+                ticketStatus: ticketStatus,
+                status: status,
+                completedAt: completedAt,
+                recordText: recordText,
+                remark: remark,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String repairNo,
+                required int vehicleId,
+                required DateTime reportDate,
+                required DateTime faultFoundAt,
+                required String symptom,
+                Value<String?> cause = const Value.absent(),
+                Value<String?> project = const Value.absent(),
+                Value<DateTime?> departAt = const Value.absent(),
+                Value<String?> vendor = const Value.absent(),
+                Value<String?> manager = const Value.absent(),
+                Value<int> reportedAmountCents = const Value.absent(),
+                Value<int> actualAmountCents = const Value.absent(),
+                required RepairTicketStatus ticketStatus,
+                Value<VehicleRepairStatus> status = const Value.absent(),
+                Value<DateTime?> completedAt = const Value.absent(),
+                Value<String?> recordText = const Value.absent(),
+                Value<String?> remark = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => RepairOrdersCompanion.insert(
+                id: id,
+                repairNo: repairNo,
+                vehicleId: vehicleId,
+                reportDate: reportDate,
+                faultFoundAt: faultFoundAt,
+                symptom: symptom,
+                cause: cause,
+                project: project,
+                departAt: departAt,
+                vendor: vendor,
+                manager: manager,
+                reportedAmountCents: reportedAmountCents,
+                actualAmountCents: actualAmountCents,
+                ticketStatus: ticketStatus,
+                status: status,
+                completedAt: completedAt,
+                recordText: recordText,
+                remark: remark,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$RepairOrdersTable, RepairOrder>(table),
+                  $$RepairOrdersTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                vehicleId = false,
+                repairCostItemsRefs = false,
+                repairPartsRefs = false,
+                vehicleAttachmentsRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (repairCostItemsRefs) db.repairCostItems,
+                    if (repairPartsRefs) db.repairParts,
+                    if (vehicleAttachmentsRefs) db.vehicleAttachments,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (vehicleId) {
+                          state = state.withJoin(
+                            currentTable: table,
+                            currentColumn: table.vehicleId,
+                            referencedTable: $$RepairOrdersTableReferences
+                                ._vehicleIdTable(db),
+                            referencedColumn: $$RepairOrdersTableReferences
+                                ._vehicleIdTable(db)
+                                .id,
+                          ) as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (repairCostItemsRefs)
+                        await $_getPrefetchedData<
+                          RepairOrder,
+                          $RepairOrdersTable,
+                          RepairCostItem
+                        >(
+                          currentTable: table,
+                          referencedTable: $$RepairOrdersTableReferences
+                              ._repairCostItemsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$RepairOrdersTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).repairCostItemsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.repairOrderId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (repairPartsRefs)
+                        await $_getPrefetchedData<
+                          RepairOrder,
+                          $RepairOrdersTable,
+                          RepairPart
+                        >(
+                          currentTable: table,
+                          referencedTable: $$RepairOrdersTableReferences
+                              ._repairPartsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$RepairOrdersTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).repairPartsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.repairOrderId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (vehicleAttachmentsRefs)
+                        await $_getPrefetchedData<
+                          RepairOrder,
+                          $RepairOrdersTable,
+                          VehicleAttachment
+                        >(
+                          currentTable: table,
+                          referencedTable: $$RepairOrdersTableReferences
+                              ._vehicleAttachmentsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$RepairOrdersTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).vehicleAttachmentsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.repairOrderId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$RepairOrdersTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $RepairOrdersTable,
+      RepairOrder,
+      $$RepairOrdersTableFilterComposer,
+      $$RepairOrdersTableOrderingComposer,
+      $$RepairOrdersTableAnnotationComposer,
+      $$RepairOrdersTableCreateCompanionBuilder,
+      $$RepairOrdersTableUpdateCompanionBuilder,
+      (RepairOrder, $$RepairOrdersTableReferences),
+      RepairOrder,
+      PrefetchHooks Function({
+        bool vehicleId,
+        bool repairCostItemsRefs,
+        bool repairPartsRefs,
+        bool vehicleAttachmentsRefs,
+      })
+    >;
+typedef $$RepairCostItemsTableCreateCompanionBuilder =
+    RepairCostItemsCompanion Function({
+      Value<int> id,
+      required int repairOrderId,
+      required String content,
+      Value<double> quantity,
+      Value<String> unit,
+      required int unitPriceCents,
+      required int subtotalCents,
+      required RepairCostType costType,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
+    });
+typedef $$RepairCostItemsTableUpdateCompanionBuilder =
+    RepairCostItemsCompanion Function({
+      Value<int> id,
+      Value<int> repairOrderId,
+      Value<String> content,
+      Value<double> quantity,
+      Value<String> unit,
+      Value<int> unitPriceCents,
+      Value<int> subtotalCents,
+      Value<RepairCostType> costType,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
+    });
+
+final class $$RepairCostItemsTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $RepairCostItemsTable, RepairCostItem> {
+  $$RepairCostItemsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $RepairOrdersTable _repairOrderIdTable(_$AppDatabase db) => db
+      .repairOrders
+      .createAlias('repair_cost_items__repair_order_id__repair_orders__id');
+
+  $$RepairOrdersTableProcessedTableManager get repairOrderId {
+    final $_column = $_itemColumn<int>('repair_order_id')!;
+
+    final manager = $$RepairOrdersTableTableManager(
+      $_db,
+      $_db.repairOrders,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_repairOrderIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<$RepairPartsTable, List<RepairPart>>
+  _repairPartsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.repairParts,
+    aliasName: 'repair_cost_items__id__repair_parts__cost_item_id',
+  );
+
+  $$RepairPartsTableProcessedTableManager get repairPartsRefs {
+    final manager = $$RepairPartsTableTableManager(
+      $_db,
+      $_db.repairParts,
+    ).filter((f) => f.costItemId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_repairPartsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$RepairCostItemsTableFilterComposer
+    extends Composer<_$AppDatabase, $RepairCostItemsTable> {
+  $$RepairCostItemsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get content => $composableBuilder(
+    column: $table.content,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get quantity => $composableBuilder(
+    column: $table.quantity,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get unit => $composableBuilder(
+    column: $table.unit,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get unitPriceCents => $composableBuilder(
+    column: $table.unitPriceCents,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get subtotalCents => $composableBuilder(
+    column: $table.subtotalCents,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<RepairCostType, RepairCostType, String>
+  get costType => $composableBuilder(
+    column: $table.costType,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$RepairOrdersTableFilterComposer get repairOrderId {
+    final $$RepairOrdersTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.repairOrderId,
+      referencedTable: $db.repairOrders,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RepairOrdersTableFilterComposer(
+            $db: $db,
+            $table: $db.repairOrders,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> repairPartsRefs(
+    Expression<bool> Function($$RepairPartsTableFilterComposer f) f,
+  ) {
+    final $$RepairPartsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.repairParts,
+      getReferencedColumn: (t) => t.costItemId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RepairPartsTableFilterComposer(
+            $db: $db,
+            $table: $db.repairParts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$RepairCostItemsTableOrderingComposer
+    extends Composer<_$AppDatabase, $RepairCostItemsTable> {
+  $$RepairCostItemsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get content => $composableBuilder(
+    column: $table.content,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get quantity => $composableBuilder(
+    column: $table.quantity,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get unit => $composableBuilder(
+    column: $table.unit,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get unitPriceCents => $composableBuilder(
+    column: $table.unitPriceCents,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get subtotalCents => $composableBuilder(
+    column: $table.subtotalCents,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get costType => $composableBuilder(
+    column: $table.costType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$RepairOrdersTableOrderingComposer get repairOrderId {
+    final $$RepairOrdersTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.repairOrderId,
+      referencedTable: $db.repairOrders,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RepairOrdersTableOrderingComposer(
+            $db: $db,
+            $table: $db.repairOrders,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$RepairCostItemsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $RepairCostItemsTable> {
+  $$RepairCostItemsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get content =>
+      $composableBuilder(column: $table.content, builder: (column) => column);
+
+  GeneratedColumn<double> get quantity =>
+      $composableBuilder(column: $table.quantity, builder: (column) => column);
+
+  GeneratedColumn<String> get unit =>
+      $composableBuilder(column: $table.unit, builder: (column) => column);
+
+  GeneratedColumn<int> get unitPriceCents => $composableBuilder(
+    column: $table.unitPriceCents,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get subtotalCents => $composableBuilder(
+    column: $table.subtotalCents,
+    builder: (column) => column,
+  );
+
+  GeneratedColumnWithTypeConverter<RepairCostType, String> get costType =>
+      $composableBuilder(column: $table.costType, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
+  $$RepairOrdersTableAnnotationComposer get repairOrderId {
+    final $$RepairOrdersTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.repairOrderId,
+      referencedTable: $db.repairOrders,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RepairOrdersTableAnnotationComposer(
+            $db: $db,
+            $table: $db.repairOrders,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<T> repairPartsRefs<T extends Object>(
+    Expression<T> Function($$RepairPartsTableAnnotationComposer a) f,
+  ) {
+    final $$RepairPartsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.repairParts,
+      getReferencedColumn: (t) => t.costItemId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RepairPartsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.repairParts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$RepairCostItemsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $RepairCostItemsTable,
+          RepairCostItem,
+          $$RepairCostItemsTableFilterComposer,
+          $$RepairCostItemsTableOrderingComposer,
+          $$RepairCostItemsTableAnnotationComposer,
+          $$RepairCostItemsTableCreateCompanionBuilder,
+          $$RepairCostItemsTableUpdateCompanionBuilder,
+          (RepairCostItem, $$RepairCostItemsTableReferences),
+          RepairCostItem,
+          PrefetchHooks Function({bool repairOrderId, bool repairPartsRefs})
+        > {
+  $$RepairCostItemsTableTableManager(
+    _$AppDatabase db,
+    $RepairCostItemsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$RepairCostItemsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$RepairCostItemsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$RepairCostItemsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> repairOrderId = const Value.absent(),
+                Value<String> content = const Value.absent(),
+                Value<double> quantity = const Value.absent(),
+                Value<String> unit = const Value.absent(),
+                Value<int> unitPriceCents = const Value.absent(),
+                Value<int> subtotalCents = const Value.absent(),
+                Value<RepairCostType> costType = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => RepairCostItemsCompanion(
+                id: id,
+                repairOrderId: repairOrderId,
+                content: content,
+                quantity: quantity,
+                unit: unit,
+                unitPriceCents: unitPriceCents,
+                subtotalCents: subtotalCents,
+                costType: costType,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int repairOrderId,
+                required String content,
+                Value<double> quantity = const Value.absent(),
+                Value<String> unit = const Value.absent(),
+                required int unitPriceCents,
+                required int subtotalCents,
+                required RepairCostType costType,
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => RepairCostItemsCompanion.insert(
+                id: id,
+                repairOrderId: repairOrderId,
+                content: content,
+                quantity: quantity,
+                unit: unit,
+                unitPriceCents: unitPriceCents,
+                subtotalCents: subtotalCents,
+                costType: costType,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$RepairCostItemsTable, RepairCostItem>(table),
+                  $$RepairCostItemsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({repairOrderId = false, repairPartsRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (repairPartsRefs) db.repairParts,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (repairOrderId) {
+                          state = state.withJoin(
+                            currentTable: table,
+                            currentColumn: table.repairOrderId,
+                            referencedTable: $$RepairCostItemsTableReferences
+                                ._repairOrderIdTable(db),
+                            referencedColumn: $$RepairCostItemsTableReferences
+                                ._repairOrderIdTable(db)
+                                .id,
+                          ) as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (repairPartsRefs)
+                        await $_getPrefetchedData<
+                          RepairCostItem,
+                          $RepairCostItemsTable,
+                          RepairPart
+                        >(
+                          currentTable: table,
+                          referencedTable: $$RepairCostItemsTableReferences
+                              ._repairPartsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$RepairCostItemsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).repairPartsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.costItemId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$RepairCostItemsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $RepairCostItemsTable,
+      RepairCostItem,
+      $$RepairCostItemsTableFilterComposer,
+      $$RepairCostItemsTableOrderingComposer,
+      $$RepairCostItemsTableAnnotationComposer,
+      $$RepairCostItemsTableCreateCompanionBuilder,
+      $$RepairCostItemsTableUpdateCompanionBuilder,
+      (RepairCostItem, $$RepairCostItemsTableReferences),
+      RepairCostItem,
+      PrefetchHooks Function({bool repairOrderId, bool repairPartsRefs})
+    >;
+typedef $$RepairPartsTableCreateCompanionBuilder =
+    RepairPartsCompanion Function({
+      Value<int> id,
+      required int repairOrderId,
+      Value<int?> costItemId,
+      Value<int?> tireId,
+      required String name,
+      Value<double> quantity,
+      Value<String> unit,
+      Value<int> amountCents,
+      Value<String?> componentType,
+      Value<String?> remark,
+      Value<bool> isDeleted,
+      Value<DateTime> createdAt,
+    });
+typedef $$RepairPartsTableUpdateCompanionBuilder =
+    RepairPartsCompanion Function({
+      Value<int> id,
+      Value<int> repairOrderId,
+      Value<int?> costItemId,
+      Value<int?> tireId,
+      Value<String> name,
+      Value<double> quantity,
+      Value<String> unit,
+      Value<int> amountCents,
+      Value<String?> componentType,
+      Value<String?> remark,
+      Value<bool> isDeleted,
+      Value<DateTime> createdAt,
+    });
+
+final class $$RepairPartsTableReferences
+    extends BaseReferences<_$AppDatabase, $RepairPartsTable, RepairPart> {
+  $$RepairPartsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $RepairOrdersTable _repairOrderIdTable(_$AppDatabase db) => db
+      .repairOrders
+      .createAlias('repair_parts__repair_order_id__repair_orders__id');
+
+  $$RepairOrdersTableProcessedTableManager get repairOrderId {
+    final $_column = $_itemColumn<int>('repair_order_id')!;
+
+    final manager = $$RepairOrdersTableTableManager(
+      $_db,
+      $_db.repairOrders,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_repairOrderIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $RepairCostItemsTable _costItemIdTable(_$AppDatabase db) => db
+      .repairCostItems
+      .createAlias('repair_parts__cost_item_id__repair_cost_items__id');
+
+  $$RepairCostItemsTableProcessedTableManager? get costItemId {
+    final $_column = $_itemColumn<int>('cost_item_id');
+    if ($_column == null) return null;
+    final manager = $$RepairCostItemsTableTableManager(
+      $_db,
+      $_db.repairCostItems,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_costItemIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $TiresTable _tireIdTable(_$AppDatabase db) =>
+      db.tires.createAlias('repair_parts__tire_id__tires__id');
+
+  $$TiresTableProcessedTableManager? get tireId {
+    final $_column = $_itemColumn<int>('tire_id');
+    if ($_column == null) return null;
+    final manager = $$TiresTableTableManager(
+      $_db,
+      $_db.tires,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_tireIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$RepairPartsTableFilterComposer
+    extends Composer<_$AppDatabase, $RepairPartsTable> {
+  $$RepairPartsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get quantity => $composableBuilder(
+    column: $table.quantity,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get unit => $composableBuilder(
+    column: $table.unit,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get amountCents => $composableBuilder(
+    column: $table.amountCents,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get componentType => $composableBuilder(
+    column: $table.componentType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$RepairOrdersTableFilterComposer get repairOrderId {
+    final $$RepairOrdersTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.repairOrderId,
+      referencedTable: $db.repairOrders,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RepairOrdersTableFilterComposer(
+            $db: $db,
+            $table: $db.repairOrders,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$RepairCostItemsTableFilterComposer get costItemId {
+    final $$RepairCostItemsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.costItemId,
+      referencedTable: $db.repairCostItems,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RepairCostItemsTableFilterComposer(
+            $db: $db,
+            $table: $db.repairCostItems,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TiresTableFilterComposer get tireId {
+    final $$TiresTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.tireId,
+      referencedTable: $db.tires,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TiresTableFilterComposer(
+            $db: $db,
+            $table: $db.tires,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$RepairPartsTableOrderingComposer
+    extends Composer<_$AppDatabase, $RepairPartsTable> {
+  $$RepairPartsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get quantity => $composableBuilder(
+    column: $table.quantity,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get unit => $composableBuilder(
+    column: $table.unit,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get amountCents => $composableBuilder(
+    column: $table.amountCents,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get componentType => $composableBuilder(
+    column: $table.componentType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$RepairOrdersTableOrderingComposer get repairOrderId {
+    final $$RepairOrdersTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.repairOrderId,
+      referencedTable: $db.repairOrders,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RepairOrdersTableOrderingComposer(
+            $db: $db,
+            $table: $db.repairOrders,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$RepairCostItemsTableOrderingComposer get costItemId {
+    final $$RepairCostItemsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.costItemId,
+      referencedTable: $db.repairCostItems,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RepairCostItemsTableOrderingComposer(
+            $db: $db,
+            $table: $db.repairCostItems,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TiresTableOrderingComposer get tireId {
+    final $$TiresTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.tireId,
+      referencedTable: $db.tires,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TiresTableOrderingComposer(
+            $db: $db,
+            $table: $db.tires,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$RepairPartsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $RepairPartsTable> {
+  $$RepairPartsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<double> get quantity =>
+      $composableBuilder(column: $table.quantity, builder: (column) => column);
+
+  GeneratedColumn<String> get unit =>
+      $composableBuilder(column: $table.unit, builder: (column) => column);
+
+  GeneratedColumn<int> get amountCents => $composableBuilder(
+    column: $table.amountCents,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get componentType => $composableBuilder(
+    column: $table.componentType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get remark =>
+      $composableBuilder(column: $table.remark, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  $$RepairOrdersTableAnnotationComposer get repairOrderId {
+    final $$RepairOrdersTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.repairOrderId,
+      referencedTable: $db.repairOrders,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RepairOrdersTableAnnotationComposer(
+            $db: $db,
+            $table: $db.repairOrders,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$RepairCostItemsTableAnnotationComposer get costItemId {
+    final $$RepairCostItemsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.costItemId,
+      referencedTable: $db.repairCostItems,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RepairCostItemsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.repairCostItems,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TiresTableAnnotationComposer get tireId {
+    final $$TiresTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.tireId,
+      referencedTable: $db.tires,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TiresTableAnnotationComposer(
+            $db: $db,
+            $table: $db.tires,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$RepairPartsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $RepairPartsTable,
+          RepairPart,
+          $$RepairPartsTableFilterComposer,
+          $$RepairPartsTableOrderingComposer,
+          $$RepairPartsTableAnnotationComposer,
+          $$RepairPartsTableCreateCompanionBuilder,
+          $$RepairPartsTableUpdateCompanionBuilder,
+          (RepairPart, $$RepairPartsTableReferences),
+          RepairPart,
+          PrefetchHooks Function({
+            bool repairOrderId,
+            bool costItemId,
+            bool tireId,
+          })
+        > {
+  $$RepairPartsTableTableManager(_$AppDatabase db, $RepairPartsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$RepairPartsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$RepairPartsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$RepairPartsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> repairOrderId = const Value.absent(),
+                Value<int?> costItemId = const Value.absent(),
+                Value<int?> tireId = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<double> quantity = const Value.absent(),
+                Value<String> unit = const Value.absent(),
+                Value<int> amountCents = const Value.absent(),
+                Value<String?> componentType = const Value.absent(),
+                Value<String?> remark = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+              }) => RepairPartsCompanion(
+                id: id,
+                repairOrderId: repairOrderId,
+                costItemId: costItemId,
+                tireId: tireId,
+                name: name,
+                quantity: quantity,
+                unit: unit,
+                amountCents: amountCents,
+                componentType: componentType,
+                remark: remark,
+                isDeleted: isDeleted,
+                createdAt: createdAt,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int repairOrderId,
+                Value<int?> costItemId = const Value.absent(),
+                Value<int?> tireId = const Value.absent(),
+                required String name,
+                Value<double> quantity = const Value.absent(),
+                Value<String> unit = const Value.absent(),
+                Value<int> amountCents = const Value.absent(),
+                Value<String?> componentType = const Value.absent(),
+                Value<String?> remark = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+              }) => RepairPartsCompanion.insert(
+                id: id,
+                repairOrderId: repairOrderId,
+                costItemId: costItemId,
+                tireId: tireId,
+                name: name,
+                quantity: quantity,
+                unit: unit,
+                amountCents: amountCents,
+                componentType: componentType,
+                remark: remark,
+                isDeleted: isDeleted,
+                createdAt: createdAt,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$RepairPartsTable, RepairPart>(table),
+                  $$RepairPartsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({repairOrderId = false, costItemId = false, tireId = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (repairOrderId) {
+                          state = state.withJoin(
+                            currentTable: table,
+                            currentColumn: table.repairOrderId,
+                            referencedTable: $$RepairPartsTableReferences
+                                ._repairOrderIdTable(db),
+                            referencedColumn: $$RepairPartsTableReferences
+                                ._repairOrderIdTable(db)
+                                .id,
+                          ) as T;
+                        }
+                        if (costItemId) {
+                          state = state.withJoin(
+                            currentTable: table,
+                            currentColumn: table.costItemId,
+                            referencedTable: $$RepairPartsTableReferences
+                                ._costItemIdTable(db),
+                            referencedColumn: $$RepairPartsTableReferences
+                                ._costItemIdTable(db)
+                                .id,
+                          ) as T;
+                        }
+                        if (tireId) {
+                          state = state.withJoin(
+                            currentTable: table,
+                            currentColumn: table.tireId,
+                            referencedTable: $$RepairPartsTableReferences
+                                ._tireIdTable(db),
+                            referencedColumn: $$RepairPartsTableReferences
+                                ._tireIdTable(db)
+                                .id,
+                          ) as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$RepairPartsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $RepairPartsTable,
+      RepairPart,
+      $$RepairPartsTableFilterComposer,
+      $$RepairPartsTableOrderingComposer,
+      $$RepairPartsTableAnnotationComposer,
+      $$RepairPartsTableCreateCompanionBuilder,
+      $$RepairPartsTableUpdateCompanionBuilder,
+      (RepairPart, $$RepairPartsTableReferences),
+      RepairPart,
+      PrefetchHooks Function({bool repairOrderId, bool costItemId, bool tireId})
+    >;
+typedef $$VehicleAttachmentsTableCreateCompanionBuilder =
+    VehicleAttachmentsCompanion Function({
+      Value<int> id,
+      required int vehicleId,
+      Value<int?> repairOrderId,
+      Value<String> category,
+      required String originalFileName,
+      Value<String> storedFileName,
+      required String relativePath,
+      Value<String?> mimeType,
+      required String extension,
+      required int fileSize,
+      Value<String?> fileHash,
+      Value<String?> remark,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<bool> isDeleted,
+    });
+typedef $$VehicleAttachmentsTableUpdateCompanionBuilder =
+    VehicleAttachmentsCompanion Function({
+      Value<int> id,
+      Value<int> vehicleId,
+      Value<int?> repairOrderId,
+      Value<String> category,
+      Value<String> originalFileName,
+      Value<String> storedFileName,
+      Value<String> relativePath,
+      Value<String?> mimeType,
+      Value<String> extension,
+      Value<int> fileSize,
+      Value<String?> fileHash,
+      Value<String?> remark,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<bool> isDeleted,
+    });
+
+final class $$VehicleAttachmentsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $VehicleAttachmentsTable,
+          VehicleAttachment
+        > {
+  $$VehicleAttachmentsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $VehiclesTable _vehicleIdTable(_$AppDatabase db) =>
+      db.vehicles.createAlias('vehicle_attachments__vehicle_id__vehicles__id');
+
+  $$VehiclesTableProcessedTableManager get vehicleId {
+    final $_column = $_itemColumn<int>('vehicle_id')!;
+
+    final manager = $$VehiclesTableTableManager(
+      $_db,
+      $_db.vehicles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_vehicleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $RepairOrdersTable _repairOrderIdTable(_$AppDatabase db) => db
+      .repairOrders
+      .createAlias('vehicle_attachments__repair_order_id__repair_orders__id');
+
+  $$RepairOrdersTableProcessedTableManager? get repairOrderId {
+    final $_column = $_itemColumn<int>('repair_order_id');
+    if ($_column == null) return null;
+    final manager = $$RepairOrdersTableTableManager(
+      $_db,
+      $_db.repairOrders,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_repairOrderIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$VehicleAttachmentsTableFilterComposer
+    extends Composer<_$AppDatabase, $VehicleAttachmentsTable> {
+  $$VehicleAttachmentsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get originalFileName => $composableBuilder(
+    column: $table.originalFileName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get storedFileName => $composableBuilder(
+    column: $table.storedFileName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get relativePath => $composableBuilder(
+    column: $table.relativePath,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get mimeType => $composableBuilder(
+    column: $table.mimeType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get extension => $composableBuilder(
+    column: $table.extension,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get fileSize => $composableBuilder(
+    column: $table.fileSize,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get fileHash => $composableBuilder(
+    column: $table.fileHash,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$VehiclesTableFilterComposer get vehicleId {
+    final $$VehiclesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableFilterComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$RepairOrdersTableFilterComposer get repairOrderId {
+    final $$RepairOrdersTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.repairOrderId,
+      referencedTable: $db.repairOrders,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RepairOrdersTableFilterComposer(
+            $db: $db,
+            $table: $db.repairOrders,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$VehicleAttachmentsTableOrderingComposer
+    extends Composer<_$AppDatabase, $VehicleAttachmentsTable> {
+  $$VehicleAttachmentsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get originalFileName => $composableBuilder(
+    column: $table.originalFileName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get storedFileName => $composableBuilder(
+    column: $table.storedFileName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get relativePath => $composableBuilder(
+    column: $table.relativePath,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get mimeType => $composableBuilder(
+    column: $table.mimeType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get extension => $composableBuilder(
+    column: $table.extension,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get fileSize => $composableBuilder(
+    column: $table.fileSize,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get fileHash => $composableBuilder(
+    column: $table.fileHash,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$VehiclesTableOrderingComposer get vehicleId {
+    final $$VehiclesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableOrderingComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$RepairOrdersTableOrderingComposer get repairOrderId {
+    final $$RepairOrdersTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.repairOrderId,
+      referencedTable: $db.repairOrders,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RepairOrdersTableOrderingComposer(
+            $db: $db,
+            $table: $db.repairOrders,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$VehicleAttachmentsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $VehicleAttachmentsTable> {
+  $$VehicleAttachmentsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get category =>
+      $composableBuilder(column: $table.category, builder: (column) => column);
+
+  GeneratedColumn<String> get originalFileName => $composableBuilder(
+    column: $table.originalFileName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get storedFileName => $composableBuilder(
+    column: $table.storedFileName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get relativePath => $composableBuilder(
+    column: $table.relativePath,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get mimeType =>
+      $composableBuilder(column: $table.mimeType, builder: (column) => column);
+
+  GeneratedColumn<String> get extension =>
+      $composableBuilder(column: $table.extension, builder: (column) => column);
+
+  GeneratedColumn<int> get fileSize =>
+      $composableBuilder(column: $table.fileSize, builder: (column) => column);
+
+  GeneratedColumn<String> get fileHash =>
+      $composableBuilder(column: $table.fileHash, builder: (column) => column);
+
+  GeneratedColumn<String> get remark =>
+      $composableBuilder(column: $table.remark, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
+  $$VehiclesTableAnnotationComposer get vehicleId {
+    final $$VehiclesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$RepairOrdersTableAnnotationComposer get repairOrderId {
+    final $$RepairOrdersTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.repairOrderId,
+      referencedTable: $db.repairOrders,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RepairOrdersTableAnnotationComposer(
+            $db: $db,
+            $table: $db.repairOrders,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$VehicleAttachmentsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $VehicleAttachmentsTable,
+          VehicleAttachment,
+          $$VehicleAttachmentsTableFilterComposer,
+          $$VehicleAttachmentsTableOrderingComposer,
+          $$VehicleAttachmentsTableAnnotationComposer,
+          $$VehicleAttachmentsTableCreateCompanionBuilder,
+          $$VehicleAttachmentsTableUpdateCompanionBuilder,
+          (VehicleAttachment, $$VehicleAttachmentsTableReferences),
+          VehicleAttachment,
+          PrefetchHooks Function({bool vehicleId, bool repairOrderId})
+        > {
+  $$VehicleAttachmentsTableTableManager(
+    _$AppDatabase db,
+    $VehicleAttachmentsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$VehicleAttachmentsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$VehicleAttachmentsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$VehicleAttachmentsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> vehicleId = const Value.absent(),
+                Value<int?> repairOrderId = const Value.absent(),
+                Value<String> category = const Value.absent(),
+                Value<String> originalFileName = const Value.absent(),
+                Value<String> storedFileName = const Value.absent(),
+                Value<String> relativePath = const Value.absent(),
+                Value<String?> mimeType = const Value.absent(),
+                Value<String> extension = const Value.absent(),
+                Value<int> fileSize = const Value.absent(),
+                Value<String?> fileHash = const Value.absent(),
+                Value<String?> remark = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => VehicleAttachmentsCompanion(
+                id: id,
+                vehicleId: vehicleId,
+                repairOrderId: repairOrderId,
+                category: category,
+                originalFileName: originalFileName,
+                storedFileName: storedFileName,
+                relativePath: relativePath,
+                mimeType: mimeType,
+                extension: extension,
+                fileSize: fileSize,
+                fileHash: fileHash,
+                remark: remark,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                isDeleted: isDeleted,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int vehicleId,
+                Value<int?> repairOrderId = const Value.absent(),
+                Value<String> category = const Value.absent(),
+                required String originalFileName,
+                Value<String> storedFileName = const Value.absent(),
+                required String relativePath,
+                Value<String?> mimeType = const Value.absent(),
+                required String extension,
+                required int fileSize,
+                Value<String?> fileHash = const Value.absent(),
+                Value<String?> remark = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => VehicleAttachmentsCompanion.insert(
+                id: id,
+                vehicleId: vehicleId,
+                repairOrderId: repairOrderId,
+                category: category,
+                originalFileName: originalFileName,
+                storedFileName: storedFileName,
+                relativePath: relativePath,
+                mimeType: mimeType,
+                extension: extension,
+                fileSize: fileSize,
+                fileHash: fileHash,
+                remark: remark,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                isDeleted: isDeleted,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$VehicleAttachmentsTable, VehicleAttachment>(
+                    table,
+                  ),
+                  $$VehicleAttachmentsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({vehicleId = false, repairOrderId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (vehicleId) {
+                      state = state.withJoin(
+                        currentTable: table,
+                        currentColumn: table.vehicleId,
+                        referencedTable: $$VehicleAttachmentsTableReferences
+                            ._vehicleIdTable(db),
+                        referencedColumn: $$VehicleAttachmentsTableReferences
+                            ._vehicleIdTable(db)
+                            .id,
+                      ) as T;
+                    }
+                    if (repairOrderId) {
+                      state = state.withJoin(
+                        currentTable: table,
+                        currentColumn: table.repairOrderId,
+                        referencedTable: $$VehicleAttachmentsTableReferences
+                            ._repairOrderIdTable(db),
+                        referencedColumn: $$VehicleAttachmentsTableReferences
+                            ._repairOrderIdTable(db)
+                            .id,
+                      ) as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$VehicleAttachmentsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $VehicleAttachmentsTable,
+      VehicleAttachment,
+      $$VehicleAttachmentsTableFilterComposer,
+      $$VehicleAttachmentsTableOrderingComposer,
+      $$VehicleAttachmentsTableAnnotationComposer,
+      $$VehicleAttachmentsTableCreateCompanionBuilder,
+      $$VehicleAttachmentsTableUpdateCompanionBuilder,
+      (VehicleAttachment, $$VehicleAttachmentsTableReferences),
+      VehicleAttachment,
+      PrefetchHooks Function({bool vehicleId, bool repairOrderId})
+    >;
+typedef $$MaintenanceTemplatesTableCreateCompanionBuilder =
+    MaintenanceTemplatesCompanion Function({
+      Value<int> id,
+      required String name,
+      Value<String?> componentType,
+      required int intervalValue,
+      required MaintenanceIntervalUnit intervalUnit,
+      Value<int> leadDays,
+      Value<int> overdueDays,
+      Value<int> sortOrder,
+      Value<bool> isActive,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
+    });
+typedef $$MaintenanceTemplatesTableUpdateCompanionBuilder =
+    MaintenanceTemplatesCompanion Function({
+      Value<int> id,
+      Value<String> name,
+      Value<String?> componentType,
+      Value<int> intervalValue,
+      Value<MaintenanceIntervalUnit> intervalUnit,
+      Value<int> leadDays,
+      Value<int> overdueDays,
+      Value<int> sortOrder,
+      Value<bool> isActive,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
+    });
+
+final class $$MaintenanceTemplatesTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $MaintenanceTemplatesTable,
+          MaintenanceTemplate
+        > {
+  $$MaintenanceTemplatesTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static MultiTypedResultKey<
+    $VehicleMaintenanceItemsTable,
+    List<VehicleMaintenanceItem>
+  >
+  _vehicleMaintenanceItemsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.vehicleMaintenanceItems,
+        aliasName:
+            'maintenance_templates__id__vehicle_maintenance_items__template_id',
+      );
+
+  $$VehicleMaintenanceItemsTableProcessedTableManager
+  get vehicleMaintenanceItemsRefs {
+    final manager = $$VehicleMaintenanceItemsTableTableManager(
+      $_db,
+      $_db.vehicleMaintenanceItems,
+    ).filter((f) => f.templateId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _vehicleMaintenanceItemsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$MaintenanceTemplatesTableFilterComposer
+    extends Composer<_$AppDatabase, $MaintenanceTemplatesTable> {
+  $$MaintenanceTemplatesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get componentType => $composableBuilder(
+    column: $table.componentType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get intervalValue => $composableBuilder(
+    column: $table.intervalValue,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<
+    MaintenanceIntervalUnit,
+    MaintenanceIntervalUnit,
+    String
+  >
+  get intervalUnit => $composableBuilder(
+    column: $table.intervalUnit,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<int> get leadDays => $composableBuilder(
+    column: $table.leadDays,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get overdueDays => $composableBuilder(
+    column: $table.overdueDays,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isActive => $composableBuilder(
+    column: $table.isActive,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> vehicleMaintenanceItemsRefs(
+    Expression<bool> Function($$VehicleMaintenanceItemsTableFilterComposer f) f,
+  ) {
+    final $$VehicleMaintenanceItemsTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.vehicleMaintenanceItems,
+          getReferencedColumn: (t) => t.templateId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$VehicleMaintenanceItemsTableFilterComposer(
+                $db: $db,
+                $table: $db.vehicleMaintenanceItems,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$MaintenanceTemplatesTableOrderingComposer
+    extends Composer<_$AppDatabase, $MaintenanceTemplatesTable> {
+  $$MaintenanceTemplatesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get componentType => $composableBuilder(
+    column: $table.componentType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get intervalValue => $composableBuilder(
+    column: $table.intervalValue,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get intervalUnit => $composableBuilder(
+    column: $table.intervalUnit,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get leadDays => $composableBuilder(
+    column: $table.leadDays,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get overdueDays => $composableBuilder(
+    column: $table.overdueDays,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isActive => $composableBuilder(
+    column: $table.isActive,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$MaintenanceTemplatesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $MaintenanceTemplatesTable> {
+  $$MaintenanceTemplatesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get componentType => $composableBuilder(
+    column: $table.componentType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get intervalValue => $composableBuilder(
+    column: $table.intervalValue,
+    builder: (column) => column,
+  );
+
+  GeneratedColumnWithTypeConverter<MaintenanceIntervalUnit, String>
+  get intervalUnit => $composableBuilder(
+    column: $table.intervalUnit,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get leadDays =>
+      $composableBuilder(column: $table.leadDays, builder: (column) => column);
+
+  GeneratedColumn<int> get overdueDays => $composableBuilder(
+    column: $table.overdueDays,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get sortOrder =>
+      $composableBuilder(column: $table.sortOrder, builder: (column) => column);
+
+  GeneratedColumn<bool> get isActive =>
+      $composableBuilder(column: $table.isActive, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
+  Expression<T> vehicleMaintenanceItemsRefs<T extends Object>(
+    Expression<T> Function($$VehicleMaintenanceItemsTableAnnotationComposer a)
+    f,
+  ) {
+    final $$VehicleMaintenanceItemsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.vehicleMaintenanceItems,
+          getReferencedColumn: (t) => t.templateId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$VehicleMaintenanceItemsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.vehicleMaintenanceItems,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$MaintenanceTemplatesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $MaintenanceTemplatesTable,
+          MaintenanceTemplate,
+          $$MaintenanceTemplatesTableFilterComposer,
+          $$MaintenanceTemplatesTableOrderingComposer,
+          $$MaintenanceTemplatesTableAnnotationComposer,
+          $$MaintenanceTemplatesTableCreateCompanionBuilder,
+          $$MaintenanceTemplatesTableUpdateCompanionBuilder,
+          (MaintenanceTemplate, $$MaintenanceTemplatesTableReferences),
+          MaintenanceTemplate,
+          PrefetchHooks Function({bool vehicleMaintenanceItemsRefs})
+        > {
+  $$MaintenanceTemplatesTableTableManager(
+    _$AppDatabase db,
+    $MaintenanceTemplatesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MaintenanceTemplatesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MaintenanceTemplatesTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$MaintenanceTemplatesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String?> componentType = const Value.absent(),
+                Value<int> intervalValue = const Value.absent(),
+                Value<MaintenanceIntervalUnit> intervalUnit =
+                    const Value.absent(),
+                Value<int> leadDays = const Value.absent(),
+                Value<int> overdueDays = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+                Value<bool> isActive = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => MaintenanceTemplatesCompanion(
+                id: id,
+                name: name,
+                componentType: componentType,
+                intervalValue: intervalValue,
+                intervalUnit: intervalUnit,
+                leadDays: leadDays,
+                overdueDays: overdueDays,
+                sortOrder: sortOrder,
+                isActive: isActive,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String name,
+                Value<String?> componentType = const Value.absent(),
+                required int intervalValue,
+                required MaintenanceIntervalUnit intervalUnit,
+                Value<int> leadDays = const Value.absent(),
+                Value<int> overdueDays = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+                Value<bool> isActive = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => MaintenanceTemplatesCompanion.insert(
+                id: id,
+                name: name,
+                componentType: componentType,
+                intervalValue: intervalValue,
+                intervalUnit: intervalUnit,
+                leadDays: leadDays,
+                overdueDays: overdueDays,
+                sortOrder: sortOrder,
+                isActive: isActive,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$MaintenanceTemplatesTable, MaintenanceTemplate>(
+                    table,
+                  ),
+                  $$MaintenanceTemplatesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({vehicleMaintenanceItemsRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (vehicleMaintenanceItemsRefs) db.vehicleMaintenanceItems,
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (vehicleMaintenanceItemsRefs)
+                    await $_getPrefetchedData<
+                      MaintenanceTemplate,
+                      $MaintenanceTemplatesTable,
+                      VehicleMaintenanceItem
+                    >(
+                      currentTable: table,
+                      referencedTable: $$MaintenanceTemplatesTableReferences
+                          ._vehicleMaintenanceItemsRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$MaintenanceTemplatesTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).vehicleMaintenanceItemsRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where((e) => e.templateId == item.id),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$MaintenanceTemplatesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $MaintenanceTemplatesTable,
+      MaintenanceTemplate,
+      $$MaintenanceTemplatesTableFilterComposer,
+      $$MaintenanceTemplatesTableOrderingComposer,
+      $$MaintenanceTemplatesTableAnnotationComposer,
+      $$MaintenanceTemplatesTableCreateCompanionBuilder,
+      $$MaintenanceTemplatesTableUpdateCompanionBuilder,
+      (MaintenanceTemplate, $$MaintenanceTemplatesTableReferences),
+      MaintenanceTemplate,
+      PrefetchHooks Function({bool vehicleMaintenanceItemsRefs})
+    >;
+typedef $$VehicleMaintenanceItemsTableCreateCompanionBuilder =
+    VehicleMaintenanceItemsCompanion Function({
+      Value<int> id,
+      required int vehicleId,
+      Value<int?> templateId,
+      required String name,
+      Value<String?> componentType,
+      required int intervalValue,
+      required MaintenanceIntervalUnit intervalUnit,
+      Value<int> leadDays,
+      Value<int> overdueDays,
+      Value<DateTime?> lastServiceDate,
+      Value<DateTime?> nextDueDate,
+      Value<bool> isActive,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
+    });
+typedef $$VehicleMaintenanceItemsTableUpdateCompanionBuilder =
+    VehicleMaintenanceItemsCompanion Function({
+      Value<int> id,
+      Value<int> vehicleId,
+      Value<int?> templateId,
+      Value<String> name,
+      Value<String?> componentType,
+      Value<int> intervalValue,
+      Value<MaintenanceIntervalUnit> intervalUnit,
+      Value<int> leadDays,
+      Value<int> overdueDays,
+      Value<DateTime?> lastServiceDate,
+      Value<DateTime?> nextDueDate,
+      Value<bool> isActive,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
+    });
+
+final class $$VehicleMaintenanceItemsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $VehicleMaintenanceItemsTable,
+          VehicleMaintenanceItem
+        > {
+  $$VehicleMaintenanceItemsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $VehiclesTable _vehicleIdTable(_$AppDatabase db) => db.vehicles
+      .createAlias('vehicle_maintenance_items__vehicle_id__vehicles__id');
+
+  $$VehiclesTableProcessedTableManager get vehicleId {
+    final $_column = $_itemColumn<int>('vehicle_id')!;
+
+    final manager = $$VehiclesTableTableManager(
+      $_db,
+      $_db.vehicles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_vehicleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $MaintenanceTemplatesTable _templateIdTable(_$AppDatabase db) =>
+      db.maintenanceTemplates.createAlias(
+        'vehicle_maintenance_items__template_id__maintenance_templates__id',
+      );
+
+  $$MaintenanceTemplatesTableProcessedTableManager? get templateId {
+    final $_column = $_itemColumn<int>('template_id');
+    if ($_column == null) return null;
+    final manager = $$MaintenanceTemplatesTableTableManager(
+      $_db,
+      $_db.maintenanceTemplates,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_templateIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<$MaintenanceRecordsTable, List<MaintenanceRecord>>
+  _maintenanceRecordsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.maintenanceRecords,
+        aliasName: 'vehicle_maintenance_items__id__maintenance_records__maintenance_item_id',
+      );
+
+  $$MaintenanceRecordsTableProcessedTableManager get maintenanceRecordsRefs {
+    final manager = $$MaintenanceRecordsTableTableManager(
+      $_db,
+      $_db.maintenanceRecords,
+    ).filter((f) => f.maintenanceItemId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _maintenanceRecordsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$VehicleMaintenanceItemsTableFilterComposer
+    extends Composer<_$AppDatabase, $VehicleMaintenanceItemsTable> {
+  $$VehicleMaintenanceItemsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get componentType => $composableBuilder(
+    column: $table.componentType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get intervalValue => $composableBuilder(
+    column: $table.intervalValue,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<
+    MaintenanceIntervalUnit,
+    MaintenanceIntervalUnit,
+    String
+  >
+  get intervalUnit => $composableBuilder(
+    column: $table.intervalUnit,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<int> get leadDays => $composableBuilder(
+    column: $table.leadDays,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get overdueDays => $composableBuilder(
+    column: $table.overdueDays,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get lastServiceDate => $composableBuilder(
+    column: $table.lastServiceDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get nextDueDate => $composableBuilder(
+    column: $table.nextDueDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isActive => $composableBuilder(
+    column: $table.isActive,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$VehiclesTableFilterComposer get vehicleId {
+    final $$VehiclesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableFilterComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$MaintenanceTemplatesTableFilterComposer get templateId {
+    final $$MaintenanceTemplatesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.templateId,
+      referencedTable: $db.maintenanceTemplates,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MaintenanceTemplatesTableFilterComposer(
+            $db: $db,
+            $table: $db.maintenanceTemplates,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> maintenanceRecordsRefs(
+    Expression<bool> Function($$MaintenanceRecordsTableFilterComposer f) f,
+  ) {
+    final $$MaintenanceRecordsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.maintenanceRecords,
+      getReferencedColumn: (t) => t.maintenanceItemId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MaintenanceRecordsTableFilterComposer(
+            $db: $db,
+            $table: $db.maintenanceRecords,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$VehicleMaintenanceItemsTableOrderingComposer
+    extends Composer<_$AppDatabase, $VehicleMaintenanceItemsTable> {
+  $$VehicleMaintenanceItemsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get componentType => $composableBuilder(
+    column: $table.componentType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get intervalValue => $composableBuilder(
+    column: $table.intervalValue,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get intervalUnit => $composableBuilder(
+    column: $table.intervalUnit,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get leadDays => $composableBuilder(
+    column: $table.leadDays,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get overdueDays => $composableBuilder(
+    column: $table.overdueDays,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get lastServiceDate => $composableBuilder(
+    column: $table.lastServiceDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get nextDueDate => $composableBuilder(
+    column: $table.nextDueDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isActive => $composableBuilder(
+    column: $table.isActive,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$VehiclesTableOrderingComposer get vehicleId {
+    final $$VehiclesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableOrderingComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$MaintenanceTemplatesTableOrderingComposer get templateId {
+    final $$MaintenanceTemplatesTableOrderingComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.templateId,
+          referencedTable: $db.maintenanceTemplates,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$MaintenanceTemplatesTableOrderingComposer(
+                $db: $db,
+                $table: $db.maintenanceTemplates,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$VehicleMaintenanceItemsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $VehicleMaintenanceItemsTable> {
+  $$VehicleMaintenanceItemsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get componentType => $composableBuilder(
+    column: $table.componentType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get intervalValue => $composableBuilder(
+    column: $table.intervalValue,
+    builder: (column) => column,
+  );
+
+  GeneratedColumnWithTypeConverter<MaintenanceIntervalUnit, String>
+  get intervalUnit => $composableBuilder(
+    column: $table.intervalUnit,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get leadDays =>
+      $composableBuilder(column: $table.leadDays, builder: (column) => column);
+
+  GeneratedColumn<int> get overdueDays => $composableBuilder(
+    column: $table.overdueDays,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get lastServiceDate => $composableBuilder(
+    column: $table.lastServiceDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get nextDueDate => $composableBuilder(
+    column: $table.nextDueDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get isActive =>
+      $composableBuilder(column: $table.isActive, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
+  $$VehiclesTableAnnotationComposer get vehicleId {
+    final $$VehiclesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$MaintenanceTemplatesTableAnnotationComposer get templateId {
+    final $$MaintenanceTemplatesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.templateId,
+          referencedTable: $db.maintenanceTemplates,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$MaintenanceTemplatesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.maintenanceTemplates,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  Expression<T> maintenanceRecordsRefs<T extends Object>(
+    Expression<T> Function($$MaintenanceRecordsTableAnnotationComposer a) f,
+  ) {
+    final $$MaintenanceRecordsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.maintenanceRecords,
+          getReferencedColumn: (t) => t.maintenanceItemId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$MaintenanceRecordsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.maintenanceRecords,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$VehicleMaintenanceItemsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $VehicleMaintenanceItemsTable,
+          VehicleMaintenanceItem,
+          $$VehicleMaintenanceItemsTableFilterComposer,
+          $$VehicleMaintenanceItemsTableOrderingComposer,
+          $$VehicleMaintenanceItemsTableAnnotationComposer,
+          $$VehicleMaintenanceItemsTableCreateCompanionBuilder,
+          $$VehicleMaintenanceItemsTableUpdateCompanionBuilder,
+          (VehicleMaintenanceItem, $$VehicleMaintenanceItemsTableReferences),
+          VehicleMaintenanceItem,
+          PrefetchHooks Function({
+            bool vehicleId,
+            bool templateId,
+            bool maintenanceRecordsRefs,
+          })
+        > {
+  $$VehicleMaintenanceItemsTableTableManager(
+    _$AppDatabase db,
+    $VehicleMaintenanceItemsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$VehicleMaintenanceItemsTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$VehicleMaintenanceItemsTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$VehicleMaintenanceItemsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> vehicleId = const Value.absent(),
+                Value<int?> templateId = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String?> componentType = const Value.absent(),
+                Value<int> intervalValue = const Value.absent(),
+                Value<MaintenanceIntervalUnit> intervalUnit =
+                    const Value.absent(),
+                Value<int> leadDays = const Value.absent(),
+                Value<int> overdueDays = const Value.absent(),
+                Value<DateTime?> lastServiceDate = const Value.absent(),
+                Value<DateTime?> nextDueDate = const Value.absent(),
+                Value<bool> isActive = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => VehicleMaintenanceItemsCompanion(
+                id: id,
+                vehicleId: vehicleId,
+                templateId: templateId,
+                name: name,
+                componentType: componentType,
+                intervalValue: intervalValue,
+                intervalUnit: intervalUnit,
+                leadDays: leadDays,
+                overdueDays: overdueDays,
+                lastServiceDate: lastServiceDate,
+                nextDueDate: nextDueDate,
+                isActive: isActive,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int vehicleId,
+                Value<int?> templateId = const Value.absent(),
+                required String name,
+                Value<String?> componentType = const Value.absent(),
+                required int intervalValue,
+                required MaintenanceIntervalUnit intervalUnit,
+                Value<int> leadDays = const Value.absent(),
+                Value<int> overdueDays = const Value.absent(),
+                Value<DateTime?> lastServiceDate = const Value.absent(),
+                Value<DateTime?> nextDueDate = const Value.absent(),
+                Value<bool> isActive = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => VehicleMaintenanceItemsCompanion.insert(
+                id: id,
+                vehicleId: vehicleId,
+                templateId: templateId,
+                name: name,
+                componentType: componentType,
+                intervalValue: intervalValue,
+                intervalUnit: intervalUnit,
+                leadDays: leadDays,
+                overdueDays: overdueDays,
+                lastServiceDate: lastServiceDate,
+                nextDueDate: nextDueDate,
+                isActive: isActive,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<
+                    $VehicleMaintenanceItemsTable,
+                    VehicleMaintenanceItem
+                  >(table),
+                  $$VehicleMaintenanceItemsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                vehicleId = false,
+                templateId = false,
+                maintenanceRecordsRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (maintenanceRecordsRefs) db.maintenanceRecords,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (vehicleId) {
+                          state = state.withJoin(
+                            currentTable: table,
+                            currentColumn: table.vehicleId,
+                            referencedTable:
+                                $$VehicleMaintenanceItemsTableReferences
+                                    ._vehicleIdTable(db),
+                            referencedColumn:
+                                $$VehicleMaintenanceItemsTableReferences
+                                    ._vehicleIdTable(db)
+                                    .id,
+                          ) as T;
+                        }
+                        if (templateId) {
+                          state = state.withJoin(
+                            currentTable: table,
+                            currentColumn: table.templateId,
+                            referencedTable:
+                                $$VehicleMaintenanceItemsTableReferences
+                                    ._templateIdTable(db),
+                            referencedColumn:
+                                $$VehicleMaintenanceItemsTableReferences
+                                    ._templateIdTable(db)
+                                    .id,
+                          ) as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (maintenanceRecordsRefs)
+                        await $_getPrefetchedData<
+                          VehicleMaintenanceItem,
+                          $VehicleMaintenanceItemsTable,
+                          MaintenanceRecord
+                        >(
+                          currentTable: table,
+                          referencedTable:
+                              $$VehicleMaintenanceItemsTableReferences
+                                  ._maintenanceRecordsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$VehicleMaintenanceItemsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).maintenanceRecordsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.maintenanceItemId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$VehicleMaintenanceItemsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $VehicleMaintenanceItemsTable,
+      VehicleMaintenanceItem,
+      $$VehicleMaintenanceItemsTableFilterComposer,
+      $$VehicleMaintenanceItemsTableOrderingComposer,
+      $$VehicleMaintenanceItemsTableAnnotationComposer,
+      $$VehicleMaintenanceItemsTableCreateCompanionBuilder,
+      $$VehicleMaintenanceItemsTableUpdateCompanionBuilder,
+      (VehicleMaintenanceItem, $$VehicleMaintenanceItemsTableReferences),
+      VehicleMaintenanceItem,
+      PrefetchHooks Function({
+        bool vehicleId,
+        bool templateId,
+        bool maintenanceRecordsRefs,
+      })
+    >;
+typedef $$MaintenanceRecordsTableCreateCompanionBuilder =
+    MaintenanceRecordsCompanion Function({
+      Value<int> id,
+      required int maintenanceItemId,
+      required int vehicleId,
+      required DateTime serviceDate,
+      Value<int> materialCostCents,
+      Value<int> laborCostCents,
+      Value<int> totalCostCents,
+      Value<String?> remark,
+      Value<DateTime> createdAt,
+      Value<bool> isDeleted,
+    });
+typedef $$MaintenanceRecordsTableUpdateCompanionBuilder =
+    MaintenanceRecordsCompanion Function({
+      Value<int> id,
+      Value<int> maintenanceItemId,
+      Value<int> vehicleId,
+      Value<DateTime> serviceDate,
+      Value<int> materialCostCents,
+      Value<int> laborCostCents,
+      Value<int> totalCostCents,
+      Value<String?> remark,
+      Value<DateTime> createdAt,
+      Value<bool> isDeleted,
+    });
+
+final class $$MaintenanceRecordsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $MaintenanceRecordsTable,
+          MaintenanceRecord
+        > {
+  $$MaintenanceRecordsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $VehicleMaintenanceItemsTable _maintenanceItemIdTable(
+    _$AppDatabase db,
+  ) => db.vehicleMaintenanceItems.createAlias(
+    'maintenance_records__maintenance_item_id__vehicle_maintenance_items__id',
+  );
+
+  $$VehicleMaintenanceItemsTableProcessedTableManager get maintenanceItemId {
+    final $_column = $_itemColumn<int>('maintenance_item_id')!;
+
+    final manager = $$VehicleMaintenanceItemsTableTableManager(
+      $_db,
+      $_db.vehicleMaintenanceItems,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_maintenanceItemIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $VehiclesTable _vehicleIdTable(_$AppDatabase db) =>
+      db.vehicles.createAlias('maintenance_records__vehicle_id__vehicles__id');
+
+  $$VehiclesTableProcessedTableManager get vehicleId {
+    final $_column = $_itemColumn<int>('vehicle_id')!;
+
+    final manager = $$VehiclesTableTableManager(
+      $_db,
+      $_db.vehicles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_vehicleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$MaintenanceRecordsTableFilterComposer
+    extends Composer<_$AppDatabase, $MaintenanceRecordsTable> {
+  $$MaintenanceRecordsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get serviceDate => $composableBuilder(
+    column: $table.serviceDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get materialCostCents => $composableBuilder(
+    column: $table.materialCostCents,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get laborCostCents => $composableBuilder(
+    column: $table.laborCostCents,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get totalCostCents => $composableBuilder(
+    column: $table.totalCostCents,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$VehicleMaintenanceItemsTableFilterComposer get maintenanceItemId {
+    final $$VehicleMaintenanceItemsTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.maintenanceItemId,
+          referencedTable: $db.vehicleMaintenanceItems,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$VehicleMaintenanceItemsTableFilterComposer(
+                $db: $db,
+                $table: $db.vehicleMaintenanceItems,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$VehiclesTableFilterComposer get vehicleId {
+    final $$VehiclesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableFilterComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$MaintenanceRecordsTableOrderingComposer
+    extends Composer<_$AppDatabase, $MaintenanceRecordsTable> {
+  $$MaintenanceRecordsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get serviceDate => $composableBuilder(
+    column: $table.serviceDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get materialCostCents => $composableBuilder(
+    column: $table.materialCostCents,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get laborCostCents => $composableBuilder(
+    column: $table.laborCostCents,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get totalCostCents => $composableBuilder(
+    column: $table.totalCostCents,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$VehicleMaintenanceItemsTableOrderingComposer get maintenanceItemId {
+    final $$VehicleMaintenanceItemsTableOrderingComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.maintenanceItemId,
+          referencedTable: $db.vehicleMaintenanceItems,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$VehicleMaintenanceItemsTableOrderingComposer(
+                $db: $db,
+                $table: $db.vehicleMaintenanceItems,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$VehiclesTableOrderingComposer get vehicleId {
+    final $$VehiclesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableOrderingComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$MaintenanceRecordsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $MaintenanceRecordsTable> {
+  $$MaintenanceRecordsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get serviceDate => $composableBuilder(
+    column: $table.serviceDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get materialCostCents => $composableBuilder(
+    column: $table.materialCostCents,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get laborCostCents => $composableBuilder(
+    column: $table.laborCostCents,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get totalCostCents => $composableBuilder(
+    column: $table.totalCostCents,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get remark =>
+      $composableBuilder(column: $table.remark, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
+  $$VehicleMaintenanceItemsTableAnnotationComposer get maintenanceItemId {
+    final $$VehicleMaintenanceItemsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.maintenanceItemId,
+          referencedTable: $db.vehicleMaintenanceItems,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$VehicleMaintenanceItemsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.vehicleMaintenanceItems,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$VehiclesTableAnnotationComposer get vehicleId {
+    final $$VehiclesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$MaintenanceRecordsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $MaintenanceRecordsTable,
+          MaintenanceRecord,
+          $$MaintenanceRecordsTableFilterComposer,
+          $$MaintenanceRecordsTableOrderingComposer,
+          $$MaintenanceRecordsTableAnnotationComposer,
+          $$MaintenanceRecordsTableCreateCompanionBuilder,
+          $$MaintenanceRecordsTableUpdateCompanionBuilder,
+          (MaintenanceRecord, $$MaintenanceRecordsTableReferences),
+          MaintenanceRecord,
+          PrefetchHooks Function({bool maintenanceItemId, bool vehicleId})
+        > {
+  $$MaintenanceRecordsTableTableManager(
+    _$AppDatabase db,
+    $MaintenanceRecordsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MaintenanceRecordsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MaintenanceRecordsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MaintenanceRecordsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> maintenanceItemId = const Value.absent(),
+                Value<int> vehicleId = const Value.absent(),
+                Value<DateTime> serviceDate = const Value.absent(),
+                Value<int> materialCostCents = const Value.absent(),
+                Value<int> laborCostCents = const Value.absent(),
+                Value<int> totalCostCents = const Value.absent(),
+                Value<String?> remark = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => MaintenanceRecordsCompanion(
+                id: id,
+                maintenanceItemId: maintenanceItemId,
+                vehicleId: vehicleId,
+                serviceDate: serviceDate,
+                materialCostCents: materialCostCents,
+                laborCostCents: laborCostCents,
+                totalCostCents: totalCostCents,
+                remark: remark,
+                createdAt: createdAt,
+                isDeleted: isDeleted,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int maintenanceItemId,
+                required int vehicleId,
+                required DateTime serviceDate,
+                Value<int> materialCostCents = const Value.absent(),
+                Value<int> laborCostCents = const Value.absent(),
+                Value<int> totalCostCents = const Value.absent(),
+                Value<String?> remark = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => MaintenanceRecordsCompanion.insert(
+                id: id,
+                maintenanceItemId: maintenanceItemId,
+                vehicleId: vehicleId,
+                serviceDate: serviceDate,
+                materialCostCents: materialCostCents,
+                laborCostCents: laborCostCents,
+                totalCostCents: totalCostCents,
+                remark: remark,
+                createdAt: createdAt,
+                isDeleted: isDeleted,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$MaintenanceRecordsTable, MaintenanceRecord>(
+                    table,
+                  ),
+                  $$MaintenanceRecordsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({maintenanceItemId = false, vehicleId = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (maintenanceItemId) {
+                          state = state.withJoin(
+                            currentTable: table,
+                            currentColumn: table.maintenanceItemId,
+                            referencedTable: $$MaintenanceRecordsTableReferences
+                                ._maintenanceItemIdTable(db),
+                            referencedColumn:
+                                $$MaintenanceRecordsTableReferences
+                                    ._maintenanceItemIdTable(db)
+                                    .id,
+                          ) as T;
+                        }
+                        if (vehicleId) {
+                          state = state.withJoin(
+                            currentTable: table,
+                            currentColumn: table.vehicleId,
+                            referencedTable: $$MaintenanceRecordsTableReferences
+                                ._vehicleIdTable(db),
+                            referencedColumn:
+                                $$MaintenanceRecordsTableReferences
+                                    ._vehicleIdTable(db)
+                                    .id,
+                          ) as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$MaintenanceRecordsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $MaintenanceRecordsTable,
+      MaintenanceRecord,
+      $$MaintenanceRecordsTableFilterComposer,
+      $$MaintenanceRecordsTableOrderingComposer,
+      $$MaintenanceRecordsTableAnnotationComposer,
+      $$MaintenanceRecordsTableCreateCompanionBuilder,
+      $$MaintenanceRecordsTableUpdateCompanionBuilder,
+      (MaintenanceRecord, $$MaintenanceRecordsTableReferences),
+      MaintenanceRecord,
+      PrefetchHooks Function({bool maintenanceItemId, bool vehicleId})
+    >;
+typedef $$ComponentLifecycleRecordsTableCreateCompanionBuilder =
+    ComponentLifecycleRecordsCompanion Function({
+      Value<int> id,
+      required int vehicleId,
+      required String componentType,
+      required String componentKey,
+      required String name,
+      required DateTime installedDate,
+      Value<DateTime?> removedDate,
+      Value<LifecycleStatus> status,
+      Value<int?> thresholdDays,
+      Value<DateTime?> lastServiceDate,
+      Value<String?> remark,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
+    });
+typedef $$ComponentLifecycleRecordsTableUpdateCompanionBuilder =
+    ComponentLifecycleRecordsCompanion Function({
+      Value<int> id,
+      Value<int> vehicleId,
+      Value<String> componentType,
+      Value<String> componentKey,
+      Value<String> name,
+      Value<DateTime> installedDate,
+      Value<DateTime?> removedDate,
+      Value<LifecycleStatus> status,
+      Value<int?> thresholdDays,
+      Value<DateTime?> lastServiceDate,
+      Value<String?> remark,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
+    });
+
+final class $$ComponentLifecycleRecordsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $ComponentLifecycleRecordsTable,
+          ComponentLifecycleRecord
+        > {
+  $$ComponentLifecycleRecordsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $VehiclesTable _vehicleIdTable(_$AppDatabase db) => db.vehicles
+      .createAlias('component_lifecycle_records__vehicle_id__vehicles__id');
+
+  $$VehiclesTableProcessedTableManager get vehicleId {
+    final $_column = $_itemColumn<int>('vehicle_id')!;
+
+    final manager = $$VehiclesTableTableManager(
+      $_db,
+      $_db.vehicles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_vehicleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$ComponentLifecycleRecordsTableFilterComposer
+    extends Composer<_$AppDatabase, $ComponentLifecycleRecordsTable> {
+  $$ComponentLifecycleRecordsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get componentType => $composableBuilder(
+    column: $table.componentType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get componentKey => $composableBuilder(
+    column: $table.componentKey,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get installedDate => $composableBuilder(
+    column: $table.installedDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get removedDate => $composableBuilder(
+    column: $table.removedDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<LifecycleStatus, LifecycleStatus, String>
+  get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<int> get thresholdDays => $composableBuilder(
+    column: $table.thresholdDays,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get lastServiceDate => $composableBuilder(
+    column: $table.lastServiceDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$VehiclesTableFilterComposer get vehicleId {
+    final $$VehiclesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableFilterComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ComponentLifecycleRecordsTableOrderingComposer
+    extends Composer<_$AppDatabase, $ComponentLifecycleRecordsTable> {
+  $$ComponentLifecycleRecordsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get componentType => $composableBuilder(
+    column: $table.componentType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get componentKey => $composableBuilder(
+    column: $table.componentKey,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get installedDate => $composableBuilder(
+    column: $table.installedDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get removedDate => $composableBuilder(
+    column: $table.removedDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get thresholdDays => $composableBuilder(
+    column: $table.thresholdDays,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get lastServiceDate => $composableBuilder(
+    column: $table.lastServiceDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$VehiclesTableOrderingComposer get vehicleId {
+    final $$VehiclesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableOrderingComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ComponentLifecycleRecordsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ComponentLifecycleRecordsTable> {
+  $$ComponentLifecycleRecordsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get componentType => $composableBuilder(
+    column: $table.componentType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get componentKey => $composableBuilder(
+    column: $table.componentKey,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get installedDate => $composableBuilder(
+    column: $table.installedDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get removedDate => $composableBuilder(
+    column: $table.removedDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumnWithTypeConverter<LifecycleStatus, String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
+  GeneratedColumn<int> get thresholdDays => $composableBuilder(
+    column: $table.thresholdDays,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get lastServiceDate => $composableBuilder(
+    column: $table.lastServiceDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get remark =>
+      $composableBuilder(column: $table.remark, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
+  $$VehiclesTableAnnotationComposer get vehicleId {
+    final $$VehiclesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ComponentLifecycleRecordsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ComponentLifecycleRecordsTable,
+          ComponentLifecycleRecord,
+          $$ComponentLifecycleRecordsTableFilterComposer,
+          $$ComponentLifecycleRecordsTableOrderingComposer,
+          $$ComponentLifecycleRecordsTableAnnotationComposer,
+          $$ComponentLifecycleRecordsTableCreateCompanionBuilder,
+          $$ComponentLifecycleRecordsTableUpdateCompanionBuilder,
+          (
+            ComponentLifecycleRecord,
+            $$ComponentLifecycleRecordsTableReferences,
+          ),
+          ComponentLifecycleRecord,
+          PrefetchHooks Function({bool vehicleId})
+        > {
+  $$ComponentLifecycleRecordsTableTableManager(
+    _$AppDatabase db,
+    $ComponentLifecycleRecordsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ComponentLifecycleRecordsTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$ComponentLifecycleRecordsTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$ComponentLifecycleRecordsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> vehicleId = const Value.absent(),
+                Value<String> componentType = const Value.absent(),
+                Value<String> componentKey = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<DateTime> installedDate = const Value.absent(),
+                Value<DateTime?> removedDate = const Value.absent(),
+                Value<LifecycleStatus> status = const Value.absent(),
+                Value<int?> thresholdDays = const Value.absent(),
+                Value<DateTime?> lastServiceDate = const Value.absent(),
+                Value<String?> remark = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => ComponentLifecycleRecordsCompanion(
+                id: id,
+                vehicleId: vehicleId,
+                componentType: componentType,
+                componentKey: componentKey,
+                name: name,
+                installedDate: installedDate,
+                removedDate: removedDate,
+                status: status,
+                thresholdDays: thresholdDays,
+                lastServiceDate: lastServiceDate,
+                remark: remark,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int vehicleId,
+                required String componentType,
+                required String componentKey,
+                required String name,
+                required DateTime installedDate,
+                Value<DateTime?> removedDate = const Value.absent(),
+                Value<LifecycleStatus> status = const Value.absent(),
+                Value<int?> thresholdDays = const Value.absent(),
+                Value<DateTime?> lastServiceDate = const Value.absent(),
+                Value<String?> remark = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => ComponentLifecycleRecordsCompanion.insert(
+                id: id,
+                vehicleId: vehicleId,
+                componentType: componentType,
+                componentKey: componentKey,
+                name: name,
+                installedDate: installedDate,
+                removedDate: removedDate,
+                status: status,
+                thresholdDays: thresholdDays,
+                lastServiceDate: lastServiceDate,
+                remark: remark,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<
+                    $ComponentLifecycleRecordsTable,
+                    ComponentLifecycleRecord
+                  >(table),
+                  $$ComponentLifecycleRecordsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({vehicleId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (vehicleId) {
+                      state = state.withJoin(
+                        currentTable: table,
+                        currentColumn: table.vehicleId,
+                        referencedTable:
+                            $$ComponentLifecycleRecordsTableReferences
+                                ._vehicleIdTable(db),
+                        referencedColumn:
+                            $$ComponentLifecycleRecordsTableReferences
+                                ._vehicleIdTable(db)
+                                .id,
+                      ) as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$ComponentLifecycleRecordsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ComponentLifecycleRecordsTable,
+      ComponentLifecycleRecord,
+      $$ComponentLifecycleRecordsTableFilterComposer,
+      $$ComponentLifecycleRecordsTableOrderingComposer,
+      $$ComponentLifecycleRecordsTableAnnotationComposer,
+      $$ComponentLifecycleRecordsTableCreateCompanionBuilder,
+      $$ComponentLifecycleRecordsTableUpdateCompanionBuilder,
+      (ComponentLifecycleRecord, $$ComponentLifecycleRecordsTableReferences),
+      ComponentLifecycleRecord,
+      PrefetchHooks Function({bool vehicleId})
+    >;
+typedef $$FuelMonthlyRecordsTableCreateCompanionBuilder =
+    FuelMonthlyRecordsCompanion Function({
+      Value<int> id,
+      required int vehicleId,
+      required int year,
+      required int month,
+      required double liters,
+      required int amountCents,
+      Value<int?> workDays,
+      Value<double?> workMileage,
+      Value<double?> workHours,
+      Value<String?> remark,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
+    });
+typedef $$FuelMonthlyRecordsTableUpdateCompanionBuilder =
+    FuelMonthlyRecordsCompanion Function({
+      Value<int> id,
+      Value<int> vehicleId,
+      Value<int> year,
+      Value<int> month,
+      Value<double> liters,
+      Value<int> amountCents,
+      Value<int?> workDays,
+      Value<double?> workMileage,
+      Value<double?> workHours,
+      Value<String?> remark,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
+    });
+
+final class $$FuelMonthlyRecordsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $FuelMonthlyRecordsTable,
+          FuelMonthlyRecord
+        > {
+  $$FuelMonthlyRecordsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $VehiclesTable _vehicleIdTable(_$AppDatabase db) =>
+      db.vehicles.createAlias('fuel_monthly_records__vehicle_id__vehicles__id');
+
+  $$VehiclesTableProcessedTableManager get vehicleId {
+    final $_column = $_itemColumn<int>('vehicle_id')!;
+
+    final manager = $$VehiclesTableTableManager(
+      $_db,
+      $_db.vehicles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_vehicleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$FuelMonthlyRecordsTableFilterComposer
+    extends Composer<_$AppDatabase, $FuelMonthlyRecordsTable> {
+  $$FuelMonthlyRecordsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get year => $composableBuilder(
+    column: $table.year,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get month => $composableBuilder(
+    column: $table.month,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get liters => $composableBuilder(
+    column: $table.liters,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get amountCents => $composableBuilder(
+    column: $table.amountCents,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get workDays => $composableBuilder(
+    column: $table.workDays,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get workMileage => $composableBuilder(
+    column: $table.workMileage,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get workHours => $composableBuilder(
+    column: $table.workHours,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$VehiclesTableFilterComposer get vehicleId {
+    final $$VehiclesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableFilterComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$FuelMonthlyRecordsTableOrderingComposer
+    extends Composer<_$AppDatabase, $FuelMonthlyRecordsTable> {
+  $$FuelMonthlyRecordsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get year => $composableBuilder(
+    column: $table.year,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get month => $composableBuilder(
+    column: $table.month,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get liters => $composableBuilder(
+    column: $table.liters,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get amountCents => $composableBuilder(
+    column: $table.amountCents,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get workDays => $composableBuilder(
+    column: $table.workDays,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get workMileage => $composableBuilder(
+    column: $table.workMileage,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get workHours => $composableBuilder(
+    column: $table.workHours,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$VehiclesTableOrderingComposer get vehicleId {
+    final $$VehiclesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableOrderingComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$FuelMonthlyRecordsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $FuelMonthlyRecordsTable> {
+  $$FuelMonthlyRecordsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get year =>
+      $composableBuilder(column: $table.year, builder: (column) => column);
+
+  GeneratedColumn<int> get month =>
+      $composableBuilder(column: $table.month, builder: (column) => column);
+
+  GeneratedColumn<double> get liters =>
+      $composableBuilder(column: $table.liters, builder: (column) => column);
+
+  GeneratedColumn<int> get amountCents => $composableBuilder(
+    column: $table.amountCents,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get workDays =>
+      $composableBuilder(column: $table.workDays, builder: (column) => column);
+
+  GeneratedColumn<double> get workMileage => $composableBuilder(
+    column: $table.workMileage,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get workHours =>
+      $composableBuilder(column: $table.workHours, builder: (column) => column);
+
+  GeneratedColumn<String> get remark =>
+      $composableBuilder(column: $table.remark, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
+  $$VehiclesTableAnnotationComposer get vehicleId {
+    final $$VehiclesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$FuelMonthlyRecordsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $FuelMonthlyRecordsTable,
+          FuelMonthlyRecord,
+          $$FuelMonthlyRecordsTableFilterComposer,
+          $$FuelMonthlyRecordsTableOrderingComposer,
+          $$FuelMonthlyRecordsTableAnnotationComposer,
+          $$FuelMonthlyRecordsTableCreateCompanionBuilder,
+          $$FuelMonthlyRecordsTableUpdateCompanionBuilder,
+          (FuelMonthlyRecord, $$FuelMonthlyRecordsTableReferences),
+          FuelMonthlyRecord,
+          PrefetchHooks Function({bool vehicleId})
+        > {
+  $$FuelMonthlyRecordsTableTableManager(
+    _$AppDatabase db,
+    $FuelMonthlyRecordsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$FuelMonthlyRecordsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$FuelMonthlyRecordsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$FuelMonthlyRecordsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> vehicleId = const Value.absent(),
+                Value<int> year = const Value.absent(),
+                Value<int> month = const Value.absent(),
+                Value<double> liters = const Value.absent(),
+                Value<int> amountCents = const Value.absent(),
+                Value<int?> workDays = const Value.absent(),
+                Value<double?> workMileage = const Value.absent(),
+                Value<double?> workHours = const Value.absent(),
+                Value<String?> remark = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => FuelMonthlyRecordsCompanion(
+                id: id,
+                vehicleId: vehicleId,
+                year: year,
+                month: month,
+                liters: liters,
+                amountCents: amountCents,
+                workDays: workDays,
+                workMileage: workMileage,
+                workHours: workHours,
+                remark: remark,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int vehicleId,
+                required int year,
+                required int month,
+                required double liters,
+                required int amountCents,
+                Value<int?> workDays = const Value.absent(),
+                Value<double?> workMileage = const Value.absent(),
+                Value<double?> workHours = const Value.absent(),
+                Value<String?> remark = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => FuelMonthlyRecordsCompanion.insert(
+                id: id,
+                vehicleId: vehicleId,
+                year: year,
+                month: month,
+                liters: liters,
+                amountCents: amountCents,
+                workDays: workDays,
+                workMileage: workMileage,
+                workHours: workHours,
+                remark: remark,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$FuelMonthlyRecordsTable, FuelMonthlyRecord>(
+                    table,
+                  ),
+                  $$FuelMonthlyRecordsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({vehicleId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (vehicleId) {
+                      state = state.withJoin(
+                        currentTable: table,
+                        currentColumn: table.vehicleId,
+                        referencedTable: $$FuelMonthlyRecordsTableReferences
+                            ._vehicleIdTable(db),
+                        referencedColumn: $$FuelMonthlyRecordsTableReferences
+                            ._vehicleIdTable(db)
+                            .id,
+                      ) as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$FuelMonthlyRecordsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $FuelMonthlyRecordsTable,
+      FuelMonthlyRecord,
+      $$FuelMonthlyRecordsTableFilterComposer,
+      $$FuelMonthlyRecordsTableOrderingComposer,
+      $$FuelMonthlyRecordsTableAnnotationComposer,
+      $$FuelMonthlyRecordsTableCreateCompanionBuilder,
+      $$FuelMonthlyRecordsTableUpdateCompanionBuilder,
+      (FuelMonthlyRecord, $$FuelMonthlyRecordsTableReferences),
+      FuelMonthlyRecord,
+      PrefetchHooks Function({bool vehicleId})
+    >;
+typedef $$ManualVehicleExpensesTableCreateCompanionBuilder =
+    ManualVehicleExpensesCompanion Function({
+      Value<int> id,
+      required int vehicleId,
+      required DateTime expenseDate,
+      required String expenseType,
+      required int amountCents,
+      Value<String?> remark,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
+    });
+typedef $$ManualVehicleExpensesTableUpdateCompanionBuilder =
+    ManualVehicleExpensesCompanion Function({
+      Value<int> id,
+      Value<int> vehicleId,
+      Value<DateTime> expenseDate,
+      Value<String> expenseType,
+      Value<int> amountCents,
+      Value<String?> remark,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
+    });
+
+final class $$ManualVehicleExpensesTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $ManualVehicleExpensesTable,
+          ManualVehicleExpense
+        > {
+  $$ManualVehicleExpensesTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $VehiclesTable _vehicleIdTable(_$AppDatabase db) => db.vehicles
+      .createAlias('manual_vehicle_expenses__vehicle_id__vehicles__id');
+
+  $$VehiclesTableProcessedTableManager get vehicleId {
+    final $_column = $_itemColumn<int>('vehicle_id')!;
+
+    final manager = $$VehiclesTableTableManager(
+      $_db,
+      $_db.vehicles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_vehicleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$ManualVehicleExpensesTableFilterComposer
+    extends Composer<_$AppDatabase, $ManualVehicleExpensesTable> {
+  $$ManualVehicleExpensesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get expenseDate => $composableBuilder(
+    column: $table.expenseDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get expenseType => $composableBuilder(
+    column: $table.expenseType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get amountCents => $composableBuilder(
+    column: $table.amountCents,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$VehiclesTableFilterComposer get vehicleId {
+    final $$VehiclesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableFilterComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ManualVehicleExpensesTableOrderingComposer
+    extends Composer<_$AppDatabase, $ManualVehicleExpensesTable> {
+  $$ManualVehicleExpensesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get expenseDate => $composableBuilder(
+    column: $table.expenseDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get expenseType => $composableBuilder(
+    column: $table.expenseType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get amountCents => $composableBuilder(
+    column: $table.amountCents,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$VehiclesTableOrderingComposer get vehicleId {
+    final $$VehiclesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableOrderingComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ManualVehicleExpensesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ManualVehicleExpensesTable> {
+  $$ManualVehicleExpensesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get expenseDate => $composableBuilder(
+    column: $table.expenseDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get expenseType => $composableBuilder(
+    column: $table.expenseType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get amountCents => $composableBuilder(
+    column: $table.amountCents,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get remark =>
+      $composableBuilder(column: $table.remark, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
+  $$VehiclesTableAnnotationComposer get vehicleId {
+    final $$VehiclesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ManualVehicleExpensesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ManualVehicleExpensesTable,
+          ManualVehicleExpense,
+          $$ManualVehicleExpensesTableFilterComposer,
+          $$ManualVehicleExpensesTableOrderingComposer,
+          $$ManualVehicleExpensesTableAnnotationComposer,
+          $$ManualVehicleExpensesTableCreateCompanionBuilder,
+          $$ManualVehicleExpensesTableUpdateCompanionBuilder,
+          (ManualVehicleExpense, $$ManualVehicleExpensesTableReferences),
+          ManualVehicleExpense,
+          PrefetchHooks Function({bool vehicleId})
+        > {
+  $$ManualVehicleExpensesTableTableManager(
+    _$AppDatabase db,
+    $ManualVehicleExpensesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ManualVehicleExpensesTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$ManualVehicleExpensesTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$ManualVehicleExpensesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> vehicleId = const Value.absent(),
+                Value<DateTime> expenseDate = const Value.absent(),
+                Value<String> expenseType = const Value.absent(),
+                Value<int> amountCents = const Value.absent(),
+                Value<String?> remark = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => ManualVehicleExpensesCompanion(
+                id: id,
+                vehicleId: vehicleId,
+                expenseDate: expenseDate,
+                expenseType: expenseType,
+                amountCents: amountCents,
+                remark: remark,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int vehicleId,
+                required DateTime expenseDate,
+                required String expenseType,
+                required int amountCents,
+                Value<String?> remark = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+              }) => ManualVehicleExpensesCompanion.insert(
+                id: id,
+                vehicleId: vehicleId,
+                expenseDate: expenseDate,
+                expenseType: expenseType,
+                amountCents: amountCents,
+                remark: remark,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<
+                    $ManualVehicleExpensesTable,
+                    ManualVehicleExpense
+                  >(table),
+                  $$ManualVehicleExpensesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({vehicleId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (vehicleId) {
+                      state = state.withJoin(
+                        currentTable: table,
+                        currentColumn: table.vehicleId,
+                        referencedTable: $$ManualVehicleExpensesTableReferences
+                            ._vehicleIdTable(db),
+                        referencedColumn: $$ManualVehicleExpensesTableReferences
+                            ._vehicleIdTable(db)
+                            .id,
+                      ) as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$ManualVehicleExpensesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ManualVehicleExpensesTable,
+      ManualVehicleExpense,
+      $$ManualVehicleExpensesTableFilterComposer,
+      $$ManualVehicleExpensesTableOrderingComposer,
+      $$ManualVehicleExpensesTableAnnotationComposer,
+      $$ManualVehicleExpensesTableCreateCompanionBuilder,
+      $$ManualVehicleExpensesTableUpdateCompanionBuilder,
+      (ManualVehicleExpense, $$ManualVehicleExpensesTableReferences),
+      ManualVehicleExpense,
+      PrefetchHooks Function({bool vehicleId})
     >;
 typedef $$WageJobTypesTableCreateCompanionBuilder =
     WageJobTypesCompanion Function({
@@ -32100,6 +54321,47 @@ class $AppDatabaseManager {
       $$AttendanceGroupsTableTableManager(_db, _db.attendanceGroups);
   $$EmployeesTableTableManager get employees =>
       $$EmployeesTableTableManager(_db, _db.employees);
+  $$VehiclesTableTableManager get vehicles =>
+      $$VehiclesTableTableManager(_db, _db.vehicles);
+  $$VehicleConditionSnapshotsTableTableManager get vehicleConditionSnapshots =>
+      $$VehicleConditionSnapshotsTableTableManager(
+        _db,
+        _db.vehicleConditionSnapshots,
+      );
+  $$VehicleConditionItemsTableTableManager get vehicleConditionItems =>
+      $$VehicleConditionItemsTableTableManager(_db, _db.vehicleConditionItems);
+  $$TiresTableTableManager get tires =>
+      $$TiresTableTableManager(_db, _db.tires);
+  $$TireInstallationsTableTableManager get tireInstallations =>
+      $$TireInstallationsTableTableManager(_db, _db.tireInstallations);
+  $$TireRepairsTableTableManager get tireRepairs =>
+      $$TireRepairsTableTableManager(_db, _db.tireRepairs);
+  $$RepairOrdersTableTableManager get repairOrders =>
+      $$RepairOrdersTableTableManager(_db, _db.repairOrders);
+  $$RepairCostItemsTableTableManager get repairCostItems =>
+      $$RepairCostItemsTableTableManager(_db, _db.repairCostItems);
+  $$RepairPartsTableTableManager get repairParts =>
+      $$RepairPartsTableTableManager(_db, _db.repairParts);
+  $$VehicleAttachmentsTableTableManager get vehicleAttachments =>
+      $$VehicleAttachmentsTableTableManager(_db, _db.vehicleAttachments);
+  $$MaintenanceTemplatesTableTableManager get maintenanceTemplates =>
+      $$MaintenanceTemplatesTableTableManager(_db, _db.maintenanceTemplates);
+  $$VehicleMaintenanceItemsTableTableManager get vehicleMaintenanceItems =>
+      $$VehicleMaintenanceItemsTableTableManager(
+        _db,
+        _db.vehicleMaintenanceItems,
+      );
+  $$MaintenanceRecordsTableTableManager get maintenanceRecords =>
+      $$MaintenanceRecordsTableTableManager(_db, _db.maintenanceRecords);
+  $$ComponentLifecycleRecordsTableTableManager get componentLifecycleRecords =>
+      $$ComponentLifecycleRecordsTableTableManager(
+        _db,
+        _db.componentLifecycleRecords,
+      );
+  $$FuelMonthlyRecordsTableTableManager get fuelMonthlyRecords =>
+      $$FuelMonthlyRecordsTableTableManager(_db, _db.fuelMonthlyRecords);
+  $$ManualVehicleExpensesTableTableManager get manualVehicleExpenses =>
+      $$ManualVehicleExpensesTableTableManager(_db, _db.manualVehicleExpenses);
   $$WageJobTypesTableTableManager get wageJobTypes =>
       $$WageJobTypesTableTableManager(_db, _db.wageJobTypes);
   $$WageRateHistoryTableTableManager get wageRateHistory =>
