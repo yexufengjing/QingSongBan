@@ -28,6 +28,9 @@ import 'package:qingsongban/features/insurance/domain/insurance_options.dart';
 import 'package:qingsongban/features/reminders/application/reminder_providers.dart';
 import 'package:qingsongban/features/reminders/domain/reminder_options.dart';
 import 'package:qingsongban/features/operation_logs/application/operation_log_providers.dart';
+import 'package:qingsongban/features/vehicles/data/vehicle_repository.dart';
+import 'package:qingsongban/features/vehicles/domain/vehicle_options.dart';
+import 'package:qingsongban/features/vehicles/application/vehicle_providers.dart';
 
 void main() {
   late AppDatabase database;
@@ -130,6 +133,26 @@ void main() {
           operationLogsProvider.overrideWith(
             (ref) => Stream.value(<OperationLog>[]),
           ),
+          allVehiclesProvider.overrideWith((ref) => Stream.value(<Vehicle>[])),
+          vehicleListProvider.overrideWith((ref) => Stream.value(<Vehicle>[])),
+          vehicleConditionItemsProvider.overrideWith(
+            (ref, vehicleId) => Stream.value(<VehicleConditionItem>[]),
+          ),
+          vehicleTireInstallationsProvider.overrideWith(
+            (ref, vehicleId) => Stream.value(<TireInstallation>[]),
+          ),
+          vehicleRepairOrdersProvider.overrideWith(
+            (ref, vehicleId) => Stream.value(<RepairOrder>[]),
+          ),
+          vehicleMaintenanceItemsProvider.overrideWith(
+            (ref, vehicleId) => Stream.value(<VehicleMaintenanceItem>[]),
+          ),
+          vehicleLifecycleRecordsProvider.overrideWith(
+            (ref, vehicleId) => Stream.value(<ComponentLifecycleRecord>[]),
+          ),
+          vehicleAttachmentsProvider.overrideWith(
+            (ref, key) => Stream.value(<VehicleAttachment>[]),
+          ),
         ],
         child: const QingSongBanApp(),
       ),
@@ -169,6 +192,77 @@ void main() {
     ]) {
       expect(find.byKey(Key('home-action-$label')), findsOneWidget);
     }
+  });
+
+  testWidgets('opens vehicle management from the home shortcuts', (
+    tester,
+  ) async {
+    await pumpApp(tester);
+
+    final vehicleAction = find.byKey(const Key('home-action-车辆管理'));
+    await tester.ensureVisible(vehicleAction);
+    await tester.tap(vehicleAction);
+    await tester.pumpAndSettle();
+
+    expect(find.text('车辆管理'), findsOneWidget);
+    expect(find.text('业务入口'), findsOneWidget);
+    await tester.tap(find.byTooltip('新增车辆').first);
+    await tester.pumpAndSettle();
+    expect(find.text('车辆名称 *'), findsOneWidget);
+    appRouter.go('/home');
+    await tester.pumpAndSettle();
+  });
+
+  testWidgets('opens vehicle condition and repair tabs', (tester) async {
+    final vehicle = await VehicleRepository(database).save(
+      draft: const VehicleDraft(
+        name: '测试洒水车',
+        vehicleNo: 'WT-TEST',
+        vehicleType: VehicleType.waterTruck,
+      ),
+    );
+    await pumpApp(tester);
+    appRouter.go('/vehicles/${vehicle.id}');
+    await tester.pumpAndSettle();
+
+    expect(find.text('车辆详情'), findsOneWidget);
+    await tester.tap(find.text('车况'));
+    await tester.pumpAndSettle();
+    expect(find.text('部件车况'), findsOneWidget);
+    await tester.tap(find.text('维修'));
+    await tester.pumpAndSettle();
+    expect(find.text('暂无维修记录'), findsOneWidget);
+    await tester.tap(find.text('新建报修').first);
+    await tester.pumpAndSettle();
+    expect(find.text('新建报修/维修单'), findsOneWidget);
+    appRouter.go('/home');
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 1));
+  });
+
+  testWidgets('opens vehicle fuel summary and attachment pages', (
+    tester,
+  ) async {
+    final vehicle = await VehicleRepository(database).save(
+      draft: const VehicleDraft(
+        name: '汇总测试车',
+        vehicleNo: 'SW-SUMMARY',
+        vehicleType: VehicleType.sweeper,
+      ),
+    );
+    await pumpApp(tester);
+    appRouter.go('/vehicles/fuel-summary');
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+    expect(find.text('年度油耗汇总'), findsOneWidget);
+    expect(find.text('汇总测试车'), findsOneWidget);
+    expect(find.text('数据完整度'), findsOneWidget);
+
+    appRouter.go('/vehicles/${vehicle.id}/attachments');
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+    expect(find.text('附件资料'), findsOneWidget);
+    expect(find.text('暂无附件资料'), findsOneWidget);
   });
 
   testWidgets('navigates from every home dashboard metric', (tester) async {
