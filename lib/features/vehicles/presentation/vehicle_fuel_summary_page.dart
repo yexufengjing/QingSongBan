@@ -122,34 +122,50 @@ class _VehicleFuelSummaryPageState
   }
 
   Future<void> _pickYear() async {
-    final controller = TextEditingController(text: '$_year');
     final value = await showDialog<int>(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: const Text('选择年份'),
-        content: TextField(
-          controller: controller,
-          autofocus: true,
-          keyboardType: TextInputType.number,
-          decoration: const InputDecoration(labelText: '年份'),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => dialogContext.pop(),
-            child: const Text('取消'),
-          ),
-          FilledButton(
-            onPressed: () => dialogContext.pop(int.tryParse(controller.text)),
-            child: const Text('确定'),
-          ),
-        ],
-      ),
+      builder: (dialogContext) => _YearPickerDialog(initialYear: _year),
     );
-    controller.dispose();
     if (value != null && value >= 2000 && value <= 2200) {
       setState(() => _year = value);
     }
   }
+}
+
+class _YearPickerDialog extends StatefulWidget {
+  const _YearPickerDialog({required this.initialYear});
+  final int initialYear;
+  @override
+  State<_YearPickerDialog> createState() => _YearPickerDialogState();
+}
+
+class _YearPickerDialogState extends State<_YearPickerDialog> {
+  late final TextEditingController _controller = TextEditingController(
+    text: '${widget.initialYear}',
+  );
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => AlertDialog(
+    title: const Text('选择年份'),
+    content: TextField(
+      controller: _controller,
+      autofocus: true,
+      keyboardType: TextInputType.number,
+      decoration: const InputDecoration(labelText: '年份'),
+    ),
+    actions: [
+      TextButton(onPressed: () => context.pop(), child: const Text('取消')),
+      FilledButton(
+        onPressed: () => context.pop(int.tryParse(_controller.text)),
+        child: const Text('确定'),
+      ),
+    ],
+  );
 }
 
 class _FuelTrendCard extends StatelessWidget {
@@ -724,7 +740,7 @@ class _TableCell extends StatelessWidget {
   Widget build(BuildContext context) => Container(
     width: width,
     height: height,
-    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+    padding: EdgeInsets.symmetric(horizontal: 8, vertical: header ? 1 : 3),
     decoration: BoxDecoration(
       color: header
           ? Theme.of(context).colorScheme.surfaceContainerHighest

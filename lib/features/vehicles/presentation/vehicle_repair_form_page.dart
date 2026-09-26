@@ -8,9 +8,14 @@ import '../application/vehicle_providers.dart';
 import '../domain/repair_options.dart';
 
 class VehicleRepairFormPage extends ConsumerStatefulWidget {
-  const VehicleRepairFormPage({required this.vehicleId, super.key});
+  const VehicleRepairFormPage({
+    required this.vehicleId,
+    this.repairOrderId,
+    super.key,
+  });
 
   final int vehicleId;
+  final int? repairOrderId;
 
   @override
   ConsumerState<VehicleRepairFormPage> createState() =>
@@ -32,6 +37,71 @@ class _VehicleRepairFormPageState extends ConsumerState<VehicleRepairFormPage> {
   VehicleRepairStatus _status = VehicleRepairStatus.reported;
   RepairTicketStatus _ticketStatus = RepairTicketStatus.notRequired;
   bool _saving = false;
+  bool _loading = false;
+  List<RepairPartDraft> _loadedParts = const [];
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.repairOrderId != null) _loadExisting();
+  }
+
+  Future<void> _loadExisting() async {
+    setState(() => _loading = true);
+    final repo = ref.read(repairRepositoryProvider);
+    final order = await repo.findById(widget.repairOrderId!);
+    if (!mounted) return;
+    if (order == null || order.vehicleId != widget.vehicleId) {
+      setState(() => _loading = false);
+      return;
+    }
+    final costs = await repo.listCosts(order.id);
+    final parts = await repo.listParts(order.id);
+    if (!mounted) return;
+    for (final line in _costLines) {
+      line.dispose();
+    }
+    _costLines.clear();
+    for (final item in costs) {
+      final line = _CostLineState();
+      line.content.text = item.content;
+      line.quantity.text = item.quantity.toString();
+      line.unit.text = item.unit;
+      line.unitPrice.text = (item.unitPriceCents / 100).toStringAsFixed(2);
+      line.costType = item.costType;
+      _costLines.add(line);
+    }
+    if (_costLines.isEmpty) _costLines.add(_CostLineState());
+    final positionByCostId = {
+      for (var i = 0; i < costs.length; i++) costs[i].id: i,
+    };
+    _loadedParts = [
+      for (final p in parts)
+        RepairPartDraft(
+          name: p.name,
+          quantity: p.quantity,
+          unit: p.unit,
+          amountCents: p.amountCents,
+          costItemIndex: positionByCostId[p.costItemId],
+          tireId: p.tireId,
+          componentType: p.componentType,
+          remark: p.remark,
+        ),
+    ];
+    _symptomController.text = order.symptom;
+    _causeController.text = order.cause ?? '';
+    _projectController.text = order.project ?? '';
+    _vendorController.text = order.vendor ?? '';
+    _managerController.text = order.manager ?? '';
+    _remarkController.text = order.remark ?? '';
+    _reportedAmountController.text = (order.reportedAmountCents / 100)
+        .toStringAsFixed(2);
+    _reportDate = order.reportDate;
+    _faultFoundAt = order.faultFoundAt;
+    _status = order.status;
+    _ticketStatus = order.ticketStatus;
+    setState(() => _loading = false);
+  }
 
   @override
   void dispose() {
@@ -55,150 +125,165 @@ class _VehicleRepairFormPageState extends ConsumerState<VehicleRepairFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('新建报修/维修单')),
-      body: Form(
-        key: _formKey,
-        child: ListView(
-          padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
-          children: [
-            _section('故障信息', Icons.warning_amber_outlined, [
-              TextFormField(
-                controller: _symptomController,
-                decoration: const InputDecoration(labelText: '故障现象 *'),
-                maxLines: 2,
-                validator: (value) =>
-                    value == null || value.trim().isEmpty ? '请填写故障现象' : null,
-              ),
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  Expanded(
-                    child: _dateField(
-                      context,
-                      '报修日期',
-                      _reportDate,
-                      (value) => setState(() => _reportDate = value),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: _dateField(
-                      context,
-                      '发现日期',
-                      _faultFoundAt,
-                      (value) => setState(() => _faultFoundAt = value),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: _causeController,
-                decoration: const InputDecoration(labelText: '故障原因'),
-              ),
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: _projectController,
-                decoration: const InputDecoration(labelText: '维修项目'),
-              ),
-            ]),
-            const SizedBox(height: 14),
-            _section('维修安排', Icons.handyman_outlined, [
-              Row(
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      controller: _vendorController,
-                      decoration: const InputDecoration(labelText: '维修地点/供应商'),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: TextFormField(
-                      controller: _managerController,
-                      decoration: const InputDecoration(labelText: '维修负责人'),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              DropdownButtonFormField<VehicleRepairStatus>(
-                initialValue: _status,
-                decoration: const InputDecoration(labelText: '维修状态'),
-                items: [
-                  for (final value in VehicleRepairStatus.values)
-                    DropdownMenuItem(
-                      value: value,
-                      child: Text(RepairOptions.statusLabel(value)),
-                    ),
-                ],
-                onChanged: (value) =>
-                    setState(() => _status = value ?? _status),
-              ),
-              const SizedBox(height: 12),
-              DropdownButtonFormField<RepairTicketStatus>(
-                initialValue: _ticketStatus,
-                decoration: const InputDecoration(labelText: '三联票状态'),
-                items: [
-                  for (final value in RepairTicketStatus.values)
-                    DropdownMenuItem(
-                      value: value,
-                      child: Text(RepairOptions.ticketStatusLabel(value)),
-                    ),
-                ],
-                onChanged: (value) =>
-                    setState(() => _ticketStatus = value ?? _ticketStatus),
-              ),
-            ]),
-            const SizedBox(height: 14),
-            _section('费用明细', Icons.receipt_long_outlined, [
-              for (var index = 0; index < _costLines.length; index++)
-                _CostLineEditor(
-                  key: ObjectKey(_costLines[index]),
-                  line: _costLines[index],
-                  index: index,
-                  canRemove: _costLines.length > 1,
-                  onRemove: () => setState(() {
-                    _costLines.removeAt(index).dispose();
-                  }),
-                ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: TextButton.icon(
-                  onPressed: () =>
-                      setState(() => _costLines.add(_CostLineState())),
-                  icon: const Icon(Icons.add),
-                  label: const Text('添加费用明细'),
-                ),
-              ),
-              TextFormField(
-                controller: _reportedAmountController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(labelText: '申报金额（元）'),
-              ),
-            ]),
-            const SizedBox(height: 14),
-            _section('补充信息', Icons.notes_outlined, [
-              TextFormField(
-                controller: _remarkController,
-                maxLines: 3,
-                decoration: const InputDecoration(labelText: '备注'),
-              ),
-            ]),
-            const SizedBox(height: 20),
-            FilledButton.icon(
-              onPressed: _saving ? null : _save,
-              icon: _saving
-                  ? const SizedBox.square(
-                      dimension: 18,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  : const Icon(Icons.save_outlined),
-              label: Text(_saving ? '保存中...' : '保存维修单'),
-            ),
-          ],
-        ),
+      appBar: AppBar(
+        title: Text(widget.repairOrderId == null ? '新建报修/维修单' : '编辑维修单'),
       ),
+      body: _loading
+          ? const Center(child: CircularProgressIndicator())
+          : Form(
+              key: _formKey,
+              child: ListView(
+                padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
+                children: [
+                  _section('故障信息', Icons.warning_amber_outlined, [
+                    TextFormField(
+                      controller: _symptomController,
+                      decoration: const InputDecoration(labelText: '故障现象 *'),
+                      maxLines: 2,
+                      validator: (value) =>
+                          value == null || value.trim().isEmpty
+                          ? '请填写故障现象'
+                          : null,
+                    ),
+                    const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _dateField(
+                            context,
+                            '报修日期',
+                            _reportDate,
+                            (value) => setState(() => _reportDate = value),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: _dateField(
+                            context,
+                            '发现日期',
+                            _faultFoundAt,
+                            (value) => setState(() => _faultFoundAt = value),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    TextFormField(
+                      controller: _causeController,
+                      decoration: const InputDecoration(labelText: '故障原因'),
+                    ),
+                    const SizedBox(height: 12),
+                    TextFormField(
+                      controller: _projectController,
+                      decoration: const InputDecoration(labelText: '维修项目'),
+                    ),
+                  ]),
+                  const SizedBox(height: 14),
+                  _section('维修安排', Icons.handyman_outlined, [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            controller: _vendorController,
+                            decoration: const InputDecoration(
+                              labelText: '维修地点/供应商',
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: TextFormField(
+                            controller: _managerController,
+                            decoration: const InputDecoration(
+                              labelText: '维修负责人',
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    DropdownButtonFormField<VehicleRepairStatus>(
+                      initialValue: _status,
+                      decoration: const InputDecoration(labelText: '维修状态'),
+                      items: [
+                        for (final value in VehicleRepairStatus.values)
+                          DropdownMenuItem(
+                            value: value,
+                            child: Text(RepairOptions.statusLabel(value)),
+                          ),
+                      ],
+                      onChanged: (value) =>
+                          setState(() => _status = value ?? _status),
+                    ),
+                    const SizedBox(height: 12),
+                    DropdownButtonFormField<RepairTicketStatus>(
+                      initialValue: _ticketStatus,
+                      decoration: const InputDecoration(labelText: '三联票状态'),
+                      items: [
+                        for (final value in RepairTicketStatus.values)
+                          DropdownMenuItem(
+                            value: value,
+                            child: Text(RepairOptions.ticketStatusLabel(value)),
+                          ),
+                      ],
+                      onChanged: (value) => setState(
+                        () => _ticketStatus = value ?? _ticketStatus,
+                      ),
+                    ),
+                  ]),
+                  const SizedBox(height: 14),
+                  _section('费用明细', Icons.receipt_long_outlined, [
+                    for (var index = 0; index < _costLines.length; index++)
+                      _CostLineEditor(
+                        key: ObjectKey(_costLines[index]),
+                        line: _costLines[index],
+                        index: index,
+                        canRemove: _costLines.length > 1,
+                        onRemove: () {
+                          final removed = _costLines[index];
+                          setState(() => _costLines.removeAt(index));
+                          WidgetsBinding.instance.addPostFrameCallback(
+                            (_) => removed.dispose(),
+                          );
+                        },
+                      ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: TextButton.icon(
+                        onPressed: () =>
+                            setState(() => _costLines.add(_CostLineState())),
+                        icon: const Icon(Icons.add),
+                        label: const Text('添加费用明细'),
+                      ),
+                    ),
+                    TextFormField(
+                      controller: _reportedAmountController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(labelText: '申报金额（元）'),
+                    ),
+                  ]),
+                  const SizedBox(height: 14),
+                  _section('补充信息', Icons.notes_outlined, [
+                    TextFormField(
+                      controller: _remarkController,
+                      maxLines: 3,
+                      decoration: const InputDecoration(labelText: '备注'),
+                    ),
+                  ]),
+                  const SizedBox(height: 20),
+                  FilledButton.icon(
+                    onPressed: _saving ? null : _save,
+                    icon: _saving
+                        ? const SizedBox.square(
+                            dimension: 18,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        : const Icon(Icons.save_outlined),
+                    label: Text(_saving ? '保存中...' : '保存维修单'),
+                  ),
+                ],
+              ),
+            ),
     );
   }
 
@@ -248,7 +333,12 @@ class _VehicleRepairFormPageState extends ConsumerState<VehicleRepairFormPage> {
   Future<void> _save() async {
     if (!(_formKey.currentState?.validate() ?? false)) return;
     final costs = <RepairCostDraft>[];
-    for (final line in _costLines) {
+    final costsAreEmpty =
+        _costLines.length == 1 &&
+        _costLines.single.content.text.trim().isEmpty &&
+        _costLines.single.quantity.text.trim() == '1' &&
+        _costLines.single.unitPrice.text.trim() == '0';
+    for (final line in costsAreEmpty ? <_CostLineState>[] : _costLines) {
       final quantity = double.tryParse(line.quantity.text.trim());
       final unitPrice = double.tryParse(line.unitPrice.text.trim());
       if (line.content.text.trim().isEmpty ||
@@ -280,6 +370,7 @@ class _VehicleRepairFormPageState extends ConsumerState<VehicleRepairFormPage> {
       await ref
           .read(repairRepositoryProvider)
           .save(
+            id: widget.repairOrderId,
             draft: RepairOrderDraft(
               vehicleId: widget.vehicleId,
               reportDate: _reportDate,
@@ -294,10 +385,11 @@ class _VehicleRepairFormPageState extends ConsumerState<VehicleRepairFormPage> {
               status: _status,
               remark: _remarkController.text,
               costs: costs,
+              parts: _loadedParts,
             ),
           );
       if (mounted) {
-        Navigator.of(context).pop();
+        Navigator.of(context).pop(true);
       }
     } catch (error) {
       if (mounted) {

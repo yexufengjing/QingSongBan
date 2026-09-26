@@ -97,6 +97,10 @@ final vehicleRepairOrdersProvider = StreamProvider.autoDispose
           .watchOrders(vehicleId: vehicleId);
     });
 
+final allRepairOrdersProvider = StreamProvider.autoDispose<List<RepairOrder>>(
+  (ref) => ref.watch(repairRepositoryProvider).watchAllOrders(),
+);
+
 final maintenanceRepositoryProvider = Provider<MaintenanceRepository>((ref) {
   return MaintenanceRepository(ref.watch(appDatabaseProvider));
 });

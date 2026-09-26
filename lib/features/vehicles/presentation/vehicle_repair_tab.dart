@@ -165,90 +165,94 @@ class _RepairCard extends StatelessWidget {
       _ => Colors.orange,
     };
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(14, 14, 14, 12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: 78,
-                  height: 68,
-                  child: Image.asset(
-                    vehicle.vehicleType == VehicleType.sweeper
-                        ? 'assets/vehicles/sweeper-truck.png'
-                        : 'assets/vehicles/water-truck.png',
-                    fit: BoxFit.contain,
+      child: InkWell(
+        onTap: () => context.push('/vehicles/repairs/${order.id}'),
+        borderRadius: BorderRadius.circular(16),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(14, 14, 14, 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 78,
+                    height: 68,
+                    child: Image.asset(
+                      vehicle.vehicleType == VehicleType.sweeper
+                          ? 'assets/vehicles/sweeper-truck.png'
+                          : 'assets/vehicles/water-truck.png',
+                      fit: BoxFit.contain,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        vehicle.name,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(fontWeight: FontWeight.w700),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        vehicle.licensePlate ?? vehicle.vehicleNo,
-                        style: const TextStyle(
-                          color: AppColors.techBlue,
-                          fontSize: 11,
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          vehicle.name,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(fontWeight: FontWeight.w700),
                         ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        order.symptom,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ],
+                        const SizedBox(height: 2),
+                        Text(
+                          vehicle.licensePlate ?? vehicle.vehicleNo,
+                          style: const TextStyle(
+                            color: AppColors.techBlue,
+                            fontSize: 11,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          order.symptom,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                _RepairStatusChip(
-                  label: RepairOptions.statusLabel(order.status),
-                  color: color,
-                ),
-              ],
-            ),
-            const Divider(height: 14),
-            Row(
-              children: [
-                const Icon(
-                  Icons.schedule_outlined,
-                  size: 16,
-                  color: AppColors.helper,
-                ),
-                const SizedBox(width: 5),
-                Flexible(
-                  child: Text(
-                    _date(order.reportDate),
-                    style: Theme.of(context).textTheme.bodySmall,
+                  _RepairStatusChip(
+                    label: RepairOptions.statusLabel(order.status),
+                    color: color,
                   ),
-                ),
-                const Spacer(),
-                Text(
-                  '¥${((order.actualAmountCents > 0 ? order.actualAmountCents : order.reportedAmountCents) / 100).toStringAsFixed(2)}',
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-              ],
-            ),
-            if (order.vendor?.isNotEmpty == true) ...[
-              const SizedBox(height: 4),
-              Text(
-                '维修地点：${order.vendor}',
-                style: Theme.of(context).textTheme.bodySmall,
+                ],
               ),
+              const Divider(height: 14),
+              Row(
+                children: [
+                  const Icon(
+                    Icons.schedule_outlined,
+                    size: 16,
+                    color: AppColors.helper,
+                  ),
+                  const SizedBox(width: 5),
+                  Flexible(
+                    child: Text(
+                      _date(order.reportDate),
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ),
+                  const Spacer(),
+                  Text(
+                    '¥${((order.actualAmountCents > 0 ? order.actualAmountCents : order.reportedAmountCents) / 100).toStringAsFixed(2)}',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ],
+              ),
+              if (order.vendor?.isNotEmpty == true) ...[
+                const SizedBox(height: 4),
+                Text(
+                  '维修地点：${order.vendor}',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );

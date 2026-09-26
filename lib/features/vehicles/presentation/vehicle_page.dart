@@ -21,7 +21,15 @@ class VehiclePage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('车辆管理'),
-        leading: BackButton(onPressed: () => context.pop()),
+        leading: BackButton(
+          onPressed: () {
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.go('/home');
+            }
+          },
+        ),
         actions: [
           IconButton(
             tooltip: '年度油耗汇总',
@@ -442,6 +450,8 @@ class _BusinessEntryPanel extends StatelessWidget {
           context.push('/vehicles/archive');
         } else if (entry.$1 == '提醒中心') {
           context.push('/vehicles/reminders');
+        } else if (entry.$1 == '维修管理') {
+          context.push('/vehicles/repairs');
         } else {
           onOpenFirstVehicle(entry.$4);
         }

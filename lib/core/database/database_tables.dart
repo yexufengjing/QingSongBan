@@ -241,6 +241,14 @@ class RepairOrders extends Table {
 
   TextColumn get ticketStatus => textEnum<RepairTicketStatus>()();
 
+  BoolColumn get isSettled => boolean().withDefault(const Constant(false))();
+
+  DateTimeColumn get settledAt => dateTime().nullable()();
+
+  BoolColumn get isPaid => boolean().withDefault(const Constant(false))();
+
+  DateTimeColumn get paidAt => dateTime().nullable()();
+
   TextColumn get status =>
       textEnum<VehicleRepairStatus>().withDefault(const Constant('reported'))();
 

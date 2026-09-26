@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/database/database_enums.dart';
@@ -48,6 +49,9 @@ import '../../features/vehicles/presentation/vehicle_attachments_page.dart';
 import '../../features/vehicles/presentation/vehicle_form_page.dart';
 import '../../features/vehicles/presentation/vehicle_page.dart';
 import '../../features/vehicles/presentation/vehicle_repair_form_page.dart';
+import '../../features/vehicles/presentation/vehicle_repair_list_page.dart';
+import '../../features/vehicles/presentation/vehicle_repair_detail_page.dart';
+import '../../features/vehicles/application/vehicle_providers.dart';
 import 'app_shell.dart';
 
 final GoRouter appRouter = GoRouter(
@@ -516,6 +520,42 @@ final GoRouter appRouter = GoRouter(
           builder: (context, state) => const VehicleFormPage(),
         ),
         GoRoute(
+          path: 'repairs',
+          name: 'vehicle-repairs',
+          builder: (context, state) => const VehicleRepairListPage(),
+          routes: [
+            GoRoute(
+              path: ':repairOrderId',
+              name: 'vehicle-repair-detail',
+              builder: (context, state) {
+                final id = int.tryParse(
+                  state.pathParameters['repairOrderId'] ?? '',
+                );
+                return id == null
+                    ? const Scaffold(body: Center(child: Text('无效的维修单编号')))
+                    : VehicleRepairDetailPage(repairOrderId: id);
+              },
+              routes: [
+                GoRoute(
+                  path: 'edit',
+                  name: 'vehicle-repair-edit',
+                  builder: (context, state) {
+                    final id = int.tryParse(
+                      state.pathParameters['repairOrderId'] ?? '',
+                    );
+                    if (id == null) {
+                      return const Scaffold(
+                        body: Center(child: Text('无效的维修单编号')),
+                      );
+                    }
+                    return _RepairOrderEditRoute(repairOrderId: id);
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+        GoRoute(
           path: ':vehicleId',
           name: 'vehicle-detail',
           builder: (context, state) {
@@ -589,6 +629,32 @@ final GoRouter appRouter = GoRouter(
     ),
   ],
 );
+
+class _RepairOrderEditRoute extends ConsumerWidget {
+  const _RepairOrderEditRoute({required this.repairOrderId});
+  final int repairOrderId;
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return FutureBuilder(
+      future: ref.read(repairRepositoryProvider).findById(repairOrderId),
+      builder: (context, snapshot) {
+        final order = snapshot.data;
+        if (!snapshot.hasData) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+        if (order == null) {
+          return const Scaffold(body: Center(child: Text('维修单不存在')));
+        }
+        return VehicleRepairFormPage(
+          vehicleId: order.vehicleId,
+          repairOrderId: repairOrderId,
+        );
+      },
+    );
+  }
+}
 
 EmployeeStatus? _employeeStatusFromQuery(String? value) {
   return switch (value) {

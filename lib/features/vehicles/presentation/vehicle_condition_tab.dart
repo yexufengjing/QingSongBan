@@ -89,61 +89,15 @@ class VehicleConditionTab extends ConsumerWidget {
     String componentKey,
     VehicleConditionItem? current,
   ) async {
-    var status = current?.status ?? VehicleConditionStatus.normal;
-    final detailController = TextEditingController(text: current?.detail ?? '');
-    final saved = await showDialog<bool>(
+    final result = await showDialog<(VehicleConditionStatus, String)?>(
       context: context,
-      builder: (dialogContext) => StatefulBuilder(
-        builder: (context, setState) => AlertDialog(
-          title: Text(
-            '${VehicleConditionOptions.componentLabel(componentType)}状态',
-          ),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                DropdownButtonFormField<VehicleConditionStatus>(
-                  initialValue: status,
-                  decoration: const InputDecoration(labelText: '状态'),
-                  items: [
-                    for (final value in VehicleConditionStatus.values)
-                      DropdownMenuItem(
-                        value: value,
-                        child: Text(VehicleConditionOptions.statusLabel(value)),
-                      ),
-                  ],
-                  onChanged: (value) {
-                    if (value != null) setState(() => status = value);
-                  },
-                ),
-                const SizedBox(height: 12),
-                TextField(
-                  controller: detailController,
-                  maxLines: 3,
-                  decoration: const InputDecoration(
-                    labelText: '问题或处理备注',
-                    hintText: '例如：发动机异响，待进一步检查',
-                  ),
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(dialogContext).pop(false),
-              child: const Text('取消'),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.of(dialogContext).pop(true),
-              child: const Text('保存'),
-            ),
-          ],
-        ),
+      builder: (dialogContext) => _ConditionEditDialog(
+        componentType: componentType,
+        initialStatus: current?.status ?? VehicleConditionStatus.normal,
+        initialDetail: current?.detail ?? '',
       ),
     );
-    final detail = detailController.text;
-    detailController.dispose();
-    if (saved != true) return;
+    if (result == null) return;
     await ref
         .read(vehicleConditionRepositoryProvider)
         .save(
@@ -151,12 +105,81 @@ class VehicleConditionTab extends ConsumerWidget {
             vehicleId: vehicle.id,
             componentType: componentType,
             componentKey: componentKey,
-            status: status,
+            status: result.$1,
             observedAt: DateTime.now(),
-            detail: detail,
+            detail: result.$2,
           ),
         );
   }
+}
+
+class _ConditionEditDialog extends StatefulWidget {
+  const _ConditionEditDialog({
+    required this.componentType,
+    required this.initialStatus,
+    required this.initialDetail,
+  });
+  final String componentType;
+  final VehicleConditionStatus initialStatus;
+  final String initialDetail;
+  @override
+  State<_ConditionEditDialog> createState() => _ConditionEditDialogState();
+}
+
+class _ConditionEditDialogState extends State<_ConditionEditDialog> {
+  late VehicleConditionStatus _status = widget.initialStatus;
+  late final TextEditingController _detailController = TextEditingController(
+    text: widget.initialDetail,
+  );
+  @override
+  void dispose() {
+    _detailController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => AlertDialog(
+    title: Text(
+      '${VehicleConditionOptions.componentLabel(widget.componentType)}状态',
+    ),
+    content: SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          DropdownButtonFormField<VehicleConditionStatus>(
+            initialValue: _status,
+            decoration: const InputDecoration(labelText: '状态'),
+            items: [
+              for (final value in VehicleConditionStatus.values)
+                DropdownMenuItem(
+                  value: value,
+                  child: Text(VehicleConditionOptions.statusLabel(value)),
+                ),
+            ],
+            onChanged: (value) {
+              if (value != null) setState(() => _status = value);
+            },
+          ),
+          const SizedBox(height: 12),
+          TextField(
+            controller: _detailController,
+            maxLines: 3,
+            decoration: const InputDecoration(
+              labelText: '问题或处理备注',
+              hintText: '例如：发动机异响，待进一步检查',
+            ),
+          ),
+        ],
+      ),
+    ),
+    actions: [
+      TextButton(onPressed: () => context.pop(), child: const Text('取消')),
+      FilledButton(
+        onPressed: () => context.pop((_status, _detailController.text)),
+        child: const Text('保存'),
+      ),
+    ],
+  );
 }
 
 class _ConditionIssues extends StatelessWidget {

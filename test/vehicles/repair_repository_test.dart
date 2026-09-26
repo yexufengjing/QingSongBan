@@ -179,6 +179,96 @@ void main() {
     );
   });
 
+  test('business markers update without replacing costs or parts', () async {
+    final order = await repository.save(
+      draft: RepairOrderDraft(
+        vehicleId: vehicleId,
+        reportDate: DateTime(2026, 9, 3),
+        faultFoundAt: DateTime(2026, 9, 3),
+        symptom: '发动机异响',
+        ticketStatus: RepairTicketStatus.notIssued,
+        costs: const [
+          RepairCostDraft(
+            content: '工时',
+            quantity: 1,
+            unit: '项',
+            unitPriceCents: 9000,
+            costType: RepairCostType.labor,
+          ),
+        ],
+        parts: const [
+          RepairPartDraft(
+            name: '滤芯',
+            quantity: 1,
+            unit: '个',
+            amountCents: 1200,
+          ),
+        ],
+      ),
+    );
+    final beforeCosts = await repository.listCosts(order.id);
+    final beforeParts = await repository.listParts(order.id);
+    await repository.save(
+      id: order.id,
+      draft: RepairOrderDraft(
+        vehicleId: vehicleId,
+        reportDate: order.reportDate,
+        faultFoundAt: order.faultFoundAt,
+        symptom: order.symptom,
+        ticketStatus: order.ticketStatus,
+        costs: [
+          for (final c in beforeCosts)
+            RepairCostDraft(
+              content: c.content,
+              quantity: c.quantity,
+              unit: c.unit,
+              unitPriceCents: c.unitPriceCents,
+              costType: c.costType,
+            ),
+        ],
+        parts: [
+          for (final p in beforeParts)
+            RepairPartDraft(
+              name: p.name,
+              quantity: p.quantity,
+              unit: p.unit,
+              amountCents: p.amountCents,
+              costItemIndex: p.costItemId == beforeCosts.first.id ? 0 : null,
+              tireId: p.tireId,
+              componentType: p.componentType,
+              remark: p.remark,
+            ),
+        ],
+      ),
+    );
+    final editedParts = await repository.listParts(order.id);
+    expect(editedParts.single.name, '滤芯');
+    final savedCosts = await repository.listCosts(order.id);
+    final savedParts = await repository.listParts(order.id);
+    await repository.updateMarkers(
+      id: order.id,
+      ticketStatus: RepairTicketStatus.issued,
+      isSettled: true,
+      isPaid: true,
+    );
+    final updated = (await repository.findById(order.id))!;
+    expect(updated.ticketStatus, RepairTicketStatus.issued);
+    expect(updated.isSettled, isTrue);
+    expect(updated.settledAt, isNotNull);
+    expect(updated.isPaid, isTrue);
+    expect(updated.paidAt, isNotNull);
+    expect(await repository.listCosts(order.id), savedCosts);
+    expect(await repository.listParts(order.id), savedParts);
+    await repository.updateMarkers(
+      id: order.id,
+      isSettled: false,
+      isPaid: false,
+    );
+    final cleared = (await repository.findById(order.id))!;
+    expect(cleared.settledAt, isNull);
+    expect(cleared.paidAt, isNull);
+  });
+
   test(
     'stopped and scrapped vehicles keep their manual strong state',
     () async {

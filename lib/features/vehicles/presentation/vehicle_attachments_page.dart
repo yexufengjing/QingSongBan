@@ -60,7 +60,18 @@ class _VehicleAttachmentsPageState
           return attachments.when(
             loading: () => const Center(child: CircularProgressIndicator()),
             error: (error, _) => Center(child: Text('附件加载失败：$error')),
-            data: (items) => _content(context, item, items),
+            data: (items) => _content(
+              context,
+              item,
+              widget.repairOrderId == null
+                  ? items
+                  : items
+                        .where(
+                          (attachment) =>
+                              attachment.repairOrderId == widget.repairOrderId,
+                        )
+                        .toList(),
+            ),
           );
         },
       ),

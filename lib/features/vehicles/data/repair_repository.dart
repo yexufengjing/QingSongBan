@@ -31,6 +31,52 @@ class RepairRepository {
         .getSingleOrNull();
   }
 
+  Stream<List<RepairOrder>> watchAllOrders() => watchOrders();
+
+  Future<int> updateMarkers({
+    required int id,
+    VehicleRepairStatus? status,
+    RepairTicketStatus? ticketStatus,
+    bool? isSettled,
+    bool? isPaid,
+  }) async {
+    final order = await findById(id);
+    if (order == null) throw StateError('维修单不存在');
+    final now = DateTime.now();
+    return _database.transaction(() async {
+      final changed =
+          await (_database.update(_database.repairOrders)..where(
+                (table) => table.id.equals(id) & table.isDeleted.equals(false),
+              ))
+              .write(
+                RepairOrdersCompanion(
+                  status: status == null ? const Value.absent() : Value(status),
+                  ticketStatus: ticketStatus == null
+                      ? const Value.absent()
+                      : Value(ticketStatus),
+                  isSettled: isSettled == null
+                      ? const Value.absent()
+                      : Value(isSettled),
+                  settledAt: isSettled == null
+                      ? const Value.absent()
+                      : Value(isSettled ? now : null),
+                  isPaid: isPaid == null ? const Value.absent() : Value(isPaid),
+                  paidAt: isPaid == null
+                      ? const Value.absent()
+                      : Value(isPaid ? now : null),
+                  completedAt: status == null
+                      ? const Value.absent()
+                      : Value(
+                          status == VehicleRepairStatus.completed ? now : null,
+                        ),
+                  updatedAt: Value(now),
+                ),
+              );
+      if (status != null) await _syncVehicleStatus(order.vehicleId, now);
+      return changed;
+    });
+  }
+
   Future<List<RepairCostItem>> listCosts(int repairOrderId) {
     return (_database.select(_database.repairCostItems)
           ..where(

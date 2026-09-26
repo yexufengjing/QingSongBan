@@ -63,7 +63,7 @@ class AppDatabase extends _$AppDatabase {
     : super(executor ?? NativeDatabase.memory());
 
   @override
-  int get schemaVersion => 18;
+  int get schemaVersion => 19;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -198,6 +198,20 @@ class AppDatabase extends _$AppDatabase {
           'deleted_at',
           'INTEGER',
         );
+      }
+      if (from < 19 && to >= 19) {
+        await _addColumnIfMissing(
+          'repair_orders',
+          'is_settled',
+          'INTEGER NOT NULL DEFAULT 0',
+        );
+        await _addColumnIfMissing('repair_orders', 'settled_at', 'INTEGER');
+        await _addColumnIfMissing(
+          'repair_orders',
+          'is_paid',
+          'INTEGER NOT NULL DEFAULT 0',
+        );
+        await _addColumnIfMissing('repair_orders', 'paid_at', 'INTEGER');
       }
     },
     beforeOpen: (details) async {

@@ -322,89 +322,29 @@ class _VehicleFuelTabState extends ConsumerState<VehicleFuelTab> {
     int? month, [
     FuelMonthlyRecord? existing,
   ]) async {
-    final selectedMonth = existing?.month ?? month ?? DateTime.now().month;
-    final monthController = TextEditingController(text: '$selectedMonth');
-    final litersController = TextEditingController(
-      text: existing?.liters.toString() ?? '',
-    );
-    final amountController = TextEditingController(
-      text: existing == null
-          ? ''
-          : (existing.amountCents / 100).toStringAsFixed(2),
-    );
-    final formKey = GlobalKey<FormState>();
     final saved = await showDialog<bool>(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(existing == null ? '录入月度油耗' : '编辑月度油耗'),
-        content: Form(
-          key: formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextFormField(
-                controller: monthController,
-                decoration: const InputDecoration(labelText: '月份（1-12）'),
-                keyboardType: TextInputType.number,
-                validator: (value) => _positiveNumber(value, '月份'),
+      builder: (dialogContext) => _FuelEntryDialog(
+        month: existing?.month ?? month ?? DateTime.now().month,
+        liters: existing?.liters.toString() ?? '',
+        amount: existing == null
+            ? ''
+            : (existing.amountCents / 100).toStringAsFixed(2),
+        existing: existing != null,
+        onSave: (month, liters, amount) => ref
+            .read(fuelRepositoryProvider)
+            .save(
+              FuelMonthlyDraft(
+                vehicleId: widget.vehicle.id,
+                year: _year,
+                month: month,
+                liters: liters,
+                amountCents: (amount * 100).round(),
               ),
-              TextFormField(
-                controller: litersController,
-                decoration: const InputDecoration(labelText: '加油量（升）'),
-                keyboardType: const TextInputType.numberWithOptions(
-                  decimal: true,
-                ),
-                validator: (value) => _positiveNumber(value, '油量'),
-              ),
-              TextFormField(
-                controller: amountController,
-                decoration: const InputDecoration(labelText: '油费金额（元）'),
-                keyboardType: const TextInputType.numberWithOptions(
-                  decimal: true,
-                ),
-                validator: (value) => _positiveNumber(value, '油费'),
-              ),
-            ],
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('取消'),
-          ),
-          FilledButton(
-            onPressed: () async {
-              if (!formKey.currentState!.validate()) return;
-              try {
-                await ref
-                    .read(fuelRepositoryProvider)
-                    .save(
-                      FuelMonthlyDraft(
-                        vehicleId: widget.vehicle.id,
-                        year: _year,
-                        month: int.parse(monthController.text),
-                        liters: double.parse(litersController.text),
-                        amountCents: (double.parse(amountController.text) * 100)
-                            .round(),
-                      ),
-                      id: existing?.id,
-                    );
-                if (dialogContext.mounted) Navigator.pop(dialogContext, true);
-              } catch (error) {
-                if (dialogContext.mounted) {
-                  ScaffoldMessenger.of(dialogContext)
-                      .showSnackBar(SnackBar(content: Text('保存失败：$error')));
-                }
-              }
-            },
-            child: const Text('保存'),
-          ),
-        ],
+              id: existing?.id,
+            ),
       ),
     );
-    monthController.dispose();
-    litersController.dispose();
-    amountController.dispose();
     if (saved == true) {
       ref.invalidate(vehicleFuelProvider((widget.vehicle.id, _year)));
       ref.invalidate(vehicleFuelSummaryProvider((widget.vehicle.id, _year)));
@@ -441,6 +381,104 @@ class _VehicleFuelTabState extends ConsumerState<VehicleFuelTab> {
     ref.invalidate(vehicleFuelProvider((widget.vehicle.id, _year)));
     ref.invalidate(vehicleFuelSummaryProvider((widget.vehicle.id, _year)));
     ref.invalidate(fuelYearSummaryProvider(_year));
+  }
+}
+
+class _FuelEntryDialog extends StatefulWidget {
+  const _FuelEntryDialog({
+    required this.month,
+    required this.liters,
+    required this.amount,
+    required this.existing,
+    required this.onSave,
+  });
+  final int month;
+  final String liters;
+  final String amount;
+  final bool existing;
+  final Future<void> Function(int month, double liters, double amount) onSave;
+  @override
+  State<_FuelEntryDialog> createState() => _FuelEntryDialogState();
+}
+
+class _FuelEntryDialogState extends State<_FuelEntryDialog> {
+  final _formKey = GlobalKey<FormState>();
+  late final _month = TextEditingController(text: '${widget.month}');
+  late final _liters = TextEditingController(text: widget.liters);
+  late final _amount = TextEditingController(text: widget.amount);
+  bool _saving = false;
+  @override
+  void dispose() {
+    _month.dispose();
+    _liters.dispose();
+    _amount.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => AlertDialog(
+    title: Text(widget.existing ? '编辑月度油耗' : '录入月度油耗'),
+    content: Form(
+      key: _formKey,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextFormField(
+            controller: _month,
+            decoration: const InputDecoration(labelText: '月份（1-12）'),
+            keyboardType: TextInputType.number,
+            validator: (v) => _positiveNumber(v, '月份'),
+          ),
+          TextFormField(
+            controller: _liters,
+            decoration: const InputDecoration(labelText: '加油量（升）'),
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            validator: (v) => _positiveNumber(v, '油量'),
+          ),
+          TextFormField(
+            controller: _amount,
+            decoration: const InputDecoration(labelText: '油费金额（元）'),
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            validator: (v) => _positiveNumber(v, '油费'),
+          ),
+        ],
+      ),
+    ),
+    actions: [
+      TextButton(
+        onPressed: _saving ? null : () => context.pop(),
+        child: const Text('取消'),
+      ),
+      FilledButton(
+        onPressed: _saving ? null : _save,
+        child: Text(_saving ? '保存中…' : '保存'),
+      ),
+    ],
+  );
+  Future<void> _save() async {
+    if (!(_formKey.currentState?.validate() ?? false)) return;
+    final month = int.tryParse(_month.text);
+    final liters = double.tryParse(_liters.text);
+    final amount = double.tryParse(_amount.text);
+    if (month == null ||
+        month < 1 ||
+        month > 12 ||
+        liters == null ||
+        amount == null) {
+      return;
+    }
+    setState(() => _saving = true);
+    try {
+      await widget.onSave(month, liters, amount);
+      if (mounted) context.pop(true);
+    } catch (error) {
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('保存失败：$error')));
+      }
+    } finally {
+      if (mounted) setState(() => _saving = false);
+    }
   }
 }
 

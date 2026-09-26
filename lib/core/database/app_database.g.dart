@@ -6151,6 +6151,54 @@ class $RepairOrdersTable extends RepairOrders
       ).withConverter<RepairTicketStatus>(
         $RepairOrdersTable.$converterticketStatus,
       );
+  static const VerificationMeta _isSettledMeta = const VerificationMeta(
+    'isSettled',
+  );
+  @override
+  late final GeneratedColumn<bool> isSettled = GeneratedColumn<bool>(
+    'is_settled',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_settled" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _settledAtMeta = const VerificationMeta(
+    'settledAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> settledAt = GeneratedColumn<DateTime>(
+    'settled_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _isPaidMeta = const VerificationMeta('isPaid');
+  @override
+  late final GeneratedColumn<bool> isPaid = GeneratedColumn<bool>(
+    'is_paid',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_paid" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _paidAtMeta = const VerificationMeta('paidAt');
+  @override
+  late final GeneratedColumn<DateTime> paidAt = GeneratedColumn<DateTime>(
+    'paid_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
   @override
   late final GeneratedColumnWithTypeConverter<VehicleRepairStatus, String>
   status = GeneratedColumn<String>(
@@ -6247,6 +6295,10 @@ class $RepairOrdersTable extends RepairOrders
     reportedAmountCents,
     actualAmountCents,
     ticketStatus,
+    isSettled,
+    settledAt,
+    isPaid,
+    paidAt,
     status,
     completedAt,
     recordText,
@@ -6361,6 +6413,30 @@ class $RepairOrdersTable extends RepairOrders
         ),
       );
     }
+    if (data.containsKey('is_settled')) {
+      context.handle(
+        _isSettledMeta,
+        isSettled.isAcceptableOrUnknown(data['is_settled']!, _isSettledMeta),
+      );
+    }
+    if (data.containsKey('settled_at')) {
+      context.handle(
+        _settledAtMeta,
+        settledAt.isAcceptableOrUnknown(data['settled_at']!, _settledAtMeta),
+      );
+    }
+    if (data.containsKey('is_paid')) {
+      context.handle(
+        _isPaidMeta,
+        isPaid.isAcceptableOrUnknown(data['is_paid']!, _isPaidMeta),
+      );
+    }
+    if (data.containsKey('paid_at')) {
+      context.handle(
+        _paidAtMeta,
+        paidAt.isAcceptableOrUnknown(data['paid_at']!, _paidAtMeta),
+      );
+    }
     if (data.containsKey('completed_at')) {
       context.handle(
         _completedAtMeta,
@@ -6467,6 +6543,22 @@ class $RepairOrdersTable extends RepairOrders
           data['${effectivePrefix}ticket_status'],
         )!,
       ),
+      isSettled: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_settled'],
+      )!,
+      settledAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}settled_at'],
+      ),
+      isPaid: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_paid'],
+      )!,
+      paidAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}paid_at'],
+      ),
       status: $RepairOrdersTable.$converterstatus.fromSql(
         attachedDatabase.typeMapping.read(
           DriftSqlType.string,
@@ -6530,6 +6622,10 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
   final int reportedAmountCents;
   final int actualAmountCents;
   final RepairTicketStatus ticketStatus;
+  final bool isSettled;
+  final DateTime? settledAt;
+  final bool isPaid;
+  final DateTime? paidAt;
   final VehicleRepairStatus status;
   final DateTime? completedAt;
   final String? recordText;
@@ -6552,6 +6648,10 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
     required this.reportedAmountCents,
     required this.actualAmountCents,
     required this.ticketStatus,
+    required this.isSettled,
+    this.settledAt,
+    required this.isPaid,
+    this.paidAt,
     required this.status,
     this.completedAt,
     this.recordText,
@@ -6590,6 +6690,14 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
       map['ticket_status'] = Variable<String>(
         $RepairOrdersTable.$converterticketStatus.toSql(ticketStatus),
       );
+    }
+    map['is_settled'] = Variable<bool>(isSettled);
+    if (!nullToAbsent || settledAt != null) {
+      map['settled_at'] = Variable<DateTime>(settledAt);
+    }
+    map['is_paid'] = Variable<bool>(isPaid);
+    if (!nullToAbsent || paidAt != null) {
+      map['paid_at'] = Variable<DateTime>(paidAt);
     }
     {
       map['status'] = Variable<String>(
@@ -6637,6 +6745,14 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
       reportedAmountCents: Value(reportedAmountCents),
       actualAmountCents: Value(actualAmountCents),
       ticketStatus: Value(ticketStatus),
+      isSettled: Value(isSettled),
+      settledAt: settledAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(settledAt),
+      isPaid: Value(isPaid),
+      paidAt: paidAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(paidAt),
       status: Value(status),
       completedAt: completedAt == null && nullToAbsent
           ? const Value.absent()
@@ -6677,6 +6793,10 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
       ticketStatus: $RepairOrdersTable.$converterticketStatus.fromJson(
         serializer.fromJson<String>(json['ticketStatus']),
       ),
+      isSettled: serializer.fromJson<bool>(json['isSettled']),
+      settledAt: serializer.fromJson<DateTime?>(json['settledAt']),
+      isPaid: serializer.fromJson<bool>(json['isPaid']),
+      paidAt: serializer.fromJson<DateTime?>(json['paidAt']),
       status: $RepairOrdersTable.$converterstatus.fromJson(
         serializer.fromJson<String>(json['status']),
       ),
@@ -6708,6 +6828,10 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
       'ticketStatus': serializer.toJson<String>(
         $RepairOrdersTable.$converterticketStatus.toJson(ticketStatus),
       ),
+      'isSettled': serializer.toJson<bool>(isSettled),
+      'settledAt': serializer.toJson<DateTime?>(settledAt),
+      'isPaid': serializer.toJson<bool>(isPaid),
+      'paidAt': serializer.toJson<DateTime?>(paidAt),
       'status': serializer.toJson<String>(
         $RepairOrdersTable.$converterstatus.toJson(status),
       ),
@@ -6735,6 +6859,10 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
     int? reportedAmountCents,
     int? actualAmountCents,
     RepairTicketStatus? ticketStatus,
+    bool? isSettled,
+    Value<DateTime?> settledAt = const Value.absent(),
+    bool? isPaid,
+    Value<DateTime?> paidAt = const Value.absent(),
     VehicleRepairStatus? status,
     Value<DateTime?> completedAt = const Value.absent(),
     Value<String?> recordText = const Value.absent(),
@@ -6757,6 +6885,10 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
     reportedAmountCents: reportedAmountCents ?? this.reportedAmountCents,
     actualAmountCents: actualAmountCents ?? this.actualAmountCents,
     ticketStatus: ticketStatus ?? this.ticketStatus,
+    isSettled: isSettled ?? this.isSettled,
+    settledAt: settledAt.present ? settledAt.value : this.settledAt,
+    isPaid: isPaid ?? this.isPaid,
+    paidAt: paidAt.present ? paidAt.value : this.paidAt,
     status: status ?? this.status,
     completedAt: completedAt.present ? completedAt.value : this.completedAt,
     recordText: recordText.present ? recordText.value : this.recordText,
@@ -6791,6 +6923,10 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
       ticketStatus: data.ticketStatus.present
           ? data.ticketStatus.value
           : this.ticketStatus,
+      isSettled: data.isSettled.present ? data.isSettled.value : this.isSettled,
+      settledAt: data.settledAt.present ? data.settledAt.value : this.settledAt,
+      isPaid: data.isPaid.present ? data.isPaid.value : this.isPaid,
+      paidAt: data.paidAt.present ? data.paidAt.value : this.paidAt,
       status: data.status.present ? data.status.value : this.status,
       completedAt: data.completedAt.present
           ? data.completedAt.value
@@ -6822,6 +6958,10 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
           ..write('reportedAmountCents: $reportedAmountCents, ')
           ..write('actualAmountCents: $actualAmountCents, ')
           ..write('ticketStatus: $ticketStatus, ')
+          ..write('isSettled: $isSettled, ')
+          ..write('settledAt: $settledAt, ')
+          ..write('isPaid: $isPaid, ')
+          ..write('paidAt: $paidAt, ')
           ..write('status: $status, ')
           ..write('completedAt: $completedAt, ')
           ..write('recordText: $recordText, ')
@@ -6849,6 +6989,10 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
     reportedAmountCents,
     actualAmountCents,
     ticketStatus,
+    isSettled,
+    settledAt,
+    isPaid,
+    paidAt,
     status,
     completedAt,
     recordText,
@@ -6875,6 +7019,10 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
           other.reportedAmountCents == this.reportedAmountCents &&
           other.actualAmountCents == this.actualAmountCents &&
           other.ticketStatus == this.ticketStatus &&
+          other.isSettled == this.isSettled &&
+          other.settledAt == this.settledAt &&
+          other.isPaid == this.isPaid &&
+          other.paidAt == this.paidAt &&
           other.status == this.status &&
           other.completedAt == this.completedAt &&
           other.recordText == this.recordText &&
@@ -6899,6 +7047,10 @@ class RepairOrdersCompanion extends UpdateCompanion<RepairOrder> {
   final Value<int> reportedAmountCents;
   final Value<int> actualAmountCents;
   final Value<RepairTicketStatus> ticketStatus;
+  final Value<bool> isSettled;
+  final Value<DateTime?> settledAt;
+  final Value<bool> isPaid;
+  final Value<DateTime?> paidAt;
   final Value<VehicleRepairStatus> status;
   final Value<DateTime?> completedAt;
   final Value<String?> recordText;
@@ -6921,6 +7073,10 @@ class RepairOrdersCompanion extends UpdateCompanion<RepairOrder> {
     this.reportedAmountCents = const Value.absent(),
     this.actualAmountCents = const Value.absent(),
     this.ticketStatus = const Value.absent(),
+    this.isSettled = const Value.absent(),
+    this.settledAt = const Value.absent(),
+    this.isPaid = const Value.absent(),
+    this.paidAt = const Value.absent(),
     this.status = const Value.absent(),
     this.completedAt = const Value.absent(),
     this.recordText = const Value.absent(),
@@ -6944,6 +7100,10 @@ class RepairOrdersCompanion extends UpdateCompanion<RepairOrder> {
     this.reportedAmountCents = const Value.absent(),
     this.actualAmountCents = const Value.absent(),
     required RepairTicketStatus ticketStatus,
+    this.isSettled = const Value.absent(),
+    this.settledAt = const Value.absent(),
+    this.isPaid = const Value.absent(),
+    this.paidAt = const Value.absent(),
     this.status = const Value.absent(),
     this.completedAt = const Value.absent(),
     this.recordText = const Value.absent(),
@@ -6972,6 +7132,10 @@ class RepairOrdersCompanion extends UpdateCompanion<RepairOrder> {
     Expression<int>? reportedAmountCents,
     Expression<int>? actualAmountCents,
     Expression<String>? ticketStatus,
+    Expression<bool>? isSettled,
+    Expression<DateTime>? settledAt,
+    Expression<bool>? isPaid,
+    Expression<DateTime>? paidAt,
     Expression<String>? status,
     Expression<DateTime>? completedAt,
     Expression<String>? recordText,
@@ -6996,6 +7160,10 @@ class RepairOrdersCompanion extends UpdateCompanion<RepairOrder> {
         'reported_amount_cents': reportedAmountCents,
       if (actualAmountCents != null) 'actual_amount_cents': actualAmountCents,
       if (ticketStatus != null) 'ticket_status': ticketStatus,
+      if (isSettled != null) 'is_settled': isSettled,
+      if (settledAt != null) 'settled_at': settledAt,
+      if (isPaid != null) 'is_paid': isPaid,
+      if (paidAt != null) 'paid_at': paidAt,
       if (status != null) 'status': status,
       if (completedAt != null) 'completed_at': completedAt,
       if (recordText != null) 'record_text': recordText,
@@ -7021,6 +7189,10 @@ class RepairOrdersCompanion extends UpdateCompanion<RepairOrder> {
     Value<int>? reportedAmountCents,
     Value<int>? actualAmountCents,
     Value<RepairTicketStatus>? ticketStatus,
+    Value<bool>? isSettled,
+    Value<DateTime?>? settledAt,
+    Value<bool>? isPaid,
+    Value<DateTime?>? paidAt,
     Value<VehicleRepairStatus>? status,
     Value<DateTime?>? completedAt,
     Value<String?>? recordText,
@@ -7044,6 +7216,10 @@ class RepairOrdersCompanion extends UpdateCompanion<RepairOrder> {
       reportedAmountCents: reportedAmountCents ?? this.reportedAmountCents,
       actualAmountCents: actualAmountCents ?? this.actualAmountCents,
       ticketStatus: ticketStatus ?? this.ticketStatus,
+      isSettled: isSettled ?? this.isSettled,
+      settledAt: settledAt ?? this.settledAt,
+      isPaid: isPaid ?? this.isPaid,
+      paidAt: paidAt ?? this.paidAt,
       status: status ?? this.status,
       completedAt: completedAt ?? this.completedAt,
       recordText: recordText ?? this.recordText,
@@ -7101,6 +7277,18 @@ class RepairOrdersCompanion extends UpdateCompanion<RepairOrder> {
         $RepairOrdersTable.$converterticketStatus.toSql(ticketStatus.value),
       );
     }
+    if (isSettled.present) {
+      map['is_settled'] = Variable<bool>(isSettled.value);
+    }
+    if (settledAt.present) {
+      map['settled_at'] = Variable<DateTime>(settledAt.value);
+    }
+    if (isPaid.present) {
+      map['is_paid'] = Variable<bool>(isPaid.value);
+    }
+    if (paidAt.present) {
+      map['paid_at'] = Variable<DateTime>(paidAt.value);
+    }
     if (status.present) {
       map['status'] = Variable<String>(
         $RepairOrdersTable.$converterstatus.toSql(status.value),
@@ -7144,6 +7332,10 @@ class RepairOrdersCompanion extends UpdateCompanion<RepairOrder> {
           ..write('reportedAmountCents: $reportedAmountCents, ')
           ..write('actualAmountCents: $actualAmountCents, ')
           ..write('ticketStatus: $ticketStatus, ')
+          ..write('isSettled: $isSettled, ')
+          ..write('settledAt: $settledAt, ')
+          ..write('isPaid: $isPaid, ')
+          ..write('paidAt: $paidAt, ')
           ..write('status: $status, ')
           ..write('completedAt: $completedAt, ')
           ..write('recordText: $recordText, ')
@@ -37075,6 +37267,10 @@ typedef $$RepairOrdersTableCreateCompanionBuilder =
       Value<int> reportedAmountCents,
       Value<int> actualAmountCents,
       required RepairTicketStatus ticketStatus,
+      Value<bool> isSettled,
+      Value<DateTime?> settledAt,
+      Value<bool> isPaid,
+      Value<DateTime?> paidAt,
       Value<VehicleRepairStatus> status,
       Value<DateTime?> completedAt,
       Value<String?> recordText,
@@ -37099,6 +37295,10 @@ typedef $$RepairOrdersTableUpdateCompanionBuilder =
       Value<int> reportedAmountCents,
       Value<int> actualAmountCents,
       Value<RepairTicketStatus> ticketStatus,
+      Value<bool> isSettled,
+      Value<DateTime?> settledAt,
+      Value<bool> isPaid,
+      Value<DateTime?> paidAt,
       Value<VehicleRepairStatus> status,
       Value<DateTime?> completedAt,
       Value<String?> recordText,
@@ -37262,6 +37462,26 @@ class $$RepairOrdersTableFilterComposer
   get ticketStatus => $composableBuilder(
     column: $table.ticketStatus,
     builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<bool> get isSettled => $composableBuilder(
+    column: $table.isSettled,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get settledAt => $composableBuilder(
+    column: $table.settledAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isPaid => $composableBuilder(
+    column: $table.isPaid,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get paidAt => $composableBuilder(
+    column: $table.paidAt,
+    builder: (column) => ColumnFilters(column),
   );
 
   ColumnWithTypeConverterFilters<
@@ -37477,6 +37697,26 @@ class $$RepairOrdersTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<bool> get isSettled => $composableBuilder(
+    column: $table.isSettled,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get settledAt => $composableBuilder(
+    column: $table.settledAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isPaid => $composableBuilder(
+    column: $table.isPaid,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get paidAt => $composableBuilder(
+    column: $table.paidAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get status => $composableBuilder(
     column: $table.status,
     builder: (column) => ColumnOrderings(column),
@@ -37594,6 +37834,18 @@ class $$RepairOrdersTableAnnotationComposer
     column: $table.ticketStatus,
     builder: (column) => column,
   );
+
+  GeneratedColumn<bool> get isSettled =>
+      $composableBuilder(column: $table.isSettled, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get settledAt =>
+      $composableBuilder(column: $table.settledAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isPaid =>
+      $composableBuilder(column: $table.isPaid, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get paidAt =>
+      $composableBuilder(column: $table.paidAt, builder: (column) => column);
 
   GeneratedColumnWithTypeConverter<VehicleRepairStatus, String> get status =>
       $composableBuilder(column: $table.status, builder: (column) => column);
@@ -37767,6 +38019,10 @@ class $$RepairOrdersTableTableManager
                 Value<int> reportedAmountCents = const Value.absent(),
                 Value<int> actualAmountCents = const Value.absent(),
                 Value<RepairTicketStatus> ticketStatus = const Value.absent(),
+                Value<bool> isSettled = const Value.absent(),
+                Value<DateTime?> settledAt = const Value.absent(),
+                Value<bool> isPaid = const Value.absent(),
+                Value<DateTime?> paidAt = const Value.absent(),
                 Value<VehicleRepairStatus> status = const Value.absent(),
                 Value<DateTime?> completedAt = const Value.absent(),
                 Value<String?> recordText = const Value.absent(),
@@ -37789,6 +38045,10 @@ class $$RepairOrdersTableTableManager
                 reportedAmountCents: reportedAmountCents,
                 actualAmountCents: actualAmountCents,
                 ticketStatus: ticketStatus,
+                isSettled: isSettled,
+                settledAt: settledAt,
+                isPaid: isPaid,
+                paidAt: paidAt,
                 status: status,
                 completedAt: completedAt,
                 recordText: recordText,
@@ -37813,6 +38073,10 @@ class $$RepairOrdersTableTableManager
                 Value<int> reportedAmountCents = const Value.absent(),
                 Value<int> actualAmountCents = const Value.absent(),
                 required RepairTicketStatus ticketStatus,
+                Value<bool> isSettled = const Value.absent(),
+                Value<DateTime?> settledAt = const Value.absent(),
+                Value<bool> isPaid = const Value.absent(),
+                Value<DateTime?> paidAt = const Value.absent(),
                 Value<VehicleRepairStatus> status = const Value.absent(),
                 Value<DateTime?> completedAt = const Value.absent(),
                 Value<String?> recordText = const Value.absent(),
@@ -37835,6 +38099,10 @@ class $$RepairOrdersTableTableManager
                 reportedAmountCents: reportedAmountCents,
                 actualAmountCents: actualAmountCents,
                 ticketStatus: ticketStatus,
+                isSettled: isSettled,
+                settledAt: settledAt,
+                isPaid: isPaid,
+                paidAt: paidAt,
                 status: status,
                 completedAt: completedAt,
                 recordText: recordText,
