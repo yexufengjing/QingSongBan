@@ -1,6 +1,6 @@
 # 轻松办当前数据库结构
 
-当前 `schemaVersion` 为 **12**。提醒功能在现有 Drift 数据库上增加了重复执行实例、通知规则和通用关联表，并保持本地迁移与旧提醒兼容。
+当前 `schemaVersion` 为 **21**。数据库使用 Drift 管理；维修组、明细、附件和基础数据均在本地保存。旧 schema 19/20 数据库会保留既有记录并补齐结算字段和缺失的器械维修表。
 
 ## 业务表
 
@@ -27,6 +27,14 @@
 - `reminder_occurrences`：每一期提醒的执行实例、逾期/完成/跳过/稍后提醒状态及完成时间。
 - `reminder_alert_rules`：当天、提前提醒和未完成催办规则；同一主项可以有多条规则。
 - `reminder_links`：提醒与人员、车辆、器械、物资等对象的通用关联，当前已接通人员。
+- `vehicles`、`vehicle_condition_snapshots`、`vehicle_condition_items`：车辆档案与车况快照。
+- `tires`、`tire_installations`、`tire_repairs`：轮胎、更换和修补记录。
+- `repair_orders`、`repair_cost_items`、`repair_parts`：车辆维修单、费用和备件；维修单记录结算/结账标记及时间。
+- `vehicle_attachments`：车辆及维修附件元数据。
+- `maintenance_templates`、`vehicle_maintenance_items`、`maintenance_records`、`component_lifecycle_records`：保养和部件生命周期。
+- `fuel_monthly_records`、`manual_vehicle_expenses`：油耗和车辆手工费用。
+- `garden_tool_repair_units`、`garden_tool_repair_persons`：器械维修单位和人员基础数据。
+- `garden_tool_repair_groups`、`garden_tool_repair_items`、`garden_tool_repair_attachments`：按月份记录的器械维修组、明细及附件。
 
 ## 支撑表
 
@@ -48,6 +56,15 @@
 - 版本 10：物资/物品发放模块相关表。
 - 版本 11：物资/物品发放模块补充字段和索引。
 - 版本 12：提醒主项扩展字段、执行实例、通知规则和通用关联表；旧提醒迁移为首个执行实例及提前提醒规则。
+- 版本 13：车辆档案。
+- 版本 14：车况快照、轮胎、更换和修补表。
+- 版本 15：车辆维修单、费用、备件和附件表。
+- 版本 16：保养模板、保养项目、保养记录和部件生命周期表。
+- 版本 17：月度油耗和手工车辆费用表。
+- 版本 18：车辆附件补充文件名、MIME、哈希和软删除字段。
+- 版本 19：园林器械维修基础数据、维修组、明细和附件表。
+- 版本 20：车辆维修单补充结算/结账状态以及结算、结账时间。
+- 版本 21：兼容旧版本 20 数据库，补建缺失的园林器械维修表，不改动已存在的数据表。
 
 提醒字段约定：`scheduledAt` 和提醒的 `dueDate` 保存为用户设备时区下的墙上时间，`timezoneId` 保存创建时使用的 IANA 时区标识；调度时转换为 `timezone` 的 `TZDateTime`。重复规则使用 RFC 5545 RRULE，由 `rrule` 包计算，禁止在业务层手写日期递推。
 

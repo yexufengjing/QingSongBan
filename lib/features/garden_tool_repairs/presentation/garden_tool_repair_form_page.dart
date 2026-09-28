@@ -12,6 +12,7 @@ import '../application/garden_tool_repair_providers.dart';
 import '../data/garden_tool_repair_repository.dart';
 import '../domain/repair_formatters.dart';
 import '../domain/repair_models.dart';
+import 'garden_tool_repair_design.dart';
 
 class GardenToolRepairFormPage extends ConsumerStatefulWidget {
   const GardenToolRepairFormPage({
@@ -87,21 +88,24 @@ class _GardenToolRepairFormPageState
     final attachmentsAsync = _editingGroupId == null
         ? null
         : ref.watch(gardenToolRepairAttachmentsProvider(_editingGroupId!));
-    return Scaffold(
-      appBar: AppBar(title: Text(_isEditing ? '编辑维修记录' : '新增维修记录')),
-      body: _loading
-          ? const Center(child: CircularProgressIndicator())
-          : ListView(
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 18),
-              children: [
-                _buildBasicInfo(unitsAsync),
-                const SizedBox(height: 12),
-                _buildItemsCard(),
-                const SizedBox(height: 12),
-                _buildAttachmentCard(attachmentsAsync),
-              ],
-            ),
-      bottomNavigationBar: _loading ? null : _buildBottomActions(),
+    return Theme(
+      data: gardenToolRepairTheme(context),
+      child: Scaffold(
+        appBar: AppBar(title: Text(_isEditing ? '编辑维修记录' : '新增维修记录')),
+        body: _loading
+            ? const Center(child: CircularProgressIndicator())
+            : ListView(
+                padding: const EdgeInsets.fromLTRB(12, 8, 12, 14),
+                children: [
+                  _buildBasicInfo(unitsAsync),
+                  const SizedBox(height: 10),
+                  _buildItemsCard(),
+                  const SizedBox(height: 10),
+                  _buildAttachmentCard(attachmentsAsync),
+                ],
+              ),
+        bottomNavigationBar: _loading ? null : _buildBottomActions(),
+      ),
     );
   }
 
@@ -109,12 +113,22 @@ class _GardenToolRepairFormPageState
     AsyncValue<List<GardenToolRepairUnit>> unitsAsync,
   ) => Card(
     child: Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('基础信息', style: Theme.of(context).textTheme.titleLarge),
-          const SizedBox(height: 12),
+          Row(
+            children: [
+              const _SectionIcon(
+                icon: Icons.description_outlined,
+                color: AppColors.primary,
+                background: AppColors.lightGreen,
+              ),
+              const SizedBox(width: 8),
+              Text('基础信息', style: Theme.of(context).textTheme.titleLarge),
+            ],
+          ),
+          const SizedBox(height: 10),
           Row(
             children: [
               Expanded(
@@ -125,7 +139,7 @@ class _GardenToolRepairFormPageState
                   onTap: _pickMonth,
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: 8),
               Expanded(
                 child: _ChoiceField(
                   label: '维修日期',
@@ -136,65 +150,164 @@ class _GardenToolRepairFormPageState
               ),
             ],
           ),
-          const SizedBox(height: 10),
-          unitsAsync.when(
-            loading: () => const LinearProgressIndicator(),
-            error: (error, _) => Text('维修单位加载失败：$error'),
-            data: (units) {
-              final selectable = units
-                  .where(
-                    (unit) =>
-                        unit.isActive ||
-                        (widget.groupId != null && unit.id == _unitId),
-                  )
-                  .toList();
-              final selectedId = selectable.any((unit) => unit.id == _unitId)
-                  ? _unitId
-                  : null;
-              return DropdownButtonFormField<int>(
-                key: ValueKey('repair-unit-$selectedId'),
-                initialValue: selectedId,
-                decoration: const InputDecoration(
-                  labelText: '维修单位',
-                  prefixIcon: Icon(Icons.apartment),
-                ),
-                items: [
-                  for (final unit in selectable)
-                    DropdownMenuItem(
-                      value: unit.id,
-                      child: Text(
-                        unit.isActive ? unit.name : '${unit.name}（已停用）',
+          const SizedBox(height: 8),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const _FieldLabel('维修单位'),
+                    const SizedBox(height: 4),
+                    SizedBox(
+                      height: 36,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: AppColors.background,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.only(left: 10, right: 7),
+                              child: Icon(
+                                Icons.apartment,
+                                color: AppColors.primary,
+                                size: 18,
+                              ),
+                            ),
+                            const _CompactFieldDivider(),
+                            Expanded(
+                              child: unitsAsync.when(
+                                loading: () => const LinearProgressIndicator(),
+                                error: (error, _) => Text('维修单位加载失败：$error'),
+                                data: (units) {
+                                  final selectable = units
+                                      .where(
+                                        (unit) =>
+                                            unit.isActive ||
+                                            (widget.groupId != null &&
+                                                unit.id == _unitId),
+                                      )
+                                      .toList();
+                                  final selectedId =
+                                      selectable.any(
+                                        (unit) => unit.id == _unitId,
+                                      )
+                                      ? _unitId
+                                      : null;
+                                  return DropdownButtonFormField<int>(
+                                    key: ValueKey('repair-unit-$selectedId'),
+                                    initialValue: selectedId,
+                                    isExpanded: true,
+                                    decoration: const InputDecoration(
+                                      filled: false,
+                                      isDense: true,
+                                      contentPadding: EdgeInsets.zero,
+                                      border: InputBorder.none,
+                                      enabledBorder: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
+                                      disabledBorder: InputBorder.none,
+                                      errorBorder: InputBorder.none,
+                                      focusedErrorBorder: InputBorder.none,
+                                    ),
+                                    iconSize: 18,
+                                    items: [
+                                      for (final unit in selectable)
+                                        DropdownMenuItem(
+                                          value: unit.id,
+                                          child: Text(
+                                            unit.isActive
+                                                ? unit.name
+                                                : '${unit.name}（已停用）',
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                    ],
+                                    onChanged: (value) {
+                                      if (value == _unitId) return;
+                                      setState(() {
+                                        _unitId = value;
+                                        _repairerId = null;
+                                        _repairerController.clear();
+                                      });
+                                    },
+                                    validator: (value) =>
+                                        value == null ? '请选择维修单位' : null,
+                                  );
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                          ],
+                        ),
                       ),
                     ),
-                ],
-                onChanged: (value) {
-                  if (value == _unitId) return;
-                  setState(() {
-                    _unitId = value;
-                    _repairerId = null;
-                    _repairerController.clear();
-                  });
-                },
-                validator: (value) => value == null ? '请选择维修单位' : null,
-              );
-            },
-          ),
-          const SizedBox(height: 10),
-          TextField(
-            controller: _repairerController,
-            decoration: InputDecoration(
-              labelText: '维修人',
-              hintText: '选择人员或临时输入姓名',
-              prefixIcon: const Icon(Icons.person_outline),
-              suffixIcon: _unitId == null
-                  ? null
-                  : IconButton(
-                      tooltip: '新增本单位维修人',
-                      onPressed: _addPerson,
-                      icon: const Icon(Icons.person_add_alt_1),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const _FieldLabel('维修人'),
+                    const SizedBox(height: 4),
+                    SizedBox(
+                      height: 36,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: AppColors.background,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.only(left: 10, right: 7),
+                              child: Icon(
+                                Icons.person_outline,
+                                color: AppColors.primary,
+                                size: 18,
+                              ),
+                            ),
+                            const _CompactFieldDivider(),
+                            Expanded(
+                              child: TextField(
+                                controller: _repairerController,
+                                style: const TextStyle(fontSize: 10),
+                                decoration: const InputDecoration(
+                                  hintText: '选择人员或临时输入姓名',
+                                  filled: false,
+                                  isDense: true,
+                                  contentPadding: EdgeInsets.zero,
+                                  border: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  disabledBorder: InputBorder.none,
+                                  errorBorder: InputBorder.none,
+                                  focusedErrorBorder: InputBorder.none,
+                                ),
+                                onChanged: (_) =>
+                                    setState(() => _repairerId = null),
+                              ),
+                            ),
+                            if (_unitId != null)
+                              IconButton(
+                                tooltip: '新增本单位维修人',
+                                visualDensity: VisualDensity.compact,
+                                onPressed: _addPerson,
+                                icon: const Icon(Icons.person_add_alt_1),
+                              ),
+                            const SizedBox(width: 4),
+                          ],
+                        ),
+                      ),
                     ),
-            ),
-            onChanged: (_) => setState(() => _repairerId = null),
+                  ],
+                ),
+              ),
+            ],
           ),
           if (_unitId != null) ...[
             const SizedBox(height: 6),
@@ -229,7 +342,7 @@ class _GardenToolRepairFormPageState
           ],
           if (unitsAsync.valueOrNull?.where((unit) => unit.isActive).isEmpty ??
               true) ...[
-            const SizedBox(height: 8),
+            const SizedBox(height: 6),
             Align(
               alignment: Alignment.centerLeft,
               child: TextButton.icon(
@@ -239,11 +352,14 @@ class _GardenToolRepairFormPageState
               ),
             ),
           ],
-          const SizedBox(height: 8),
+          const SizedBox(height: 6),
           TextField(
             controller: _remarkController,
-            decoration: const InputDecoration(labelText: '组备注（可选）'),
-            maxLines: 2,
+            decoration: const InputDecoration(
+              labelText: '组备注（可选）',
+              isDense: true,
+            ),
+            maxLines: 1,
           ),
         ],
       ),
@@ -252,12 +368,17 @@ class _GardenToolRepairFormPageState
 
   Widget _buildItemsCard() => Card(
     child: Padding(
-      padding: const EdgeInsets.fromLTRB(12, 14, 12, 12),
+      padding: const EdgeInsets.all(10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
+              const _SectionIcon(
+                icon: Icons.build_outlined,
+                color: AppColors.primary,
+              ),
+              const SizedBox(width: 8),
               Expanded(
                 child: Text(
                   '维修明细',
@@ -273,7 +394,7 @@ class _GardenToolRepairFormPageState
               Text('金额自动计算', style: Theme.of(context).textTheme.bodySmall),
             ],
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Column(
@@ -306,57 +427,66 @@ class _GardenToolRepairFormPageState
   );
 
   Widget _itemRow(int index, _RepairItemInput row) => Padding(
-    padding: const EdgeInsets.only(top: 6),
+    padding: const EdgeInsets.only(top: 4),
     child: Row(
       children: [
-        _itemField(row.project, width: 148, hint: '项目名称'),
-        const SizedBox(width: 6),
-        _itemField(row.spec, width: 96, hint: '规格'),
-        const SizedBox(width: 6),
-        _itemField(row.unit, width: 72, hint: '单位'),
-        const SizedBox(width: 6),
+        _itemField(row.project, width: 62, hint: '项目名称'),
+        const SizedBox(width: 2),
+        _itemField(row.spec, width: 44, hint: '规格'),
+        const SizedBox(width: 2),
+        _itemField(row.unit, width: 32, hint: '单位'),
+        const SizedBox(width: 2),
         _itemField(
           row.quantity,
-          width: 76,
+          width: 36,
           hint: '数量',
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           inputFormatters: [
             FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
           ],
         ),
-        const SizedBox(width: 6),
+        const SizedBox(width: 2),
         _itemField(
           row.unitPrice,
-          width: 88,
+          width: 44,
           hint: '单价',
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           inputFormatters: [
             FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
           ],
         ),
-        const SizedBox(width: 6),
+        const SizedBox(width: 2),
         Container(
-          width: 100,
-          height: 48,
-          alignment: Alignment.centerRight,
-          padding: const EdgeInsets.symmetric(horizontal: 8),
+          width: 50,
+          height: 38,
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(horizontal: 2),
           decoration: BoxDecoration(
             color: AppColors.background,
             borderRadius: BorderRadius.circular(12),
           ),
-          child: Text(formatRepairMoney(_rowAmount(row))),
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(formatRepairMoney(_rowAmount(row))),
+          ),
         ),
-        const SizedBox(width: 6),
-        _itemField(row.remark, width: 112, hint: '备注'),
-        IconButton(
-          tooltip: '删除明细',
-          onPressed: () {
-            setState(() {
-              _items.removeAt(index).dispose();
-            });
-          },
-          color: AppColors.danger,
-          icon: const Icon(Icons.delete_outline),
+        const SizedBox(width: 2),
+        _itemField(row.remark, width: 48, hint: '备注'),
+        SizedBox(
+          width: 28,
+          height: 40,
+          child: IconButton(
+            tooltip: '删除明细',
+            onPressed: () {
+              setState(() {
+                _items.removeAt(index).dispose();
+              });
+            },
+            color: AppColors.danger,
+            padding: EdgeInsets.zero,
+            iconSize: 18,
+            icon: const Icon(Icons.delete_outline),
+          ),
         ),
       ],
     ),
@@ -370,16 +500,19 @@ class _GardenToolRepairFormPageState
     List<TextInputFormatter>? inputFormatters,
   }) => SizedBox(
     width: width,
-    height: 48,
+    height: 38,
     child: TextField(
       controller: controller,
       keyboardType: keyboardType,
       inputFormatters: inputFormatters,
       onChanged: (_) => setState(() {}),
+      style: const TextStyle(fontSize: 12),
       decoration: InputDecoration(
+        isDense: true,
         hintText: hint,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        hintStyle: const TextStyle(fontSize: 10, color: AppColors.helper),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 3, vertical: 8),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
       ),
     ),
   );
@@ -391,12 +524,17 @@ class _GardenToolRepairFormPageState
     final total = existing.length + _pendingPhotos.length;
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(14),
+        padding: const EdgeInsets.all(12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
+                const _SectionIcon(
+                  icon: Icons.receipt_long_outlined,
+                  color: AppColors.techBlue,
+                ),
+                const SizedBox(width: 8),
                 Expanded(
                   child: Text(
                     '票据/照片附件（$total/${GardenToolRepairRepository.maxAttachmentsPerGroup}）',
@@ -410,47 +548,27 @@ class _GardenToolRepairFormPageState
               const LinearProgressIndicator()
             else if (attachmentsAsync?.hasError == true)
               Text('已存附件加载失败：${attachmentsAsync!.error}'),
-            if (existing.isNotEmpty || _pendingPhotos.isNotEmpty) ...[
-              const SizedBox(height: 10),
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: [
-                  for (final attachment in existing)
-                    _ExistingPhotoTile(
-                      attachment: attachment,
-                      onRemove: () => _removeExistingPhoto(attachment.id),
-                    ),
-                  for (var index = 0; index < _pendingPhotos.length; index++)
-                    _PendingPhotoTile(
-                      photo: _pendingPhotos[index],
-                      onRemove: () => setState(() {
-                        _pendingPhotos.removeAt(index);
-                      }),
-                    ),
-                ],
-              ),
-            ],
-            if (total < GardenToolRepairRepository.maxAttachmentsPerGroup) ...[
-              const SizedBox(height: 10),
-              Wrap(
-                spacing: 8,
-                children: [
-                  OutlinedButton.icon(
-                    onPressed: () =>
-                        _pickPhotos(camera: true, available: 9 - total),
-                    icon: const Icon(Icons.photo_camera_outlined),
-                    label: const Text('拍照'),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 6,
+              runSpacing: 6,
+              children: [
+                for (final attachment in existing)
+                  _ExistingPhotoTile(
+                    attachment: attachment,
+                    onRemove: () => _removeExistingPhoto(attachment.id),
                   ),
-                  OutlinedButton.icon(
-                    onPressed: () =>
-                        _pickPhotos(camera: false, available: 9 - total),
-                    icon: const Icon(Icons.photo_library_outlined),
-                    label: const Text('相册选择'),
+                for (var index = 0; index < _pendingPhotos.length; index++)
+                  _PendingPhotoTile(
+                    photo: _pendingPhotos[index],
+                    onRemove: () => setState(() {
+                      _pendingPhotos.removeAt(index);
+                    }),
                   ),
-                ],
-              ),
-            ],
+                if (total < GardenToolRepairRepository.maxAttachmentsPerGroup)
+                  _UploadPhotoTile(onTap: () => _choosePhotoSource(9 - total)),
+              ],
+            ),
           ],
         ),
       ),
@@ -460,53 +578,63 @@ class _GardenToolRepairFormPageState
   Widget _buildBottomActions() => SafeArea(
     top: false,
     child: Material(
-      color: AppColors.card,
-      elevation: 8,
+      color: const Color(0xFFEAF8EF),
+      elevation: 4,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+        padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
+        child: Row(
           children: [
-            Row(
-              children: [
-                const Text('当前合计：'),
-                Text(
-                  formatRepairMoney(_currentSubtotal),
-                  style: const TextStyle(
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 20,
+            Expanded(
+              flex: 5,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('当前合计', style: TextStyle(fontSize: 11)),
+                  Text(
+                    formatRepairMoney(_currentSubtotal),
+                    style: const TextStyle(
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 17,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-            const SizedBox(height: 6),
-            Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton(
-                    onPressed: _saving
-                        ? null
-                        : () => _save(continueEntry: false),
-                    child: Text(_isEditing ? '保存' : '保存'),
-                  ),
+            const SizedBox(
+              height: 34,
+              child: VerticalDivider(width: 14, color: AppColors.divider),
+            ),
+            Expanded(
+              flex: 3,
+              child: OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  minimumSize: const Size(0, 38),
+                  visualDensity: VisualDensity.compact,
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
                 ),
-                const SizedBox(width: 10),
-                Expanded(
-                  flex: 2,
-                  child: FilledButton(
-                    onPressed: _saving
-                        ? null
-                        : () => _save(continueEntry: true),
-                    child: _saving
-                        ? const SizedBox.square(
-                            dimension: 18,
-                            child: CircularProgressIndicator(strokeWidth: 2),
-                          )
-                        : const Text('保存并继续'),
-                  ),
+                onPressed: _saving ? null : () => _save(continueEntry: false),
+                child: const Text('保存'),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              flex: 5,
+              child: FilledButton(
+                style: FilledButton.styleFrom(
+                  minimumSize: const Size(0, 38),
+                  visualDensity: VisualDensity.compact,
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
                 ),
-              ],
+                onPressed: _saving ? null : () => _save(continueEntry: true),
+                child: _saving
+                    ? const SizedBox.square(
+                        dimension: 18,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
+                    : const Text('保存并继续'),
+              ),
             ),
           ],
         ),
@@ -516,6 +644,32 @@ class _GardenToolRepairFormPageState
 
   int get _currentSubtotal =>
       _items.fold(0, (sum, item) => sum + _rowAmount(item));
+
+  Future<void> _choosePhotoSource(int available) async {
+    final camera = await showModalBottomSheet<bool>(
+      context: context,
+      builder: (context) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.photo_camera_outlined),
+              title: const Text('拍照'),
+              onTap: () => Navigator.pop(context, true),
+            ),
+            ListTile(
+              leading: const Icon(Icons.photo_library_outlined),
+              title: const Text('从相册选择'),
+              onTap: () => Navigator.pop(context, false),
+            ),
+          ],
+        ),
+      ),
+    );
+    if (camera != null && mounted) {
+      await _pickPhotos(camera: camera, available: available);
+    }
+  }
 
   int _rowAmount(_RepairItemInput row) {
     final quantity = double.tryParse(row.quantity.text) ?? 0;
@@ -604,29 +758,10 @@ class _GardenToolRepairFormPageState
   Future<void> _addPerson() async {
     final unitId = _unitId;
     if (unitId == null) return;
-    final controller = TextEditingController();
     final name = await showDialog<String>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('新增维修人'),
-        content: TextField(
-          controller: controller,
-          autofocus: true,
-          decoration: const InputDecoration(labelText: '姓名'),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('取消'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(context, controller.text.trim()),
-            child: const Text('添加'),
-          ),
-        ],
-      ),
+      builder: (_) => const _RepairerNameDialog(),
     );
-    controller.dispose();
     if (name == null || name.trim().isEmpty || !mounted) return;
     try {
       final person = await ref
@@ -729,8 +864,9 @@ class _GardenToolRepairFormPageState
     }
 
     setState(() => _saving = true);
+    GardenToolRepairGroup? savedGroup;
     try {
-      final saved = await ref
+      savedGroup = await ref
           .read(gardenToolRepairRepositoryProvider)
           .saveGroup(
             GardenToolRepairGroupDraft(
@@ -744,12 +880,12 @@ class _GardenToolRepairFormPageState
               items: items,
             ),
           );
-      _editingGroupId = saved.id;
+      _editingGroupId = savedGroup.id;
       for (final pending in List<_PendingRepairPhoto>.from(_pendingPhotos)) {
         await ref
             .read(gardenToolRepairAttachmentServiceProvider)
             .storePhoto(
-              groupId: saved.id,
+              groupId: savedGroup.id,
               photo: pending.photo,
               attachmentType: pending.type.name,
             );
@@ -774,7 +910,12 @@ class _GardenToolRepairFormPageState
         context.pop();
       }
     } catch (error) {
-      if (mounted) _showMessage('保存失败：$error');
+      if (mounted) {
+        final message = savedGroup == null
+            ? '保存维修记录失败：$error'
+            : '维修记录已保存，${_pendingPhotos.length} 张附件未保存，可重试：$error';
+        _showMessage(message);
+      }
     } finally {
       if (mounted) setState(() => _saving = false);
     }
@@ -800,18 +941,68 @@ class _ChoiceField extends StatelessWidget {
   final VoidCallback onTap;
 
   @override
-  Widget build(BuildContext context) => InkWell(
-    onTap: onTap,
-    borderRadius: BorderRadius.circular(14),
-    child: InputDecorator(
-      decoration: InputDecoration(
-        labelText: label,
-        prefixIcon: Icon(icon),
-        suffixIcon: const Icon(Icons.arrow_drop_down),
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      _FieldLabel(label),
+      const SizedBox(height: 4),
+      Material(
+        color: AppColors.background,
+        borderRadius: BorderRadius.circular(10),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(10),
+          child: SizedBox(
+            height: 36,
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 7),
+                  child: Icon(icon, color: AppColors.primary, size: 18),
+                ),
+                const _CompactFieldDivider(),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    value,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: AppColors.ink,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                const Icon(Icons.arrow_drop_down, color: AppColors.body),
+                const SizedBox(width: 4),
+              ],
+            ),
+          ),
+        ),
       ),
-      child: Text(value),
-    ),
+    ],
   );
+}
+
+class _FieldLabel extends StatelessWidget {
+  const _FieldLabel(this.label);
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) => Text(
+    label,
+    style: Theme.of(context).textTheme.bodyMedium
+        ?.copyWith(color: AppColors.body, fontWeight: FontWeight.w500),
+  );
+}
+
+class _CompactFieldDivider extends StatelessWidget {
+  const _CompactFieldDivider();
+
+  @override
+  Widget build(BuildContext context) =>
+      Container(width: 1, height: 24, color: AppColors.divider);
 }
 
 class _ItemHeader extends StatelessWidget {
@@ -820,20 +1011,20 @@ class _ItemHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) => const Row(
     children: [
-      _HeaderCell('项目名称', 148),
-      SizedBox(width: 6),
-      _HeaderCell('规格', 96),
-      SizedBox(width: 6),
-      _HeaderCell('单位', 72),
-      SizedBox(width: 6),
-      _HeaderCell('数量', 76),
-      SizedBox(width: 6),
-      _HeaderCell('单价', 88),
-      SizedBox(width: 6),
-      _HeaderCell('金额', 100),
-      SizedBox(width: 6),
-      _HeaderCell('备注', 112),
-      SizedBox(width: 48),
+      _HeaderCell('项目', 62),
+      SizedBox(width: 2),
+      _HeaderCell('规格', 44),
+      SizedBox(width: 2),
+      _HeaderCell('单位', 32),
+      SizedBox(width: 2),
+      _HeaderCell('数量', 36),
+      SizedBox(width: 2),
+      _HeaderCell('单价', 44),
+      SizedBox(width: 2),
+      _HeaderCell('金额', 50),
+      SizedBox(width: 2),
+      _HeaderCell('备注', 48),
+      SizedBox(width: 28),
     ],
   );
 }
@@ -847,14 +1038,99 @@ class _HeaderCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
     width: width,
-    height: 36,
+    height: 30,
     alignment: Alignment.center,
     decoration: const BoxDecoration(
       color: AppColors.background,
       borderRadius: BorderRadius.all(Radius.circular(8)),
     ),
-    child: Text(label, style: Theme.of(context).textTheme.bodySmall),
+    child: Text(
+      label,
+      style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 11),
+    ),
   );
+}
+
+class _SectionIcon extends StatelessWidget {
+  const _SectionIcon({
+    required this.icon,
+    required this.color,
+    this.background,
+  });
+
+  final IconData icon;
+  final Color color;
+  final Color? background;
+
+  @override
+  Widget build(BuildContext context) => Container(
+    width: 30,
+    height: 30,
+    decoration: BoxDecoration(
+      color: background ?? color.withValues(alpha: 0.12),
+      borderRadius: BorderRadius.circular(10),
+    ),
+    child: Icon(icon, size: 18, color: color),
+  );
+}
+
+class _UploadPhotoTile extends StatelessWidget {
+  const _UploadPhotoTile({required this.onTap});
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) => InkWell(
+    onTap: onTap,
+    borderRadius: BorderRadius.circular(12),
+    child: CustomPaint(
+      foregroundPainter: _DashedBorderPainter(),
+      child: Container(
+        width: 72,
+        height: 72,
+        decoration: BoxDecoration(
+          color: AppColors.background,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: const Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.add_a_photo_outlined, color: AppColors.techBlue),
+            SizedBox(height: 5),
+            Text('上传照片', style: TextStyle(fontSize: 11)),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+class _DashedBorderPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final path = Path()
+      ..addRRect(
+        RRect.fromRectAndRadius(Offset.zero & size, const Radius.circular(12)),
+      );
+    final paint = Paint()
+      ..color = AppColors.helper
+      ..strokeWidth = 1.2
+      ..style = PaintingStyle.stroke;
+    for (final metric in path.computeMetrics()) {
+      for (var distance = 0.0; distance < metric.length; distance += 9) {
+        canvas.drawPath(
+          metric.extractPath(
+            distance,
+            (distance + 5).clamp(0.0, metric.length).toDouble(),
+          ),
+          paint,
+        );
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _DashedBorderPainter oldDelegate) => false;
 }
 
 class _RepairItemInput {
@@ -920,8 +1196,8 @@ class _ExistingPhotoTile extends ConsumerWidget {
             .read(gardenToolRepairAttachmentServiceProvider)
             .resolveFile(attachment),
         builder: (context, snapshot) => Container(
-          width: 84,
-          height: 84,
+          width: 72,
+          height: 72,
           decoration: BoxDecoration(
             color: AppColors.background,
             borderRadius: BorderRadius.circular(12),
@@ -955,8 +1231,8 @@ class _PendingPhotoTile extends StatelessWidget {
   Widget build(BuildContext context) => Stack(
     children: [
       Container(
-        width: 84,
-        height: 84,
+        width: 72,
+        height: 72,
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
         child: Image.file(File(photo.photo.path), fit: BoxFit.cover),
@@ -986,6 +1262,45 @@ class _PendingPhotoTile extends StatelessWidget {
           onPressed: onRemove,
           icon: const Icon(Icons.close, size: 16),
         ),
+      ),
+    ],
+  );
+}
+
+class _RepairerNameDialog extends StatefulWidget {
+  const _RepairerNameDialog();
+
+  @override
+  State<_RepairerNameDialog> createState() => _RepairerNameDialogState();
+}
+
+class _RepairerNameDialogState extends State<_RepairerNameDialog> {
+  final _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => AlertDialog(
+    title: const Text('新增维修人'),
+    content: TextField(
+      controller: _controller,
+      autofocus: true,
+      decoration: const InputDecoration(labelText: '姓名'),
+      textInputAction: TextInputAction.done,
+      onSubmitted: (_) => Navigator.pop(context, _controller.text.trim()),
+    ),
+    actions: [
+      TextButton(
+        onPressed: () => Navigator.pop(context),
+        child: const Text('取消'),
+      ),
+      FilledButton(
+        onPressed: () => Navigator.pop(context, _controller.text.trim()),
+        child: const Text('添加'),
       ),
     ],
   );

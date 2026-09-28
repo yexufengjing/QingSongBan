@@ -83,31 +83,13 @@ class GardenToolRepairUnitsPage extends ConsumerWidget {
     WidgetRef ref, {
     GardenToolRepairUnit? unit,
   }) async {
-    final controller = TextEditingController(text: unit?.name ?? '');
     final name = await showDialog<String>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(unit == null ? '新增维修单位' : '编辑维修单位'),
-        content: TextField(
-          controller: controller,
-          autofocus: true,
-          decoration: const InputDecoration(labelText: '单位名称'),
-          textInputAction: TextInputAction.done,
-          onSubmitted: (value) => Navigator.pop(context, value.trim()),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('取消'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(context, controller.text.trim()),
-            child: const Text('保存'),
-          ),
-        ],
+      builder: (_) => _UnitNameDialog(
+        title: unit == null ? '新增维修单位' : '编辑维修单位',
+        initialName: unit?.name ?? '',
       ),
     );
-    controller.dispose();
     if (name == null || name.trim().isEmpty) return;
     try {
       await ref
@@ -125,6 +107,49 @@ class GardenToolRepairUnitsPage extends ConsumerWidget {
       }
     }
   }
+}
+
+class _UnitNameDialog extends StatefulWidget {
+  const _UnitNameDialog({required this.title, required this.initialName});
+
+  final String title;
+  final String initialName;
+
+  @override
+  State<_UnitNameDialog> createState() => _UnitNameDialogState();
+}
+
+class _UnitNameDialogState extends State<_UnitNameDialog> {
+  late final TextEditingController _controller = TextEditingController(
+    text: widget.initialName,
+  );
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _submit() => Navigator.pop(context, _controller.text.trim());
+
+  @override
+  Widget build(BuildContext context) => AlertDialog(
+    title: Text(widget.title),
+    content: TextField(
+      controller: _controller,
+      autofocus: true,
+      decoration: const InputDecoration(labelText: '单位名称'),
+      textInputAction: TextInputAction.done,
+      onSubmitted: (_) => _submit(),
+    ),
+    actions: [
+      TextButton(
+        onPressed: () => Navigator.pop(context),
+        child: const Text('取消'),
+      ),
+      FilledButton(onPressed: _submit, child: const Text('保存')),
+    ],
+  );
 }
 
 enum _UnitAction { edit, toggle }

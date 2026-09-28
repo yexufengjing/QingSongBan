@@ -16,7 +16,7 @@ void main() {
     await database.close();
   });
 
-  test('creates the complete version nineteen schema', () async {
+  test('creates the complete version twenty-one schema', () async {
     final rows = await database
         .customSelect(
           "SELECT name FROM sqlite_master "
@@ -25,7 +25,7 @@ void main() {
         .get();
     final tableNames = rows.map((row) => row.read<String>('name')).toSet();
 
-    expect(database.schemaVersion, 19);
+    expect(database.schemaVersion, 21);
     expect(
       tableNames,
       containsAll([

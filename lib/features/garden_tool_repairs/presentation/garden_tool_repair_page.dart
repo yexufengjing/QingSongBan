@@ -7,6 +7,7 @@ import '../application/garden_tool_repair_providers.dart';
 import '../domain/repair_formatters.dart';
 import '../domain/repair_models.dart';
 import '../domain/rmb_amount.dart';
+import 'garden_tool_repair_design.dart';
 
 class GardenToolRepairPage extends ConsumerStatefulWidget {
   const GardenToolRepairPage({this.initialYear, this.initialMonth, super.key});
@@ -37,42 +38,46 @@ class _GardenToolRepairPageState extends ConsumerState<GardenToolRepairPage> {
   @override
   Widget build(BuildContext context) {
     final groupsAsync = ref.watch(gardenToolRepairMonthProvider(_month));
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('${_month.month}月器械维修信息'),
-        actions: [
-          IconButton(
-            tooltip: '维修单位',
-            onPressed: () => context.push('/garden-tool-repairs/units'),
-            icon: const Icon(Icons.business_outlined),
+    return Theme(
+      data: gardenToolRepairTheme(context),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            '${_month.month}月器械维修信息',
+            style: Theme.of(context).textTheme.titleLarge
+                ?.copyWith(fontSize: 20, fontWeight: FontWeight.w700),
           ),
-          IconButton(
-            tooltip: '数据分析',
-            onPressed: () => context.push(
-              '/garden-tool-repairs/analysis?year=${_month.year}&month=${_month.month}',
+          titleSpacing: 8,
+          actionsPadding: EdgeInsets.zero,
+          actions: [
+            _RepairHeaderAction(
+              icon: Icons.add_circle,
+              label: '新增',
+              color: AppColors.primary,
+              onPressed: _addGroup,
             ),
-            icon: const Icon(
-              Icons.bar_chart_outlined,
-              color: AppColors.techBlue,
+            _RepairHeaderAction(
+              icon: Icons.bar_chart,
+              label: '分析',
+              color: AppColors.primary,
+              onPressed: () => context.push(
+                '/garden-tool-repairs/analysis?year=${_month.year}&month=${_month.month}',
+              ),
             ),
+            _RepairHeaderAction(
+              icon: Icons.price_change_outlined,
+              label: '比价',
+              color: AppColors.primary,
+              onPressed: () => context.push('/garden-tool-repairs/prices'),
+            ),
+          ],
+        ),
+        body: SafeArea(
+          child: groupsAsync.when(
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (error, _) => _LoadError(message: error.toString()),
+            data: (groups) => _buildLedger(groups),
           ),
-          IconButton(
-            tooltip: '价格比对',
-            onPressed: () => context.push('/garden-tool-repairs/prices'),
-            icon: const Icon(Icons.sell_outlined, color: AppColors.techBlue),
-          ),
-          IconButton(
-            tooltip: '新增维修记录',
-            onPressed: _addGroup,
-            icon: const Icon(Icons.add_circle, color: AppColors.primary),
-          ),
-        ],
-      ),
-      body: SafeArea(
-        child: groupsAsync.when(
-          loading: () => const Center(child: CircularProgressIndicator()),
-          error: (error, _) => _LoadError(message: error.toString()),
-          data: (groups) => _buildLedger(groups),
         ),
       ),
     );
@@ -81,15 +86,14 @@ class _GardenToolRepairPageState extends ConsumerState<GardenToolRepairPage> {
   Widget _buildLedger(List<GardenToolRepairLedgerGroup> groups) {
     final summary = GardenToolRepairMonthSummary.fromGroups(groups);
     return ListView(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+      padding: const EdgeInsets.fromLTRB(12, 8, 12, 16),
       children: [
         _MonthSelector(
           month: _month,
-          onPrevious: () => _changeMonth(-1),
-          onNext: () => _changeMonth(1),
           onPick: _pickMonth,
+          onUnits: () => context.push('/garden-tool-repairs/units'),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 10),
         Row(
           children: [
             Expanded(
@@ -97,6 +101,7 @@ class _GardenToolRepairPageState extends ConsumerState<GardenToolRepairPage> {
                 label: '本月合计',
                 value: formatRepairMoney(summary.totalCents),
                 color: AppColors.primary,
+                icon: Icons.account_balance_wallet,
               ),
             ),
             const SizedBox(width: 8),
@@ -105,6 +110,7 @@ class _GardenToolRepairPageState extends ConsumerState<GardenToolRepairPage> {
                 label: '记录组数',
                 value: '${summary.groupCount}',
                 color: AppColors.techBlue,
+                icon: Icons.receipt_long,
               ),
             ),
             const SizedBox(width: 8),
@@ -113,11 +119,12 @@ class _GardenToolRepairPageState extends ConsumerState<GardenToolRepairPage> {
                 label: '项目条数',
                 value: '${summary.itemCount}',
                 color: const Color(0xFFEF8B27),
+                icon: Icons.format_list_bulleted,
               ),
             ),
           ],
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 10),
         if (groups.isEmpty)
           _EmptyLedger(onAdd: _addGroup)
         else
@@ -139,10 +146,6 @@ class _GardenToolRepairPageState extends ConsumerState<GardenToolRepairPage> {
         _MonthTotal(totalCents: summary.totalCents),
       ],
     );
-  }
-
-  void _changeMonth(int difference) {
-    setState(() => _month = DateTime(_month.year, _month.month + difference));
   }
 
   Future<void> _pickMonth() async {
@@ -215,38 +218,79 @@ class _GardenToolRepairPageState extends ConsumerState<GardenToolRepairPage> {
 class _MonthSelector extends StatelessWidget {
   const _MonthSelector({
     required this.month,
-    required this.onPrevious,
-    required this.onNext,
     required this.onPick,
+    required this.onUnits,
   });
 
   final DateTime month;
-  final VoidCallback onPrevious;
-  final VoidCallback onNext;
   final VoidCallback onPick;
+  final VoidCallback onUnits;
 
   @override
-  Widget build(BuildContext context) => Card(
-    child: Row(
+  Widget build(BuildContext context) => SizedBox(
+    height: 40,
+    child: Stack(
+      alignment: Alignment.center,
       children: [
-        IconButton(
-          tooltip: '上个月',
-          onPressed: onPrevious,
-          icon: const Icon(Icons.chevron_left),
+        TextButton.icon(
+          onPressed: onPick,
+          style: TextButton.styleFrom(
+            foregroundColor: AppColors.primary,
+            backgroundColor: AppColors.lightGreen,
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+            shape: const StadiumBorder(),
+          ),
+          icon: const Icon(Icons.calendar_month, size: 18),
+          label: Text('${month.year}年${month.month}月'),
         ),
-        Expanded(
+        Positioned(
+          right: 0,
           child: TextButton.icon(
-            onPressed: onPick,
-            icon: const Icon(Icons.calendar_month, color: AppColors.primary),
-            label: Text('${month.year}年${month.month}月'),
+            onPressed: onUnits,
+            style: TextButton.styleFrom(
+              foregroundColor: AppColors.body,
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              minimumSize: const Size(0, 36),
+            ),
+            icon: const Icon(Icons.apartment_outlined, size: 18),
+            label: const Text('单位'),
           ),
         ),
-        IconButton(
-          tooltip: '下个月',
-          onPressed: onNext,
-          icon: const Icon(Icons.chevron_right),
-        ),
       ],
+    ),
+  );
+}
+
+class _RepairHeaderAction extends StatelessWidget {
+  const _RepairHeaderAction({
+    required this.icon,
+    required this.label,
+    required this.color,
+    required this.onPressed,
+  });
+
+  final IconData icon;
+  final String label;
+  final Color color;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) => SizedBox(
+    width: 48,
+    child: InkWell(
+      onTap: onPressed,
+      borderRadius: BorderRadius.circular(10),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, color: color, size: 23),
+            const SizedBox(height: 1),
+            Text(label, style: Theme.of(context).textTheme.bodySmall),
+          ],
+        ),
+      ),
     ),
   );
 }
@@ -256,28 +300,55 @@ class _SummaryCard extends StatelessWidget {
     required this.label,
     required this.value,
     required this.color,
+    required this.icon,
   });
 
   final String label;
   final String value;
   final Color color;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) => Card(
     child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+      child: Row(
         children: [
-          Text(label, style: Theme.of(context).textTheme.bodySmall),
-          const SizedBox(height: 6),
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            alignment: Alignment.centerLeft,
-            child: Text(
-              value,
-              style: Theme.of(context).textTheme.titleLarge
-                  ?.copyWith(color: color),
+          Container(
+            width: 30,
+            height: 30,
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: .12),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Icon(icon, color: color, size: 18),
+          ),
+          const SizedBox(width: 7),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                const SizedBox(height: 3),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    value,
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: color,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -306,7 +377,7 @@ class _RepairGroupCard extends StatelessWidget {
     final group = entry.group;
     return Card(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
+        padding: const EdgeInsets.fromLTRB(10, 6, 10, 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -388,11 +459,23 @@ class _RepairGroupCard extends StatelessWidget {
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: DataTable(
+                headingRowColor: const WidgetStatePropertyAll(
+                  AppColors.background,
+                ),
+                headingTextStyle: const TextStyle(
+                  color: AppColors.body,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                ),
+                dataTextStyle: const TextStyle(
+                  color: AppColors.ink,
+                  fontSize: 12,
+                ),
                 horizontalMargin: 8,
-                columnSpacing: 14,
-                headingRowHeight: 38,
-                dataRowMinHeight: 42,
-                dataRowMaxHeight: 48,
+                columnSpacing: 10,
+                headingRowHeight: 34,
+                dataRowMinHeight: 36,
+                dataRowMaxHeight: 42,
                 columns: const [
                   DataColumn(label: Text('项目名称')),
                   DataColumn(label: Text('规格')),
@@ -427,12 +510,21 @@ class _RepairGroupCard extends StatelessWidget {
               ),
             ),
             const Divider(),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                '小计：${formatRepairMoney(entry.subtotalCents)}',
-                style: Theme.of(context).textTheme.titleLarge
-                    ?.copyWith(color: AppColors.primary),
+            Container(
+              padding: const EdgeInsets.fromLTRB(10, 6, 10, 6),
+              decoration: BoxDecoration(
+                color: AppColors.lightGreen,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  '小计：${formatRepairMoney(entry.subtotalCents)}',
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    color: const Color(0xFF087F58),
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
               ),
             ),
           ],
@@ -461,11 +553,22 @@ class _MonthTotal extends StatelessWidget {
   Widget build(BuildContext context) => Card(
     color: AppColors.lightGreen,
     child: Padding(
-      padding: const EdgeInsets.all(18),
+      padding: const EdgeInsets.all(12),
       child: Row(
         children: [
-          const Icon(Icons.receipt_long, color: AppColors.primary, size: 32),
-          const SizedBox(width: 14),
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: .72),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: const Icon(
+              Icons.account_balance_wallet,
+              color: AppColors.primary,
+            ),
+          ),
+          const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -485,7 +588,21 @@ class _MonthTotal extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 8),
-          const Icon(Icons.summarize, color: AppColors.primary, size: 42),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            decoration: BoxDecoration(
+              color: AppColors.primary,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: const Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.summarize_outlined, color: Colors.white, size: 24),
+                SizedBox(height: 2),
+                Text('总计', style: TextStyle(color: Colors.white, fontSize: 11)),
+              ],
+            ),
+          ),
         ],
       ),
     ),
@@ -500,7 +617,7 @@ class _EmptyLedger extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Card(
     child: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
       child: Column(
         children: [
           const Icon(

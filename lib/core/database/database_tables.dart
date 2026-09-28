@@ -255,6 +255,14 @@ class RepairOrders extends Table {
   DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
 
   BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+
+  BoolColumn get isSettled => boolean().withDefault(const Constant(false))();
+
+  DateTimeColumn get settledAt => dateTime().nullable()();
+
+  BoolColumn get isPaid => boolean().withDefault(const Constant(false))();
+
+  DateTimeColumn get paidAt => dateTime().nullable()();
 }
 
 class RepairCostItems extends Table {

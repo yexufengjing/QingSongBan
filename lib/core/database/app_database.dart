@@ -68,7 +68,7 @@ class AppDatabase extends _$AppDatabase {
     : super(executor ?? NativeDatabase.memory());
 
   @override
-  int get schemaVersion => 19;
+  int get schemaVersion => 21;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -210,6 +210,37 @@ class AppDatabase extends _$AppDatabase {
         await m.createTable(gardenToolRepairGroups);
         await m.createTable(gardenToolRepairItems);
         await m.createTable(gardenToolRepairAttachments);
+      }
+      if (from < 20 && to >= 20) {
+        await _addColumnIfMissing(
+          'repair_orders',
+          'is_settled',
+          'INTEGER NOT NULL DEFAULT 0',
+        );
+        await _addColumnIfMissing('repair_orders', 'settled_at', 'INTEGER');
+        await _addColumnIfMissing(
+          'repair_orders',
+          'is_paid',
+          'INTEGER NOT NULL DEFAULT 0',
+        );
+        await _addColumnIfMissing('repair_orders', 'paid_at', 'INTEGER');
+      }
+      if (from < 21 && to >= 21) {
+        if (!await _tableExists('garden_tool_repair_units')) {
+          await m.createTable(gardenToolRepairUnits);
+        }
+        if (!await _tableExists('garden_tool_repair_persons')) {
+          await m.createTable(gardenToolRepairPersons);
+        }
+        if (!await _tableExists('garden_tool_repair_groups')) {
+          await m.createTable(gardenToolRepairGroups);
+        }
+        if (!await _tableExists('garden_tool_repair_items')) {
+          await m.createTable(gardenToolRepairItems);
+        }
+        if (!await _tableExists('garden_tool_repair_attachments')) {
+          await m.createTable(gardenToolRepairAttachments);
+        }
       }
     },
     beforeOpen: (details) async {

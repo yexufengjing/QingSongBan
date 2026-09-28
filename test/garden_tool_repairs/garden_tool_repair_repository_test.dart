@@ -249,6 +249,50 @@ void main() {
     },
   );
 
+  test('price history keeps the repair-unit name snapshot after rename and deactivation', () async {
+    final unit = await repository.saveUnit(
+      name: '特钢',
+      sortOrder: 0,
+      isActive: true,
+    );
+    await repository.saveGroup(
+      _draft(
+        unitId: unit.id,
+        repairerName: '张三',
+        items: const [
+          GardenToolRepairItemDraft(
+            projectName: '化油器',
+            specModel: 'GX35',
+            countUnit: '个',
+            quantity: 1,
+            unitPriceCents: 12000,
+          ),
+        ],
+      ),
+    );
+    await repository.saveUnit(
+      id: unit.id,
+      name: '特钢分厂',
+      sortOrder: 0,
+      isActive: false,
+    );
+
+    final points = await repository.loadPricePoints(
+      projectName: '化油器',
+      specModel: 'GX35',
+      countUnit: '个',
+      start: DateTime(2026, 9),
+      endExclusive: DateTime(2026, 10),
+      unitId: unit.id,
+    );
+    final allUnits = await repository.listUnits(includeInactive: true);
+
+    expect(points, hasLength(1));
+    expect(points.single.unitName, '特钢');
+    expect(allUnits.single.name, '特钢分厂');
+    expect(allUnits.single.isActive, isFalse);
+  });
+
   test(
     'rejects a date outside the selected month and invalid details',
     () async {

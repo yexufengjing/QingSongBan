@@ -6231,6 +6231,54 @@ class $RepairOrdersTable extends RepairOrders
     ),
     defaultValue: const Constant(false),
   );
+  static const VerificationMeta _isSettledMeta = const VerificationMeta(
+    'isSettled',
+  );
+  @override
+  late final GeneratedColumn<bool> isSettled = GeneratedColumn<bool>(
+    'is_settled',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_settled" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _settledAtMeta = const VerificationMeta(
+    'settledAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> settledAt = GeneratedColumn<DateTime>(
+    'settled_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _isPaidMeta = const VerificationMeta('isPaid');
+  @override
+  late final GeneratedColumn<bool> isPaid = GeneratedColumn<bool>(
+    'is_paid',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_paid" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _paidAtMeta = const VerificationMeta('paidAt');
+  @override
+  late final GeneratedColumn<DateTime> paidAt = GeneratedColumn<DateTime>(
+    'paid_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -6254,6 +6302,10 @@ class $RepairOrdersTable extends RepairOrders
     createdAt,
     updatedAt,
     isDeleted,
+    isSettled,
+    settledAt,
+    isPaid,
+    paidAt,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -6400,6 +6452,30 @@ class $RepairOrdersTable extends RepairOrders
         isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
       );
     }
+    if (data.containsKey('is_settled')) {
+      context.handle(
+        _isSettledMeta,
+        isSettled.isAcceptableOrUnknown(data['is_settled']!, _isSettledMeta),
+      );
+    }
+    if (data.containsKey('settled_at')) {
+      context.handle(
+        _settledAtMeta,
+        settledAt.isAcceptableOrUnknown(data['settled_at']!, _settledAtMeta),
+      );
+    }
+    if (data.containsKey('is_paid')) {
+      context.handle(
+        _isPaidMeta,
+        isPaid.isAcceptableOrUnknown(data['is_paid']!, _isPaidMeta),
+      );
+    }
+    if (data.containsKey('paid_at')) {
+      context.handle(
+        _paidAtMeta,
+        paidAt.isAcceptableOrUnknown(data['paid_at']!, _paidAtMeta),
+      );
+    }
     return context;
   }
 
@@ -6497,6 +6573,22 @@ class $RepairOrdersTable extends RepairOrders
         DriftSqlType.bool,
         data['${effectivePrefix}is_deleted'],
       )!,
+      isSettled: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_settled'],
+      )!,
+      settledAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}settled_at'],
+      ),
+      isPaid: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_paid'],
+      )!,
+      paidAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}paid_at'],
+      ),
     );
   }
 
@@ -6537,6 +6629,10 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
   final DateTime createdAt;
   final DateTime updatedAt;
   final bool isDeleted;
+  final bool isSettled;
+  final DateTime? settledAt;
+  final bool isPaid;
+  final DateTime? paidAt;
   const RepairOrder({
     required this.id,
     required this.repairNo,
@@ -6559,6 +6655,10 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
     required this.createdAt,
     required this.updatedAt,
     required this.isDeleted,
+    required this.isSettled,
+    this.settledAt,
+    required this.isPaid,
+    this.paidAt,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -6608,6 +6708,14 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
     map['created_at'] = Variable<DateTime>(createdAt);
     map['updated_at'] = Variable<DateTime>(updatedAt);
     map['is_deleted'] = Variable<bool>(isDeleted);
+    map['is_settled'] = Variable<bool>(isSettled);
+    if (!nullToAbsent || settledAt != null) {
+      map['settled_at'] = Variable<DateTime>(settledAt);
+    }
+    map['is_paid'] = Variable<bool>(isPaid);
+    if (!nullToAbsent || paidAt != null) {
+      map['paid_at'] = Variable<DateTime>(paidAt);
+    }
     return map;
   }
 
@@ -6650,6 +6758,14 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
       createdAt: Value(createdAt),
       updatedAt: Value(updatedAt),
       isDeleted: Value(isDeleted),
+      isSettled: Value(isSettled),
+      settledAt: settledAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(settledAt),
+      isPaid: Value(isPaid),
+      paidAt: paidAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(paidAt),
     );
   }
 
@@ -6686,6 +6802,10 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
       isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+      isSettled: serializer.fromJson<bool>(json['isSettled']),
+      settledAt: serializer.fromJson<DateTime?>(json['settledAt']),
+      isPaid: serializer.fromJson<bool>(json['isPaid']),
+      paidAt: serializer.fromJson<DateTime?>(json['paidAt']),
     );
   }
   @override
@@ -6717,6 +6837,10 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
       'isDeleted': serializer.toJson<bool>(isDeleted),
+      'isSettled': serializer.toJson<bool>(isSettled),
+      'settledAt': serializer.toJson<DateTime?>(settledAt),
+      'isPaid': serializer.toJson<bool>(isPaid),
+      'paidAt': serializer.toJson<DateTime?>(paidAt),
     };
   }
 
@@ -6742,6 +6866,10 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
     DateTime? createdAt,
     DateTime? updatedAt,
     bool? isDeleted,
+    bool? isSettled,
+    Value<DateTime?> settledAt = const Value.absent(),
+    bool? isPaid,
+    Value<DateTime?> paidAt = const Value.absent(),
   }) => RepairOrder(
     id: id ?? this.id,
     repairNo: repairNo ?? this.repairNo,
@@ -6764,6 +6892,10 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt ?? this.updatedAt,
     isDeleted: isDeleted ?? this.isDeleted,
+    isSettled: isSettled ?? this.isSettled,
+    settledAt: settledAt.present ? settledAt.value : this.settledAt,
+    isPaid: isPaid ?? this.isPaid,
+    paidAt: paidAt.present ? paidAt.value : this.paidAt,
   );
   RepairOrder copyWithCompanion(RepairOrdersCompanion data) {
     return RepairOrder(
@@ -6802,6 +6934,10 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
       isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+      isSettled: data.isSettled.present ? data.isSettled.value : this.isSettled,
+      settledAt: data.settledAt.present ? data.settledAt.value : this.settledAt,
+      isPaid: data.isPaid.present ? data.isPaid.value : this.isPaid,
+      paidAt: data.paidAt.present ? data.paidAt.value : this.paidAt,
     );
   }
 
@@ -6828,7 +6964,11 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
           ..write('remark: $remark, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt, ')
-          ..write('isDeleted: $isDeleted')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('isSettled: $isSettled, ')
+          ..write('settledAt: $settledAt, ')
+          ..write('isPaid: $isPaid, ')
+          ..write('paidAt: $paidAt')
           ..write(')'))
         .toString();
   }
@@ -6856,6 +6996,10 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
     createdAt,
     updatedAt,
     isDeleted,
+    isSettled,
+    settledAt,
+    isPaid,
+    paidAt,
   ]);
   @override
   bool operator ==(Object other) =>
@@ -6881,7 +7025,11 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
           other.remark == this.remark &&
           other.createdAt == this.createdAt &&
           other.updatedAt == this.updatedAt &&
-          other.isDeleted == this.isDeleted);
+          other.isDeleted == this.isDeleted &&
+          other.isSettled == this.isSettled &&
+          other.settledAt == this.settledAt &&
+          other.isPaid == this.isPaid &&
+          other.paidAt == this.paidAt);
 }
 
 class RepairOrdersCompanion extends UpdateCompanion<RepairOrder> {
@@ -6906,6 +7054,10 @@ class RepairOrdersCompanion extends UpdateCompanion<RepairOrder> {
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
   final Value<bool> isDeleted;
+  final Value<bool> isSettled;
+  final Value<DateTime?> settledAt;
+  final Value<bool> isPaid;
+  final Value<DateTime?> paidAt;
   const RepairOrdersCompanion({
     this.id = const Value.absent(),
     this.repairNo = const Value.absent(),
@@ -6928,6 +7080,10 @@ class RepairOrdersCompanion extends UpdateCompanion<RepairOrder> {
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
     this.isDeleted = const Value.absent(),
+    this.isSettled = const Value.absent(),
+    this.settledAt = const Value.absent(),
+    this.isPaid = const Value.absent(),
+    this.paidAt = const Value.absent(),
   });
   RepairOrdersCompanion.insert({
     this.id = const Value.absent(),
@@ -6951,6 +7107,10 @@ class RepairOrdersCompanion extends UpdateCompanion<RepairOrder> {
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
     this.isDeleted = const Value.absent(),
+    this.isSettled = const Value.absent(),
+    this.settledAt = const Value.absent(),
+    this.isPaid = const Value.absent(),
+    this.paidAt = const Value.absent(),
   }) : repairNo = Value(repairNo),
        vehicleId = Value(vehicleId),
        reportDate = Value(reportDate),
@@ -6979,6 +7139,10 @@ class RepairOrdersCompanion extends UpdateCompanion<RepairOrder> {
     Expression<DateTime>? createdAt,
     Expression<DateTime>? updatedAt,
     Expression<bool>? isDeleted,
+    Expression<bool>? isSettled,
+    Expression<DateTime>? settledAt,
+    Expression<bool>? isPaid,
+    Expression<DateTime>? paidAt,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -7003,6 +7167,10 @@ class RepairOrdersCompanion extends UpdateCompanion<RepairOrder> {
       if (createdAt != null) 'created_at': createdAt,
       if (updatedAt != null) 'updated_at': updatedAt,
       if (isDeleted != null) 'is_deleted': isDeleted,
+      if (isSettled != null) 'is_settled': isSettled,
+      if (settledAt != null) 'settled_at': settledAt,
+      if (isPaid != null) 'is_paid': isPaid,
+      if (paidAt != null) 'paid_at': paidAt,
     });
   }
 
@@ -7028,6 +7196,10 @@ class RepairOrdersCompanion extends UpdateCompanion<RepairOrder> {
     Value<DateTime>? createdAt,
     Value<DateTime>? updatedAt,
     Value<bool>? isDeleted,
+    Value<bool>? isSettled,
+    Value<DateTime?>? settledAt,
+    Value<bool>? isPaid,
+    Value<DateTime?>? paidAt,
   }) {
     return RepairOrdersCompanion(
       id: id ?? this.id,
@@ -7051,6 +7223,10 @@ class RepairOrdersCompanion extends UpdateCompanion<RepairOrder> {
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       isDeleted: isDeleted ?? this.isDeleted,
+      isSettled: isSettled ?? this.isSettled,
+      settledAt: settledAt ?? this.settledAt,
+      isPaid: isPaid ?? this.isPaid,
+      paidAt: paidAt ?? this.paidAt,
     );
   }
 
@@ -7124,6 +7300,18 @@ class RepairOrdersCompanion extends UpdateCompanion<RepairOrder> {
     if (isDeleted.present) {
       map['is_deleted'] = Variable<bool>(isDeleted.value);
     }
+    if (isSettled.present) {
+      map['is_settled'] = Variable<bool>(isSettled.value);
+    }
+    if (settledAt.present) {
+      map['settled_at'] = Variable<DateTime>(settledAt.value);
+    }
+    if (isPaid.present) {
+      map['is_paid'] = Variable<bool>(isPaid.value);
+    }
+    if (paidAt.present) {
+      map['paid_at'] = Variable<DateTime>(paidAt.value);
+    }
     return map;
   }
 
@@ -7150,7 +7338,11 @@ class RepairOrdersCompanion extends UpdateCompanion<RepairOrder> {
           ..write('remark: $remark, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt, ')
-          ..write('isDeleted: $isDeleted')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('isSettled: $isSettled, ')
+          ..write('settledAt: $settledAt, ')
+          ..write('isPaid: $isPaid, ')
+          ..write('paidAt: $paidAt')
           ..write(')'))
         .toString();
   }
@@ -39946,6 +40138,10 @@ typedef $$RepairOrdersTableCreateCompanionBuilder =
       Value<DateTime> createdAt,
       Value<DateTime> updatedAt,
       Value<bool> isDeleted,
+      Value<bool> isSettled,
+      Value<DateTime?> settledAt,
+      Value<bool> isPaid,
+      Value<DateTime?> paidAt,
     });
 typedef $$RepairOrdersTableUpdateCompanionBuilder =
     RepairOrdersCompanion Function({
@@ -39970,6 +40166,10 @@ typedef $$RepairOrdersTableUpdateCompanionBuilder =
       Value<DateTime> createdAt,
       Value<DateTime> updatedAt,
       Value<bool> isDeleted,
+      Value<bool> isSettled,
+      Value<DateTime?> settledAt,
+      Value<bool> isPaid,
+      Value<DateTime?> paidAt,
     });
 
 final class $$RepairOrdersTableReferences
@@ -40165,6 +40365,26 @@ class $$RepairOrdersTableFilterComposer
 
   ColumnFilters<bool> get isDeleted => $composableBuilder(
     column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isSettled => $composableBuilder(
+    column: $table.isSettled,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get settledAt => $composableBuilder(
+    column: $table.settledAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isPaid => $composableBuilder(
+    column: $table.isPaid,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get paidAt => $composableBuilder(
+    column: $table.paidAt,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -40376,6 +40596,26 @@ class $$RepairOrdersTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<bool> get isSettled => $composableBuilder(
+    column: $table.isSettled,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get settledAt => $composableBuilder(
+    column: $table.settledAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isPaid => $composableBuilder(
+    column: $table.isPaid,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get paidAt => $composableBuilder(
+    column: $table.paidAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   $$VehiclesTableOrderingComposer get vehicleId {
     final $$VehiclesTableOrderingComposer composer = $composerBuilder(
       composer: this,
@@ -40483,6 +40723,18 @@ class $$RepairOrdersTableAnnotationComposer
 
   GeneratedColumn<bool> get isDeleted =>
       $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
+  GeneratedColumn<bool> get isSettled =>
+      $composableBuilder(column: $table.isSettled, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get settledAt =>
+      $composableBuilder(column: $table.settledAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isPaid =>
+      $composableBuilder(column: $table.isPaid, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get paidAt =>
+      $composableBuilder(column: $table.paidAt, builder: (column) => column);
 
   $$VehiclesTableAnnotationComposer get vehicleId {
     final $$VehiclesTableAnnotationComposer composer = $composerBuilder(
@@ -40638,6 +40890,10 @@ class $$RepairOrdersTableTableManager
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
                 Value<bool> isDeleted = const Value.absent(),
+                Value<bool> isSettled = const Value.absent(),
+                Value<DateTime?> settledAt = const Value.absent(),
+                Value<bool> isPaid = const Value.absent(),
+                Value<DateTime?> paidAt = const Value.absent(),
               }) => RepairOrdersCompanion(
                 id: id,
                 repairNo: repairNo,
@@ -40660,6 +40916,10 @@ class $$RepairOrdersTableTableManager
                 createdAt: createdAt,
                 updatedAt: updatedAt,
                 isDeleted: isDeleted,
+                isSettled: isSettled,
+                settledAt: settledAt,
+                isPaid: isPaid,
+                paidAt: paidAt,
               ),
           createCompanionCallback:
               ({
@@ -40684,6 +40944,10 @@ class $$RepairOrdersTableTableManager
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
                 Value<bool> isDeleted = const Value.absent(),
+                Value<bool> isSettled = const Value.absent(),
+                Value<DateTime?> settledAt = const Value.absent(),
+                Value<bool> isPaid = const Value.absent(),
+                Value<DateTime?> paidAt = const Value.absent(),
               }) => RepairOrdersCompanion.insert(
                 id: id,
                 repairNo: repairNo,
@@ -40706,6 +40970,10 @@ class $$RepairOrdersTableTableManager
                 createdAt: createdAt,
                 updatedAt: updatedAt,
                 isDeleted: isDeleted,
+                isSettled: isSettled,
+                settledAt: settledAt,
+                isPaid: isPaid,
+                paidAt: paidAt,
               ),
           withReferenceMapper: (p0) => p0
               .map(

@@ -8,6 +8,7 @@ import '../../../core/database/app_database.dart';
 import '../application/garden_tool_repair_providers.dart';
 import '../domain/repair_formatters.dart';
 import '../domain/repair_models.dart';
+import 'garden_tool_repair_design.dart';
 
 class GardenToolRepairPricePage extends ConsumerStatefulWidget {
   const GardenToolRepairPricePage({super.key});
@@ -28,29 +29,32 @@ class _GardenToolRepairPricePageState
   @override
   Widget build(BuildContext context) {
     final optionsAsync = ref.watch(gardenToolRepairPriceItemOptionsProvider);
-    final unitsAsync = ref.watch(gardenToolRepairUnitsProvider(false));
-    return Scaffold(
-      appBar: AppBar(title: const Text('价格比对')),
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-          children: [
-            optionsAsync.when(
-              loading: () => const Card(
-                child: Padding(
-                  padding: EdgeInsets.all(28),
-                  child: Center(child: CircularProgressIndicator()),
+    final unitsAsync = ref.watch(gardenToolRepairUnitsProvider(true));
+    return Theme(
+      data: gardenToolRepairTheme(context),
+      child: Scaffold(
+        appBar: AppBar(title: const Text('价格比对')),
+        body: SafeArea(
+          child: ListView(
+            padding: const EdgeInsets.fromLTRB(12, 8, 12, 16),
+            children: [
+              optionsAsync.when(
+                loading: () => const Card(
+                  child: Padding(
+                    padding: EdgeInsets.all(28),
+                    child: Center(child: CircularProgressIndicator()),
+                  ),
                 ),
-              ),
-              error: (error, _) => Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Text('历史项目加载失败：$error'),
+                error: (error, _) => Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Text('历史项目加载失败：$error'),
+                  ),
                 ),
+                data: (options) => _buildWithOptions(options, unitsAsync),
               ),
-              data: (options) => _buildWithOptions(options, unitsAsync),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -102,7 +106,7 @@ class _GardenToolRepairPricePageState
           countUnit: countUnit,
           unitsAsync: unitsAsync,
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 10),
         pointsAsync.when(
           loading: () => const Padding(
             padding: EdgeInsets.only(top: 80),
@@ -132,13 +136,14 @@ class _GardenToolRepairPricePageState
     required AsyncValue<List<GardenToolRepairUnit>> unitsAsync,
   }) => Card(
     child: Padding(
-      padding: const EdgeInsets.all(14),
+      padding: const EdgeInsets.all(12),
       child: Column(
         children: [
           Row(
             children: [
               Expanded(
                 child: DropdownButtonFormField<String>(
+                  isExpanded: true,
                   initialValue: project,
                   decoration: const InputDecoration(labelText: '项目名称'),
                   items: [
@@ -155,6 +160,7 @@ class _GardenToolRepairPricePageState
               const SizedBox(width: 10),
               Expanded(
                 child: DropdownButtonFormField<String>(
+                  isExpanded: true,
                   initialValue: spec,
                   decoration: const InputDecoration(labelText: '规格型号'),
                   items: [
@@ -173,13 +179,12 @@ class _GardenToolRepairPricePageState
             ],
           ),
           const SizedBox(height: 10),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
+          Row(
             children: [
               SizedBox(
                 width: 130,
                 child: DropdownButtonFormField<String>(
+                  isExpanded: true,
                   initialValue: countUnit,
                   decoration: const InputDecoration(labelText: '计数单位'),
                   items: [
@@ -189,32 +194,11 @@ class _GardenToolRepairPricePageState
                   onChanged: (value) => setState(() => _countUnit = value),
                 ),
               ),
-              SizedBox(
-                width: 150,
-                child: unitsAsync.when(
-                  loading: () => const LinearProgressIndicator(),
-                  error: (error, _) => const Text('维修单位加载失败'),
-                  data: (units) => DropdownButtonFormField<int?>(
-                    initialValue: _unitId,
-                    decoration: const InputDecoration(labelText: '维修单位'),
-                    items: [
-                      const DropdownMenuItem<int?>(
-                        value: null,
-                        child: Text('全部单位'),
-                      ),
-                      for (final unit in units)
-                        DropdownMenuItem<int?>(
-                          value: unit.id,
-                          child: Text(unit.name),
-                        ),
-                    ],
-                    onChanged: (value) => setState(() => _unitId = value),
-                  ),
-                ),
-              ),
+              const SizedBox(width: 8),
               SizedBox(
                 width: 150,
                 child: DropdownButtonFormField<int>(
+                  isExpanded: true,
                   initialValue: _months,
                   decoration: const InputDecoration(labelText: '时间范围'),
                   items: const [
@@ -227,6 +211,29 @@ class _GardenToolRepairPricePageState
                 ),
               ),
             ],
+          ),
+          const SizedBox(height: 8),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Wrap(
+              spacing: 6,
+              runSpacing: 4,
+              children: [
+                _UnitChoiceChip(
+                  label: '全部单位',
+                  selected: _unitId == null,
+                  onSelected: () => setState(() => _unitId = null),
+                ),
+                ...unitsAsync.valueOrNull?.map(
+                      (unit) => _UnitChoiceChip(
+                        label: unit.name,
+                        selected: _unitId == unit.id,
+                        onSelected: () => setState(() => _unitId = unit.id),
+                      ),
+                    ) ??
+                    const <Widget>[],
+              ],
+            ),
           ),
         ],
       ),
@@ -252,46 +259,51 @@ class _GardenToolRepairPricePageState
     final chronological = points.reversed.toList();
     return Column(
       children: [
-        GridView.count(
-          crossAxisCount: 2,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          childAspectRatio: 1.7,
+        Row(
           children: [
-            _PriceMetric(
-              label: '当前价格',
-              value: formatRepairMoney(summary.currentPriceCents!),
-              color: AppColors.primary,
-              icon: Icons.sell_outlined,
+            Expanded(
+              child: _PriceMetric(
+                label: '当前价格',
+                value: formatRepairMoney(summary.currentPriceCents!),
+                color: AppColors.primary,
+                icon: Icons.sell_outlined,
+              ),
             ),
-            _PriceMetric(
-              label: '上次价格',
-              value: summary.previousPriceCents == null
-                  ? '暂无对比'
-                  : formatRepairMoney(summary.previousPriceCents!),
-              color: AppColors.techBlue,
-              icon: Icons.receipt_long_outlined,
+            const SizedBox(width: 6),
+            Expanded(
+              child: _PriceMetric(
+                label: '上次价格',
+                value: summary.previousPriceCents == null
+                    ? '暂无对比'
+                    : formatRepairMoney(summary.previousPriceCents!),
+                color: AppColors.techBlue,
+                icon: Icons.receipt_long_outlined,
+              ),
             ),
-            _PriceMetric(
-              label: '涨跌幅',
-              value: changeLabel,
-              color: changeColor,
-              icon: Icons.trending_up,
+            const SizedBox(width: 6),
+            Expanded(
+              child: _PriceMetric(
+                label: '涨跌幅',
+                value: changeLabel,
+                color: changeColor,
+                icon: Icons.trending_up,
+              ),
             ),
-            _PriceMetric(
-              label: '平均价格',
-              value: formatRepairMoney(summary.averagePriceCents!),
-              color: const Color(0xFFEF8B27),
-              icon: Icons.bar_chart,
+            const SizedBox(width: 6),
+            Expanded(
+              child: _PriceMetric(
+                label: '平均价格',
+                value: formatRepairMoney(summary.averagePriceCents!),
+                color: const Color(0xFFEF8B27),
+                icon: Icons.bar_chart,
+              ),
             ),
           ],
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 10),
         Card(
           child: Padding(
-            padding: const EdgeInsets.all(14),
+            padding: const EdgeInsets.all(12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -319,10 +331,10 @@ class _GardenToolRepairPricePageState
             ),
           ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 10),
         Card(
           child: Padding(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -357,7 +369,7 @@ class _GardenToolRepairPricePageState
             ),
           ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 10),
         Row(
           children: [
             Expanded(
@@ -433,32 +445,65 @@ class _PriceMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Card(
     child: Padding(
-      padding: const EdgeInsets.all(12),
-      child: Row(
+      padding: const EdgeInsets.all(8),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: color, size: 24),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(label, style: Theme.of(context).textTheme.bodySmall),
-                const SizedBox(height: 4),
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    value,
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                ),
-              ],
+          Container(
+            width: 26,
+            height: 26,
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.12),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Icon(icon, color: color, size: 15),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.bodySmall
+                ?.copyWith(fontSize: 10),
+          ),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Text(
+              value,
+              style: Theme.of(context).textTheme.titleMedium
+                  ?.copyWith(fontWeight: FontWeight.w700),
             ),
           ),
         ],
       ),
     ),
+  );
+}
+
+class _UnitChoiceChip extends StatelessWidget {
+  const _UnitChoiceChip({
+    required this.label,
+    required this.selected,
+    required this.onSelected,
+  });
+
+  final String label;
+  final bool selected;
+  final VoidCallback onSelected;
+
+  @override
+  Widget build(BuildContext context) => ChoiceChip(
+    label: Text(label),
+    selected: selected,
+    onSelected: (_) => onSelected(),
+    visualDensity: VisualDensity.compact,
+    labelStyle: TextStyle(
+      fontSize: 11,
+      color: selected ? AppColors.primary : AppColors.body,
+    ),
+    side: BorderSide(color: selected ? AppColors.primary : AppColors.divider),
   );
 }
 
@@ -559,6 +604,26 @@ class _PriceTrendPainter extends CustomPainter {
     );
     for (final point in pointsToDraw) {
       canvas.drawCircle(point, 4, Paint()..color = AppColors.primary);
+    }
+    for (var index = 0; index < pointsToDraw.length; index++) {
+      final label = TextPainter(
+        text: TextSpan(
+          text: (points[index].unitPriceCents / 100).toStringAsFixed(0),
+          style: const TextStyle(
+            fontSize: 9,
+            color: AppColors.ink,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        textDirection: TextDirection.ltr,
+      )..layout(maxWidth: chart.width / points.length + 6);
+      label.paint(
+        canvas,
+        Offset(
+          pointsToDraw[index].dx - label.width / 2,
+          math.max(top, pointsToDraw[index].dy - label.height - 5),
+        ),
+      );
     }
   }
 

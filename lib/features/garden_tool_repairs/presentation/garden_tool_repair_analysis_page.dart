@@ -9,6 +9,7 @@ import '../../../core/database/app_database.dart';
 import '../application/garden_tool_repair_providers.dart';
 import '../domain/repair_analytics_models.dart';
 import '../domain/repair_formatters.dart';
+import 'garden_tool_repair_design.dart';
 
 class GardenToolRepairAnalysisPage extends ConsumerStatefulWidget {
   const GardenToolRepairAnalysisPage({
@@ -43,7 +44,7 @@ class _GardenToolRepairAnalysisPageState
 
   @override
   Widget build(BuildContext context) {
-    final unitsAsync = ref.watch(gardenToolRepairUnitsProvider(false));
+    final unitsAsync = ref.watch(gardenToolRepairUnitsProvider(true));
     final start = _cycle == _AnalysisCycle.year
         ? DateTime(_year)
         : DateTime(_year, _month);
@@ -52,37 +53,40 @@ class _GardenToolRepairAnalysisPageState
         : DateTime(_year, _month + 1);
     final filter = (start: start, endExclusive: end, unitId: _unitId);
     final groupsAsync = ref.watch(gardenToolRepairPeriodProvider(filter));
-    return Scaffold(
-      appBar: AppBar(title: const Text('数据分析')),
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-          children: [
-            _buildFilters(unitsAsync),
-            const SizedBox(height: 12),
-            groupsAsync.when(
-              loading: () => const Padding(
-                padding: EdgeInsets.only(top: 80),
-                child: Center(child: CircularProgressIndicator()),
+    return Theme(
+      data: gardenToolRepairTheme(context),
+      child: Scaffold(
+        appBar: AppBar(title: const Text('数据分析')),
+        body: SafeArea(
+          child: ListView(
+            padding: const EdgeInsets.fromLTRB(12, 8, 12, 16),
+            children: [
+              _buildFilters(unitsAsync),
+              const SizedBox(height: 10),
+              groupsAsync.when(
+                loading: () => const Padding(
+                  padding: EdgeInsets.only(top: 80),
+                  child: Center(child: CircularProgressIndicator()),
+                ),
+                error: (error, _) => _AnalysisError(
+                  message: error.toString(),
+                  onRetry: () =>
+                      ref.invalidate(gardenToolRepairPeriodProvider(filter)),
+                ),
+                data: (groups) {
+                  final report = ref
+                      .read(gardenToolRepairAnalysisServiceProvider)
+                      .summarize(
+                        groups,
+                        year: _year,
+                        month: _cycle == _AnalysisCycle.month ? _month : null,
+                      );
+                  if (report.itemCount == 0) return const _AnalysisEmpty();
+                  return _buildReport(report);
+                },
               ),
-              error: (error, _) => _AnalysisError(
-                message: error.toString(),
-                onRetry: () =>
-                    ref.invalidate(gardenToolRepairPeriodProvider(filter)),
-              ),
-              data: (groups) {
-                final report = ref
-                    .read(gardenToolRepairAnalysisServiceProvider)
-                    .summarize(
-                      groups,
-                      year: _year,
-                      month: _cycle == _AnalysisCycle.month ? _month : null,
-                    );
-                if (report.itemCount == 0) return const _AnalysisEmpty();
-                return _buildReport(report);
-              },
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -93,85 +97,90 @@ class _GardenToolRepairAnalysisPageState
   ) => Card(
     child: Padding(
       padding: const EdgeInsets.all(12),
-      child: Wrap(
-        spacing: 8,
-        runSpacing: 8,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: 128,
-            child: DropdownButtonFormField<int>(
-              initialValue: _year,
-              decoration: const InputDecoration(labelText: '年份'),
-              items: [
-                for (var year = DateTime.now().year; year >= 2000; year--)
-                  DropdownMenuItem(value: year, child: Text('$year年')),
-              ],
-              onChanged: (value) {
-                if (value != null) setState(() => _year = value);
-              },
-            ),
-          ),
-          SizedBox(
-            width: 116,
-            child: DropdownButtonFormField<_AnalysisCycle>(
-              initialValue: _cycle,
-              decoration: const InputDecoration(labelText: '周期'),
-              items: const [
-                DropdownMenuItem(value: _AnalysisCycle.year, child: Text('年度')),
-                DropdownMenuItem(
-                  value: _AnalysisCycle.month,
-                  child: Text('月度'),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              SizedBox(
+                width: 104,
+                child: DropdownButtonFormField<int>(
+                  isExpanded: true,
+                  initialValue: _year,
+                  decoration: const InputDecoration(labelText: '年份'),
+                  items: [
+                    for (var year = DateTime.now().year; year >= 2000; year--)
+                      DropdownMenuItem(value: year, child: Text('$year年')),
+                  ],
+                  onChanged: (value) {
+                    if (value != null) setState(() => _year = value);
+                  },
                 ),
-              ],
-              onChanged: (value) {
-                if (value != null) setState(() => _cycle = value);
-              },
-            ),
-          ),
-          if (_cycle == _AnalysisCycle.month)
-            SizedBox(
-              width: 105,
-              child: DropdownButtonFormField<int>(
-                initialValue: _month,
-                decoration: const InputDecoration(labelText: '月份'),
-                items: [
-                  for (var month = 1; month <= 12; month++)
-                    DropdownMenuItem(value: month, child: Text('$month月')),
-                ],
-                onChanged: (value) {
-                  if (value != null) setState(() => _month = value);
-                },
               ),
-            ),
-          SizedBox(
-            width: 150,
-            child: unitsAsync.when(
-              loading: () => const LinearProgressIndicator(),
-              error: (error, _) => const Text('维修单位加载失败'),
-              data: (units) => DropdownButtonFormField<int?>(
-                initialValue: _unitId,
-                decoration: const InputDecoration(labelText: '维修单位'),
-                items: [
-                  const DropdownMenuItem<int?>(
-                    value: null,
-                    child: Text('全部单位'),
+              SizedBox(
+                width: 94,
+                child: DropdownButtonFormField<_AnalysisCycle>(
+                  isExpanded: true,
+                  initialValue: _cycle,
+                  decoration: const InputDecoration(labelText: '周期'),
+                  items: const [
+                    DropdownMenuItem(
+                      value: _AnalysisCycle.year,
+                      child: Text('年度'),
+                    ),
+                    DropdownMenuItem(
+                      value: _AnalysisCycle.month,
+                      child: Text('月度'),
+                    ),
+                  ],
+                  onChanged: (value) {
+                    if (value != null) setState(() => _cycle = value);
+                  },
+                ),
+              ),
+              if (_cycle == _AnalysisCycle.month)
+                SizedBox(
+                  width: 82,
+                  child: DropdownButtonFormField<int>(
+                    isExpanded: true,
+                    initialValue: _month,
+                    decoration: const InputDecoration(labelText: '月份'),
+                    items: [
+                      for (var month = 1; month <= 12; month++)
+                        DropdownMenuItem(value: month, child: Text('$month月')),
+                    ],
+                    onChanged: (value) {
+                      if (value != null) setState(() => _month = value);
+                    },
+                  ),
+                ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          unitsAsync.when(
+            loading: () => const LinearProgressIndicator(),
+            error: (error, _) => const Text('维修单位加载失败'),
+            data: (units) => SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  _UnitFilterChip(
+                    label: '全部',
+                    selected: _unitId == null,
+                    onTap: () => setState(() => _unitId = null),
                   ),
                   for (final unit in units)
-                    DropdownMenuItem<int?>(
-                      value: unit.id,
-                      child: Text(unit.name, overflow: TextOverflow.ellipsis),
+                    _UnitFilterChip(
+                      label: '${unit.name}${unit.isActive ? '' : '（已停用）'}',
+                      selected: _unitId == unit.id,
+                      onTap: () => setState(() => _unitId = unit.id),
                     ),
                 ],
-                onChanged: (value) => setState(() => _unitId = value),
               ),
             ),
           ),
-          if (_unitId != null)
-            TextButton.icon(
-              onPressed: () => setState(() => _unitId = null),
-              icon: const Icon(Icons.filter_alt_off),
-              label: const Text('清除单位筛选'),
-            ),
         ],
       ),
     ),
@@ -224,28 +233,37 @@ class _GardenToolRepairAnalysisPageState
             ),
           ],
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 10),
         _MonthlyTrendCard(
           title: '月度维修费用趋势',
           amounts: report.monthlyTotalsCents,
           onTapMonth: _openMonth,
         ),
-        const SizedBox(height: 12),
-        _UnitShareCard(
-          totalCents: report.totalCents,
-          units: report.unitAmounts,
-          selectedUnitId: _unitId,
-          onSelect: (id) => setState(() => _unitId = id),
+        const SizedBox(height: 10),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: _UnitShareCard(
+                totalCents: report.totalCents,
+                units: report.unitAmounts,
+                selectedUnitId: _unitId,
+                onSelect: (id) => setState(() => _unitId = id),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: _ProjectAmountCard(
+                entries: visibleProjects,
+                maximum: maxAmount,
+                canExpand: report.projectAmounts.length > 5,
+                expanded: _showTopTen,
+                onToggle: () => setState(() => _showTopTen = !_showTopTen),
+              ),
+            ),
+          ],
         ),
-        const SizedBox(height: 12),
-        _ProjectAmountCard(
-          entries: visibleProjects,
-          maximum: maxAmount,
-          canExpand: report.projectAmounts.length > 5,
-          expanded: _showTopTen,
-          onToggle: () => setState(() => _showTopTen = !_showTopTen),
-        ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 10),
         _ProjectCountCard(
           entries: visibleCounts,
           canExpand: report.projectCounts.length > 10,
@@ -253,7 +271,7 @@ class _GardenToolRepairAnalysisPageState
           onToggle: () =>
               setState(() => _showAllFrequency = !_showAllFrequency),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 10),
         _RepairerTable(entries: report.repairers),
       ],
     );
@@ -265,6 +283,37 @@ class _GardenToolRepairAnalysisPageState
 }
 
 enum _AnalysisCycle { year, month }
+
+class _UnitFilterChip extends StatelessWidget {
+  const _UnitFilterChip({
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.only(right: 6),
+    child: ChoiceChip(
+      label: Text(label),
+      selected: selected,
+      showCheckmark: false,
+      visualDensity: VisualDensity.compact,
+      labelStyle: TextStyle(
+        color: selected ? Colors.white : AppColors.body,
+        fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
+      ),
+      selectedColor: AppColors.primary,
+      backgroundColor: AppColors.background,
+      side: BorderSide.none,
+      onSelected: (_) => onTap(),
+    ),
+  );
+}
 
 class _MetricCard extends StatelessWidget {
   const _MetricCard({
@@ -282,17 +331,30 @@ class _MetricCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Card(
     child: Padding(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(10),
       child: Row(
         children: [
-          Icon(icon, color: color, size: 24),
-          const SizedBox(width: 10),
+          Container(
+            width: 34,
+            height: 34,
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: .12),
+              borderRadius: BorderRadius.circular(9),
+            ),
+            child: Icon(icon, color: color, size: 20),
+          ),
+          const SizedBox(width: 8),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(label, style: Theme.of(context).textTheme.bodySmall),
+                Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
                 const SizedBox(height: 4),
                 FittedBox(
                   alignment: Alignment.centerLeft,
@@ -325,7 +387,7 @@ class _MonthlyTrendCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Card(
     child: Padding(
-      padding: const EdgeInsets.all(14),
+      padding: const EdgeInsets.all(10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -441,6 +503,26 @@ class _TrendPainter extends CustomPainter {
           ..style = PaintingStyle.fill,
       );
     }
+    for (var index = 0; index < points.length; index++) {
+      final label = TextPainter(
+        text: TextSpan(
+          text: (amounts[index] / 100).round().toString(),
+          style: const TextStyle(
+            fontSize: 9,
+            color: AppColors.ink,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        textDirection: TextDirection.ltr,
+      )..layout(maxWidth: chart.width / 12 + 4);
+      label.paint(
+        canvas,
+        Offset(
+          points[index].dx - label.width / 2,
+          math.max(top, points[index].dy - label.height - 5),
+        ),
+      );
+    }
   }
 
   @override
@@ -464,24 +546,30 @@ class _UnitShareCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Card(
     child: Padding(
-      padding: const EdgeInsets.all(14),
+      padding: const EdgeInsets.all(10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('维修单位费用占比', style: Theme.of(context).textTheme.titleLarge),
-          const SizedBox(height: 10),
+          Text(
+            '维修单位费用占比',
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.titleLarge
+                ?.copyWith(fontSize: 14),
+          ),
+          const SizedBox(height: 8),
           Row(
             children: [
               SizedBox(
-                width: 150,
-                height: 150,
+                width: 76,
+                height: 76,
                 child: CustomPaint(
                   painter: _DonutPainter(
                     units.map((unit) => unit.totalCents).toList(),
                   ),
                   child: Center(
                     child: Padding(
-                      padding: const EdgeInsets.all(35),
+                      padding: const EdgeInsets.all(17),
                       child: FittedBox(
                         child: Text(formatRepairMoney(totalCents)),
                       ),
@@ -489,7 +577,7 @@ class _UnitShareCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: 6),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -502,22 +590,39 @@ class _UnitShareCard extends StatelessWidget {
                               : units[index].unitId,
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5),
-                          child: Row(
+                          padding: const EdgeInsets.symmetric(vertical: 3),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                width: 9,
-                                height: 9,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color:
-                                      _chartColors[index % _chartColors.length],
-                                ),
+                              Row(
+                                children: [
+                                  Container(
+                                    width: 7,
+                                    height: 7,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color:
+                                          _chartColors[index %
+                                              _chartColors.length],
+                                    ),
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Expanded(
+                                    child: Text(
+                                      units[index].unitName,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(fontSize: 10),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              const SizedBox(width: 7),
-                              Expanded(child: Text(units[index].unitName)),
                               Text(
                                 '${(units[index].share * 100).toStringAsFixed(1)}%',
+                                style: const TextStyle(
+                                  color: AppColors.body,
+                                  fontSize: 9,
+                                ),
                               ),
                             ],
                           ),
@@ -571,7 +676,7 @@ class _DonutPainter extends CustomPainter {
         Paint()
           ..color = _chartColors[index % _chartColors.length]
           ..style = PaintingStyle.stroke
-          ..strokeWidth = 24,
+          ..strokeWidth = 14,
       );
       start += sweep;
     }
@@ -599,7 +704,7 @@ class _ProjectAmountCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Card(
     child: Padding(
-      padding: const EdgeInsets.all(14),
+      padding: const EdgeInsets.all(10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -608,37 +713,50 @@ class _ProjectAmountCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   '维修项目金额排行',
-                  style: Theme.of(context).textTheme.titleLarge,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.titleLarge
+                      ?.copyWith(fontSize: 14),
                 ),
               ),
-              const Text('单位：元', style: TextStyle(color: AppColors.body)),
+              const Text(
+                '元',
+                style: TextStyle(color: AppColors.body, fontSize: 10),
+              ),
             ],
           ),
           const SizedBox(height: 8),
           for (final entry in entries)
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5),
-              child: Row(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    width: 72,
-                    child: Text(
-                      entry.projectName,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          entry.projectName,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(fontSize: 10),
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        formatRepairMoney(entry.totalCents),
+                        style: const TextStyle(fontSize: 9),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: LinearProgressIndicator(
-                      value: maximum == 0 ? 0 : entry.totalCents / maximum,
-                      minHeight: 14,
-                      borderRadius: BorderRadius.circular(8),
-                      color: AppColors.primary,
-                      backgroundColor: AppColors.background,
-                    ),
+                  const SizedBox(height: 3),
+                  LinearProgressIndicator(
+                    value: maximum == 0 ? 0 : entry.totalCents / maximum,
+                    minHeight: 6,
+                    borderRadius: BorderRadius.circular(8),
+                    color: AppColors.primary,
+                    backgroundColor: AppColors.background,
                   ),
-                  const SizedBox(width: 8),
-                  Text(formatRepairMoney(entry.totalCents)),
                 ],
               ),
             ),
@@ -672,7 +790,7 @@ class _ProjectCountCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Card(
     child: Padding(
-      padding: const EdgeInsets.all(14),
+      padding: const EdgeInsets.all(12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -711,38 +829,128 @@ class _RepairerTable extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('维修人数据统计', style: Theme.of(context).textTheme.titleLarge),
-          const SizedBox(height: 6),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: DataTable(
-              columns: const [
-                DataColumn(label: Text('姓名')),
-                DataColumn(label: Text('所属单位')),
-                DataColumn(label: Text('项目条数'), numeric: true),
-                DataColumn(label: Text('累计金额'), numeric: true),
-                DataColumn(label: Text('占比'), numeric: true),
+          Row(
+            children: [
+              const Icon(Icons.people_alt, color: AppColors.primary, size: 20),
+              const SizedBox(width: 8),
+              Text('维修人项目数排行', style: Theme.of(context).textTheme.titleLarge),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+            decoration: BoxDecoration(
+              color: AppColors.background,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: const Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Text('排名', style: TextStyle(fontSize: 10)),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Text('姓名', style: TextStyle(fontSize: 10)),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Text('项目数', style: TextStyle(fontSize: 10)),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Text('维修金额', style: TextStyle(fontSize: 10)),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Text('占比', style: TextStyle(fontSize: 10)),
+                ),
               ],
-              rows: [
-                for (final entry in entries)
-                  DataRow(
-                    cells: [
-                      DataCell(Text(entry.personName)),
-                      DataCell(Text(entry.unitName)),
-                      DataCell(Text('${entry.itemCount}')),
-                      DataCell(Text(formatRepairMoney(entry.totalCents))),
-                      DataCell(
-                        Text('${(entry.share * 100).toStringAsFixed(1)}%'),
-                      ),
-                    ],
+            ),
+          ),
+          for (var index = 0; index < entries.length; index++)
+            _RepairerRankRow(index: index, entry: entries[index]),
+        ],
+      ),
+    ),
+  );
+}
+
+class _RepairerRankRow extends StatelessWidget {
+  const _RepairerRankRow({required this.index, required this.entry});
+
+  final int index;
+  final GardenToolRepairPersonSummary entry;
+
+  @override
+  Widget build(BuildContext context) {
+    final medalColors = [
+      const Color(0xFFFFBE2E),
+      const Color(0xFFB7C3CE),
+      const Color(0xFFEF9B58),
+    ];
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+      decoration: const BoxDecoration(
+        border: Border(bottom: BorderSide(color: AppColors.divider)),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: CircleAvatar(
+              radius: 10,
+              backgroundColor: index < medalColors.length
+                  ? medalColors[index]
+                  : AppColors.background,
+              child: Text(
+                '${index + 1}',
+                style: const TextStyle(fontSize: 10, color: AppColors.ink),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Text(
+              entry.personName,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          Expanded(flex: 1, child: Text('${entry.itemCount}')),
+          Expanded(
+            flex: 2,
+            child: FittedBox(
+              alignment: Alignment.centerLeft,
+              fit: BoxFit.scaleDown,
+              child: Text(formatRepairMoney(entry.totalCents)),
+            ),
+          ),
+          Expanded(
+            flex: 3,
+            child: Row(
+              children: [
+                Text(
+                  '${(entry.share * 100).toStringAsFixed(1)}%',
+                  style: const TextStyle(fontSize: 10),
+                ),
+                const SizedBox(width: 5),
+                Expanded(
+                  child: LinearProgressIndicator(
+                    value: entry.share.clamp(0, 1),
+                    minHeight: 7,
+                    borderRadius: BorderRadius.circular(6),
+                    color: AppColors.primary,
+                    backgroundColor: AppColors.background,
                   ),
+                ),
               ],
             ),
           ),
         ],
       ),
-    ),
-  );
+    );
+  }
 }
 
 class _AnalysisEmpty extends StatelessWidget {

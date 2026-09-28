@@ -424,11 +424,9 @@ class GardenToolRepairRepository {
   }) async {
     final items = _database.gardenToolRepairItems;
     final groups = _database.gardenToolRepairGroups;
-    final units = _database.gardenToolRepairUnits;
     final query =
         _database.select(items).join([
           innerJoin(groups, groups.id.equalsExp(items.groupId)),
-          innerJoin(units, units.id.equalsExp(groups.unitId)),
         ])..where(
           items.projectName.equals(projectName.trim()) &
               (specModel.trim().isEmpty
@@ -451,7 +449,7 @@ class GardenToolRepairRepository {
         .map(
           (row) => GardenToolRepairPricePoint(
             repairDate: row.readTable(groups).repairDate,
-            unitName: row.readTable(units).name,
+            unitName: row.readTable(groups).unitNameSnapshot,
             repairerName: row.readTable(groups).repairerNameSnapshot,
             unitPriceCents: row.readTable(items).unitPriceCents,
           ),
