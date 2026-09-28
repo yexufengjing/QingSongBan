@@ -53,6 +53,11 @@ part 'app_database.g.dart';
     ReminderOccurrences,
     ReminderAlertRules,
     ReminderLinks,
+    GardenToolRepairUnits,
+    GardenToolRepairPersons,
+    GardenToolRepairGroups,
+    GardenToolRepairItems,
+    GardenToolRepairAttachments,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -200,18 +205,11 @@ class AppDatabase extends _$AppDatabase {
         );
       }
       if (from < 19 && to >= 19) {
-        await _addColumnIfMissing(
-          'repair_orders',
-          'is_settled',
-          'INTEGER NOT NULL DEFAULT 0',
-        );
-        await _addColumnIfMissing('repair_orders', 'settled_at', 'INTEGER');
-        await _addColumnIfMissing(
-          'repair_orders',
-          'is_paid',
-          'INTEGER NOT NULL DEFAULT 0',
-        );
-        await _addColumnIfMissing('repair_orders', 'paid_at', 'INTEGER');
+        await m.createTable(gardenToolRepairUnits);
+        await m.createTable(gardenToolRepairPersons);
+        await m.createTable(gardenToolRepairGroups);
+        await m.createTable(gardenToolRepairItems);
+        await m.createTable(gardenToolRepairAttachments);
       }
     },
     beforeOpen: (details) async {

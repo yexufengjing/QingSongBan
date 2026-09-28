@@ -6151,54 +6151,6 @@ class $RepairOrdersTable extends RepairOrders
       ).withConverter<RepairTicketStatus>(
         $RepairOrdersTable.$converterticketStatus,
       );
-  static const VerificationMeta _isSettledMeta = const VerificationMeta(
-    'isSettled',
-  );
-  @override
-  late final GeneratedColumn<bool> isSettled = GeneratedColumn<bool>(
-    'is_settled',
-    aliasedName,
-    false,
-    type: DriftSqlType.bool,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("is_settled" IN (0, 1))',
-    ),
-    defaultValue: const Constant(false),
-  );
-  static const VerificationMeta _settledAtMeta = const VerificationMeta(
-    'settledAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> settledAt = GeneratedColumn<DateTime>(
-    'settled_at',
-    aliasedName,
-    true,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _isPaidMeta = const VerificationMeta('isPaid');
-  @override
-  late final GeneratedColumn<bool> isPaid = GeneratedColumn<bool>(
-    'is_paid',
-    aliasedName,
-    false,
-    type: DriftSqlType.bool,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("is_paid" IN (0, 1))',
-    ),
-    defaultValue: const Constant(false),
-  );
-  static const VerificationMeta _paidAtMeta = const VerificationMeta('paidAt');
-  @override
-  late final GeneratedColumn<DateTime> paidAt = GeneratedColumn<DateTime>(
-    'paid_at',
-    aliasedName,
-    true,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
-  );
   @override
   late final GeneratedColumnWithTypeConverter<VehicleRepairStatus, String>
   status = GeneratedColumn<String>(
@@ -6295,10 +6247,6 @@ class $RepairOrdersTable extends RepairOrders
     reportedAmountCents,
     actualAmountCents,
     ticketStatus,
-    isSettled,
-    settledAt,
-    isPaid,
-    paidAt,
     status,
     completedAt,
     recordText,
@@ -6413,30 +6361,6 @@ class $RepairOrdersTable extends RepairOrders
         ),
       );
     }
-    if (data.containsKey('is_settled')) {
-      context.handle(
-        _isSettledMeta,
-        isSettled.isAcceptableOrUnknown(data['is_settled']!, _isSettledMeta),
-      );
-    }
-    if (data.containsKey('settled_at')) {
-      context.handle(
-        _settledAtMeta,
-        settledAt.isAcceptableOrUnknown(data['settled_at']!, _settledAtMeta),
-      );
-    }
-    if (data.containsKey('is_paid')) {
-      context.handle(
-        _isPaidMeta,
-        isPaid.isAcceptableOrUnknown(data['is_paid']!, _isPaidMeta),
-      );
-    }
-    if (data.containsKey('paid_at')) {
-      context.handle(
-        _paidAtMeta,
-        paidAt.isAcceptableOrUnknown(data['paid_at']!, _paidAtMeta),
-      );
-    }
     if (data.containsKey('completed_at')) {
       context.handle(
         _completedAtMeta,
@@ -6543,22 +6467,6 @@ class $RepairOrdersTable extends RepairOrders
           data['${effectivePrefix}ticket_status'],
         )!,
       ),
-      isSettled: attachedDatabase.typeMapping.read(
-        DriftSqlType.bool,
-        data['${effectivePrefix}is_settled'],
-      )!,
-      settledAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}settled_at'],
-      ),
-      isPaid: attachedDatabase.typeMapping.read(
-        DriftSqlType.bool,
-        data['${effectivePrefix}is_paid'],
-      )!,
-      paidAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}paid_at'],
-      ),
       status: $RepairOrdersTable.$converterstatus.fromSql(
         attachedDatabase.typeMapping.read(
           DriftSqlType.string,
@@ -6622,10 +6530,6 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
   final int reportedAmountCents;
   final int actualAmountCents;
   final RepairTicketStatus ticketStatus;
-  final bool isSettled;
-  final DateTime? settledAt;
-  final bool isPaid;
-  final DateTime? paidAt;
   final VehicleRepairStatus status;
   final DateTime? completedAt;
   final String? recordText;
@@ -6648,10 +6552,6 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
     required this.reportedAmountCents,
     required this.actualAmountCents,
     required this.ticketStatus,
-    required this.isSettled,
-    this.settledAt,
-    required this.isPaid,
-    this.paidAt,
     required this.status,
     this.completedAt,
     this.recordText,
@@ -6690,14 +6590,6 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
       map['ticket_status'] = Variable<String>(
         $RepairOrdersTable.$converterticketStatus.toSql(ticketStatus),
       );
-    }
-    map['is_settled'] = Variable<bool>(isSettled);
-    if (!nullToAbsent || settledAt != null) {
-      map['settled_at'] = Variable<DateTime>(settledAt);
-    }
-    map['is_paid'] = Variable<bool>(isPaid);
-    if (!nullToAbsent || paidAt != null) {
-      map['paid_at'] = Variable<DateTime>(paidAt);
     }
     {
       map['status'] = Variable<String>(
@@ -6745,14 +6637,6 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
       reportedAmountCents: Value(reportedAmountCents),
       actualAmountCents: Value(actualAmountCents),
       ticketStatus: Value(ticketStatus),
-      isSettled: Value(isSettled),
-      settledAt: settledAt == null && nullToAbsent
-          ? const Value.absent()
-          : Value(settledAt),
-      isPaid: Value(isPaid),
-      paidAt: paidAt == null && nullToAbsent
-          ? const Value.absent()
-          : Value(paidAt),
       status: Value(status),
       completedAt: completedAt == null && nullToAbsent
           ? const Value.absent()
@@ -6793,10 +6677,6 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
       ticketStatus: $RepairOrdersTable.$converterticketStatus.fromJson(
         serializer.fromJson<String>(json['ticketStatus']),
       ),
-      isSettled: serializer.fromJson<bool>(json['isSettled']),
-      settledAt: serializer.fromJson<DateTime?>(json['settledAt']),
-      isPaid: serializer.fromJson<bool>(json['isPaid']),
-      paidAt: serializer.fromJson<DateTime?>(json['paidAt']),
       status: $RepairOrdersTable.$converterstatus.fromJson(
         serializer.fromJson<String>(json['status']),
       ),
@@ -6828,10 +6708,6 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
       'ticketStatus': serializer.toJson<String>(
         $RepairOrdersTable.$converterticketStatus.toJson(ticketStatus),
       ),
-      'isSettled': serializer.toJson<bool>(isSettled),
-      'settledAt': serializer.toJson<DateTime?>(settledAt),
-      'isPaid': serializer.toJson<bool>(isPaid),
-      'paidAt': serializer.toJson<DateTime?>(paidAt),
       'status': serializer.toJson<String>(
         $RepairOrdersTable.$converterstatus.toJson(status),
       ),
@@ -6859,10 +6735,6 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
     int? reportedAmountCents,
     int? actualAmountCents,
     RepairTicketStatus? ticketStatus,
-    bool? isSettled,
-    Value<DateTime?> settledAt = const Value.absent(),
-    bool? isPaid,
-    Value<DateTime?> paidAt = const Value.absent(),
     VehicleRepairStatus? status,
     Value<DateTime?> completedAt = const Value.absent(),
     Value<String?> recordText = const Value.absent(),
@@ -6885,10 +6757,6 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
     reportedAmountCents: reportedAmountCents ?? this.reportedAmountCents,
     actualAmountCents: actualAmountCents ?? this.actualAmountCents,
     ticketStatus: ticketStatus ?? this.ticketStatus,
-    isSettled: isSettled ?? this.isSettled,
-    settledAt: settledAt.present ? settledAt.value : this.settledAt,
-    isPaid: isPaid ?? this.isPaid,
-    paidAt: paidAt.present ? paidAt.value : this.paidAt,
     status: status ?? this.status,
     completedAt: completedAt.present ? completedAt.value : this.completedAt,
     recordText: recordText.present ? recordText.value : this.recordText,
@@ -6923,10 +6791,6 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
       ticketStatus: data.ticketStatus.present
           ? data.ticketStatus.value
           : this.ticketStatus,
-      isSettled: data.isSettled.present ? data.isSettled.value : this.isSettled,
-      settledAt: data.settledAt.present ? data.settledAt.value : this.settledAt,
-      isPaid: data.isPaid.present ? data.isPaid.value : this.isPaid,
-      paidAt: data.paidAt.present ? data.paidAt.value : this.paidAt,
       status: data.status.present ? data.status.value : this.status,
       completedAt: data.completedAt.present
           ? data.completedAt.value
@@ -6958,10 +6822,6 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
           ..write('reportedAmountCents: $reportedAmountCents, ')
           ..write('actualAmountCents: $actualAmountCents, ')
           ..write('ticketStatus: $ticketStatus, ')
-          ..write('isSettled: $isSettled, ')
-          ..write('settledAt: $settledAt, ')
-          ..write('isPaid: $isPaid, ')
-          ..write('paidAt: $paidAt, ')
           ..write('status: $status, ')
           ..write('completedAt: $completedAt, ')
           ..write('recordText: $recordText, ')
@@ -6989,10 +6849,6 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
     reportedAmountCents,
     actualAmountCents,
     ticketStatus,
-    isSettled,
-    settledAt,
-    isPaid,
-    paidAt,
     status,
     completedAt,
     recordText,
@@ -7019,10 +6875,6 @@ class RepairOrder extends DataClass implements Insertable<RepairOrder> {
           other.reportedAmountCents == this.reportedAmountCents &&
           other.actualAmountCents == this.actualAmountCents &&
           other.ticketStatus == this.ticketStatus &&
-          other.isSettled == this.isSettled &&
-          other.settledAt == this.settledAt &&
-          other.isPaid == this.isPaid &&
-          other.paidAt == this.paidAt &&
           other.status == this.status &&
           other.completedAt == this.completedAt &&
           other.recordText == this.recordText &&
@@ -7047,10 +6899,6 @@ class RepairOrdersCompanion extends UpdateCompanion<RepairOrder> {
   final Value<int> reportedAmountCents;
   final Value<int> actualAmountCents;
   final Value<RepairTicketStatus> ticketStatus;
-  final Value<bool> isSettled;
-  final Value<DateTime?> settledAt;
-  final Value<bool> isPaid;
-  final Value<DateTime?> paidAt;
   final Value<VehicleRepairStatus> status;
   final Value<DateTime?> completedAt;
   final Value<String?> recordText;
@@ -7073,10 +6921,6 @@ class RepairOrdersCompanion extends UpdateCompanion<RepairOrder> {
     this.reportedAmountCents = const Value.absent(),
     this.actualAmountCents = const Value.absent(),
     this.ticketStatus = const Value.absent(),
-    this.isSettled = const Value.absent(),
-    this.settledAt = const Value.absent(),
-    this.isPaid = const Value.absent(),
-    this.paidAt = const Value.absent(),
     this.status = const Value.absent(),
     this.completedAt = const Value.absent(),
     this.recordText = const Value.absent(),
@@ -7100,10 +6944,6 @@ class RepairOrdersCompanion extends UpdateCompanion<RepairOrder> {
     this.reportedAmountCents = const Value.absent(),
     this.actualAmountCents = const Value.absent(),
     required RepairTicketStatus ticketStatus,
-    this.isSettled = const Value.absent(),
-    this.settledAt = const Value.absent(),
-    this.isPaid = const Value.absent(),
-    this.paidAt = const Value.absent(),
     this.status = const Value.absent(),
     this.completedAt = const Value.absent(),
     this.recordText = const Value.absent(),
@@ -7132,10 +6972,6 @@ class RepairOrdersCompanion extends UpdateCompanion<RepairOrder> {
     Expression<int>? reportedAmountCents,
     Expression<int>? actualAmountCents,
     Expression<String>? ticketStatus,
-    Expression<bool>? isSettled,
-    Expression<DateTime>? settledAt,
-    Expression<bool>? isPaid,
-    Expression<DateTime>? paidAt,
     Expression<String>? status,
     Expression<DateTime>? completedAt,
     Expression<String>? recordText,
@@ -7160,10 +6996,6 @@ class RepairOrdersCompanion extends UpdateCompanion<RepairOrder> {
         'reported_amount_cents': reportedAmountCents,
       if (actualAmountCents != null) 'actual_amount_cents': actualAmountCents,
       if (ticketStatus != null) 'ticket_status': ticketStatus,
-      if (isSettled != null) 'is_settled': isSettled,
-      if (settledAt != null) 'settled_at': settledAt,
-      if (isPaid != null) 'is_paid': isPaid,
-      if (paidAt != null) 'paid_at': paidAt,
       if (status != null) 'status': status,
       if (completedAt != null) 'completed_at': completedAt,
       if (recordText != null) 'record_text': recordText,
@@ -7189,10 +7021,6 @@ class RepairOrdersCompanion extends UpdateCompanion<RepairOrder> {
     Value<int>? reportedAmountCents,
     Value<int>? actualAmountCents,
     Value<RepairTicketStatus>? ticketStatus,
-    Value<bool>? isSettled,
-    Value<DateTime?>? settledAt,
-    Value<bool>? isPaid,
-    Value<DateTime?>? paidAt,
     Value<VehicleRepairStatus>? status,
     Value<DateTime?>? completedAt,
     Value<String?>? recordText,
@@ -7216,10 +7044,6 @@ class RepairOrdersCompanion extends UpdateCompanion<RepairOrder> {
       reportedAmountCents: reportedAmountCents ?? this.reportedAmountCents,
       actualAmountCents: actualAmountCents ?? this.actualAmountCents,
       ticketStatus: ticketStatus ?? this.ticketStatus,
-      isSettled: isSettled ?? this.isSettled,
-      settledAt: settledAt ?? this.settledAt,
-      isPaid: isPaid ?? this.isPaid,
-      paidAt: paidAt ?? this.paidAt,
       status: status ?? this.status,
       completedAt: completedAt ?? this.completedAt,
       recordText: recordText ?? this.recordText,
@@ -7277,18 +7101,6 @@ class RepairOrdersCompanion extends UpdateCompanion<RepairOrder> {
         $RepairOrdersTable.$converterticketStatus.toSql(ticketStatus.value),
       );
     }
-    if (isSettled.present) {
-      map['is_settled'] = Variable<bool>(isSettled.value);
-    }
-    if (settledAt.present) {
-      map['settled_at'] = Variable<DateTime>(settledAt.value);
-    }
-    if (isPaid.present) {
-      map['is_paid'] = Variable<bool>(isPaid.value);
-    }
-    if (paidAt.present) {
-      map['paid_at'] = Variable<DateTime>(paidAt.value);
-    }
     if (status.present) {
       map['status'] = Variable<String>(
         $RepairOrdersTable.$converterstatus.toSql(status.value),
@@ -7332,10 +7144,6 @@ class RepairOrdersCompanion extends UpdateCompanion<RepairOrder> {
           ..write('reportedAmountCents: $reportedAmountCents, ')
           ..write('actualAmountCents: $actualAmountCents, ')
           ..write('ticketStatus: $ticketStatus, ')
-          ..write('isSettled: $isSettled, ')
-          ..write('settledAt: $settledAt, ')
-          ..write('isPaid: $isPaid, ')
-          ..write('paidAt: $paidAt, ')
           ..write('status: $status, ')
           ..write('completedAt: $completedAt, ')
           ..write('recordText: $recordText, ')
@@ -30369,6 +30177,2855 @@ class ReminderLinksCompanion extends UpdateCompanion<ReminderLink> {
   }
 }
 
+class $GardenToolRepairUnitsTable extends GardenToolRepairUnits
+    with TableInfo<$GardenToolRepairUnitsTable, GardenToolRepairUnit> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $GardenToolRepairUnitsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _sortOrderMeta = const VerificationMeta(
+    'sortOrder',
+  );
+  @override
+  late final GeneratedColumn<int> sortOrder = GeneratedColumn<int>(
+    'sort_order',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _isActiveMeta = const VerificationMeta(
+    'isActive',
+  );
+  @override
+  late final GeneratedColumn<bool> isActive = GeneratedColumn<bool>(
+    'is_active',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_active" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    sortOrder,
+    isActive,
+    createdAt,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'garden_tool_repair_units';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<GardenToolRepairUnit> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('sort_order')) {
+      context.handle(
+        _sortOrderMeta,
+        sortOrder.isAcceptableOrUnknown(data['sort_order']!, _sortOrderMeta),
+      );
+    }
+    if (data.containsKey('is_active')) {
+      context.handle(
+        _isActiveMeta,
+        isActive.isAcceptableOrUnknown(data['is_active']!, _isActiveMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  GardenToolRepairUnit map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return GardenToolRepairUnit(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      sortOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sort_order'],
+      )!,
+      isActive: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_active'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $GardenToolRepairUnitsTable createAlias(String alias) {
+    return $GardenToolRepairUnitsTable(attachedDatabase, alias);
+  }
+}
+
+class GardenToolRepairUnit extends DataClass
+    implements Insertable<GardenToolRepairUnit> {
+  final int id;
+  final String name;
+  final int sortOrder;
+  final bool isActive;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  const GardenToolRepairUnit({
+    required this.id,
+    required this.name,
+    required this.sortOrder,
+    required this.isActive,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['name'] = Variable<String>(name);
+    map['sort_order'] = Variable<int>(sortOrder);
+    map['is_active'] = Variable<bool>(isActive);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  GardenToolRepairUnitsCompanion toCompanion(bool nullToAbsent) {
+    return GardenToolRepairUnitsCompanion(
+      id: Value(id),
+      name: Value(name),
+      sortOrder: Value(sortOrder),
+      isActive: Value(isActive),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory GardenToolRepairUnit.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return GardenToolRepairUnit(
+      id: serializer.fromJson<int>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      sortOrder: serializer.fromJson<int>(json['sortOrder']),
+      isActive: serializer.fromJson<bool>(json['isActive']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'name': serializer.toJson<String>(name),
+      'sortOrder': serializer.toJson<int>(sortOrder),
+      'isActive': serializer.toJson<bool>(isActive),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  GardenToolRepairUnit copyWith({
+    int? id,
+    String? name,
+    int? sortOrder,
+    bool? isActive,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) => GardenToolRepairUnit(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    sortOrder: sortOrder ?? this.sortOrder,
+    isActive: isActive ?? this.isActive,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  GardenToolRepairUnit copyWithCompanion(GardenToolRepairUnitsCompanion data) {
+    return GardenToolRepairUnit(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
+      isActive: data.isActive.present ? data.isActive.value : this.isActive,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GardenToolRepairUnit(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('isActive: $isActive, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, name, sortOrder, isActive, createdAt, updatedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is GardenToolRepairUnit &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.sortOrder == this.sortOrder &&
+          other.isActive == this.isActive &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class GardenToolRepairUnitsCompanion
+    extends UpdateCompanion<GardenToolRepairUnit> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<int> sortOrder;
+  final Value<bool> isActive;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  const GardenToolRepairUnitsCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.isActive = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+  });
+  GardenToolRepairUnitsCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    this.sortOrder = const Value.absent(),
+    this.isActive = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+  }) : name = Value(name);
+  static Insertable<GardenToolRepairUnit> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+    Expression<int>? sortOrder,
+    Expression<bool>? isActive,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (sortOrder != null) 'sort_order': sortOrder,
+      if (isActive != null) 'is_active': isActive,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+    });
+  }
+
+  GardenToolRepairUnitsCompanion copyWith({
+    Value<int>? id,
+    Value<String>? name,
+    Value<int>? sortOrder,
+    Value<bool>? isActive,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+  }) {
+    return GardenToolRepairUnitsCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      sortOrder: sortOrder ?? this.sortOrder,
+      isActive: isActive ?? this.isActive,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (sortOrder.present) {
+      map['sort_order'] = Variable<int>(sortOrder.value);
+    }
+    if (isActive.present) {
+      map['is_active'] = Variable<bool>(isActive.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GardenToolRepairUnitsCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('isActive: $isActive, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $GardenToolRepairPersonsTable extends GardenToolRepairPersons
+    with TableInfo<$GardenToolRepairPersonsTable, GardenToolRepairPerson> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $GardenToolRepairPersonsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _unitIdMeta = const VerificationMeta('unitId');
+  @override
+  late final GeneratedColumn<int> unitId = GeneratedColumn<int>(
+    'unit_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES garden_tool_repair_units (id)',
+    ),
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _isActiveMeta = const VerificationMeta(
+    'isActive',
+  );
+  @override
+  late final GeneratedColumn<bool> isActive = GeneratedColumn<bool>(
+    'is_active',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_active" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  static const VerificationMeta _sortOrderMeta = const VerificationMeta(
+    'sortOrder',
+  );
+  @override
+  late final GeneratedColumn<int> sortOrder = GeneratedColumn<int>(
+    'sort_order',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    unitId,
+    name,
+    isActive,
+    sortOrder,
+    createdAt,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'garden_tool_repair_persons';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<GardenToolRepairPerson> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('unit_id')) {
+      context.handle(
+        _unitIdMeta,
+        unitId.isAcceptableOrUnknown(data['unit_id']!, _unitIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_unitIdMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('is_active')) {
+      context.handle(
+        _isActiveMeta,
+        isActive.isAcceptableOrUnknown(data['is_active']!, _isActiveMeta),
+      );
+    }
+    if (data.containsKey('sort_order')) {
+      context.handle(
+        _sortOrderMeta,
+        sortOrder.isAcceptableOrUnknown(data['sort_order']!, _sortOrderMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  GardenToolRepairPerson map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return GardenToolRepairPerson(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      unitId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}unit_id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      isActive: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_active'],
+      )!,
+      sortOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sort_order'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $GardenToolRepairPersonsTable createAlias(String alias) {
+    return $GardenToolRepairPersonsTable(attachedDatabase, alias);
+  }
+}
+
+class GardenToolRepairPerson extends DataClass
+    implements Insertable<GardenToolRepairPerson> {
+  final int id;
+  final int unitId;
+  final String name;
+  final bool isActive;
+  final int sortOrder;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  const GardenToolRepairPerson({
+    required this.id,
+    required this.unitId,
+    required this.name,
+    required this.isActive,
+    required this.sortOrder,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['unit_id'] = Variable<int>(unitId);
+    map['name'] = Variable<String>(name);
+    map['is_active'] = Variable<bool>(isActive);
+    map['sort_order'] = Variable<int>(sortOrder);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  GardenToolRepairPersonsCompanion toCompanion(bool nullToAbsent) {
+    return GardenToolRepairPersonsCompanion(
+      id: Value(id),
+      unitId: Value(unitId),
+      name: Value(name),
+      isActive: Value(isActive),
+      sortOrder: Value(sortOrder),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory GardenToolRepairPerson.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return GardenToolRepairPerson(
+      id: serializer.fromJson<int>(json['id']),
+      unitId: serializer.fromJson<int>(json['unitId']),
+      name: serializer.fromJson<String>(json['name']),
+      isActive: serializer.fromJson<bool>(json['isActive']),
+      sortOrder: serializer.fromJson<int>(json['sortOrder']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'unitId': serializer.toJson<int>(unitId),
+      'name': serializer.toJson<String>(name),
+      'isActive': serializer.toJson<bool>(isActive),
+      'sortOrder': serializer.toJson<int>(sortOrder),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  GardenToolRepairPerson copyWith({
+    int? id,
+    int? unitId,
+    String? name,
+    bool? isActive,
+    int? sortOrder,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) => GardenToolRepairPerson(
+    id: id ?? this.id,
+    unitId: unitId ?? this.unitId,
+    name: name ?? this.name,
+    isActive: isActive ?? this.isActive,
+    sortOrder: sortOrder ?? this.sortOrder,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  GardenToolRepairPerson copyWithCompanion(
+    GardenToolRepairPersonsCompanion data,
+  ) {
+    return GardenToolRepairPerson(
+      id: data.id.present ? data.id.value : this.id,
+      unitId: data.unitId.present ? data.unitId.value : this.unitId,
+      name: data.name.present ? data.name.value : this.name,
+      isActive: data.isActive.present ? data.isActive.value : this.isActive,
+      sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GardenToolRepairPerson(')
+          ..write('id: $id, ')
+          ..write('unitId: $unitId, ')
+          ..write('name: $name, ')
+          ..write('isActive: $isActive, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, unitId, name, isActive, sortOrder, createdAt, updatedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is GardenToolRepairPerson &&
+          other.id == this.id &&
+          other.unitId == this.unitId &&
+          other.name == this.name &&
+          other.isActive == this.isActive &&
+          other.sortOrder == this.sortOrder &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class GardenToolRepairPersonsCompanion
+    extends UpdateCompanion<GardenToolRepairPerson> {
+  final Value<int> id;
+  final Value<int> unitId;
+  final Value<String> name;
+  final Value<bool> isActive;
+  final Value<int> sortOrder;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  const GardenToolRepairPersonsCompanion({
+    this.id = const Value.absent(),
+    this.unitId = const Value.absent(),
+    this.name = const Value.absent(),
+    this.isActive = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+  });
+  GardenToolRepairPersonsCompanion.insert({
+    this.id = const Value.absent(),
+    required int unitId,
+    required String name,
+    this.isActive = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+  }) : unitId = Value(unitId),
+       name = Value(name);
+  static Insertable<GardenToolRepairPerson> custom({
+    Expression<int>? id,
+    Expression<int>? unitId,
+    Expression<String>? name,
+    Expression<bool>? isActive,
+    Expression<int>? sortOrder,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (unitId != null) 'unit_id': unitId,
+      if (name != null) 'name': name,
+      if (isActive != null) 'is_active': isActive,
+      if (sortOrder != null) 'sort_order': sortOrder,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+    });
+  }
+
+  GardenToolRepairPersonsCompanion copyWith({
+    Value<int>? id,
+    Value<int>? unitId,
+    Value<String>? name,
+    Value<bool>? isActive,
+    Value<int>? sortOrder,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+  }) {
+    return GardenToolRepairPersonsCompanion(
+      id: id ?? this.id,
+      unitId: unitId ?? this.unitId,
+      name: name ?? this.name,
+      isActive: isActive ?? this.isActive,
+      sortOrder: sortOrder ?? this.sortOrder,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (unitId.present) {
+      map['unit_id'] = Variable<int>(unitId.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (isActive.present) {
+      map['is_active'] = Variable<bool>(isActive.value);
+    }
+    if (sortOrder.present) {
+      map['sort_order'] = Variable<int>(sortOrder.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GardenToolRepairPersonsCompanion(')
+          ..write('id: $id, ')
+          ..write('unitId: $unitId, ')
+          ..write('name: $name, ')
+          ..write('isActive: $isActive, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $GardenToolRepairGroupsTable extends GardenToolRepairGroups
+    with TableInfo<$GardenToolRepairGroupsTable, GardenToolRepairGroup> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $GardenToolRepairGroupsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _repairMonthMeta = const VerificationMeta(
+    'repairMonth',
+  );
+  @override
+  late final GeneratedColumn<String> repairMonth = GeneratedColumn<String>(
+    'repair_month',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _repairDateMeta = const VerificationMeta(
+    'repairDate',
+  );
+  @override
+  late final GeneratedColumn<DateTime> repairDate = GeneratedColumn<DateTime>(
+    'repair_date',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _unitIdMeta = const VerificationMeta('unitId');
+  @override
+  late final GeneratedColumn<int> unitId = GeneratedColumn<int>(
+    'unit_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES garden_tool_repair_units (id)',
+    ),
+  );
+  static const VerificationMeta _unitNameSnapshotMeta = const VerificationMeta(
+    'unitNameSnapshot',
+  );
+  @override
+  late final GeneratedColumn<String> unitNameSnapshot = GeneratedColumn<String>(
+    'unit_name_snapshot',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _repairerIdMeta = const VerificationMeta(
+    'repairerId',
+  );
+  @override
+  late final GeneratedColumn<int> repairerId = GeneratedColumn<int>(
+    'repairer_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES garden_tool_repair_persons (id)',
+    ),
+  );
+  static const VerificationMeta _repairerNameSnapshotMeta =
+      const VerificationMeta('repairerNameSnapshot');
+  @override
+  late final GeneratedColumn<String> repairerNameSnapshot =
+      GeneratedColumn<String>(
+        'repairer_name_snapshot',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _subtotalCentsMeta = const VerificationMeta(
+    'subtotalCents',
+  );
+  @override
+  late final GeneratedColumn<int> subtotalCents = GeneratedColumn<int>(
+    'subtotal_cents',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _remarkMeta = const VerificationMeta('remark');
+  @override
+  late final GeneratedColumn<String> remark = GeneratedColumn<String>(
+    'remark',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _deletedAtMeta = const VerificationMeta(
+    'deletedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+    'deleted_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    repairMonth,
+    repairDate,
+    unitId,
+    unitNameSnapshot,
+    repairerId,
+    repairerNameSnapshot,
+    subtotalCents,
+    remark,
+    createdAt,
+    updatedAt,
+    deletedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'garden_tool_repair_groups';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<GardenToolRepairGroup> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('repair_month')) {
+      context.handle(
+        _repairMonthMeta,
+        repairMonth.isAcceptableOrUnknown(
+          data['repair_month']!,
+          _repairMonthMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_repairMonthMeta);
+    }
+    if (data.containsKey('repair_date')) {
+      context.handle(
+        _repairDateMeta,
+        repairDate.isAcceptableOrUnknown(data['repair_date']!, _repairDateMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_repairDateMeta);
+    }
+    if (data.containsKey('unit_id')) {
+      context.handle(
+        _unitIdMeta,
+        unitId.isAcceptableOrUnknown(data['unit_id']!, _unitIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_unitIdMeta);
+    }
+    if (data.containsKey('unit_name_snapshot')) {
+      context.handle(
+        _unitNameSnapshotMeta,
+        unitNameSnapshot.isAcceptableOrUnknown(
+          data['unit_name_snapshot']!,
+          _unitNameSnapshotMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_unitNameSnapshotMeta);
+    }
+    if (data.containsKey('repairer_id')) {
+      context.handle(
+        _repairerIdMeta,
+        repairerId.isAcceptableOrUnknown(data['repairer_id']!, _repairerIdMeta),
+      );
+    }
+    if (data.containsKey('repairer_name_snapshot')) {
+      context.handle(
+        _repairerNameSnapshotMeta,
+        repairerNameSnapshot.isAcceptableOrUnknown(
+          data['repairer_name_snapshot']!,
+          _repairerNameSnapshotMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_repairerNameSnapshotMeta);
+    }
+    if (data.containsKey('subtotal_cents')) {
+      context.handle(
+        _subtotalCentsMeta,
+        subtotalCents.isAcceptableOrUnknown(
+          data['subtotal_cents']!,
+          _subtotalCentsMeta,
+        ),
+      );
+    }
+    if (data.containsKey('remark')) {
+      context.handle(
+        _remarkMeta,
+        remark.isAcceptableOrUnknown(data['remark']!, _remarkMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(
+        _deletedAtMeta,
+        deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  GardenToolRepairGroup map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return GardenToolRepairGroup(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      repairMonth: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}repair_month'],
+      )!,
+      repairDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}repair_date'],
+      )!,
+      unitId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}unit_id'],
+      )!,
+      unitNameSnapshot: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}unit_name_snapshot'],
+      )!,
+      repairerId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}repairer_id'],
+      ),
+      repairerNameSnapshot: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}repairer_name_snapshot'],
+      )!,
+      subtotalCents: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}subtotal_cents'],
+      )!,
+      remark: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}remark'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}deleted_at'],
+      ),
+    );
+  }
+
+  @override
+  $GardenToolRepairGroupsTable createAlias(String alias) {
+    return $GardenToolRepairGroupsTable(attachedDatabase, alias);
+  }
+}
+
+class GardenToolRepairGroup extends DataClass
+    implements Insertable<GardenToolRepairGroup> {
+  final int id;
+  final String repairMonth;
+  final DateTime repairDate;
+  final int unitId;
+  final String unitNameSnapshot;
+  final int? repairerId;
+  final String repairerNameSnapshot;
+  final int subtotalCents;
+  final String? remark;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime? deletedAt;
+  const GardenToolRepairGroup({
+    required this.id,
+    required this.repairMonth,
+    required this.repairDate,
+    required this.unitId,
+    required this.unitNameSnapshot,
+    this.repairerId,
+    required this.repairerNameSnapshot,
+    required this.subtotalCents,
+    this.remark,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['repair_month'] = Variable<String>(repairMonth);
+    map['repair_date'] = Variable<DateTime>(repairDate);
+    map['unit_id'] = Variable<int>(unitId);
+    map['unit_name_snapshot'] = Variable<String>(unitNameSnapshot);
+    if (!nullToAbsent || repairerId != null) {
+      map['repairer_id'] = Variable<int>(repairerId);
+    }
+    map['repairer_name_snapshot'] = Variable<String>(repairerNameSnapshot);
+    map['subtotal_cents'] = Variable<int>(subtotalCents);
+    if (!nullToAbsent || remark != null) {
+      map['remark'] = Variable<String>(remark);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    return map;
+  }
+
+  GardenToolRepairGroupsCompanion toCompanion(bool nullToAbsent) {
+    return GardenToolRepairGroupsCompanion(
+      id: Value(id),
+      repairMonth: Value(repairMonth),
+      repairDate: Value(repairDate),
+      unitId: Value(unitId),
+      unitNameSnapshot: Value(unitNameSnapshot),
+      repairerId: repairerId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(repairerId),
+      repairerNameSnapshot: Value(repairerNameSnapshot),
+      subtotalCents: Value(subtotalCents),
+      remark: remark == null && nullToAbsent
+          ? const Value.absent()
+          : Value(remark),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+    );
+  }
+
+  factory GardenToolRepairGroup.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return GardenToolRepairGroup(
+      id: serializer.fromJson<int>(json['id']),
+      repairMonth: serializer.fromJson<String>(json['repairMonth']),
+      repairDate: serializer.fromJson<DateTime>(json['repairDate']),
+      unitId: serializer.fromJson<int>(json['unitId']),
+      unitNameSnapshot: serializer.fromJson<String>(json['unitNameSnapshot']),
+      repairerId: serializer.fromJson<int?>(json['repairerId']),
+      repairerNameSnapshot: serializer.fromJson<String>(
+        json['repairerNameSnapshot'],
+      ),
+      subtotalCents: serializer.fromJson<int>(json['subtotalCents']),
+      remark: serializer.fromJson<String?>(json['remark']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'repairMonth': serializer.toJson<String>(repairMonth),
+      'repairDate': serializer.toJson<DateTime>(repairDate),
+      'unitId': serializer.toJson<int>(unitId),
+      'unitNameSnapshot': serializer.toJson<String>(unitNameSnapshot),
+      'repairerId': serializer.toJson<int?>(repairerId),
+      'repairerNameSnapshot': serializer.toJson<String>(repairerNameSnapshot),
+      'subtotalCents': serializer.toJson<int>(subtotalCents),
+      'remark': serializer.toJson<String?>(remark),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+    };
+  }
+
+  GardenToolRepairGroup copyWith({
+    int? id,
+    String? repairMonth,
+    DateTime? repairDate,
+    int? unitId,
+    String? unitNameSnapshot,
+    Value<int?> repairerId = const Value.absent(),
+    String? repairerNameSnapshot,
+    int? subtotalCents,
+    Value<String?> remark = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<DateTime?> deletedAt = const Value.absent(),
+  }) => GardenToolRepairGroup(
+    id: id ?? this.id,
+    repairMonth: repairMonth ?? this.repairMonth,
+    repairDate: repairDate ?? this.repairDate,
+    unitId: unitId ?? this.unitId,
+    unitNameSnapshot: unitNameSnapshot ?? this.unitNameSnapshot,
+    repairerId: repairerId.present ? repairerId.value : this.repairerId,
+    repairerNameSnapshot: repairerNameSnapshot ?? this.repairerNameSnapshot,
+    subtotalCents: subtotalCents ?? this.subtotalCents,
+    remark: remark.present ? remark.value : this.remark,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+  );
+  GardenToolRepairGroup copyWithCompanion(
+    GardenToolRepairGroupsCompanion data,
+  ) {
+    return GardenToolRepairGroup(
+      id: data.id.present ? data.id.value : this.id,
+      repairMonth: data.repairMonth.present
+          ? data.repairMonth.value
+          : this.repairMonth,
+      repairDate: data.repairDate.present
+          ? data.repairDate.value
+          : this.repairDate,
+      unitId: data.unitId.present ? data.unitId.value : this.unitId,
+      unitNameSnapshot: data.unitNameSnapshot.present
+          ? data.unitNameSnapshot.value
+          : this.unitNameSnapshot,
+      repairerId: data.repairerId.present
+          ? data.repairerId.value
+          : this.repairerId,
+      repairerNameSnapshot: data.repairerNameSnapshot.present
+          ? data.repairerNameSnapshot.value
+          : this.repairerNameSnapshot,
+      subtotalCents: data.subtotalCents.present
+          ? data.subtotalCents.value
+          : this.subtotalCents,
+      remark: data.remark.present ? data.remark.value : this.remark,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GardenToolRepairGroup(')
+          ..write('id: $id, ')
+          ..write('repairMonth: $repairMonth, ')
+          ..write('repairDate: $repairDate, ')
+          ..write('unitId: $unitId, ')
+          ..write('unitNameSnapshot: $unitNameSnapshot, ')
+          ..write('repairerId: $repairerId, ')
+          ..write('repairerNameSnapshot: $repairerNameSnapshot, ')
+          ..write('subtotalCents: $subtotalCents, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    repairMonth,
+    repairDate,
+    unitId,
+    unitNameSnapshot,
+    repairerId,
+    repairerNameSnapshot,
+    subtotalCents,
+    remark,
+    createdAt,
+    updatedAt,
+    deletedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is GardenToolRepairGroup &&
+          other.id == this.id &&
+          other.repairMonth == this.repairMonth &&
+          other.repairDate == this.repairDate &&
+          other.unitId == this.unitId &&
+          other.unitNameSnapshot == this.unitNameSnapshot &&
+          other.repairerId == this.repairerId &&
+          other.repairerNameSnapshot == this.repairerNameSnapshot &&
+          other.subtotalCents == this.subtotalCents &&
+          other.remark == this.remark &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt);
+}
+
+class GardenToolRepairGroupsCompanion
+    extends UpdateCompanion<GardenToolRepairGroup> {
+  final Value<int> id;
+  final Value<String> repairMonth;
+  final Value<DateTime> repairDate;
+  final Value<int> unitId;
+  final Value<String> unitNameSnapshot;
+  final Value<int?> repairerId;
+  final Value<String> repairerNameSnapshot;
+  final Value<int> subtotalCents;
+  final Value<String?> remark;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<DateTime?> deletedAt;
+  const GardenToolRepairGroupsCompanion({
+    this.id = const Value.absent(),
+    this.repairMonth = const Value.absent(),
+    this.repairDate = const Value.absent(),
+    this.unitId = const Value.absent(),
+    this.unitNameSnapshot = const Value.absent(),
+    this.repairerId = const Value.absent(),
+    this.repairerNameSnapshot = const Value.absent(),
+    this.subtotalCents = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+  });
+  GardenToolRepairGroupsCompanion.insert({
+    this.id = const Value.absent(),
+    required String repairMonth,
+    required DateTime repairDate,
+    required int unitId,
+    required String unitNameSnapshot,
+    this.repairerId = const Value.absent(),
+    required String repairerNameSnapshot,
+    this.subtotalCents = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+  }) : repairMonth = Value(repairMonth),
+       repairDate = Value(repairDate),
+       unitId = Value(unitId),
+       unitNameSnapshot = Value(unitNameSnapshot),
+       repairerNameSnapshot = Value(repairerNameSnapshot);
+  static Insertable<GardenToolRepairGroup> custom({
+    Expression<int>? id,
+    Expression<String>? repairMonth,
+    Expression<DateTime>? repairDate,
+    Expression<int>? unitId,
+    Expression<String>? unitNameSnapshot,
+    Expression<int>? repairerId,
+    Expression<String>? repairerNameSnapshot,
+    Expression<int>? subtotalCents,
+    Expression<String>? remark,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime>? deletedAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (repairMonth != null) 'repair_month': repairMonth,
+      if (repairDate != null) 'repair_date': repairDate,
+      if (unitId != null) 'unit_id': unitId,
+      if (unitNameSnapshot != null) 'unit_name_snapshot': unitNameSnapshot,
+      if (repairerId != null) 'repairer_id': repairerId,
+      if (repairerNameSnapshot != null)
+        'repairer_name_snapshot': repairerNameSnapshot,
+      if (subtotalCents != null) 'subtotal_cents': subtotalCents,
+      if (remark != null) 'remark': remark,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+    });
+  }
+
+  GardenToolRepairGroupsCompanion copyWith({
+    Value<int>? id,
+    Value<String>? repairMonth,
+    Value<DateTime>? repairDate,
+    Value<int>? unitId,
+    Value<String>? unitNameSnapshot,
+    Value<int?>? repairerId,
+    Value<String>? repairerNameSnapshot,
+    Value<int>? subtotalCents,
+    Value<String?>? remark,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<DateTime?>? deletedAt,
+  }) {
+    return GardenToolRepairGroupsCompanion(
+      id: id ?? this.id,
+      repairMonth: repairMonth ?? this.repairMonth,
+      repairDate: repairDate ?? this.repairDate,
+      unitId: unitId ?? this.unitId,
+      unitNameSnapshot: unitNameSnapshot ?? this.unitNameSnapshot,
+      repairerId: repairerId ?? this.repairerId,
+      repairerNameSnapshot: repairerNameSnapshot ?? this.repairerNameSnapshot,
+      subtotalCents: subtotalCents ?? this.subtotalCents,
+      remark: remark ?? this.remark,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (repairMonth.present) {
+      map['repair_month'] = Variable<String>(repairMonth.value);
+    }
+    if (repairDate.present) {
+      map['repair_date'] = Variable<DateTime>(repairDate.value);
+    }
+    if (unitId.present) {
+      map['unit_id'] = Variable<int>(unitId.value);
+    }
+    if (unitNameSnapshot.present) {
+      map['unit_name_snapshot'] = Variable<String>(unitNameSnapshot.value);
+    }
+    if (repairerId.present) {
+      map['repairer_id'] = Variable<int>(repairerId.value);
+    }
+    if (repairerNameSnapshot.present) {
+      map['repairer_name_snapshot'] = Variable<String>(
+        repairerNameSnapshot.value,
+      );
+    }
+    if (subtotalCents.present) {
+      map['subtotal_cents'] = Variable<int>(subtotalCents.value);
+    }
+    if (remark.present) {
+      map['remark'] = Variable<String>(remark.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GardenToolRepairGroupsCompanion(')
+          ..write('id: $id, ')
+          ..write('repairMonth: $repairMonth, ')
+          ..write('repairDate: $repairDate, ')
+          ..write('unitId: $unitId, ')
+          ..write('unitNameSnapshot: $unitNameSnapshot, ')
+          ..write('repairerId: $repairerId, ')
+          ..write('repairerNameSnapshot: $repairerNameSnapshot, ')
+          ..write('subtotalCents: $subtotalCents, ')
+          ..write('remark: $remark, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $GardenToolRepairItemsTable extends GardenToolRepairItems
+    with TableInfo<$GardenToolRepairItemsTable, GardenToolRepairItem> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $GardenToolRepairItemsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _groupIdMeta = const VerificationMeta(
+    'groupId',
+  );
+  @override
+  late final GeneratedColumn<int> groupId = GeneratedColumn<int>(
+    'group_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES garden_tool_repair_groups (id)',
+    ),
+  );
+  static const VerificationMeta _projectNameMeta = const VerificationMeta(
+    'projectName',
+  );
+  @override
+  late final GeneratedColumn<String> projectName = GeneratedColumn<String>(
+    'project_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _specModelMeta = const VerificationMeta(
+    'specModel',
+  );
+  @override
+  late final GeneratedColumn<String> specModel = GeneratedColumn<String>(
+    'spec_model',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _countUnitMeta = const VerificationMeta(
+    'countUnit',
+  );
+  @override
+  late final GeneratedColumn<String> countUnit = GeneratedColumn<String>(
+    'count_unit',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _quantityMeta = const VerificationMeta(
+    'quantity',
+  );
+  @override
+  late final GeneratedColumn<double> quantity = GeneratedColumn<double>(
+    'quantity',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _unitPriceCentsMeta = const VerificationMeta(
+    'unitPriceCents',
+  );
+  @override
+  late final GeneratedColumn<int> unitPriceCents = GeneratedColumn<int>(
+    'unit_price_cents',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _amountCentsMeta = const VerificationMeta(
+    'amountCents',
+  );
+  @override
+  late final GeneratedColumn<int> amountCents = GeneratedColumn<int>(
+    'amount_cents',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _remarkMeta = const VerificationMeta('remark');
+  @override
+  late final GeneratedColumn<String> remark = GeneratedColumn<String>(
+    'remark',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _sortOrderMeta = const VerificationMeta(
+    'sortOrder',
+  );
+  @override
+  late final GeneratedColumn<int> sortOrder = GeneratedColumn<int>(
+    'sort_order',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _deletedAtMeta = const VerificationMeta(
+    'deletedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+    'deleted_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    groupId,
+    projectName,
+    specModel,
+    countUnit,
+    quantity,
+    unitPriceCents,
+    amountCents,
+    remark,
+    sortOrder,
+    createdAt,
+    updatedAt,
+    deletedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'garden_tool_repair_items';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<GardenToolRepairItem> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('group_id')) {
+      context.handle(
+        _groupIdMeta,
+        groupId.isAcceptableOrUnknown(data['group_id']!, _groupIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_groupIdMeta);
+    }
+    if (data.containsKey('project_name')) {
+      context.handle(
+        _projectNameMeta,
+        projectName.isAcceptableOrUnknown(
+          data['project_name']!,
+          _projectNameMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_projectNameMeta);
+    }
+    if (data.containsKey('spec_model')) {
+      context.handle(
+        _specModelMeta,
+        specModel.isAcceptableOrUnknown(data['spec_model']!, _specModelMeta),
+      );
+    }
+    if (data.containsKey('count_unit')) {
+      context.handle(
+        _countUnitMeta,
+        countUnit.isAcceptableOrUnknown(data['count_unit']!, _countUnitMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_countUnitMeta);
+    }
+    if (data.containsKey('quantity')) {
+      context.handle(
+        _quantityMeta,
+        quantity.isAcceptableOrUnknown(data['quantity']!, _quantityMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_quantityMeta);
+    }
+    if (data.containsKey('unit_price_cents')) {
+      context.handle(
+        _unitPriceCentsMeta,
+        unitPriceCents.isAcceptableOrUnknown(
+          data['unit_price_cents']!,
+          _unitPriceCentsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_unitPriceCentsMeta);
+    }
+    if (data.containsKey('amount_cents')) {
+      context.handle(
+        _amountCentsMeta,
+        amountCents.isAcceptableOrUnknown(
+          data['amount_cents']!,
+          _amountCentsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_amountCentsMeta);
+    }
+    if (data.containsKey('remark')) {
+      context.handle(
+        _remarkMeta,
+        remark.isAcceptableOrUnknown(data['remark']!, _remarkMeta),
+      );
+    }
+    if (data.containsKey('sort_order')) {
+      context.handle(
+        _sortOrderMeta,
+        sortOrder.isAcceptableOrUnknown(data['sort_order']!, _sortOrderMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(
+        _deletedAtMeta,
+        deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  GardenToolRepairItem map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return GardenToolRepairItem(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      groupId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}group_id'],
+      )!,
+      projectName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}project_name'],
+      )!,
+      specModel: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}spec_model'],
+      ),
+      countUnit: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}count_unit'],
+      )!,
+      quantity: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}quantity'],
+      )!,
+      unitPriceCents: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}unit_price_cents'],
+      )!,
+      amountCents: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}amount_cents'],
+      )!,
+      remark: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}remark'],
+      ),
+      sortOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sort_order'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}deleted_at'],
+      ),
+    );
+  }
+
+  @override
+  $GardenToolRepairItemsTable createAlias(String alias) {
+    return $GardenToolRepairItemsTable(attachedDatabase, alias);
+  }
+}
+
+class GardenToolRepairItem extends DataClass
+    implements Insertable<GardenToolRepairItem> {
+  final int id;
+  final int groupId;
+  final String projectName;
+  final String? specModel;
+  final String countUnit;
+  final double quantity;
+  final int unitPriceCents;
+  final int amountCents;
+  final String? remark;
+  final int sortOrder;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime? deletedAt;
+  const GardenToolRepairItem({
+    required this.id,
+    required this.groupId,
+    required this.projectName,
+    this.specModel,
+    required this.countUnit,
+    required this.quantity,
+    required this.unitPriceCents,
+    required this.amountCents,
+    this.remark,
+    required this.sortOrder,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['group_id'] = Variable<int>(groupId);
+    map['project_name'] = Variable<String>(projectName);
+    if (!nullToAbsent || specModel != null) {
+      map['spec_model'] = Variable<String>(specModel);
+    }
+    map['count_unit'] = Variable<String>(countUnit);
+    map['quantity'] = Variable<double>(quantity);
+    map['unit_price_cents'] = Variable<int>(unitPriceCents);
+    map['amount_cents'] = Variable<int>(amountCents);
+    if (!nullToAbsent || remark != null) {
+      map['remark'] = Variable<String>(remark);
+    }
+    map['sort_order'] = Variable<int>(sortOrder);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    return map;
+  }
+
+  GardenToolRepairItemsCompanion toCompanion(bool nullToAbsent) {
+    return GardenToolRepairItemsCompanion(
+      id: Value(id),
+      groupId: Value(groupId),
+      projectName: Value(projectName),
+      specModel: specModel == null && nullToAbsent
+          ? const Value.absent()
+          : Value(specModel),
+      countUnit: Value(countUnit),
+      quantity: Value(quantity),
+      unitPriceCents: Value(unitPriceCents),
+      amountCents: Value(amountCents),
+      remark: remark == null && nullToAbsent
+          ? const Value.absent()
+          : Value(remark),
+      sortOrder: Value(sortOrder),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+    );
+  }
+
+  factory GardenToolRepairItem.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return GardenToolRepairItem(
+      id: serializer.fromJson<int>(json['id']),
+      groupId: serializer.fromJson<int>(json['groupId']),
+      projectName: serializer.fromJson<String>(json['projectName']),
+      specModel: serializer.fromJson<String?>(json['specModel']),
+      countUnit: serializer.fromJson<String>(json['countUnit']),
+      quantity: serializer.fromJson<double>(json['quantity']),
+      unitPriceCents: serializer.fromJson<int>(json['unitPriceCents']),
+      amountCents: serializer.fromJson<int>(json['amountCents']),
+      remark: serializer.fromJson<String?>(json['remark']),
+      sortOrder: serializer.fromJson<int>(json['sortOrder']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'groupId': serializer.toJson<int>(groupId),
+      'projectName': serializer.toJson<String>(projectName),
+      'specModel': serializer.toJson<String?>(specModel),
+      'countUnit': serializer.toJson<String>(countUnit),
+      'quantity': serializer.toJson<double>(quantity),
+      'unitPriceCents': serializer.toJson<int>(unitPriceCents),
+      'amountCents': serializer.toJson<int>(amountCents),
+      'remark': serializer.toJson<String?>(remark),
+      'sortOrder': serializer.toJson<int>(sortOrder),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+    };
+  }
+
+  GardenToolRepairItem copyWith({
+    int? id,
+    int? groupId,
+    String? projectName,
+    Value<String?> specModel = const Value.absent(),
+    String? countUnit,
+    double? quantity,
+    int? unitPriceCents,
+    int? amountCents,
+    Value<String?> remark = const Value.absent(),
+    int? sortOrder,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<DateTime?> deletedAt = const Value.absent(),
+  }) => GardenToolRepairItem(
+    id: id ?? this.id,
+    groupId: groupId ?? this.groupId,
+    projectName: projectName ?? this.projectName,
+    specModel: specModel.present ? specModel.value : this.specModel,
+    countUnit: countUnit ?? this.countUnit,
+    quantity: quantity ?? this.quantity,
+    unitPriceCents: unitPriceCents ?? this.unitPriceCents,
+    amountCents: amountCents ?? this.amountCents,
+    remark: remark.present ? remark.value : this.remark,
+    sortOrder: sortOrder ?? this.sortOrder,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+  );
+  GardenToolRepairItem copyWithCompanion(GardenToolRepairItemsCompanion data) {
+    return GardenToolRepairItem(
+      id: data.id.present ? data.id.value : this.id,
+      groupId: data.groupId.present ? data.groupId.value : this.groupId,
+      projectName: data.projectName.present
+          ? data.projectName.value
+          : this.projectName,
+      specModel: data.specModel.present ? data.specModel.value : this.specModel,
+      countUnit: data.countUnit.present ? data.countUnit.value : this.countUnit,
+      quantity: data.quantity.present ? data.quantity.value : this.quantity,
+      unitPriceCents: data.unitPriceCents.present
+          ? data.unitPriceCents.value
+          : this.unitPriceCents,
+      amountCents: data.amountCents.present
+          ? data.amountCents.value
+          : this.amountCents,
+      remark: data.remark.present ? data.remark.value : this.remark,
+      sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GardenToolRepairItem(')
+          ..write('id: $id, ')
+          ..write('groupId: $groupId, ')
+          ..write('projectName: $projectName, ')
+          ..write('specModel: $specModel, ')
+          ..write('countUnit: $countUnit, ')
+          ..write('quantity: $quantity, ')
+          ..write('unitPriceCents: $unitPriceCents, ')
+          ..write('amountCents: $amountCents, ')
+          ..write('remark: $remark, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    groupId,
+    projectName,
+    specModel,
+    countUnit,
+    quantity,
+    unitPriceCents,
+    amountCents,
+    remark,
+    sortOrder,
+    createdAt,
+    updatedAt,
+    deletedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is GardenToolRepairItem &&
+          other.id == this.id &&
+          other.groupId == this.groupId &&
+          other.projectName == this.projectName &&
+          other.specModel == this.specModel &&
+          other.countUnit == this.countUnit &&
+          other.quantity == this.quantity &&
+          other.unitPriceCents == this.unitPriceCents &&
+          other.amountCents == this.amountCents &&
+          other.remark == this.remark &&
+          other.sortOrder == this.sortOrder &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt);
+}
+
+class GardenToolRepairItemsCompanion
+    extends UpdateCompanion<GardenToolRepairItem> {
+  final Value<int> id;
+  final Value<int> groupId;
+  final Value<String> projectName;
+  final Value<String?> specModel;
+  final Value<String> countUnit;
+  final Value<double> quantity;
+  final Value<int> unitPriceCents;
+  final Value<int> amountCents;
+  final Value<String?> remark;
+  final Value<int> sortOrder;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<DateTime?> deletedAt;
+  const GardenToolRepairItemsCompanion({
+    this.id = const Value.absent(),
+    this.groupId = const Value.absent(),
+    this.projectName = const Value.absent(),
+    this.specModel = const Value.absent(),
+    this.countUnit = const Value.absent(),
+    this.quantity = const Value.absent(),
+    this.unitPriceCents = const Value.absent(),
+    this.amountCents = const Value.absent(),
+    this.remark = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+  });
+  GardenToolRepairItemsCompanion.insert({
+    this.id = const Value.absent(),
+    required int groupId,
+    required String projectName,
+    this.specModel = const Value.absent(),
+    required String countUnit,
+    required double quantity,
+    required int unitPriceCents,
+    required int amountCents,
+    this.remark = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+  }) : groupId = Value(groupId),
+       projectName = Value(projectName),
+       countUnit = Value(countUnit),
+       quantity = Value(quantity),
+       unitPriceCents = Value(unitPriceCents),
+       amountCents = Value(amountCents);
+  static Insertable<GardenToolRepairItem> custom({
+    Expression<int>? id,
+    Expression<int>? groupId,
+    Expression<String>? projectName,
+    Expression<String>? specModel,
+    Expression<String>? countUnit,
+    Expression<double>? quantity,
+    Expression<int>? unitPriceCents,
+    Expression<int>? amountCents,
+    Expression<String>? remark,
+    Expression<int>? sortOrder,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime>? deletedAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (groupId != null) 'group_id': groupId,
+      if (projectName != null) 'project_name': projectName,
+      if (specModel != null) 'spec_model': specModel,
+      if (countUnit != null) 'count_unit': countUnit,
+      if (quantity != null) 'quantity': quantity,
+      if (unitPriceCents != null) 'unit_price_cents': unitPriceCents,
+      if (amountCents != null) 'amount_cents': amountCents,
+      if (remark != null) 'remark': remark,
+      if (sortOrder != null) 'sort_order': sortOrder,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+    });
+  }
+
+  GardenToolRepairItemsCompanion copyWith({
+    Value<int>? id,
+    Value<int>? groupId,
+    Value<String>? projectName,
+    Value<String?>? specModel,
+    Value<String>? countUnit,
+    Value<double>? quantity,
+    Value<int>? unitPriceCents,
+    Value<int>? amountCents,
+    Value<String?>? remark,
+    Value<int>? sortOrder,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<DateTime?>? deletedAt,
+  }) {
+    return GardenToolRepairItemsCompanion(
+      id: id ?? this.id,
+      groupId: groupId ?? this.groupId,
+      projectName: projectName ?? this.projectName,
+      specModel: specModel ?? this.specModel,
+      countUnit: countUnit ?? this.countUnit,
+      quantity: quantity ?? this.quantity,
+      unitPriceCents: unitPriceCents ?? this.unitPriceCents,
+      amountCents: amountCents ?? this.amountCents,
+      remark: remark ?? this.remark,
+      sortOrder: sortOrder ?? this.sortOrder,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (groupId.present) {
+      map['group_id'] = Variable<int>(groupId.value);
+    }
+    if (projectName.present) {
+      map['project_name'] = Variable<String>(projectName.value);
+    }
+    if (specModel.present) {
+      map['spec_model'] = Variable<String>(specModel.value);
+    }
+    if (countUnit.present) {
+      map['count_unit'] = Variable<String>(countUnit.value);
+    }
+    if (quantity.present) {
+      map['quantity'] = Variable<double>(quantity.value);
+    }
+    if (unitPriceCents.present) {
+      map['unit_price_cents'] = Variable<int>(unitPriceCents.value);
+    }
+    if (amountCents.present) {
+      map['amount_cents'] = Variable<int>(amountCents.value);
+    }
+    if (remark.present) {
+      map['remark'] = Variable<String>(remark.value);
+    }
+    if (sortOrder.present) {
+      map['sort_order'] = Variable<int>(sortOrder.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GardenToolRepairItemsCompanion(')
+          ..write('id: $id, ')
+          ..write('groupId: $groupId, ')
+          ..write('projectName: $projectName, ')
+          ..write('specModel: $specModel, ')
+          ..write('countUnit: $countUnit, ')
+          ..write('quantity: $quantity, ')
+          ..write('unitPriceCents: $unitPriceCents, ')
+          ..write('amountCents: $amountCents, ')
+          ..write('remark: $remark, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $GardenToolRepairAttachmentsTable extends GardenToolRepairAttachments
+    with
+        TableInfo<
+          $GardenToolRepairAttachmentsTable,
+          GardenToolRepairAttachment
+        > {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $GardenToolRepairAttachmentsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _groupIdMeta = const VerificationMeta(
+    'groupId',
+  );
+  @override
+  late final GeneratedColumn<int> groupId = GeneratedColumn<int>(
+    'group_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES garden_tool_repair_groups (id)',
+    ),
+  );
+  static const VerificationMeta _attachmentTypeMeta = const VerificationMeta(
+    'attachmentType',
+  );
+  @override
+  late final GeneratedColumn<String> attachmentType = GeneratedColumn<String>(
+    'attachment_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _filePathMeta = const VerificationMeta(
+    'filePath',
+  );
+  @override
+  late final GeneratedColumn<String> filePath = GeneratedColumn<String>(
+    'file_path',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _thumbnailPathMeta = const VerificationMeta(
+    'thumbnailPath',
+  );
+  @override
+  late final GeneratedColumn<String> thumbnailPath = GeneratedColumn<String>(
+    'thumbnail_path',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _sortOrderMeta = const VerificationMeta(
+    'sortOrder',
+  );
+  @override
+  late final GeneratedColumn<int> sortOrder = GeneratedColumn<int>(
+    'sort_order',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _deletedAtMeta = const VerificationMeta(
+    'deletedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+    'deleted_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    groupId,
+    attachmentType,
+    filePath,
+    thumbnailPath,
+    sortOrder,
+    createdAt,
+    deletedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'garden_tool_repair_attachments';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<GardenToolRepairAttachment> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('group_id')) {
+      context.handle(
+        _groupIdMeta,
+        groupId.isAcceptableOrUnknown(data['group_id']!, _groupIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_groupIdMeta);
+    }
+    if (data.containsKey('attachment_type')) {
+      context.handle(
+        _attachmentTypeMeta,
+        attachmentType.isAcceptableOrUnknown(
+          data['attachment_type']!,
+          _attachmentTypeMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_attachmentTypeMeta);
+    }
+    if (data.containsKey('file_path')) {
+      context.handle(
+        _filePathMeta,
+        filePath.isAcceptableOrUnknown(data['file_path']!, _filePathMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_filePathMeta);
+    }
+    if (data.containsKey('thumbnail_path')) {
+      context.handle(
+        _thumbnailPathMeta,
+        thumbnailPath.isAcceptableOrUnknown(
+          data['thumbnail_path']!,
+          _thumbnailPathMeta,
+        ),
+      );
+    }
+    if (data.containsKey('sort_order')) {
+      context.handle(
+        _sortOrderMeta,
+        sortOrder.isAcceptableOrUnknown(data['sort_order']!, _sortOrderMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(
+        _deletedAtMeta,
+        deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  GardenToolRepairAttachment map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return GardenToolRepairAttachment(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      groupId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}group_id'],
+      )!,
+      attachmentType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}attachment_type'],
+      )!,
+      filePath: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}file_path'],
+      )!,
+      thumbnailPath: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}thumbnail_path'],
+      ),
+      sortOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sort_order'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}deleted_at'],
+      ),
+    );
+  }
+
+  @override
+  $GardenToolRepairAttachmentsTable createAlias(String alias) {
+    return $GardenToolRepairAttachmentsTable(attachedDatabase, alias);
+  }
+}
+
+class GardenToolRepairAttachment extends DataClass
+    implements Insertable<GardenToolRepairAttachment> {
+  final int id;
+  final int groupId;
+  final String attachmentType;
+  final String filePath;
+  final String? thumbnailPath;
+  final int sortOrder;
+  final DateTime createdAt;
+  final DateTime? deletedAt;
+  const GardenToolRepairAttachment({
+    required this.id,
+    required this.groupId,
+    required this.attachmentType,
+    required this.filePath,
+    this.thumbnailPath,
+    required this.sortOrder,
+    required this.createdAt,
+    this.deletedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['group_id'] = Variable<int>(groupId);
+    map['attachment_type'] = Variable<String>(attachmentType);
+    map['file_path'] = Variable<String>(filePath);
+    if (!nullToAbsent || thumbnailPath != null) {
+      map['thumbnail_path'] = Variable<String>(thumbnailPath);
+    }
+    map['sort_order'] = Variable<int>(sortOrder);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    return map;
+  }
+
+  GardenToolRepairAttachmentsCompanion toCompanion(bool nullToAbsent) {
+    return GardenToolRepairAttachmentsCompanion(
+      id: Value(id),
+      groupId: Value(groupId),
+      attachmentType: Value(attachmentType),
+      filePath: Value(filePath),
+      thumbnailPath: thumbnailPath == null && nullToAbsent
+          ? const Value.absent()
+          : Value(thumbnailPath),
+      sortOrder: Value(sortOrder),
+      createdAt: Value(createdAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+    );
+  }
+
+  factory GardenToolRepairAttachment.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return GardenToolRepairAttachment(
+      id: serializer.fromJson<int>(json['id']),
+      groupId: serializer.fromJson<int>(json['groupId']),
+      attachmentType: serializer.fromJson<String>(json['attachmentType']),
+      filePath: serializer.fromJson<String>(json['filePath']),
+      thumbnailPath: serializer.fromJson<String?>(json['thumbnailPath']),
+      sortOrder: serializer.fromJson<int>(json['sortOrder']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'groupId': serializer.toJson<int>(groupId),
+      'attachmentType': serializer.toJson<String>(attachmentType),
+      'filePath': serializer.toJson<String>(filePath),
+      'thumbnailPath': serializer.toJson<String?>(thumbnailPath),
+      'sortOrder': serializer.toJson<int>(sortOrder),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+    };
+  }
+
+  GardenToolRepairAttachment copyWith({
+    int? id,
+    int? groupId,
+    String? attachmentType,
+    String? filePath,
+    Value<String?> thumbnailPath = const Value.absent(),
+    int? sortOrder,
+    DateTime? createdAt,
+    Value<DateTime?> deletedAt = const Value.absent(),
+  }) => GardenToolRepairAttachment(
+    id: id ?? this.id,
+    groupId: groupId ?? this.groupId,
+    attachmentType: attachmentType ?? this.attachmentType,
+    filePath: filePath ?? this.filePath,
+    thumbnailPath: thumbnailPath.present
+        ? thumbnailPath.value
+        : this.thumbnailPath,
+    sortOrder: sortOrder ?? this.sortOrder,
+    createdAt: createdAt ?? this.createdAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+  );
+  GardenToolRepairAttachment copyWithCompanion(
+    GardenToolRepairAttachmentsCompanion data,
+  ) {
+    return GardenToolRepairAttachment(
+      id: data.id.present ? data.id.value : this.id,
+      groupId: data.groupId.present ? data.groupId.value : this.groupId,
+      attachmentType: data.attachmentType.present
+          ? data.attachmentType.value
+          : this.attachmentType,
+      filePath: data.filePath.present ? data.filePath.value : this.filePath,
+      thumbnailPath: data.thumbnailPath.present
+          ? data.thumbnailPath.value
+          : this.thumbnailPath,
+      sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GardenToolRepairAttachment(')
+          ..write('id: $id, ')
+          ..write('groupId: $groupId, ')
+          ..write('attachmentType: $attachmentType, ')
+          ..write('filePath: $filePath, ')
+          ..write('thumbnailPath: $thumbnailPath, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('deletedAt: $deletedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    groupId,
+    attachmentType,
+    filePath,
+    thumbnailPath,
+    sortOrder,
+    createdAt,
+    deletedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is GardenToolRepairAttachment &&
+          other.id == this.id &&
+          other.groupId == this.groupId &&
+          other.attachmentType == this.attachmentType &&
+          other.filePath == this.filePath &&
+          other.thumbnailPath == this.thumbnailPath &&
+          other.sortOrder == this.sortOrder &&
+          other.createdAt == this.createdAt &&
+          other.deletedAt == this.deletedAt);
+}
+
+class GardenToolRepairAttachmentsCompanion
+    extends UpdateCompanion<GardenToolRepairAttachment> {
+  final Value<int> id;
+  final Value<int> groupId;
+  final Value<String> attachmentType;
+  final Value<String> filePath;
+  final Value<String?> thumbnailPath;
+  final Value<int> sortOrder;
+  final Value<DateTime> createdAt;
+  final Value<DateTime?> deletedAt;
+  const GardenToolRepairAttachmentsCompanion({
+    this.id = const Value.absent(),
+    this.groupId = const Value.absent(),
+    this.attachmentType = const Value.absent(),
+    this.filePath = const Value.absent(),
+    this.thumbnailPath = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+  });
+  GardenToolRepairAttachmentsCompanion.insert({
+    this.id = const Value.absent(),
+    required int groupId,
+    required String attachmentType,
+    required String filePath,
+    this.thumbnailPath = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+  }) : groupId = Value(groupId),
+       attachmentType = Value(attachmentType),
+       filePath = Value(filePath);
+  static Insertable<GardenToolRepairAttachment> custom({
+    Expression<int>? id,
+    Expression<int>? groupId,
+    Expression<String>? attachmentType,
+    Expression<String>? filePath,
+    Expression<String>? thumbnailPath,
+    Expression<int>? sortOrder,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? deletedAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (groupId != null) 'group_id': groupId,
+      if (attachmentType != null) 'attachment_type': attachmentType,
+      if (filePath != null) 'file_path': filePath,
+      if (thumbnailPath != null) 'thumbnail_path': thumbnailPath,
+      if (sortOrder != null) 'sort_order': sortOrder,
+      if (createdAt != null) 'created_at': createdAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+    });
+  }
+
+  GardenToolRepairAttachmentsCompanion copyWith({
+    Value<int>? id,
+    Value<int>? groupId,
+    Value<String>? attachmentType,
+    Value<String>? filePath,
+    Value<String?>? thumbnailPath,
+    Value<int>? sortOrder,
+    Value<DateTime>? createdAt,
+    Value<DateTime?>? deletedAt,
+  }) {
+    return GardenToolRepairAttachmentsCompanion(
+      id: id ?? this.id,
+      groupId: groupId ?? this.groupId,
+      attachmentType: attachmentType ?? this.attachmentType,
+      filePath: filePath ?? this.filePath,
+      thumbnailPath: thumbnailPath ?? this.thumbnailPath,
+      sortOrder: sortOrder ?? this.sortOrder,
+      createdAt: createdAt ?? this.createdAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (groupId.present) {
+      map['group_id'] = Variable<int>(groupId.value);
+    }
+    if (attachmentType.present) {
+      map['attachment_type'] = Variable<String>(attachmentType.value);
+    }
+    if (filePath.present) {
+      map['file_path'] = Variable<String>(filePath.value);
+    }
+    if (thumbnailPath.present) {
+      map['thumbnail_path'] = Variable<String>(thumbnailPath.value);
+    }
+    if (sortOrder.present) {
+      map['sort_order'] = Variable<int>(sortOrder.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GardenToolRepairAttachmentsCompanion(')
+          ..write('id: $id, ')
+          ..write('groupId: $groupId, ')
+          ..write('attachmentType: $attachmentType, ')
+          ..write('filePath: $filePath, ')
+          ..write('thumbnailPath: $thumbnailPath, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('deletedAt: $deletedAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -30447,6 +33104,16 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $ReminderAlertRulesTable reminderAlertRules =
       $ReminderAlertRulesTable(this);
   late final $ReminderLinksTable reminderLinks = $ReminderLinksTable(this);
+  late final $GardenToolRepairUnitsTable gardenToolRepairUnits =
+      $GardenToolRepairUnitsTable(this);
+  late final $GardenToolRepairPersonsTable gardenToolRepairPersons =
+      $GardenToolRepairPersonsTable(this);
+  late final $GardenToolRepairGroupsTable gardenToolRepairGroups =
+      $GardenToolRepairGroupsTable(this);
+  late final $GardenToolRepairItemsTable gardenToolRepairItems =
+      $GardenToolRepairItemsTable(this);
+  late final $GardenToolRepairAttachmentsTable gardenToolRepairAttachments =
+      $GardenToolRepairAttachmentsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -30494,6 +33161,11 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     reminderOccurrences,
     reminderAlertRules,
     reminderLinks,
+    gardenToolRepairUnits,
+    gardenToolRepairPersons,
+    gardenToolRepairGroups,
+    gardenToolRepairItems,
+    gardenToolRepairAttachments,
   ];
 }
 
@@ -37267,10 +39939,6 @@ typedef $$RepairOrdersTableCreateCompanionBuilder =
       Value<int> reportedAmountCents,
       Value<int> actualAmountCents,
       required RepairTicketStatus ticketStatus,
-      Value<bool> isSettled,
-      Value<DateTime?> settledAt,
-      Value<bool> isPaid,
-      Value<DateTime?> paidAt,
       Value<VehicleRepairStatus> status,
       Value<DateTime?> completedAt,
       Value<String?> recordText,
@@ -37295,10 +39963,6 @@ typedef $$RepairOrdersTableUpdateCompanionBuilder =
       Value<int> reportedAmountCents,
       Value<int> actualAmountCents,
       Value<RepairTicketStatus> ticketStatus,
-      Value<bool> isSettled,
-      Value<DateTime?> settledAt,
-      Value<bool> isPaid,
-      Value<DateTime?> paidAt,
       Value<VehicleRepairStatus> status,
       Value<DateTime?> completedAt,
       Value<String?> recordText,
@@ -37462,26 +40126,6 @@ class $$RepairOrdersTableFilterComposer
   get ticketStatus => $composableBuilder(
     column: $table.ticketStatus,
     builder: (column) => ColumnWithTypeConverterFilters(column),
-  );
-
-  ColumnFilters<bool> get isSettled => $composableBuilder(
-    column: $table.isSettled,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get settledAt => $composableBuilder(
-    column: $table.settledAt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<bool> get isPaid => $composableBuilder(
-    column: $table.isPaid,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get paidAt => $composableBuilder(
-    column: $table.paidAt,
-    builder: (column) => ColumnFilters(column),
   );
 
   ColumnWithTypeConverterFilters<
@@ -37697,26 +40341,6 @@ class $$RepairOrdersTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<bool> get isSettled => $composableBuilder(
-    column: $table.isSettled,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get settledAt => $composableBuilder(
-    column: $table.settledAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<bool> get isPaid => $composableBuilder(
-    column: $table.isPaid,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get paidAt => $composableBuilder(
-    column: $table.paidAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<String> get status => $composableBuilder(
     column: $table.status,
     builder: (column) => ColumnOrderings(column),
@@ -37834,18 +40458,6 @@ class $$RepairOrdersTableAnnotationComposer
     column: $table.ticketStatus,
     builder: (column) => column,
   );
-
-  GeneratedColumn<bool> get isSettled =>
-      $composableBuilder(column: $table.isSettled, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get settledAt =>
-      $composableBuilder(column: $table.settledAt, builder: (column) => column);
-
-  GeneratedColumn<bool> get isPaid =>
-      $composableBuilder(column: $table.isPaid, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get paidAt =>
-      $composableBuilder(column: $table.paidAt, builder: (column) => column);
 
   GeneratedColumnWithTypeConverter<VehicleRepairStatus, String> get status =>
       $composableBuilder(column: $table.status, builder: (column) => column);
@@ -38019,10 +40631,6 @@ class $$RepairOrdersTableTableManager
                 Value<int> reportedAmountCents = const Value.absent(),
                 Value<int> actualAmountCents = const Value.absent(),
                 Value<RepairTicketStatus> ticketStatus = const Value.absent(),
-                Value<bool> isSettled = const Value.absent(),
-                Value<DateTime?> settledAt = const Value.absent(),
-                Value<bool> isPaid = const Value.absent(),
-                Value<DateTime?> paidAt = const Value.absent(),
                 Value<VehicleRepairStatus> status = const Value.absent(),
                 Value<DateTime?> completedAt = const Value.absent(),
                 Value<String?> recordText = const Value.absent(),
@@ -38045,10 +40653,6 @@ class $$RepairOrdersTableTableManager
                 reportedAmountCents: reportedAmountCents,
                 actualAmountCents: actualAmountCents,
                 ticketStatus: ticketStatus,
-                isSettled: isSettled,
-                settledAt: settledAt,
-                isPaid: isPaid,
-                paidAt: paidAt,
                 status: status,
                 completedAt: completedAt,
                 recordText: recordText,
@@ -38073,10 +40677,6 @@ class $$RepairOrdersTableTableManager
                 Value<int> reportedAmountCents = const Value.absent(),
                 Value<int> actualAmountCents = const Value.absent(),
                 required RepairTicketStatus ticketStatus,
-                Value<bool> isSettled = const Value.absent(),
-                Value<DateTime?> settledAt = const Value.absent(),
-                Value<bool> isPaid = const Value.absent(),
-                Value<DateTime?> paidAt = const Value.absent(),
                 Value<VehicleRepairStatus> status = const Value.absent(),
                 Value<DateTime?> completedAt = const Value.absent(),
                 Value<String?> recordText = const Value.absent(),
@@ -38099,10 +40699,6 @@ class $$RepairOrdersTableTableManager
                 reportedAmountCents: reportedAmountCents,
                 actualAmountCents: actualAmountCents,
                 ticketStatus: ticketStatus,
-                isSettled: isSettled,
-                settledAt: settledAt,
-                isPaid: isPaid,
-                paidAt: paidAt,
                 status: status,
                 completedAt: completedAt,
                 recordText: recordText,
@@ -54581,6 +57177,2652 @@ typedef $$ReminderLinksTableProcessedTableManager =
       ReminderLink,
       PrefetchHooks Function({bool reminderId})
     >;
+typedef $$GardenToolRepairUnitsTableCreateCompanionBuilder =
+    GardenToolRepairUnitsCompanion Function({
+      Value<int> id,
+      required String name,
+      Value<int> sortOrder,
+      Value<bool> isActive,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+    });
+typedef $$GardenToolRepairUnitsTableUpdateCompanionBuilder =
+    GardenToolRepairUnitsCompanion Function({
+      Value<int> id,
+      Value<String> name,
+      Value<int> sortOrder,
+      Value<bool> isActive,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+    });
+
+final class $$GardenToolRepairUnitsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $GardenToolRepairUnitsTable,
+          GardenToolRepairUnit
+        > {
+  $$GardenToolRepairUnitsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static MultiTypedResultKey<
+    $GardenToolRepairPersonsTable,
+    List<GardenToolRepairPerson>
+  >
+  _gardenToolRepairPersonsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.gardenToolRepairPersons,
+        aliasName:
+            'garden_tool_repair_units__id__garden_tool_repair_persons__unit_id',
+      );
+
+  $$GardenToolRepairPersonsTableProcessedTableManager
+  get gardenToolRepairPersonsRefs {
+    final manager = $$GardenToolRepairPersonsTableTableManager(
+      $_db,
+      $_db.gardenToolRepairPersons,
+    ).filter((f) => f.unitId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _gardenToolRepairPersonsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $GardenToolRepairGroupsTable,
+    List<GardenToolRepairGroup>
+  >
+  _gardenToolRepairGroupsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.gardenToolRepairGroups,
+        aliasName:
+            'garden_tool_repair_units__id__garden_tool_repair_groups__unit_id',
+      );
+
+  $$GardenToolRepairGroupsTableProcessedTableManager
+  get gardenToolRepairGroupsRefs {
+    final manager = $$GardenToolRepairGroupsTableTableManager(
+      $_db,
+      $_db.gardenToolRepairGroups,
+    ).filter((f) => f.unitId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _gardenToolRepairGroupsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$GardenToolRepairUnitsTableFilterComposer
+    extends Composer<_$AppDatabase, $GardenToolRepairUnitsTable> {
+  $$GardenToolRepairUnitsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isActive => $composableBuilder(
+    column: $table.isActive,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> gardenToolRepairPersonsRefs(
+    Expression<bool> Function($$GardenToolRepairPersonsTableFilterComposer f) f,
+  ) {
+    final $$GardenToolRepairPersonsTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.gardenToolRepairPersons,
+          getReferencedColumn: (t) => t.unitId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$GardenToolRepairPersonsTableFilterComposer(
+                $db: $db,
+                $table: $db.gardenToolRepairPersons,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<bool> gardenToolRepairGroupsRefs(
+    Expression<bool> Function($$GardenToolRepairGroupsTableFilterComposer f) f,
+  ) {
+    final $$GardenToolRepairGroupsTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.gardenToolRepairGroups,
+          getReferencedColumn: (t) => t.unitId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$GardenToolRepairGroupsTableFilterComposer(
+                $db: $db,
+                $table: $db.gardenToolRepairGroups,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$GardenToolRepairUnitsTableOrderingComposer
+    extends Composer<_$AppDatabase, $GardenToolRepairUnitsTable> {
+  $$GardenToolRepairUnitsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isActive => $composableBuilder(
+    column: $table.isActive,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$GardenToolRepairUnitsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $GardenToolRepairUnitsTable> {
+  $$GardenToolRepairUnitsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<int> get sortOrder =>
+      $composableBuilder(column: $table.sortOrder, builder: (column) => column);
+
+  GeneratedColumn<bool> get isActive =>
+      $composableBuilder(column: $table.isActive, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  Expression<T> gardenToolRepairPersonsRefs<T extends Object>(
+    Expression<T> Function($$GardenToolRepairPersonsTableAnnotationComposer a)
+    f,
+  ) {
+    final $$GardenToolRepairPersonsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.gardenToolRepairPersons,
+          getReferencedColumn: (t) => t.unitId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$GardenToolRepairPersonsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.gardenToolRepairPersons,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> gardenToolRepairGroupsRefs<T extends Object>(
+    Expression<T> Function($$GardenToolRepairGroupsTableAnnotationComposer a) f,
+  ) {
+    final $$GardenToolRepairGroupsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.gardenToolRepairGroups,
+          getReferencedColumn: (t) => t.unitId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$GardenToolRepairGroupsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.gardenToolRepairGroups,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$GardenToolRepairUnitsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $GardenToolRepairUnitsTable,
+          GardenToolRepairUnit,
+          $$GardenToolRepairUnitsTableFilterComposer,
+          $$GardenToolRepairUnitsTableOrderingComposer,
+          $$GardenToolRepairUnitsTableAnnotationComposer,
+          $$GardenToolRepairUnitsTableCreateCompanionBuilder,
+          $$GardenToolRepairUnitsTableUpdateCompanionBuilder,
+          (GardenToolRepairUnit, $$GardenToolRepairUnitsTableReferences),
+          GardenToolRepairUnit,
+          PrefetchHooks Function({
+            bool gardenToolRepairPersonsRefs,
+            bool gardenToolRepairGroupsRefs,
+          })
+        > {
+  $$GardenToolRepairUnitsTableTableManager(
+    _$AppDatabase db,
+    $GardenToolRepairUnitsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$GardenToolRepairUnitsTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$GardenToolRepairUnitsTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$GardenToolRepairUnitsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+                Value<bool> isActive = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+              }) => GardenToolRepairUnitsCompanion(
+                id: id,
+                name: name,
+                sortOrder: sortOrder,
+                isActive: isActive,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String name,
+                Value<int> sortOrder = const Value.absent(),
+                Value<bool> isActive = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+              }) => GardenToolRepairUnitsCompanion.insert(
+                id: id,
+                name: name,
+                sortOrder: sortOrder,
+                isActive: isActive,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<
+                    $GardenToolRepairUnitsTable,
+                    GardenToolRepairUnit
+                  >(table),
+                  $$GardenToolRepairUnitsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                gardenToolRepairPersonsRefs = false,
+                gardenToolRepairGroupsRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (gardenToolRepairPersonsRefs) db.gardenToolRepairPersons,
+                    if (gardenToolRepairGroupsRefs) db.gardenToolRepairGroups,
+                  ],
+                  addJoins: null,
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (gardenToolRepairPersonsRefs)
+                        await $_getPrefetchedData<
+                          GardenToolRepairUnit,
+                          $GardenToolRepairUnitsTable,
+                          GardenToolRepairPerson
+                        >(
+                          currentTable: table,
+                          referencedTable:
+                              $$GardenToolRepairUnitsTableReferences
+                                  ._gardenToolRepairPersonsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$GardenToolRepairUnitsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).gardenToolRepairPersonsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.unitId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (gardenToolRepairGroupsRefs)
+                        await $_getPrefetchedData<
+                          GardenToolRepairUnit,
+                          $GardenToolRepairUnitsTable,
+                          GardenToolRepairGroup
+                        >(
+                          currentTable: table,
+                          referencedTable:
+                              $$GardenToolRepairUnitsTableReferences
+                                  ._gardenToolRepairGroupsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$GardenToolRepairUnitsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).gardenToolRepairGroupsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.unitId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$GardenToolRepairUnitsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $GardenToolRepairUnitsTable,
+      GardenToolRepairUnit,
+      $$GardenToolRepairUnitsTableFilterComposer,
+      $$GardenToolRepairUnitsTableOrderingComposer,
+      $$GardenToolRepairUnitsTableAnnotationComposer,
+      $$GardenToolRepairUnitsTableCreateCompanionBuilder,
+      $$GardenToolRepairUnitsTableUpdateCompanionBuilder,
+      (GardenToolRepairUnit, $$GardenToolRepairUnitsTableReferences),
+      GardenToolRepairUnit,
+      PrefetchHooks Function({
+        bool gardenToolRepairPersonsRefs,
+        bool gardenToolRepairGroupsRefs,
+      })
+    >;
+typedef $$GardenToolRepairPersonsTableCreateCompanionBuilder =
+    GardenToolRepairPersonsCompanion Function({
+      Value<int> id,
+      required int unitId,
+      required String name,
+      Value<bool> isActive,
+      Value<int> sortOrder,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+    });
+typedef $$GardenToolRepairPersonsTableUpdateCompanionBuilder =
+    GardenToolRepairPersonsCompanion Function({
+      Value<int> id,
+      Value<int> unitId,
+      Value<String> name,
+      Value<bool> isActive,
+      Value<int> sortOrder,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+    });
+
+final class $$GardenToolRepairPersonsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $GardenToolRepairPersonsTable,
+          GardenToolRepairPerson
+        > {
+  $$GardenToolRepairPersonsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $GardenToolRepairUnitsTable _unitIdTable(_$AppDatabase db) =>
+      db.gardenToolRepairUnits.createAlias(
+        'garden_tool_repair_persons__unit_id__garden_tool_repair_units__id',
+      );
+
+  $$GardenToolRepairUnitsTableProcessedTableManager get unitId {
+    final $_column = $_itemColumn<int>('unit_id')!;
+
+    final manager = $$GardenToolRepairUnitsTableTableManager(
+      $_db,
+      $_db.gardenToolRepairUnits,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_unitIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $GardenToolRepairGroupsTable,
+    List<GardenToolRepairGroup>
+  >
+  _gardenToolRepairGroupsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.gardenToolRepairGroups,
+        aliasName: 'garden_tool_repair_persons__id__garden_tool_repair_groups__repairer_id',
+      );
+
+  $$GardenToolRepairGroupsTableProcessedTableManager
+  get gardenToolRepairGroupsRefs {
+    final manager = $$GardenToolRepairGroupsTableTableManager(
+      $_db,
+      $_db.gardenToolRepairGroups,
+    ).filter((f) => f.repairerId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _gardenToolRepairGroupsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$GardenToolRepairPersonsTableFilterComposer
+    extends Composer<_$AppDatabase, $GardenToolRepairPersonsTable> {
+  $$GardenToolRepairPersonsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isActive => $composableBuilder(
+    column: $table.isActive,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$GardenToolRepairUnitsTableFilterComposer get unitId {
+    final $$GardenToolRepairUnitsTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.unitId,
+          referencedTable: $db.gardenToolRepairUnits,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$GardenToolRepairUnitsTableFilterComposer(
+                $db: $db,
+                $table: $db.gardenToolRepairUnits,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  Expression<bool> gardenToolRepairGroupsRefs(
+    Expression<bool> Function($$GardenToolRepairGroupsTableFilterComposer f) f,
+  ) {
+    final $$GardenToolRepairGroupsTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.gardenToolRepairGroups,
+          getReferencedColumn: (t) => t.repairerId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$GardenToolRepairGroupsTableFilterComposer(
+                $db: $db,
+                $table: $db.gardenToolRepairGroups,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$GardenToolRepairPersonsTableOrderingComposer
+    extends Composer<_$AppDatabase, $GardenToolRepairPersonsTable> {
+  $$GardenToolRepairPersonsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isActive => $composableBuilder(
+    column: $table.isActive,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$GardenToolRepairUnitsTableOrderingComposer get unitId {
+    final $$GardenToolRepairUnitsTableOrderingComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.unitId,
+          referencedTable: $db.gardenToolRepairUnits,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$GardenToolRepairUnitsTableOrderingComposer(
+                $db: $db,
+                $table: $db.gardenToolRepairUnits,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$GardenToolRepairPersonsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $GardenToolRepairPersonsTable> {
+  $$GardenToolRepairPersonsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<bool> get isActive =>
+      $composableBuilder(column: $table.isActive, builder: (column) => column);
+
+  GeneratedColumn<int> get sortOrder =>
+      $composableBuilder(column: $table.sortOrder, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  $$GardenToolRepairUnitsTableAnnotationComposer get unitId {
+    final $$GardenToolRepairUnitsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.unitId,
+          referencedTable: $db.gardenToolRepairUnits,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$GardenToolRepairUnitsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.gardenToolRepairUnits,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  Expression<T> gardenToolRepairGroupsRefs<T extends Object>(
+    Expression<T> Function($$GardenToolRepairGroupsTableAnnotationComposer a) f,
+  ) {
+    final $$GardenToolRepairGroupsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.gardenToolRepairGroups,
+          getReferencedColumn: (t) => t.repairerId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$GardenToolRepairGroupsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.gardenToolRepairGroups,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$GardenToolRepairPersonsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $GardenToolRepairPersonsTable,
+          GardenToolRepairPerson,
+          $$GardenToolRepairPersonsTableFilterComposer,
+          $$GardenToolRepairPersonsTableOrderingComposer,
+          $$GardenToolRepairPersonsTableAnnotationComposer,
+          $$GardenToolRepairPersonsTableCreateCompanionBuilder,
+          $$GardenToolRepairPersonsTableUpdateCompanionBuilder,
+          (GardenToolRepairPerson, $$GardenToolRepairPersonsTableReferences),
+          GardenToolRepairPerson,
+          PrefetchHooks Function({bool unitId, bool gardenToolRepairGroupsRefs})
+        > {
+  $$GardenToolRepairPersonsTableTableManager(
+    _$AppDatabase db,
+    $GardenToolRepairPersonsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$GardenToolRepairPersonsTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$GardenToolRepairPersonsTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$GardenToolRepairPersonsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> unitId = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<bool> isActive = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+              }) => GardenToolRepairPersonsCompanion(
+                id: id,
+                unitId: unitId,
+                name: name,
+                isActive: isActive,
+                sortOrder: sortOrder,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int unitId,
+                required String name,
+                Value<bool> isActive = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+              }) => GardenToolRepairPersonsCompanion.insert(
+                id: id,
+                unitId: unitId,
+                name: name,
+                isActive: isActive,
+                sortOrder: sortOrder,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<
+                    $GardenToolRepairPersonsTable,
+                    GardenToolRepairPerson
+                  >(table),
+                  $$GardenToolRepairPersonsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({unitId = false, gardenToolRepairGroupsRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (gardenToolRepairGroupsRefs) db.gardenToolRepairGroups,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (unitId) {
+                          state = state.withJoin(
+                            currentTable: table,
+                            currentColumn: table.unitId,
+                            referencedTable:
+                                $$GardenToolRepairPersonsTableReferences
+                                    ._unitIdTable(db),
+                            referencedColumn:
+                                $$GardenToolRepairPersonsTableReferences
+                                    ._unitIdTable(db)
+                                    .id,
+                          ) as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (gardenToolRepairGroupsRefs)
+                        await $_getPrefetchedData<
+                          GardenToolRepairPerson,
+                          $GardenToolRepairPersonsTable,
+                          GardenToolRepairGroup
+                        >(
+                          currentTable: table,
+                          referencedTable:
+                              $$GardenToolRepairPersonsTableReferences
+                                  ._gardenToolRepairGroupsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$GardenToolRepairPersonsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).gardenToolRepairGroupsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.repairerId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$GardenToolRepairPersonsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $GardenToolRepairPersonsTable,
+      GardenToolRepairPerson,
+      $$GardenToolRepairPersonsTableFilterComposer,
+      $$GardenToolRepairPersonsTableOrderingComposer,
+      $$GardenToolRepairPersonsTableAnnotationComposer,
+      $$GardenToolRepairPersonsTableCreateCompanionBuilder,
+      $$GardenToolRepairPersonsTableUpdateCompanionBuilder,
+      (GardenToolRepairPerson, $$GardenToolRepairPersonsTableReferences),
+      GardenToolRepairPerson,
+      PrefetchHooks Function({bool unitId, bool gardenToolRepairGroupsRefs})
+    >;
+typedef $$GardenToolRepairGroupsTableCreateCompanionBuilder =
+    GardenToolRepairGroupsCompanion Function({
+      Value<int> id,
+      required String repairMonth,
+      required DateTime repairDate,
+      required int unitId,
+      required String unitNameSnapshot,
+      Value<int?> repairerId,
+      required String repairerNameSnapshot,
+      Value<int> subtotalCents,
+      Value<String?> remark,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+    });
+typedef $$GardenToolRepairGroupsTableUpdateCompanionBuilder =
+    GardenToolRepairGroupsCompanion Function({
+      Value<int> id,
+      Value<String> repairMonth,
+      Value<DateTime> repairDate,
+      Value<int> unitId,
+      Value<String> unitNameSnapshot,
+      Value<int?> repairerId,
+      Value<String> repairerNameSnapshot,
+      Value<int> subtotalCents,
+      Value<String?> remark,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+    });
+
+final class $$GardenToolRepairGroupsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $GardenToolRepairGroupsTable,
+          GardenToolRepairGroup
+        > {
+  $$GardenToolRepairGroupsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $GardenToolRepairUnitsTable _unitIdTable(_$AppDatabase db) =>
+      db.gardenToolRepairUnits.createAlias(
+        'garden_tool_repair_groups__unit_id__garden_tool_repair_units__id',
+      );
+
+  $$GardenToolRepairUnitsTableProcessedTableManager get unitId {
+    final $_column = $_itemColumn<int>('unit_id')!;
+
+    final manager = $$GardenToolRepairUnitsTableTableManager(
+      $_db,
+      $_db.gardenToolRepairUnits,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_unitIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $GardenToolRepairPersonsTable _repairerIdTable(
+    _$AppDatabase db,
+  ) => db.gardenToolRepairPersons.createAlias(
+    'garden_tool_repair_groups__repairer_id__garden_tool_repair_persons__id',
+  );
+
+  $$GardenToolRepairPersonsTableProcessedTableManager? get repairerId {
+    final $_column = $_itemColumn<int>('repairer_id');
+    if ($_column == null) return null;
+    final manager = $$GardenToolRepairPersonsTableTableManager(
+      $_db,
+      $_db.gardenToolRepairPersons,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_repairerIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $GardenToolRepairItemsTable,
+    List<GardenToolRepairItem>
+  >
+  _gardenToolRepairItemsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.gardenToolRepairItems,
+        aliasName:
+            'garden_tool_repair_groups__id__garden_tool_repair_items__group_id',
+      );
+
+  $$GardenToolRepairItemsTableProcessedTableManager
+  get gardenToolRepairItemsRefs {
+    final manager = $$GardenToolRepairItemsTableTableManager(
+      $_db,
+      $_db.gardenToolRepairItems,
+    ).filter((f) => f.groupId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _gardenToolRepairItemsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $GardenToolRepairAttachmentsTable,
+    List<GardenToolRepairAttachment>
+  >
+  _gardenToolRepairAttachmentsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.gardenToolRepairAttachments,
+        aliasName: 'garden_tool_repair_groups__id__garden_tool_repair_attachments__group_id',
+      );
+
+  $$GardenToolRepairAttachmentsTableProcessedTableManager
+  get gardenToolRepairAttachmentsRefs {
+    final manager = $$GardenToolRepairAttachmentsTableTableManager(
+      $_db,
+      $_db.gardenToolRepairAttachments,
+    ).filter((f) => f.groupId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _gardenToolRepairAttachmentsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$GardenToolRepairGroupsTableFilterComposer
+    extends Composer<_$AppDatabase, $GardenToolRepairGroupsTable> {
+  $$GardenToolRepairGroupsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get repairMonth => $composableBuilder(
+    column: $table.repairMonth,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get repairDate => $composableBuilder(
+    column: $table.repairDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get unitNameSnapshot => $composableBuilder(
+    column: $table.unitNameSnapshot,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get repairerNameSnapshot => $composableBuilder(
+    column: $table.repairerNameSnapshot,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get subtotalCents => $composableBuilder(
+    column: $table.subtotalCents,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$GardenToolRepairUnitsTableFilterComposer get unitId {
+    final $$GardenToolRepairUnitsTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.unitId,
+          referencedTable: $db.gardenToolRepairUnits,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$GardenToolRepairUnitsTableFilterComposer(
+                $db: $db,
+                $table: $db.gardenToolRepairUnits,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$GardenToolRepairPersonsTableFilterComposer get repairerId {
+    final $$GardenToolRepairPersonsTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.repairerId,
+          referencedTable: $db.gardenToolRepairPersons,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$GardenToolRepairPersonsTableFilterComposer(
+                $db: $db,
+                $table: $db.gardenToolRepairPersons,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  Expression<bool> gardenToolRepairItemsRefs(
+    Expression<bool> Function($$GardenToolRepairItemsTableFilterComposer f) f,
+  ) {
+    final $$GardenToolRepairItemsTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.gardenToolRepairItems,
+          getReferencedColumn: (t) => t.groupId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$GardenToolRepairItemsTableFilterComposer(
+                $db: $db,
+                $table: $db.gardenToolRepairItems,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<bool> gardenToolRepairAttachmentsRefs(
+    Expression<bool> Function(
+      $$GardenToolRepairAttachmentsTableFilterComposer f,
+    )
+    f,
+  ) {
+    final $$GardenToolRepairAttachmentsTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.gardenToolRepairAttachments,
+          getReferencedColumn: (t) => t.groupId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$GardenToolRepairAttachmentsTableFilterComposer(
+                $db: $db,
+                $table: $db.gardenToolRepairAttachments,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$GardenToolRepairGroupsTableOrderingComposer
+    extends Composer<_$AppDatabase, $GardenToolRepairGroupsTable> {
+  $$GardenToolRepairGroupsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get repairMonth => $composableBuilder(
+    column: $table.repairMonth,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get repairDate => $composableBuilder(
+    column: $table.repairDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get unitNameSnapshot => $composableBuilder(
+    column: $table.unitNameSnapshot,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get repairerNameSnapshot => $composableBuilder(
+    column: $table.repairerNameSnapshot,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get subtotalCents => $composableBuilder(
+    column: $table.subtotalCents,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$GardenToolRepairUnitsTableOrderingComposer get unitId {
+    final $$GardenToolRepairUnitsTableOrderingComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.unitId,
+          referencedTable: $db.gardenToolRepairUnits,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$GardenToolRepairUnitsTableOrderingComposer(
+                $db: $db,
+                $table: $db.gardenToolRepairUnits,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$GardenToolRepairPersonsTableOrderingComposer get repairerId {
+    final $$GardenToolRepairPersonsTableOrderingComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.repairerId,
+          referencedTable: $db.gardenToolRepairPersons,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$GardenToolRepairPersonsTableOrderingComposer(
+                $db: $db,
+                $table: $db.gardenToolRepairPersons,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$GardenToolRepairGroupsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $GardenToolRepairGroupsTable> {
+  $$GardenToolRepairGroupsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get repairMonth => $composableBuilder(
+    column: $table.repairMonth,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get repairDate => $composableBuilder(
+    column: $table.repairDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get unitNameSnapshot => $composableBuilder(
+    column: $table.unitNameSnapshot,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get repairerNameSnapshot => $composableBuilder(
+    column: $table.repairerNameSnapshot,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get subtotalCents => $composableBuilder(
+    column: $table.subtotalCents,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get remark =>
+      $composableBuilder(column: $table.remark, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  $$GardenToolRepairUnitsTableAnnotationComposer get unitId {
+    final $$GardenToolRepairUnitsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.unitId,
+          referencedTable: $db.gardenToolRepairUnits,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$GardenToolRepairUnitsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.gardenToolRepairUnits,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$GardenToolRepairPersonsTableAnnotationComposer get repairerId {
+    final $$GardenToolRepairPersonsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.repairerId,
+          referencedTable: $db.gardenToolRepairPersons,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$GardenToolRepairPersonsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.gardenToolRepairPersons,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  Expression<T> gardenToolRepairItemsRefs<T extends Object>(
+    Expression<T> Function($$GardenToolRepairItemsTableAnnotationComposer a) f,
+  ) {
+    final $$GardenToolRepairItemsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.gardenToolRepairItems,
+          getReferencedColumn: (t) => t.groupId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$GardenToolRepairItemsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.gardenToolRepairItems,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> gardenToolRepairAttachmentsRefs<T extends Object>(
+    Expression<T> Function(
+      $$GardenToolRepairAttachmentsTableAnnotationComposer a,
+    )
+    f,
+  ) {
+    final $$GardenToolRepairAttachmentsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.gardenToolRepairAttachments,
+          getReferencedColumn: (t) => t.groupId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$GardenToolRepairAttachmentsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.gardenToolRepairAttachments,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$GardenToolRepairGroupsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $GardenToolRepairGroupsTable,
+          GardenToolRepairGroup,
+          $$GardenToolRepairGroupsTableFilterComposer,
+          $$GardenToolRepairGroupsTableOrderingComposer,
+          $$GardenToolRepairGroupsTableAnnotationComposer,
+          $$GardenToolRepairGroupsTableCreateCompanionBuilder,
+          $$GardenToolRepairGroupsTableUpdateCompanionBuilder,
+          (GardenToolRepairGroup, $$GardenToolRepairGroupsTableReferences),
+          GardenToolRepairGroup,
+          PrefetchHooks Function({
+            bool unitId,
+            bool repairerId,
+            bool gardenToolRepairItemsRefs,
+            bool gardenToolRepairAttachmentsRefs,
+          })
+        > {
+  $$GardenToolRepairGroupsTableTableManager(
+    _$AppDatabase db,
+    $GardenToolRepairGroupsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$GardenToolRepairGroupsTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$GardenToolRepairGroupsTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$GardenToolRepairGroupsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> repairMonth = const Value.absent(),
+                Value<DateTime> repairDate = const Value.absent(),
+                Value<int> unitId = const Value.absent(),
+                Value<String> unitNameSnapshot = const Value.absent(),
+                Value<int?> repairerId = const Value.absent(),
+                Value<String> repairerNameSnapshot = const Value.absent(),
+                Value<int> subtotalCents = const Value.absent(),
+                Value<String?> remark = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+              }) => GardenToolRepairGroupsCompanion(
+                id: id,
+                repairMonth: repairMonth,
+                repairDate: repairDate,
+                unitId: unitId,
+                unitNameSnapshot: unitNameSnapshot,
+                repairerId: repairerId,
+                repairerNameSnapshot: repairerNameSnapshot,
+                subtotalCents: subtotalCents,
+                remark: remark,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String repairMonth,
+                required DateTime repairDate,
+                required int unitId,
+                required String unitNameSnapshot,
+                Value<int?> repairerId = const Value.absent(),
+                required String repairerNameSnapshot,
+                Value<int> subtotalCents = const Value.absent(),
+                Value<String?> remark = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+              }) => GardenToolRepairGroupsCompanion.insert(
+                id: id,
+                repairMonth: repairMonth,
+                repairDate: repairDate,
+                unitId: unitId,
+                unitNameSnapshot: unitNameSnapshot,
+                repairerId: repairerId,
+                repairerNameSnapshot: repairerNameSnapshot,
+                subtotalCents: subtotalCents,
+                remark: remark,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<
+                    $GardenToolRepairGroupsTable,
+                    GardenToolRepairGroup
+                  >(table),
+                  $$GardenToolRepairGroupsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                unitId = false,
+                repairerId = false,
+                gardenToolRepairItemsRefs = false,
+                gardenToolRepairAttachmentsRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (gardenToolRepairItemsRefs) db.gardenToolRepairItems,
+                    if (gardenToolRepairAttachmentsRefs)
+                      db.gardenToolRepairAttachments,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (unitId) {
+                          state = state.withJoin(
+                            currentTable: table,
+                            currentColumn: table.unitId,
+                            referencedTable:
+                                $$GardenToolRepairGroupsTableReferences
+                                    ._unitIdTable(db),
+                            referencedColumn:
+                                $$GardenToolRepairGroupsTableReferences
+                                    ._unitIdTable(db)
+                                    .id,
+                          ) as T;
+                        }
+                        if (repairerId) {
+                          state = state.withJoin(
+                            currentTable: table,
+                            currentColumn: table.repairerId,
+                            referencedTable:
+                                $$GardenToolRepairGroupsTableReferences
+                                    ._repairerIdTable(db),
+                            referencedColumn:
+                                $$GardenToolRepairGroupsTableReferences
+                                    ._repairerIdTable(db)
+                                    .id,
+                          ) as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (gardenToolRepairItemsRefs)
+                        await $_getPrefetchedData<
+                          GardenToolRepairGroup,
+                          $GardenToolRepairGroupsTable,
+                          GardenToolRepairItem
+                        >(
+                          currentTable: table,
+                          referencedTable:
+                              $$GardenToolRepairGroupsTableReferences
+                                  ._gardenToolRepairItemsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$GardenToolRepairGroupsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).gardenToolRepairItemsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.groupId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (gardenToolRepairAttachmentsRefs)
+                        await $_getPrefetchedData<
+                          GardenToolRepairGroup,
+                          $GardenToolRepairGroupsTable,
+                          GardenToolRepairAttachment
+                        >(
+                          currentTable: table,
+                          referencedTable:
+                              $$GardenToolRepairGroupsTableReferences
+                                  ._gardenToolRepairAttachmentsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$GardenToolRepairGroupsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).gardenToolRepairAttachmentsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.groupId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$GardenToolRepairGroupsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $GardenToolRepairGroupsTable,
+      GardenToolRepairGroup,
+      $$GardenToolRepairGroupsTableFilterComposer,
+      $$GardenToolRepairGroupsTableOrderingComposer,
+      $$GardenToolRepairGroupsTableAnnotationComposer,
+      $$GardenToolRepairGroupsTableCreateCompanionBuilder,
+      $$GardenToolRepairGroupsTableUpdateCompanionBuilder,
+      (GardenToolRepairGroup, $$GardenToolRepairGroupsTableReferences),
+      GardenToolRepairGroup,
+      PrefetchHooks Function({
+        bool unitId,
+        bool repairerId,
+        bool gardenToolRepairItemsRefs,
+        bool gardenToolRepairAttachmentsRefs,
+      })
+    >;
+typedef $$GardenToolRepairItemsTableCreateCompanionBuilder =
+    GardenToolRepairItemsCompanion Function({
+      Value<int> id,
+      required int groupId,
+      required String projectName,
+      Value<String?> specModel,
+      required String countUnit,
+      required double quantity,
+      required int unitPriceCents,
+      required int amountCents,
+      Value<String?> remark,
+      Value<int> sortOrder,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+    });
+typedef $$GardenToolRepairItemsTableUpdateCompanionBuilder =
+    GardenToolRepairItemsCompanion Function({
+      Value<int> id,
+      Value<int> groupId,
+      Value<String> projectName,
+      Value<String?> specModel,
+      Value<String> countUnit,
+      Value<double> quantity,
+      Value<int> unitPriceCents,
+      Value<int> amountCents,
+      Value<String?> remark,
+      Value<int> sortOrder,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+    });
+
+final class $$GardenToolRepairItemsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $GardenToolRepairItemsTable,
+          GardenToolRepairItem
+        > {
+  $$GardenToolRepairItemsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $GardenToolRepairGroupsTable _groupIdTable(_$AppDatabase db) =>
+      db.gardenToolRepairGroups.createAlias(
+        'garden_tool_repair_items__group_id__garden_tool_repair_groups__id',
+      );
+
+  $$GardenToolRepairGroupsTableProcessedTableManager get groupId {
+    final $_column = $_itemColumn<int>('group_id')!;
+
+    final manager = $$GardenToolRepairGroupsTableTableManager(
+      $_db,
+      $_db.gardenToolRepairGroups,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_groupIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$GardenToolRepairItemsTableFilterComposer
+    extends Composer<_$AppDatabase, $GardenToolRepairItemsTable> {
+  $$GardenToolRepairItemsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get projectName => $composableBuilder(
+    column: $table.projectName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get specModel => $composableBuilder(
+    column: $table.specModel,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get countUnit => $composableBuilder(
+    column: $table.countUnit,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get quantity => $composableBuilder(
+    column: $table.quantity,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get unitPriceCents => $composableBuilder(
+    column: $table.unitPriceCents,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get amountCents => $composableBuilder(
+    column: $table.amountCents,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$GardenToolRepairGroupsTableFilterComposer get groupId {
+    final $$GardenToolRepairGroupsTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.groupId,
+          referencedTable: $db.gardenToolRepairGroups,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$GardenToolRepairGroupsTableFilterComposer(
+                $db: $db,
+                $table: $db.gardenToolRepairGroups,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$GardenToolRepairItemsTableOrderingComposer
+    extends Composer<_$AppDatabase, $GardenToolRepairItemsTable> {
+  $$GardenToolRepairItemsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get projectName => $composableBuilder(
+    column: $table.projectName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get specModel => $composableBuilder(
+    column: $table.specModel,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get countUnit => $composableBuilder(
+    column: $table.countUnit,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get quantity => $composableBuilder(
+    column: $table.quantity,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get unitPriceCents => $composableBuilder(
+    column: $table.unitPriceCents,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get amountCents => $composableBuilder(
+    column: $table.amountCents,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$GardenToolRepairGroupsTableOrderingComposer get groupId {
+    final $$GardenToolRepairGroupsTableOrderingComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.groupId,
+          referencedTable: $db.gardenToolRepairGroups,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$GardenToolRepairGroupsTableOrderingComposer(
+                $db: $db,
+                $table: $db.gardenToolRepairGroups,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$GardenToolRepairItemsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $GardenToolRepairItemsTable> {
+  $$GardenToolRepairItemsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get projectName => $composableBuilder(
+    column: $table.projectName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get specModel =>
+      $composableBuilder(column: $table.specModel, builder: (column) => column);
+
+  GeneratedColumn<String> get countUnit =>
+      $composableBuilder(column: $table.countUnit, builder: (column) => column);
+
+  GeneratedColumn<double> get quantity =>
+      $composableBuilder(column: $table.quantity, builder: (column) => column);
+
+  GeneratedColumn<int> get unitPriceCents => $composableBuilder(
+    column: $table.unitPriceCents,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get amountCents => $composableBuilder(
+    column: $table.amountCents,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get remark =>
+      $composableBuilder(column: $table.remark, builder: (column) => column);
+
+  GeneratedColumn<int> get sortOrder =>
+      $composableBuilder(column: $table.sortOrder, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  $$GardenToolRepairGroupsTableAnnotationComposer get groupId {
+    final $$GardenToolRepairGroupsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.groupId,
+          referencedTable: $db.gardenToolRepairGroups,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$GardenToolRepairGroupsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.gardenToolRepairGroups,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$GardenToolRepairItemsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $GardenToolRepairItemsTable,
+          GardenToolRepairItem,
+          $$GardenToolRepairItemsTableFilterComposer,
+          $$GardenToolRepairItemsTableOrderingComposer,
+          $$GardenToolRepairItemsTableAnnotationComposer,
+          $$GardenToolRepairItemsTableCreateCompanionBuilder,
+          $$GardenToolRepairItemsTableUpdateCompanionBuilder,
+          (GardenToolRepairItem, $$GardenToolRepairItemsTableReferences),
+          GardenToolRepairItem,
+          PrefetchHooks Function({bool groupId})
+        > {
+  $$GardenToolRepairItemsTableTableManager(
+    _$AppDatabase db,
+    $GardenToolRepairItemsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$GardenToolRepairItemsTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$GardenToolRepairItemsTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$GardenToolRepairItemsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> groupId = const Value.absent(),
+                Value<String> projectName = const Value.absent(),
+                Value<String?> specModel = const Value.absent(),
+                Value<String> countUnit = const Value.absent(),
+                Value<double> quantity = const Value.absent(),
+                Value<int> unitPriceCents = const Value.absent(),
+                Value<int> amountCents = const Value.absent(),
+                Value<String?> remark = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+              }) => GardenToolRepairItemsCompanion(
+                id: id,
+                groupId: groupId,
+                projectName: projectName,
+                specModel: specModel,
+                countUnit: countUnit,
+                quantity: quantity,
+                unitPriceCents: unitPriceCents,
+                amountCents: amountCents,
+                remark: remark,
+                sortOrder: sortOrder,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int groupId,
+                required String projectName,
+                Value<String?> specModel = const Value.absent(),
+                required String countUnit,
+                required double quantity,
+                required int unitPriceCents,
+                required int amountCents,
+                Value<String?> remark = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+              }) => GardenToolRepairItemsCompanion.insert(
+                id: id,
+                groupId: groupId,
+                projectName: projectName,
+                specModel: specModel,
+                countUnit: countUnit,
+                quantity: quantity,
+                unitPriceCents: unitPriceCents,
+                amountCents: amountCents,
+                remark: remark,
+                sortOrder: sortOrder,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<
+                    $GardenToolRepairItemsTable,
+                    GardenToolRepairItem
+                  >(table),
+                  $$GardenToolRepairItemsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({groupId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (groupId) {
+                      state = state.withJoin(
+                        currentTable: table,
+                        currentColumn: table.groupId,
+                        referencedTable: $$GardenToolRepairItemsTableReferences
+                            ._groupIdTable(db),
+                        referencedColumn: $$GardenToolRepairItemsTableReferences
+                            ._groupIdTable(db)
+                            .id,
+                      ) as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$GardenToolRepairItemsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $GardenToolRepairItemsTable,
+      GardenToolRepairItem,
+      $$GardenToolRepairItemsTableFilterComposer,
+      $$GardenToolRepairItemsTableOrderingComposer,
+      $$GardenToolRepairItemsTableAnnotationComposer,
+      $$GardenToolRepairItemsTableCreateCompanionBuilder,
+      $$GardenToolRepairItemsTableUpdateCompanionBuilder,
+      (GardenToolRepairItem, $$GardenToolRepairItemsTableReferences),
+      GardenToolRepairItem,
+      PrefetchHooks Function({bool groupId})
+    >;
+typedef $$GardenToolRepairAttachmentsTableCreateCompanionBuilder =
+    GardenToolRepairAttachmentsCompanion Function({
+      Value<int> id,
+      required int groupId,
+      required String attachmentType,
+      required String filePath,
+      Value<String?> thumbnailPath,
+      Value<int> sortOrder,
+      Value<DateTime> createdAt,
+      Value<DateTime?> deletedAt,
+    });
+typedef $$GardenToolRepairAttachmentsTableUpdateCompanionBuilder =
+    GardenToolRepairAttachmentsCompanion Function({
+      Value<int> id,
+      Value<int> groupId,
+      Value<String> attachmentType,
+      Value<String> filePath,
+      Value<String?> thumbnailPath,
+      Value<int> sortOrder,
+      Value<DateTime> createdAt,
+      Value<DateTime?> deletedAt,
+    });
+
+final class $$GardenToolRepairAttachmentsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $GardenToolRepairAttachmentsTable,
+          GardenToolRepairAttachment
+        > {
+  $$GardenToolRepairAttachmentsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $GardenToolRepairGroupsTable _groupIdTable(
+    _$AppDatabase db,
+  ) => db.gardenToolRepairGroups.createAlias(
+    'garden_tool_repair_attachments__group_id__garden_tool_repair_groups__id',
+  );
+
+  $$GardenToolRepairGroupsTableProcessedTableManager get groupId {
+    final $_column = $_itemColumn<int>('group_id')!;
+
+    final manager = $$GardenToolRepairGroupsTableTableManager(
+      $_db,
+      $_db.gardenToolRepairGroups,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_groupIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$GardenToolRepairAttachmentsTableFilterComposer
+    extends Composer<_$AppDatabase, $GardenToolRepairAttachmentsTable> {
+  $$GardenToolRepairAttachmentsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get attachmentType => $composableBuilder(
+    column: $table.attachmentType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get filePath => $composableBuilder(
+    column: $table.filePath,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get thumbnailPath => $composableBuilder(
+    column: $table.thumbnailPath,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$GardenToolRepairGroupsTableFilterComposer get groupId {
+    final $$GardenToolRepairGroupsTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.groupId,
+          referencedTable: $db.gardenToolRepairGroups,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$GardenToolRepairGroupsTableFilterComposer(
+                $db: $db,
+                $table: $db.gardenToolRepairGroups,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$GardenToolRepairAttachmentsTableOrderingComposer
+    extends Composer<_$AppDatabase, $GardenToolRepairAttachmentsTable> {
+  $$GardenToolRepairAttachmentsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get attachmentType => $composableBuilder(
+    column: $table.attachmentType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get filePath => $composableBuilder(
+    column: $table.filePath,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get thumbnailPath => $composableBuilder(
+    column: $table.thumbnailPath,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$GardenToolRepairGroupsTableOrderingComposer get groupId {
+    final $$GardenToolRepairGroupsTableOrderingComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.groupId,
+          referencedTable: $db.gardenToolRepairGroups,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$GardenToolRepairGroupsTableOrderingComposer(
+                $db: $db,
+                $table: $db.gardenToolRepairGroups,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$GardenToolRepairAttachmentsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $GardenToolRepairAttachmentsTable> {
+  $$GardenToolRepairAttachmentsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get attachmentType => $composableBuilder(
+    column: $table.attachmentType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get filePath =>
+      $composableBuilder(column: $table.filePath, builder: (column) => column);
+
+  GeneratedColumn<String> get thumbnailPath => $composableBuilder(
+    column: $table.thumbnailPath,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get sortOrder =>
+      $composableBuilder(column: $table.sortOrder, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  $$GardenToolRepairGroupsTableAnnotationComposer get groupId {
+    final $$GardenToolRepairGroupsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.groupId,
+          referencedTable: $db.gardenToolRepairGroups,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$GardenToolRepairGroupsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.gardenToolRepairGroups,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$GardenToolRepairAttachmentsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $GardenToolRepairAttachmentsTable,
+          GardenToolRepairAttachment,
+          $$GardenToolRepairAttachmentsTableFilterComposer,
+          $$GardenToolRepairAttachmentsTableOrderingComposer,
+          $$GardenToolRepairAttachmentsTableAnnotationComposer,
+          $$GardenToolRepairAttachmentsTableCreateCompanionBuilder,
+          $$GardenToolRepairAttachmentsTableUpdateCompanionBuilder,
+          (
+            GardenToolRepairAttachment,
+            $$GardenToolRepairAttachmentsTableReferences,
+          ),
+          GardenToolRepairAttachment,
+          PrefetchHooks Function({bool groupId})
+        > {
+  $$GardenToolRepairAttachmentsTableTableManager(
+    _$AppDatabase db,
+    $GardenToolRepairAttachmentsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$GardenToolRepairAttachmentsTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$GardenToolRepairAttachmentsTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$GardenToolRepairAttachmentsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> groupId = const Value.absent(),
+                Value<String> attachmentType = const Value.absent(),
+                Value<String> filePath = const Value.absent(),
+                Value<String?> thumbnailPath = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+              }) => GardenToolRepairAttachmentsCompanion(
+                id: id,
+                groupId: groupId,
+                attachmentType: attachmentType,
+                filePath: filePath,
+                thumbnailPath: thumbnailPath,
+                sortOrder: sortOrder,
+                createdAt: createdAt,
+                deletedAt: deletedAt,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int groupId,
+                required String attachmentType,
+                required String filePath,
+                Value<String?> thumbnailPath = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+              }) => GardenToolRepairAttachmentsCompanion.insert(
+                id: id,
+                groupId: groupId,
+                attachmentType: attachmentType,
+                filePath: filePath,
+                thumbnailPath: thumbnailPath,
+                sortOrder: sortOrder,
+                createdAt: createdAt,
+                deletedAt: deletedAt,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<
+                    $GardenToolRepairAttachmentsTable,
+                    GardenToolRepairAttachment
+                  >(table),
+                  $$GardenToolRepairAttachmentsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({groupId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (groupId) {
+                      state = state.withJoin(
+                        currentTable: table,
+                        currentColumn: table.groupId,
+                        referencedTable:
+                            $$GardenToolRepairAttachmentsTableReferences
+                                ._groupIdTable(db),
+                        referencedColumn:
+                            $$GardenToolRepairAttachmentsTableReferences
+                                ._groupIdTable(db)
+                                .id,
+                      ) as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$GardenToolRepairAttachmentsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $GardenToolRepairAttachmentsTable,
+      GardenToolRepairAttachment,
+      $$GardenToolRepairAttachmentsTableFilterComposer,
+      $$GardenToolRepairAttachmentsTableOrderingComposer,
+      $$GardenToolRepairAttachmentsTableAnnotationComposer,
+      $$GardenToolRepairAttachmentsTableCreateCompanionBuilder,
+      $$GardenToolRepairAttachmentsTableUpdateCompanionBuilder,
+      (
+        GardenToolRepairAttachment,
+        $$GardenToolRepairAttachmentsTableReferences,
+      ),
+      GardenToolRepairAttachment,
+      PrefetchHooks Function({bool groupId})
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -54694,4 +59936,24 @@ class $AppDatabaseManager {
       $$ReminderAlertRulesTableTableManager(_db, _db.reminderAlertRules);
   $$ReminderLinksTableTableManager get reminderLinks =>
       $$ReminderLinksTableTableManager(_db, _db.reminderLinks);
+  $$GardenToolRepairUnitsTableTableManager get gardenToolRepairUnits =>
+      $$GardenToolRepairUnitsTableTableManager(_db, _db.gardenToolRepairUnits);
+  $$GardenToolRepairPersonsTableTableManager get gardenToolRepairPersons =>
+      $$GardenToolRepairPersonsTableTableManager(
+        _db,
+        _db.gardenToolRepairPersons,
+      );
+  $$GardenToolRepairGroupsTableTableManager get gardenToolRepairGroups =>
+      $$GardenToolRepairGroupsTableTableManager(
+        _db,
+        _db.gardenToolRepairGroups,
+      );
+  $$GardenToolRepairItemsTableTableManager get gardenToolRepairItems =>
+      $$GardenToolRepairItemsTableTableManager(_db, _db.gardenToolRepairItems);
+  $$GardenToolRepairAttachmentsTableTableManager
+  get gardenToolRepairAttachments =>
+      $$GardenToolRepairAttachmentsTableTableManager(
+        _db,
+        _db.gardenToolRepairAttachments,
+      );
 }

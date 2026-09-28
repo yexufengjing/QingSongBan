@@ -214,6 +214,12 @@ class _QuickActions extends StatelessWidget {
       ),
       ('车辆管理', Icons.local_shipping_outlined, '/vehicles', AppColors.techBlue),
       (
+        '园林器械维修',
+        Icons.handyman_outlined,
+        '/garden-tool-repairs',
+        AppColors.primary,
+      ),
+      (
         '年度油耗汇总',
         Icons.table_chart_outlined,
         '/vehicles/fuel-summary',

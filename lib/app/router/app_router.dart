@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/database/database_enums.dart';
@@ -49,9 +48,13 @@ import '../../features/vehicles/presentation/vehicle_attachments_page.dart';
 import '../../features/vehicles/presentation/vehicle_form_page.dart';
 import '../../features/vehicles/presentation/vehicle_page.dart';
 import '../../features/vehicles/presentation/vehicle_repair_form_page.dart';
-import '../../features/vehicles/presentation/vehicle_repair_list_page.dart';
-import '../../features/vehicles/presentation/vehicle_repair_detail_page.dart';
-import '../../features/vehicles/application/vehicle_providers.dart';
+import '../../features/garden_tool_repairs/domain/repair_models.dart';
+import '../../features/garden_tool_repairs/presentation/garden_tool_repair_attachments_page.dart';
+import '../../features/garden_tool_repairs/presentation/garden_tool_repair_analysis_page.dart';
+import '../../features/garden_tool_repairs/presentation/garden_tool_repair_form_page.dart';
+import '../../features/garden_tool_repairs/presentation/garden_tool_repair_page.dart';
+import '../../features/garden_tool_repairs/presentation/garden_tool_repair_price_page.dart';
+import '../../features/garden_tool_repairs/presentation/garden_tool_repair_units_page.dart';
 import 'app_shell.dart';
 
 final GoRouter appRouter = GoRouter(
@@ -495,6 +498,94 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => const ItemDistributionPage(),
     ),
     GoRoute(
+      path: '/garden-tool-repairs',
+      name: 'garden-tool-repairs',
+      builder: (context, state) {
+        final query = state.uri.queryParameters;
+        final year = int.tryParse(query['year'] ?? '');
+        final month = int.tryParse(query['month'] ?? '');
+        return GardenToolRepairPage(
+          initialYear: year != null && year >= 2000 && year <= 2100
+              ? year
+              : null,
+          initialMonth: month != null && month >= 1 && month <= 12
+              ? month
+              : null,
+        );
+      },
+    ),
+    GoRoute(
+      path: '/garden-tool-repairs/units',
+      name: 'garden-tool-repair-units',
+      builder: (context, state) => const GardenToolRepairUnitsPage(),
+    ),
+    GoRoute(
+      path: '/garden-tool-repairs/analysis',
+      name: 'garden-tool-repair-analysis',
+      builder: (context, state) {
+        final now = DateTime.now();
+        final query = state.uri.queryParameters;
+        final requestedYear = int.tryParse(query['year'] ?? '') ?? now.year;
+        final requestedMonth = int.tryParse(query['month'] ?? '') ?? now.month;
+        return GardenToolRepairAnalysisPage(
+          initialYear: requestedYear >= 2000 && requestedYear <= 2100
+              ? requestedYear
+              : now.year,
+          initialMonth: requestedMonth >= 1 && requestedMonth <= 12
+              ? requestedMonth
+              : now.month,
+        );
+      },
+    ),
+    GoRoute(
+      path: '/garden-tool-repairs/prices',
+      name: 'garden-tool-repair-prices',
+      builder: (context, state) => const GardenToolRepairPricePage(),
+    ),
+    GoRoute(
+      path: '/garden-tool-repairs/new',
+      name: 'garden-tool-repair-new',
+      builder: (context, state) {
+        final query = state.uri.queryParameters;
+        final now = DateTime.now();
+        final year = int.tryParse(query['year'] ?? '') ?? now.year;
+        final month = int.tryParse(query['month'] ?? '') ?? now.month;
+        final validMonth = month >= 1 && month <= 12 ? month : now.month;
+        final draft = state.extra is GardenToolRepairGroupDraft
+            ? state.extra! as GardenToolRepairGroupDraft
+            : null;
+        return GardenToolRepairFormPage(
+          initialMonth: DateTime(year, validMonth),
+          initialDraft: draft,
+        );
+      },
+    ),
+    GoRoute(
+      path: '/garden-tool-repairs/groups/:groupId/edit',
+      name: 'garden-tool-repair-edit',
+      builder: (context, state) {
+        final groupId = int.tryParse(state.pathParameters['groupId'] ?? '');
+        if (groupId == null) {
+          return const Scaffold(body: Center(child: Text('无效的维修记录编号')));
+        }
+        return GardenToolRepairFormPage(
+          initialMonth: DateTime.now(),
+          groupId: groupId,
+        );
+      },
+    ),
+    GoRoute(
+      path: '/garden-tool-repairs/groups/:groupId/attachments',
+      name: 'garden-tool-repair-attachments',
+      builder: (context, state) {
+        final groupId = int.tryParse(state.pathParameters['groupId'] ?? '');
+        if (groupId == null) {
+          return const Scaffold(body: Center(child: Text('无效的维修记录编号')));
+        }
+        return GardenToolRepairAttachmentsPage(groupId: groupId);
+      },
+    ),
+    GoRoute(
       path: '/vehicles',
       name: 'vehicles',
       builder: (context, state) => const VehiclePage(),
@@ -518,42 +609,6 @@ final GoRouter appRouter = GoRouter(
           path: 'new',
           name: 'vehicle-new',
           builder: (context, state) => const VehicleFormPage(),
-        ),
-        GoRoute(
-          path: 'repairs',
-          name: 'vehicle-repairs',
-          builder: (context, state) => const VehicleRepairListPage(),
-          routes: [
-            GoRoute(
-              path: ':repairOrderId',
-              name: 'vehicle-repair-detail',
-              builder: (context, state) {
-                final id = int.tryParse(
-                  state.pathParameters['repairOrderId'] ?? '',
-                );
-                return id == null
-                    ? const Scaffold(body: Center(child: Text('无效的维修单编号')))
-                    : VehicleRepairDetailPage(repairOrderId: id);
-              },
-              routes: [
-                GoRoute(
-                  path: 'edit',
-                  name: 'vehicle-repair-edit',
-                  builder: (context, state) {
-                    final id = int.tryParse(
-                      state.pathParameters['repairOrderId'] ?? '',
-                    );
-                    if (id == null) {
-                      return const Scaffold(
-                        body: Center(child: Text('无效的维修单编号')),
-                      );
-                    }
-                    return _RepairOrderEditRoute(repairOrderId: id);
-                  },
-                ),
-              ],
-            ),
-          ],
         ),
         GoRoute(
           path: ':vehicleId',
@@ -629,32 +684,6 @@ final GoRouter appRouter = GoRouter(
     ),
   ],
 );
-
-class _RepairOrderEditRoute extends ConsumerWidget {
-  const _RepairOrderEditRoute({required this.repairOrderId});
-  final int repairOrderId;
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return FutureBuilder(
-      future: ref.read(repairRepositoryProvider).findById(repairOrderId),
-      builder: (context, snapshot) {
-        final order = snapshot.data;
-        if (!snapshot.hasData) {
-          return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
-          );
-        }
-        if (order == null) {
-          return const Scaffold(body: Center(child: Text('维修单不存在')));
-        }
-        return VehicleRepairFormPage(
-          vehicleId: order.vehicleId,
-          repairOrderId: repairOrderId,
-        );
-      },
-    );
-  }
-}
 
 EmployeeStatus? _employeeStatusFromQuery(String? value) {
   return switch (value) {

@@ -241,14 +241,6 @@ class RepairOrders extends Table {
 
   TextColumn get ticketStatus => textEnum<RepairTicketStatus>()();
 
-  BoolColumn get isSettled => boolean().withDefault(const Constant(false))();
-
-  DateTimeColumn get settledAt => dateTime().nullable()();
-
-  BoolColumn get isPaid => boolean().withDefault(const Constant(false))();
-
-  DateTimeColumn get paidAt => dateTime().nullable()();
-
   TextColumn get status =>
       textEnum<VehicleRepairStatus>().withDefault(const Constant('reported'))();
 
@@ -1229,4 +1221,122 @@ class ReminderLinks extends Table {
   List<Set<Column>> get uniqueKeys => [
     {reminderId, entityType, entityId},
   ];
+}
+
+class GardenToolRepairUnits extends Table {
+  @override
+  String get tableName => 'garden_tool_repair_units';
+
+  IntColumn get id => integer().autoIncrement()();
+
+  TextColumn get name => text()();
+
+  IntColumn get sortOrder => integer().withDefault(const Constant(0))();
+
+  BoolColumn get isActive => boolean().withDefault(const Constant(true))();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+}
+
+class GardenToolRepairPersons extends Table {
+  @override
+  String get tableName => 'garden_tool_repair_persons';
+
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get unitId => integer().references(GardenToolRepairUnits, #id)();
+
+  TextColumn get name => text()();
+
+  BoolColumn get isActive => boolean().withDefault(const Constant(true))();
+
+  IntColumn get sortOrder => integer().withDefault(const Constant(0))();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+}
+
+class GardenToolRepairGroups extends Table {
+  @override
+  String get tableName => 'garden_tool_repair_groups';
+
+  IntColumn get id => integer().autoIncrement()();
+
+  TextColumn get repairMonth => text()();
+
+  DateTimeColumn get repairDate => dateTime()();
+
+  IntColumn get unitId => integer().references(GardenToolRepairUnits, #id)();
+
+  TextColumn get unitNameSnapshot => text()();
+
+  IntColumn get repairerId =>
+      integer().nullable().references(GardenToolRepairPersons, #id)();
+
+  TextColumn get repairerNameSnapshot => text()();
+
+  IntColumn get subtotalCents => integer().withDefault(const Constant(0))();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get deletedAt => dateTime().nullable()();
+}
+
+class GardenToolRepairItems extends Table {
+  @override
+  String get tableName => 'garden_tool_repair_items';
+
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get groupId => integer().references(GardenToolRepairGroups, #id)();
+
+  TextColumn get projectName => text()();
+
+  TextColumn get specModel => text().nullable()();
+
+  TextColumn get countUnit => text()();
+
+  RealColumn get quantity => real()();
+
+  IntColumn get unitPriceCents => integer()();
+
+  IntColumn get amountCents => integer()();
+
+  TextColumn get remark => text().nullable()();
+
+  IntColumn get sortOrder => integer().withDefault(const Constant(0))();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get deletedAt => dateTime().nullable()();
+}
+
+class GardenToolRepairAttachments extends Table {
+  @override
+  String get tableName => 'garden_tool_repair_attachments';
+
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get groupId => integer().references(GardenToolRepairGroups, #id)();
+
+  TextColumn get attachmentType => text()();
+
+  TextColumn get filePath => text()();
+
+  TextColumn get thumbnailPath => text().nullable()();
+
+  IntColumn get sortOrder => integer().withDefault(const Constant(0))();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get deletedAt => dateTime().nullable()();
 }
