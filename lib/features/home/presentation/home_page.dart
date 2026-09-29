@@ -181,6 +181,7 @@ class _QuickActions extends StatelessWidget {
         AppColors.techBlue,
       ),
       ('物品领取', Icons.inventory_2_outlined, '/items', AppColors.primary),
+      ('库存管理', Icons.warehouse_outlined, '/inventory', AppColors.primary),
       (
         '请假登记',
         Icons.event_busy_outlined,

@@ -58,6 +58,16 @@ part 'app_database.g.dart';
     GardenToolRepairGroups,
     GardenToolRepairItems,
     GardenToolRepairAttachments,
+    InventoryCategories,
+    InventoryMaterials,
+    InventoryReceipts,
+    InventoryReceiptItems,
+    InventoryIssues,
+    InventoryIssueItems,
+    InventoryTransactions,
+    InventoryStocktakes,
+    InventoryStocktakeItems,
+    InventoryReplenishmentItems,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -68,7 +78,7 @@ class AppDatabase extends _$AppDatabase {
     : super(executor ?? NativeDatabase.memory());
 
   @override
-  int get schemaVersion => 21;
+  int get schemaVersion => 22;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -241,6 +251,18 @@ class AppDatabase extends _$AppDatabase {
         if (!await _tableExists('garden_tool_repair_attachments')) {
           await m.createTable(gardenToolRepairAttachments);
         }
+      }
+      if (from < 22 && to >= 22) {
+        await m.createTable(inventoryCategories);
+        await m.createTable(inventoryMaterials);
+        await m.createTable(inventoryReceipts);
+        await m.createTable(inventoryReplenishmentItems);
+        await m.createTable(inventoryReceiptItems);
+        await m.createTable(inventoryIssues);
+        await m.createTable(inventoryIssueItems);
+        await m.createTable(inventoryTransactions);
+        await m.createTable(inventoryStocktakes);
+        await m.createTable(inventoryStocktakeItems);
       }
     },
     beforeOpen: (details) async {

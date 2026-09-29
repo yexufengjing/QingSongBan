@@ -8,6 +8,7 @@ import '../../../core/utils/date_utils.dart';
 import '../../../core/utils/privacy_utils.dart';
 import '../../attendance/application/attendance_group_providers.dart';
 import '../../attachments/application/attachment_providers.dart';
+import '../../inventory/presentation/widgets/inventory_employee_history_section.dart';
 import '../application/personnel_providers.dart';
 import '../domain/personnel_options.dart';
 import 'personnel_widgets.dart';
@@ -242,6 +243,8 @@ class _EmployeeDetailContent extends ConsumerWidget {
               ),
             ),
           ),
+          const SizedBox(height: 14),
+          InventoryEmployeeHistorySection(employeeId: employee.id),
           const SizedBox(height: 14),
           Card(
             child: ListTile(

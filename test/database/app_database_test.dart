@@ -16,7 +16,7 @@ void main() {
     await database.close();
   });
 
-  test('creates the complete version twenty-one schema', () async {
+  test('creates the complete version twenty-two schema', () async {
     final rows = await database
         .customSelect(
           "SELECT name FROM sqlite_master "
@@ -25,7 +25,7 @@ void main() {
         .get();
     final tableNames = rows.map((row) => row.read<String>('name')).toSet();
 
-    expect(database.schemaVersion, 21);
+    expect(database.schemaVersion, 22);
     expect(
       tableNames,
       containsAll([
@@ -79,6 +79,16 @@ void main() {
         'item_distribution_batches',
         'item_distribution_entries',
         'item_distribution_settings',
+        'inventory_categories',
+        'inventory_materials',
+        'inventory_receipts',
+        'inventory_receipt_items',
+        'inventory_issues',
+        'inventory_issue_items',
+        'inventory_transactions',
+        'inventory_stocktakes',
+        'inventory_stocktake_items',
+        'inventory_replenishment_items',
       ]),
     );
   });

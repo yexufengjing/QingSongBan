@@ -39,6 +39,7 @@ import '../../features/payroll/presentation/payroll_home_page.dart';
 import '../../features/payroll/presentation/employee_payroll_page.dart';
 import '../../features/payroll/presentation/wage_job_settings_page.dart';
 import '../../features/item_distribution/presentation/item_distribution_page.dart';
+import '../../features/inventory/inventory_routes.dart';
 import '../../features/settings/presentation/settings_page.dart';
 import '../../features/vehicles/presentation/vehicle_detail_page.dart';
 import '../../features/vehicles/presentation/vehicle_archive_page.dart';
@@ -492,6 +493,7 @@ final GoRouter appRouter = GoRouter(
         ),
       ],
     ),
+    ...inventoryRoutes(),
     GoRoute(
       path: '/items',
       name: 'item-distribution',
