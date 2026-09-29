@@ -1348,3 +1348,319 @@ class GardenToolRepairAttachments extends Table {
 
   DateTimeColumn get deletedAt => dateTime().nullable()();
 }
+
+class InventoryCategories extends Table {
+  @override
+  String get tableName => 'inventory_categories';
+
+  IntColumn get id => integer().autoIncrement()();
+
+  TextColumn get name => text().unique()();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+}
+
+class InventoryMaterials extends Table {
+  @override
+  String get tableName => 'inventory_materials';
+
+  IntColumn get id => integer().autoIncrement()();
+
+  TextColumn get materialCode => text().unique()();
+
+  TextColumn get materialName => text()();
+
+  IntColumn get categoryId =>
+      integer().nullable().references(InventoryCategories, #id)();
+
+  TextColumn get modelSpec => text().nullable()();
+
+  TextColumn get unitName => text()();
+
+  TextColumn get storageLocation => text().nullable()();
+
+  RealColumn get currentStock => real().withDefault(const Constant(0))();
+
+  RealColumn get minStock => real().withDefault(const Constant(0))();
+
+  RealColumn get maxStock => real().nullable()();
+
+  TextColumn get defaultSource => text().nullable()();
+
+  IntColumn get referencePriceCent => integer().nullable()();
+
+  BoolColumn get warningEnabled => boolean().withDefault(const Constant(true))();
+
+  BoolColumn get isCommon => boolean().withDefault(const Constant(false))();
+
+  TextColumn get status => text().withDefault(const Constant('active'))();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+
+  DateTimeColumn get deletedAt => dateTime().nullable()();
+}
+
+class InventoryReceipts extends Table {
+  @override
+  String get tableName => 'inventory_receipts';
+
+  IntColumn get id => integer().autoIncrement()();
+
+  TextColumn get receiptNo => text().unique()();
+
+  DateTimeColumn get receiptDate => dateTime()();
+
+  TextColumn get receiptType => text()();
+
+  TextColumn get sourceName => text().nullable()();
+
+  IntColumn get operatorId => integer().nullable().references(Employees, #id)();
+
+  TextColumn get operatorNameSnapshot => text().nullable()();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+
+  DateTimeColumn get deletedAt => dateTime().nullable()();
+}
+
+class InventoryReceiptItems extends Table {
+  @override
+  String get tableName => 'inventory_receipt_items';
+
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get receiptId => integer().references(InventoryReceipts, #id)();
+
+  IntColumn get materialId => integer().references(InventoryMaterials, #id)();
+
+  TextColumn get materialNameSnapshot => text()();
+
+  TextColumn get modelSnapshot => text().nullable()();
+
+  TextColumn get unitSnapshot => text()();
+
+  RealColumn get quantity => real()();
+
+  IntColumn get referencePriceCent => integer().nullable()();
+
+  IntColumn get replenishmentId =>
+      integer().nullable().references(InventoryReplenishmentItems, #id)();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+}
+
+class InventoryIssues extends Table {
+  @override
+  String get tableName => 'inventory_issues';
+
+  IntColumn get id => integer().autoIncrement()();
+
+  TextColumn get issueNo => text().unique()();
+
+  DateTimeColumn get issueDate => dateTime()();
+
+  TextColumn get issueType => text()();
+
+  TextColumn get receiverType => text()();
+
+  @ReferenceName('inventoryIssueEmployee')
+  IntColumn get employeeId => integer().nullable().references(Employees, #id)();
+
+  TextColumn get employeeNameSnapshot => text().nullable()();
+
+  TextColumn get departmentNameSnapshot => text().nullable()();
+
+  TextColumn get manualReceiverName => text().nullable()();
+
+  TextColumn get purpose => text().nullable()();
+
+  @ReferenceName('inventoryIssueOperator')
+  IntColumn get operatorId => integer().nullable().references(Employees, #id)();
+
+  TextColumn get operatorNameSnapshot => text().nullable()();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+
+  DateTimeColumn get deletedAt => dateTime().nullable()();
+}
+
+class InventoryIssueItems extends Table {
+  @override
+  String get tableName => 'inventory_issue_items';
+
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get issueId => integer().references(InventoryIssues, #id)();
+
+  IntColumn get materialId => integer().references(InventoryMaterials, #id)();
+
+  TextColumn get materialNameSnapshot => text()();
+
+  TextColumn get modelSnapshot => text().nullable()();
+
+  TextColumn get unitSnapshot => text()();
+
+  RealColumn get quantity => real()();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+}
+
+class InventoryTransactions extends Table {
+  @override
+  String get tableName => 'inventory_transactions';
+
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get materialId => integer().references(InventoryMaterials, #id)();
+
+  TextColumn get materialNameSnapshot => text()();
+
+  TextColumn get modelSnapshot => text().nullable()();
+
+  TextColumn get unitSnapshot => text()();
+
+  DateTimeColumn get occurredAt => dateTime()();
+
+  TextColumn get transactionType => text()();
+
+  TextColumn get sourceType => text()();
+
+  IntColumn get sourceId => integer().nullable()();
+
+  RealColumn get stockBefore => real()();
+
+  RealColumn get quantityChange => real()();
+
+  RealColumn get stockAfter => real()();
+
+  IntColumn get operatorId => integer().nullable().references(Employees, #id)();
+
+  TextColumn get operatorNameSnapshot => text().nullable()();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+}
+
+class InventoryStocktakes extends Table {
+  @override
+  String get tableName => 'inventory_stocktakes';
+
+  IntColumn get id => integer().autoIncrement()();
+
+  TextColumn get stocktakeNo => text().unique()();
+
+  DateTimeColumn get stocktakeDate => dateTime()();
+
+  IntColumn get operatorId => integer().nullable().references(Employees, #id)();
+
+  TextColumn get operatorNameSnapshot => text().nullable()();
+
+  TextColumn get status => text().withDefault(const Constant('draft'))();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get confirmedAt => dateTime().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+}
+
+class InventoryStocktakeItems extends Table {
+  @override
+  String get tableName => 'inventory_stocktake_items';
+
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get stocktakeId => integer().references(InventoryStocktakes, #id)();
+
+  IntColumn get materialId => integer().references(InventoryMaterials, #id)();
+
+  TextColumn get materialNameSnapshot => text()();
+
+  TextColumn get modelSnapshot => text().nullable()();
+
+  TextColumn get unitSnapshot => text()();
+
+  RealColumn get bookQuantity => real()();
+
+  RealColumn get actualQuantity => real()();
+
+  RealColumn get differenceQuantity => real()();
+
+  TextColumn get remark => text().nullable()();
+}
+
+class InventoryReplenishmentItems extends Table {
+  @override
+  String get tableName => 'inventory_replenishment_items';
+
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get materialId =>
+      integer().nullable().references(InventoryMaterials, #id)();
+
+  TextColumn get materialNameSnapshot => text()();
+
+  TextColumn get modelSnapshot => text().nullable()();
+
+  TextColumn get unitSnapshot => text()();
+
+  RealColumn get currentStockSnapshot => real()();
+
+  RealColumn get minStockSnapshot => real()();
+
+  RealColumn get suggestedQuantity => real()();
+
+  RealColumn get plannedQuantity => real().nullable()();
+
+  TextColumn get replenishMethod => text()();
+
+  TextColumn get reason => text().nullable()();
+
+  TextColumn get status => text().withDefault(const Constant('pending'))();
+
+  IntColumn get linkedReceiptId =>
+      integer().nullable().references(InventoryReceipts, #id)();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get completedAt => dateTime().nullable()();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+
+  DateTimeColumn get deletedAt => dateTime().nullable();
+}

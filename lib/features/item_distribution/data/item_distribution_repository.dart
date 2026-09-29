@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 
 import '../../../core/database/app_database.dart';
+import '../../inventory/data/inventory_repository.dart';
 import '../domain/item_distribution_models.dart';
 
 class ItemDistributionRepository {
@@ -331,45 +332,66 @@ class ItemDistributionRepository {
     DistributionStatus status, {
     DistributionCategory category = DistributionCategory.welfare,
   }) async {
-    final row = await db
-        .customSelect(
-          '''SELECT e.recipient_name, e.employment_type, e.item_name
-         FROM item_distribution_entries e
-         JOIN item_distribution_batches b ON b.id = e.batch_id
-         WHERE b.benefit_month = ? AND b.category = ?
-           AND e.recipient_key = ? AND e.is_deleted = 0 AND b.is_deleted = 0
-         LIMIT 1''',
-          variables: [
-            Variable.withString(month),
-            Variable.withString(category.name),
-            Variable.withString(recipientKey),
-          ],
-        )
-        .getSingleOrNull();
-    if (row == null) return;
-    final now = DateTime.now().toIso8601String();
-    final value = status == DistributionStatus.received
-        ? 'received'
-        : 'not_received';
-    final signedAt = status == DistributionStatus.received ? now : null;
-    await db.customStatement(
-      '''UPDATE item_distribution_entries
-         SET status = ?, signed_at = ?, updated_at = ?
-         WHERE recipient_key = ? AND is_deleted = 0
-           AND batch_id IN (
-             SELECT id FROM item_distribution_batches
-             WHERE benefit_month = ? AND category = ? AND is_deleted = 0
-           )''',
-      [value, signedAt, now, recipientKey, month, category.name],
-    );
-    await _recordLog(
-      operationType: status == DistributionStatus.received
-          ? 'distribution_received'
-          : 'distribution_not_received',
-      entityType: 'welfare_source',
-      detail:
-          '$month ${row.data['recipient_name']} ${row.data['employment_type'] ?? row.data['item_name']}',
-    );
+    await db.transaction(() async {
+      final entries = await db
+          .customSelect(
+            '''SELECT e.id, e.status, e.recipient_name, e.employment_type, e.item_name
+               FROM item_distribution_entries e
+               JOIN item_distribution_batches b ON b.id = e.batch_id
+               WHERE b.benefit_month = ? AND b.category = ?
+                 AND e.recipient_key = ? AND e.is_deleted = 0 AND b.is_deleted = 0''',
+            variables: [
+              Variable.withString(month),
+              Variable.withString(category.name),
+              Variable.withString(recipientKey),
+            ],
+          )
+          .get();
+      if (entries.isEmpty) return;
+
+      final row = entries.first;
+      final toReceive = status == DistributionStatus.received
+          ? entries.where((entry) => entry.data['status'] != 'received')
+          : const <QueryRow>[];
+      final toUndo = status == DistributionStatus.notReceived
+          ? entries.where((entry) => entry.data['status'] == 'received')
+          : const <QueryRow>[];
+      final now = DateTime.now().toIso8601String();
+      final value = status == DistributionStatus.received
+          ? 'received'
+          : 'not_received';
+      final signedAt = status == DistributionStatus.received ? now : null;
+      await db.customStatement(
+        '''UPDATE item_distribution_entries
+           SET status = ?, signed_at = ?, updated_at = ?
+           WHERE recipient_key = ? AND is_deleted = 0
+             AND batch_id IN (
+               SELECT id FROM item_distribution_batches
+               WHERE benefit_month = ? AND category = ? AND is_deleted = 0
+             )''',
+        [value, signedAt, now, recipientKey, month, category.name],
+      );
+      if (category == DistributionCategory.welfare) {
+        final inventory = InventoryRepository(db);
+        if (status == DistributionStatus.received) {
+          for (final entry in toReceive) {
+            await inventory.issueWelfareDistribution(entry.data['id'] as int);
+          }
+        } else {
+          for (final entry in toUndo) {
+            await inventory.cancelWelfareDistribution(entry.data['id'] as int);
+          }
+        }
+      }
+      await _recordLog(
+        operationType: status == DistributionStatus.received
+            ? 'distribution_received'
+            : 'distribution_not_received',
+        entityType: 'welfare_source',
+        detail:
+            '$month ${row.data['recipient_name']} ${row.data['employment_type'] ?? row.data['item_name']}',
+      );
+    });
   }
 
   Future<void> addReplenishment({
