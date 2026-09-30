@@ -102,6 +102,54 @@ void main() {
     await tester.pump(const Duration(milliseconds: 1));
   });
 
+  testWidgets('archive filters the live list by work area', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(411, 850));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final database = AppDatabase.forTesting();
+    addTearDown(database.close);
+    final repository = VehicleRepository(database);
+    await repository.save(
+      draft: const VehicleDraft(
+        name: '城区车辆',
+        vehicleNo: 'AREA-1',
+        vehicleType: VehicleType.sweeper,
+        workArea: '城区主干道',
+      ),
+    );
+    await repository.save(
+      draft: const VehicleDraft(
+        name: '开发区车辆',
+        vehicleNo: 'AREA-2',
+        vehicleType: VehicleType.waterTruck,
+        workArea: '开发区',
+      ),
+    );
+    final router = GoRouter(
+      routes: [
+        GoRoute(path: '/', builder: (_, _) => const VehicleArchivePage()),
+      ],
+    );
+    addTearDown(router.dispose);
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [appDatabaseProvider.overrideWithValue(database)],
+        child: MaterialApp.router(routerConfig: router),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('共 2 辆'), findsOneWidget);
+    await tester.tap(find.byType(DropdownButton<String?>));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('城区主干道').last);
+    await tester.pumpAndSettle();
+    expect(find.text('共 1 辆'), findsOneWidget);
+    expect(find.text('城区车辆'), findsOneWidget);
+    expect(find.text('开发区车辆'), findsNothing);
+    expect(tester.takeException(), isNull);
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pump(const Duration(milliseconds: 1));
+  });
+
   testWidgets('expense page renders trend and composition from records', (
     tester,
   ) async {
@@ -133,8 +181,18 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
+    expect(find.text('本年累计总费用'), findsOneWidget);
     expect(find.text('月度费用趋势'), findsOneWidget);
     expect(find.text('费用构成'), findsOneWidget);
+    expect(find.text('单位：元'), findsOneWidget);
+    expect(find.text('¥240'), findsNWidgets(2));
+    expect(find.text('¥240  100%'), findsOneWidget);
+    await tester.tap(find.byType(DropdownButton<int>));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('${DateTime.now().year - 1} 年').last);
+    await tester.pumpAndSettle();
+    expect(find.text('本年度还没有费用流水'), findsOneWidget);
+    expect(find.text('月度费用趋势'), findsNothing);
     expect(tester.takeException(), isNull);
     await tester.pumpWidget(const SizedBox.shrink());
     await tester.pump(const Duration(milliseconds: 1));

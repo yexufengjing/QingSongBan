@@ -48,11 +48,24 @@ class _MonthlyAttendanceTablePageState
   @override
   Widget build(BuildContext context) {
     _applyInitialMonth();
+    final month = ref.watch(monthlyAttendanceTableMonthProvider);
     final groups = ref.watch(monthlyAttendanceTableGroupsProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('月考勤表'),
         actions: [
+          FilledButton.tonalIcon(
+            key: const Key('monthly-attendance-export'),
+            onPressed: () => context.push(
+              '/settings/excel?month=${month.year.toString().padLeft(4, '0')}-${month.month.toString().padLeft(2, '0')}',
+            ),
+            icon: const Icon(Icons.download_outlined),
+            label: const Text('导出表格'),
+            style: FilledButton.styleFrom(
+              backgroundColor: AppColors.lightGreen,
+              foregroundColor: AppColors.primary,
+            ),
+          ),
           IconButton(
             onPressed: () => context.push('/attendance/daily'),
             icon: const Icon(Icons.fact_check_outlined),
@@ -105,7 +118,7 @@ class _MonthlyAttendanceTableContent extends ConsumerWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(20, 8, 20, 0),
+          padding: const EdgeInsets.fromLTRB(12, 6, 12, 0),
           child: _MonthlyTableSelectors(
             month: month,
             groups: groups,
@@ -121,18 +134,51 @@ class _MonthlyAttendanceTableContent extends ConsumerWidget {
             },
           ),
         ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(12, 6, 12, 0),
+          child: SizedBox(
+            width: double.infinity,
+            child: SegmentedButton<String>(
+              segments: const [
+                ButtonSegment(
+                  value: 'daily',
+                  label: Text('日登记'),
+                  icon: Icon(Icons.fact_check_outlined),
+                ),
+                ButtonSegment(
+                  value: 'monthly',
+                  label: Text('月表'),
+                  icon: Icon(Icons.calendar_view_month_outlined),
+                ),
+              ],
+              selected: const {'monthly'},
+              onSelectionChanged: (_) => context.push('/attendance/daily'),
+              style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.resolveWith(
+                  (states) => states.contains(WidgetState.selected)
+                      ? AppColors.primary
+                      : Colors.white,
+                ),
+                foregroundColor: WidgetStateProperty.resolveWith(
+                  (states) => states.contains(WidgetState.selected)
+                      ? Colors.white
+                      : AppColors.ink,
+                ),
+              ),
+            ),
+          ),
+        ),
         if (!selectedGroup.isEnabled)
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),
+            padding: const EdgeInsets.fromLTRB(12, 6, 12, 0),
             child: Card(
               color: AppColors.lightOrange,
               child: const Padding(
-                padding: EdgeInsets.all(14),
+                padding: EdgeInsets.all(10),
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Icon(Icons.history_outlined, color: Color(0xFFE98500)),
-                    SizedBox(width: 10),
+                    SizedBox(width: 8),
                     Expanded(child: Text('当前考勤组已停用，仅保留历史月度考勤表查看。')),
                   ],
                 ),
@@ -140,32 +186,62 @@ class _MonthlyAttendanceTableContent extends ConsumerWidget {
             ),
           ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
-          child: table.when(
-            loading: () => const _MonthlyTableSummaryPlaceholder(),
-            error: (_, _) => const SizedBox.shrink(),
-            data: (value) => _MonthlyTableSummary(table: value),
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 2),
+          child: Row(
+            children: [
+              Container(
+                width: 4,
+                height: 18,
+                decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  '考勤明细',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ),
+              Text(
+                '← 左右滑动查看日期 →',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
           ),
         ),
-        Expanded(
-          child: table.when(
-            loading: () => const Center(child: CircularProgressIndicator()),
-            error: (_, _) => _MonthlyTableError(
+        table.when(
+          loading: () => const SizedBox(
+            height: 200,
+            child: Center(child: CircularProgressIndicator()),
+          ),
+          error: (_, _) => SizedBox(
+            height: 200,
+            child: _MonthlyTableError(
               onRetry: () => ref.invalidate(monthlyAttendanceTableProvider),
             ),
-            data: (value) {
-              if (value.rows.isEmpty) {
-                return const _NoMonthlyRoster();
-              }
-              return _MonthlyAttendanceTable(
+          ),
+          data: (value) {
+            if (value.rows.isEmpty) return const _NoMonthlyRoster();
+            final screenHeight = MediaQuery.sizeOf(context).height;
+            final maximumHeight = math.min(360.0, screenHeight * 0.46);
+            final contentHeight =
+                _MonthlyAttendanceTable.headerHeight +
+                value.rows.length * _MonthlyAttendanceTable.rowHeight +
+                _MonthlyAttendanceTable.totalHeight;
+            return SizedBox(
+              height: math.min(maximumHeight, contentHeight),
+              child: _MonthlyAttendanceTable(
                 month: month,
                 table: value,
                 onCellTap: (row, cell) =>
                     _editCell(context, ref, row: row, cell: cell),
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
+        const _MonthlyAttendanceLegend(),
       ],
     );
   }
@@ -219,149 +295,139 @@ class _MonthlyTableSelectors extends StatelessWidget {
   final ValueChanged<int?> onGroupChanged;
 
   @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(14, 14, 14, 12),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton.icon(
-                    key: const Key('monthly-attendance-table-month-button'),
-                    onPressed: () async {
-                      final picked = await showDatePicker(
-                        context: context,
-                        initialDate: month,
-                        firstDate: DateTime(2020),
-                        lastDate: DateTime(2099),
-                        helpText: '选择月份',
-                      );
-                      if (picked != null) {
-                        onMonthChanged(DateTime(picked.year, picked.month));
-                      }
-                    },
-                    icon: const Icon(Icons.date_range_outlined),
-                    label: Text(
-                      '${month.year}年${month.month.toString().padLeft(2, '0')}月',
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                TextButton(
-                  key: const Key('monthly-attendance-table-current-month'),
-                  onPressed: () {
-                    final now = DateTime.now();
-                    onMonthChanged(DateTime(now.year, now.month));
-                  },
-                  child: const Text('本月'),
-                ),
-              ],
+  Widget build(BuildContext context) => Card(
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      child: Row(
+        children: [
+          Expanded(
+            child: OutlinedButton.icon(
+              key: const Key('monthly-attendance-table-month-button'),
+              onPressed: () async {
+                final picked = await showDatePicker(
+                  context: context,
+                  initialDate: month,
+                  firstDate: DateTime(2020),
+                  lastDate: DateTime(2099),
+                  helpText: '选择月份',
+                );
+                if (picked != null) {
+                  onMonthChanged(DateTime(picked.year, picked.month));
+                }
+              },
+              icon: const Icon(Icons.calendar_month_outlined, size: 19),
+              label: Text(
+                '${month.year}年${month.month.toString().padLeft(2, '0')}月',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
-            const SizedBox(height: 10),
-            DropdownButtonFormField<int>(
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: DropdownButtonFormField<int>(
               key: const Key('monthly-attendance-table-group-field'),
               initialValue: selectedGroup.id,
               isExpanded: true,
               decoration: const InputDecoration(
-                labelText: '考勤组',
-                prefixIcon: Icon(Icons.groups_outlined),
+                prefixIcon: Icon(Icons.groups_outlined, size: 19),
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 8,
+                  vertical: 9,
+                ),
               ),
               items: [
                 for (final group in groups)
                   DropdownMenuItem(
                     value: group.id,
                     child: Text(
-                      '${group.name}${group.isEnabled ? '' : '（已停用）'}',
+                      '${group.name}${group.isEnabled ? '' : '（停用）'}',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
               ],
               onChanged: onGroupChanged,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
 }
 
-class _MonthlyTableSummary extends StatelessWidget {
-  const _MonthlyTableSummary({required this.table});
-
-  final MonthlyAttendanceTableView table;
+class _MonthlyAttendanceLegend extends StatelessWidget {
+  const _MonthlyAttendanceLegend();
 
   @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: _MonthlySummaryCard(
-            label: '人员',
-            value: '${table.rows.length} 人',
-            color: AppColors.techBlue,
+  Widget build(BuildContext context) => Card(
+    margin: const EdgeInsets.fromLTRB(12, 6, 12, 8),
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text('符号说明', style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: 6),
+          Wrap(
+            spacing: 14,
+            runSpacing: 6,
+            children: const [
+              _LegendItem(symbol: '力', label: '全天出勤', color: AppColors.primary),
+              _LegendItem(
+                symbol: '半',
+                label: '半天出勤',
+                color: AppColors.techBlue,
+              ),
+              _LegendItem(symbol: '🔺', label: '缺勤', color: AppColors.danger),
+              _LegendItem(symbol: '休', label: '公休', color: AppColors.body),
+              _LegendItem(symbol: '停', label: '停工', color: Color(0xFFE98500)),
+              _LegendItem(symbol: '假', label: '请假', color: AppColors.danger),
+              _LegendItem(symbol: '·', label: '未登记', color: AppColors.helper),
+              _LegendItem(symbol: '未', label: '入职前锁定', color: AppColors.helper),
+              _LegendItem(symbol: '离', label: '离职后锁定', color: AppColors.helper),
+            ],
           ),
-        ),
-        const SizedBox(width: 8),
-        Expanded(
-          child: _MonthlySummaryCard(
-            label: '出勤合计',
-            value: _formatDays(table.totalAttendanceDays),
-            color: AppColors.primary,
+          const SizedBox(height: 6),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+            decoration: BoxDecoration(
+              color: AppColors.lightBlue,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: const Text('点击表格中的单元格，可编辑当日的上午/下午考勤状态。'),
           ),
-        ),
-        const SizedBox(width: 8),
-        Expanded(
-          child: _MonthlySummaryCard(
-            label: '请假合计',
-            value: _formatDays(table.totalLeaveDays),
-            color: AppColors.purple,
-          ),
-        ),
-      ],
-    );
-  }
+        ],
+      ),
+    ),
+  );
 }
 
-class _MonthlyTableSummaryPlaceholder extends StatelessWidget {
-  const _MonthlyTableSummaryPlaceholder();
-
-  @override
-  Widget build(BuildContext context) {
-    return const SizedBox(height: 60);
-  }
-}
-
-class _MonthlySummaryCard extends StatelessWidget {
-  const _MonthlySummaryCard({
+class _LegendItem extends StatelessWidget {
+  const _LegendItem({
+    required this.symbol,
     required this.label,
-    required this.value,
     required this.color,
   });
 
+  final String symbol;
   final String label;
-  final String value;
   final Color color;
 
   @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 11),
-        child: Column(
-          children: [
-            Text(label, style: Theme.of(context).textTheme.bodySmall),
-            const SizedBox(height: 2),
-            Text(
-              value,
-              style: Theme.of(context).textTheme.titleLarge
-                  ?.copyWith(color: color),
-            ),
-          ],
-        ),
+  Widget build(BuildContext context) => Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Text(
+        symbol,
+        style: TextStyle(color: color, fontWeight: FontWeight.w700),
       ),
-    );
-  }
+      const SizedBox(width: 4),
+      Text(label, style: Theme.of(context).textTheme.bodySmall),
+    ],
+  );
 }
 
 class _MonthlyAttendanceTable extends StatelessWidget {
@@ -371,12 +437,12 @@ class _MonthlyAttendanceTable extends StatelessWidget {
     required this.onCellTap,
   });
 
-  static const nameWidth = 142.0;
-  static const dayWidth = 56.0;
-  static const tailWidth = 78.0;
-  static const headerHeight = 58.0;
-  static const rowHeight = 70.0;
-  static const totalHeight = 62.0;
+  static const nameWidth = 88.0;
+  static const dayWidth = 40.0;
+  static const tailWidth = 54.0;
+  static const headerHeight = 46.0;
+  static const rowHeight = 48.0;
+  static const totalHeight = 44.0;
 
   final DateTime month;
   final MonthlyAttendanceTableView table;
@@ -466,7 +532,7 @@ class _FixedNameColumn extends StatelessWidget {
                       row.employee.name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodyLarge
+                      style: Theme.of(context).textTheme.bodyMedium
                           ?.copyWith(fontWeight: FontWeight.w600),
                     ),
                     const SizedBox(height: 3),
@@ -474,7 +540,8 @@ class _FixedNameColumn extends StatelessWidget {
                       row.employee.employeeNo,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodySmall,
+                      style: Theme.of(context).textTheme.bodySmall
+                          ?.copyWith(fontSize: 10),
                     ),
                   ],
                 ),
@@ -527,7 +594,24 @@ class _ScrollableDateColumn extends StatelessWidget {
                   width: _MonthlyAttendanceTable.dayWidth,
                   height: _MonthlyAttendanceTable.headerHeight,
                   background: AppColors.lightBlue,
-                  child: Center(child: Text('$day日')),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '$day',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                        Text(
+                          _weekdayShort(
+                            DateTime(month.year, month.month, day).weekday,
+                          ),
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(fontSize: 10),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               _TableBox(
                 width: _MonthlyAttendanceTable.tailWidth,
@@ -623,13 +707,19 @@ class _MonthlyCell extends StatelessWidget {
           child: Container(
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: statusColor.withValues(alpha: 0.09),
               border: Border.all(color: AppColors.divider),
             ),
-            child: Text(
-              cell.symbol,
-              style: Theme.of(context).textTheme.titleLarge
-                  ?.copyWith(color: statusColor, fontWeight: FontWeight.w700),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
+              decoration: BoxDecoration(
+                color: statusColor.withValues(alpha: .12),
+                borderRadius: BorderRadius.circular(7),
+              ),
+              child: Text(
+                cell.symbol,
+                style: Theme.of(context).textTheme.bodyMedium
+                    ?.copyWith(color: statusColor, fontWeight: FontWeight.w700),
+              ),
             ),
           ),
         ),
@@ -641,14 +731,18 @@ class _MonthlyCell extends StatelessWidget {
     if (!cell.isEditable) return AppColors.helper;
     if (cell.attendanceDays == 1) return AppColors.primary;
     if (cell.attendanceDays > 0) return AppColors.techBlue;
-    if (cell.leaveDays > 0) return AppColors.purple;
+    if (cell.leaveDays > 0) return AppColors.danger;
+    if (cell.morningStatus == AttendanceHalfStatus.absent ||
+        cell.afternoonStatus == AttendanceHalfStatus.absent) {
+      return AppColors.danger;
+    }
     if (cell.morningStatus == AttendanceHalfStatus.rest &&
         cell.afternoonStatus == AttendanceHalfStatus.rest) {
-      return AppColors.techBlue;
+      return AppColors.body;
     }
     if (cell.morningStatus == AttendanceHalfStatus.stopped &&
         cell.afternoonStatus == AttendanceHalfStatus.stopped) {
-      return AppColors.danger;
+      return const Color(0xFFE98500);
     }
     return AppColors.helper;
   }
@@ -914,3 +1008,13 @@ String _formatDays(double value) {
       ? value.toInt().toString()
       : value.toStringAsFixed(1);
 }
+
+String _weekdayShort(int weekday) => switch (weekday) {
+  DateTime.monday => '一',
+  DateTime.tuesday => '二',
+  DateTime.wednesday => '三',
+  DateTime.thursday => '四',
+  DateTime.friday => '五',
+  DateTime.saturday => '六',
+  _ => '日',
+};

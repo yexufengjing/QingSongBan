@@ -88,6 +88,23 @@ Alignment vehicleAtlasAlignmentForAngle(VehicleViewAngle angle) =>
       VehicleViewAngle.rearLeft => Alignment.bottomRight,
     };
 
+Offset vehicleVisualNodeCenter(
+  VehicleVisualNodeSpec node, {
+  required double canvasWidth,
+  required double canvasHeight,
+  required double markerWidth,
+  required double markerHeight,
+}) {
+  final minX = markerWidth / 2;
+  final minY = markerHeight / 2;
+  final x = (node.x * canvasWidth).clamp(minX, canvasWidth - minX);
+  // Node y values are authored against the original 0.8-height atlas area.
+  // Convert that normalized position to the actual constrained canvas height.
+  final normalizedY = ((node.y - 0.10) / 0.80).clamp(0.0, 1.0);
+  final y = (normalizedY * canvasHeight).clamp(minY, canvasHeight - minY);
+  return Offset(x, y);
+}
+
 String vehicleAtlasAssetPath(VehicleType type) => switch (type) {
   VehicleType.sweeper => 'assets/vehicles/sweeper-angles.png',
   VehicleType.waterTruck => 'assets/vehicles/water-angles.png',
@@ -362,12 +379,12 @@ class _VehicleVisualViewState extends ConsumerState<VehicleVisualView> {
 
     return Card(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(14, 14, 14, 16),
+        padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('部件状态说明', style: Theme.of(context).textTheme.titleLarge),
-            const SizedBox(height: 8),
+            const SizedBox(height: 4),
             const Wrap(
               spacing: 10,
               runSpacing: 6,
@@ -378,7 +395,7 @@ class _VehicleVisualViewState extends ConsumerState<VehicleVisualView> {
                 _LegendDot(color: vehicleUnknownNodeColor, label: '未记录'),
               ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 6),
             Row(
               children: [
                 _ViewModeButton(
@@ -397,6 +414,7 @@ class _VehicleVisualViewState extends ConsumerState<VehicleVisualView> {
                 const Spacer(),
                 if (!_listView)
                   IconButton.filledTonal(
+                    visualDensity: VisualDensity.compact,
                     tooltip: '重置到左前方',
                     onPressed: () =>
                         setState(() => _angle = VehicleViewAngle.frontLeft),
@@ -404,7 +422,7 @@ class _VehicleVisualViewState extends ConsumerState<VehicleVisualView> {
                   ),
               ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 4),
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 180),
               child: _listView
@@ -412,18 +430,19 @@ class _VehicleVisualViewState extends ConsumerState<VehicleVisualView> {
                   : _buildAtlas(tireById, installations),
             ),
             if (!_listView) ...[
-              const SizedBox(height: 4),
+              const SizedBox(height: 2),
               Center(
                 child: Text(
                   '每次滑动切换一个视角，点击节点查看记录',
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 2),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   IconButton(
+                    visualDensity: VisualDensity.compact,
                     tooltip: '上一个视角',
                     onPressed: () => _stepAngle(forward: false),
                     icon: const Icon(Icons.chevron_left),
@@ -433,6 +452,7 @@ class _VehicleVisualViewState extends ConsumerState<VehicleVisualView> {
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   IconButton(
+                    visualDensity: VisualDensity.compact,
                     tooltip: '下一个视角',
                     onPressed: () => _stepAngle(forward: true),
                     icon: const Icon(Icons.chevron_right),
@@ -478,9 +498,9 @@ class _VehicleVisualViewState extends ConsumerState<VehicleVisualView> {
         },
         child: SizedBox(
           width: size,
-          height: size * 0.80,
+          height: size * 0.52,
           child: Stack(
-            clipBehavior: Clip.none,
+            clipBehavior: Clip.hardEdge,
             children: [
               Positioned.fill(
                 child: _VehicleAtlasQuadrant(
@@ -489,7 +509,13 @@ class _VehicleVisualViewState extends ConsumerState<VehicleVisualView> {
                 ),
               ),
               for (final node in nodes)
-                _buildNodeMarker(node, size, tireById, installations),
+                _buildNodeMarker(
+                  node,
+                  size,
+                  size * 0.52,
+                  tireById,
+                  installations,
+                ),
             ],
           ),
         ),
@@ -500,6 +526,7 @@ class _VehicleVisualViewState extends ConsumerState<VehicleVisualView> {
   Widget _buildNodeMarker(
     VehicleVisualNodeSpec node,
     double size,
+    double canvasHeight,
     Map<int, Tire> tireById,
     List<TireInstallation> installations,
   ) {
@@ -516,9 +543,25 @@ class _VehicleVisualViewState extends ConsumerState<VehicleVisualView> {
               node.componentKey!,
             ),
           );
+    final labelPainter = TextPainter(
+      text: TextSpan(
+        text: node.label,
+        style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w600),
+      ),
+      textDirection: Directionality.of(context),
+    )..layout();
+    final markerWidth = labelPainter.width + 25;
+    final markerHeight = labelPainter.height + 10;
+    final center = vehicleVisualNodeCenter(
+      node,
+      canvasWidth: size,
+      canvasHeight: canvasHeight,
+      markerWidth: markerWidth,
+      markerHeight: markerHeight,
+    );
     return Positioned(
-      left: node.x * size,
-      top: ((node.y - 0.10) / 0.80) * size * 0.80,
+      left: center.dx,
+      top: center.dy,
       child: FractionalTranslation(
         translation: const Offset(-0.5, -0.5),
         child: _NodeMarker(

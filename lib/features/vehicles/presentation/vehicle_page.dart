@@ -10,26 +10,26 @@ import '../data/maintenance_repository.dart';
 import '../domain/vehicle_options.dart';
 import 'vehicle_navigation_bar.dart';
 
-class VehiclePage extends ConsumerWidget {
+class VehiclePage extends ConsumerStatefulWidget {
   const VehiclePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<VehiclePage> createState() => _VehiclePageState();
+}
+
+class _VehiclePageState extends ConsumerState<VehiclePage> {
+  _VehicleSort _sort = _VehicleSort.defaultOrder;
+
+  @override
+  Widget build(BuildContext context) {
+    final ref = this.ref;
     final vehicles = ref.watch(vehicleListProvider);
     final allVehicles = ref.watch(allVehiclesProvider);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('车辆管理'),
-        leading: BackButton(
-          onPressed: () {
-            if (context.canPop()) {
-              context.pop();
-            } else {
-              context.go('/home');
-            }
-          },
-        ),
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
             tooltip: '年度油耗汇总',
@@ -68,13 +68,47 @@ class VehiclePage extends ConsumerWidget {
               const SizedBox(height: 16),
               _SectionTitle(
                 title: '车辆列表',
-                trailing: vehicles.when(
-                  data: (items) => Text(
-                    '共 ${items.length} 辆',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  loading: () => const SizedBox.shrink(),
-                  error: (_, _) => const SizedBox.shrink(),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    vehicles.when(
+                      data: (items) => Text(
+                        '共 ${items.length} 辆',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      loading: () => const SizedBox.shrink(),
+                      error: (_, _) => const SizedBox.shrink(),
+                    ),
+                    const SizedBox(width: 8),
+                    PopupMenuButton<_VehicleSort>(
+                      tooltip: '车辆排序',
+                      initialValue: _sort,
+                      onSelected: (value) => setState(() => _sort = value),
+                      itemBuilder: (context) => [
+                        for (final order in _VehicleSort.values)
+                          PopupMenuItem(value: order, child: Text(order.label)),
+                      ],
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            Icons.swap_vert,
+                            size: 17,
+                            color: AppColors.helper,
+                          ),
+                          Text(
+                            _sort.label,
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                          const Icon(
+                            Icons.keyboard_arrow_down,
+                            size: 17,
+                            color: AppColors.helper,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 10),
@@ -85,7 +119,7 @@ class VehiclePage extends ConsumerWidget {
                 ),
                 error: (error, _) => _ErrorCard(message: error.toString()),
                 data: (items) => _VehicleList(
-                  items: items,
+                  items: _sortVehicles(items, _sort),
                   onAdd: () => context.push('/vehicles/new'),
                 ),
               ),
@@ -126,7 +160,7 @@ class _VehicleSearchAndFilters extends ConsumerWidget {
     return Column(
       children: [
         Container(
-          height: 52,
+          height: 46,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(28),
@@ -174,7 +208,7 @@ class _VehicleSearchAndFilters extends ConsumerWidget {
         ),
         const SizedBox(height: 12),
         SizedBox(
-          height: 42,
+          height: 36,
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: [
@@ -257,11 +291,12 @@ class _FilterPill extends StatelessWidget {
       labelStyle: TextStyle(
         color: selected ? Colors.white : color ?? AppColors.body,
         fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+        fontSize: 12,
       ),
       backgroundColor: Colors.white.withValues(alpha: 0.72),
       selectedColor: color == null ? AppColors.techBlue : accent,
       shape: const StadiumBorder(),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
     );
   }
 }
@@ -336,12 +371,12 @@ class _StatTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-    height: compact ? 76 : 84,
+    height: compact ? 68 : 74,
     decoration: BoxDecoration(
       color: value.$3.withValues(alpha: 0.08),
       borderRadius: BorderRadius.circular(13),
     ),
-    padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 7),
+    padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 3),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -375,17 +410,17 @@ class _BusinessEntryPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final entries = [
-      ('车辆档案', '车辆信息管理', Icons.description_outlined, null),
-      ('车况检查', '日常检查上报', Icons.verified_outlined, 'condition'),
-      ('维修管理', '报修/维修记录', Icons.build_outlined, 'repair'),
-      ('保养/备件', '保养计划与备件', Icons.settings_outlined, 'maintenance'),
-      ('油耗管理', '加油记录与分析', Icons.water_drop_outlined, 'fuel'),
-      ('费用分析', '用车成本统计', Icons.bar_chart_outlined, 'expense'),
-      ('提醒中心', '保养/年检/保险', Icons.notifications_none, null),
+      ('车辆档案', '车辆信息管理', Icons.description, null),
+      ('车况检查', '日常检查上报', Icons.verified, 'condition'),
+      ('维修管理', '报修/维修记录', Icons.build, 'repair'),
+      ('保养/备件', '保养计划与备件', Icons.settings, 'maintenance'),
+      ('油耗管理', '加油记录与分析', Icons.water_drop, 'fuel'),
+      ('费用分析', '用车成本统计', Icons.bar_chart, 'expense'),
+      ('提醒中心', '保养/年检/保险', Icons.notifications, null),
     ];
     return Card(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(12, 16, 12, 12),
+        padding: const EdgeInsets.fromLTRB(12, 10, 12, 9),
         child: Column(
           children: [
             Row(
@@ -398,7 +433,7 @@ class _BusinessEntryPanel extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 8),
             LayoutBuilder(
               builder: (context, constraints) {
                 final columns = constraints.maxWidth >= 340 ? 4 : 3;
@@ -409,7 +444,7 @@ class _BusinessEntryPanel extends StatelessWidget {
                       start < entries.length;
                       start += columns
                     ) ...[
-                      if (start > 0) const SizedBox(height: 6),
+                      if (start > 0) const SizedBox(height: 4),
                       Row(
                         children: [
                           for (
@@ -440,7 +475,7 @@ class _BusinessEntryPanel extends StatelessWidget {
     (String, String, IconData, String?) entry,
     int index,
   ) => SizedBox(
-    height: 88,
+    height: 72,
     child: InkWell(
       borderRadius: BorderRadius.circular(16),
       onTap: () {
@@ -457,7 +492,7 @@ class _BusinessEntryPanel extends StatelessWidget {
         }
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 7),
+        padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 5),
         decoration: BoxDecoration(
           color: AppColors.background,
           borderRadius: BorderRadius.circular(16),
@@ -465,23 +500,35 @@ class _BusinessEntryPanel extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(entry.$3, color: _businessColor(index), size: 24),
-            const SizedBox(height: 3),
-            Text(
-              entry.$1,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                color: AppColors.ink,
-                fontSize: 13,
-                fontWeight: FontWeight.w700,
-              ),
+            Icon(entry.$3, color: _businessColor(index), size: 22),
+            const SizedBox(height: 2),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: Text(
+                    entry.$1,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      color: AppColors.ink,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                const Icon(
+                  Icons.chevron_right,
+                  size: 15,
+                  color: AppColors.helper,
+                ),
+              ],
             ),
             Text(
               entry.$2,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(color: AppColors.body, fontSize: 10),
+              style: const TextStyle(color: AppColors.body, fontSize: 9),
             ),
           ],
         ),
@@ -579,15 +626,15 @@ class _VehicleCard extends ConsumerWidget {
       child: InkWell(
         onTap: () => context.push('/vehicles/${vehicle.id}'),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(12, 14, 12, 12),
+          padding: const EdgeInsets.fromLTRB(8, 6, 8, 5),
           child: Column(
             children: [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width: 112,
-                    height: 76,
+                    width: 98,
+                    height: 58,
                     child: Image.asset(
                       _vehicleAsset(vehicle.vehicleType),
                       fit: BoxFit.contain,
@@ -606,7 +653,8 @@ class _VehicleCard extends ConsumerWidget {
                                 vehicle.name,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.titleLarge,
+                                style: Theme.of(context).textTheme.titleMedium
+                                    ?.copyWith(fontWeight: FontWeight.w700),
                               ),
                             ),
                             _StatusChip(
@@ -615,7 +663,7 @@ class _VehicleCard extends ConsumerWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 7),
+                        const SizedBox(height: 4),
                         Row(
                           children: [
                             _VehicleTag(
@@ -630,12 +678,29 @@ class _VehicleCard extends ConsumerWidget {
                             ],
                           ],
                         ),
-                        const SizedBox(height: 8),
-                        Text(
-                          '${vehicle.workArea?.isNotEmpty == true ? vehicle.workArea : '未设置工作区域'}  ·  ${vehicle.responsiblePerson?.isNotEmpty == true ? vehicle.responsiblePerson : '未设置责任人'}',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.bodyMedium,
+                        const SizedBox(height: 5),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: _VehicleIdentity(
+                                icon: Icons.location_on,
+                                label: vehicle.workArea?.isNotEmpty == true
+                                    ? vehicle.workArea!
+                                    : '未设置区域',
+                              ),
+                            ),
+                            const SizedBox(width: 6),
+                            Expanded(
+                              child: _VehicleIdentity(
+                                icon: Icons.person,
+                                label:
+                                    vehicle.responsiblePerson?.isNotEmpty ==
+                                        true
+                                    ? vehicle.responsiblePerson!
+                                    : '未设置责任人',
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -643,7 +708,7 @@ class _VehicleCard extends ConsumerWidget {
                   const Icon(Icons.chevron_right, color: AppColors.helper),
                 ],
               ),
-              const Divider(height: 18),
+              const Divider(height: 10),
               Row(
                 children: [
                   _Metric(
@@ -697,6 +762,29 @@ class _VehicleTag extends StatelessWidget {
         fontWeight: FontWeight.w600,
       ),
     ),
+  );
+}
+
+class _VehicleIdentity extends StatelessWidget {
+  const _VehicleIdentity({required this.icon, required this.label});
+
+  final IconData icon;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) => Row(
+    children: [
+      Icon(icon, color: AppColors.helper, size: 14),
+      const SizedBox(width: 4),
+      Expanded(
+        child: Text(
+          label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
+      ),
+    ],
   );
 }
 
@@ -838,6 +926,32 @@ Color _businessColor(int index) => [
   AppColors.purple,
   const Color(0xffef476f),
 ][index];
+
+enum _VehicleSort {
+  defaultOrder('默认排序'),
+  name('按名称'),
+  vehicleNo('按编号'),
+  status('按状态');
+
+  const _VehicleSort(this.label);
+
+  final String label;
+}
+
+List<Vehicle> _sortVehicles(List<Vehicle> vehicles, _VehicleSort sort) {
+  final items = [...vehicles];
+  switch (sort) {
+    case _VehicleSort.defaultOrder:
+      break;
+    case _VehicleSort.name:
+      items.sort((a, b) => a.name.compareTo(b.name));
+    case _VehicleSort.vehicleNo:
+      items.sort((a, b) => a.vehicleNo.compareTo(b.vehicleNo));
+    case _VehicleSort.status:
+      items.sort((a, b) => a.status.index.compareTo(b.status.index));
+  }
+  return items;
+}
 
 String _vehicleAsset(VehicleType type) => switch (type) {
   VehicleType.sweeper => 'assets/vehicles/sweeper-truck.png',

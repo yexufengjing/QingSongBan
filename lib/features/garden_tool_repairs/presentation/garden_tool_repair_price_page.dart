@@ -136,7 +136,7 @@ class _GardenToolRepairPricePageState
     required AsyncValue<List<GardenToolRepairUnit>> unitsAsync,
   }) => Card(
     child: Padding(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(8),
       child: Column(
         children: [
           Row(
@@ -144,8 +144,15 @@ class _GardenToolRepairPricePageState
               Expanded(
                 child: DropdownButtonFormField<String>(
                   isExpanded: true,
+                  isDense: true,
                   initialValue: project,
-                  decoration: const InputDecoration(labelText: '项目名称'),
+                  decoration: const InputDecoration(
+                    labelText: '项目名称',
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 8,
+                    ),
+                  ),
                   items: [
                     for (final name in projectNames)
                       DropdownMenuItem(value: name, child: Text(name)),
@@ -161,8 +168,15 @@ class _GardenToolRepairPricePageState
               Expanded(
                 child: DropdownButtonFormField<String>(
                   isExpanded: true,
+                  isDense: true,
                   initialValue: spec,
-                  decoration: const InputDecoration(labelText: '规格型号'),
+                  decoration: const InputDecoration(
+                    labelText: '规格型号',
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 8,
+                    ),
+                  ),
                   items: [
                     for (final value in specNames)
                       DropdownMenuItem(
@@ -185,8 +199,15 @@ class _GardenToolRepairPricePageState
                 width: 130,
                 child: DropdownButtonFormField<String>(
                   isExpanded: true,
+                  isDense: true,
                   initialValue: countUnit,
-                  decoration: const InputDecoration(labelText: '计数单位'),
+                  decoration: const InputDecoration(
+                    labelText: '计数单位',
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 8,
+                    ),
+                  ),
                   items: [
                     for (final value in units)
                       DropdownMenuItem(value: value, child: Text(value)),
@@ -199,8 +220,15 @@ class _GardenToolRepairPricePageState
                 width: 150,
                 child: DropdownButtonFormField<int>(
                   isExpanded: true,
+                  isDense: true,
                   initialValue: _months,
-                  decoration: const InputDecoration(labelText: '时间范围'),
+                  decoration: const InputDecoration(
+                    labelText: '时间范围',
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 8,
+                    ),
+                  ),
                   items: const [
                     DropdownMenuItem(value: 6, child: Text('近6个月')),
                     DropdownMenuItem(value: 12, child: Text('近12个月')),
@@ -258,6 +286,7 @@ class _GardenToolRepairPricePageState
               '${change == null ? '暂无涨跌幅' : '${change >= 0 ? '+' : ''}${change.toStringAsFixed(1)}%'}';
     final chronological = points.reversed.toList();
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Row(
           children: [
@@ -320,7 +349,7 @@ class _GardenToolRepairPricePageState
                 ),
                 const SizedBox(height: 8),
                 SizedBox(
-                  height: 210,
+                  height: 160,
                   width: double.infinity,
                   child: _PriceTrendChart(
                     points: chronological,
@@ -565,8 +594,8 @@ class _PriceTrendPainter extends CustomPainter {
       final value = minimum + range * line / 3;
       labels
         ..text = TextSpan(
-          text: (value / 100).toStringAsFixed(0),
-          style: const TextStyle(fontSize: 10, color: AppColors.body),
+          text: (value / 100).toStringAsFixed(2),
+          style: const TextStyle(fontSize: 9, color: AppColors.body),
         )
         ..layout();
       labels.paint(canvas, Offset(0, y - labels.height / 2));
@@ -608,7 +637,7 @@ class _PriceTrendPainter extends CustomPainter {
     for (var index = 0; index < pointsToDraw.length; index++) {
       final label = TextPainter(
         text: TextSpan(
-          text: (points[index].unitPriceCents / 100).toStringAsFixed(0),
+          text: (points[index].unitPriceCents / 100).toStringAsFixed(2),
           style: const TextStyle(
             fontSize: 9,
             color: AppColors.ink,

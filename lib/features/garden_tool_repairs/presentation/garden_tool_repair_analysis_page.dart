@@ -96,7 +96,7 @@ class _GardenToolRepairAnalysisPageState
     AsyncValue<List<GardenToolRepairUnit>> unitsAsync,
   ) => Card(
     child: Padding(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -105,11 +105,18 @@ class _GardenToolRepairAnalysisPageState
             runSpacing: 8,
             children: [
               SizedBox(
-                width: 104,
+                width: 96,
                 child: DropdownButtonFormField<int>(
                   isExpanded: true,
+                  isDense: true,
                   initialValue: _year,
-                  decoration: const InputDecoration(labelText: '年份'),
+                  decoration: const InputDecoration(
+                    labelText: '年份',
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 8,
+                    ),
+                  ),
                   items: [
                     for (var year = DateTime.now().year; year >= 2000; year--)
                       DropdownMenuItem(value: year, child: Text('$year年')),
@@ -120,11 +127,18 @@ class _GardenToolRepairAnalysisPageState
                 ),
               ),
               SizedBox(
-                width: 94,
+                width: 96,
                 child: DropdownButtonFormField<_AnalysisCycle>(
                   isExpanded: true,
+                  isDense: true,
                   initialValue: _cycle,
-                  decoration: const InputDecoration(labelText: '周期'),
+                  decoration: const InputDecoration(
+                    labelText: '周期',
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 8,
+                    ),
+                  ),
                   items: const [
                     DropdownMenuItem(
                       value: _AnalysisCycle.year,
@@ -142,11 +156,18 @@ class _GardenToolRepairAnalysisPageState
               ),
               if (_cycle == _AnalysisCycle.month)
                 SizedBox(
-                  width: 82,
+                  width: 76,
                   child: DropdownButtonFormField<int>(
                     isExpanded: true,
+                    isDense: true,
                     initialValue: _month,
-                    decoration: const InputDecoration(labelText: '月份'),
+                    decoration: const InputDecoration(
+                      labelText: '月份',
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 8,
+                      ),
+                    ),
                     items: [
                       for (var month = 1; month <= 12; month++)
                         DropdownMenuItem(value: month, child: Text('$month月')),
@@ -158,7 +179,7 @@ class _GardenToolRepairAnalysisPageState
                 ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 4),
           unitsAsync.when(
             loading: () => const LinearProgressIndicator(),
             error: (error, _) => const Text('维修单位加载失败'),
@@ -205,7 +226,7 @@ class _GardenToolRepairAnalysisPageState
           physics: const NeverScrollableScrollPhysics(),
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
-          childAspectRatio: 1.85,
+          childAspectRatio: 2.65,
           children: [
             _MetricCard(
               label: '$periodLabel维修金额',
@@ -264,15 +285,17 @@ class _GardenToolRepairAnalysisPageState
           ],
         ),
         const SizedBox(height: 10),
-        _ProjectCountCard(
-          entries: visibleCounts,
-          canExpand: report.projectCounts.length > 10,
-          expanded: _showAllFrequency,
-          onToggle: () =>
-              setState(() => _showAllFrequency = !_showAllFrequency),
-        ),
-        const SizedBox(height: 10),
         _RepairerTable(entries: report.repairers),
+        if (visibleCounts.isNotEmpty) ...[
+          const SizedBox(height: 10),
+          _ProjectCountCard(
+            entries: visibleCounts,
+            canExpand: report.projectCounts.length > 10,
+            expanded: _showAllFrequency,
+            onToggle: () =>
+                setState(() => _showAllFrequency = !_showAllFrequency),
+          ),
+        ],
       ],
     );
   }
@@ -391,8 +414,18 @@ class _MonthlyTrendCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: Theme.of(context).textTheme.titleLarge),
-          const SizedBox(height: 8),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  title,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              ),
+              const Text('单位：元', style: TextStyle(color: AppColors.body)),
+            ],
+          ),
+          const SizedBox(height: 4),
           LayoutBuilder(
             builder: (context, constraints) => GestureDetector(
               onTapUp: (details) {
@@ -406,15 +439,11 @@ class _MonthlyTrendCard extends StatelessWidget {
                 onTapMonth(index + 1);
               },
               child: SizedBox(
-                height: 220,
+                height: 150,
                 width: double.infinity,
                 child: CustomPaint(painter: _TrendPainter(amounts)),
               ),
             ),
-          ),
-          const Align(
-            alignment: Alignment.centerRight,
-            child: Text('单位：元', style: TextStyle(color: AppColors.body)),
           ),
         ],
       ),

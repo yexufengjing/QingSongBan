@@ -104,6 +104,30 @@ void main() {
       );
     });
 
+    test('short atlas canvas keeps every tappable node inside its bounds', () {
+      const canvasWidth = 330.0;
+      const canvasHeight = canvasWidth * 0.52;
+      const markerWidth = 72.0;
+      const markerHeight = 24.0;
+      for (final angle in VehicleViewAngle.values) {
+        for (final type in VehicleType.values) {
+          for (final node in vehicleVisualNodesFor(angle, type)) {
+            final center = vehicleVisualNodeCenter(
+              node,
+              canvasWidth: canvasWidth,
+              canvasHeight: canvasHeight,
+              markerWidth: markerWidth,
+              markerHeight: markerHeight,
+            );
+            expect(center.dx - markerWidth / 2, greaterThanOrEqualTo(0));
+            expect(center.dx + markerWidth / 2, lessThanOrEqualTo(canvasWidth));
+            expect(center.dy - markerHeight / 2, greaterThanOrEqualTo(0));
+            expect(center.dy + markerHeight / 2, lessThanOrEqualTo(canvasHeight));
+          }
+        }
+      }
+    });
+
     test('condition lookup requires both type and exact component key', () {
       final engine = _condition(
         id: 1,

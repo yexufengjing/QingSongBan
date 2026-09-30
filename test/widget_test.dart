@@ -21,6 +21,7 @@ import 'package:qingsongban/features/leave/domain/leave_options.dart';
 import 'package:qingsongban/features/overtime/application/overtime_providers.dart';
 import 'package:qingsongban/features/overtime/domain/overtime_options.dart';
 import 'package:qingsongban/features/personnel/application/personnel_providers.dart';
+import 'package:qingsongban/features/personnel/presentation/personnel_list_page.dart';
 import 'package:qingsongban/features/reports/application/monthly_summary_providers.dart';
 import 'package:qingsongban/features/reports/domain/monthly_summary_options.dart';
 import 'package:qingsongban/features/insurance/application/insurance_providers.dart';
@@ -31,6 +32,7 @@ import 'package:qingsongban/features/operation_logs/application/operation_log_pr
 import 'package:qingsongban/features/vehicles/data/vehicle_repository.dart';
 import 'package:qingsongban/features/vehicles/domain/vehicle_options.dart';
 import 'package:qingsongban/features/vehicles/application/vehicle_providers.dart';
+import 'package:qingsongban/features/home/application/home_providers.dart';
 
 void main() {
   late AppDatabase database;
@@ -112,6 +114,20 @@ void main() {
           overtimeRecordsProvider.overrideWith(
             (ref) => Stream.value(overtimeOverride ?? <OvertimeRecordView>[]),
           ),
+          overtimeRecordsForMonthProvider.overrideWith(
+            (ref, month) =>
+                Stream.value(overtimeOverride ?? <OvertimeRecordView>[]),
+          ),
+          homeDashboardProvider.overrideWith(
+            (ref) async => const HomeDashboardStats(
+              activeEmployees: 0,
+              newEmployees: 0,
+              terminatedEmployees: 0,
+              todayAttendance: 0,
+              anomalies: 0,
+              pendingReminders: 0,
+            ),
+          ),
           monthlySummaryProvider.overrideWith(
             (ref) => Stream.value(
               const MonthlySummaryView.empty(yearMonth: '2026-09'),
@@ -160,14 +176,22 @@ void main() {
     await tester.pumpAndSettle();
     addTearDown(() async {
       await tester.pumpWidget(const SizedBox.shrink());
+      await tester.idle();
       await tester.pump();
+      await tester.pump(const Duration(milliseconds: 1));
+      await tester.idle();
     });
   }
 
   testWidgets('starts on the home tab with five destinations', (tester) async {
     await pumpApp(tester);
+    final semantics = tester.ensureSemantics();
+    addTearDown(semantics.dispose);
 
-    expect(find.text('轻松办'), findsOneWidget);
+    expect(
+      find.bySemanticsLabel('轻松办人员管理首页，清洁人员与车辆背景，标语：让城市更清洁，让工作更轻松。'),
+      findsOneWidget,
+    );
     expect(find.text('首页'), findsOneWidget);
     expect(find.text('人员'), findsOneWidget);
     expect(find.text('考勤'), findsOneWidget);
@@ -282,6 +306,7 @@ void main() {
       await tester.pumpAndSettle();
       final metric = find.byKey(Key('home-metric-${entry.key}'));
       expect(metric, findsOneWidget);
+      await tester.ensureVisible(metric);
       await tester.tap(metric);
       await tester.pumpAndSettle();
       expect(find.text(entry.value), findsOneWidget);
@@ -340,7 +365,19 @@ void main() {
     await tester.tap(newCard);
     await tester.pumpAndSettle();
     expect(find.text('人员名单'), findsOneWidget);
-    expect(find.textContaining('入职月份：'), findsOneWidget);
+    final container = ProviderScope.containerOf(
+      tester.element(find.byType(PersonnelListPage)),
+    );
+    final now = DateTime.now();
+    final expectedMonth =
+        '${now.year}-${now.month.toString().padLeft(2, '0')}';
+    expect(
+      container.read(personnelHireMonthFilterProvider),
+      expectedMonth,
+    );
+    await tester.tap(find.text('筛选'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('入职月份：$expectedMonth'), findsOneWidget);
 
     appRouter.go('/personnel');
     await tester.pumpAndSettle();
@@ -374,7 +411,7 @@ void main() {
     await tester.tap(firstSave);
     await tester.pumpAndSettle();
 
-    expect(find.text('张三'), findsOneWidget);
+    expect(find.text('张三'), findsWidgets);
     expect(find.text('EMP-0001'), findsOneWidget);
 
     await tester.tap(find.byTooltip('编辑档案'));
@@ -385,7 +422,7 @@ void main() {
     await tester.tap(secondSave);
     await tester.pumpAndSettle();
 
-    expect(find.text('李四'), findsOneWidget);
+    expect(find.text('李四'), findsWidgets);
     expect(find.text('张三'), findsNothing);
   });
 

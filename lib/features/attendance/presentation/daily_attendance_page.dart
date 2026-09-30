@@ -6,7 +6,10 @@ import '../../../app/theme/app_theme.dart';
 import '../../../core/database/app_database.dart';
 import '../../../core/database/database_enums.dart';
 import '../../../core/utils/date_utils.dart';
-import '../../personnel/domain/personnel_options.dart';
+import '../../overtime/application/overtime_providers.dart';
+import '../../overtime/domain/overtime_options.dart';
+import '../application/attendance_group_providers.dart';
+import '../domain/attendance_group_options.dart';
 import '../application/daily_attendance_providers.dart';
 import '../domain/daily_attendance_options.dart';
 
@@ -20,6 +23,17 @@ class DailyAttendancePage extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('每日考勤'),
         actions: [
+          const Chip(
+            avatar: Icon(
+              Icons.check_circle,
+              color: AppColors.primary,
+              size: 16,
+            ),
+            label: Text('自动保存'),
+            visualDensity: VisualDensity.compact,
+            side: BorderSide.none,
+            backgroundColor: AppColors.lightGreen,
+          ),
           IconButton(
             onPressed: () => context.push('/attendance/monthly-roster'),
             icon: const Icon(Icons.calendar_month_outlined),
@@ -68,24 +82,30 @@ class _DailyAttendanceContent extends ConsumerWidget {
     }
 
     final entries = ref.watch(dailyAttendanceEntriesProvider);
-    final registeredCount = entries.maybeWhen(
-      data: (items) => items.where((item) => item.isRegistered).length,
-      orElse: () => 0,
+    final overtimeState = ref.watch(
+      overtimeRecordsForMonthProvider(DateTime(date.year, date.month)),
     );
-    final lockedCount = entries.maybeWhen(
-      data: (items) => items.where((item) => !item.isEditable).length,
-      orElse: () => 0,
+    final overtimeRecords =
+        overtimeState.valueOrNull ?? const <OvertimeRecordView>[];
+    final overtimeUnavailable = overtimeState.when(
+      loading: () => '加载中',
+      error: (_, _) => '暂不可用',
+      data: (_) => null,
     );
-
+    final groupSummaries =
+        ref.watch(attendanceGroupSummariesProvider).valueOrNull ??
+        const <AttendanceGroupSummary>[];
     return ListView(
-      padding: const EdgeInsets.fromLTRB(20, 8, 20, 28),
+      padding: const EdgeInsets.fromLTRB(14, 8, 14, 24),
       children: [
-        _DailyAttendanceHero(date: date, group: selectedGroup),
-        const SizedBox(height: 14),
         _DailyAttendanceSelectors(
           date: date,
           groups: groups,
           selectedGroup: selectedGroup,
+          memberCounts: {
+            for (final summary in groupSummaries)
+              summary.group.id: summary.memberCount,
+          },
           onDateChanged: (value) =>
               ref.read(dailyAttendanceDateProvider.notifier).state = value,
           onGroupChanged: (value) {
@@ -94,45 +114,12 @@ class _DailyAttendanceContent extends ConsumerWidget {
             }
           },
         ),
-        const SizedBox(height: 14),
-        _DailyAttendanceStats(
-          total: entries.maybeWhen(
-            data: (items) => items.length,
-            orElse: () => 0,
-          ),
-          registered: registeredCount,
-          locked: lockedCount,
-        ),
-        const SizedBox(height: 14),
+        const SizedBox(height: 8),
         _DailyAttendanceActions(
           onAction: (action) => _runAction(context, ref, action),
         ),
-        const SizedBox(height: 18),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('考勤人员', style: Theme.of(context).textTheme.titleLarge),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  Icons.cloud_done_outlined,
-                  size: 16,
-                  color: AppColors.primary,
-                ),
-                const SizedBox(width: 4),
-                Text(
-                  '本地已保存',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 8),
+        const _DailyAttendanceTableHeader(),
         entries.when(
           loading: () => const Padding(
             padding: EdgeInsets.all(32),
@@ -151,6 +138,24 @@ class _DailyAttendanceContent extends ConsumerWidget {
                   _DailyAttendanceEmployeeCard(
                     key: ValueKey(entry.employee.id),
                     entry: entry,
+                    overtimeUnavailable: overtimeUnavailable,
+                    overtimeMinutes: overtimeRecords
+                        .where(
+                          (item) =>
+                              item.employee.id == entry.employee.id &&
+                              AppDateUtils.dateOnly(
+                                    item.overtime.overtimeDate,
+                                  ) ==
+                                  AppDateUtils.dateOnly(date),
+                        )
+                        .fold<int>(
+                          0,
+                          (total, item) =>
+                              total +
+                              item.overtime.endTime
+                                  .difference(item.overtime.startTime)
+                                  .inMinutes,
+                        ),
                     onSave: (draft) => _saveEntry(context, ref, draft),
                   ),
                   const SizedBox(height: 10),
@@ -210,74 +215,12 @@ class _DailyAttendanceContent extends ConsumerWidget {
   }
 }
 
-class _DailyAttendanceHero extends StatelessWidget {
-  const _DailyAttendanceHero({required this.date, required this.group});
-
-  final DateTime date;
-  final AttendanceGroup group;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(23),
-        gradient: const LinearGradient(
-          colors: [Color(0xFFE8F7F0), Color(0xFFE8F1FF)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        border: Border.all(color: Colors.white, width: 2),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 56,
-            height: 56,
-            decoration: BoxDecoration(
-              color: AppColors.primary,
-              borderRadius: BorderRadius.circular(18),
-            ),
-            child: const Icon(
-              Icons.fact_check_outlined,
-              color: Colors.white,
-              size: 29,
-            ),
-          ),
-          const SizedBox(width: 15),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('每日登记', style: Theme.of(context).textTheme.headlineMedium),
-                const SizedBox(height: 5),
-                Text(
-                  '${date.year}年${date.month.toString().padLeft(2, '0')}月${date.day.toString().padLeft(2, '0')}日 · ${group.name}',
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: AppColors.ink,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  '上午、下午分别登记，修改后立即保存。',
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _DailyAttendanceSelectors extends StatelessWidget {
   const _DailyAttendanceSelectors({
     required this.date,
     required this.groups,
     required this.selectedGroup,
+    required this.memberCounts,
     required this.onDateChanged,
     required this.onGroupChanged,
   });
@@ -285,163 +228,133 @@ class _DailyAttendanceSelectors extends StatelessWidget {
   final DateTime date;
   final List<AttendanceGroup> groups;
   final AttendanceGroup selectedGroup;
+  final Map<int, int> memberCounts;
   final ValueChanged<DateTime> onDateChanged;
   final ValueChanged<int?> onGroupChanged;
 
   @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(14, 14, 14, 12),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                IconButton(
-                  key: const Key('daily-attendance-previous-day'),
-                  onPressed: () => onDateChanged(
-                    AppDateUtils.dateOnly(
-                      date.subtract(const Duration(days: 1)),
+  Widget build(BuildContext context) => Column(
+    children: [
+      Card(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+          child: Row(
+            children: [
+              const Icon(
+                Icons.calendar_month_outlined,
+                color: AppColors.techBlue,
+                size: 18,
+              ),
+              const SizedBox(width: 4),
+              Expanded(
+                child: TextButton(
+                  key: const Key('daily-attendance-date-button'),
+                  onPressed: () async {
+                    final picked = await showDatePicker(
+                      context: context,
+                      initialDate: date,
+                      firstDate: DateTime(2020),
+                      lastDate: DateTime(2099),
+                      helpText: '选择考勤日期',
+                    );
+                    if (picked != null) {
+                      onDateChanged(AppDateUtils.dateOnly(picked));
+                    }
+                  },
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')} ${_weekdayLabel(date.weekday)}',
+                      maxLines: 1,
+                      softWrap: false,
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  icon: const Icon(Icons.chevron_left),
-                  tooltip: '前一天',
                 ),
-                Expanded(
-                  child: OutlinedButton.icon(
-                    key: const Key('daily-attendance-date-button'),
-                    onPressed: () async {
-                      final picked = await showDatePicker(
-                        context: context,
-                        initialDate: date,
-                        firstDate: DateTime(2020),
-                        lastDate: DateTime(2099),
-                        helpText: '选择考勤日期',
-                      );
-                      if (picked != null) {
-                        onDateChanged(AppDateUtils.dateOnly(picked));
-                      }
-                    },
-                    icon: const Icon(Icons.date_range_outlined),
-                    label: Text(
-                      '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}',
-                    ),
-                  ),
+              ),
+              IconButton(
+                key: const Key('daily-attendance-previous-day'),
+                onPressed: () => onDateChanged(
+                  AppDateUtils.dateOnly(date.subtract(const Duration(days: 1))),
                 ),
-                IconButton(
-                  key: const Key('daily-attendance-next-day'),
-                  onPressed: () => onDateChanged(
-                    AppDateUtils.dateOnly(date.add(const Duration(days: 1))),
-                  ),
-                  icon: const Icon(Icons.chevron_right),
-                  tooltip: '后一天',
+                icon: const Icon(Icons.chevron_left),
+                tooltip: '前一天',
+                constraints: const BoxConstraints.tightFor(
+                  width: 30,
+                  height: 32,
                 ),
-              ],
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
+                padding: EdgeInsets.zero,
+              ),
+              TextButton(
                 key: const Key('daily-attendance-today-button'),
                 onPressed: () =>
                     onDateChanged(AppDateUtils.dateOnly(DateTime.now())),
+                style: TextButton.styleFrom(
+                  minimumSize: const Size(36, 32),
+                  padding: const EdgeInsets.symmetric(horizontal: 3),
+                  visualDensity: VisualDensity.compact,
+                ),
                 child: const Text('今天'),
               ),
-            ),
-            const SizedBox(height: 4),
-            DropdownButtonFormField<int>(
-              key: const Key('daily-attendance-group-field'),
-              initialValue: selectedGroup.id,
-              isExpanded: true,
-              decoration: const InputDecoration(
-                labelText: '考勤组',
-                prefixIcon: Icon(Icons.groups_outlined),
+              IconButton(
+                key: const Key('daily-attendance-next-day'),
+                onPressed: () => onDateChanged(
+                  AppDateUtils.dateOnly(date.add(const Duration(days: 1))),
+                ),
+                icon: const Icon(Icons.chevron_right),
+                tooltip: '后一天',
+                constraints: const BoxConstraints.tightFor(
+                  width: 30,
+                  height: 32,
+                ),
+                padding: EdgeInsets.zero,
               ),
-              items: [
-                for (final group in groups)
-                  DropdownMenuItem(value: group.id, child: Text(group.name)),
-              ],
-              onChanged: onGroupChanged,
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-    );
-  }
-}
-
-class _DailyAttendanceStats extends StatelessWidget {
-  const _DailyAttendanceStats({
-    required this.total,
-    required this.registered,
-    required this.locked,
-  });
-
-  final int total;
-  final int registered;
-  final int locked;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: _DailyStatCard(
-            label: '名单',
-            value: total,
-            color: AppColors.techBlue,
-          ),
-        ),
-        const SizedBox(width: 10),
-        Expanded(
-          child: _DailyStatCard(
-            label: '已登记',
-            value: registered,
-            color: AppColors.primary,
-          ),
-        ),
-        const SizedBox(width: 10),
-        Expanded(
-          child: _DailyStatCard(
-            label: '锁定',
-            value: locked,
-            color: AppColors.helper,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _DailyStatCard extends StatelessWidget {
-  const _DailyStatCard({
-    required this.label,
-    required this.value,
-    required this.color,
-  });
-
-  final String label;
-  final int value;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
-        child: Column(
-          children: [
-            Text(label, style: Theme.of(context).textTheme.bodySmall),
-            const SizedBox(height: 2),
-            Text(
-              '$value 人',
-              style: Theme.of(context).textTheme.titleLarge
-                  ?.copyWith(color: color),
-            ),
-          ],
+      const SizedBox(height: 6),
+      SizedBox(
+        height: 44,
+        child: ListView.separated(
+          scrollDirection: Axis.horizontal,
+          itemCount: groups.length,
+          separatorBuilder: (_, _) => const SizedBox(width: 8),
+          itemBuilder: (context, index) {
+            final group = groups[index];
+            final count = memberCounts[group.id];
+            final selected = group.id == selectedGroup.id;
+            return ChoiceChip(
+              key: Key('daily-attendance-group-${group.id}'),
+              label: Text(
+                count == null ? group.name : '${group.name}（$count人）',
+              ),
+              selected: selected,
+              onSelected: (_) => onGroupChanged(group.id),
+              showCheckmark: false,
+              selectedColor: AppColors.primary,
+              backgroundColor: AppColors.lightBlue,
+              side: BorderSide.none,
+              labelStyle: TextStyle(
+                color: selected ? Colors.white : AppColors.ink,
+                fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
+              ),
+            );
+          },
         ),
       ),
-    );
-  }
+    ],
+  );
+
+  static String _weekdayLabel(int weekday) => switch (weekday) {
+    DateTime.monday => '周一',
+    DateTime.tuesday => '周二',
+    DateTime.wednesday => '周三',
+    DateTime.thursday => '周四',
+    DateTime.friday => '周五',
+    DateTime.saturday => '周六',
+    _ => '周日',
+  };
 }
 
 class _DailyAttendanceActions extends StatelessWidget {
@@ -451,80 +364,94 @@ class _DailyAttendanceActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(14),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('快捷操作', style: Theme.of(context).textTheme.titleLarge),
-            const SizedBox(height: 10),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                _ActionButton(
-                  key: const Key('daily-attendance-all-present'),
-                  action: DailyAttendanceAction.allPresent,
-                  onPressed: onAction,
-                ),
-                _ActionButton(
-                  key: const Key('daily-attendance-copy-previous'),
-                  action: DailyAttendanceAction.copyPrevious,
-                  onPressed: onAction,
-                ),
-                _ActionButton(
-                  key: const Key('daily-attendance-rest'),
-                  action: DailyAttendanceAction.rest,
-                  onPressed: onAction,
-                ),
-                _ActionButton(
-                  key: const Key('daily-attendance-stopped'),
-                  action: DailyAttendanceAction.stopped,
-                  onPressed: onAction,
-                ),
-              ],
-            ),
-          ],
-        ),
+    const actions = [
+      (DailyAttendanceAction.allPresent, Icons.done_all, AppColors.primary),
+      (
+        DailyAttendanceAction.copyPrevious,
+        Icons.copy_outlined,
+        AppColors.techBlue,
       ),
+      (DailyAttendanceAction.rest, Icons.weekend_outlined, Color(0xFFE98500)),
+      (
+        DailyAttendanceAction.stopped,
+        Icons.pause_circle_outline,
+        AppColors.danger,
+      ),
+    ];
+    return Row(
+      children: [
+        for (var index = 0; index < actions.length; index++) ...[
+          if (index > 0) const SizedBox(width: 6),
+          Expanded(
+            child: Material(
+              color: actions[index].$3.withValues(alpha: .1),
+              borderRadius: BorderRadius.circular(14),
+              child: InkWell(
+                key: Key('daily-attendance-action-${actions[index].$1.name}'),
+                onTap: () => onAction(actions[index].$1),
+                borderRadius: BorderRadius.circular(14),
+                child: SizedBox(
+                  height: 78,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        actions[index].$2,
+                        color: actions[index].$3,
+                        size: 22,
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        DailyAttendanceOptions.actionLabel(actions[index].$1),
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: AppColors.ink,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ],
     );
   }
 }
 
-class _ActionButton extends StatelessWidget {
-  const _ActionButton({
-    required this.action,
-    required this.onPressed,
-    super.key,
-  });
-
-  final DailyAttendanceAction action;
-  final ValueChanged<DailyAttendanceAction> onPressed;
+class _DailyAttendanceTableHeader extends StatelessWidget {
+  const _DailyAttendanceTableHeader();
 
   @override
-  Widget build(BuildContext context) {
-    return OutlinedButton.icon(
-      onPressed: () => onPressed(action),
-      icon: Icon(switch (action) {
-        DailyAttendanceAction.allPresent => Icons.done_all,
-        DailyAttendanceAction.copyPrevious => Icons.copy_outlined,
-        DailyAttendanceAction.rest => Icons.weekend_outlined,
-        DailyAttendanceAction.stopped => Icons.pause_circle_outline,
-      }, size: 18),
-      label: Text(DailyAttendanceOptions.actionLabel(action)),
-    );
-  }
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.fromLTRB(8, 6, 8, 6),
+    child: Row(
+      children: [
+        const SizedBox(width: 86, child: Text('姓名')),
+        const Expanded(child: Center(child: Text('上午'))),
+        const Expanded(child: Center(child: Text('下午'))),
+        const SizedBox(width: 64, child: Center(child: Text('加班时长'))),
+        const SizedBox(width: 38, child: Center(child: Text('备注'))),
+      ],
+    ),
+  );
 }
 
 class _DailyAttendanceEmployeeCard extends StatefulWidget {
   const _DailyAttendanceEmployeeCard({
     required this.entry,
+    required this.overtimeMinutes,
+    required this.overtimeUnavailable,
     required this.onSave,
     super.key,
   });
 
   final DailyAttendanceEntryView entry;
+  final int overtimeMinutes;
+  final String? overtimeUnavailable;
   final Future<void> Function(DailyAttendanceDraft draft) onSave;
 
   @override
@@ -535,20 +462,17 @@ class _DailyAttendanceEmployeeCard extends StatefulWidget {
 class _DailyAttendanceEmployeeCardState
     extends State<_DailyAttendanceEmployeeCard> {
   late final TextEditingController _remarkController;
-  late final FocusNode _remarkFocusNode;
 
   @override
   void initState() {
     super.initState();
     _remarkController = TextEditingController(text: widget.entry.remark ?? '');
-    _remarkFocusNode = FocusNode();
   }
 
   @override
   void didUpdateWidget(covariant _DailyAttendanceEmployeeCard oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.entry.remark != widget.entry.remark &&
-        !_remarkFocusNode.hasFocus) {
+    if (oldWidget.entry.remark != widget.entry.remark) {
       _remarkController.text = widget.entry.remark ?? '';
     }
   }
@@ -556,108 +480,92 @@ class _DailyAttendanceEmployeeCardState
   @override
   void dispose() {
     _remarkController.dispose();
-    _remarkFocusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final employee = widget.entry.employee;
+    final overtime =
+        widget.overtimeUnavailable ??
+        (widget.overtimeMinutes == 0
+            ? '无'
+            : _formatDuration(widget.overtimeMinutes));
     return Card(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(15, 14, 15, 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 7),
+        child: Row(
           children: [
-            Row(
-              children: [
-                CircleAvatar(
-                  radius: 22,
-                  backgroundColor: AppColors.lightBlue,
-                  foregroundColor: AppColors.techBlue,
-                  child: Text(employee.name.characters.first),
-                ),
-                const SizedBox(width: 11),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        employee.name,
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                      const SizedBox(height: 3),
-                      Text(
-                        '${employee.employeeNo} · ${employee.position?.isNotEmpty == true ? employee.position : '岗位未填写'} · ${PersonnelOptions.statusLabel(employee.status)}',
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                    ],
+            SizedBox(
+              width: 78,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    employee.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
-                ),
-                if (!widget.entry.isEditable)
-                  Icon(Icons.lock_outline, color: AppColors.helper, size: 20),
-              ],
-            ),
-            if (!widget.entry.isEditable) ...[
-              const SizedBox(height: 8),
-              Text(
-                widget.entry.lockReason ?? '当前日期不可登记',
-                style: Theme.of(context).textTheme.bodySmall
-                    ?.copyWith(color: AppColors.helper),
+                  Text(
+                    '工号 ${employee.employeeNo}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ],
               ),
-            ],
-            const SizedBox(height: 13),
-            Row(
-              children: [
-                Expanded(
-                  child: _buildStatusField(
-                    context,
-                    '上午',
-                    widget.entry.morningStatus,
-                    'morning',
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: _buildStatusField(
-                    context,
-                    '下午',
-                    widget.entry.afternoonStatus,
-                    'afternoon',
-                  ),
-                ),
-              ],
             ),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                const Icon(
-                  Icons.more_time_outlined,
-                  size: 19,
-                  color: AppColors.helper,
-                ),
-                const SizedBox(width: 7),
-                Text('加班时长', style: Theme.of(context).textTheme.bodyMedium),
-                const SizedBox(width: 10),
-                Text('上午、下午独立登记', style: Theme.of(context).textTheme.bodySmall),
-              ],
+            Expanded(
+              child: _buildStatusField(
+                context,
+                widget.entry.morningStatus,
+                'morning',
+              ),
             ),
-            const SizedBox(height: 10),
-            TextField(
+            const SizedBox(width: 5),
+            Expanded(
+              child: _buildStatusField(
+                context,
+                widget.entry.afternoonStatus,
+                'afternoon',
+              ),
+            ),
+            SizedBox(
+              width: 59,
+              child: TextButton(
+                key: Key('daily-attendance-overtime-${employee.id}'),
+                onPressed: () => context.push('/attendance/overtime'),
+                style: TextButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 2),
+                ),
+                child: Text(
+                  overtime,
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  style: Theme.of(context).textTheme.bodySmall
+                      ?.copyWith(color: AppColors.ink),
+                ),
+              ),
+            ),
+            IconButton(
               key: Key('daily-attendance-remark-${employee.id}'),
-              controller: _remarkController,
-              focusNode: _remarkFocusNode,
-              enabled: widget.entry.isEditable,
-              textInputAction: TextInputAction.done,
-              onSubmitted: (_) => _saveCurrent(),
-              onTapOutside: (_) => _saveCurrent(),
-              decoration: const InputDecoration(
-                labelText: '备注',
-                prefixIcon: Icon(Icons.notes_outlined),
+              tooltip: _remarkController.text.isEmpty
+                  ? '添加备注'
+                  : '备注：${_remarkController.text}',
+              onPressed: widget.entry.isEditable ? _editRemark : null,
+              icon: Icon(
+                _remarkController.text.isEmpty
+                    ? Icons.notes_outlined
+                    : Icons.sticky_note_2_outlined,
+                color: _remarkController.text.isEmpty
+                    ? AppColors.helper
+                    : AppColors.techBlue,
+                size: 20,
               ),
             ),
+            if (!widget.entry.isEditable)
+              const Icon(Icons.lock_outline, color: AppColors.helper, size: 16),
           ],
         ),
       ),
@@ -666,78 +574,128 @@ class _DailyAttendanceEmployeeCardState
 
   Widget _buildStatusField(
     BuildContext context,
-    String label,
     AttendanceHalfStatus status,
     String part,
   ) {
+    final color = _statusColor(status);
+    final key = Key('daily-attendance-$part-${widget.entry.employee.id}');
     if (!widget.entry.isEditable) {
       return Container(
-        padding: const EdgeInsets.fromLTRB(13, 9, 13, 10),
+        height: 42,
+        alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: AppColors.background,
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: AppColors.divider),
+          color: color.withValues(alpha: .13),
+          borderRadius: BorderRadius.circular(12),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(label, style: Theme.of(context).textTheme.bodySmall),
-            const SizedBox(height: 4),
-            Text(
-              DailyAttendanceOptions.statusLabel(status),
-              style: Theme.of(context).textTheme.bodyLarge
-                  ?.copyWith(color: AppColors.helper),
-            ),
-          ],
+        child: Text(
+          DailyAttendanceOptions.statusLabel(status),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(color: color),
         ),
       );
     }
-    final key = Key('daily-attendance-$part-${widget.entry.employee.id}');
-    return DropdownButtonFormField<AttendanceHalfStatus>(
-      key: key,
-      initialValue: status,
-      isExpanded: true,
-      decoration: InputDecoration(
-        labelText: label,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 12,
-          vertical: 11,
+    return Container(
+      height: 42,
+      padding: const EdgeInsets.symmetric(horizontal: 4),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: .11),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<AttendanceHalfStatus>(
+          key: key,
+          value: status,
+          isExpanded: true,
+          icon: Icon(Icons.expand_more, size: 16, color: color),
+          style: Theme.of(context).textTheme.bodySmall
+              ?.copyWith(color: color, fontWeight: FontWeight.w600),
+          items: [
+            for (final option in DailyAttendanceOptions.editableStatuses)
+              DropdownMenuItem(
+                value: option,
+                child: Text(
+                  DailyAttendanceOptions.statusLabel(option),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+          ],
+          onChanged: (value) {
+            if (value == null) return;
+            if (part == 'morning') {
+              _save(morning: value);
+            } else {
+              _save(afternoon: value);
+            }
+          },
         ),
       ),
-      items: [
-        for (final option in DailyAttendanceOptions.editableStatuses)
-          DropdownMenuItem(
-            value: option,
-            child: Text(DailyAttendanceOptions.statusLabel(option)),
-          ),
-      ],
-      onChanged: (value) {
-        if (value == null) return;
-        if (part == 'morning') {
-          _save(morning: value);
-        } else {
-          _save(afternoon: value);
-        }
-      },
     );
+  }
+
+  Future<void> _editRemark() async {
+    final controller = TextEditingController(text: _remarkController.text);
+    final result = await showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('考勤备注'),
+        content: TextField(
+          controller: controller,
+          autofocus: true,
+          maxLines: 3,
+          maxLength: 100,
+          decoration: const InputDecoration(hintText: '输入备注'),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('取消'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(context, controller.text.trim()),
+            child: const Text('保存备注'),
+          ),
+        ],
+      ),
+    );
+    controller.dispose();
+    if (result == null) return;
+    _remarkController.text = result;
+    await _save();
+    if (mounted) setState(() {});
   }
 
   Future<void> _save({
     AttendanceHalfStatus? morning,
     AttendanceHalfStatus? afternoon,
-  }) {
-    return widget.onSave(
-      DailyAttendanceDraft(
-        employeeId: widget.entry.employee.id,
-        attendanceDate: widget.entry.attendanceDate,
-        morningStatus: morning ?? widget.entry.morningStatus,
-        afternoonStatus: afternoon ?? widget.entry.afternoonStatus,
-        remark: _remarkController.text,
-      ),
-    );
+  }) => widget.onSave(
+    DailyAttendanceDraft(
+      employeeId: widget.entry.employee.id,
+      attendanceDate: widget.entry.attendanceDate,
+      morningStatus: morning ?? widget.entry.morningStatus,
+      afternoonStatus: afternoon ?? widget.entry.afternoonStatus,
+      remark: _remarkController.text,
+    ),
+  );
+
+  String _formatDuration(int minutes) {
+    final hours = minutes ~/ 60;
+    final remainder = minutes % 60;
+    if (hours == 0) return '$remainder分钟';
+    return remainder == 0 ? '$hours小时' : '$hours小时$remainder分';
   }
 
-  Future<void> _saveCurrent() => _save();
+  Color _statusColor(AttendanceHalfStatus status) => switch (status) {
+    AttendanceHalfStatus.present => AppColors.primary,
+    AttendanceHalfStatus.leave ||
+    AttendanceHalfStatus.absent => AppColors.danger,
+    AttendanceHalfStatus.rest => AppColors.body,
+    AttendanceHalfStatus.stopped => const Color(0xFFE98500),
+    AttendanceHalfStatus.unregistered => AppColors.techBlue,
+    AttendanceHalfStatus.notEmployed ||
+    AttendanceHalfStatus.terminated => AppColors.helper,
+  };
 }
 
 class _DailyAttendanceEmpty extends StatelessWidget {

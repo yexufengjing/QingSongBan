@@ -1,7 +1,10 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:qingsongban/core/database/app_database.dart';
 import 'package:qingsongban/core/database/database_enums.dart';
+import 'package:qingsongban/core/database/database_provider.dart';
+import 'package:qingsongban/features/overtime/application/overtime_providers.dart';
 import 'package:qingsongban/features/overtime/data/overtime_repository.dart';
 import 'package:qingsongban/features/overtime/domain/overtime_options.dart';
 import 'package:qingsongban/features/personnel/data/personnel_repository.dart';
@@ -68,6 +71,44 @@ void main() {
       '张三',
     );
   });
+
+  test(
+    'month-scoped overtime provider follows its date, not list month',
+    () async {
+      final employee = await createEmployee('EMP-O050', '跨月人员');
+      await overtimeRepository.save(
+        draft: draft(
+          employeeId: employee.id,
+          start: DateTime(2026, 9, 30, 18),
+          end: DateTime(2026, 9, 30, 20),
+        ),
+      );
+      await overtimeRepository.save(
+        draft: draft(
+          employeeId: employee.id,
+          start: DateTime(2026, 10, 1, 18),
+          end: DateTime(2026, 10, 1, 21),
+        ),
+      );
+      final container = ProviderContainer(
+        overrides: [
+          appDatabaseProvider.overrideWithValue(database),
+          overtimeMonthProvider.overrideWith((ref) => DateTime(2026, 10)),
+        ],
+      );
+      addTearDown(container.dispose);
+
+      final dailyMonth = await container.read(
+        overtimeRecordsForMonthProvider(DateTime(2026, 9)).future,
+      );
+      final listMonth = await container.read(overtimeRecordsProvider.future);
+
+      expect(dailyMonth, hasLength(1));
+      expect(dailyMonth.single.overtime.overtimeDate, DateTime(2026, 9, 30));
+      expect(listMonth, hasLength(1));
+      expect(listMonth.single.overtime.overtimeDate, DateTime(2026, 10, 1));
+    },
+  );
 
   test(
     'allows multiple non-overlapping segments and sums them in the list',

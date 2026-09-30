@@ -11,13 +11,23 @@ import '../data/maintenance_repository.dart';
 import '../domain/maintenance_options.dart';
 import 'vehicle_metric_grid.dart';
 
-class VehicleMaintenanceTab extends ConsumerWidget {
+class VehicleMaintenanceTab extends ConsumerStatefulWidget {
   const VehicleMaintenanceTab({required this.vehicle, super.key});
 
   final Vehicle vehicle;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<VehicleMaintenanceTab> createState() =>
+      _VehicleMaintenanceTabState();
+}
+
+class _VehicleMaintenanceTabState extends ConsumerState<VehicleMaintenanceTab> {
+  bool _showLifecycle = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final ref = this.ref;
+    final vehicle = widget.vehicle;
     final items = ref.watch(vehicleMaintenanceItemsProvider(vehicle.id));
     final lifecycle = ref.watch(vehicleLifecycleRecordsProvider(vehicle.id));
     return ListView(
@@ -31,19 +41,35 @@ class VehicleMaintenanceTab extends ConsumerWidget {
                 style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
-            OutlinedButton.icon(
-              onPressed: () => _seedDefaults(context, ref),
-              icon: const Icon(Icons.playlist_add_outlined),
-              label: const Text('初始化默认项目'),
+            SegmentedButton<bool>(
+              showSelectedIcon: false,
+              segments: const [
+                ButtonSegment(value: false, label: Text('保养计划')),
+                ButtonSegment(value: true, label: Text('备件寿命')),
+              ],
+              selected: {_showLifecycle},
+              onSelectionChanged: (selection) =>
+                  setState(() => _showLifecycle = selection.first),
             ),
           ],
         ),
-        const SizedBox(height: 8),
-        items.when(
-          loading: () => const Center(child: CircularProgressIndicator()),
-          error: (error, _) => Text('保养项目加载失败：$error'),
-          data: (rows) {
-            return Column(
+        const SizedBox(height: 10),
+        if (!_showLifecycle)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton.icon(
+                onPressed: () => _seedDefaults(context, ref),
+                icon: const Icon(Icons.playlist_add_outlined, size: 18),
+                label: const Text('初始化默认项目'),
+              ),
+            ],
+          ),
+        if (!_showLifecycle)
+          items.when(
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (error, _) => Text('保养项目加载失败：$error'),
+            data: (rows) => Column(
               children: [
                 _MaintenanceOverview(rows: rows),
                 const SizedBox(height: 12),
@@ -62,29 +88,25 @@ class VehicleMaintenanceTab extends ConsumerWidget {
                     ),
                   ),
               ],
-            );
-          },
-        ),
-        const SizedBox(height: 20),
-        Text('部件寿命', style: Theme.of(context).textTheme.titleLarge),
-        const SizedBox(height: 8),
-        lifecycle.when(
-          loading: () => const Center(child: CircularProgressIndicator()),
-          error: (error, _) => Text('部件寿命加载失败：$error'),
-          data: (rows) {
-            if (rows.isEmpty) {
-              return const Card(
-                child: Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Text('暂未登记寿命件。轮胎、滤芯等需要按实际更换或安装记录累计使用。'),
-                ),
-              );
-            }
-            return Column(
-              children: rows.map((row) => _LifecycleCard(record: row)).toList(),
-            );
-          },
-        ),
+            ),
+          )
+        else
+          lifecycle.when(
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (error, _) => Text('部件寿命加载失败：$error'),
+            data: (rows) => rows.isEmpty
+                ? const Card(
+                    child: Padding(
+                      padding: EdgeInsets.all(20),
+                      child: Text('暂未登记寿命件。轮胎、滤芯等需要按实际更换或安装记录累计使用。'),
+                    ),
+                  )
+                : Column(
+                    children: rows
+                        .map((row) => _LifecycleCard(record: row))
+                        .toList(),
+                  ),
+          ),
       ],
     );
   }
@@ -93,8 +115,8 @@ class VehicleMaintenanceTab extends ConsumerWidget {
     try {
       await ref
           .read(maintenanceRepositoryProvider)
-          .seedDefaultItems(vehicle.id);
-      ref.invalidate(vehicleMaintenanceItemsProvider(vehicle.id));
+          .seedDefaultItems(widget.vehicle.id);
+      ref.invalidate(vehicleMaintenanceItemsProvider(widget.vehicle.id));
       if (context.mounted) {
         ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text('默认保养项目已初始化')));

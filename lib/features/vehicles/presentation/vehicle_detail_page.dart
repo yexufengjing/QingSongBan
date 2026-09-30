@@ -35,7 +35,7 @@ class VehicleDetailPage extends ConsumerWidget {
     final vehicle = ref.watch(vehicleProvider(vehicleId));
     return Scaffold(
       appBar: AppBar(
-        title: const Text('车辆详情'),
+        title: Text(_titleForTab(initialTab)),
         actions: [
           IconButton(
             tooltip: '附件资料',
@@ -117,6 +117,15 @@ class VehicleDetailPage extends ConsumerWidget {
     _ => 0,
   };
 
+  String _titleForTab(String? tab) => switch (tab) {
+    'condition' => '车辆车况检查',
+    'repair' => '车辆维修管理',
+    'maintenance' => '车辆保养/备件',
+    'fuel' => '车辆油耗记录',
+    'expense' => '车辆费用分析',
+    _ => '车辆详情',
+  };
+
   Future<void> _stop(BuildContext context, WidgetRef ref, int id) async {
     final confirmed = await showDialog<bool>(
       context: context,
@@ -152,16 +161,16 @@ class _VehicleHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _vehicleStatusColor(vehicle.status);
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 10, 16, 8),
+      padding: const EdgeInsets.fromLTRB(12, 4, 12, 4),
       child: Card(
         color: Colors.white,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(12, 12, 14, 12),
+          padding: const EdgeInsets.fromLTRB(8, 6, 10, 6),
           child: Row(
             children: [
               SizedBox(
-                width: 112,
-                height: 72,
+                width: 66,
+                height: 42,
                 child: Image.asset(
                   vehicle.vehicleType == VehicleType.sweeper
                       ? 'assets/vehicles/sweeper-truck.png'
@@ -169,7 +178,7 @@ class _VehicleHeader extends StatelessWidget {
                   fit: BoxFit.contain,
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: 8),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -178,7 +187,7 @@ class _VehicleHeader extends StatelessWidget {
                       vehicle.name,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
-                    const SizedBox(height: 5),
+                    const SizedBox(height: 2),
                     Row(
                       children: [
                         Text(
@@ -192,7 +201,7 @@ class _VehicleHeader extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 2),
                     Text(
                       '${VehicleOptions.typeShortLabel(vehicle.vehicleType)} · ${vehicle.workArea ?? '未设置工作区域'} · ${vehicle.responsiblePerson ?? '未设置责任人'}',
                       maxLines: 1,

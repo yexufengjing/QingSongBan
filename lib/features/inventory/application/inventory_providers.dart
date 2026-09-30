@@ -29,9 +29,19 @@ final inventoryWarningsProvider = FutureProvider<List<InventoryStockRow>>(
 final inventoryReceiptsProvider = FutureProvider<List<InventoryReceipt>>(
   (ref) => ref.watch(inventoryServiceProvider).getReceipts(),
 );
+final inventoryReceiptItemsProvider =
+    FutureProvider.family<List<InventoryReceiptItem>, int>(
+      (ref, receiptId) =>
+          ref.watch(inventoryServiceProvider).getReceiptItems(receiptId),
+    );
 final inventoryIssuesProvider = FutureProvider<List<InventoryIssue>>(
   (ref) => ref.watch(inventoryServiceProvider).getIssues(),
 );
+final inventoryIssueItemsProvider =
+    FutureProvider.family<List<InventoryIssueItem>, int>(
+      (ref, issueId) =>
+          ref.watch(inventoryServiceProvider).getIssueItems(issueId),
+    );
 final inventoryTransactionsProvider =
     FutureProvider<List<InventoryTransaction>>(
       (ref) => ref.watch(inventoryServiceProvider).getTransactions(),
@@ -39,6 +49,11 @@ final inventoryTransactionsProvider =
 final inventoryStocktakesProvider = FutureProvider<List<InventoryStocktake>>(
   (ref) => ref.watch(inventoryServiceProvider).getStocktakes(),
 );
+final inventoryStocktakeItemsProvider =
+    FutureProvider.family<List<InventoryStocktakeItem>, int>(
+      (ref, stocktakeId) =>
+          ref.watch(inventoryServiceProvider).getStocktakeItems(stocktakeId),
+    );
 final inventoryReplenishmentsProvider =
     FutureProvider<List<InventoryReplenishmentItem>>(
       (ref) => ref.watch(inventoryServiceProvider).getReplenishments(),

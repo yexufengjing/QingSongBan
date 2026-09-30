@@ -6,18 +6,33 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/theme/app_theme.dart';
 import '../../../core/database/app_database.dart';
+import '../../../core/database/database_enums.dart';
 import '../application/vehicle_providers.dart';
+import '../domain/condition_options.dart';
 import '../domain/expense_options.dart';
+import '../../reminders/application/reminder_providers.dart';
+import '../../reminders/domain/reminder_options.dart';
 import 'vehicle_metric_grid.dart';
 
-class VehicleExpenseTab extends ConsumerWidget {
+class VehicleExpenseTab extends ConsumerStatefulWidget {
   const VehicleExpenseTab({required this.vehicle, super.key});
 
   final Vehicle vehicle;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final items = ref.watch(vehicleExpenseItemsProvider(vehicle.id));
+  ConsumerState<VehicleExpenseTab> createState() => _VehicleExpenseTabState();
+}
+
+class _VehicleExpenseTabState extends ConsumerState<VehicleExpenseTab> {
+  late int _year = DateTime.now().year;
+
+  @override
+  Widget build(BuildContext context) {
+    final vehicle = widget.vehicle;
+    final items = ref.watch(
+      vehicleExpenseItemsForYearProvider((vehicle.id, _year)),
+    );
+    final repairs = ref.watch(vehicleRepairOrdersProvider(vehicle.id));
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 32),
       children: [
@@ -25,9 +40,20 @@ class VehicleExpenseTab extends ConsumerWidget {
           children: [
             Text('费用分析', style: Theme.of(context).textTheme.titleLarge),
             const Spacer(),
-            Text(
-              '${DateTime.now().year} 年',
-              style: Theme.of(context).textTheme.bodyMedium,
+            DropdownButton<int>(
+              value: _year,
+              underline: const SizedBox.shrink(),
+              items: [
+                for (
+                  var year = DateTime.now().year - 10;
+                  year <= DateTime.now().year + 1;
+                  year++
+                )
+                  DropdownMenuItem(value: year, child: Text('$year 年')),
+              ],
+              onChanged: (year) {
+                if (year != null) setState(() => _year = year);
+              },
             ),
           ],
         ),
@@ -43,7 +69,13 @@ class VehicleExpenseTab extends ConsumerWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _ExpenseOverview(rows: rows, total: total),
+                _ExpenseOverview(
+                  rows: rows,
+                  total: total,
+                  repairCount: repairs.valueOrNull
+                      ?.where((order) => order.reportDate.year == _year)
+                      .length,
+                ),
                 const SizedBox(height: 14),
                 if (rows.isNotEmpty) ...[
                   _MonthlyExpenseChart(rows: rows),
@@ -78,6 +110,10 @@ class VehicleExpenseTab extends ConsumerWidget {
                   const SizedBox(height: 8),
                   ...rows.map((row) => _ExpenseCard(item: row)),
                 ],
+                const SizedBox(height: 14),
+                _FrequentRepairProjects(vehicleId: vehicle.id, year: _year),
+                const SizedBox(height: 14),
+                _VehicleExpenseAlerts(vehicleId: vehicle.id),
               ],
             );
           },
@@ -88,42 +124,49 @@ class VehicleExpenseTab extends ConsumerWidget {
 }
 
 class _ExpenseOverview extends StatelessWidget {
-  const _ExpenseOverview({required this.rows, required this.total});
+  const _ExpenseOverview({
+    required this.rows,
+    required this.total,
+    required this.repairCount,
+  });
 
   final List<VehicleExpenseItem> rows;
   final int total;
+  final int? repairCount;
 
   @override
   Widget build(BuildContext context) {
     final fuel = rows
         .where((row) => row.category == '油耗费用')
         .fold<int>(0, (sum, row) => sum + row.amountCents);
-    final maintenance = rows
-        .where((row) => row.category == '维修费用' || row.category == '保养费用')
+    final currentMonth = DateTime.now().month;
+    final monthTotal = rows
+        .where((row) => row.date.month == currentMonth)
         .fold<int>(0, (sum, row) => sum + row.amountCents);
+    final fuelShare = total == 0 ? 0 : (fuel * 100 / total).round();
     return VehicleMetricGrid(
       items: [
         VehicleMetricData(
-          label: '累计总费用',
+          label: '本年累计总费用',
           value: '¥${(total / 100).toStringAsFixed(0)}',
           color: AppColors.techBlue,
           icon: Icons.account_balance_wallet_outlined,
         ),
         VehicleMetricData(
-          label: '油费',
-          value: '¥${(fuel / 100).toStringAsFixed(0)}',
+          label: '本月费用',
+          value: '¥${(monthTotal / 100).toStringAsFixed(0)}',
           color: Colors.orange,
           icon: Icons.water_drop_outlined,
         ),
         VehicleMetricData(
-          label: '维修/保养',
-          value: '¥${(maintenance / 100).toStringAsFixed(0)}',
+          label: '油费占比',
+          value: '$fuelShare%',
           color: AppColors.purple,
           icon: Icons.build_outlined,
         ),
         VehicleMetricData(
-          label: '记录数',
-          value: '${rows.length}',
+          label: '维修次数',
+          value: repairCount?.toString() ?? '—',
           color: AppColors.primary,
           icon: Icons.receipt_long_outlined,
         ),
@@ -161,13 +204,23 @@ class _MonthlyExpenseChart extends StatelessWidget {
     final maximum = values
         .map((month) => month.reduce((a, b) => a + b))
         .reduce(math.max);
+    final scaleMax = maximum == 0 ? 100 : maximum;
     return Card(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(14, 14, 14, 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('月度费用趋势', style: Theme.of(context).textTheme.titleLarge),
+            Row(
+              children: [
+                Text('月度费用趋势', style: Theme.of(context).textTheme.titleLarge),
+                const Spacer(),
+                const Text(
+                  '单位：元',
+                  style: TextStyle(fontSize: 11, color: AppColors.body),
+                ),
+              ],
+            ),
             const SizedBox(height: 8),
             const _ExpenseLegend(),
             const SizedBox(height: 12),
@@ -176,6 +229,29 @@ class _MonthlyExpenseChart extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
+                  SizedBox(
+                    width: 40,
+                    height: 125,
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          top: 0,
+                          right: 2,
+                          child: _AxisLabel(value: scaleMax),
+                        ),
+                        Positioned(
+                          top: 52,
+                          right: 2,
+                          child: _AxisLabel(value: scaleMax ~/ 2),
+                        ),
+                        const Positioned(
+                          bottom: 0,
+                          right: 2,
+                          child: _AxisLabel(value: 0),
+                        ),
+                      ],
+                    ),
+                  ),
                   for (var month = 0; month < 12; month++)
                     Expanded(
                       child: Tooltip(
@@ -206,7 +282,7 @@ class _MonthlyExpenseChart extends StatelessWidget {
                                             height:
                                                 120 *
                                                 values[month][category] /
-                                                maximum,
+                                                scaleMax,
                                             color: _expenseColors[category],
                                           ),
                                     ],
@@ -300,9 +376,9 @@ class _ExpenseComposition extends StatelessWidget {
                               ),
                               const Spacer(),
                               Text(
-                                '${total == 0 ? 0 : (amounts[index] * 100 / total).round()}%',
+                                '¥${(amounts[index] / 100).toStringAsFixed(0)}  ${total == 0 ? 0 : (amounts[index] * 100 / total).round()}%',
                                 style: const TextStyle(
-                                  fontSize: 12,
+                                  fontSize: 11,
                                   color: AppColors.body,
                                 ),
                               ),
@@ -369,6 +445,18 @@ class _ExpenseLegend extends StatelessWidget {
   );
 }
 
+class _AxisLabel extends StatelessWidget {
+  const _AxisLabel({required this.value});
+
+  final int value;
+
+  @override
+  Widget build(BuildContext context) => Text(
+    (value / 100).toStringAsFixed(0),
+    style: const TextStyle(fontSize: 9, color: AppColors.body),
+  );
+}
+
 class _LegendItem extends StatelessWidget {
   const _LegendItem({required this.label, required this.color});
 
@@ -409,4 +497,169 @@ class _ExpenseCard extends StatelessWidget {
     '保养费用' => Icons.build_circle_outlined,
     _ => Icons.receipt_long_outlined,
   };
+}
+
+class _FrequentRepairProjects extends ConsumerWidget {
+  const _FrequentRepairProjects({required this.vehicleId, required this.year});
+
+  final int vehicleId;
+  final int year;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final orders = ref.watch(vehicleRepairOrdersProvider(vehicleId));
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(14),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('高频维修项目', style: Theme.of(context).textTheme.titleLarge),
+            const SizedBox(height: 6),
+            orders.when(
+              loading: () => const LinearProgressIndicator(),
+              error: (_, _) => const Text('维修项目加载失败'),
+              data: (items) {
+                final frequencies = <String, int>{};
+                for (final order in items.where(
+                  (item) => item.reportDate.year == year,
+                )) {
+                  final project = order.project?.trim();
+                  final label = project == null || project.isEmpty
+                      ? order.symptom.trim()
+                      : project;
+                  if (label.isNotEmpty) {
+                    frequencies.update(
+                      label,
+                      (count) => count + 1,
+                      ifAbsent: () => 1,
+                    );
+                  }
+                }
+                final ranked = frequencies.entries.toList()
+                  ..sort((a, b) => b.value.compareTo(a.value));
+                if (ranked.isEmpty) {
+                  return const Text(
+                    '本年度暂无维修项目记录',
+                    style: TextStyle(color: AppColors.body),
+                  );
+                }
+                return Column(
+                  children: [
+                    for (final entry in ranked.take(5))
+                      ListTile(
+                        dense: true,
+                        contentPadding: EdgeInsets.zero,
+                        leading: const Icon(
+                          Icons.handyman_outlined,
+                          color: AppColors.techBlue,
+                        ),
+                        title: Text(
+                          entry.key,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        trailing: Text(
+                          '${entry.value} 次',
+                          style: const TextStyle(color: AppColors.body),
+                        ),
+                      ),
+                  ],
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _VehicleExpenseAlerts extends ConsumerWidget {
+  const _VehicleExpenseAlerts({required this.vehicleId});
+
+  final int vehicleId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final conditionState = ref.watch(vehicleConditionItemsProvider(vehicleId));
+    final reminderState = ref.watch(reminderItemsProvider);
+    final conditions =
+        conditionState.valueOrNull ?? const <VehicleConditionItem>[];
+    final reminders = reminderState.valueOrNull ?? const <ReminderItem>[];
+    final issues = conditions
+        .where(
+          (item) => switch (item.status) {
+            VehicleConditionStatus.normal ||
+            VehicleConditionStatus.unavailable => false,
+            _ => true,
+          },
+        )
+        .toList();
+    final today = DateTime.now();
+    final endOfSoon = DateTime(
+      today.year,
+      today.month,
+      today.day,
+    ).add(const Duration(days: 7));
+    final dueReminders = reminders.where((item) {
+      if (!item.isPending ||
+          !item.links.any(
+            (link) =>
+                link.entityType == 'vehicle' && link.entityId == vehicleId,
+          )) {
+        return false;
+      }
+      final date = item.scheduledAt;
+      return date != null && !date.isAfter(endOfSoon);
+    }).toList();
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(14),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('异常提示', style: Theme.of(context).textTheme.titleLarge),
+            const SizedBox(height: 6),
+            if (conditionState.isLoading || reminderState.isLoading)
+              const LinearProgressIndicator()
+            else if (issues.isEmpty && dueReminders.isEmpty)
+              const Text('暂无异常或临近到期提醒', style: TextStyle(color: AppColors.body))
+            else ...[
+              for (final item in issues)
+                ListTile(
+                  dense: true,
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(
+                    Icons.warning_amber_outlined,
+                    color: AppColors.danger,
+                  ),
+                  title: Text(
+                    VehicleConditionOptions.componentLabel(item.componentType),
+                  ),
+                  subtitle: Text(
+                    item.detail?.trim().isNotEmpty == true
+                        ? item.detail!
+                        : VehicleConditionOptions.statusLabel(item.status),
+                  ),
+                ),
+              for (final item in dueReminders)
+                ListTile(
+                  dense: true,
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(
+                    Icons.event_outlined,
+                    color: Colors.orange,
+                  ),
+                  title: Text(item.reminder.title),
+                  subtitle: Text(
+                    '到期 ${item.scheduledAt!.year}-${item.scheduledAt!.month.toString().padLeft(2, '0')}-${item.scheduledAt!.day.toString().padLeft(2, '0')}',
+                  ),
+                ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
 }

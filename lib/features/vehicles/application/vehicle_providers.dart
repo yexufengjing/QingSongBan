@@ -181,3 +181,10 @@ final vehicleExpenseItemsProvider = FutureProvider.autoDispose
           .watch(vehicleExpenseRepositoryProvider)
           .list(vehicleId, year: DateTime.now().year);
     });
+
+final vehicleExpenseItemsForYearProvider = FutureProvider.autoDispose
+    .family<List<VehicleExpenseItem>, (int, int)>((ref, query) {
+      return ref
+          .watch(vehicleExpenseRepositoryProvider)
+          .list(query.$1, year: query.$2);
+    });

@@ -9,12 +9,22 @@ import '../application/vehicle_providers.dart';
 import '../domain/vehicle_options.dart';
 import 'vehicle_navigation_bar.dart';
 
-class VehicleArchivePage extends ConsumerWidget {
+class VehicleArchivePage extends ConsumerStatefulWidget {
   const VehicleArchivePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<VehicleArchivePage> createState() => _VehicleArchivePageState();
+}
+
+class _VehicleArchivePageState extends ConsumerState<VehicleArchivePage> {
+  String? _selectedArea;
+  _ArchiveSort _sort = _ArchiveSort.defaultOrder;
+
+  @override
+  Widget build(BuildContext context) {
+    final ref = this.ref;
     final vehicles = ref.watch(vehicleListProvider);
+    final allVehicles = ref.watch(allVehiclesProvider);
     final selectedType = ref.watch(vehicleTypeFilterProvider);
     final selectedStatus = ref.watch(vehicleStatusFilterProvider);
     return Scaffold(
@@ -36,9 +46,26 @@ class VehicleArchivePage extends ConsumerWidget {
           TextField(
             onChanged: (value) =>
                 ref.read(vehicleSearchQueryProvider.notifier).state = value,
+            onSubmitted: (_) => FocusScope.of(context).unfocus(),
             decoration: InputDecoration(
               hintText: '搜索车牌号、车辆名称、编号或负责人',
               prefixIcon: const Icon(Icons.search),
+              suffixIcon: Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(
+                      height: 24,
+                      child: VerticalDivider(width: 1),
+                    ),
+                    TextButton(
+                      onPressed: () => FocusScope.of(context).unfocus(),
+                      child: const Text('搜索'),
+                    ),
+                  ],
+                ),
+              ),
               filled: true,
               fillColor: Colors.white,
               border: OutlineInputBorder(
@@ -87,58 +114,172 @@ class VehicleArchivePage extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: 8),
-          Row(
-            children: [
-              const Text('车辆状态', style: TextStyle(color: AppColors.body)),
-              const SizedBox(width: 10),
-              DropdownButton<VehicleStatus?>(
-                value: selectedStatus,
-                underline: const SizedBox.shrink(),
-                items: [
-                  const DropdownMenuItem<VehicleStatus?>(
-                    value: null,
-                    child: Text('全部'),
-                  ),
-                  for (final status in VehicleStatus.values)
-                    DropdownMenuItem<VehicleStatus?>(
-                      value: status,
-                      child: Text(VehicleOptions.statusLabel(status)),
+          allVehicles.when(
+            loading: () => const SizedBox(height: 48),
+            error: (_, _) => const SizedBox.shrink(),
+            data: (allItems) {
+              final areas =
+                  allItems
+                      .map((vehicle) => vehicle.workArea?.trim())
+                      .whereType<String>()
+                      .where((area) => area.isNotEmpty)
+                      .toSet()
+                      .toList()
+                    ..sort();
+              if (_selectedArea != null && !areas.contains(_selectedArea)) {
+                _selectedArea = null;
+              }
+              return Row(
+                children: [
+                  Expanded(
+                    child: _ArchiveFilter(
+                      label: '车辆类型',
+                      value: selectedType,
+                      items: [
+                        (null, '全部'),
+                        for (final type in VehicleType.values)
+                          (type, VehicleOptions.typeShortLabel(type)),
+                      ],
+                      onChanged: (type) =>
+                          ref.read(vehicleTypeFilterProvider.notifier).state =
+                              type,
                     ),
+                  ),
+                  const SizedBox(width: 6),
+                  Expanded(
+                    child: _ArchiveFilter(
+                      label: '车辆状态',
+                      value: selectedStatus,
+                      items: [
+                        (null, '全部'),
+                        for (final status in VehicleStatus.values)
+                          (status, VehicleOptions.statusLabel(status)),
+                      ],
+                      onChanged: (status) =>
+                          ref.read(vehicleStatusFilterProvider.notifier).state =
+                              status,
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  Expanded(
+                    child: _ArchiveFilter<String>(
+                      label: '所属区域',
+                      value: _selectedArea,
+                      items: [
+                        (null, '全部'),
+                        for (final area in areas) (area, area),
+                      ],
+                      onChanged: (area) => setState(() => _selectedArea = area),
+                    ),
+                  ),
                 ],
-                onChanged: (status) =>
-                    ref.read(vehicleStatusFilterProvider.notifier).state =
-                        status,
-              ),
-              const Spacer(),
-              vehicles.when(
-                data: (items) => Text(
-                  '共 ${items.length} 辆',
-                  style: const TextStyle(color: AppColors.body),
-                ),
-                loading: () => const SizedBox.shrink(),
-                error: (_, _) => const SizedBox.shrink(),
-              ),
-            ],
+              );
+            },
+          ),
+          vehicles.when(
+            data: (items) {
+              final count = _selectedArea == null
+                  ? items.length
+                  : items
+                        .where((vehicle) => vehicle.workArea == _selectedArea)
+                        .length;
+              return Row(
+                children: [
+                  Text(
+                    '共 $count 辆',
+                    style: const TextStyle(color: AppColors.body, fontSize: 12),
+                  ),
+                  const Spacer(),
+                  PopupMenuButton<_ArchiveSort>(
+                    tooltip: '排序车辆',
+                    initialValue: _sort,
+                    onSelected: (sort) => setState(() => _sort = sort),
+                    itemBuilder: (context) => [
+                      for (final sort in _ArchiveSort.values)
+                        CheckedPopupMenuItem(
+                          value: sort,
+                          checked: _sort == sort,
+                          child: Text(sort.label),
+                        ),
+                    ],
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            Icons.swap_vert,
+                            size: 16,
+                            color: AppColors.body,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            _sort.label,
+                            style: const TextStyle(
+                              color: AppColors.body,
+                              fontSize: 12,
+                            ),
+                          ),
+                          const Icon(
+                            Icons.keyboard_arrow_down,
+                            size: 18,
+                            color: AppColors.body,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
+            loading: () => const SizedBox.shrink(),
+            error: (_, _) => const SizedBox.shrink(),
           ),
           const SizedBox(height: 10),
           vehicles.when(
             loading: () => const Center(child: CircularProgressIndicator()),
             error: (error, _) => Text('车辆档案加载失败：$error'),
-            data: (items) => items.isEmpty
-                ? const Card(
-                    child: Padding(
-                      padding: EdgeInsets.all(20),
-                      child: Text('没有符合条件的车辆'),
-                    ),
-                  )
-                : Column(
-                    children: [
-                      for (final vehicle in items) ...[
-                        _ArchiveCard(vehicle: vehicle),
-                        const SizedBox(height: 9),
+            data: (items) {
+              final visibleItems =
+                  (_selectedArea == null
+                          ? items
+                          : items
+                                .where(
+                                  (vehicle) =>
+                                      vehicle.workArea == _selectedArea,
+                                )
+                                .toList())
+                      .toList();
+              switch (_sort) {
+                case _ArchiveSort.defaultOrder:
+                  break;
+                case _ArchiveSort.name:
+                  visibleItems.sort((a, b) => a.name.compareTo(b.name));
+                case _ArchiveSort.vehicleNo:
+                  visibleItems.sort(
+                    (a, b) => a.vehicleNo.compareTo(b.vehicleNo),
+                  );
+                case _ArchiveSort.status:
+                  visibleItems.sort(
+                    (a, b) => a.status.index.compareTo(b.status.index),
+                  );
+              }
+              return visibleItems.isEmpty
+                  ? const Card(
+                      child: Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Text('没有符合条件的车辆'),
+                      ),
+                    )
+                  : Column(
+                      children: [
+                        for (final vehicle in visibleItems) ...[
+                          _ArchiveCard(vehicle: vehicle),
+                          const SizedBox(height: 9),
+                        ],
                       ],
-                    ],
-                  ),
+                    );
+            },
           ),
         ],
       ),
@@ -211,30 +352,62 @@ class _ArchiveCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    _DetailLine(
-                      '编号',
-                      vehicle.vehicleNo,
-                      '品牌型号',
-                      [vehicle.brand, vehicle.model]
-                          .whereType<String>()
-                          .where((value) => value.isNotEmpty)
-                          .join(' '),
+                    const SizedBox(height: 7),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _ArchiveInfoCell(
+                            icon: Icons.description,
+                            label: '车辆编号',
+                            value: vehicle.vehicleNo,
+                          ),
+                        ),
+                        Expanded(
+                          child: _ArchiveInfoCell(
+                            icon: Icons.inventory_2,
+                            label: '品牌型号',
+                            value: [vehicle.brand, vehicle.model]
+                                .whereType<String>()
+                                .where((value) => value.isNotEmpty)
+                                .join(' '),
+                          ),
+                        ),
+                        Expanded(
+                          child: _ArchiveInfoCell(
+                            icon: Icons.calendar_month,
+                            label: '购置日期',
+                            value: purchaseDate == null
+                                ? '—'
+                                : '${purchaseDate.year}-${purchaseDate.month.toString().padLeft(2, '0')}-${purchaseDate.day.toString().padLeft(2, '0')}',
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 5),
-                    _DetailLine(
-                      '区域',
-                      vehicle.workArea ?? '—',
-                      '责任人',
-                      vehicle.responsiblePerson ?? '—',
-                    ),
-                    const SizedBox(height: 5),
-                    _DetailLine(
-                      '部门',
-                      vehicle.department ?? '—',
-                      '购置日期',
-                      purchaseDate == null
-                          ? '—'
-                          : '${purchaseDate.year}-${purchaseDate.month.toString().padLeft(2, '0')}-${purchaseDate.day.toString().padLeft(2, '0')}',
+                    const SizedBox(height: 6),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _ArchiveInfoCell(
+                            icon: Icons.location_on,
+                            label: '所属区域',
+                            value: vehicle.workArea ?? '—',
+                          ),
+                        ),
+                        Expanded(
+                          child: _ArchiveInfoCell(
+                            icon: Icons.person,
+                            label: '责任人',
+                            value: vehicle.responsiblePerson ?? '—',
+                          ),
+                        ),
+                        Expanded(
+                          child: _ArchiveInfoCell(
+                            icon: Icons.apartment,
+                            label: '所属部门',
+                            value: vehicle.department ?? '—',
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -247,32 +420,99 @@ class _ArchiveCard extends StatelessWidget {
   }
 }
 
-class _DetailLine extends StatelessWidget {
-  const _DetailLine(this.label1, this.value1, this.label2, this.value2);
+class _ArchiveFilter<T> extends StatelessWidget {
+  const _ArchiveFilter({
+    required this.label,
+    required this.value,
+    required this.items,
+    required this.onChanged,
+  });
 
-  final String label1;
-  final String value1;
-  final String label2;
-  final String value2;
+  final String label;
+  final T? value;
+  final List<(T?, String)> items;
+  final ValueChanged<T?> onChanged;
+
+  @override
+  Widget build(BuildContext context) => Container(
+    height: 42,
+    padding: const EdgeInsets.symmetric(horizontal: 9),
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(14),
+      border: Border.all(color: AppColors.divider.withValues(alpha: .65)),
+    ),
+    child: Row(
+      children: [
+        Flexible(
+          child: Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(color: AppColors.body, fontSize: 11),
+          ),
+        ),
+        const SizedBox(width: 4),
+        Expanded(
+          child: DropdownButton<T?>(
+            isExpanded: true,
+            value: value,
+            underline: const SizedBox.shrink(),
+            icon: const Icon(Icons.keyboard_arrow_down, size: 18),
+            style: const TextStyle(color: AppColors.ink, fontSize: 12),
+            items: [
+              for (final item in items)
+                DropdownMenuItem<T?>(
+                  value: item.$1,
+                  child: Text(item.$2, overflow: TextOverflow.ellipsis),
+                ),
+            ],
+            onChanged: onChanged,
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+class _ArchiveInfoCell extends StatelessWidget {
+  const _ArchiveInfoCell({
+    required this.icon,
+    required this.label,
+    required this.value,
+  });
+
+  final IconData icon;
+  final String label;
+  final String value;
 
   @override
   Widget build(BuildContext context) => Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
     children: [
+      Icon(icon, size: 14, color: AppColors.helper),
+      const SizedBox(width: 4),
       Expanded(
-        child: Text(
-          '$label1  ${value1.isEmpty ? '—' : value1}',
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: const TextStyle(fontSize: 11, color: AppColors.body),
-        ),
-      ),
-      const SizedBox(width: 5),
-      Expanded(
-        child: Text(
-          '$label2  ${value2.isEmpty ? '—' : value2}',
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: const TextStyle(fontSize: 11, color: AppColors.body),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(fontSize: 10, color: AppColors.body),
+            ),
+            Text(
+              value.isEmpty ? '—' : value,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                fontSize: 11,
+                color: AppColors.ink,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
         ),
       ),
     ],
@@ -297,4 +537,14 @@ class _ArchiveStatus extends StatelessWidget {
       style: TextStyle(fontSize: 11, color: color, fontWeight: FontWeight.w700),
     ),
   );
+}
+
+enum _ArchiveSort {
+  defaultOrder('默认排序'),
+  name('按名称'),
+  vehicleNo('按编号'),
+  status('按状态');
+
+  const _ArchiveSort(this.label);
+  final String label;
 }

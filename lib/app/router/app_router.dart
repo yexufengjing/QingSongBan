@@ -454,7 +454,26 @@ final GoRouter appRouter = GoRouter(
                 GoRoute(
                   path: 'excel',
                   name: 'excel',
-                  builder: (context, state) => const ExcelPage(),
+                  builder: (context, state) {
+                    final parts = state.uri.queryParameters['month']?.split(
+                      '-',
+                    );
+                    final year = parts != null && parts.length == 2
+                        ? int.tryParse(parts[0])
+                        : null;
+                    final month = parts != null && parts.length == 2
+                        ? int.tryParse(parts[1])
+                        : null;
+                    return ExcelPage(
+                      initialMonth:
+                          year != null &&
+                              month != null &&
+                              month >= 1 &&
+                              month <= 12
+                          ? DateTime(year, month)
+                          : null,
+                    );
+                  },
                 ),
                 GoRoute(
                   path: 'reminders',

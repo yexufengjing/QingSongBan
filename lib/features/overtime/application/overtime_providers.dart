@@ -20,6 +20,13 @@ final overtimeRecordsProvider =
           .watchOvertime(month: ref.watch(overtimeMonthProvider));
     });
 
+final overtimeRecordsForMonthProvider = StreamProvider.autoDispose
+    .family<List<OvertimeRecordView>, DateTime>((ref, month) {
+      return ref
+          .watch(overtimeRepositoryProvider)
+          .watchOvertime(month: DateTime(month.year, month.month));
+    });
+
 String overtimeMonthLabel(DateTime month) {
   return '${month.year}年${month.month.toString().padLeft(2, '0')}月';
 }

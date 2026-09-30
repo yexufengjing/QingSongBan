@@ -82,6 +82,7 @@ class _InventoryStocktakeDetailPageState
       }
       await service.confirmStocktake(widget.stocktakeId);
       ref.invalidate(inventoryStocktakesProvider);
+      ref.invalidate(inventoryStocktakeItemsProvider(widget.stocktakeId));
       ref.invalidate(inventoryStockProvider);
       ref.invalidate(inventoryMaterialsProvider);
       ref.invalidate(inventoryWarningsProvider);

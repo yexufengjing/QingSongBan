@@ -9,7 +9,9 @@ import '../application/excel_providers.dart';
 import '../application/excel_service.dart';
 
 class ExcelPage extends ConsumerStatefulWidget {
-  const ExcelPage({super.key});
+  const ExcelPage({super.key, this.initialMonth});
+
+  final DateTime? initialMonth;
 
   @override
   ConsumerState<ExcelPage> createState() => _ExcelPageState();
@@ -23,8 +25,8 @@ class _ExcelPageState extends ConsumerState<ExcelPage> {
   @override
   void initState() {
     super.initState();
-    final now = DateTime.now();
-    _month = DateTime(now.year, now.month);
+    final initial = widget.initialMonth ?? DateTime.now();
+    _month = DateTime(initial.year, initial.month);
   }
 
   @override
