@@ -1662,5 +1662,5 @@ class InventoryReplenishmentItems extends Table {
 
   BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
 
-  DateTimeColumn get deletedAt => dateTime().nullable();
+  DateTimeColumn get deletedAt => dateTime().nullable()();
 }
