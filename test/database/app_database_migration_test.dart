@@ -41,7 +41,7 @@ void main() {
         )
         .getSingle();
 
-    expect(upgraded.schemaVersion, 22);
+    expect(upgraded.schemaVersion, 23);
     expect(repairOrder.read<int>('is_settled'), 0);
     expect(repairOrder.read<int>('is_paid'), 0);
     expect(
@@ -64,6 +64,10 @@ void main() {
       await upgraded.select(upgraded.gardenToolRepairAttachments).get(),
       isEmpty,
     );
+    expect(await upgraded.select(upgraded.purchaseRequests).get(), isEmpty);
+    expect(await upgraded.select(upgraded.purchaseRequestItems).get(), isEmpty);
+    expect(await upgraded.select(upgraded.purchaseStatusLogs).get(), isEmpty);
+    expect(await upgraded.select(upgraded.purchaseStockEntries).get(), isEmpty);
     await upgraded.close();
     await directory.delete(recursive: true);
   });
@@ -123,7 +127,7 @@ void main() {
         )
         .getSingle();
 
-    expect(upgraded.schemaVersion, 22);
+    expect(upgraded.schemaVersion, 23);
     expect(row.read<int>('is_settled'), 0);
     expect(row.read<int?>('settled_at'), isNull);
     expect(row.read<int>('is_paid'), 0);
@@ -221,7 +225,7 @@ void main() {
         1,
         DateTime(2026, 9, 1),
       );
-      expect(upgraded.schemaVersion, 22);
+      expect(upgraded.schemaVersion, 23);
       expect(await upgraded.select(upgraded.vehicles).get(), isEmpty);
       expect(
         await upgraded.select(upgraded.gardenToolRepairUnits).get(),
@@ -299,7 +303,7 @@ void main() {
         .select(upgraded.reminderOccurrences)
         .getSingle();
     final rule = await upgraded.select(upgraded.reminderAlertRules).getSingle();
-    expect(upgraded.schemaVersion, 22);
+    expect(upgraded.schemaVersion, 23);
     expect(occurrence.status, 'completed');
     expect(rule.offsetMinutes, -4320);
     await upgraded.close();

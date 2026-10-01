@@ -429,6 +429,7 @@ class _MoreBusinessTools extends StatelessWidget {
     const tools = [
       ('物品领取', Icons.inventory_2_outlined, '/items'),
       ('库存管理', Icons.warehouse_outlined, '/inventory'),
+      ('采购管理', Icons.shopping_cart_outlined, '/purchase'),
       ('工资造资', Icons.payments_outlined, '/reports/payroll'),
       ('新建提醒', Icons.add_alert_outlined, '/settings/reminders/new'),
       ('车辆管理', Icons.local_shipping_outlined, '/vehicles'),

@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/theme/app_theme.dart';
 import '../../../core/database/app_database.dart';
+import '../../purchase/presentation/purchase_item_prefill.dart';
+import '../../purchase/purchase_routes.dart';
 import '../application/inventory_providers.dart';
 import '../domain/inventory_models.dart';
 import 'widgets/inventory_widgets.dart';
@@ -227,6 +229,16 @@ class _InventoryMaterialDetailPageState
                     ),
                   ),
                 ],
+              ),
+              const SizedBox(height: 8),
+              FilledButton.icon(
+                key: const Key('inventory-material-create-purchase'),
+                onPressed: () => context.push(
+                  PurchaseRoutes.create,
+                  extra: PurchaseItemPrefill.fromInventoryMaterial(material),
+                ),
+                icon: const Icon(Icons.add_shopping_cart_outlined),
+                label: const Text('申报采购'),
               ),
               const SizedBox(height: 8),
               OutlinedButton.icon(

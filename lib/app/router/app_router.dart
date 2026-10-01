@@ -41,6 +41,17 @@ import '../../features/payroll/presentation/employee_payroll_page.dart';
 import '../../features/payroll/presentation/wage_job_settings_page.dart';
 import '../../features/item_distribution/presentation/item_distribution_page.dart';
 import '../../features/inventory/inventory_routes.dart';
+import '../../features/purchase/presentation/purchase_create_page.dart';
+import '../../features/purchase/presentation/purchase_detail_page.dart';
+import '../../features/purchase/presentation/purchase_home_page.dart';
+import '../../features/purchase/presentation/purchase_history_page.dart';
+import '../../features/purchase/presentation/purchase_item_history_page.dart';
+import '../../features/purchase/presentation/purchase_item_prefill.dart';
+import '../../features/purchase/presentation/purchase_pending_apply_page.dart';
+import '../../features/purchase/presentation/purchase_pending_receive_page.dart';
+import '../../features/purchase/presentation/purchase_stock_in_page.dart';
+import '../../features/purchase/presentation/purchase_tracking_page.dart';
+import '../../features/purchase/domain/purchase_status.dart';
 import '../../features/settings/presentation/settings_page.dart';
 import '../../features/vehicles/application/vehicle_providers.dart';
 import '../../features/vehicles/presentation/vehicle_detail_page.dart';
@@ -487,7 +498,15 @@ final GoRouter appRouter = GoRouter(
                     GoRoute(
                       path: 'new',
                       name: 'reminder-new',
-                      builder: (context, state) => const ReminderFormPage(),
+                      builder: (context, state) => ReminderFormPage(
+                        initialTitle: state.uri.queryParameters['title'],
+                        initialRemark: state.uri.queryParameters['remark'],
+                        sourceEntityType:
+                            state.uri.queryParameters['sourceType'],
+                        sourceEntityId: int.tryParse(
+                          state.uri.queryParameters['sourceId'] ?? '',
+                        ),
+                      ),
                     ),
                     GoRoute(
                       path: ':id/edit',
@@ -517,6 +536,80 @@ final GoRouter appRouter = GoRouter(
       ],
     ),
     ...inventoryRoutes(),
+    GoRoute(
+      path: '/purchase',
+      name: 'purchase-home',
+      builder: (context, state) => const PurchaseHomePage(),
+      routes: [
+        GoRoute(
+          path: 'create',
+          name: 'purchase-create',
+          builder: (context, state) => PurchaseCreatePage(
+            requestId: int.tryParse(state.uri.queryParameters['editId'] ?? ''),
+            initialItem: state.extra is PurchaseItemPrefill
+                ? state.extra! as PurchaseItemPrefill
+                : null,
+          ),
+        ),
+        GoRoute(
+          path: 'pending-apply',
+          name: 'purchase-pending-apply',
+          builder: (context, state) => const PurchasePendingApplyPage(),
+        ),
+        GoRoute(
+          path: 'tracking',
+          name: 'purchase-tracking',
+          builder: (context, state) => PurchaseTrackingPage(
+            showAll: state.uri.queryParameters['all'] == '1',
+            initialStatus: state.uri.queryParameters['status'] == null
+                ? null
+                : PurchaseStatus.parse(state.uri.queryParameters['status']!),
+          ),
+        ),
+        GoRoute(
+          path: 'pending-receive',
+          name: 'purchase-pending-receive',
+          builder: (context, state) => const PurchasePendingReceivePage(),
+        ),
+        GoRoute(
+          path: 'history',
+          name: 'purchase-history',
+          builder: (context, state) => PurchaseHistoryPage(
+            initialPreset: state.uri.queryParameters['preset'],
+          ),
+        ),
+        GoRoute(
+          path: 'detail/:requestId',
+          name: 'purchase-detail',
+          builder: (context, state) {
+            final id = int.tryParse(state.pathParameters['requestId'] ?? '');
+            return id == null
+                ? const Scaffold(body: Center(child: Text('无效的采购记录编号')))
+                : PurchaseDetailPage(requestId: id);
+          },
+        ),
+        GoRoute(
+          path: 'stock-in/:requestId',
+          name: 'purchase-stock-in',
+          builder: (context, state) {
+            final id = int.tryParse(state.pathParameters['requestId'] ?? '');
+            return id == null
+                ? const Scaffold(body: Center(child: Text('无效的采购记录编号')))
+                : PurchaseStockInPage(requestId: id);
+          },
+        ),
+        GoRoute(
+          path: 'item-history/:materialId',
+          name: 'purchase-item-history',
+          builder: (context, state) {
+            final id = int.tryParse(state.pathParameters['materialId'] ?? '');
+            return id == null
+                ? const Scaffold(body: Center(child: Text('无效的库存物资编号')))
+                : PurchaseItemHistoryPage(inventoryMaterialId: id);
+          },
+        ),
+      ],
+    ),
     GoRoute(
       path: '/items',
       name: 'item-distribution',

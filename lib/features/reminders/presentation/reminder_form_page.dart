@@ -12,9 +12,20 @@ import '../domain/reminder_schedule.dart';
 import 'reminder_schedule_page.dart';
 
 class ReminderFormPage extends ConsumerStatefulWidget {
-  const ReminderFormPage({super.key, this.reminderId});
+  const ReminderFormPage({
+    super.key,
+    this.reminderId,
+    this.initialTitle,
+    this.initialRemark,
+    this.sourceEntityType,
+    this.sourceEntityId,
+  });
 
   final int? reminderId;
+  final String? initialTitle;
+  final String? initialRemark;
+  final String? sourceEntityType;
+  final int? sourceEntityId;
 
   @override
   ConsumerState<ReminderFormPage> createState() => _ReminderFormPageState();
@@ -31,7 +42,10 @@ class _ReminderFormPageState extends ConsumerState<ReminderFormPage> {
   bool _advancedExpanded = false;
   bool _loading = false;
   bool _saving = false;
+  late String? _sourceEntityType = widget.sourceEntityType;
+  late int? _sourceEntityId = widget.sourceEntityId;
   final Set<int> _employeeIds = <int>{};
+  List<ReminderLinkDraft> _otherLinks = const <ReminderLinkDraft>[];
 
   bool get _isEditing => widget.reminderId != null;
 
@@ -41,6 +55,9 @@ class _ReminderFormPageState extends ConsumerState<ReminderFormPage> {
     if (_isEditing) {
       _loading = true;
       Future<void>.microtask(_loadReminder);
+    } else {
+      _titleController.text = widget.initialTitle ?? '';
+      _remarkController.text = widget.initialRemark ?? '';
     }
   }
 
@@ -72,11 +89,22 @@ class _ReminderFormPageState extends ConsumerState<ReminderFormPage> {
       _priority = reminder.priority;
       _category = reminder.category;
       _isEnabled = reminder.isEnabled;
+      _sourceEntityType = reminder.sourceEntityType;
+      _sourceEntityId = reminder.sourceEntityId;
       _employeeIds.addAll(
         item.links
             .where((link) => link.entityType == 'employee')
             .map((link) => link.entityId),
       );
+      _otherLinks = [
+        for (final link in item.links)
+          if (link.entityType != 'employee')
+            ReminderLinkDraft(
+              entityType: link.entityType,
+              entityId: link.entityId,
+              displayName: link.displayNameSnapshot,
+            ),
+      ];
       _advancedExpanded =
           _priority != 'normal' ||
           _category == 'custom' ||
@@ -392,6 +420,7 @@ class _ReminderFormPageState extends ConsumerState<ReminderFormPage> {
       return;
     }
     setState(() => _saving = true);
+    var reminderSaved = false;
     try {
       final notificationService = ref.read(notificationServiceProvider);
       final timezoneId = await notificationService.currentTimezoneId();
@@ -410,7 +439,10 @@ class _ReminderFormPageState extends ConsumerState<ReminderFormPage> {
               priority: _priority,
               category: _category,
               timezoneId: timezoneId,
+              sourceEntityType: _sourceEntityType,
+              sourceEntityId: _sourceEntityId,
               links: [
+                ..._otherLinks,
                 for (final employee in employees)
                   if (_employeeIds.contains(employee.id))
                     ReminderLinkDraft(
@@ -421,6 +453,7 @@ class _ReminderFormPageState extends ConsumerState<ReminderFormPage> {
               ],
             ),
           );
+      reminderSaved = true;
       if (_isEnabled) {
         await notificationService.requestPermission();
         await notificationService.sync(
@@ -436,7 +469,15 @@ class _ReminderFormPageState extends ConsumerState<ReminderFormPage> {
     } catch (error) {
       if (!mounted) return;
       setState(() => _saving = false);
-      _showMessage('保存失败：$error');
+      if (_sourceEntityType == 'purchase_request') {
+        _showMessage(
+          reminderSaved
+              ? '提醒已保存，但系统通知同步失败，请稍后检查提醒设置。'
+              : '采购状态已更新，但领取提醒创建失败，可稍后重新设置。',
+        );
+      } else {
+        _showMessage('保存失败：$error');
+      }
     }
   }
 

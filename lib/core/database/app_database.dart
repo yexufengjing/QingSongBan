@@ -68,6 +68,10 @@ part 'app_database.g.dart';
     InventoryStocktakes,
     InventoryStocktakeItems,
     InventoryReplenishmentItems,
+    PurchaseRequests,
+    PurchaseRequestItems,
+    PurchaseStatusLogs,
+    PurchaseStockEntries,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -78,7 +82,7 @@ class AppDatabase extends _$AppDatabase {
     : super(executor ?? NativeDatabase.memory());
 
   @override
-  int get schemaVersion => 22;
+  int get schemaVersion => 23;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -263,6 +267,17 @@ class AppDatabase extends _$AppDatabase {
         await m.createTable(inventoryTransactions);
         await m.createTable(inventoryStocktakes);
         await m.createTable(inventoryStocktakeItems);
+      }
+      if (from < 23 && to >= 23) {
+        await m.createTable(purchaseRequests);
+        await m.createTable(purchaseRequestItems);
+        await m.createTable(purchaseStatusLogs);
+        await m.createTable(purchaseStockEntries);
+        for (final index in allSchemaEntities.whereType<Index>()) {
+          if (index.entityName.startsWith('idx_purchase_')) {
+            await m.createIndex(index);
+          }
+        }
       }
     },
     beforeOpen: (details) async {

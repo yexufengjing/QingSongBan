@@ -1395,7 +1395,8 @@ class InventoryMaterials extends Table {
 
   IntColumn get referencePriceCent => integer().nullable()();
 
-  BoolColumn get warningEnabled => boolean().withDefault(const Constant(true))();
+  BoolColumn get warningEnabled =>
+      boolean().withDefault(const Constant(true))();
 
   BoolColumn get isCommon => boolean().withDefault(const Constant(false))();
 
@@ -1663,4 +1664,158 @@ class InventoryReplenishmentItems extends Table {
   BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
 
   DateTimeColumn get deletedAt => dateTime().nullable()();
+}
+
+@TableIndex(
+  name: 'idx_purchase_requests_status_updated',
+  columns: {#status, #updatedAt},
+)
+class PurchaseRequests extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  TextColumn get title => text()();
+
+  TextColumn get status =>
+      text().withDefault(const Constant('pending_apply'))();
+
+  DateTimeColumn get requestDate => dateTime().nullable()();
+
+  DateTimeColumn get appliedDate => dateTime().nullable()();
+
+  TextColumn get oaRequestNo => text().nullable()();
+
+  TextColumn get oaTitle => text().nullable()();
+
+  TextColumn get oaUrl => text().nullable()();
+
+  TextColumn get purchaseDepartment => text().nullable()();
+
+  TextColumn get purchaserName => text().nullable()();
+
+  DateTimeColumn get assignedDate => dateTime().nullable()();
+
+  DateTimeColumn get arrivalNoticeDate => dateTime().nullable()();
+
+  TextColumn get receiveLocation => text().nullable()();
+
+  TextColumn get demandReason => text().nullable()();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get completedAt => dateTime().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+}
+
+@TableIndex(name: 'idx_purchase_request_items_request', columns: {#requestId})
+@TableIndex(
+  name: 'idx_purchase_request_items_material',
+  columns: {#inventoryMaterialId},
+)
+class PurchaseRequestItems extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get requestId => integer().references(
+    PurchaseRequests,
+    #id,
+    onDelete: KeyAction.cascade,
+  )();
+
+  IntColumn get inventoryMaterialId =>
+      integer().nullable().references(InventoryMaterials, #id)();
+
+  TextColumn get itemName => text()();
+
+  TextColumn get specification => text().nullable()();
+
+  TextColumn get unit => text()();
+
+  RealColumn get currentStockSnapshot => real().nullable()();
+
+  RealColumn get requestQuantity => real()();
+
+  RealColumn get receivedQuantity => real().withDefault(const Constant(0))();
+
+  RealColumn get remainingQuantity => real()();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+}
+
+@TableIndex(
+  name: 'idx_purchase_status_logs_request_changed',
+  columns: {#requestId, #changedAt},
+)
+class PurchaseStatusLogs extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get requestId => integer().references(
+    PurchaseRequests,
+    #id,
+    onDelete: KeyAction.cascade,
+  )();
+
+  TextColumn get oldStatus => text().nullable()();
+
+  TextColumn get newStatus => text()();
+
+  DateTimeColumn get changedAt => dateTime()();
+
+  TextColumn get remark => text().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+}
+
+@TableIndex(
+  name: 'idx_purchase_stock_entries_request_item',
+  columns: {#requestId, #requestItemId},
+)
+@TableIndex(
+  name: 'idx_purchase_stock_entries_receipt',
+  columns: {#inventoryReceiptId},
+)
+class PurchaseStockEntries extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get requestId => integer().references(
+    PurchaseRequests,
+    #id,
+    onDelete: KeyAction.cascade,
+  )();
+
+  IntColumn get requestItemId => integer().references(
+    PurchaseRequestItems,
+    #id,
+    onDelete: KeyAction.cascade,
+  )();
+
+  IntColumn get inventoryTransactionId =>
+      integer().nullable().references(InventoryTransactions, #id)();
+
+  IntColumn get inventoryReceiptId =>
+      integer().references(InventoryReceipts, #id)();
+
+  IntColumn get inventoryMaterialId =>
+      integer().references(InventoryMaterials, #id)();
+
+  RealColumn get quantity => real()();
+
+  DateTimeColumn get stockInDate => dateTime()();
+
+  TextColumn get storageLocation => text().nullable()();
+
+  TextColumn get remark => text().nullable()();
+
+  BoolColumn get isReversed => boolean().withDefault(const Constant(false))();
+
+  DateTimeColumn get reversedAt => dateTime().nullable()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
 }

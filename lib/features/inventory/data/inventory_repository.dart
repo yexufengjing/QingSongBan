@@ -674,6 +674,13 @@ class InventoryRepository {
       final items = await (db.select(
         db.inventoryReceiptItems,
       )..where((t) => t.receiptId.equals(receiptId))).get();
+      final purchaseEntries =
+          await (db.select(db.purchaseStockEntries)..where(
+                (t) =>
+                    t.inventoryReceiptId.equals(receiptId) &
+                    t.isReversed.equals(false),
+              ))
+              .get();
       for (final item in items) {
         final material = await (db.select(
           db.inventoryMaterials,
@@ -708,6 +715,95 @@ class InventoryRepository {
               updatedAt: Value(DateTime.now()),
             ),
           );
+        }
+      }
+      for (final entry in purchaseEntries) {
+        final purchaseItem = await (db.select(
+          db.purchaseRequestItems,
+        )..where((t) => t.id.equals(entry.requestItemId))).getSingleOrNull();
+        if (purchaseItem == null) {
+          throw StateError('采购入库关联明细不存在，无法撤销库存入库');
+        }
+        final received = purchaseItem.receivedQuantity - entry.quantity;
+        if (received < -0.000001) {
+          throw StateError('采购累计入库数量小于本次撤销数量');
+        }
+        final normalizedReceived = received < 0 ? 0.0 : received;
+        await (db.update(
+          db.purchaseRequestItems,
+        )..where((t) => t.id.equals(purchaseItem.id))).write(
+          PurchaseRequestItemsCompanion(
+            receivedQuantity: Value(normalizedReceived),
+            remainingQuantity: Value(
+              purchaseItem.requestQuantity - normalizedReceived,
+            ),
+            updatedAt: Value(DateTime.now()),
+          ),
+        );
+        await (db.update(
+          db.purchaseStockEntries,
+        )..where((t) => t.id.equals(entry.id))).write(
+          PurchaseStockEntriesCompanion(
+            isReversed: const Value(true),
+            reversedAt: Value(DateTime.now()),
+          ),
+        );
+      }
+      for (final requestId
+          in purchaseEntries.map((entry) => entry.requestId).toSet()) {
+        final request = await (db.select(
+          db.purchaseRequests,
+        )..where((t) => t.id.equals(requestId))).getSingleOrNull();
+        if (request == null) continue;
+        final purchaseItems = await (db.select(
+          db.purchaseRequestItems,
+        )..where((t) => t.requestId.equals(requestId))).get();
+        final allReceived = purchaseItems.every(
+          (item) => item.remainingQuantity <= 0.000001,
+        );
+        final nextStatus = request.status == 'cancelled'
+            ? 'cancelled'
+            : allReceived
+            ? 'stocked'
+            : 'pending_receive';
+        final validEntries =
+            await (db.select(db.purchaseStockEntries)..where(
+                  (t) =>
+                      t.requestId.equals(requestId) &
+                      t.isReversed.equals(false),
+                ))
+                .get();
+        final actualCompletedAt = allReceived && validEntries.isNotEmpty
+            ? validEntries
+                  .map((entry) => entry.stockInDate)
+                  .reduce((a, b) => a.isAfter(b) ? a : b)
+            : null;
+        final now = DateTime.now();
+        if (request.status != nextStatus ||
+            request.completedAt != actualCompletedAt) {
+          await (db.update(
+            db.purchaseRequests,
+          )..where((t) => t.id.equals(request.id))).write(
+            PurchaseRequestsCompanion(
+              status: Value(nextStatus),
+              completedAt: Value(actualCompletedAt),
+              updatedAt: Value(now),
+            ),
+          );
+          if (request.status != nextStatus) {
+            await db
+                .into(db.purchaseStatusLogs)
+                .insert(
+                  PurchaseStatusLogsCompanion.insert(
+                    requestId: request.id,
+                    oldStatus: Value(request.status),
+                    newStatus: nextStatus,
+                    changedAt: now,
+                    remark: const Value('库存入库撤销，采购数量与状态已回写'),
+                    createdAt: Value(now),
+                  ),
+                );
+          }
         }
       }
       await (db.update(
