@@ -1,0 +1,3 @@
+00:00 +0: loading D:/QingSongBan/test/widget_test.dart
+00:00 +0: counts only real attendance, leave, and upcoming reminder records on home
+00:00 +1: All tests passed!

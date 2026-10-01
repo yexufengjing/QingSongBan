@@ -17,18 +17,13 @@ class InventoryReplenishmentsPage extends ConsumerWidget {
       title: const Text('待采购 / 待补充'),
       actions: [
         IconButton(
+          key: const Key('inventory-replenishment-new'),
           tooltip: '新增待补充',
           onPressed: () => _showCreateDialog(context, ref),
           icon: const Icon(Icons.add),
         ),
         const InventoryExportButton(),
       ],
-    ),
-    floatingActionButton: FloatingActionButton.extended(
-      key: const Key('inventory-replenishment-new'),
-      onPressed: () => _showCreateDialog(context, ref),
-      icon: const Icon(Icons.add),
-      label: const Text('新增清单项'),
     ),
     body: ref
         .watch(inventoryReplenishmentsProvider)
@@ -38,25 +33,118 @@ class InventoryReplenishmentsPage extends ConsumerWidget {
             onRetry: () => ref.invalidate(inventoryReplenishmentsProvider),
           ),
           data: (items) => items.isEmpty
-              ? InventoryEmptyState(
-                  title: '待补充清单为空',
-                  message: '可以手动新建，或从库存预警中一键加入。',
-                  action: FilledButton.icon(
-                    onPressed: () => _showCreateDialog(context, ref),
-                    icon: const Icon(Icons.add),
-                    label: const Text('新增清单项'),
-                  ),
+              ? ListView(
+                  padding: const EdgeInsets.all(16),
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: InventoryMetricCard(
+                            compact: true,
+                            label: '待处理',
+                            value: '0',
+                            icon: Icons.schedule,
+                            color: const Color(0xFFE98500),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: InventoryMetricCard(
+                            compact: true,
+                            label: '已申报',
+                            value: '0',
+                            icon: Icons.assignment_outlined,
+                            color: AppColors.techBlue,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: InventoryMetricCard(
+                            compact: true,
+                            label: '已完成',
+                            value: '0',
+                            icon: Icons.check_circle_outline,
+                          ),
+                        ),
+                      ],
+                    ),
+                    InventoryEmptyState(
+                      title: '待补充清单为空',
+                      message: '可以手动新建，或从库存预警中一键加入。',
+                      action: FilledButton.icon(
+                        onPressed: () => _showCreateDialog(context, ref),
+                        icon: const Icon(Icons.add),
+                        label: const Text('新增清单项'),
+                      ),
+                    ),
+                  ],
                 )
               : RefreshIndicator(
                   onRefresh: () async =>
                       ref.invalidate(inventoryReplenishmentsProvider),
-                  child: ListView.separated(
+                  child: ListView(
                     physics: const AlwaysScrollableScrollPhysics(),
-                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 92),
-                    itemCount: items.length,
-                    separatorBuilder: (_, _) => const SizedBox(height: 10),
-                    itemBuilder: (context, index) =>
-                        _ReplenishmentCard(item: items[index]),
+                    padding: const EdgeInsets.fromLTRB(16, 2, 16, 24),
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: InventoryMetricCard(
+                              compact: true,
+                              label: '待处理',
+                              value:
+                                  '${items.where((item) => item.status == 'pending').length}',
+                              icon: Icons.schedule,
+                              color: const Color(0xFFE98500),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: InventoryMetricCard(
+                              compact: true,
+                              label: '已申报',
+                              value:
+                                  '${items.where((item) => item.status == 'submitted').length}',
+                              icon: Icons.assignment_outlined,
+                              color: AppColors.techBlue,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: InventoryMetricCard(
+                              compact: true,
+                              label: '已完成',
+                              value:
+                                  '${items.where((item) => item.status == 'received').length}',
+                              icon: Icons.check_circle_outline,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      for (final item in items) ...[
+                        _ReplenishmentCard(item: item),
+                        const SizedBox(height: 10),
+                      ],
+                      InventorySummaryPanel(
+                        title: '补充进度',
+                        icon: Icons.bar_chart_rounded,
+                        metrics: [
+                          (
+                            '待处理',
+                            '${items.where((item) => item.status == 'pending').length}',
+                          ),
+                          (
+                            '已申报',
+                            '${items.where((item) => item.status == 'submitted').length}',
+                          ),
+                          (
+                            '已完成',
+                            '${items.where((item) => item.status == 'received').length}',
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
         ),

@@ -32,6 +32,22 @@ final insuranceChangesProvider =
           .watchChanges(month: ref.watch(insuranceMonthProvider));
     });
 
+final insuranceEmployeeChangesProvider = StreamProvider.autoDispose
+    .family<List<InsuranceChangeView>, int>((ref, employeeId) {
+      return ref
+          .watch(insuranceRepositoryProvider)
+          .watchChanges()
+          .map(
+            (items) =>
+                items.where((item) => item.employee.id == employeeId).toList(),
+          );
+    });
+
+final insuranceChangesForMonthProvider = StreamProvider.autoDispose
+    .family<List<InsuranceChangeView>, DateTime>((ref, month) {
+      return ref.watch(insuranceRepositoryProvider).watchChanges(month: month);
+    });
+
 final insuranceBaseHistoryProvider =
     StreamProvider.autoDispose<List<InsuranceHistoryView>>((ref) {
       return ref.watch(insuranceRepositoryProvider).watchBaseHistory();

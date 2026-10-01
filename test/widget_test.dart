@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:drift/drift.dart';
 
 import 'package:qingsongban/core/database/app_database.dart';
 import 'package:qingsongban/core/database/database_enums.dart';
@@ -21,6 +22,7 @@ import 'package:qingsongban/features/leave/domain/leave_options.dart';
 import 'package:qingsongban/features/overtime/application/overtime_providers.dart';
 import 'package:qingsongban/features/overtime/domain/overtime_options.dart';
 import 'package:qingsongban/features/personnel/application/personnel_providers.dart';
+import 'package:qingsongban/features/personnel/presentation/personnel_list_page.dart';
 import 'package:qingsongban/features/reports/application/monthly_summary_providers.dart';
 import 'package:qingsongban/features/reports/domain/monthly_summary_options.dart';
 import 'package:qingsongban/features/insurance/application/insurance_providers.dart';
@@ -31,6 +33,7 @@ import 'package:qingsongban/features/operation_logs/application/operation_log_pr
 import 'package:qingsongban/features/vehicles/data/vehicle_repository.dart';
 import 'package:qingsongban/features/vehicles/domain/vehicle_options.dart';
 import 'package:qingsongban/features/vehicles/application/vehicle_providers.dart';
+import 'package:qingsongban/features/home/application/home_providers.dart';
 
 void main() {
   late AppDatabase database;
@@ -39,17 +42,31 @@ void main() {
     database = AppDatabase.forTesting();
   });
 
-  tearDown(() async {
-    await database.close();
-  });
+  void widgetTest(
+    String description,
+    Future<void> Function(WidgetTester tester) body,
+  ) {
+    testWidgets(description, (tester) async {
+      try {
+        await body(tester);
+      } finally {
+        await tester.pumpWidget(const SizedBox.shrink());
+        await tester.idle();
+        await tester.pump(const Duration(milliseconds: 1));
+        await database.close();
+        await tester.idle();
+        await tester.pump(const Duration(milliseconds: 1));
+      }
+    });
+  }
 
   Future<void> pumpApp(
     WidgetTester tester, {
     List<AttendanceGroup>? attendanceGroupOverride,
+    bool useDatabasePersonnelGroups = false,
     MonthlyAttendanceTableView? monthlyTableOverride,
     List<LeaveRecordView>? leaveOverride,
     List<Employee>? personnelOverride,
-    List<Employee>? personnelListOverride,
     List<OvertimeRecordView>? overtimeOverride,
   }) async {
     await tester.pumpWidget(
@@ -59,14 +76,11 @@ void main() {
           allPersonnelProvider.overrideWith(
             (ref) => Stream.value(personnelOverride ?? <Employee>[]),
           ),
-          if (personnelListOverride != null)
-            personnelListProvider.overrideWith(
-              (ref) => Stream.value(personnelListOverride),
+          if (!useDatabasePersonnelGroups)
+            attendanceGroupsProvider.overrideWith(
+              (ref) =>
+                  Stream.value(attendanceGroupOverride ?? <AttendanceGroup>[]),
             ),
-          attendanceGroupsProvider.overrideWith(
-            (ref) =>
-                Stream.value(attendanceGroupOverride ?? <AttendanceGroup>[]),
-          ),
           attendanceGroupSummariesProvider.overrideWith(
             (ref) => Stream.value(<AttendanceGroupSummary>[]),
           ),
@@ -111,6 +125,20 @@ void main() {
           ),
           overtimeRecordsProvider.overrideWith(
             (ref) => Stream.value(overtimeOverride ?? <OvertimeRecordView>[]),
+          ),
+          overtimeRecordsForMonthProvider.overrideWith(
+            (ref, month) =>
+                Stream.value(overtimeOverride ?? <OvertimeRecordView>[]),
+          ),
+          homeDashboardProvider.overrideWith(
+            (ref) async => const HomeDashboardStats(
+              activeEmployees: 0,
+              newEmployees: 0,
+              terminatedEmployees: 0,
+              todayAttendance: 0,
+              anomalies: 0,
+              pendingReminders: 0,
+            ),
           ),
           monthlySummaryProvider.overrideWith(
             (ref) => Stream.value(
@@ -158,26 +186,158 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    addTearDown(() async {
-      await tester.pumpWidget(const SizedBox.shrink());
-      await tester.pump();
-    });
   }
 
-  testWidgets('starts on the home tab with five destinations', (tester) async {
+  widgetTest('starts on the home tab with five destinations', (tester) async {
     await pumpApp(tester);
-
-    expect(find.text('轻松办'), findsOneWidget);
-    expect(find.text('首页'), findsOneWidget);
-    expect(find.text('人员'), findsOneWidget);
-    expect(find.text('考勤'), findsOneWidget);
-    expect(find.text('汇总'), findsOneWidget);
-    expect(find.text('我的'), findsOneWidget);
-    expect(find.text('今日概览'), findsOneWidget);
-    expect(find.text('设计基线'), findsNothing);
+    final semantics = tester.ensureSemantics();
+    try {
+      await tester.pump();
+      expect(
+        find.bySemanticsLabel(
+          RegExp(r'^轻松办人员管理首页，清洁人员与车辆背景，标语：让城市更清洁，让工作更轻松。'),
+        ),
+        findsOneWidget,
+      );
+      expect(find.text('首页'), findsOneWidget);
+      expect(find.text('人员'), findsOneWidget);
+      expect(find.text('考勤'), findsOneWidget);
+      expect(find.text('汇总'), findsOneWidget);
+      expect(find.text('我的'), findsOneWidget);
+      expect(find.text('今日概览'), findsNothing);
+      expect(find.text('查看汇总'), findsOneWidget);
+      expect(find.text('设计基线'), findsNothing);
+    } finally {
+      semantics.dispose();
+    }
   });
 
-  testWidgets('shows the home shortcuts', (tester) async {
+  widgetTest(
+    'counts only real attendance, leave, and upcoming reminder records on home',
+    (_) async {
+      final now = DateTime.now();
+      final today = DateTime(now.year, now.month, now.day);
+      final attendingId = await database.insertEmployee(
+        EmployeesCompanion.insert(
+          employeeNo: 'EMP-DASH-1',
+          name: '出勤人员',
+          hireDate: today,
+        ),
+      );
+      final restingId = await database.insertEmployee(
+        EmployeesCompanion.insert(
+          employeeNo: 'EMP-DASH-2',
+          name: '公休人员',
+          hireDate: today,
+        ),
+      );
+      await database
+          .into(database.attendanceRecords)
+          .insert(
+            AttendanceRecordsCompanion.insert(
+              employeeId: attendingId,
+              attendanceDate: today,
+              morningStatus: const Value(AttendanceHalfStatus.present),
+              afternoonStatus: const Value(AttendanceHalfStatus.unregistered),
+            ),
+          );
+      await database
+          .into(database.attendanceRecords)
+          .insert(
+            AttendanceRecordsCompanion.insert(
+              employeeId: restingId,
+              attendanceDate: today,
+              morningStatus: const Value(AttendanceHalfStatus.rest),
+              afternoonStatus: const Value(AttendanceHalfStatus.rest),
+            ),
+          );
+      await database
+          .into(database.leaveRecords)
+          .insert(
+            LeaveRecordsCompanion.insert(
+              employeeId: restingId,
+              startDate: today.subtract(const Duration(days: 1)),
+              endDate: today,
+            ),
+          );
+
+      Future<int> addReminder({
+        required String title,
+        required DateTime due,
+        String reminderType = 'custom',
+        bool enabled = true,
+        bool completed = false,
+      }) => database
+          .into(database.reminders)
+          .insert(
+            RemindersCompanion.insert(
+              title: title,
+              reminderType: reminderType,
+              dueDate: Value(due),
+              isEnabled: Value(enabled),
+              isCompleted: Value(completed),
+            ),
+          );
+
+      Future<void> addOccurrence(int reminderId, DateTime scheduledAt) async {
+        await database
+            .into(database.reminderOccurrences)
+            .insert(
+              ReminderOccurrencesCompanion.insert(
+                reminderId: reminderId,
+                scheduledAt: scheduledAt,
+              ),
+            );
+      }
+
+      final withinRange = await addReminder(
+        title: '三十天内',
+        due: today.add(const Duration(days: 5)),
+      );
+      final beyondRange = await addReminder(
+        title: '三十一天后',
+        due: today.add(const Duration(days: 31)),
+      );
+      final disabled = await addReminder(
+        title: '已停用',
+        due: today.add(const Duration(days: 5)),
+        enabled: false,
+      );
+      final completed = await addReminder(
+        title: '已完成',
+        due: today.add(const Duration(days: 5)),
+        completed: true,
+      );
+      final legacyInsurance = await addReminder(
+        title: '历史离职停保提醒',
+        due: today.subtract(const Duration(days: 5)),
+        reminderType: 'terminationInsurance',
+      );
+      await addOccurrence(withinRange, today.add(const Duration(days: 30)));
+      await addOccurrence(beyondRange, today.add(const Duration(days: 31)));
+      await addOccurrence(disabled, today.add(const Duration(days: 5)));
+      await addOccurrence(completed, today.add(const Duration(days: 5)));
+      await addOccurrence(
+        legacyInsurance,
+        today.subtract(const Duration(days: 1)),
+      );
+
+      final container = ProviderContainer(
+        overrides: [appDatabaseProvider.overrideWithValue(database)],
+      );
+      try {
+        final result = await container.read(homeDashboardProvider.future);
+        expect(result.todayAttendance, 1);
+        expect(result.todayLeave, 1);
+        expect(result.upcomingReminders, 1);
+        expect(result.pendingReminders, 1);
+      } finally {
+        container.dispose();
+      }
+    },
+  );
+
+  widgetTest('shows the home shortcuts', (tester) async {
     await pumpApp(tester);
 
     for (final label in [
@@ -194,7 +354,23 @@ void main() {
     }
   });
 
-  testWidgets('opens vehicle management from the home shortcuts', (
+  widgetTest('shows the pending reminder card in the first 411dp viewport', (
+    tester,
+  ) async {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(411, 840);
+    try {
+      await pumpApp(tester);
+      final viewport = tester.getRect(find.byType(SingleChildScrollView).first);
+      final reminderHeading = tester.getRect(find.text('待办提醒'));
+      expect(viewport.contains(reminderHeading.topLeft), isTrue);
+    } finally {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    }
+  });
+
+  widgetTest('opens vehicle management from the home shortcuts', (
     tester,
   ) async {
     await pumpApp(tester);
@@ -213,7 +389,7 @@ void main() {
     await tester.pumpAndSettle();
   });
 
-  testWidgets('opens vehicle condition and repair tabs', (tester) async {
+  widgetTest('opens vehicle condition and repair tabs', (tester) async {
     final vehicle = await VehicleRepository(database).save(
       draft: const VehicleDraft(
         name: '测试洒水车',
@@ -240,9 +416,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 1));
   });
 
-  testWidgets('opens vehicle fuel summary and attachment pages', (
-    tester,
-  ) async {
+  widgetTest('opens vehicle fuel summary and attachment pages', (tester) async {
     final vehicle = await VehicleRepository(database).save(
       draft: const VehicleDraft(
         name: '汇总测试车',
@@ -265,16 +439,16 @@ void main() {
     expect(find.text('暂无附件资料'), findsOneWidget);
   });
 
-  testWidgets('navigates from every home dashboard metric', (tester) async {
+  widgetTest('navigates from every home dashboard metric', (tester) async {
     await pumpApp(tester);
 
     const markers = {
       '当前在岗': '人员名单',
       '本月新增': '人员名单',
       '本月离职': '离职管理',
-      '今日已登记': '每日考勤',
-      '异常记录': '本月尚未生成汇总',
-      '待处理提醒': '备忘提醒',
+      '今日出勤': '每日考勤',
+      '今日请假': '请假记录',
+      '即将到期': '备忘提醒',
     };
 
     for (final entry in markers.entries) {
@@ -282,16 +456,40 @@ void main() {
       await tester.pumpAndSettle();
       final metric = find.byKey(Key('home-metric-${entry.key}'));
       expect(metric, findsOneWidget);
+      await tester.ensureVisible(metric);
       await tester.tap(metric);
       await tester.pumpAndSettle();
       expect(find.text(entry.value), findsOneWidget);
+      if (entry.key == '当前在岗') {
+        final listPage = find.byType(PersonnelListPage);
+        final container = ProviderScope.containerOf(tester.element(listPage));
+        expect(
+          tester.widget<PersonnelListPage>(listPage).initialStatus,
+          EmployeeStatus.active,
+        );
+        expect(
+          container.read(personnelStatusFilterProvider),
+          EmployeeStatus.active,
+        );
+      } else if (entry.key == '本月新增') {
+        final listPage = find.byType(PersonnelListPage);
+        final container = ProviderScope.containerOf(tester.element(listPage));
+        final now = DateTime.now();
+        final expectedMonth =
+            '${now.year}-${now.month.toString().padLeft(2, '0')}';
+        expect(
+          tester.widget<PersonnelListPage>(listPage).initialHireMonth,
+          expectedMonth,
+        );
+        expect(container.read(personnelHireMonthFilterProvider), expectedMonth);
+      }
     }
 
     appRouter.go('/home');
     await tester.pumpAndSettle();
   });
 
-  testWidgets('switches between all five tabs', (tester) async {
+  widgetTest('switches between all five tabs', (tester) async {
     await pumpApp(tester);
 
     const markers = {
@@ -299,7 +497,7 @@ void main() {
       '考勤': '考勤组管理',
       '汇总': '本月尚未生成汇总',
       '我的': '社保保险',
-      '首页': '今日概览',
+      '首页': '快捷操作',
     };
 
     for (final entry in markers.entries) {
@@ -314,14 +512,18 @@ void main() {
     }
   });
 
-  testWidgets('navigates personnel overview cards to filtered lists', (
+  widgetTest('navigates personnel overview cards to filtered lists', (
     tester,
   ) async {
-    await pumpApp(tester, personnelListOverride: const []);
+    await pumpApp(tester);
     await tester.tap(find.text('人员'));
     await tester.pumpAndSettle();
 
-    const statusCards = {'在岗': '在岗', '暂停工作': '暂停工作', '已离职': '已离职'};
+    const statusCards = {
+      '在岗': EmployeeStatus.active,
+      '暂停工作': EmployeeStatus.paused,
+      '已离职': EmployeeStatus.terminated,
+    };
     for (final entry in statusCards.entries) {
       appRouter.go('/personnel');
       await tester.pumpAndSettle();
@@ -330,7 +532,23 @@ void main() {
       await tester.tap(card);
       await tester.pumpAndSettle();
       expect(find.text('人员名单'), findsOneWidget);
-      expect(find.text(entry.value), findsOneWidget);
+      final statusLabel = find.textContaining(
+        RegExp('^${RegExp.escape(entry.key)} \\(\\d+\\)\$'),
+      );
+      expect(statusLabel, findsOneWidget);
+      final statusChip = find.ancestor(
+        of: statusLabel,
+        matching: find.byType(ChoiceChip),
+      );
+      expect(statusChip, findsOneWidget);
+      expect(tester.widget<ChoiceChip>(statusChip).selected, isTrue);
+      final listPage = find.byType(PersonnelListPage);
+      final container = ProviderScope.containerOf(tester.element(listPage));
+      expect(
+        tester.widget<PersonnelListPage>(listPage).initialStatus,
+        entry.value,
+      );
+      expect(container.read(personnelStatusFilterProvider), entry.value);
     }
 
     appRouter.go('/personnel');
@@ -340,13 +558,108 @@ void main() {
     await tester.tap(newCard);
     await tester.pumpAndSettle();
     expect(find.text('人员名单'), findsOneWidget);
-    expect(find.textContaining('入职月份：'), findsOneWidget);
+    final container = ProviderScope.containerOf(
+      tester.element(find.byType(PersonnelListPage)),
+    );
+    final listPage = tester.widget<PersonnelListPage>(
+      find.byType(PersonnelListPage),
+    );
+    final now = DateTime.now();
+    final expectedMonth = '${now.year}-${now.month.toString().padLeft(2, '0')}';
+    expect(listPage.initialHireMonth, expectedMonth);
+    expect(container.read(personnelHireMonthFilterProvider), expectedMonth);
+    await tester.tap(find.text('筛选'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('入职月份：$expectedMonth'), findsOneWidget);
 
     appRouter.go('/personnel');
     await tester.pumpAndSettle();
   });
 
-  testWidgets('uses the stage zero visual baseline', (tester) async {
+  widgetTest(
+    'filters personnel by the requested hire month using database rows',
+    (tester) async {
+      final now = DateTime.now();
+      final selectedMonth = DateTime(now.year, now.month);
+      final previousMonth = DateTime(now.year, now.month - 1);
+      final monthText =
+          '${selectedMonth.year}-${selectedMonth.month.toString().padLeft(2, '0')}';
+      await database.insertEmployee(
+        EmployeesCompanion.insert(
+          employeeNo: 'EMP-MONTH-1',
+          name: '本月入职人员',
+          hireDate: DateTime(selectedMonth.year, selectedMonth.month, 2),
+        ),
+      );
+      await database.insertEmployee(
+        EmployeesCompanion.insert(
+          employeeNo: 'EMP-MONTH-2',
+          name: '上月入职人员',
+          hireDate: DateTime(previousMonth.year, previousMonth.month, 2),
+        ),
+      );
+      await pumpApp(tester);
+
+      appRouter.go('/personnel/list?hireMonth=$monthText');
+      await tester.pumpAndSettle();
+
+      expect(find.text('本月入职人员'), findsOneWidget);
+      expect(find.text('上月入职人员'), findsNothing);
+      await tester.tap(find.text('筛选'));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('入职月份：$monthText'), findsOneWidget);
+    },
+  );
+
+  widgetTest(
+    'filters personnel by a real attendance group and keeps the add FAB circular',
+    (tester) async {
+      final firstGroup = await AttendanceGroupRepository(database)
+          .save(draft: const AttendanceGroupDraft(name: '东区班组'));
+      final secondGroup = await AttendanceGroupRepository(database)
+          .save(draft: const AttendanceGroupDraft(name: '西区班组'));
+      await database.insertEmployee(
+        EmployeesCompanion.insert(
+          employeeNo: 'EMP-GROUP-1',
+          name: '东区人员',
+          hireDate: DateTime(2026, 9, 1),
+          defaultAttendanceGroupId: Value(firstGroup.id),
+        ),
+      );
+      await database.insertEmployee(
+        EmployeesCompanion.insert(
+          employeeNo: 'EMP-GROUP-2',
+          name: '西区人员',
+          hireDate: DateTime(2026, 9, 1),
+          defaultAttendanceGroupId: Value(secondGroup.id),
+        ),
+      );
+      await pumpApp(
+        tester,
+        attendanceGroupOverride: [firstGroup, secondGroup],
+        useDatabasePersonnelGroups: true,
+      );
+
+      appRouter.go('/personnel/list');
+      await tester.pumpAndSettle();
+      final fab = tester.widget<FloatingActionButton>(
+        find.byKey(const Key('personnel-add-fab')),
+      );
+      expect(fab.shape, isA<CircleBorder>());
+      expect(find.text('东区人员'), findsOneWidget);
+      expect(find.text('西区人员'), findsOneWidget);
+
+      await tester.tap(find.byType(DropdownButton<int>).first);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text(firstGroup.name).last);
+      await tester.pumpAndSettle();
+
+      expect(find.text('东区人员'), findsOneWidget);
+      expect(find.text('西区人员'), findsNothing);
+    },
+  );
+
+  widgetTest('uses the stage zero visual baseline', (tester) async {
     await pumpApp(tester);
 
     final materialApp = tester.widget<MaterialApp>(find.byType(MaterialApp));
@@ -356,7 +669,7 @@ void main() {
     expect(materialApp.supportedLocales, const [Locale('zh', 'CN')]);
   });
 
-  testWidgets('creates and edits a personnel record', (tester) async {
+  widgetTest('creates and edits a personnel record', (tester) async {
     await pumpApp(tester);
 
     await tester.tap(find.text('人员'));
@@ -374,10 +687,11 @@ void main() {
     await tester.tap(firstSave);
     await tester.pumpAndSettle();
 
-    expect(find.text('张三'), findsOneWidget);
-    expect(find.text('EMP-0001'), findsOneWidget);
+    expect(find.text('张三'), findsWidgets);
+    expect(find.textContaining('EMP-0001'), findsOneWidget);
+    expect((await database.findEmployeeById(1))?.employeeNo, 'EMP-0001');
 
-    await tester.tap(find.byTooltip('编辑档案'));
+    await tester.tap(find.byKey(const Key('personnel-detail-edit')));
     await tester.pumpAndSettle();
     await tester.enterText(find.byKey(const Key('personnel-name-field')), '李四');
     final secondSave = find.text('保存档案');
@@ -385,11 +699,12 @@ void main() {
     await tester.tap(secondSave);
     await tester.pumpAndSettle();
 
-    expect(find.text('李四'), findsOneWidget);
+    expect(find.text('李四'), findsWidgets);
     expect(find.text('张三'), findsNothing);
+    expect((await database.findEmployeeById(1))?.name, '李四');
   });
 
-  testWidgets('creates an attendance group and opens its detail page', (
+  widgetTest('creates an attendance group and opens its detail page', (
     tester,
   ) async {
     await pumpApp(tester);
@@ -416,7 +731,7 @@ void main() {
     expect(find.text('还没有组成员'), findsOneWidget);
   });
 
-  testWidgets('opens the monthly roster from the attendance tab', (
+  widgetTest('opens the monthly roster from the attendance tab', (
     tester,
   ) async {
     await pumpApp(tester);
@@ -433,7 +748,7 @@ void main() {
     expect(find.text('去管理考勤组'), findsOneWidget);
   });
 
-  testWidgets('opens monthly summary and exposes direct Excel export', (
+  widgetTest('opens monthly summary and exposes direct Excel export', (
     tester,
   ) async {
     await pumpApp(tester);
@@ -453,7 +768,7 @@ void main() {
     expect(find.text('考勤组管理'), findsOneWidget);
   });
 
-  testWidgets('opens the employee attachment center from personnel detail', (
+  widgetTest('opens the employee attachment center from personnel detail', (
     tester,
   ) async {
     await database.insertEmployee(
@@ -479,7 +794,7 @@ void main() {
     expect(find.text('暂无附件资料'), findsOneWidget);
   });
 
-  testWidgets('opens daily attendance with selectors and empty state', (
+  widgetTest('opens daily attendance with selectors and empty state', (
     tester,
   ) async {
     final group = await AttendanceGroupRepository(database)
@@ -493,16 +808,30 @@ void main() {
     await tester.tap(dailyEntry);
     await tester.pumpAndSettle();
 
-    expect(find.text('每日登记'), findsOneWidget);
+    expect(find.text('每日考勤'), findsOneWidget);
     expect(
       find.byKey(const Key('daily-attendance-date-button')),
       findsOneWidget,
     );
     expect(
-      find.byKey(const Key('daily-attendance-group-field')),
+      find.byKey(Key('daily-attendance-group-${group.id}')),
       findsOneWidget,
     );
-    expect(find.text('快捷操作'), findsOneWidget);
+    for (final action in [
+      DailyAttendanceAction.allPresent,
+      DailyAttendanceAction.copyPrevious,
+      DailyAttendanceAction.rest,
+      DailyAttendanceAction.stopped,
+    ]) {
+      expect(
+        find.byKey(Key('daily-attendance-action-${action.name}')),
+        findsOneWidget,
+      );
+      expect(
+        find.text(DailyAttendanceOptions.actionLabel(action)),
+        findsOneWidget,
+      );
+    }
 
     await tester.tap(find.byKey(const Key('daily-attendance-date-button')));
     await tester.pumpAndSettle();
@@ -521,7 +850,7 @@ void main() {
     expect(find.text('考勤'), findsWidgets);
   });
 
-  testWidgets('opens the monthly attendance table with an empty roster', (
+  widgetTest('opens the monthly attendance table with an empty roster', (
     tester,
   ) async {
     final group = await AttendanceGroupRepository(database)
@@ -547,7 +876,7 @@ void main() {
     expect(find.text('本月暂无考勤名单'), findsOneWidget);
   });
 
-  testWidgets('opens the leave page with an empty state', (tester) async {
+  widgetTest('opens the leave page with an empty state', (tester) async {
     await pumpApp(tester);
 
     await tester.tap(find.text('考勤'));
@@ -563,7 +892,7 @@ void main() {
     expect(find.text('新增请假'), findsOneWidget);
   });
 
-  testWidgets('creates a leave record from the leave form', (tester) async {
+  widgetTest('creates a leave record from the leave form', (tester) async {
     final employeeId = await database.insertEmployee(
       EmployeesCompanion.insert(
         employeeNo: 'EMP-LW01',
@@ -602,7 +931,7 @@ void main() {
     expect(record?.afternoonStatus, AttendanceHalfStatus.leave);
   });
 
-  testWidgets('opens the overtime page with an empty state', (tester) async {
+  widgetTest('opens the overtime page with an empty state', (tester) async {
     await pumpApp(tester);
 
     await tester.tap(find.text('考勤'));
@@ -618,7 +947,7 @@ void main() {
     expect(find.text('新增加班'), findsOneWidget);
   });
 
-  testWidgets('opens the insurance page from settings', (tester) async {
+  widgetTest('opens the insurance page from settings', (tester) async {
     await pumpApp(tester);
 
     await tester.tap(find.text('我的'));
@@ -633,7 +962,7 @@ void main() {
     expect(find.text('本月暂无保险变更'), findsOneWidget);
   });
 
-  testWidgets('opens Excel import and export from settings', (tester) async {
+  widgetTest('opens Excel import and export from settings', (tester) async {
     await pumpApp(tester);
 
     await tester.tap(find.text('我的'));
@@ -648,7 +977,7 @@ void main() {
     expect(find.byKey(const Key('excel-import-button')), findsOneWidget);
   });
 
-  testWidgets('opens local reminders from settings', (tester) async {
+  widgetTest('opens local reminders from settings', (tester) async {
     await pumpApp(tester);
 
     await tester.tap(find.text('我的'));
@@ -673,7 +1002,7 @@ void main() {
     expect(reminderTestButton, findsOneWidget);
   });
 
-  testWidgets('opens backup and restore from settings', (tester) async {
+  widgetTest('opens backup and restore from settings', (tester) async {
     await pumpApp(tester);
 
     await tester.tap(find.text('我的'));
@@ -688,7 +1017,7 @@ void main() {
     expect(find.byKey(const Key('backup-restore-button')), findsOneWidget);
   });
 
-  testWidgets('opens operation logs from settings', (tester) async {
+  widgetTest('opens operation logs from settings', (tester) async {
     await pumpApp(tester);
 
     await tester.tap(find.text('我的'));
@@ -702,7 +1031,7 @@ void main() {
     expect(find.text('暂无操作日志'), findsOneWidget);
   });
 
-  testWidgets('renders month cells and opens the cell editor', (tester) async {
+  widgetTest('renders month cells and opens the cell editor', (tester) async {
     final group = await AttendanceGroupRepository(database)
         .save(draft: const AttendanceGroupDraft(name: '月表编辑组'));
     final employee = Employee(
@@ -740,15 +1069,13 @@ void main() {
 
     await tester.tap(find.text('考勤'));
     await tester.pumpAndSettle();
-    final monthlyTableEntry = find.text('月考勤表');
-    await tester.ensureVisible(monthlyTableEntry);
-    await tester.tap(monthlyTableEntry);
+    appRouter.go('/attendance/monthly-table?month=2026-09');
     await tester.pumpAndSettle();
 
     expect(find.text('张三'), findsOneWidget);
-    expect(find.text('1日'), findsOneWidget);
-    expect(find.text('半'), findsOneWidget);
+    expect(find.text('1'), findsOneWidget);
     final cell = find.byKey(const Key('monthly-attendance-cell-1-1'));
+    expect(find.descendant(of: cell, matching: find.text('半')), findsOneWidget);
     await tester.tap(cell);
     await tester.pumpAndSettle();
     expect(find.text('张三 · 9月1日'), findsOneWidget);
@@ -760,7 +1087,7 @@ void main() {
     await tester.pumpAndSettle();
   });
 
-  testWidgets('shows monthly roster selectors and an empty state for a group', (
+  widgetTest('shows monthly roster selectors and an empty state for a group', (
     tester,
   ) async {
     final group = await AttendanceGroupRepository(database)
@@ -793,7 +1120,7 @@ void main() {
     expect(emptyRoster, findsOneWidget);
   });
 
-  testWidgets('assigns a default attendance group from the personnel form', (
+  widgetTest('assigns a default attendance group from the personnel form', (
     tester,
   ) async {
     final group = await AttendanceGroupRepository(database)

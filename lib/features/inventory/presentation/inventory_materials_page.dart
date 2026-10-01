@@ -20,6 +20,7 @@ class _InventoryMaterialsPageState
     extends ConsumerState<InventoryMaterialsPage> {
   final _search = TextEditingController();
   bool _commonOnly = false;
+  int? _categoryId;
 
   @override
   void dispose() {
@@ -41,17 +42,28 @@ class _InventoryMaterialsPageState
         title: const Text('物资信息'),
         actions: [
           IconButton(
+            key: const Key('inventory-material-add'),
             tooltip: '新增物资',
             onPressed: () => context.push('/inventory/materials/new'),
-            icon: const Icon(Icons.add),
+            icon: const Icon(Icons.add_circle_outline),
+          ),
+          PopupMenuButton<int>(
+            tooltip: '按分类筛选',
+            icon: const Icon(Icons.grid_view_rounded),
+            onSelected: (value) =>
+                setState(() => _categoryId = value == -1 ? null : value),
+            itemBuilder: (context) => [
+              const PopupMenuItem(value: -1, child: Text('全部分类')),
+              for (final category in categories)
+                PopupMenuItem(value: category.id, child: Text(category.name)),
+            ],
+          ),
+          IconButton(
+            tooltip: _commonOnly ? '清除常用筛选' : '筛选常用物资',
+            onPressed: () => setState(() => _commonOnly = !_commonOnly),
+            icon: const Icon(Icons.filter_alt_outlined),
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        key: const Key('inventory-material-add'),
-        onPressed: () => context.push('/inventory/materials/new'),
-        icon: const Icon(Icons.add),
-        label: const Text('新增物资'),
       ),
       body: Column(
         children: [
@@ -85,12 +97,69 @@ class _InventoryMaterialsPageState
                 const SizedBox(height: 8),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: FilterChip(
-                    selected: _commonOnly,
-                    label: const Text('常用物资'),
-                    avatar: const Icon(Icons.star_outline, size: 18),
-                    onSelected: (value) => setState(() => _commonOnly = value),
+                  child: Wrap(
+                    spacing: 8,
+                    children: [
+                      FilterChip(
+                        selected: _commonOnly,
+                        label: const Text('常用物资'),
+                        avatar: const Icon(Icons.star_outline, size: 18),
+                        onSelected: (value) =>
+                            setState(() => _commonOnly = value),
+                      ),
+                      if (_categoryId != null)
+                        FilterChip(
+                          selected: true,
+                          label: Text(categoryNames[_categoryId] ?? '分类'),
+                          onSelected: (_) => setState(() => _categoryId = null),
+                        ),
+                    ],
                   ),
+                ),
+                const SizedBox(height: 6),
+                materials.when(
+                  loading: () => const SizedBox.shrink(),
+                  error: (_, _) => const SizedBox.shrink(),
+                  data: (items) {
+                    final commonCount = items
+                        .where((item) => item.isCommon)
+                        .length;
+                    final disabledCount = items
+                        .where((item) => item.status != 'active')
+                        .length;
+                    return Row(
+                      children: [
+                        Expanded(
+                          child: InventoryMetricCard(
+                            compact: true,
+                            label: '物资总数',
+                            value: '${items.length}',
+                            icon: Icons.inventory_2_outlined,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: InventoryMetricCard(
+                            compact: true,
+                            label: '常用物资',
+                            value: '$commonCount',
+                            icon: Icons.star_rounded,
+                            color: const Color(0xFFE98500),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: InventoryMetricCard(
+                            compact: true,
+                            label: '停用',
+                            value: '$disabledCount',
+                            icon: Icons.pause_circle_outline,
+                            color: AppColors.danger,
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ],
             ),
@@ -109,7 +178,9 @@ class _InventoryMaterialsPageState
                       item.materialName.toLowerCase().contains(keyword) ||
                       item.materialCode.toLowerCase().contains(keyword) ||
                       (item.modelSpec ?? '').toLowerCase().contains(keyword);
-                  return matchesKeyword && (!_commonOnly || item.isCommon);
+                  return matchesKeyword &&
+                      (!_commonOnly || item.isCommon) &&
+                      (_categoryId == null || item.categoryId == _categoryId);
                 }).toList();
                 if (filtered.isEmpty) {
                   return InventoryEmptyState(

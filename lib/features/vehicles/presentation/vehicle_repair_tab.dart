@@ -9,13 +9,23 @@ import '../application/vehicle_providers.dart';
 import '../domain/repair_options.dart';
 import 'vehicle_metric_grid.dart';
 
-class VehicleRepairTab extends ConsumerWidget {
+class VehicleRepairTab extends ConsumerStatefulWidget {
   const VehicleRepairTab({required this.vehicle, super.key});
 
   final Vehicle vehicle;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<VehicleRepairTab> createState() => _VehicleRepairTabState();
+}
+
+class _VehicleRepairTabState extends ConsumerState<VehicleRepairTab> {
+  VehicleRepairStatus? _status;
+  DateTime? _month;
+  bool _amountDescending = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final vehicle = widget.vehicle;
     final orders = ref.watch(vehicleRepairOrdersProvider(vehicle.id));
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 32),
@@ -27,6 +37,12 @@ class VehicleRepairTab extends ConsumerWidget {
             items: items,
             vehicle: vehicle,
             onCreate: () => context.push('/vehicles/${vehicle.id}/repair/new'),
+            status: _status,
+            month: _month,
+            amountDescending: _amountDescending,
+            onStatusChanged: (value) => setState(() => _status = value),
+            onMonthChanged: (value) => setState(() => _month = value),
+            onSortChanged: (value) => setState(() => _amountDescending = value),
           ),
         ),
       ],
@@ -39,11 +55,23 @@ class _RepairContent extends StatelessWidget {
     required this.items,
     required this.vehicle,
     required this.onCreate,
+    required this.status,
+    required this.month,
+    required this.amountDescending,
+    required this.onStatusChanged,
+    required this.onMonthChanged,
+    required this.onSortChanged,
   });
 
   final List<RepairOrder> items;
   final Vehicle vehicle;
   final VoidCallback onCreate;
+  final VehicleRepairStatus? status;
+  final DateTime? month;
+  final bool amountDescending;
+  final ValueChanged<VehicleRepairStatus?> onStatusChanged;
+  final ValueChanged<DateTime?> onMonthChanged;
+  final ValueChanged<bool> onSortChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +84,27 @@ class _RepairContent extends StatelessWidget {
     final completed = items
         .where((item) => item.status == VehicleRepairStatus.completed)
         .length;
-    final total = items.fold<int>(
-      0,
-      (sum, item) => sum + item.actualAmountCents,
+    final currentMonth = DateTime.now();
+    final monthTotal = items
+        .where(
+          (item) =>
+              item.reportDate.year == currentMonth.year &&
+              item.reportDate.month == currentMonth.month,
+        )
+        .fold<int>(0, (sum, item) => sum + item.actualAmountCents);
+    final visibleItems = items.where((item) {
+      if (status != null && item.status != status) return false;
+      if (month != null &&
+          (item.reportDate.year != month!.year ||
+              item.reportDate.month != month!.month)) {
+        return false;
+      }
+      return true;
+    }).toList();
+    visibleItems.sort(
+      (a, b) => amountDescending
+          ? b.actualAmountCents.compareTo(a.actualAmountCents)
+          : b.reportDate.compareTo(a.reportDate),
     );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -99,8 +145,8 @@ class _RepairContent extends StatelessWidget {
               icon: Icons.check_circle_outline,
             ),
             VehicleMetricData(
-              label: '累计费用',
-              value: '¥${(total / 100).toStringAsFixed(0)}',
+              label: '本月费用',
+              value: '¥${(monthTotal / 100).toStringAsFixed(0)}',
               color: AppColors.purple,
               icon: Icons.account_balance_wallet_outlined,
             ),
@@ -109,7 +155,76 @@ class _RepairContent extends StatelessWidget {
         const SizedBox(height: 14),
         Text('维修单列表', style: Theme.of(context).textTheme.titleLarge),
         const SizedBox(height: 8),
-        if (items.isEmpty)
+        Row(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    _RepairFilterChip(
+                      label: '全部',
+                      selected: status == null,
+                      onTap: () => onStatusChanged(null),
+                    ),
+                    for (final value in [
+                      VehicleRepairStatus.reported,
+                      VehicleRepairStatus.repairing,
+                      VehicleRepairStatus.completed,
+                    ])
+                      _RepairFilterChip(
+                        label: RepairOptions.statusLabel(value),
+                        selected: status == value,
+                        onTap: () => onStatusChanged(value),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+            IconButton(
+              tooltip: month == null ? '按月份筛选' : '清除月份筛选',
+              onPressed: () async {
+                if (month != null) {
+                  onMonthChanged(null);
+                  return;
+                }
+                final picked = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2100),
+                  helpText: '选择月份中的任意日期',
+                );
+                if (picked != null) {
+                  onMonthChanged(DateTime(picked.year, picked.month));
+                }
+              },
+              icon: Icon(
+                month == null
+                    ? Icons.calendar_month_outlined
+                    : Icons.event_available,
+              ),
+            ),
+            PopupMenuButton<bool>(
+              tooltip: '排序维修单',
+              onSelected: onSortChanged,
+              itemBuilder: (context) => [
+                CheckedPopupMenuItem(
+                  value: false,
+                  checked: !amountDescending,
+                  child: const Text('按日期排序'),
+                ),
+                CheckedPopupMenuItem(
+                  value: true,
+                  checked: amountDescending,
+                  child: const Text('按金额排序'),
+                ),
+              ],
+              icon: const Icon(Icons.swap_vert),
+            ),
+          ],
+        ),
+        if (visibleItems.isEmpty)
           Card(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(20, 26, 20, 24),
@@ -141,7 +256,7 @@ class _RepairContent extends StatelessWidget {
             ),
           )
         else
-          for (final order in items) ...[
+          for (final order in visibleItems) ...[
             _RepairCard(order: order, vehicle: vehicle),
             const SizedBox(height: 10),
           ],
@@ -251,6 +366,22 @@ class _RepairCard extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ],
+              if (order.manager?.isNotEmpty == true) ...[
+                const SizedBox(height: 4),
+                Text(
+                  '维修负责人：${order.manager}',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
+              if (order.project?.isNotEmpty == true) ...[
+                const SizedBox(height: 4),
+                Text(
+                  '维修项目：${order.project}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
             ],
           ),
         ),
@@ -293,6 +424,36 @@ class _RepairStatusChip extends StatelessWidget {
           ),
         ),
       ],
+    ),
+  );
+}
+
+class _RepairFilterChip extends StatelessWidget {
+  const _RepairFilterChip({
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.only(right: 6),
+    child: ChoiceChip(
+      label: Text(label),
+      selected: selected,
+      showCheckmark: false,
+      visualDensity: VisualDensity.compact,
+      labelStyle: TextStyle(
+        color: selected ? Colors.white : AppColors.body,
+        fontSize: 12,
+      ),
+      selectedColor: AppColors.techBlue,
+      side: BorderSide.none,
+      onSelected: (_) => onTap(),
     ),
   );
 }

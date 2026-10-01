@@ -1,0 +1,18 @@
+00:00 +0: loading D:/QingSongBan/test/widget_test.dart
+lib/features/home/application/home_providers.dart:54:47: Error: The operator '&' isn't defined for the type 'Expression<bool>'.
+ - 'Expression' is from 'package:drift/src/runtime/query_builder/query_builder.dart' ('/C:/Users/Administrator/AppData/Local/Pub/Cache/hosted/pub.dev/drift-2.35.0/lib/src/runtime/query_builder/query_builder.dart').
+Try correcting the operator to an existing operator, or defining a '&' operator.
+                table.isDeleted.equals(false) & table.archivedAt.isNull(),
+                                              ^
+00:00 +0 -1: loading D:/QingSongBan/test/widget_test.dart [E]
+  Failed to load "D:/QingSongBan/test/widget_test.dart":
+  Compilation failed for testPath=D:/QingSongBan/test/widget_test.dart: lib/features/home/application/home_providers.dart:54:47: Error: The operator '&' isn't defined for the type 'Expression<bool>'.
+   - 'Expression' is from 'package:drift/src/runtime/query_builder/query_builder.dart' ('/C:/Users/Administrator/AppData/Local/Pub/Cache/hosted/pub.dev/drift-2.35.0/lib/src/runtime/query_builder/query_builder.dart').
+  Try correcting the operator to an existing operator, or defining a '&' operator.
+                  table.isDeleted.equals(false) & table.archivedAt.isNull(),
+                                                ^
+  .
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  D:/QingSongBan/test/widget_test.dart: loading D:/QingSongBan/test/widget_test.dart

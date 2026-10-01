@@ -1,0 +1,83 @@
+00:00 +0: loading D:/QingSongBan/test/widget_test.dart
+00:00 +0: starts on the home tab with five destinations
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running a test:
+A SemanticsHandle was active at the end of the test.
+All SemanticsHandle instances must be disposed by calling dispose() on the SemanticsHandle.
+
+When the exception was thrown, this was the stack:
+#0      WidgetTester._verifySemanticsHandlesWereDisposed (package:flutter_test/src/widget_tester.dart:1074:7)
+#1      WidgetTester._endOfTestVerifications (package:flutter_test/src/widget_tester.dart:1063:5)
+#2      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1969:22)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+The test description was:
+  starts on the home tab with five destinations
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +0 -1: starts on the home tab with five destinations [E]
+  Test failed. See exception logs above.
+  The test description was: starts on the home tab with five destinations
+  
+00:01 +0 -1: counts only real attendance, leave, and upcoming reminder records on home
+00:01 +1 -1: shows the home shortcuts
+00:02 +2 -1: opens vehicle management from the home shortcuts
+00:03 +3 -1: opens vehicle condition and repair tabs
+00:04 +4 -1: opens vehicle fuel summary and attachment pages
+00:04 +5 -1: navigates from every home dashboard metric
+00:06 +6 -1: switches between all five tabs
+00:06 +7 -1: navigates personnel overview cards to filtered lists
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: '2026-10'
+  Actual: <null>
+   Which: not an <Instance of 'String'>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///D:/QingSongBan/test/widget_test.dart:492:5)
+<asynchronous suspension>
+#5      main.widgetTest.<anonymous closure> (file:///D:/QingSongBan/test/widget_test.dart:51:9)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///D:/QingSongBan/test/widget_test.dart line 492
+The test description was:
+  navigates personnel overview cards to filtered lists
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:07 +7 -2: navigates personnel overview cards to filtered lists [E]
+  Test failed. See exception logs above.
+  The test description was: navigates personnel overview cards to filtered lists
+  
+00:07 +7 -2: filters personnel by the requested hire month using database rows
+00:08 +8 -2: filters personnel by a real attendance group and keeps the add FAB circular
+00:08 +9 -2: uses the stage zero visual baseline
+00:08 +10 -2: creates and edits a personnel record
+00:09 +11 -2: creates an attendance group and opens its detail page
+00:10 +12 -2: opens the monthly roster from the attendance tab
+00:10 +13 -2: opens monthly summary and exposes direct Excel export
+00:10 +14 -2: opens the employee attachment center from personnel detail
+00:11 +15 -2: opens daily attendance with selectors and empty state
+00:11 +16 -2: opens the monthly attendance table with an empty roster
+00:11 +17 -2: opens the leave page with an empty state
+00:12 +18 -2: creates a leave record from the leave form
+00:12 +19 -2: opens the overtime page with an empty state
+00:12 +20 -2: opens the insurance page from settings
+00:12 +21 -2: opens Excel import and export from settings
+00:13 +22 -2: opens local reminders from settings
+00:13 +23 -2: opens backup and restore from settings
+00:13 +24 -2: opens operation logs from settings
+00:13 +25 -2: renders month cells and opens the cell editor
+00:14 +26 -2: shows monthly roster selectors and an empty state for a group
+00:14 +27 -2: assigns a default attendance group from the personnel form
+00:15 +28 -2: Some tests failed.
+
+Failing tests:
+  D:/QingSongBan/test/widget_test.dart: navigates personnel overview cards to filtered lists
+  D:/QingSongBan/test/widget_test.dart: starts on the home tab with five destinations

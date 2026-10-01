@@ -1,0 +1,20 @@
+warning: LF will be replaced by CRLF in docs/development/UI对照任务续接记录_2026-10-01.md.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in docs/development/UI差异排查_基础与人员.md.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in docs/development/UI差异排查_库存.md.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in docs/development/UI差异排查_车辆与器械.md.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in lib/app/router/app_router.dart.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in lib/features/garden_tool_repairs/presentation/garden_tool_repair_page.dart.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in lib/features/home/application/home_providers.dart.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in lib/features/home/presentation/home_page.dart.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in lib/features/personnel/presentation/personnel_list_page.dart.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in test/garden_tool_repairs/garden_tool_repair_pages_test.dart.
+The file will have its original line endings in your working directory

@@ -1,0 +1,204 @@
+00:00 +0: loading D:/QingSongBan/test/attachments/attachment_repository_test.dart
+00:00 +0: D:/QingSongBan/test/attachments/attachment_repository_test.dart: copies supported files and keeps only a relative path
+00:00 +1: D:/QingSongBan/test/attendance/attendance_group_repository_test.dart: creates, edits, and rejects duplicate attendance groups
+00:00 +2: D:/QingSongBan/test/attendance/attendance_group_repository_test.dart: creates, edits, and rejects duplicate attendance groups
+00:00 +3: D:/QingSongBan/test/attachments/attachment_repository_test.dart: rejects unsupported and oversized files
+00:00 +4: D:/QingSongBan/test/attachments/attachment_repository_test.dart: rejects unsupported and oversized files
+00:00 +5: D:/QingSongBan/test/attachments/attachment_repository_test.dart: rejects unsupported and oversized files
+00:00 +6: D:/QingSongBan/test/attachments/attachment_repository_test.dart: rejects unsupported and oversized files
+00:01 +7: D:/QingSongBan/test/attendance/daily_attendance_repository_test.dart: saves one daily record and updates it instead of duplicating
+00:01 +8: D:/QingSongBan/test/attendance/daily_overtime_month_test.dart: daily attendance requests the selected month and shows only that day's overtime
+00:01 +9: D:/QingSongBan/test/attendance/daily_overtime_month_test.dart: daily attendance requests the selected month and shows only that day's overtime
+00:01 +10: D:/QingSongBan/test/attendance/daily_overtime_month_test.dart: daily attendance requests the selected month and shows only that day's overtime
+00:01 +11: D:/QingSongBan/test/attendance/daily_overtime_month_test.dart: daily attendance requests the selected month and shows only that day's overtime
+00:01 +12: D:/QingSongBan/test/attendance/daily_overtime_month_test.dart: daily attendance requests the selected month and shows only that day's overtime
+00:02 +13: D:/QingSongBan/test/attendance/daily_overtime_month_test.dart: daily attendance requests the selected month and shows only that day's overtime
+00:02 +14: D:/QingSongBan/test/attendance/daily_overtime_month_test.dart: daily attendance requests the selected month and shows only that day's overtime
+00:02 +15: D:/QingSongBan/test/attendance/daily_overtime_month_test.dart: daily attendance requests the selected month and shows only that day's overtime
+00:02 +16: D:/QingSongBan/test/attendance/daily_overtime_month_test.dart: daily attendance requests the selected month and shows only that day's overtime
+00:02 +17: D:/QingSongBan/test/attendance/daily_overtime_month_test.dart: daily attendance requests the selected month and shows only that day's overtime
+00:02 +18: D:/QingSongBan/test/attendance/daily_overtime_month_test.dart: daily attendance requests the selected month and shows only that day's overtime
+00:02 +19: D:/QingSongBan/test/attendance/daily_overtime_month_test.dart: daily attendance requests the selected month and shows only that day's overtime
+00:02 +20: D:/QingSongBan/test/attendance/daily_overtime_month_test.dart: daily attendance requests the selected month and shows only that day's overtime
+00:03 +21: D:/QingSongBan/test/attendance/daily_overtime_month_test.dart: daily attendance requests the selected month and shows only that day's overtime
+00:03 +22: D:/QingSongBan/test/attendance/daily_overtime_month_test.dart: daily attendance requests the selected month and shows only that day's overtime
+00:03 +23: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +24: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +25: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +26: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +27: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +28: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +29: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +30: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +31: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +32: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:05 +33: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:05 +34: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:05 +35: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:06 +36: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:06 +37: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:06 +38: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:07 +39: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:07 +40: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:07 +41: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:07 +42: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:07 +43: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:07 +44: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:07 +45: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:07 +46: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:07 +47: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:08 +48: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:08 +49: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:08 +50: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:09 +51: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:09 +52: D:/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:09 +53: D:/QingSongBan/test/inventory/inventory_pages_test.dart: home inventory shortcut opens the eight-operation home
+00:10 +54: D:/QingSongBan/test/inventory/inventory_pages_test.dart: home inventory shortcut opens the eight-operation home
+00:10 +55: D:/QingSongBan/test/inventory/inventory_pages_test.dart: home inventory shortcut opens the eight-operation home
+00:10 +56: D:/QingSongBan/test/inventory/inventory_pages_test.dart: home inventory shortcut opens the eight-operation home
+00:10 +57: D:/QingSongBan/test/inventory/inventory_pages_test.dart: home inventory shortcut opens the eight-operation home
+00:10 +58: D:/QingSongBan/test/inventory/inventory_pages_test.dart: home inventory shortcut opens the eight-operation home
+00:10 +59: D:/QingSongBan/test/inventory/inventory_pages_test.dart: home inventory shortcut opens the eight-operation home
+00:10 +60: D:/QingSongBan/test/inventory/inventory_pages_test.dart: home inventory shortcut opens the eight-operation home
+00:10 +61: D:/QingSongBan/test/inventory/inventory_pages_test.dart: home inventory shortcut opens the eight-operation home
+00:10 +62: D:/QingSongBan/test/inventory/inventory_pages_test.dart: home inventory shortcut opens the eight-operation home
+00:10 +63: D:/QingSongBan/test/inventory/inventory_pages_test.dart: home inventory shortcut opens the eight-operation home
+00:11 +64: D:/QingSongBan/test/inventory/inventory_pages_test.dart: home inventory shortcut opens the eight-operation home
+00:11 +65: D:/QingSongBan/test/inventory/inventory_pages_test.dart: home inventory shortcut opens the eight-operation home
+00:11 +66: D:/QingSongBan/test/inventory/inventory_pages_test.dart: home inventory shortcut opens the eight-operation home
+00:11 +67: D:/QingSongBan/test/garden_tool_repairs/garden_tool_repair_pages_test.dart: form calculates multiple item amounts and saves a temporary repairer
+00:11 +68: D:/QingSongBan/test/garden_tool_repairs/garden_tool_repair_pages_test.dart: form calculates multiple item amounts and saves a temporary repairer
+00:11 +69: D:/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:11 +70: D:/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:11 +71: D:/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:12 +72: D:/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:12 +73: D:/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:12 +74: D:/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:13 +75: D:/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:13 +76: D:/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:13 +77: D:/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:13 +78: D:/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:13 +79: D:/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:13 +80: D:/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:13 +81: D:/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:13 +82: D:/QingSongBan/test/inventory/inventory_pages_test.dart: employee history exposes six columns in a horizontal mobile table
+00:13 +83: D:/QingSongBan/test/inventory/inventory_pages_test.dart: employee history exposes six columns in a horizontal mobile table
+00:13 +84: D:/QingSongBan/test/inventory/inventory_pages_test.dart: employee history exposes six columns in a horizontal mobile table
+00:13 +85: D:/QingSongBan/test/backup/backup_service_test.dart: keeps read-only compatibility with a legacy v1 backup
+00:13 +86: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:14 +87: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:14 +88: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:14 +89: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:14 +90: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:14 +91: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:14 +92: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:15 +93: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:15 +94: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:15 +95: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:16 +96: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:16 +97: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:16 +98: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:16 +99: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:16 +100: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:16 +101: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:16 +102: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:16 +103: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:16 +104: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:16 +105: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:16 +106: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:16 +107: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:16 +108: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:17 +109: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:17 +110: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:17 +111: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:17 +112: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:17 +113: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:17 +114: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:17 +115: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:17 +116: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:17 +117: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:18 +118: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:18 +119: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:18 +120: D:/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:18 +121: D:/QingSongBan/test/reminders/reminder_schedule_page_test.dart: opens time, repeat, and multiple-alert configuration
+00:18 +122: D:/QingSongBan/test/reminders/reminder_schedule_page_test.dart: opens time, repeat, and multiple-alert configuration
+00:18 +123: D:/QingSongBan/test/reminders/reminder_schedule_page_test.dart: opens time, repeat, and multiple-alert configuration
+00:18 +124: D:/QingSongBan/test/reminders/reminder_schedule_page_test.dart: opens time, repeat, and multiple-alert configuration
+00:18 +125: D:/QingSongBan/test/reminders/reminder_schedule_page_test.dart: opens time, repeat, and multiple-alert configuration
+00:19 +126: D:/QingSongBan/test/reminders/reminder_schedule_page_test.dart: opens time, repeat, and multiple-alert configuration
+00:19 +127: D:/QingSongBan/test/vehicles/fuel_and_expense_repository_test.dart: saves one monthly fuel record and calculates annual summary
+00:19 +128: D:/QingSongBan/test/vehicles/fuel_and_expense_repository_test.dart: expense aggregation uses completed repair actual amount once
+00:19 +129: D:/QingSongBan/test/vehicles/fuel_year_summary_service_test.dart: builds a twelve-month pivot and excludes never-used scrapped vehicles
+00:19 +130: D:/QingSongBan/test/vehicles/fuel_year_summary_service_test.dart: builds a twelve-month pivot and excludes never-used scrapped vehicles
+00:19 +131: D:/QingSongBan/test/vehicles/fuel_year_summary_service_test.dart: builds a twelve-month pivot and excludes never-used scrapped vehicles
+00:20 +132: D:/QingSongBan/test/vehicles/maintenance_repository_test.dart: calculates calendar due dates without overflowing short months
+00:20 +133: D:/QingSongBan/test/vehicles/maintenance_repository_test.dart: calculates calendar due dates without overflowing short months
+00:20 +134: D:/QingSongBan/test/vehicles/maintenance_repository_test.dart: seeds maintenance items, updates due status, and syncs reminder
+00:20 +135: D:/QingSongBan/test/vehicles/maintenance_repository_test.dart: records service costs and preserves component lifecycle usage days
+00:20 +136: D:/QingSongBan/test/vehicles/repair_pages_test.dart: repair list opens detail and saves settlement marker
+00:21 +137: D:/QingSongBan/test/vehicles/repair_pages_test.dart: repair list opens detail and saves settlement marker
+00:21 +138: D:/QingSongBan/test/vehicles/repair_pages_test.dart: repair list opens detail and saves settlement marker
+00:21 +139: D:/QingSongBan/test/vehicles/repair_pages_test.dart: repair list opens detail and saves settlement marker
+00:21 +140: D:/QingSongBan/test/vehicles/repair_pages_test.dart: repair list opens detail and saves settlement marker
+00:21 +141: D:/QingSongBan/test/vehicles/repair_pages_test.dart: repair list opens detail and saves settlement marker
+00:21 +142: D:/QingSongBan/test/vehicles/repair_pages_test.dart: repair list opens detail and saves settlement marker
+00:21 +143: D:/QingSongBan/test/vehicles/repair_pages_test.dart: repair list opens detail and saves settlement marker
+00:21 +144: D:/QingSongBan/test/vehicles/repair_pages_test.dart: repair list opens detail and saves settlement marker
+00:22 +145: D:/QingSongBan/test/vehicles/repair_pages_test.dart: repair list opens detail and saves settlement marker
+00:22 +146: D:/QingSongBan/test/vehicles/repair_pages_test.dart: repair list opens detail and saves settlement marker
+00:22 +147: D:/QingSongBan/test/vehicles/repair_pages_test.dart: repair list opens detail and saves settlement marker
+00:22 +148: D:/QingSongBan/test/vehicles/repair_pages_test.dart: repair list opens detail and saves settlement marker
+00:23 +149: D:/QingSongBan/test/vehicles/vehicle_detail_tabs_test.dart: vehicle detail app bar title follows the selected tab
+00:23 +150: D:/QingSongBan/test/vehicles/vehicle_detail_tabs_test.dart: vehicle detail app bar title follows the selected tab
+00:23 +151: D:/QingSongBan/test/vehicles/vehicle_detail_tabs_test.dart: vehicle detail app bar title follows the selected tab
+00:24 +152: D:/QingSongBan/test/vehicles/vehicle_detail_tabs_test.dart: vehicle detail app bar title follows the selected tab
+00:25 +153: D:/QingSongBan/test/vehicles/vehicle_detail_tabs_test.dart: vehicle detail app bar title follows the selected tab
+00:25 +154: D:/QingSongBan/test/vehicles/vehicle_detail_tabs_test.dart: vehicle detail app bar title follows the selected tab
+00:25 +155: D:/QingSongBan/test/vehicles/vehicle_page_layout_test.dart: vehicle dashboard is compact at 411dp
+00:25 +156: D:/QingSongBan/test/vehicles/vehicle_page_layout_test.dart: vehicle dashboard is compact at 411dp
+00:25 +157: D:/QingSongBan/test/vehicles/vehicle_page_layout_test.dart: vehicle dashboard is compact at 411dp
+00:26 +158: D:/QingSongBan/test/vehicles/vehicle_pages_visual_test.dart: inline fuel entry saves the selected month
+00:26 +159: D:/QingSongBan/test/vehicles/vehicle_pages_visual_test.dart: inline fuel entry saves the selected month
+00:26 +160: D:/QingSongBan/test/vehicles/vehicle_pages_visual_test.dart: vehicle reminder center shows linked vehicle reminders
+00:26 +161: D:/QingSongBan/test/vehicles/vehicle_repair_routes_test.dart: vehicle repair routes open list, real detail, and edit form
+00:27 +162: D:/QingSongBan/test/vehicles/vehicle_repair_routes_test.dart: vehicle repair routes open list, real detail, and edit form
+00:27 +163: D:/QingSongBan/test/vehicles/vehicle_repair_routes_test.dart: vehicle repair routes open list, real detail, and edit form
+00:27 +164: D:/QingSongBan/test/vehicles/vehicle_repair_routes_test.dart: vehicle repair routes open list, real detail, and edit form
+00:27 +165: D:/QingSongBan/test/vehicles/vehicle_repair_routes_test.dart: vehicle repair routes open list, real detail, and edit form
+00:27 +166: D:/QingSongBan/test/vehicles/vehicle_repair_routes_test.dart: vehicle repair routes open list, real detail, and edit form
+00:27 +167: D:/QingSongBan/test/vehicles/vehicle_repair_routes_test.dart: vehicle repair routes open list, real detail, and edit form
+00:27 +168: D:/QingSongBan/test/vehicles/vehicle_repair_routes_test.dart: vehicle repair routes open list, real detail, and edit form
+00:27 +169: D:/QingSongBan/test/vehicles/vehicle_repair_routes_test.dart: vehicle repair routes open list, real detail, and edit form
+00:29 +170: D:/QingSongBan/test/vehicles/vehicle_repair_routes_test.dart: vehicle repair routes open list, real detail, and edit form
+00:29 +171: D:/QingSongBan/test/vehicles/vehicle_repair_routes_test.dart: vehicle repair routes open list, real detail, and edit form
+00:29 +172: D:/QingSongBan/test/widget_test.dart: counts only real attendance, leave, and upcoming reminder records on home
+00:29 +173: D:/QingSongBan/test/widget_test.dart: shows the home shortcuts
+00:30 +174: D:/QingSongBan/test/widget_test.dart: shows the pending reminder card in the first 411dp viewport
+00:30 +175: D:/QingSongBan/test/widget_test.dart: opens vehicle management from the home shortcuts
+00:31 +176: D:/QingSongBan/test/widget_test.dart: opens vehicle condition and repair tabs
+00:32 +177: D:/QingSongBan/test/widget_test.dart: opens vehicle fuel summary and attachment pages
+00:33 +178: D:/QingSongBan/test/widget_test.dart: navigates from every home dashboard metric
+00:34 +179: D:/QingSongBan/test/widget_test.dart: switches between all five tabs
+00:34 +180: D:/QingSongBan/test/widget_test.dart: navigates personnel overview cards to filtered lists
+00:35 +181: D:/QingSongBan/test/widget_test.dart: filters personnel by the requested hire month using database rows
+00:36 +182: D:/QingSongBan/test/widget_test.dart: filters personnel by a real attendance group and keeps the add FAB circular
+00:36 +183: D:/QingSongBan/test/widget_test.dart: uses the stage zero visual baseline
+00:36 +184: D:/QingSongBan/test/widget_test.dart: creates and edits a personnel record
+00:38 +185: D:/QingSongBan/test/widget_test.dart: creates an attendance group and opens its detail page
+00:38 +186: D:/QingSongBan/test/widget_test.dart: opens the monthly roster from the attendance tab
+00:38 +187: D:/QingSongBan/test/widget_test.dart: opens monthly summary and exposes direct Excel export
+00:38 +188: D:/QingSongBan/test/widget_test.dart: opens the employee attachment center from personnel detail
+00:39 +189: D:/QingSongBan/test/widget_test.dart: opens daily attendance with selectors and empty state
+00:39 +190: D:/QingSongBan/test/widget_test.dart: opens the monthly attendance table with an empty roster
+00:39 +191: D:/QingSongBan/test/widget_test.dart: opens the leave page with an empty state
+00:40 +192: D:/QingSongBan/test/widget_test.dart: creates a leave record from the leave form
+00:40 +193: D:/QingSongBan/test/widget_test.dart: opens the overtime page with an empty state
+00:40 +194: D:/QingSongBan/test/widget_test.dart: opens the insurance page from settings
+00:40 +195: D:/QingSongBan/test/widget_test.dart: opens Excel import and export from settings
+00:41 +196: D:/QingSongBan/test/widget_test.dart: opens local reminders from settings
+00:41 +197: D:/QingSongBan/test/widget_test.dart: opens backup and restore from settings
+00:41 +198: D:/QingSongBan/test/widget_test.dart: opens operation logs from settings
+00:41 +199: D:/QingSongBan/test/widget_test.dart: renders month cells and opens the cell editor
+00:42 +200: D:/QingSongBan/test/widget_test.dart: shows monthly roster selectors and an empty state for a group
+00:42 +201: D:/QingSongBan/test/widget_test.dart: assigns a default attendance group from the personnel form
+00:43 +202: All tests passed!

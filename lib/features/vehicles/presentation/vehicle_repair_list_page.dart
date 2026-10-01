@@ -24,6 +24,8 @@ class _VehicleRepairListPageState extends ConsumerState<VehicleRepairListPage> {
   RepairTicketStatus? _ticket;
   bool? _settled;
   bool? _paid;
+  DateTime? _month;
+  _RepairSort _sort = _RepairSort.newest;
 
   int get _activeFilterCount => [
     _vehicleId,
@@ -31,6 +33,7 @@ class _VehicleRepairListPageState extends ConsumerState<VehicleRepairListPage> {
     _ticket,
     _settled,
     _paid,
+    _month,
   ].where((value) => value != null).length;
 
   @override
@@ -46,6 +49,7 @@ class _VehicleRepairListPageState extends ConsumerState<VehicleRepairListPage> {
       ticket: _ticket,
       settled: _settled,
       paid: _paid,
+      month: _month,
     );
     final applied = await Navigator.of(context).push<_RepairFilterValues>(
       MaterialPageRoute(
@@ -60,6 +64,7 @@ class _VehicleRepairListPageState extends ConsumerState<VehicleRepairListPage> {
         _ticket = applied.ticket;
         _settled = applied.settled;
         _paid = applied.paid;
+        _month = applied.month;
       });
     }
   }
@@ -124,6 +129,11 @@ class _VehicleRepairListPageState extends ConsumerState<VehicleRepairListPage> {
               if (_ticket != null && o.ticketStatus != _ticket) return false;
               if (_settled != null && o.isSettled != _settled) return false;
               if (_paid != null && o.isPaid != _paid) return false;
+              if (_month != null &&
+                  (o.reportDate.year != _month!.year ||
+                      o.reportDate.month != _month!.month)) {
+                return false;
+              }
               if (query.isEmpty) return true;
               return [
                 o.repairNo,
@@ -135,6 +145,20 @@ class _VehicleRepairListPageState extends ConsumerState<VehicleRepairListPage> {
                 v?.vehicleNo ?? '',
               ].any((s) => s.toLowerCase().contains(query));
             }).toList();
+            switch (_sort) {
+              case _RepairSort.newest:
+                shown.sort((a, b) => b.reportDate.compareTo(a.reportDate));
+              case _RepairSort.oldest:
+                shown.sort((a, b) => a.reportDate.compareTo(b.reportDate));
+              case _RepairSort.amountHigh:
+                shown.sort(
+                  (a, b) => b.actualAmountCents.compareTo(a.actualAmountCents),
+                );
+              case _RepairSort.amountLow:
+                shown.sort(
+                  (a, b) => a.actualAmountCents.compareTo(b.actualAmountCents),
+                );
+            }
             return Column(
               children: [
                 Padding(
@@ -156,6 +180,56 @@ class _VehicleRepairListPageState extends ConsumerState<VehicleRepairListPage> {
                       _FilterButton(
                         count: _activeFilterCount,
                         onPressed: () => _openFilters(vehicleItems),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(18, 0, 18, 4),
+                  child: Row(
+                    children: [
+                      Text(
+                        '共 ${shown.length} 单',
+                        style: const TextStyle(
+                          color: AppColors.body,
+                          fontSize: 12,
+                        ),
+                      ),
+                      const Spacer(),
+                      PopupMenuButton<_RepairSort>(
+                        tooltip: '排序维修单',
+                        onSelected: (sort) => setState(() => _sort = sort),
+                        itemBuilder: (context) => [
+                          for (final sort in _RepairSort.values)
+                            CheckedPopupMenuItem(
+                              value: sort,
+                              checked: _sort == sort,
+                              child: Text(sort.label),
+                            ),
+                        ],
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(
+                              Icons.swap_vert,
+                              size: 16,
+                              color: AppColors.body,
+                            ),
+                            const SizedBox(width: 4),
+                            Text(
+                              _sort.label,
+                              style: const TextStyle(
+                                color: AppColors.body,
+                                fontSize: 12,
+                              ),
+                            ),
+                            const Icon(
+                              Icons.keyboard_arrow_down,
+                              size: 18,
+                              color: AppColors.body,
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -255,6 +329,7 @@ class _RepairFilterValues {
     this.ticket,
     this.settled,
     this.paid,
+    this.month,
   });
 
   final int? vehicleId;
@@ -262,9 +337,16 @@ class _RepairFilterValues {
   final RepairTicketStatus? ticket;
   final bool? settled;
   final bool? paid;
+  final DateTime? month;
 
-  int get activeCount =>
-      [vehicleId, status, ticket, settled, paid].where((v) => v != null).length;
+  int get activeCount => [
+    vehicleId,
+    status,
+    ticket,
+    settled,
+    paid,
+    month,
+  ].where((v) => v != null).length;
 
   _RepairFilterValues reset() => const _RepairFilterValues();
 }
@@ -284,6 +366,7 @@ class _RepairFilterPageState extends State<_RepairFilterPage> {
   late RepairTicketStatus? _ticket = widget.initial.ticket;
   late bool? _settled = widget.initial.settled;
   late bool? _paid = widget.initial.paid;
+  late DateTime? _month = widget.initial.month;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -302,6 +385,7 @@ class _RepairFilterPageState extends State<_RepairFilterPage> {
             _ticket = null;
             _settled = null;
             _paid = null;
+            _month = null;
           }),
           child: const Text('重置'),
         ),
@@ -310,6 +394,27 @@ class _RepairFilterPageState extends State<_RepairFilterPage> {
     body: ListView(
       padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
       children: [
+        _FilterSection(
+          title: '维修月份',
+          child: OutlinedButton.icon(
+            icon: const Icon(Icons.calendar_month_outlined),
+            label: Text(
+              _month == null ? '全部月份' : '${_month!.year}年${_month!.month}月',
+            ),
+            onPressed: () async {
+              final picked = await showDatePicker(
+                context: context,
+                initialDate: _month ?? DateTime.now(),
+                firstDate: DateTime(2000),
+                lastDate: DateTime(2100),
+                helpText: '选择月份中的任意日期',
+              );
+              if (picked != null) {
+                setState(() => _month = DateTime(picked.year, picked.month));
+              }
+            },
+          ),
+        ),
         _FilterSection(
           title: '车辆',
           child: DropdownButtonFormField<int?>(
@@ -377,12 +482,23 @@ class _RepairFilterPageState extends State<_RepairFilterPage> {
             ticket: _ticket,
             settled: _settled,
             paid: _paid,
+            month: _month,
           ),
         ),
         child: const Text('应用筛选'),
       ),
     ),
   );
+}
+
+enum _RepairSort {
+  newest('最新日期'),
+  oldest('最早日期'),
+  amountHigh('金额从高到低'),
+  amountLow('金额从低到高');
+
+  const _RepairSort(this.label);
+  final String label;
 }
 
 class _FilterSection extends StatelessWidget {
@@ -661,6 +777,37 @@ class _RepairOrderCard extends StatelessWidget {
                   ),
                 ],
               ),
+              if (order.manager?.trim().isNotEmpty == true) ...[
+                const SizedBox(height: 4),
+                Row(
+                  children: [
+                    Text(
+                      '维修负责人',
+                      style: theme.textTheme.labelSmall?.copyWith(
+                        color: AppColors.body,
+                      ),
+                    ),
+                    const SizedBox(width: 7),
+                    Expanded(
+                      child: Text(
+                        order.manager!.trim(),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: theme.textTheme.bodySmall,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+              if (order.project?.trim().isNotEmpty == true) ...[
+                const SizedBox(height: 4),
+                Text(
+                  '维修项目：${order.project!.trim()}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.bodySmall,
+                ),
+              ],
             ],
           ),
         ),

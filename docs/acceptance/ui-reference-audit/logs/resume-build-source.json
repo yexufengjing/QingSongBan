@@ -1,0 +1,55 @@
+{
+  "branch": "publish-origin-main",
+  "head": "8dd6e1485424d5217307b8c7571a68457e295dd0",
+  "apk_sha256": "e0c399ea5bb81a138544a7077e80a1808daeff54e8018505c0d7954b59fc727f",
+  "application_sources": [
+    {
+      "path": "lib/app/router/app_router.dart",
+      "sha256": "c176ff3c55dbd643e8844bebf5296405c484360c543dc325280ddf3ec83d3090"
+    },
+    {
+      "path": "lib/features/attendance/presentation/monthly_attendance_table_page.dart",
+      "sha256": "51b3dd244bd89a49133690f6f955380ad087b2962d75b49d71b191960171644f"
+    },
+    {
+      "path": "lib/features/garden_tool_repairs/presentation/garden_tool_repair_page.dart",
+      "sha256": "fff48347cd6ff05ae026b13acf43408bc14b0999e7da108939b7e52a0275ff0d"
+    },
+    {
+      "path": "lib/features/home/application/home_providers.dart",
+      "sha256": "9799816c2a0977e311b724b6d52debe2259054fa2bcf8cab0621b82f3b76a69d"
+    },
+    {
+      "path": "lib/features/home/presentation/home_page.dart",
+      "sha256": "b25e80fb3aeb8c9a4e01937b0a06e1e710fa0f8175e04cc82b4933b1fee3035f"
+    },
+    {
+      "path": "lib/features/inventory/presentation/inventory_issues_page.dart",
+      "sha256": "c8e54de49db569c464b5d0491d4972cb5daeeba73adab6ad683c27a3dab3cf89"
+    },
+    {
+      "path": "lib/features/inventory/presentation/inventory_receipts_page.dart",
+      "sha256": "2417b29a961e29e2a12977002762ab3d29389aebe859c80fc65712f7545fb745"
+    },
+    {
+      "path": "lib/features/inventory/presentation/widgets/inventory_export_button.dart",
+      "sha256": "890f63286a743be25aa6d913ec59e9f03b39c4a8f725f53a93160403fa33a549"
+    },
+    {
+      "path": "lib/features/inventory/presentation/widgets/inventory_widgets.dart",
+      "sha256": "f8d3430039347b1a80dcf928c1d1de776fd391ec972ee42d2a3054347cca3e81"
+    },
+    {
+      "path": "lib/features/personnel/presentation/personnel_list_page.dart",
+      "sha256": "7fc893a129af72894634402fb8ab24faf8aebae9b5e78489dae1b756797d6807"
+    },
+    {
+      "path": "lib/features/vehicles/presentation/vehicle_detail_page.dart",
+      "sha256": "f547e318286528a69fbf6a746ce7c52544a06718f81db7fdc71b2732d596b3e6"
+    },
+    {
+      "path": "lib/features/vehicles/presentation/vehicle_repair_form_page.dart",
+      "sha256": "57ec31ab54851c249369c122d9de84089b698c24b455ea46974c15b3f06cceca"
+    }
+  ]
+}

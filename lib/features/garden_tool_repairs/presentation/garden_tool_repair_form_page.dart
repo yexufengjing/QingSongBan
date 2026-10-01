@@ -375,8 +375,9 @@ class _GardenToolRepairFormPageState
           Row(
             children: [
               const _SectionIcon(
-                icon: Icons.build_outlined,
-                color: AppColors.primary,
+                icon: Icons.format_list_bulleted,
+                color: Color(0xFFEF8B27),
+                background: Color(0xFFFFF1E8),
               ),
               const SizedBox(width: 8),
               Expanded(
@@ -406,20 +407,36 @@ class _GardenToolRepairFormPageState
             ),
           ),
           const SizedBox(height: 8),
-          Row(
-            children: [
-              OutlinedButton.icon(
-                onPressed: () => setState(() => _items.add(_RepairItemInput())),
-                icon: const Icon(Icons.add),
-                label: const Text('添加明细'),
-              ),
-              const Spacer(),
-              Text(
-                '小计：${formatRepairMoney(_currentSubtotal)}',
-                style: Theme.of(context).textTheme.titleLarge
-                    ?.copyWith(color: AppColors.primary),
-              ),
-            ],
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+            decoration: BoxDecoration(
+              color: AppColors.lightGreen,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Row(
+              children: [
+                OutlinedButton.icon(
+                  onPressed: () =>
+                      setState(() => _items.add(_RepairItemInput())),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppColors.primary,
+                    side: const BorderSide(color: AppColors.primary),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    visualDensity: VisualDensity.compact,
+                  ),
+                  icon: const Icon(Icons.add_circle, size: 18),
+                  label: const Text('添加明细'),
+                ),
+                const Spacer(),
+                Text(
+                  '小计：${formatRepairMoney(_currentSubtotal)}',
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    color: const Color(0xFF087F58),
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -541,7 +558,10 @@ class _GardenToolRepairFormPageState
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
-                Text('最多9张', style: Theme.of(context).textTheme.bodySmall),
+                Text(
+                  '支持拍照、相册上传，最多9张',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
               ],
             ),
             if (attachmentsAsync?.isLoading == true)
@@ -1024,7 +1044,8 @@ class _ItemHeader extends StatelessWidget {
       _HeaderCell('金额', 50),
       SizedBox(width: 2),
       _HeaderCell('备注', 48),
-      SizedBox(width: 28),
+      SizedBox(width: 2),
+      _HeaderCell('操作', 28),
     ],
   );
 }

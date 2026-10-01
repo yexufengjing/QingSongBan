@@ -1,0 +1,14 @@
+00:00 +0: loading D:/QingSongBan/test/vehicles/vehicle_repair_routes_test.dart
+test/vehicles/vehicle_repair_routes_test.dart:54:32: Error: The argument type 'String?' can't be assigned to the parameter type 'String'.
+      expect(find.text(vehicle.licensePlate), findsOneWidget);
+                               ^
+00:00 +0 -1: loading D:/QingSongBan/test/vehicles/vehicle_repair_routes_test.dart [E]
+  Failed to load "D:/QingSongBan/test/vehicles/vehicle_repair_routes_test.dart":
+  Compilation failed for testPath=D:/QingSongBan/test/vehicles/vehicle_repair_routes_test.dart: test/vehicles/vehicle_repair_routes_test.dart:54:32: Error: The argument type 'String?' can't be assigned to the parameter type 'String'.
+        expect(find.text(vehicle.licensePlate), findsOneWidget);
+                                 ^
+  .
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  D:/QingSongBan/test/vehicles/vehicle_repair_routes_test.dart: loading D:/QingSongBan/test/vehicles/vehicle_repair_routes_test.dart

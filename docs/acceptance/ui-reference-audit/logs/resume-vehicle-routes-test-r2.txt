@@ -1,0 +1,3 @@
+00:00 +0: loading D:/QingSongBan/test/vehicles/vehicle_repair_routes_test.dart
+00:00 +0: vehicle repair routes open list, real detail, and edit form
+00:03 +1: All tests passed!

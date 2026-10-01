@@ -1,0 +1,302 @@
+[
+  {
+    "name": "home",
+    "route": "/home"
+  },
+  {
+    "name": "personnel-overview",
+    "route": "/personnel"
+  },
+  {
+    "name": "personnel-list",
+    "route": "/personnel/list"
+  },
+  {
+    "name": "personnel-hire-month",
+    "route": "/personnel/list?hireMonth=2026-09"
+  },
+  {
+    "name": "personnel-detail",
+    "route": "/personnel/2"
+  },
+  {
+    "name": "personnel-form",
+    "route": "/personnel/new"
+  },
+  {
+    "name": "personnel-edit",
+    "route": "/personnel/2/edit"
+  },
+  {
+    "name": "personnel-attachments",
+    "route": "/personnel/2/attachments"
+  },
+  {
+    "name": "employee-payroll",
+    "route": "/personnel/2/payroll"
+  },
+  {
+    "name": "attendance-overview",
+    "route": "/attendance"
+  },
+  {
+    "name": "daily-attendance",
+    "route": "/attendance/daily"
+  },
+  {
+    "name": "monthly-attendance",
+    "route": "/attendance/monthly-table?month=2026-09"
+  },
+  {
+    "name": "monthly-roster",
+    "route": "/attendance/monthly-roster"
+  },
+  {
+    "name": "attendance-groups",
+    "route": "/attendance/groups"
+  },
+  {
+    "name": "attendance-group-detail",
+    "route": "/attendance/groups/1"
+  },
+  {
+    "name": "attendance-group-form",
+    "route": "/attendance/groups/new"
+  },
+  {
+    "name": "leave-list",
+    "route": "/attendance/leave"
+  },
+  {
+    "name": "leave-form",
+    "route": "/attendance/leave/new"
+  },
+  {
+    "name": "overtime-list",
+    "route": "/attendance/overtime"
+  },
+  {
+    "name": "overtime-form",
+    "route": "/attendance/overtime/new"
+  },
+  {
+    "name": "termination-list",
+    "route": "/attendance/termination"
+  },
+  {
+    "name": "termination-form",
+    "route": "/attendance/termination/new"
+  },
+  {
+    "name": "monthly-summary",
+    "route": "/reports"
+  },
+  {
+    "name": "payroll-home",
+    "route": "/reports/payroll"
+  },
+  {
+    "name": "payroll-history",
+    "route": "/reports/payroll/history"
+  },
+  {
+    "name": "wage-settings",
+    "route": "/reports/payroll/settings"
+  },
+  {
+    "name": "settings",
+    "route": "/settings"
+  },
+  {
+    "name": "insurance-list",
+    "route": "/settings/insurance"
+  },
+  {
+    "name": "insurance-profile",
+    "route": "/settings/insurance/profile?employeeId=2"
+  },
+  {
+    "name": "insurance-change",
+    "route": "/settings/insurance/change"
+  },
+  {
+    "name": "excel",
+    "route": "/settings/excel"
+  },
+  {
+    "name": "reminders",
+    "route": "/settings/reminders"
+  },
+  {
+    "name": "reminder-form",
+    "route": "/settings/reminders/new"
+  },
+  {
+    "name": "backup",
+    "route": "/settings/backup"
+  },
+  {
+    "name": "operation-logs",
+    "route": "/settings/operation-logs"
+  },
+  {
+    "name": "item-distribution",
+    "route": "/items"
+  },
+  {
+    "name": "vehicle-home",
+    "route": "/vehicles"
+  },
+  {
+    "name": "vehicle-archive",
+    "route": "/vehicles/archive"
+  },
+  {
+    "name": "vehicle-overview",
+    "route": "/vehicles/1"
+  },
+  {
+    "name": "vehicle-condition",
+    "route": "/vehicles/1?tab=condition"
+  },
+  {
+    "name": "vehicle-condition-water",
+    "route": "/vehicles/2?tab=condition"
+  },
+  {
+    "name": "vehicle-repair",
+    "route": "/vehicles/1?tab=repair"
+  },
+  {
+    "name": "vehicle-maintenance",
+    "route": "/vehicles/1?tab=maintenance"
+  },
+  {
+    "name": "vehicle-fuel",
+    "route": "/vehicles/1?tab=fuel"
+  },
+  {
+    "name": "vehicle-expense",
+    "route": "/vehicles/1?tab=expense"
+  },
+  {
+    "name": "vehicle-fuel-summary",
+    "route": "/vehicles/fuel-summary"
+  },
+  {
+    "name": "vehicle-reminders",
+    "route": "/vehicles/reminders"
+  },
+  {
+    "name": "vehicle-form",
+    "route": "/vehicles/new"
+  },
+  {
+    "name": "vehicle-repair-form",
+    "route": "/vehicles/1/repair/new"
+  },
+  {
+    "name": "vehicle-attachments",
+    "route": "/vehicles/1/attachments"
+  },
+  {
+    "name": "garden-ledger",
+    "route": "/garden-tool-repairs"
+  },
+  {
+    "name": "garden-analysis",
+    "route": "/garden-tool-repairs/analysis"
+  },
+  {
+    "name": "garden-form",
+    "route": "/garden-tool-repairs/new"
+  },
+  {
+    "name": "garden-price",
+    "route": "/garden-tool-repairs/prices"
+  },
+  {
+    "name": "garden-units",
+    "route": "/garden-tool-repairs/units"
+  },
+  {
+    "name": "inventory-home",
+    "route": "/inventory"
+  },
+  {
+    "name": "inventory-materials",
+    "route": "/inventory/materials"
+  },
+  {
+    "name": "inventory-material-form",
+    "route": "/inventory/materials/new"
+  },
+  {
+    "name": "inventory-receipts",
+    "route": "/inventory/receipts"
+  },
+  {
+    "name": "inventory-receipt-form",
+    "route": "/inventory/receipts/new"
+  },
+  {
+    "name": "inventory-issues",
+    "route": "/inventory/issues"
+  },
+  {
+    "name": "inventory-issue-form",
+    "route": "/inventory/issues/new"
+  },
+  {
+    "name": "inventory-stock",
+    "route": "/inventory/stock"
+  },
+  {
+    "name": "inventory-stocktakes",
+    "route": "/inventory/stocktake"
+  },
+  {
+    "name": "inventory-stocktake-form",
+    "route": "/inventory/stocktake/new"
+  },
+  {
+    "name": "inventory-warnings",
+    "route": "/inventory/warnings"
+  },
+  {
+    "name": "inventory-replenishments",
+    "route": "/inventory/replenishment"
+  },
+  {
+    "name": "inventory-transactions",
+    "route": "/inventory/transactions"
+  },
+  {
+    "name": "vehicle-repair-list",
+    "route": "/vehicles/repairs"
+  },
+  {
+    "name": "vehicle-edit",
+    "route": "/vehicles/1/edit"
+  },
+  {
+    "name": "leave-edit",
+    "route": "/attendance/leave/1/edit"
+  },
+  {
+    "name": "overtime-edit",
+    "route": "/attendance/overtime/1/edit"
+  },
+  {
+    "name": "termination-edit",
+    "route": "/attendance/termination/1/edit"
+  },
+  {
+    "name": "insurance-change-edit",
+    "route": "/settings/insurance/change/1/edit"
+  },
+  {
+    "name": "reminder-edit",
+    "route": "/settings/reminders/1/edit"
+  }
+]

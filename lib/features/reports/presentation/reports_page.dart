@@ -4,6 +4,9 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/theme/app_theme.dart';
 import '../../../core/database/database_enums.dart';
+import '../../../core/utils/date_utils.dart';
+import '../../insurance/application/insurance_providers.dart';
+import '../../insurance/domain/insurance_options.dart';
 import '../application/monthly_summary_providers.dart';
 import '../../excel/application/excel_providers.dart';
 import '../domain/monthly_summary_options.dart';
@@ -27,7 +30,7 @@ class _ReportsPageState extends ConsumerState<ReportsPage> {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 24, 20, 0),
+            padding: const EdgeInsets.fromLTRB(16, 8, 12, 0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -42,13 +45,8 @@ class _ReportsPageState extends ConsumerState<ReportsPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '汇总',
-                        style: Theme.of(context).textTheme.headlineLarge,
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        '月度考勤、人员变动与异常检查',
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        '月度汇总',
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ],
                   ),
@@ -82,9 +80,9 @@ class _ReportsPageState extends ConsumerState<ReportsPage> {
               ],
             ),
           ),
-          const SizedBox(height: 18),
+          const SizedBox(height: 8),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: _SummaryMonthSelector(
               month: month,
               onChanged: (value) =>
@@ -245,7 +243,7 @@ class _SummaryMonthSelector extends StatelessWidget {
   }
 }
 
-class _SummaryContent extends StatelessWidget {
+class _SummaryContent extends ConsumerWidget {
   const _SummaryContent({
     required this.value,
     required this.onGenerate,
@@ -258,42 +256,261 @@ class _SummaryContent extends StatelessWidget {
   onStatus;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     if (value.rows.isEmpty) return _SummaryEmpty(onGenerate: onGenerate);
+    final month = AppDateUtils.parseYearMonth(value.yearMonth);
+    final changes = ref.watch(insuranceChangesForMonthProvider(month));
     return ListView(
-      padding: const EdgeInsets.fromLTRB(20, 0, 20, 28),
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
       children: [
-        _SummaryStatusCard(
+        _SummaryStats(value: value),
+        const SizedBox(height: 8),
+        _SummaryTabs(value: value, insuranceChanges: changes),
+        const SizedBox(height: 12),
+        _SummaryOperationMenu(
           value: value,
           onGenerate: onGenerate,
           onStatus: onStatus,
         ),
         const SizedBox(height: 12),
-        _SummaryStats(value: value),
-        const SizedBox(height: 16),
-        Text('人员汇总', style: Theme.of(context).textTheme.titleLarge),
-        const SizedBox(height: 10),
-        for (final row in value.rows) ...[
-          _SummaryRow(row: row),
-          const SizedBox(height: 10),
-        ],
+        Text('异常汇总', style: Theme.of(context).textTheme.titleLarge),
         const SizedBox(height: 8),
-        Text('异常检查', style: Theme.of(context).textTheme.titleLarge),
-        const SizedBox(height: 10),
         if (value.anomalies.isEmpty)
           const _NoAnomalies()
         else
-          for (final anomaly in value.anomalies) ...[
-            _AnomalyCard(anomaly: anomaly),
-            const SizedBox(height: 8),
-          ],
+          for (final anomaly in value.anomalies) _AnomalyCard(anomaly: anomaly),
       ],
     );
   }
 }
 
-class _SummaryStatusCard extends StatelessWidget {
-  const _SummaryStatusCard({
+class _SummaryTabs extends StatefulWidget {
+  const _SummaryTabs({required this.value, required this.insuranceChanges});
+
+  final MonthlySummaryView value;
+  final AsyncValue<List<InsuranceChangeView>> insuranceChanges;
+
+  @override
+  State<_SummaryTabs> createState() => _SummaryTabsState();
+}
+
+class _SummaryTabsState extends State<_SummaryTabs> {
+  int _selected = 0;
+
+  @override
+  Widget build(BuildContext context) => Column(
+    children: [
+      Row(
+        children: [
+          for (final entry in const [(0, '考勤汇总'), (1, '人员变动'), (2, '保险变更')])
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 6),
+                child: ChoiceChip(
+                  label: Center(child: Text(entry.$2)),
+                  selected: _selected == entry.$1,
+                  onSelected: (_) => setState(() => _selected = entry.$1),
+                  showCheckmark: false,
+                  selectedColor: AppColors.primary,
+                  labelStyle: TextStyle(
+                    color: _selected == entry.$1 ? Colors.white : AppColors.ink,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
+      const SizedBox(height: 4),
+      switch (_selected) {
+        0 => _AttendanceSummaryTable(rows: widget.value.rows),
+        1 => _PersonnelChangesTable(rows: widget.value.rows),
+        _ => widget.insuranceChanges.when(
+          loading: () => const Center(
+            child: Padding(
+              padding: EdgeInsets.all(16),
+              child: CircularProgressIndicator(),
+            ),
+          ),
+          error: (_, _) => const ListTile(
+            leading: Icon(Icons.error_outline, color: AppColors.danger),
+            title: Text('保险变更暂时不可用'),
+          ),
+          data: (items) => _InsuranceChangesTable(items: items),
+        ),
+      },
+    ],
+  );
+}
+
+class _AttendanceSummaryTable extends StatelessWidget {
+  const _AttendanceSummaryTable({required this.rows});
+
+  final List<MonthlySummaryRowView> rows;
+
+  @override
+  Widget build(BuildContext context) => Card(
+    clipBehavior: Clip.antiAlias,
+    child: SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: DataTable(
+        headingRowHeight: 38,
+        dataRowMinHeight: 42,
+        dataRowMaxHeight: 48,
+        columns: const [
+          DataColumn(label: Text('姓名')),
+          DataColumn(label: Text('实际出勤天数')),
+          DataColumn(label: Text('请假天数')),
+          DataColumn(label: Text('缺勤天数')),
+          DataColumn(label: Text('加班小时')),
+          DataColumn(label: Text('月末状态')),
+          DataColumn(label: Text('数据完整')),
+        ],
+        rows: [
+          for (final row in rows)
+            DataRow(
+              cells: [
+                DataCell(Text(row.employee.name)),
+                DataCell(Text(_summaryDays(row.summary.attendanceDays))),
+                DataCell(Text(_summaryDays(row.summary.leaveDays))),
+                DataCell(Text(_summaryDays(row.summary.absentDays))),
+                DataCell(
+                  Text((row.summary.overtimeMinutes / 60).toStringAsFixed(1)),
+                ),
+                DataCell(Text(row.summary.monthEndStatus ?? '未知')),
+                DataCell(Text(row.summary.isComplete ? '完整' : '待补充')),
+              ],
+            ),
+        ],
+      ),
+    ),
+  );
+}
+
+String _summaryDays(double value) => value == value.roundToDouble()
+    ? '${value.toInt()}天'
+    : '${value.toStringAsFixed(1)}天';
+
+class _PersonnelChangesTable extends StatelessWidget {
+  const _PersonnelChangesTable({required this.rows});
+
+  final List<MonthlySummaryRowView> rows;
+
+  @override
+  Widget build(BuildContext context) {
+    final changed = rows
+        .where(
+          (row) =>
+              row.summary.joinedDuringMonth ||
+              row.summary.terminatedDuringMonth,
+        )
+        .toList();
+    if (changed.isEmpty) {
+      return const Card(
+        child: ListTile(
+          leading: Icon(Icons.people_outline, color: AppColors.techBlue),
+          title: Text('本月暂无人员变动记录'),
+        ),
+      );
+    }
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: DataTable(
+          headingRowHeight: 38,
+          dataRowMinHeight: 42,
+          dataRowMaxHeight: 48,
+          columns: const [
+            DataColumn(label: Text('姓名')),
+            DataColumn(label: Text('人员编号')),
+            DataColumn(label: Text('月初状态')),
+            DataColumn(label: Text('月末状态')),
+            DataColumn(label: Text('变动')),
+          ],
+          rows: [
+            for (final row in changed)
+              DataRow(
+                cells: [
+                  DataCell(Text(row.employee.name)),
+                  DataCell(Text(row.employee.employeeNo)),
+                  DataCell(Text(row.summary.monthStartStatus ?? '未知')),
+                  DataCell(Text(row.summary.monthEndStatus ?? '未知')),
+                  DataCell(
+                    Text(
+                      [
+                        if (row.summary.joinedDuringMonth) '本月入职',
+                        if (row.summary.terminatedDuringMonth) '本月离职',
+                      ].join('、'),
+                    ),
+                  ),
+                ],
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _InsuranceChangesTable extends StatelessWidget {
+  const _InsuranceChangesTable({required this.items});
+
+  final List<InsuranceChangeView> items;
+
+  @override
+  Widget build(BuildContext context) {
+    if (items.isEmpty) {
+      return const Card(
+        child: ListTile(
+          leading: Icon(Icons.shield_outlined, color: AppColors.primary),
+          title: Text('本月暂无保险变更记录'),
+        ),
+      );
+    }
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: DataTable(
+          headingRowHeight: 38,
+          dataRowMinHeight: 42,
+          dataRowMaxHeight: 48,
+          columns: const [
+            DataColumn(label: Text('姓名')),
+            DataColumn(label: Text('生效月份')),
+            DataColumn(label: Text('变更类型')),
+            DataColumn(label: Text('办理状态')),
+          ],
+          rows: [
+            for (final item in items)
+              DataRow(
+                cells: [
+                  DataCell(Text(item.employee.name)),
+                  DataCell(Text(item.change.effectiveMonth)),
+                  DataCell(
+                    Text(
+                      InsuranceOptions.changeTypeLabel(item.change.changeType),
+                    ),
+                  ),
+                  DataCell(
+                    Text(
+                      InsuranceOptions.statusLabel(
+                        item.change.processingStatus,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SummaryOperationMenu extends StatelessWidget {
+  const _SummaryOperationMenu({
     required this.value,
     required this.onGenerate,
     required this.onStatus,
@@ -301,98 +518,68 @@ class _SummaryStatusCard extends StatelessWidget {
 
   final MonthlySummaryView value;
   final VoidCallback onGenerate;
-  final Future<void> Function(MonthlySummaryStatus status, String? reason)
-  onStatus;
+  final Future<void> Function(MonthlySummaryStatus, String?) onStatus;
 
   @override
-  Widget build(BuildContext context) {
-    final status = value.status;
-    return Card(
-      color: _statusColor(status).withValues(alpha: 0.1),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 14, 12, 14),
-        child: Row(
+  Widget build(BuildContext context) => Card(
+    child: ExpansionTile(
+      leading: const Icon(Icons.tune),
+      title: Text('汇总操作 · ${MonthlySummaryOptions.statusLabel(value.status)}'),
+      children: [
+        Wrap(
+          spacing: 8,
           children: [
-            Icon(Icons.assessment_outlined, color: _statusColor(status)),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('汇总状态', style: Theme.of(context).textTheme.bodySmall),
-                  Text(
-                    MonthlySummaryOptions.statusLabel(status),
-                    style: Theme.of(context).textTheme.titleLarge
-                        ?.copyWith(color: _statusColor(status)),
-                  ),
-                ],
-              ),
+            TextButton.icon(
+              onPressed: onGenerate,
+              icon: const Icon(Icons.refresh),
+              label: const Text('重新生成'),
             ),
-            if (status != MonthlySummaryStatus.locked)
-              TextButton(
-                key: const Key('summary-regenerate-button'),
-                onPressed: onGenerate,
-                child: const Text('重新生成'),
-              ),
-            if (status == MonthlySummaryStatus.pendingReview)
+            if (value.status == MonthlySummaryStatus.pendingReview)
               FilledButton(
-                key: const Key('summary-confirm-button'),
                 onPressed: () => onStatus(MonthlySummaryStatus.confirmed, null),
-                child: const Text('确认'),
+                child: const Text('确认汇总'),
               ),
-            if (status == MonthlySummaryStatus.confirmed)
+            if (value.status == MonthlySummaryStatus.confirmed)
               FilledButton(
-                key: const Key('summary-lock-button'),
                 onPressed: () => onStatus(MonthlySummaryStatus.locked, null),
-                child: const Text('锁定'),
+                child: const Text('锁定汇总'),
               ),
-            if (status == MonthlySummaryStatus.locked)
+            if (value.status == MonthlySummaryStatus.locked)
               TextButton(
-                key: const Key('summary-unlock-button'),
                 onPressed: () => _unlock(context),
-                child: const Text('解锁'),
+                child: const Text('解锁汇总'),
               ),
           ],
         ),
-      ),
-    );
-  }
+      ],
+    ),
+  );
 
   Future<void> _unlock(BuildContext context) async {
-    var reasonText = '';
-    final reason = await showDialog<String>(
+    var reason = '';
+    final value = await showDialog<String>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('解锁月度汇总'),
         content: TextField(
-          autofocus: true,
-          onChanged: (value) => reasonText = value,
+          onChanged: (text) => reason = text,
           decoration: const InputDecoration(labelText: '解锁原因'),
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => Navigator.pop(context),
             child: const Text('取消'),
           ),
           FilledButton(
-            onPressed: () => Navigator.of(context).pop(reasonText),
+            onPressed: () => Navigator.pop(context, reason),
             child: const Text('确认解锁'),
           ),
         ],
       ),
     );
-    if (reason != null && reason.trim().isNotEmpty) {
-      await onStatus(MonthlySummaryStatus.pendingReview, reason);
+    if (value != null && value.trim().isNotEmpty) {
+      await onStatus(MonthlySummaryStatus.pendingReview, value);
     }
-  }
-
-  Color _statusColor(MonthlySummaryStatus status) {
-    return switch (status) {
-      MonthlySummaryStatus.notGenerated => AppColors.helper,
-      MonthlySummaryStatus.pendingReview => AppColors.techBlue,
-      MonthlySummaryStatus.confirmed => AppColors.primary,
-      MonthlySummaryStatus.locked => AppColors.purple,
-    };
   }
 }
 
@@ -403,150 +590,120 @@ class _SummaryStats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      spacing: 8,
-      runSpacing: 8,
+    final stats = [
+      _StatData(
+        label: '本月出勤人数',
+        value:
+            '${value.rows.where((row) => row.summary.attendanceDays > 0).length}人',
+        icon: Icons.fact_check_outlined,
+        color: AppColors.primary,
+      ),
+      _StatData(
+        label: '请假人数',
+        value:
+            '${value.rows.where((row) => row.summary.leaveDays > 0).length}人',
+        icon: Icons.event_busy_outlined,
+        color: AppColors.purple,
+      ),
+      _StatData(
+        label: '缺勤人数',
+        value:
+            '${value.rows.where((row) => row.summary.absentDays > 0).length}人',
+        icon: Icons.person_off_outlined,
+        color: AppColors.danger,
+      ),
+      _StatData(
+        label: '加班小时',
+        value: (value.overtimeMinutes / 60).toStringAsFixed(1),
+        icon: Icons.more_time_outlined,
+        color: const Color(0xFFE98500),
+      ),
+      _StatData(
+        label: '数据完整率',
+        value:
+            '${(value.rows.where((row) => row.summary.isComplete).length * 100 / value.rows.length).round()}%',
+        icon: Icons.verified_outlined,
+        color: AppColors.techBlue,
+      ),
+    ];
+    return Column(
       children: [
-        _Stat(
-          label: '人员',
-          value: '${value.rows.length}人',
-          color: AppColors.techBlue,
+        Row(
+          children: [
+            for (var i = 0; i < 3; i++) ...[
+              if (i > 0) const SizedBox(width: 8),
+              Expanded(child: _Stat(data: stats[i])),
+            ],
+          ],
         ),
-        _Stat(
-          label: '出勤',
-          value: _days(value.attendanceDays),
-          color: AppColors.primary,
-        ),
-        _Stat(
-          label: '请假',
-          value: _days(value.leaveDays),
-          color: AppColors.purple,
-        ),
-        _Stat(
-          label: '加班',
-          value: _overtime(value.overtimeCount, value.overtimeMinutes),
-          color: const Color(0xFFE98500),
+        const SizedBox(height: 8),
+        Row(
+          children: [
+            Expanded(child: _Stat(data: stats[3])),
+            const SizedBox(width: 8),
+            Expanded(child: _Stat(data: stats[4])),
+          ],
         ),
       ],
     );
   }
+}
 
-  String _days(double value) {
-    return value == value.roundToDouble()
-        ? '${value.toInt()}天'
-        : '${value.toStringAsFixed(1)}天';
-  }
+class _StatData {
+  const _StatData({
+    required this.label,
+    required this.value,
+    required this.icon,
+    required this.color,
+  });
 
-  String _overtime(int count, int minutes) {
-    if (minutes < 60) return '$count段/$minutes分';
-    final hours = minutes ~/ 60;
-    final remainder = minutes % 60;
-    return remainder == 0 ? '$count段/$hours小时' : '$count段/$hours小时$remainder分';
-  }
+  final String label;
+  final String value;
+  final IconData icon;
+  final Color color;
 }
 
 class _Stat extends StatelessWidget {
-  const _Stat({required this.label, required this.value, required this.color});
+  const _Stat({required this.data});
 
-  final String label;
-  final String value;
-  final Color color;
+  final _StatData data;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 10),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(label, style: Theme.of(context).textTheme.bodySmall),
-            const SizedBox(width: 7),
-            Text(
-              value,
-              style: Theme.of(context).textTheme.titleMedium
-                  ?.copyWith(color: color),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _SummaryRow extends StatelessWidget {
-  const _SummaryRow({required this.row});
-
-  final MonthlySummaryRowView row;
-
-  @override
-  Widget build(BuildContext context) {
-    final summary = row.summary;
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+        padding: const EdgeInsets.fromLTRB(10, 12, 10, 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    '${row.employee.name} · ${row.employee.employeeNo}',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ),
-                if (summary.anomalyCount > 0)
-                  Text(
-                    '${summary.anomalyCount}项异常',
-                    style: Theme.of(context).textTheme.bodySmall
-                        ?.copyWith(color: AppColors.danger),
-                  ),
-              ],
+            Container(
+              width: 30,
+              height: 30,
+              decoration: BoxDecoration(
+                color: data.color.withValues(alpha: .12),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(data.icon, color: data.color, size: 18),
             ),
-            const SizedBox(height: 8),
-            Wrap(
-              spacing: 12,
-              runSpacing: 4,
-              children: [
-                _Metric('出勤', _days(summary.attendanceDays)),
-                _Metric('请假', _days(summary.leaveDays)),
-                _Metric('缺勤', _days(summary.absentDays)),
-                _Metric('公休', _days(summary.restDays)),
-                _Metric('停工', _days(summary.stoppedDays)),
-                _Metric(
-                  '加班',
-                  '${summary.overtimeCount}段/${summary.overtimeMinutes}分',
-                ),
-              ],
-            ),
-            const SizedBox(height: 5),
+            const SizedBox(height: 7),
             Text(
-              '月初 ${summary.monthStartStatus ?? '未知'} · 月末 ${summary.monthEndStatus ?? '未知'}${summary.joinedDuringMonth ? ' · 月内入职' : ''}${summary.terminatedDuringMonth ? ' · 月内离职' : ''}',
+              data.label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodySmall,
+            ),
+            const SizedBox(height: 2),
+            Text(
+              data.value,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.titleLarge
+                  ?.copyWith(color: AppColors.ink, fontWeight: FontWeight.w700),
             ),
           ],
         ),
       ),
     );
-  }
-
-  String _days(double value) {
-    return value == value.roundToDouble()
-        ? '${value.toInt()}天'
-        : '${value.toStringAsFixed(1)}天';
-  }
-}
-
-class _Metric extends StatelessWidget {
-  const _Metric(this.label, this.value);
-
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Text('$label $value', style: Theme.of(context).textTheme.bodySmall);
   }
 }
 

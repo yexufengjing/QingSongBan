@@ -42,12 +42,16 @@ class _GardenToolRepairPageState extends ConsumerState<GardenToolRepairPage> {
       data: gardenToolRepairTheme(context),
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
-            '${_month.month}月器械维修信息',
-            style: Theme.of(context).textTheme.titleLarge
-                ?.copyWith(fontSize: 20, fontWeight: FontWeight.w700),
+          title: FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Text(
+              '${_month.month}月器械维修信息',
+              style: Theme.of(context).textTheme.titleLarge
+                  ?.copyWith(fontSize: 18, fontWeight: FontWeight.w700),
+            ),
           ),
-          titleSpacing: 8,
+          titleSpacing: 0,
           actionsPadding: EdgeInsets.zero,
           actions: [
             _RepairHeaderAction(
@@ -70,6 +74,17 @@ class _GardenToolRepairPageState extends ConsumerState<GardenToolRepairPage> {
               color: AppColors.primary,
               onPressed: () => context.push('/garden-tool-repairs/prices'),
             ),
+            PopupMenuButton<String>(
+              tooltip: '更多功能',
+              onSelected: (value) {
+                if (value == 'units') {
+                  context.push('/garden-tool-repairs/units');
+                }
+              },
+              itemBuilder: (context) => const [
+                PopupMenuItem(value: 'units', child: Text('维修单位管理')),
+              ],
+            ),
           ],
         ),
         body: SafeArea(
@@ -88,11 +103,7 @@ class _GardenToolRepairPageState extends ConsumerState<GardenToolRepairPage> {
     return ListView(
       padding: const EdgeInsets.fromLTRB(12, 8, 12, 16),
       children: [
-        _MonthSelector(
-          month: _month,
-          onPick: _pickMonth,
-          onUnits: () => context.push('/garden-tool-repairs/units'),
-        ),
+        _MonthSelector(month: _month, onPick: _pickMonth),
         const SizedBox(height: 10),
         Row(
           children: [
@@ -216,47 +227,26 @@ class _GardenToolRepairPageState extends ConsumerState<GardenToolRepairPage> {
 }
 
 class _MonthSelector extends StatelessWidget {
-  const _MonthSelector({
-    required this.month,
-    required this.onPick,
-    required this.onUnits,
-  });
+  const _MonthSelector({required this.month, required this.onPick});
 
   final DateTime month;
   final VoidCallback onPick;
-  final VoidCallback onUnits;
 
   @override
   Widget build(BuildContext context) => SizedBox(
     height: 40,
-    child: Stack(
-      alignment: Alignment.center,
-      children: [
-        TextButton.icon(
-          onPressed: onPick,
-          style: TextButton.styleFrom(
-            foregroundColor: AppColors.primary,
-            backgroundColor: AppColors.lightGreen,
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-            shape: const StadiumBorder(),
-          ),
-          icon: const Icon(Icons.calendar_month, size: 18),
-          label: Text('${month.year}年${month.month}月'),
+    child: Center(
+      child: TextButton.icon(
+        onPressed: onPick,
+        style: TextButton.styleFrom(
+          foregroundColor: AppColors.primary,
+          backgroundColor: AppColors.lightGreen,
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+          shape: const StadiumBorder(),
         ),
-        Positioned(
-          right: 0,
-          child: TextButton.icon(
-            onPressed: onUnits,
-            style: TextButton.styleFrom(
-              foregroundColor: AppColors.body,
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              minimumSize: const Size(0, 36),
-            ),
-            icon: const Icon(Icons.apartment_outlined, size: 18),
-            label: const Text('单位'),
-          ),
-        ),
-      ],
+        icon: const Icon(Icons.calendar_month, size: 18),
+        label: Text('${month.year}年${month.month}月'),
+      ),
     ),
   );
 }
@@ -276,7 +266,7 @@ class _RepairHeaderAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SizedBox(
-    width: 48,
+    width: 44,
     child: InkWell(
       onTap: onPressed,
       borderRadius: BorderRadius.circular(10),
@@ -285,7 +275,7 @@ class _RepairHeaderAction extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: color, size: 23),
+            Icon(icon, color: color, size: 21),
             const SizedBox(height: 1),
             Text(label, style: Theme.of(context).textTheme.bodySmall),
           ],
@@ -393,11 +383,7 @@ class _RepairGroupCard extends StatelessWidget {
                 const SizedBox(width: 8),
                 const _HeaderDivider(),
                 const SizedBox(width: 8),
-                const Icon(
-                  Icons.apartment,
-                  color: AppColors.techBlue,
-                  size: 18,
-                ),
+                const Icon(Icons.apartment, color: AppColors.primary, size: 18),
                 const SizedBox(width: 5),
                 Flexible(
                   child: Text(

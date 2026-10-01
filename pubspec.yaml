@@ -78,6 +78,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/ui/home_header.png
     - assets/vehicles/sweeper-truck.png
     - assets/vehicles/water-truck.png
     - assets/vehicles/sweeper-angles.png

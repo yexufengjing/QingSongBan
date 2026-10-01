@@ -23,7 +23,7 @@ class VehicleConditionTab extends ConsumerWidget {
       vehicleTireInstallationsProvider(vehicle.id),
     );
     return ListView(
-      padding: const EdgeInsets.fromLTRB(20, 12, 20, 32),
+      padding: const EdgeInsets.fromLTRB(12, 6, 12, 24),
       children: [
         _ConditionIntro(
           issueCount:
@@ -34,12 +34,12 @@ class VehicleConditionTab extends ConsumerWidget {
                   .length ??
               0,
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 4),
         VehicleVisualView(
           vehicle: vehicle,
           conditions: conditions.valueOrNull ?? const [],
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 8),
         conditions.when(
           loading: () => const SizedBox.shrink(),
           error: (_, _) => const SizedBox.shrink(),
@@ -55,7 +55,7 @@ class VehicleConditionTab extends ConsumerWidget {
             onRepair: () => context.push('/vehicles/${vehicle.id}/repair/new'),
           ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 8),
         conditions.when(
           loading: () => const _LoadingCard(),
           error: (error, _) => _ErrorCard(message: error.toString()),
@@ -71,7 +71,7 @@ class VehicleConditionTab extends ConsumerWidget {
             ),
           ),
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: 8),
         installations.when(
           loading: () => const _LoadingCard(),
           error: (error, _) => _ErrorCard(message: error.toString()),
@@ -206,7 +206,7 @@ class _ConditionIssues extends StatelessWidget {
           ..sort((a, b) => _severity(b.status).compareTo(_severity(a.status)));
     return Card(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(13, 12, 13, 8),
+        padding: const EdgeInsets.fromLTRB(10, 8, 10, 6),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -227,8 +227,8 @@ class _ConditionIssues extends StatelessWidget {
               Row(
                 children: [
                   Container(
-                    width: 36,
-                    height: 36,
+                    width: 30,
+                    height: 30,
                     decoration: BoxDecoration(
                       color: _conditionColor(issue.status)
                           .withValues(alpha: 0.1),
@@ -240,7 +240,7 @@ class _ConditionIssues extends StatelessWidget {
                       size: 20,
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 6),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

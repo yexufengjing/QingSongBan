@@ -10,8 +10,11 @@ import 'package:qingsongban/features/inventory/application/inventory_providers.d
 import 'package:qingsongban/features/inventory/domain/inventory_models.dart';
 import 'package:qingsongban/features/inventory/inventory_routes.dart';
 import 'package:qingsongban/features/inventory/presentation/inventory_issue_form_page.dart';
+import 'package:qingsongban/features/inventory/presentation/inventory_issues_page.dart';
 import 'package:qingsongban/features/inventory/presentation/inventory_receipt_form_page.dart';
+import 'package:qingsongban/features/inventory/presentation/inventory_receipts_page.dart';
 import 'package:qingsongban/features/inventory/presentation/inventory_stock_page.dart';
+import 'package:qingsongban/features/inventory/presentation/inventory_stocktakes_page.dart';
 import 'package:qingsongban/features/inventory/presentation/widgets/inventory_employee_history_section.dart';
 import 'package:qingsongban/features/personnel/application/personnel_providers.dart';
 
@@ -40,7 +43,10 @@ void main() {
     final router = GoRouter(
       initialLocation: '/home',
       routes: [
-        GoRoute(path: '/home', builder: (_, _) => const HomePage()),
+        GoRoute(
+          path: '/home',
+          builder: (_, _) => const Scaffold(body: HomePage()),
+        ),
         ...inventoryRoutes(),
       ],
     );
@@ -71,6 +77,8 @@ void main() {
             (ref) async => [InventoryStockRow(material: material)],
           ),
           inventoryTransactionsProvider.overrideWith((ref) async => []),
+          inventoryReceiptsProvider.overrideWith((ref) async => []),
+          inventoryIssuesProvider.overrideWith((ref) async => []),
         ],
         child: MaterialApp.router(routerConfig: router),
       ),
@@ -87,8 +95,8 @@ void main() {
       '领用出库',
       '当前库存',
       '库存盘点',
-      '预警与待补充',
-      '待补充清单',
+      '库存预警',
+      '待采购',
       '库存流水',
     ]) {
       expect(find.byKey(Key('inventory-shortcut-$label')), findsOneWidget);
@@ -118,6 +126,275 @@ void main() {
       expect(tester.takeException(), isNull);
     },
   );
+
+  testWidgets(
+    'receipt list shows mixed units and detail count on narrow screen',
+    (tester) async {
+      tester.view.physicalSize = const Size(360, 780);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      final now = DateTime.now();
+      final receipt = InventoryReceipt(
+        id: 31,
+        receiptNo: 'RK-31',
+        receiptDate: now,
+        receiptType: 'purchase',
+        sourceName: '测试采购来源',
+        operatorNameSnapshot: '测试登记人',
+        createdAt: now,
+        updatedAt: now,
+        isDeleted: false,
+      );
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            inventoryReceiptsProvider.overrideWith((ref) async => [receipt]),
+            inventoryReceiptItemsProvider(31).overrideWith(
+              (ref) async => [
+                InventoryReceiptItem(
+                  id: 1,
+                  receiptId: 31,
+                  materialId: 7,
+                  materialNameSnapshot: '防护手套',
+                  modelSnapshot: '均码',
+                  unitSnapshot: '副',
+                  quantity: 2,
+                  createdAt: now,
+                ),
+                InventoryReceiptItem(
+                  id: 2,
+                  receiptId: 31,
+                  materialId: 8,
+                  materialNameSnapshot: '消毒液',
+                  modelSnapshot: '500ml',
+                  unitSnapshot: '瓶',
+                  quantity: 3,
+                  createdAt: now,
+                ),
+              ],
+            ),
+          ],
+          child: const MaterialApp(home: InventoryReceiptsPage()),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('副'), findsOneWidget);
+      expect(find.text('瓶'), findsOneWidget);
+      expect(find.text('共 2 条明细'), findsOneWidget);
+      expect(find.text('本月入库'), findsOneWidget);
+      expect(find.text('记录组数'), findsWidgets);
+      expect(find.text('条目条数'), findsWidgets);
+      expect(
+        find.descendant(
+          of: find.byKey(const Key('inventory-receipt-quantity')),
+          matching: find.text('2副\n3瓶'),
+        ),
+        findsOneWidget,
+      );
+      expect(
+        find.descendant(
+          of: find.byKey(const Key('inventory-receipt-group-count')),
+          matching: find.text('1'),
+        ),
+        findsOneWidget,
+      );
+      expect(
+        find.descendant(
+          of: find.byKey(const Key('inventory-receipt-detail-count')),
+          matching: find.text('2'),
+        ),
+        findsOneWidget,
+      );
+      expect(tester.takeException(), isNull);
+    },
+  );
+
+  testWidgets(
+    'issue list shows mixed units and detail count on narrow screen',
+    (tester) async {
+      tester.view.physicalSize = const Size(360, 780);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      final now = DateTime.now();
+      final issue = InventoryIssue(
+        id: 41,
+        issueNo: 'CK-41',
+        issueDate: now,
+        issueType: 'employee_claim',
+        receiverType: 'employee',
+        employeeNameSnapshot: '测试领用人',
+        createdAt: now,
+        updatedAt: now,
+        isDeleted: false,
+      );
+      final manualIssue = InventoryIssue(
+        id: 42,
+        issueNo: 'CK-42',
+        issueDate: now,
+        issueType: 'other',
+        receiverType: 'manual',
+        manualReceiverName: '手填领取对象',
+        createdAt: now,
+        updatedAt: now,
+        isDeleted: false,
+      );
+      final departmentIssue = InventoryIssue(
+        id: 43,
+        issueNo: 'CK-43',
+        issueDate: now,
+        issueType: 'department_use',
+        receiverType: 'department',
+        departmentNameSnapshot: '后勤组',
+        createdAt: now,
+        updatedAt: now,
+        isDeleted: false,
+      );
+      final publicIssue = InventoryIssue(
+        id: 44,
+        issueNo: 'CK-44',
+        issueDate: now,
+        issueType: 'other',
+        receiverType: 'public',
+        createdAt: now,
+        updatedAt: now,
+        isDeleted: false,
+      );
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            inventoryIssuesProvider.overrideWith(
+              (ref) async => [issue, manualIssue, departmentIssue, publicIssue],
+            ),
+            inventoryIssueItemsProvider(41).overrideWith(
+              (ref) async => [
+                InventoryIssueItem(
+                  id: 1,
+                  issueId: 41,
+                  materialId: 7,
+                  materialNameSnapshot: '防护手套',
+                  modelSnapshot: '均码',
+                  unitSnapshot: '副',
+                  quantity: 2,
+                  createdAt: now,
+                ),
+                InventoryIssueItem(
+                  id: 2,
+                  issueId: 41,
+                  materialId: 8,
+                  materialNameSnapshot: '消毒液',
+                  modelSnapshot: '500ml',
+                  unitSnapshot: '瓶',
+                  quantity: 3,
+                  createdAt: now,
+                ),
+              ],
+            ),
+            inventoryIssueItemsProvider(42)
+                .overrideWith((ref) async => <InventoryIssueItem>[]),
+            inventoryIssueItemsProvider(43)
+                .overrideWith((ref) async => <InventoryIssueItem>[]),
+            inventoryIssueItemsProvider(44)
+                .overrideWith((ref) async => <InventoryIssueItem>[]),
+          ],
+          child: const MaterialApp(home: InventoryIssuesPage()),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('副'), findsOneWidget);
+      expect(find.text('瓶'), findsOneWidget);
+      expect(find.text('共 2 条明细'), findsOneWidget);
+      expect(find.text('本月出库'), findsOneWidget);
+      expect(find.text('领取人次'), findsWidgets);
+      expect(find.text('条目条数'), findsWidgets);
+      expect(
+        find.descendant(
+          of: find.byKey(const Key('inventory-issue-quantity')),
+          matching: find.text('2副\n3瓶'),
+        ),
+        findsOneWidget,
+      );
+      expect(
+        find.descendant(
+          of: find.byKey(const Key('inventory-issue-receiver-count')),
+          matching: find.text('4'),
+        ),
+        findsOneWidget,
+      );
+      expect(
+        find.descendant(
+          of: find.byKey(const Key('inventory-issue-detail-count')),
+          matching: find.text('2'),
+        ),
+        findsOneWidget,
+      );
+      expect(tester.takeException(), isNull);
+    },
+  );
+
+  testWidgets('draft stocktake shows real differences on a narrow screen', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(360, 780);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final now = DateTime.now();
+    final stocktake = InventoryStocktake(
+      id: 51,
+      stocktakeNo: 'PD-51',
+      stocktakeDate: now,
+      operatorNameSnapshot: '测试盘点人',
+      status: 'draft',
+      createdAt: now,
+      updatedAt: now,
+    );
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          inventoryStocktakesProvider.overrideWith((ref) async => [stocktake]),
+          inventoryStocktakeItemsProvider(51).overrideWith(
+            (ref) async => [
+              const InventoryStocktakeItem(
+                id: 1,
+                stocktakeId: 51,
+                materialId: 7,
+                materialNameSnapshot: '防护手套',
+                modelSnapshot: '均码',
+                unitSnapshot: '副',
+                bookQuantity: 3,
+                actualQuantity: 2,
+                differenceQuantity: -1,
+              ),
+              const InventoryStocktakeItem(
+                id: 2,
+                stocktakeId: 51,
+                materialId: 8,
+                materialNameSnapshot: '消毒液',
+                modelSnapshot: '500ml',
+                unitSnapshot: '瓶',
+                bookQuantity: 4,
+                actualQuantity: 4,
+                differenceQuantity: 0,
+              ),
+            ],
+          ),
+        ],
+        child: const MaterialApp(home: InventoryStocktakesPage()),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('待盘点'), findsWidgets);
+    expect(find.text('防护手套'), findsOneWidget);
+    expect(find.text('消毒液'), findsOneWidget);
+    expect(find.text('3'), findsWidgets);
+    expect(find.text('2'), findsWidgets);
+    expect(find.text('-1'), findsOneWidget);
+    expect(find.text('差异条数'), findsWidgets);
+    expect(find.text('1'), findsWidgets);
+    expect(tester.takeException(), isNull);
+  });
 
   testWidgets('receipt form validates quantities before submission', (
     tester,

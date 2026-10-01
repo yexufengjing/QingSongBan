@@ -1,0 +1,16 @@
+00:00 +0: loading D:/QingSongBan/test/widget_test.dart
+test/widget_test.dart:526:9: Error: The argument type 'RegExp' can't be assigned to the parameter type 'String'.
+ - 'RegExp' is from 'dart:core'.
+        RegExp('^${RegExp.escape(entry.key)} \\(\\d+\\)\$'),
+        ^
+00:00 +0 -1: loading D:/QingSongBan/test/widget_test.dart [E]
+  Failed to load "D:/QingSongBan/test/widget_test.dart":
+  Compilation failed for testPath=D:/QingSongBan/test/widget_test.dart: test/widget_test.dart:526:9: Error: The argument type 'RegExp' can't be assigned to the parameter type 'String'.
+   - 'RegExp' is from 'dart:core'.
+          RegExp('^${RegExp.escape(entry.key)} \\(\\d+\\)\$'),
+          ^
+  .
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  D:/QingSongBan/test/widget_test.dart: loading D:/QingSongBan/test/widget_test.dart

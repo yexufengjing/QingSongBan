@@ -1,0 +1,11 @@
+00:00 +0: loading D:/QingSongBan/test/vehicles/vehicle_detail_tabs_test.dart
+00:00 +0: D:/QingSongBan/test/vehicles/vehicle_detail_tabs_test.dart: vehicle detail app bar title follows the selected tab
+00:00 +1: D:/QingSongBan/test/vehicles/vehicle_detail_tabs_test.dart: vehicle detail app bar title follows the selected tab
+00:00 +2: D:/QingSongBan/test/vehicles/vehicle_detail_tabs_test.dart: vehicle detail app bar title follows the selected tab
+00:00 +3: D:/QingSongBan/test/vehicles/vehicle_detail_tabs_test.dart: vehicle detail app bar title follows the selected tab
+00:00 +4: D:/QingSongBan/test/vehicles/vehicle_detail_tabs_test.dart: vehicle detail app bar title follows the selected tab
+00:00 +5: D:/QingSongBan/test/vehicles/vehicle_detail_tabs_test.dart: vehicle detail app bar title follows the selected tab
+00:01 +6: D:/QingSongBan/test/vehicles/vehicle_detail_tabs_test.dart: vehicle detail app bar title follows the selected tab
+00:02 +7: D:/QingSongBan/test/vehicles/vehicle_detail_tabs_test.dart: vehicle detail app bar title follows the selected tab
+00:03 +8: D:/QingSongBan/test/garden_tool_repairs/garden_tool_repair_pages_test.dart: form calculates multiple item amounts and saves a temporary repairer
+00:04 +9: All tests passed!

@@ -62,26 +62,37 @@ class _VehicleFuelTabState extends ConsumerState<VehicleFuelTab> {
             IconButton(
               tooltip: '上一年',
               onPressed: () => setState(() => _year--),
+              visualDensity: VisualDensity.compact,
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints.tightFor(width: 32, height: 32),
               icon: const Icon(Icons.chevron_left),
             ),
             Text('$_year 年', style: Theme.of(context).textTheme.titleLarge),
             IconButton(
               tooltip: '下一年',
               onPressed: () => setState(() => _year++),
+              visualDensity: VisualDensity.compact,
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints.tightFor(width: 32, height: 32),
               icon: const Icon(Icons.chevron_right),
             ),
             const Spacer(),
-            Text('月度录入', style: Theme.of(context).textTheme.titleMedium),
+            SegmentedButton<String>(
+              showSelectedIcon: false,
+              segments: const [
+                ButtonSegment(value: 'entry', label: Text('月度录入')),
+                ButtonSegment(value: 'summary', label: Text('年度汇总')),
+              ],
+              selected: const {'entry'},
+              style: ButtonStyle(
+                padding: const WidgetStatePropertyAll(
+                  EdgeInsets.symmetric(horizontal: 5),
+                ),
+                visualDensity: VisualDensity.compact,
+              ),
+              onSelectionChanged: (_) => context.push('/vehicles/fuel-summary'),
+            ),
           ],
-        ),
-        Align(
-          alignment: Alignment.centerRight,
-          child: TextButton.icon(
-            onPressed: () => context.push('/vehicles/fuel-summary'),
-            style: TextButton.styleFrom(foregroundColor: AppColors.techBlue),
-            icon: const Icon(Icons.table_chart_outlined, size: 17),
-            label: const Text('查看全部车辆年度汇总'),
-          ),
         ),
         const SizedBox(height: 4),
         _inlineEntryCard(context),

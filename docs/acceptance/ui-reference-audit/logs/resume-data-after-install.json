@@ -1,0 +1,246 @@
+{
+  "schema_version": 22,
+  "tables": {
+    "app_settings": {
+      "count": 1,
+      "rows_sha256": "c63ebb538f42740a15369ca753b6d5b18ebc69560c78a84081a3d3d69250b0d3"
+    },
+    "attendance_group_members": {
+      "count": 10,
+      "rows_sha256": "04661c049ad267f8441d9587b3865406ae8378fd31e6eca3b736e2018cd2afc4"
+    },
+    "attendance_groups": {
+      "count": 3,
+      "rows_sha256": "161865a9800b3558ead1b294b6c543e7737704b76d1d70d83543ad3bfcccdccc"
+    },
+    "attendance_records": {
+      "count": 17,
+      "rows_sha256": "1eed07433a9fa026eac993df9d856c3b8345bad1d782c51bff4fcb48b5b64d90"
+    },
+    "component_lifecycle_records": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "dictionary_items": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "employee_attachments": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "employee_wage_profiles": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "employees": {
+      "count": 11,
+      "rows_sha256": "58dc87e65a02272be1bad02358b3feadf3e72bf79c8fa4f41d9dadfbb0dae74f"
+    },
+    "fuel_monthly_records": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "garden_tool_repair_attachments": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "garden_tool_repair_groups": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "garden_tool_repair_items": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "garden_tool_repair_persons": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "garden_tool_repair_units": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "insurance_change_records": {
+      "count": 1,
+      "rows_sha256": "ae727179c099c6b67bdeb6492fa2ca18b90c8a1232fa36929c267f8788751f23"
+    },
+    "insurance_profiles": {
+      "count": 10,
+      "rows_sha256": "fe9a185a01355ad5a74e95a88168978c2ac5c9314e030ef4cb43c767ad6a2630"
+    },
+    "inventory_categories": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "inventory_issue_items": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "inventory_issues": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "inventory_materials": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "inventory_receipt_items": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "inventory_receipts": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "inventory_replenishment_items": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "inventory_stocktake_items": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "inventory_stocktakes": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "inventory_transactions": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "item_distribution_batches": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "item_distribution_entries": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "item_distribution_settings": {
+      "count": 2,
+      "rows_sha256": "f2c0a8fb8e8114aa496e8ee941731a31474e26d5742ce05f350df22734e0fe25"
+    },
+    "leave_records": {
+      "count": 4,
+      "rows_sha256": "b7374ea97a6cd2e4524bdfeafa2f3c027eadb304b46e22b2ebaa8c7c620e7e4e"
+    },
+    "maintenance_records": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "maintenance_templates": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "manual_vehicle_expenses": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "monthly_attendance_rosters": {
+      "count": 15,
+      "rows_sha256": "644cd0c582bc498db6285a6a42aacdc3aa3ff2f47834cdf90e27fa07dece9666"
+    },
+    "monthly_attendance_summaries": {
+      "count": 10,
+      "rows_sha256": "fbbb0493814db1664bea9cde97b73882ce47d15423c8a3484a0587187f1e71b3"
+    },
+    "operation_logs": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "overtime_records": {
+      "count": 1,
+      "rows_sha256": "ebf3b45946cca2486476a560f7a38b6dc49e0c865743740e74521c7ffc8ab23e"
+    },
+    "payroll_adjustments": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "payroll_batches": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "payroll_items": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "reminder_alert_rules": {
+      "count": 1,
+      "rows_sha256": "ecd439bf81c9e39df321f70fb1278abe888aa435efbeb00492fa51cd20439f69"
+    },
+    "reminder_links": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "reminder_occurrences": {
+      "count": 1,
+      "rows_sha256": "2849880f5ab5af5f3559b0e4afea561e27df91819d26a8f8e925d819990e90cd"
+    },
+    "reminders": {
+      "count": 3,
+      "rows_sha256": "9191b88f042b3ae818e95e8a71fcd1b91cf3b533f6d702472dd1d7a8c18da06e"
+    },
+    "repair_cost_items": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "repair_orders": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "repair_parts": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "social_security_base_history": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "termination_records": {
+      "count": 1,
+      "rows_sha256": "dcbf13e46cc2b92e276c5aebc70a35aaffc33a53a15295af57553d1f7b6f1ca2"
+    },
+    "tire_installations": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "tire_repairs": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "tires": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "vehicle_attachments": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "vehicle_condition_items": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "vehicle_condition_snapshots": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "vehicle_maintenance_items": {
+      "count": 4,
+      "rows_sha256": "8c55c53384a84d8cb60891eecb2c923224346f72ced44a1b51435cee9c86a60f"
+    },
+    "vehicles": {
+      "count": 2,
+      "rows_sha256": "6fcbdd9f0ccea3782524908b5f0182d05a8279ed4a5f6212952232bf7b449ff8"
+    },
+    "wage_job_types": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "wage_rate_history": {
+      "count": 0,
+      "rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  },
+  "changes_from_before": {}
+}

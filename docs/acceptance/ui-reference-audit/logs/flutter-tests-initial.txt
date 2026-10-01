@@ -1,0 +1,326 @@
+00:00 +0: loading D:/YoloList/QingSongBan/test/attachments/attachment_repository_test.dart
+00:00 +0: D:/YoloList/QingSongBan/test/attachments/attachment_repository_test.dart: copies supported files and keeps only a relative path
+00:00 +1: D:/YoloList/QingSongBan/test/attendance/attendance_group_repository_test.dart: creates, edits, and rejects duplicate attendance groups
+00:00 +2: D:/YoloList/QingSongBan/test/attendance/attendance_group_repository_test.dart: creates, edits, and rejects duplicate attendance groups
+00:00 +3: D:/YoloList/QingSongBan/test/attachments/attachment_repository_test.dart: rejects unsupported and oversized files
+00:00 +4: D:/YoloList/QingSongBan/test/attachments/attachment_repository_test.dart: rejects unsupported and oversized files
+00:00 +5: D:/YoloList/QingSongBan/test/attachments/attachment_repository_test.dart: rejects unsupported and oversized files
+00:00 +6: D:/YoloList/QingSongBan/test/attachments/attachment_repository_test.dart: rejects unsupported and oversized files
+00:00 +7: D:/YoloList/QingSongBan/test/attachments/attachment_repository_test.dart: rejects unsupported and oversized files
+00:00 +8: D:/YoloList/QingSongBan/test/attendance/monthly_attendance_table_repository_test.dart: builds the month matrix and calculates half-day totals
+00:00 +9: D:/YoloList/QingSongBan/test/attendance/monthly_attendance_table_repository_test.dart: builds the month matrix and calculates half-day totals
+00:00 +10: D:/YoloList/QingSongBan/test/attendance/monthly_attendance_table_repository_test.dart: builds the month matrix and calculates half-day totals
+00:00 +11: D:/YoloList/QingSongBan/test/attendance/monthly_attendance_table_repository_test.dart: builds the month matrix and calculates half-day totals
+00:00 +12: D:/YoloList/QingSongBan/test/attendance/monthly_roster_repository_test.dart: adds, removes, restores, and does not duplicate a monthly roster
+00:00 +13: D:/YoloList/QingSongBan/test/attendance/monthly_roster_repository_test.dart: adds, removes, restores, and does not duplicate a monthly roster
+00:00 +14: D:/YoloList/QingSongBan/test/attendance/monthly_roster_repository_test.dart: adds, removes, restores, and does not duplicate a monthly roster
+00:00 +15: D:/YoloList/QingSongBan/test/attendance/monthly_roster_repository_test.dart: adds, removes, restores, and does not duplicate a monthly roster
+00:00 +16: D:/YoloList/QingSongBan/test/attendance/monthly_roster_repository_test.dart: keeps historical months independent and allows re-adding in a later month
+00:00 +17: D:/YoloList/QingSongBan/test/attendance/monthly_roster_repository_test.dart: copies only missing previous-month entries and preserves current manual entries
+00:01 +18: D:/YoloList/QingSongBan/test/attendance/monthly_roster_repository_test.dart: rejects employees hired after the selected month ends
+00:01 +19: D:/YoloList/QingSongBan/test/attendance/monthly_roster_repository_test.dart: adds eligible employees whose default group matches without duplicates
+00:01 +20: D:/YoloList/QingSongBan/test/attendance/monthly_roster_repository_test.dart: disabled groups keep historical rosters but block new roster operations
+00:01 +21: D:/YoloList/QingSongBan/test/attendance/monthly_roster_repository_test.dart: changing the default group does not change historical monthly rosters
+00:01 +22: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:01 +23: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:01 +24: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:01 +25: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:01 +26: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:01 +27: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:01 +28: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:01 +29: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:02 +30: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:02 +31: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:02 +32: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:02 +33: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:02 +34: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:02 +35: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:02 +36: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:02 +37: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:02 +38: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:02 +39: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:02 +40: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:02 +41: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:03 +42: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:03 +43: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:03 +44: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:03 +45: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:03 +46: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:03 +47: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:03 +48: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:03 +49: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:03 +50: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:03 +51: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:03 +52: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:03 +53: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:03 +54: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +55: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +56: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +57: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +58: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +59: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +60: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +61: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +62: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +63: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +64: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +65: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +66: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +67: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +68: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +69: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +70: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +71: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +72: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +73: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +74: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:04 +75: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:05 +76: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:05 +77: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:05 +78: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:05 +79: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:05 +80: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:05 +81: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:05 +82: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:05 +83: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:05 +84: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:05 +85: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:05 +86: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: creates encrypted v3 backup and rejects wrong password or tampering
+00:05 +87: D:/YoloList/QingSongBan/test/payroll/payroll_excel_service_test.dart: exports ordered Chinese payroll rows, half-days, decimals and totals
+00:05 +88: D:/YoloList/QingSongBan/test/payroll/payroll_excel_service_test.dart: exports ordered Chinese payroll rows, half-days, decimals and totals
+00:05 +89: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:05 +90: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:05 +91: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:05 +92: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:05 +93: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:05 +94: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:05 +95: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:05 +96: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:05 +97: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:06 +98: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:06 +99: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:06 +100: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:06 +101: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:06 +102: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:06 +103: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:06 +104: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:06 +105: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:06 +106: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:06 +107: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:06 +108: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:06 +109: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:06 +110: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:06 +111: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:06 +112: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:06 +113: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:06 +114: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:06 +115: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:06 +116: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:06 +117: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:06 +118: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:07 +119: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:07 +120: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:07 +121: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:07 +122: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:07 +123: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:07 +124: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:07 +125: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:07 +126: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:07 +127: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:07 +128: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:07 +129: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:07 +130: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:07 +131: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:07 +132: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:07 +133: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:07 +134: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:07 +135: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:07 +136: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:07 +137: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: checks attachment manifest, size and hash
+00:08 +138: D:/YoloList/QingSongBan/test/vehicles/repair_pages_test.dart: repair list opens detail and saves settlement marker
+00:08 +139: D:/YoloList/QingSongBan/test/vehicles/repair_pages_test.dart: repair list opens detail and saves settlement marker
+00:08 +140: D:/YoloList/QingSongBan/test/vehicles/repair_pages_test.dart: repair list opens detail and saves settlement marker
+00:08 +141: D:/YoloList/QingSongBan/test/vehicles/repair_pages_test.dart: repair list opens detail and saves settlement marker
+00:08 +142: D:/YoloList/QingSongBan/test/vehicles/repair_pages_test.dart: repair list opens detail and saves settlement marker
+00:08 +143: D:/YoloList/QingSongBan/test/vehicles/repair_pages_test.dart: repair list opens detail and saves settlement marker
+00:08 +144: D:/YoloList/QingSongBan/test/vehicles/repair_pages_test.dart: repair list opens detail and saves settlement marker
+00:08 +145: D:/YoloList/QingSongBan/test/vehicles/repair_pages_test.dart: repair list opens detail and saves settlement marker
+00:08 +146: D:/YoloList/QingSongBan/test/vehicles/repair_pages_test.dart: repair list opens detail and saves settlement marker
+00:08 +147: D:/YoloList/QingSongBan/test/vehicles/repair_pages_test.dart: repair list opens detail and saves settlement marker
+00:08 +148: D:/YoloList/QingSongBan/test/vehicles/repair_pages_test.dart: repair list opens detail and saves settlement marker
+00:08 +149: D:/YoloList/QingSongBan/test/vehicles/repair_pages_test.dart: repair list opens detail and saves settlement marker
+00:09 +150: D:/YoloList/QingSongBan/test/vehicles/vehicle_page_layout_test.dart: vehicle dashboard is compact at 411dp
+00:09 +151: D:/YoloList/QingSongBan/test/vehicles/vehicle_page_layout_test.dart: vehicle dashboard is compact at 411dp
+00:09 +152: D:/YoloList/QingSongBan/test/vehicles/vehicle_page_layout_test.dart: vehicle dashboard is compact at 411dp
+00:09 +153: D:/YoloList/QingSongBan/test/vehicles/vehicle_page_layout_test.dart: vehicle dashboard is compact at 411dp
+00:09 +154: D:/YoloList/QingSongBan/test/vehicles/vehicle_page_layout_test.dart: vehicle dashboard is compact at 411dp
+00:09 +155: D:/YoloList/QingSongBan/test/vehicles/vehicle_page_layout_test.dart: vehicle dashboard is compact at 411dp
+00:09 +156: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:09 +157: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:09 +158: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:10 +159: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:10 +160: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:10 +161: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:10 +162: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:10 +163: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:10 +164: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: restores through staged files and creates an encrypted safety backup
+00:11 +165: D:/YoloList/QingSongBan/test/widget_test.dart: starts on the home tab with five destinations
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "轻松办": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///D:/YoloList/QingSongBan/test/widget_test.dart:170:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///D:/YoloList/QingSongBan/test/widget_test.dart line 170
+The test description was:
+  starts on the home tab with five destinations
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:11 +165 -1: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: rejects path traversal in legacy attachment entries
+00:11 +165 -1: D:/YoloList/QingSongBan/test/widget_test.dart: starts on the home tab with five destinations [E]
+  Test failed. See exception logs above.
+  The test description was: starts on the home tab with five destinations
+  
+00:11 +166 -1: D:/YoloList/QingSongBan/test/backup/backup_service_test.dart: rejects path traversal in legacy attachment entries
+00:12 +167 -1: D:/YoloList/QingSongBan/test/widget_test.dart: opens vehicle management from the home shortcuts
+00:12 +168 -1: D:/YoloList/QingSongBan/test/widget_test.dart: opens vehicle condition and repair tabs
+00:12 +169 -1: D:/YoloList/QingSongBan/test/widget_test.dart: opens vehicle fuel summary and attachment pages
+00:13 +170 -1: D:/YoloList/QingSongBan/test/widget_test.dart: navigates from every home dashboard metric
+
+Warning: A call to tap() with finder "Found 1 widget with key [<'home-metric-今日已登记'>]: [
+  InkWell-[<'home-metric-今日已登记'>],
+]" derived an Offset (Offset(141.3, 617.4)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(141.3, 617.4) is outside the bounds of the root of the render tree, Size(800.0, 600.0).
+The finder corresponds to this RenderBox: RenderSemanticsAnnotations#2d540
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#94857(_ReusableRenderView#01195), HitTestEntry<HitTestTarget>#eca85(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.tap (package:flutter_test/src/controller.dart:1080:7)
+#3      main.<anonymous closure> (file:///D:/YoloList/QingSongBan/test/widget_test.dart:285:20)
+<asynchronous suspension>
+#4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#6      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "tap()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "每日考勤": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///D:/YoloList/QingSongBan/test/widget_test.dart:287:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///D:/YoloList/QingSongBan/test/widget_test.dart line 287
+The test description was:
+  navigates from every home dashboard metric
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:13 +170 -2: D:/YoloList/QingSongBan/test/widget_test.dart: navigates from every home dashboard metric [E]
+  Test failed. See exception logs above.
+  The test description was: navigates from every home dashboard metric
+  
+00:13 +170 -2: D:/YoloList/QingSongBan/test/widget_test.dart: switches between all five tabs
+00:14 +171 -2: D:/YoloList/QingSongBan/test/widget_test.dart: navigates personnel overview cards to filtered lists
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TextContainingWidgetFinder:<Found 0 widgets with text containing 入职月份：: []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///D:/YoloList/QingSongBan/test/widget_test.dart:343:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///D:/YoloList/QingSongBan/test/widget_test.dart line 343
+The test description was:
+  navigates personnel overview cards to filtered lists
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:14 +171 -3: D:/YoloList/QingSongBan/test/widget_test.dart: navigates personnel overview cards to filtered lists [E]
+  Test failed. See exception logs above.
+  The test description was: navigates personnel overview cards to filtered lists
+  
+00:14 +171 -3: D:/YoloList/QingSongBan/test/widget_test.dart: uses the stage zero visual baseline
+Pending timers:
+Timer (duration: 0:00:00.000000, periodic: false), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:342:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:260:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:185:15)
+#6      StreamQueryStore.markAsClosed (package:drift/src/runtime/executor/stream_queries.dart:156:11)
+#7      QueryStream._onCancelOrPause (package:drift/src/runtime/executor/stream_queries.dart:305:14)
+#8      QueryStream._stream.<anonymous closure>.<anonymous closure> (package:drift/src/runtime/executor/stream_queries.dart:238:9)
+#17     FutureHandlerProviderElementMixin.runOnDispose (package:riverpod/src/async_notifier/base.dart:430:26)
+#18     AutoDisposeProviderElementMixin.runOnDispose (package:riverpod/src/framework/auto_dispose.dart:32:11)
+#19     ProviderElementBase.dispose (package:riverpod/src/framework/element.dart:861:5)
+#20     FutureHandlerProviderElementMixin.dispose (package:riverpod/src/async_notifier/base.dart:471:11)
+#21     StreamProviderElement.dispose (package:riverpod/src/stream_provider/base.dart:180:11)
+#22     ProviderContainer.dispose (package:riverpod/src/framework/container.dart:634:15)
+#23     ProviderScopeState.dispose (package:flutter_riverpod/src/framework.dart:264:15)
+#24     StatefulElement.unmount (package:flutter/src/widgets/framework.dart:6043:11)
+#25     _InactiveElements._unmount (package:flutter/src/widgets/framework.dart:2119:13)
+#26     ListIterable.forEach (dart:_internal/iterable.dart:49:13)
+#27     _InactiveElements._unmountAll (package:flutter/src/widgets/framework.dart:2128:25)
+#28     BuildOwner.lockState (package:flutter/src/widgets/framework.dart:3033:15)
+#29     BuildOwner.finalizeTree (package:flutter/src/widgets/framework.dart:3357:7)
+#30     AutomatedTestWidgetsFlutterBinding.drawFrame (package:flutter_test/src/binding.dart:2454:19)
+#31     RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:558:5)
+#32     SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1430:15)
+#33     SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1345:9)
+#34     AutomatedTestWidgetsFlutterBinding.scheduleWarmUpFrame (package:flutter_test/src/binding.dart:2358:5)
+#35     _runWidget (package:flutter/src/widgets/binding.dart:1952:7)
+#36     runApp (package:flutter/src/widgets/binding.dart:1885:3)
+#37     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1960:7)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 12 frames from dart:async and package:stack_trace)
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running a test:
+A Timer is still pending even after the widget tree was disposed.
+'package:flutter_test/src/binding.dart':
+Failed assertion: line 2543 pos 12: '!timersPending'
+
+When the exception was thrown, this was the stack:
+#2      AutomatedTestWidgetsFlutterBinding._verifyInvariants (package:flutter_test/src/binding.dart:2543:12)
+#3      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1974:7)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from class _AssertionError and package:stack_trace)
+
+The test description was:
+  uses the stage zero visual baseline
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:14 +171 -4: D:/YoloList/QingSongBan/test/widget_test.dart: uses the stage zero visual baseline [E]
+  Test failed. See exception logs above.
+  The test description was: uses the stage zero visual baseline
+  

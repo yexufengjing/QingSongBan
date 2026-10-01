@@ -74,24 +74,119 @@ class _InventoryTransactionsPageState
                     _ => true,
                   };
                 }).toList();
+                final now = DateTime.now();
+                final currentMonth = items
+                    .where(
+                      (item) =>
+                          item.occurredAt.year == now.year &&
+                          item.occurredAt.month == now.month,
+                    )
+                    .toList();
+                final inboundCount = currentMonth
+                    .where((item) => item.quantityChange > 0)
+                    .length;
+                final outboundCount = currentMonth
+                    .where((item) => item.quantityChange < 0)
+                    .length;
                 if (filtered.isEmpty) {
-                  return InventoryEmptyState(
-                    title: items.isEmpty ? '还没有库存流水' : '该类型暂无流水',
-                    message: items.isEmpty
-                        ? '完成入库、出库、盘点或库存调整后会自动记录。'
-                        : '选择其他类型查看。',
+                  return ListView(
+                    padding: const EdgeInsets.all(16),
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: InventoryMetricCard(
+                              compact: true,
+                              label: '本月变动',
+                              value: '${currentMonth.length}',
+                              icon: Icons.swap_vert_rounded,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: InventoryMetricCard(
+                              compact: true,
+                              label: '入库',
+                              value: '$inboundCount',
+                              icon: Icons.north_rounded,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: InventoryMetricCard(
+                              compact: true,
+                              label: '出库',
+                              value: '$outboundCount',
+                              icon: Icons.south_rounded,
+                              color: AppColors.techBlue,
+                            ),
+                          ),
+                        ],
+                      ),
+                      InventoryEmptyState(
+                        title: items.isEmpty ? '还没有库存流水' : '该类型暂无流水',
+                        message: items.isEmpty
+                            ? '完成入库、出库、盘点或库存调整后会自动记录。'
+                            : '选择其他类型查看。',
+                      ),
+                    ],
                   );
                 }
                 return RefreshIndicator(
                   onRefresh: () async =>
                       ref.invalidate(inventoryTransactionsProvider),
-                  child: ListView.separated(
+                  child: ListView(
                     physics: const AlwaysScrollableScrollPhysics(),
                     padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-                    itemCount: filtered.length,
-                    separatorBuilder: (_, _) => const SizedBox(height: 9),
-                    itemBuilder: (context, index) =>
-                        _TransactionCard(transaction: filtered[index]),
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: InventoryMetricCard(
+                              compact: true,
+                              label: '本月变动',
+                              value: '${currentMonth.length}',
+                              icon: Icons.swap_vert_rounded,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: InventoryMetricCard(
+                              compact: true,
+                              label: '入库',
+                              value: '$inboundCount',
+                              icon: Icons.north_rounded,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: InventoryMetricCard(
+                              compact: true,
+                              label: '出库',
+                              value: '$outboundCount',
+                              icon: Icons.south_rounded,
+                              color: AppColors.techBlue,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      for (final item in filtered) ...[
+                        _TransactionCard(transaction: item),
+                        const SizedBox(height: 9),
+                      ],
+                      InventorySummaryPanel(
+                        title: '流水汇总',
+                        icon: Icons.bar_chart_rounded,
+                        metrics: [
+                          ('本月变动', '${currentMonth.length}'),
+                          ('入库', '$inboundCount'),
+                          ('出库', '$outboundCount'),
+                        ],
+                        actionLabel: '查看',
+                        onAction: () => context.push('/inventory/stock'),
+                      ),
+                    ],
                   ),
                 );
               },

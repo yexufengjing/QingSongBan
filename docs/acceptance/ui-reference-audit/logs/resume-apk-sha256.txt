@@ -1,0 +1,5 @@
+
+Algorithm : SHA256
+Hash      : 06195E186981673A1B511AD8E0502AC66E618B170A9527DE52358D191508C091
+Path      : D:\QingSongBan\build\app\outputs\flutter-apk\app-debug.apk
+

@@ -1,0 +1,70 @@
+00:00 +0: loading D:/QingSongBan/test/widget_test.dart
+00:00 +0: D:/QingSongBan/test/widget_test.dart: starts on the home tab with five destinations
+00:01 +1: D:/QingSongBan/test/widget_test.dart: starts on the home tab with five destinations
+00:02 +2: D:/QingSongBan/test/vehicles/vehicle_repair_routes_test.dart: vehicle repair routes open list, real detail, and edit form
+00:03 +3: D:/QingSongBan/test/vehicles/vehicle_repair_routes_test.dart: vehicle repair routes open list, real detail, and edit form
+00:03 +4: D:/QingSongBan/test/vehicles/vehicle_repair_routes_test.dart: vehicle repair routes open list, real detail, and edit form
+00:03 +5: D:/QingSongBan/test/vehicles/vehicle_repair_routes_test.dart: vehicle repair routes open list, real detail, and edit form
+00:03 +6: D:/QingSongBan/test/vehicles/vehicle_repair_routes_test.dart: vehicle repair routes open list, real detail, and edit form
+00:04 +7: D:/QingSongBan/test/vehicles/vehicle_repair_routes_test.dart: vehicle repair routes open list, real detail, and edit form
+00:04 +8: D:/QingSongBan/test/vehicles/vehicle_repair_routes_test.dart: vehicle repair routes open list, real detail, and edit form
+00:04 +9: D:/QingSongBan/test/widget_test.dart: opens vehicle management from the home shortcuts
+00:05 +10: D:/QingSongBan/test/widget_test.dart: opens vehicle management from the home shortcuts
+00:05 +11: D:/QingSongBan/test/vehicles/vehicle_pages_visual_test.dart: vehicle reminder center shows linked vehicle reminders
+00:05 +12: D:/QingSongBan/test/widget_test.dart: opens vehicle condition and repair tabs
+00:07 +13: D:/QingSongBan/test/widget_test.dart: opens vehicle fuel summary and attachment pages
+00:08 +14: D:/QingSongBan/test/widget_test.dart: navigates from every home dashboard metric
+00:09 +15: D:/QingSongBan/test/widget_test.dart: switches between all five tabs
+00:10 +16: D:/QingSongBan/test/widget_test.dart: navigates personnel overview cards to filtered lists
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "在岗": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///D:/QingSongBan/test/widget_test.dart:520:7)
+<asynchronous suspension>
+#5      main.widgetTest.<anonymous closure> (file:///D:/QingSongBan/test/widget_test.dart:51:9)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///D:/QingSongBan/test/widget_test.dart line 520
+The test description was:
+  navigates personnel overview cards to filtered lists
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:11 +16 -1: D:/QingSongBan/test/widget_test.dart: navigates personnel overview cards to filtered lists [E]
+  Test failed. See exception logs above.
+  The test description was: navigates personnel overview cards to filtered lists
+  
+00:11 +16 -1: D:/QingSongBan/test/widget_test.dart: filters personnel by the requested hire month using database rows
+00:12 +17 -1: D:/QingSongBan/test/widget_test.dart: filters personnel by a real attendance group and keeps the add FAB circular
+00:12 +18 -1: D:/QingSongBan/test/widget_test.dart: uses the stage zero visual baseline
+00:13 +19 -1: D:/QingSongBan/test/widget_test.dart: creates and edits a personnel record
+00:15 +20 -1: D:/QingSongBan/test/widget_test.dart: creates an attendance group and opens its detail page
+00:15 +21 -1: D:/QingSongBan/test/widget_test.dart: opens the monthly roster from the attendance tab
+00:16 +22 -1: D:/QingSongBan/test/widget_test.dart: opens monthly summary and exposes direct Excel export
+00:16 +23 -1: D:/QingSongBan/test/widget_test.dart: opens the employee attachment center from personnel detail
+00:16 +24 -1: D:/QingSongBan/test/widget_test.dart: opens daily attendance with selectors and empty state
+00:17 +25 -1: D:/QingSongBan/test/widget_test.dart: opens the monthly attendance table with an empty roster
+00:18 +26 -1: D:/QingSongBan/test/widget_test.dart: opens the leave page with an empty state
+00:18 +27 -1: D:/QingSongBan/test/widget_test.dart: creates a leave record from the leave form
+00:18 +28 -1: D:/QingSongBan/test/widget_test.dart: opens the overtime page with an empty state
+00:19 +29 -1: D:/QingSongBan/test/widget_test.dart: opens the insurance page from settings
+00:19 +30 -1: D:/QingSongBan/test/widget_test.dart: opens Excel import and export from settings
+00:19 +31 -1: D:/QingSongBan/test/widget_test.dart: opens local reminders from settings
+00:20 +32 -1: D:/QingSongBan/test/widget_test.dart: opens backup and restore from settings
+00:20 +33 -1: D:/QingSongBan/test/widget_test.dart: opens operation logs from settings
+00:20 +34 -1: D:/QingSongBan/test/widget_test.dart: renders month cells and opens the cell editor
+00:21 +35 -1: D:/QingSongBan/test/widget_test.dart: shows monthly roster selectors and an empty state for a group
+00:21 +36 -1: D:/QingSongBan/test/widget_test.dart: assigns a default attendance group from the personnel form
+00:22 +37 -1: Some tests failed.
+
+Failing tests:
+  D:/QingSongBan/test/widget_test.dart: navigates personnel overview cards to filtered lists

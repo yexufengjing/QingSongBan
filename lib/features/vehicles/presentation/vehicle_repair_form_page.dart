@@ -180,26 +180,18 @@ class _VehicleRepairFormPageState extends ConsumerState<VehicleRepairFormPage> {
                   ]),
                   const SizedBox(height: 14),
                   _section('维修安排', Icons.handyman_outlined, [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            controller: _vendorController,
-                            decoration: const InputDecoration(
-                              labelText: '维修地点/供应商',
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: TextFormField(
-                            controller: _managerController,
-                            decoration: const InputDecoration(
-                              labelText: '维修负责人',
-                            ),
-                          ),
-                        ),
-                      ],
+                    TextFormField(
+                      controller: _vendorController,
+                      decoration: const InputDecoration(
+                        labelText: '维修地点/供应商',
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    TextFormField(
+                      controller: _managerController,
+                      decoration: const InputDecoration(
+                        labelText: '维修负责人',
+                      ),
                     ),
                     const SizedBox(height: 12),
                     DropdownButtonFormField<VehicleRepairStatus>(

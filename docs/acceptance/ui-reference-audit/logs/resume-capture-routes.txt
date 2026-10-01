@@ -1,0 +1,7 @@
+home: capture failed at 2026-10-01T13:24:57+08:00: adb shell cat /sdcard/qsb-ui-audit.xml failed: cat: /sdcard/qsb-ui-audit.xml: No such file or directory
+personnel-overview: capture failed at 2026-10-01T13:25:03+08:00: adb shell cat /sdcard/qsb-ui-audit.xml failed: cat: /sdcard/qsb-ui-audit.xml: No such file or directory
+personnel-list: capture failed at 2026-10-01T13:25:09+08:00: adb shell cat /sdcard/qsb-ui-audit.xml failed: cat: /sdcard/qsb-ui-audit.xml: No such file or directory
+personnel-hire-month: capture failed at 2026-10-01T13:25:15+08:00: adb shell cat /sdcard/qsb-ui-audit.xml failed: cat: /sdcard/qsb-ui-audit.xml: No such file or directory
+personnel-detail: capture failed at 2026-10-01T13:25:20+08:00: adb shell cat /sdcard/qsb-ui-audit.xml failed: cat: /sdcard/qsb-ui-audit.xml: No such file or directory
+personnel-form: capture failed at 2026-10-01T13:25:25+08:00: adb shell cat /sdcard/qsb-ui-audit.xml failed: cat: /sdcard/qsb-ui-audit.xml: No such file or directory
+personnel-edit: capture failed at 2026-10-01T13:25:30+08:00: adb shell cat /sdcard/qsb-ui-audit.xml failed: cat: /sdcard/qsb-ui-audit.xml: No such file or directory

@@ -42,15 +42,30 @@ class _InventoryExportButtonState extends ConsumerState<InventoryExportButton> {
   }
 
   @override
-  Widget build(BuildContext context) => IconButton(
-    key: const Key('inventory-export'),
-    tooltip: '导出库存工作簿',
-    onPressed: _exporting ? null : _export,
-    icon: _exporting
-        ? const SizedBox.square(
-            dimension: 20,
-            child: CircularProgressIndicator(strokeWidth: 2),
-          )
-        : const Icon(Icons.file_download_outlined),
+  Widget build(BuildContext context) => Tooltip(
+    message: _exporting ? '正在导出库存工作簿' : '导出库存工作簿',
+    child: TextButton(
+      key: const Key('inventory-export'),
+      onPressed: _exporting ? null : _export,
+      style: TextButton.styleFrom(
+        minimumSize: const Size(48, 48),
+        padding: const EdgeInsets.symmetric(horizontal: 6),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _exporting
+              ? const SizedBox.square(
+                  dimension: 20,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                )
+              : const Icon(Icons.file_download_outlined),
+          Text(
+            _exporting ? '导出中' : '导出',
+            style: Theme.of(context).textTheme.labelSmall,
+          ),
+        ],
+      ),
+    ),
   );
 }

@@ -1,0 +1,488 @@
+00:00 +0: loading D:/YoloList/QingSongBan/test/widget_test.dart
+00:00 +0: D:/YoloList/QingSongBan/test/widget_test.dart: starts on the home tab with five destinations
+00:00 +1: D:/YoloList/QingSongBan/test/widget_test.dart: starts on the home tab with five destinations
+00:00 +2: D:/YoloList/QingSongBan/test/widget_test.dart: starts on the home tab with five destinations
+00:00 +3: D:/YoloList/QingSongBan/test/widget_test.dart: starts on the home tab with five destinations
+00:00 +4: D:/YoloList/QingSongBan/test/widget_test.dart: starts on the home tab with five destinations
+00:00 +5: D:/YoloList/QingSongBan/test/widget_test.dart: starts on the home tab with five destinations
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _ElementPredicateWidgetFinder:<Found 0 widgets with a semantics label named
+"轻松办人员管理首页，清洁人员与车辆背景，标语：让城市更清洁，让工作更轻松。": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///D:/YoloList/QingSongBan/test/widget_test.dart:191:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///D:/YoloList/QingSongBan/test/widget_test.dart line 191
+The test description was:
+  starts on the home tab with five destinations
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +5 -1: D:/YoloList/QingSongBan/test/widget_test.dart: starts on the home tab with five destinations [E]
+  Test failed. See exception logs above.
+  The test description was: starts on the home tab with five destinations
+  
+00:01 +5 -1: D:/YoloList/QingSongBan/test/widget_test.dart: shows the home shortcuts
+00:01 +6 -1: D:/YoloList/QingSongBan/test/widget_test.dart: opens vehicle management from the home shortcuts
+00:01 +7 -1: D:/YoloList/QingSongBan/test/widget_test.dart: opens vehicle condition and repair tabs
+00:02 +8 -1: D:/YoloList/QingSongBan/test/widget_test.dart: opens vehicle fuel summary and attachment pages
+00:02 +9 -1: D:/YoloList/QingSongBan/test/widget_test.dart: navigates from every home dashboard metric
+00:03 +10 -1: D:/YoloList/QingSongBan/test/widget_test.dart: switches between all five tabs
+00:03 +11 -1: D:/YoloList/QingSongBan/test/widget_test.dart: navigates personnel overview cards to filtered lists
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: '2026-10'
+  Actual: <null>
+   Which: not an <Instance of 'String'>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///D:/YoloList/QingSongBan/test/widget_test.dart:374:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///D:/YoloList/QingSongBan/test/widget_test.dart line 374
+The test description was:
+  navigates personnel overview cards to filtered lists
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:04 +11 -2: D:/YoloList/QingSongBan/test/widget_test.dart: navigates personnel overview cards to filtered lists [E]
+  Test failed. See exception logs above.
+  The test description was: navigates personnel overview cards to filtered lists
+  
+00:04 +11 -2: D:/YoloList/QingSongBan/test/widget_test.dart: uses the stage zero visual baseline
+Pending timers:
+Timer (duration: 0:00:00.000000, periodic: false), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:342:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:260:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:185:15)
+#6      StreamQueryStore.markAsClosed (package:drift/src/runtime/executor/stream_queries.dart:156:11)
+#7      QueryStream._onCancelOrPause (package:drift/src/runtime/executor/stream_queries.dart:305:14)
+#8      QueryStream._stream.<anonymous closure>.<anonymous closure> (package:drift/src/runtime/executor/stream_queries.dart:238:9)
+#17     FutureHandlerProviderElementMixin.runOnDispose (package:riverpod/src/async_notifier/base.dart:430:26)
+#18     AutoDisposeProviderElementMixin.runOnDispose (package:riverpod/src/framework/auto_dispose.dart:32:11)
+#19     ProviderElementBase.dispose (package:riverpod/src/framework/element.dart:861:5)
+#20     FutureHandlerProviderElementMixin.dispose (package:riverpod/src/async_notifier/base.dart:471:11)
+#21     StreamProviderElement.dispose (package:riverpod/src/stream_provider/base.dart:180:11)
+#22     ProviderContainer.dispose (package:riverpod/src/framework/container.dart:634:15)
+#23     ProviderScopeState.dispose (package:flutter_riverpod/src/framework.dart:264:15)
+#24     StatefulElement.unmount (package:flutter/src/widgets/framework.dart:6043:11)
+#25     _InactiveElements._unmount (package:flutter/src/widgets/framework.dart:2119:13)
+#26     ListIterable.forEach (dart:_internal/iterable.dart:49:13)
+#27     _InactiveElements._unmountAll (package:flutter/src/widgets/framework.dart:2128:25)
+#28     BuildOwner.lockState (package:flutter/src/widgets/framework.dart:3033:15)
+#29     BuildOwner.finalizeTree (package:flutter/src/widgets/framework.dart:3357:7)
+#30     AutomatedTestWidgetsFlutterBinding.drawFrame (package:flutter_test/src/binding.dart:2454:19)
+#31     RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:558:5)
+#32     SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1430:15)
+#33     SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1345:9)
+#34     AutomatedTestWidgetsFlutterBinding.scheduleWarmUpFrame (package:flutter_test/src/binding.dart:2358:5)
+#35     _runWidget (package:flutter/src/widgets/binding.dart:1952:7)
+#36     runApp (package:flutter/src/widgets/binding.dart:1885:3)
+#37     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1960:7)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 12 frames from dart:async and package:stack_trace)
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running a test:
+A Timer is still pending even after the widget tree was disposed.
+'package:flutter_test/src/binding.dart':
+Failed assertion: line 2543 pos 12: '!timersPending'
+
+When the exception was thrown, this was the stack:
+#2      AutomatedTestWidgetsFlutterBinding._verifyInvariants (package:flutter_test/src/binding.dart:2543:12)
+#3      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1974:7)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from class _AssertionError and package:stack_trace)
+
+The test description was:
+  uses the stage zero visual baseline
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:04 +11 -3: D:/YoloList/QingSongBan/test/widget_test.dart: uses the stage zero visual baseline [E]
+  Test failed. See exception logs above.
+  The test description was: uses the stage zero visual baseline
+  
+00:04 +11 -3: D:/YoloList/QingSongBan/test/widget_test.dart: creates and edits a personnel record
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "EMP-0001": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///D:/YoloList/QingSongBan/test/widget_test.dart:415:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///D:/YoloList/QingSongBan/test/widget_test.dart line 415
+The test description was:
+  creates and edits a personnel record
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:05 +11 -4: D:/YoloList/QingSongBan/test/widget_test.dart: creates and edits a personnel record [E]
+  Test failed. See exception logs above.
+  The test description was: creates and edits a personnel record
+  
+00:05 +11 -4: D:/YoloList/QingSongBan/test/widget_test.dart: creates an attendance group and opens its detail page
+00:05 +12 -4: D:/YoloList/QingSongBan/test/widget_test.dart: opens the monthly roster from the attendance tab
+00:06 +13 -4: D:/YoloList/QingSongBan/test/widget_test.dart: opens monthly summary and exposes direct Excel export
+00:06 +14 -4: D:/YoloList/QingSongBan/test/widget_test.dart: opens the employee attachment center from personnel detail
+Pending timers:
+Timer (duration: 0:00:00.000000, periodic: false), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:342:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:260:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:185:15)
+#6      StreamQueryStore.markAsClosed (package:drift/src/runtime/executor/stream_queries.dart:156:11)
+#7      QueryStream._onCancelOrPause (package:drift/src/runtime/executor/stream_queries.dart:305:14)
+#8      QueryStream._stream.<anonymous closure>.<anonymous closure> (package:drift/src/runtime/executor/stream_queries.dart:238:9)
+#23     FutureHandlerProviderElementMixin.runOnDispose (package:riverpod/src/async_notifier/base.dart:430:26)
+#24     AutoDisposeProviderElementMixin.runOnDispose (package:riverpod/src/framework/auto_dispose.dart:32:11)
+#25     ProviderElementBase.dispose (package:riverpod/src/framework/element.dart:861:5)
+#26     FutureHandlerProviderElementMixin.dispose (package:riverpod/src/async_notifier/base.dart:471:11)
+#27     StreamProviderElement.dispose (package:riverpod/src/stream_provider/base.dart:180:11)
+#28     ProviderContainer.dispose (package:riverpod/src/framework/container.dart:634:15)
+#29     ProviderScopeState.dispose (package:flutter_riverpod/src/framework.dart:264:15)
+#30     StatefulElement.unmount (package:flutter/src/widgets/framework.dart:6043:11)
+#31     _InactiveElements._unmount (package:flutter/src/widgets/framework.dart:2119:13)
+#32     ListIterable.forEach (dart:_internal/iterable.dart:49:13)
+#33     _InactiveElements._unmountAll (package:flutter/src/widgets/framework.dart:2128:25)
+#34     BuildOwner.lockState (package:flutter/src/widgets/framework.dart:3033:15)
+#35     BuildOwner.finalizeTree (package:flutter/src/widgets/framework.dart:3357:7)
+#36     AutomatedTestWidgetsFlutterBinding.drawFrame (package:flutter_test/src/binding.dart:2454:19)
+#37     RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:558:5)
+#38     SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1430:15)
+#39     SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1345:9)
+#40     AutomatedTestWidgetsFlutterBinding.scheduleWarmUpFrame (package:flutter_test/src/binding.dart:2358:5)
+#41     _runWidget (package:flutter/src/widgets/binding.dart:1952:7)
+#42     runApp (package:flutter/src/widgets/binding.dart:1885:3)
+#43     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1960:7)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 18 frames from dart:async and package:stack_trace)
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running a test:
+A Timer is still pending even after the widget tree was disposed.
+'package:flutter_test/src/binding.dart':
+Failed assertion: line 2543 pos 12: '!timersPending'
+
+When the exception was thrown, this was the stack:
+#2      AutomatedTestWidgetsFlutterBinding._verifyInvariants (package:flutter_test/src/binding.dart:2543:12)
+#3      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1974:7)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from class _AssertionError and package:stack_trace)
+
+The test description was:
+  opens the employee attachment center from personnel detail
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:06 +14 -5: D:/YoloList/QingSongBan/test/widget_test.dart: opens the employee attachment center from personnel detail [E]
+  Test failed. See exception logs above.
+  The test description was: opens the employee attachment center from personnel detail
+  
+00:06 +14 -5: D:/YoloList/QingSongBan/test/widget_test.dart: opens daily attendance with selectors and empty state
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "每日登记": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///D:/YoloList/QingSongBan/test/widget_test.dart:533:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///D:/YoloList/QingSongBan/test/widget_test.dart line 533
+The test description was:
+  opens daily attendance with selectors and empty state
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:06 +14 -6: D:/YoloList/QingSongBan/test/widget_test.dart: opens daily attendance with selectors and empty state [E]
+  Test failed. See exception logs above.
+  The test description was: opens daily attendance with selectors and empty state
+  
+00:06 +14 -6: D:/YoloList/QingSongBan/test/widget_test.dart: opens the monthly attendance table with an empty roster
+══╡ EXCEPTION CAUGHT BY RENDERING LIBRARY ╞═════════════════════════════════════════════════════════
+The following assertion was thrown during layout:
+A RenderFlex overflowed by 6.0 pixels on the bottom.
+
+The relevant error-causing widget was:
+  Column
+  Column:file:///D:/YoloList/QingSongBan/lib/features/attendance/presentation/monthly_attendance_table_page.dart:118:12
+
+The overflowing RenderFlex has an orientation of Axis.vertical.
+The edge of the RenderFlex that is overflowing has been marked in the rendering with a yellow and
+black striped pattern. This is usually caused by the contents being too big for the RenderFlex.
+Consider applying a flex factor (e.g. using an Expanded widget) to force the children of the
+RenderFlex to fit within the available space instead of being sized to their natural size.
+This is considered an error condition because it indicates that there is content that cannot be
+seen. If the content is legitimately bigger than the available space, consider clipping it with a
+ClipRect widget before putting it in the flex, or using a scrollable container rather than a Flex,
+like a ListView.
+The specific RenderFlex in question is: RenderFlex#fb05e relayoutBoundary=up1 OVERFLOWING:
+  creator: Column ← _MonthlyAttendanceTableContent ← KeyedSubtree-[GlobalKey#ea1d0] ← _BodyBuilder ←
+    MediaQuery ← LayoutId-[<_ScaffoldSlot.body>] ← CustomMultiChildLayout ← _ActionsScope ← Actions ←
+    Builder ← DefaultTextStyle ← AnimatedDefaultTextStyle ← ⋯
+  parentData: offset=Offset(0.0, 56.0); id=_ScaffoldSlot.body (can use size)
+  constraints: BoxConstraints(0.0<=w<=800.0, 0.0<=h<=466.0)
+  size: Size(800.0, 466.0)
+  direction: vertical
+  mainAxisAlignment: start
+  mainAxisSize: max
+  crossAxisAlignment: center
+  verticalDirection: down
+  spacing: 0.0
+◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:07 +14 -7: D:/YoloList/QingSongBan/test/widget_test.dart: opens the monthly attendance table with an empty roster [E]
+  Test failed. See exception logs above.
+  The test description was: opens the monthly attendance table with an empty roster
+  
+00:07 +14 -7: D:/YoloList/QingSongBan/test/widget_test.dart: opens the leave page with an empty state
+00:07 +15 -7: D:/YoloList/QingSongBan/test/widget_test.dart: creates a leave record from the leave form
+00:07 +16 -7: D:/YoloList/QingSongBan/test/widget_test.dart: opens the overtime page with an empty state
+00:07 +17 -7: D:/YoloList/QingSongBan/test/widget_test.dart: opens the insurance page from settings
+00:07 +18 -7: D:/YoloList/QingSongBan/test/widget_test.dart: opens Excel import and export from settings
+00:07 +19 -7: D:/YoloList/QingSongBan/test/widget_test.dart: opens local reminders from settings
+00:08 +20 -7: D:/YoloList/QingSongBan/test/widget_test.dart: opens backup and restore from settings
+00:08 +21 -7: D:/YoloList/QingSongBan/test/widget_test.dart: opens operation logs from settings
+00:08 +22 -7: D:/YoloList/QingSongBan/test/widget_test.dart: renders month cells and opens the cell editor
+══╡ EXCEPTION CAUGHT BY RENDERING LIBRARY ╞═════════════════════════════════════════════════════════
+The following assertion was thrown during layout:
+A RenderFlex overflowed by 6.0 pixels on the bottom.
+
+The relevant error-causing widget was:
+  Column
+  Column:file:///D:/YoloList/QingSongBan/lib/features/attendance/presentation/monthly_attendance_table_page.dart:118:12
+
+The overflowing RenderFlex has an orientation of Axis.vertical.
+The edge of the RenderFlex that is overflowing has been marked in the rendering with a yellow and
+black striped pattern. This is usually caused by the contents being too big for the RenderFlex.
+Consider applying a flex factor (e.g. using an Expanded widget) to force the children of the
+RenderFlex to fit within the available space instead of being sized to their natural size.
+This is considered an error condition because it indicates that there is content that cannot be
+seen. If the content is legitimately bigger than the available space, consider clipping it with a
+ClipRect widget before putting it in the flex, or using a scrollable container rather than a Flex,
+like a ListView.
+The specific RenderFlex in question is: RenderFlex#739b2 relayoutBoundary=up1:
+  needs compositing
+  creator: Column ← _MonthlyAttendanceTableContent ← KeyedSubtree-[GlobalKey#06e53] ← _BodyBuilder ←
+    MediaQuery ← LayoutId-[<_ScaffoldSlot.body>] ← CustomMultiChildLayout ← _ActionsScope ← Actions ←
+    Builder ← DefaultTextStyle ← AnimatedDefaultTextStyle ← ⋯
+  parentData: offset=Offset(0.0, 56.0); id=_ScaffoldSlot.body (can use size)
+  constraints: BoxConstraints(0.0<=w<=800.0, 0.0<=h<=466.0)
+  size: Size(800.0, 466.0)
+  direction: vertical
+  mainAxisAlignment: start
+  mainAxisSize: max
+  crossAxisAlignment: center
+  verticalDirection: down
+  spacing: 0.0
+◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "1日": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///D:/YoloList/QingSongBan/test/widget_test.dart:786:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///D:/YoloList/QingSongBan/test/widget_test.dart line 786
+The test description was:
+  renders month cells and opens the cell editor
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following message was thrown:
+Multiple exceptions (2) were detected during the running of the current test, and at least one was
+unexpected.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:09 +22 -8: D:/YoloList/QingSongBan/test/widget_test.dart: renders month cells and opens the cell editor [E]
+  Test failed. See exception logs above.
+  The test description was: renders month cells and opens the cell editor
+  
+00:09 +22 -8: D:/YoloList/QingSongBan/test/widget_test.dart: shows monthly roster selectors and an empty state for a group
+══╡ EXCEPTION CAUGHT BY RENDERING LIBRARY ╞═════════════════════════════════════════════════════════
+The following assertion was thrown during layout:
+A RenderFlex overflowed by 6.0 pixels on the bottom.
+
+The overflowing RenderFlex has an orientation of Axis.vertical.
+The edge of the RenderFlex that is overflowing has been marked in the rendering with a yellow and
+black striped pattern. This is usually caused by the contents being too big for the RenderFlex.
+Consider applying a flex factor (e.g. using an Expanded widget) to force the children of the
+RenderFlex to fit within the available space instead of being sized to their natural size.
+This is considered an error condition because it indicates that there is content that cannot be
+seen. If the content is legitimately bigger than the available space, consider clipping it with a
+ClipRect widget before putting it in the flex, or using a scrollable container rather than a Flex,
+like a ListView.
+The specific RenderFlex in question is: RenderFlex#3af79 DISPOSED OVERFLOWING:
+  creator: MultiChildRenderObjectElement#cb396(DEFUNCT) ← ConsumerStatefulElement#6da1c(DEFUNCT) ←
+    StatelessElement#6c548(DEFUNCT) ← StatelessElement#9b75e(DEFUNCT) ←
+    InheritedModelElement<_MediaQueryAspect>#d3705(DEFUNCT) ←
+    ParentDataElement<MultiChildLayoutParentData>#0ca31(DEFUNCT) ←
+    MultiChildRenderObjectElement#c7f15(DEFUNCT) ← InheritedElement#23e91(DEFUNCT) ←
+    StatefulElement#a9e99(DEFUNCT) ← StatelessElement#d9fc1(DEFUNCT) ← InheritedElement#d5ff0(DEFUNCT)
+    ← StatefulElement#142ef(DEFUNCT) ← ⋯
+  parentData: offset=Offset(0.0, 56.0); id=_ScaffoldSlot.body (can use size)
+  constraints: BoxConstraints(0.0<=w<=800.0, 0.0<=h<=466.0)
+  size: Size(800.0, 466.0)
+  direction: vertical
+  mainAxisAlignment: start
+  mainAxisSize: max
+  crossAxisAlignment: center
+  verticalDirection: down
+  spacing: 0.0
+◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:09 +22 -9: D:/YoloList/QingSongBan/test/widget_test.dart: shows monthly roster selectors and an empty state for a group [E]
+  Test failed. See exception logs above.
+  The test description was: shows monthly roster selectors and an empty state for a group
+  
+══╡ EXCEPTION CAUGHT BY WIDGET INSPECTOR ╞══════════════════════════════════════════════════════════
+The following assertion was thrown:
+Looking up a deactivated widget's ancestor is unsafe.
+At this point the state of the widget's element tree is no longer stable.
+To safely refer to a widget's ancestor in its dispose() method, save a reference to the ancestor by
+calling dependOnInheritedWidgetOfExactType() in the widget's didChangeDependencies() method.
+
+When the exception was thrown, this was the stack:
+#0      Element._debugCheckStateIsActiveForAncestorLookup.<anonymous closure> (package:flutter/src/widgets/framework.dart:5062:9)
+#1      Element._debugCheckStateIsActiveForAncestorLookup (package:flutter/src/widgets/framework.dart:5076:6)
+#2      Element.visitAncestorElements (package:flutter/src/widgets/framework.dart:5187:12)
+#3      _describeRelevantUserCode (package:flutter/src/widgets/widget_inspector.dart:4342:13)
+#4      _parseDiagnosticsNode (package:flutter/src/widgets/widget_inspector.dart:4261:12)
+#5      debugTransformDebugCreator (package:flutter/src/widgets/widget_inspector.dart:4240:21)
+#6      _FlutterErrorDetailsNode.builder (package:flutter/src/foundation/assertions.dart:1300:31)
+#7      DiagnosticableNode.getProperties (package:flutter/src/foundation/diagnostics.dart:2943:68)
+#8      TextTreeRenderer._debugRender (package:flutter/src/foundation/diagnostics.dart:1270:63)
+#9      TextTreeRenderer.render (package:flutter/src/foundation/diagnostics.dart:1137:14)
+#10     FlutterError.dumpErrorToConsole (package:flutter/src/foundation/assertions.dart:1030:13)
+#11     _defaultTestExceptionReporter (package:flutter_test/src/test_exception_reporter.dart:29:16)
+#12     TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1714:28)
+<asynchronous suspension>
+(elided 8 frames from dart:async and package:stack_trace)
+
+This exception was caught while trying to describe the user-relevant code of another error.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY WIDGET INSPECTOR ╞══════════════════════════════════════════════════════════
+The following assertion was thrown:
+Looking up a deactivated widget's ancestor is unsafe.
+At this point the state of the widget's element tree is no longer stable.
+To safely refer to a widget's ancestor in its dispose() method, save a reference to the ancestor by
+calling dependOnInheritedWidgetOfExactType() in the widget's didChangeDependencies() method.
+
+When the exception was thrown, this was the stack:
+#0      Element._debugCheckStateIsActiveForAncestorLookup.<anonymous closure> (package:flutter/src/widgets/framework.dart:5062:9)
+#1      Element._debugCheckStateIsActiveForAncestorLookup (package:flutter/src/widgets/framework.dart:5076:6)
+#2      Element.visitAncestorElements (package:flutter/src/widgets/framework.dart:5187:12)
+#3      _describeRelevantUserCode (package:flutter/src/widgets/widget_inspector.dart:4342:13)
+#4      _parseDiagnosticsNode (package:flutter/src/widgets/widget_inspector.dart:4261:12)
+#5      debugTransformDebugCreator (package:flutter/src/widgets/widget_inspector.dart:4240:21)
+#6      _FlutterErrorDetailsNode.builder (package:flutter/src/foundation/assertions.dart:1300:31)
+#7      DiagnosticableNode.emptyBodyDescription (package:flutter/src/foundation/diagnostics.dart:2939:45)
+#8      TextTreeRenderer._debugRender (package:flutter/src/foundation/diagnostics.dart:1307:14)
+#9      TextTreeRenderer.render (package:flutter/src/foundation/diagnostics.dart:1137:14)
+#10     FlutterError.dumpErrorToConsole (package:flutter/src/foundation/assertions.dart:1030:13)
+#11     _defaultTestExceptionReporter (package:flutter_test/src/test_exception_reporter.dart:29:16)
+#12     TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1714:28)
+<asynchronous suspension>
+(elided 8 frames from dart:async and package:stack_trace)
+
+This exception was caught while trying to describe the user-relevant code of another error.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:09 +22 -9: D:/YoloList/QingSongBan/test/widget_test.dart: assigns a default attendance group from the personnel form
+Pending timers:
+Timer (duration: 0:00:00.000000, periodic: false), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:342:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:260:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:185:15)
+#6      StreamQueryStore.markAsClosed (package:drift/src/runtime/executor/stream_queries.dart:156:11)
+#7      QueryStream._onCancelOrPause (package:drift/src/runtime/executor/stream_queries.dart:305:14)
+#8      QueryStream._stream.<anonymous closure>.<anonymous closure> (package:drift/src/runtime/executor/stream_queries.dart:238:9)
+#23     FutureHandlerProviderElementMixin.runOnDispose (package:riverpod/src/async_notifier/base.dart:430:26)
+#24     AutoDisposeProviderElementMixin.runOnDispose (package:riverpod/src/framework/auto_dispose.dart:32:11)
+#25     ProviderElementBase.dispose (package:riverpod/src/framework/element.dart:861:5)
+#26     FutureHandlerProviderElementMixin.dispose (package:riverpod/src/async_notifier/base.dart:471:11)
+#27     StreamProviderElement.dispose (package:riverpod/src/stream_provider/base.dart:180:11)
+#28     ProviderContainer.dispose (package:riverpod/src/framework/container.dart:634:15)
+#29     ProviderScopeState.dispose (package:flutter_riverpod/src/framework.dart:264:15)
+#30     StatefulElement.unmount (package:flutter/src/widgets/framework.dart:6043:11)
+#31     _InactiveElements._unmount (package:flutter/src/widgets/framework.dart:2119:13)
+#32     ListIterable.forEach (dart:_internal/iterable.dart:49:13)
+#33     _InactiveElements._unmountAll (package:flutter/src/widgets/framework.dart:2128:25)
+#34     BuildOwner.lockState (package:flutter/src/widgets/framework.dart:3033:15)
+#35     BuildOwner.finalizeTree (package:flutter/src/widgets/framework.dart:3357:7)
+#36     AutomatedTestWidgetsFlutterBinding.drawFrame (package:flutter_test/src/binding.dart:2454:19)
+#37     RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:558:5)
+#38     SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1430:15)
+#39     SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1345:9)
+#40     AutomatedTestWidgetsFlutterBinding.scheduleWarmUpFrame (package:flutter_test/src/binding.dart:2358:5)
+#41     _runWidget (package:flutter/src/widgets/binding.dart:1952:7)
+#42     runApp (package:flutter/src/widgets/binding.dart:1885:3)
+#43     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1960:7)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 18 frames from dart:async and package:stack_trace)
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running a test:
+A Timer is still pending even after the widget tree was disposed.
+'package:flutter_test/src/binding.dart':
+Failed assertion: line 2543 pos 12: '!timersPending'
+
+When the exception was thrown, this was the stack:
+#2      AutomatedTestWidgetsFlutterBinding._verifyInvariants (package:flutter_test/src/binding.dart:2543:12)
+#3      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1974:7)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from class _AssertionError and package:stack_trace)
+
+The test description was:
+  assigns a default attendance group from the personnel form
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:09 +22 -10: D:/YoloList/QingSongBan/test/widget_test.dart: assigns a default attendance group from the personnel form [E]
+  Test failed. See exception logs above.
+  The test description was: assigns a default attendance group from the personnel form
+  
+00:09 +22 -10: Some tests failed.
+
+Failing tests:
+  D:/YoloList/QingSongBan/test/widget_test.dart: assigns a default attendance group from the personnel form
+  D:/YoloList/QingSongBan/test/widget_test.dart: creates and edits a personnel record
+  D:/YoloList/QingSongBan/test/widget_test.dart: navigates personnel overview cards to filtered lists
+  D:/YoloList/QingSongBan/test/widget_test.dart: opens daily attendance with selectors and empty state
+  ... and 6 more

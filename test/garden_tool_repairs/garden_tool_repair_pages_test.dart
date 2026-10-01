@@ -19,7 +19,7 @@ void main() {
   testWidgets(
     'month ledger shows one header for each date, unit and person group',
     (tester) async {
-      await tester.binding.setSurfaceSize(const Size(411, 850));
+      await tester.binding.setSurfaceSize(const Size(360, 850));
       addTearDown(() => tester.binding.setSurfaceSize(null));
       final repository = GardenToolRepairRepository(database);
       final unit = await repository.saveUnit(
@@ -85,6 +85,11 @@ void main() {
       );
       await tester.pumpAndSettle();
 
+      expect(find.text('9月器械维修信息'), findsOneWidget);
+      expect(
+        tester.getRect(find.text('9月器械维修信息')).right,
+        lessThan(tester.getRect(find.text('新增')).left),
+      );
       expect(find.text('本月合计'), findsOneWidget);
       expect(find.text('记录组数'), findsOneWidget);
       expect(find.text('项目条数'), findsOneWidget);

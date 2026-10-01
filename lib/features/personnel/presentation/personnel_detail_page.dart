@@ -9,6 +9,8 @@ import '../../../core/utils/privacy_utils.dart';
 import '../../attendance/application/attendance_group_providers.dart';
 import '../../attachments/application/attachment_providers.dart';
 import '../../inventory/presentation/widgets/inventory_employee_history_section.dart';
+import '../../insurance/application/insurance_providers.dart';
+import '../../insurance/domain/insurance_options.dart';
 import '../application/personnel_providers.dart';
 import '../domain/personnel_options.dart';
 import 'personnel_widgets.dart';
@@ -23,38 +25,7 @@ class PersonnelDetailPage extends ConsumerWidget {
     final employee = ref.watch(employeeProvider(employeeId));
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('人员详情'),
-        actions: [
-          employee.maybeWhen(
-            data: (item) => item == null || item.isDeleted
-                ? const SizedBox.shrink()
-                : IconButton(
-                    onPressed: () =>
-                        context.push('/personnel/$employeeId/edit'),
-                    icon: const Icon(Icons.edit_outlined),
-                    tooltip: '编辑档案',
-                  ),
-            orElse: () => const SizedBox.shrink(),
-          ),
-          employee.maybeWhen(
-            data: (item) => item == null
-                ? const SizedBox.shrink()
-                : PopupMenuButton<_DetailAction>(
-                    onSelected: (action) => _handleAction(context, ref, action),
-                    itemBuilder: (context) => [
-                      PopupMenuItem(
-                        value: item.isDeleted
-                            ? _DetailAction.restore
-                            : _DetailAction.delete,
-                        child: Text(item.isDeleted ? '恢复档案' : '删除档案'),
-                      ),
-                    ],
-                  ),
-            orElse: () => const SizedBox.shrink(),
-          ),
-        ],
-      ),
+      appBar: AppBar(title: const Text('人员档案'), centerTitle: false),
       body: employee.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (_, _) => PersonnelErrorState(
@@ -64,7 +35,10 @@ class PersonnelDetailPage extends ConsumerWidget {
           if (item == null) {
             return const Center(child: Text('档案不存在或已被移除'));
           }
-          return _EmployeeDetailContent(employee: item);
+          return _EmployeeDetailContent(
+            employee: item,
+            onMore: (action) => _handleAction(context, ref, action),
+          );
         },
       ),
     );
@@ -112,9 +86,10 @@ class PersonnelDetailPage extends ConsumerWidget {
 enum _DetailAction { delete, restore }
 
 class _EmployeeDetailContent extends ConsumerWidget {
-  const _EmployeeDetailContent({required this.employee});
+  const _EmployeeDetailContent({required this.employee, required this.onMore});
 
   final Employee employee;
+  final ValueChanged<_DetailAction> onMore;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -130,16 +105,27 @@ class _EmployeeDetailContent extends ConsumerWidget {
         : group.isEnabled
         ? group.name
         : '${group.name}（已停用）';
-    final attachmentCount =
-        ref.watch(employeeAttachmentCountProvider(employee.id)).valueOrNull ??
-        0;
+    final insuranceState = ref.watch(insuranceProfileProvider(employee.id));
+    final insurance = insuranceState.valueOrNull;
+    final insuranceChanges = ref.watch(
+      insuranceEmployeeChangesProvider(employee.id),
+    );
+    final attachmentsState = ref.watch(
+      employeeAttachmentsProvider(employee.id),
+    );
+    final attachments =
+        attachmentsState.valueOrNull ?? const <EmployeeAttachment>[];
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.fromLTRB(20, 12, 20, 28),
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _EmployeeIdentityCard(employee: employee),
+          _EmployeeIdentityCard(
+            employee: employee,
+            groupName: groupName,
+            onMore: onMore,
+          ),
           if (employee.isDeleted) ...[
             const SizedBox(height: 12),
             Card(
@@ -156,92 +142,143 @@ class _EmployeeDetailContent extends ConsumerWidget {
               ),
             ),
           ],
-          const SizedBox(height: 20),
-          const PersonnelSectionTitle(title: '基本信息'),
-          const SizedBox(height: 10),
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18),
-              child: Column(
-                children: [
-                  _InfoRow(label: '性别', value: employee.gender ?? '未填写'),
-                  _InfoRow(
-                    label: '身份证号',
-                    value: PrivacyUtils.maskIdCard(employee.idCardNumber),
-                  ),
-                  _InfoRow(
-                    label: '出生日期',
-                    value: employee.birthDate == null
-                        ? '未填写'
-                        : '${AppDateUtils.formatDate(employee.birthDate)} · ${AppDateUtils.ageAt(employee.birthDate!)} 岁',
-                  ),
-                  _InfoRow(
-                    label: '联系电话',
-                    value: PrivacyUtils.maskPhone(employee.phone),
-                  ),
-                  _InfoRow(label: '家庭住址', value: employee.address ?? '未填写'),
-                  _InfoRow(
-                    label: '备注',
-                    value: employee.remark ?? '未填写',
-                    isLast: true,
-                  ),
-                ],
+          const SizedBox(height: 12),
+          _DetailSection(
+            title: '基本信息',
+            icon: Icons.person_outline,
+            iconColor: AppColors.primary,
+            initiallyExpanded: true,
+            rows: [
+              ('姓名', employee.name),
+              ('联系电话', PrivacyUtils.maskPhone(employee.phone)),
+              ('身份证号', PrivacyUtils.maskIdCard(employee.idCardNumber)),
+              ('当前住址', employee.address ?? '未填写'),
+              (
+                '出生/年龄',
+                employee.birthDate == null
+                    ? '未填写'
+                    : '${AppDateUtils.formatDate(employee.birthDate)} · ${AppDateUtils.ageAt(employee.birthDate!)} 岁',
               ),
-            ),
+              ('备注', employee.remark ?? '未填写'),
+              (
+                '性别',
+                employee.gender?.isNotEmpty == true ? employee.gender! : '未填写',
+              ),
+            ],
           ),
-          const SizedBox(height: 20),
-          const PersonnelSectionTitle(title: '附件资料'),
-          const SizedBox(height: 10),
-          Card(
-            child: ListTile(
-              key: const Key('personnel-attachments-entry'),
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 18,
-                vertical: 8,
-              ),
-              leading: const CircleAvatar(
-                backgroundColor: AppColors.lightBlue,
-                child: Icon(Icons.folder_outlined, color: AppColors.techBlue),
-              ),
-              title: const Text('统一附件中心'),
-              subtitle: Text(
-                attachmentCount == 0
-                    ? '添加身份证、银行卡、保险或离职材料'
-                    : '$attachmentCount 个有效附件',
-              ),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () =>
-                  context.push('/personnel/${employee.id}/attachments'),
-            ),
+          const SizedBox(height: 12),
+          _DetailSection(
+            title: '工作信息',
+            icon: Icons.work_outline,
+            iconColor: AppColors.techBlue,
+            initiallyExpanded: true,
+            rows: [
+              ('入职日期', AppDateUtils.formatDate(employee.hireDate)),
+              ('工作区域', employee.workArea ?? '未填写'),
+              ('岗位', employee.position ?? '未填写'),
+              ('负责人', employee.manager ?? '未填写'),
+              ('班组', employee.team ?? '未填写'),
+              ('用工类型', employee.employmentType ?? '未填写'),
+              ('默认考勤组', groupName),
+              ('人员状态', PersonnelOptions.statusLabel(employee.status)),
+            ],
           ),
-          const SizedBox(height: 20),
-          const PersonnelSectionTitle(title: '工作信息'),
-          const SizedBox(height: 10),
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18),
-              child: Column(
-                children: [
-                  _InfoRow(
-                    label: '入职日期',
-                    value: AppDateUtils.formatDate(employee.hireDate),
-                  ),
-                  _InfoRow(
-                    label: '人员状态',
-                    value: PersonnelOptions.statusLabel(employee.status),
-                  ),
-                  _InfoRow(label: '岗位', value: employee.position ?? '未填写'),
-                  _InfoRow(label: '所属班组', value: employee.team ?? '未填写'),
-                  _InfoRow(label: '工作区域', value: employee.workArea ?? '未填写'),
-                  _InfoRow(label: '负责人', value: employee.manager ?? '未填写'),
-                  _InfoRow(
-                    label: '用工类型',
-                    value: employee.employmentType ?? '未填写',
-                  ),
-                  _InfoRow(label: '默认考勤组', value: groupName, isLast: true),
-                ],
+          const SizedBox(height: 12),
+          _DetailSection(
+            title: '保险信息',
+            icon: Icons.shield_outlined,
+            iconColor: const Color(0xFFE98500),
+            initiallyExpanded: true,
+            rows: [
+              (
+                '是否参保',
+                insuranceState.when(
+                  loading: () => '加载中',
+                  error: (_, _) => '暂不可用',
+                  data: (value) => value == null
+                      ? '未设置'
+                      : value.isInsured
+                      ? '● 已参保'
+                      : '未参保',
+                ),
               ),
-            ),
+              (
+                '参保开始',
+                insuranceState.when(
+                  loading: () => '加载中',
+                  error: (_, _) => '暂不可用',
+                  data: (_) => insurance?.effectiveMonth ?? '未填写',
+                ),
+              ),
+              (
+                '险种',
+                insuranceState.when(
+                  loading: () => '加载中',
+                  error: (_, _) => '暂不可用',
+                  data: (_) => insurance?.insuranceType == null
+                      ? '未填写'
+                      : InsuranceOptions.typeLabel(insurance!.insuranceType!),
+                ),
+              ),
+              (
+                '缴费基数',
+                insuranceState.when(
+                  loading: () => '加载中',
+                  error: (_, _) => '暂不可用',
+                  data: (_) => insurance?.contributionBase == null
+                      ? '未填写'
+                      : '¥${insurance!.contributionBase!.toStringAsFixed(2)}',
+                ),
+              ),
+              (
+                '最近变更',
+                insuranceChanges.when(
+                  loading: () => '加载中',
+                  error: (_, _) => '暂不可用',
+                  data: (items) => items.isEmpty
+                      ? '暂无记录'
+                      : '${items.first.change.effectiveMonth} · ${InsuranceOptions.changeTypeLabel(items.first.change.changeType)}',
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          _AttachmentCategories(
+            employeeId: employee.id,
+            items: attachments,
+            loading: attachmentsState.isLoading,
+            error: attachmentsState.hasError,
+          ),
+          const SizedBox(height: 14),
+          Row(
+            children: [
+              Expanded(
+                child: _EmployeeActionButton(
+                  label: '请假登记',
+                  icon: Icons.event_busy_outlined,
+                  color: const Color(0xFFE98500),
+                  onTap: () => context.push('/attendance/leave/new'),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: _EmployeeActionButton(
+                  label: '加班登记',
+                  icon: Icons.more_time_outlined,
+                  color: AppColors.purple,
+                  onTap: () => context.push('/attendance/overtime/new'),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: _EmployeeActionButton(
+                  label: '离职登记',
+                  icon: Icons.person_remove_outlined,
+                  color: AppColors.danger,
+                  onTap: () => context.push('/attendance/termination/new'),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 14),
           InventoryEmployeeHistorySection(employeeId: employee.id),
@@ -268,107 +305,335 @@ class _EmployeeDetailContent extends ConsumerWidget {
 }
 
 class _EmployeeIdentityCard extends StatelessWidget {
-  const _EmployeeIdentityCard({required this.employee});
+  const _EmployeeIdentityCard({
+    required this.employee,
+    required this.groupName,
+    required this.onMore,
+  });
 
   final Employee employee;
+  final String groupName;
+  final ValueChanged<_DetailAction> onMore;
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(22),
-        gradient: LinearGradient(
-          colors: employee.isDeleted
-              ? const [Color(0xFFFFF3F3), Color(0xFFFFECEC)]
-              : const [Color(0xFFE8F7F0), Color(0xFFE8F1FF)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        border: Border.all(color: Colors.white, width: 2),
-      ),
+  Widget build(BuildContext context) => Card(
+    child: Padding(
+      padding: const EdgeInsets.all(14),
       child: Row(
         children: [
-          Container(
-            width: 62,
-            height: 62,
-            decoration: BoxDecoration(
-              color: employee.isDeleted ? AppColors.danger : AppColors.primary,
-              borderRadius: BorderRadius.circular(20),
-            ),
+          CircleAvatar(
+            radius: 32,
+            backgroundColor: employee.isDeleted
+                ? AppColors.lightDanger
+                : AppColors.lightBlue,
             child: Icon(
               employee.isDeleted
                   ? Icons.person_off_outlined
                   : Icons.person_outline,
-              color: Colors.white,
-              size: 32,
+              size: 34,
+              color: employee.isDeleted ? AppColors.danger : AppColors.techBlue,
             ),
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  employee.name,
-                  style: Theme.of(context).textTheme.headlineMedium,
+                Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        employee.name,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.headlineMedium,
+                      ),
+                    ),
+                    const SizedBox(width: 7),
+                    EmployeeStatusBadge(
+                      status: employee.status,
+                      deleted: employee.isDeleted,
+                      compact: true,
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(height: 4),
                 Text(
-                  employee.employeeNo,
+                  '${employee.position?.isNotEmpty == true ? employee.position : '岗位未填写'}  ·  $groupName',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
-                const SizedBox(height: 10),
-                EmployeeStatusBadge(
-                  status: employee.status,
-                  deleted: employee.isDeleted,
+                Text(
+                  '工号：${employee.employeeNo}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 8),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (!employee.isDeleted)
+                FilledButton.icon(
+                  key: const Key('personnel-detail-edit'),
+                  onPressed: () =>
+                      context.push('/personnel/${employee.id}/edit'),
+                  icon: const Icon(Icons.edit_outlined, size: 17),
+                  label: const Text('编辑'),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: AppColors.techBlue,
+                    visualDensity: VisualDensity.compact,
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                  ),
+                ),
+              PopupMenuButton<_DetailAction>(
+                tooltip: '更多档案操作',
+                onSelected: onMore,
+                itemBuilder: (context) => [
+                  PopupMenuItem(
+                    value: employee.isDeleted
+                        ? _DetailAction.restore
+                        : _DetailAction.delete,
+                    child: Text(employee.isDeleted ? '恢复档案' : '删除档案'),
+                  ),
+                ],
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 9,
+                    vertical: 7,
+                  ),
+                  decoration: BoxDecoration(
+                    color: AppColors.lightBlue,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.more_horiz, size: 18),
+                      SizedBox(width: 3),
+                      Text('更多'),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+class _DetailSection extends StatelessWidget {
+  const _DetailSection({
+    required this.title,
+    required this.icon,
+    required this.iconColor,
+    required this.rows,
+    this.initiallyExpanded = false,
+  });
+
+  final String title;
+  final IconData icon;
+  final Color iconColor;
+  final List<(String, String)> rows;
+  final bool initiallyExpanded;
+
+  @override
+  Widget build(BuildContext context) => Card(
+    child: Theme(
+      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+      child: ExpansionTile(
+        initiallyExpanded: initiallyExpanded,
+        tilePadding: const EdgeInsets.symmetric(horizontal: 14),
+        childrenPadding: const EdgeInsets.fromLTRB(14, 0, 14, 8),
+        leading: Container(
+          width: 36,
+          height: 36,
+          decoration: BoxDecoration(
+            color: iconColor.withValues(alpha: .12),
+            borderRadius: BorderRadius.circular(11),
+          ),
+          child: Icon(icon, color: iconColor, size: 20),
+        ),
+        title: Text(title, style: Theme.of(context).textTheme.titleLarge),
+        children: [
+          LayoutBuilder(
+            builder: (context, constraints) => Wrap(
+              spacing: 8,
+              runSpacing: 6,
+              children: [
+                for (final row in rows)
+                  SizedBox(
+                    width: (constraints.maxWidth - 8) / 2,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: 70,
+                          child: Text(
+                            row.$1,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: AppColors.body,
+                              height: 1.3,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            row.$2,
+                            style: TextStyle(
+                              fontSize: 14,
+                              height: 1.3,
+                              color: row.$1 == '是否参保' && row.$2.contains('已参保')
+                                  ? AppColors.primary
+                                  : AppColors.ink,
+                              fontWeight:
+                                  row.$1 == '是否参保' && row.$2.contains('已参保')
+                                  ? FontWeight.w600
+                                  : FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
               ],
             ),
           ),
         ],
       ),
+    ),
+  );
+}
+
+class _AttachmentCategories extends StatelessWidget {
+  const _AttachmentCategories({
+    required this.employeeId,
+    required this.items,
+    required this.loading,
+    required this.error,
+  });
+
+  final int employeeId;
+  final List<EmployeeAttachment> items;
+  final bool loading;
+  final bool error;
+
+  @override
+  Widget build(BuildContext context) {
+    final categories = [
+      ('身份证件', ['idFront', 'idBack'], Icons.badge_outlined, AppColors.techBlue),
+      ('银行卡', ['bankCard'], Icons.credit_card_outlined, AppColors.primary),
+      (
+        '保险材料',
+        ['insurance'],
+        Icons.health_and_safety_outlined,
+        const Color(0xFFE98500),
+      ),
+      ('离职材料', ['termination'], Icons.description_outlined, AppColors.purple),
+    ];
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          children: [
+            ListTile(
+              key: const Key('personnel-attachments-entry'),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 2),
+              leading: const Icon(Icons.attach_file, color: AppColors.purple),
+              title: const Text('附件资料'),
+              subtitle: Text(
+                loading
+                    ? '正在读取附件'
+                    : error
+                    ? '附件暂时不可用'
+                    : '共 ${items.length} 项',
+              ),
+              trailing: const Icon(
+                Icons.chevron_right,
+                color: AppColors.helper,
+              ),
+              onTap: () => context.push('/personnel/$employeeId/attachments'),
+            ),
+            Row(
+              children: [
+                for (final category in categories)
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 3),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(12),
+                        onTap: () =>
+                            context.push('/personnel/$employeeId/attachments'),
+                        child: Container(
+                          height: 86,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 4,
+                            vertical: 8,
+                          ),
+                          decoration: BoxDecoration(
+                            color: category.$4.withValues(alpha: .09),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(category.$3, color: category.$4, size: 21),
+                              const SizedBox(height: 4),
+                              Text(
+                                category.$1,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                              Text(
+                                loading || error
+                                    ? '—'
+                                    : '${items.where((item) => category.$2.contains(item.category)).length} 张',
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
 
-class _InfoRow extends StatelessWidget {
-  const _InfoRow({
+class _EmployeeActionButton extends StatelessWidget {
+  const _EmployeeActionButton({
     required this.label,
-    required this.value,
-    this.isLast = false,
+    required this.icon,
+    required this.color,
+    required this.onTap,
   });
 
   final String label;
-  final String value;
-  final bool isLast;
+  final IconData icon;
+  final Color color;
+  final VoidCallback onTap;
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 14),
-      decoration: BoxDecoration(
-        border: isLast
-            ? null
-            : const Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 86,
-            child: Text(label, style: Theme.of(context).textTheme.bodyMedium),
-          ),
-          Expanded(
-            child: Text(
-              value,
-              textAlign: TextAlign.right,
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  Widget build(BuildContext context) => FilledButton.tonalIcon(
+    onPressed: onTap,
+    icon: Icon(icon, size: 18),
+    label: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis),
+    style: FilledButton.styleFrom(
+      foregroundColor: color,
+      backgroundColor: color.withValues(alpha: .1),
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 12),
+    ),
+  );
 }

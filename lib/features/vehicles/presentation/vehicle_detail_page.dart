@@ -33,74 +33,85 @@ class VehicleDetailPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final vehicle = ref.watch(vehicleProvider(vehicleId));
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('车辆详情'),
-        actions: [
-          IconButton(
-            tooltip: '附件资料',
-            onPressed: () => context.push('/vehicles/$vehicleId/attachments'),
-            icon: const Icon(Icons.attach_file),
-          ),
-          IconButton(
-            tooltip: '编辑车辆',
-            onPressed: () async {
-              await context.push('/vehicles/$vehicleId/edit');
-              ref.invalidate(vehicleProvider(vehicleId));
-            },
-            icon: const Icon(Icons.edit_outlined),
-          ),
-        ],
-      ),
-      bottomNavigationBar: const VehicleNavigationBar(),
-      body: vehicle.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, _) => Center(child: Text(error.toString())),
-        data: (item) {
-          if (item == null) return const Center(child: Text('车辆不存在'));
-          return DefaultTabController(
-            length: 6,
-            initialIndex: _tabIndex(initialTab),
-            child: Column(
-              children: [
-                _VehicleHeader(vehicle: item),
-                const TabBar(
-                  isScrollable: true,
-                  tabAlignment: TabAlignment.start,
-                  labelColor: AppColors.techBlue,
-                  unselectedLabelColor: AppColors.body,
-                  indicatorColor: AppColors.techBlue,
-                  tabs: [
-                    Tab(text: '概览'),
-                    Tab(text: '车况'),
-                    Tab(text: '维修'),
-                    Tab(text: '保养/备件'),
-                    Tab(text: '油耗'),
-                    Tab(text: '费用分析'),
-                  ],
+    return DefaultTabController(
+      length: 6,
+      initialIndex: _tabIndex(initialTab),
+      child: Builder(
+        builder: (context) {
+          final tabController = DefaultTabController.of(context);
+          return Scaffold(
+            appBar: AppBar(
+              title: AnimatedBuilder(
+                animation: tabController,
+                builder: (context, _) => Text(
+                  _titleForTabIndex(tabController.index),
                 ),
-                Expanded(
-                  child: TabBarView(
-                    children: [
-                      _OverviewTab(
-                        vehicle: item,
-                        onStop: () => _stop(context, ref, item.id),
-                        onAttachments: () =>
-                            context.push('/vehicles/${item.id}/attachments'),
-                      ),
-                      VehicleConditionTab(vehicle: item),
-                      VehicleRepairTab(vehicle: item),
-                      VehicleMaintenanceTab(vehicle: item),
-                      VehicleFuelTab(
-                        vehicle: item,
-                        initialYear: initialFuelYear,
-                        initialMonth: initialFuelMonth,
-                      ),
-                      VehicleExpenseTab(vehicle: item),
-                    ],
-                  ),
+              ),
+              actions: [
+                IconButton(
+                  tooltip: '附件资料',
+                  onPressed: () =>
+                      context.push('/vehicles/$vehicleId/attachments'),
+                  icon: const Icon(Icons.attach_file),
+                ),
+                IconButton(
+                  tooltip: '编辑车辆',
+                  onPressed: () async {
+                    await context.push('/vehicles/$vehicleId/edit');
+                    ref.invalidate(vehicleProvider(vehicleId));
+                  },
+                  icon: const Icon(Icons.edit_outlined),
                 ),
               ],
+            ),
+            bottomNavigationBar: const VehicleNavigationBar(),
+            body: vehicle.when(
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (error, _) => Center(child: Text(error.toString())),
+              data: (item) {
+                if (item == null) return const Center(child: Text('车辆不存在'));
+                return Column(
+                  children: [
+                    _VehicleHeader(vehicle: item),
+                    const TabBar(
+                      isScrollable: true,
+                      tabAlignment: TabAlignment.start,
+                      labelColor: AppColors.techBlue,
+                      unselectedLabelColor: AppColors.body,
+                      indicatorColor: AppColors.techBlue,
+                      tabs: [
+                        Tab(text: '概览'),
+                        Tab(text: '车况'),
+                        Tab(text: '维修'),
+                        Tab(text: '保养/备件'),
+                        Tab(text: '油耗'),
+                        Tab(text: '费用分析'),
+                      ],
+                    ),
+                    Expanded(
+                      child: TabBarView(
+                        children: [
+                          _OverviewTab(
+                            vehicle: item,
+                            onStop: () => _stop(context, ref, item.id),
+                            onAttachments: () =>
+                                context.push('/vehicles/${item.id}/attachments'),
+                          ),
+                          VehicleConditionTab(vehicle: item),
+                          VehicleRepairTab(vehicle: item),
+                          VehicleMaintenanceTab(vehicle: item),
+                          VehicleFuelTab(
+                            vehicle: item,
+                            initialYear: initialFuelYear,
+                            initialMonth: initialFuelMonth,
+                          ),
+                          VehicleExpenseTab(vehicle: item),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
           );
         },
@@ -115,6 +126,15 @@ class VehicleDetailPage extends ConsumerWidget {
     'fuel' => 4,
     'expense' => 5,
     _ => 0,
+  };
+
+  String _titleForTabIndex(int index) => switch (index) {
+    1 => '车辆车况检查',
+    2 => '车辆维修管理',
+    3 => '车辆保养/备件',
+    4 => '车辆油耗记录',
+    5 => '车辆费用分析',
+    _ => '车辆详情',
   };
 
   Future<void> _stop(BuildContext context, WidgetRef ref, int id) async {
@@ -152,16 +172,16 @@ class _VehicleHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _vehicleStatusColor(vehicle.status);
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 10, 16, 8),
+      padding: const EdgeInsets.fromLTRB(12, 4, 12, 4),
       child: Card(
         color: Colors.white,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(12, 12, 14, 12),
+          padding: const EdgeInsets.fromLTRB(8, 6, 10, 6),
           child: Row(
             children: [
               SizedBox(
-                width: 112,
-                height: 72,
+                width: 66,
+                height: 42,
                 child: Image.asset(
                   vehicle.vehicleType == VehicleType.sweeper
                       ? 'assets/vehicles/sweeper-truck.png'
@@ -169,7 +189,7 @@ class _VehicleHeader extends StatelessWidget {
                   fit: BoxFit.contain,
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: 8),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -178,7 +198,7 @@ class _VehicleHeader extends StatelessWidget {
                       vehicle.name,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
-                    const SizedBox(height: 5),
+                    const SizedBox(height: 2),
                     Row(
                       children: [
                         Text(
@@ -192,7 +212,7 @@ class _VehicleHeader extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 2),
                     Text(
                       '${VehicleOptions.typeShortLabel(vehicle.vehicleType)} · ${vehicle.workArea ?? '未设置工作区域'} · ${vehicle.responsiblePerson ?? '未设置责任人'}',
                       maxLines: 1,

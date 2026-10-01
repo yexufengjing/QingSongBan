@@ -1,0 +1,147 @@
+00:00 +0: loading D:/QingSongBan/test/widget_test.dart
+00:00 +0: starts on the home tab with five destinations
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _ElementPredicateWidgetFinder:<Found 0 widgets with a semantics label named
+"轻松办人员管理首页，清洁人员与车辆背景，标语：让城市更清洁，让工作更轻松。": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///D:/QingSongBan/test/widget_test.dart:203:5)
+<asynchronous suspension>
+#5      main.widgetTest.<anonymous closure> (file:///D:/QingSongBan/test/widget_test.dart:51:9)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///D:/QingSongBan/test/widget_test.dart line 203
+The test description was:
+  starts on the home tab with five destinations
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +0 -1: starts on the home tab with five destinations [E]
+  Test failed. See exception logs above.
+  The test description was: starts on the home tab with five destinations
+  
+00:01 +0 -1: counts only real attendance, leave, and upcoming reminder records on home
+00:01 +1 -1: shows the home shortcuts
+00:02 +2 -1: opens vehicle management from the home shortcuts
+00:03 +3 -1: opens vehicle condition and repair tabs
+00:04 +4 -1: opens vehicle fuel summary and attachment pages
+00:04 +5 -1: navigates from every home dashboard metric
+00:06 +6 -1: switches between all five tabs
+00:06 +7 -1: navigates personnel overview cards to filtered lists
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: '2026-10'
+  Actual: <null>
+   Which: not an <Instance of 'String'>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///D:/QingSongBan/test/widget_test.dart:497:5)
+<asynchronous suspension>
+#5      main.widgetTest.<anonymous closure> (file:///D:/QingSongBan/test/widget_test.dart:51:9)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///D:/QingSongBan/test/widget_test.dart line 497
+The test description was:
+  navigates personnel overview cards to filtered lists
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:07 +7 -2: navigates personnel overview cards to filtered lists [E]
+  Test failed. See exception logs above.
+  The test description was: navigates personnel overview cards to filtered lists
+  
+00:07 +7 -2: filters personnel by the requested hire month using database rows
+00:07 +8 -2: filters personnel by a real attendance group and keeps the add FAB circular
+00:08 +9 -2: uses the stage zero visual baseline
+00:08 +10 -2: creates and edits a personnel record
+00:09 +11 -2: creates an attendance group and opens its detail page
+00:10 +12 -2: opens the monthly roster from the attendance tab
+00:10 +13 -2: opens monthly summary and exposes direct Excel export
+00:10 +14 -2: opens the employee attachment center from personnel detail
+00:11 +15 -2: opens daily attendance with selectors and empty state
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "快捷操作": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///D:/QingSongBan/test/widget_test.dart:751:5)
+<asynchronous suspension>
+#5      main.widgetTest.<anonymous closure> (file:///D:/QingSongBan/test/widget_test.dart:51:9)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///D:/QingSongBan/test/widget_test.dart line 751
+The test description was:
+  opens daily attendance with selectors and empty state
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:11 +15 -3: opens daily attendance with selectors and empty state [E]
+  Test failed. See exception logs above.
+  The test description was: opens daily attendance with selectors and empty state
+  
+00:11 +15 -3: opens the monthly attendance table with an empty roster
+00:11 +16 -3: opens the leave page with an empty state
+00:11 +17 -3: creates a leave record from the leave form
+00:12 +18 -3: opens the overtime page with an empty state
+00:12 +19 -3: opens the insurance page from settings
+00:12 +20 -3: opens Excel import and export from settings
+00:12 +21 -3: opens local reminders from settings
+00:12 +22 -3: opens backup and restore from settings
+00:12 +23 -3: opens operation logs from settings
+00:13 +24 -3: renders month cells and opens the cell editor
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "张三 · 9月1日": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///D:/QingSongBan/test/widget_test.dart:1000:5)
+<asynchronous suspension>
+#5      main.widgetTest.<anonymous closure> (file:///D:/QingSongBan/test/widget_test.dart:51:9)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///D:/QingSongBan/test/widget_test.dart line 1000
+The test description was:
+  renders month cells and opens the cell editor
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:13 +24 -4: renders month cells and opens the cell editor [E]
+  Test failed. See exception logs above.
+  The test description was: renders month cells and opens the cell editor
+  
+00:13 +24 -4: shows monthly roster selectors and an empty state for a group
+00:13 +25 -4: assigns a default attendance group from the personnel form
+00:14 +26 -4: Some tests failed.
+
+Failing tests:
+  D:/QingSongBan/test/widget_test.dart: navigates personnel overview cards to filtered lists
+  D:/QingSongBan/test/widget_test.dart: opens daily attendance with selectors and empty state
+  D:/QingSongBan/test/widget_test.dart: renders month cells and opens the cell editor
+  D:/QingSongBan/test/widget_test.dart: starts on the home tab with five destinations

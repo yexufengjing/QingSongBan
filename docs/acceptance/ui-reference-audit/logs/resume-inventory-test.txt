@@ -1,0 +1,10 @@
+00:00 +0: loading D:/QingSongBan/test/inventory/inventory_pages_test.dart
+00:00 +0: home inventory shortcut opens the eight-operation home
+00:01 +1: stock list shows status and adjustment action on a narrow screen
+00:01 +2: receipt list shows mixed units and detail count on narrow screen
+00:02 +3: issue list shows mixed units and detail count on narrow screen
+00:02 +4: draft stocktake shows real differences on a narrow screen
+00:02 +5: receipt form validates quantities before submission
+00:02 +6: issue form supports empty personnel state and requires a receiver
+00:03 +7: employee history exposes six columns in a horizontal mobile table
+00:03 +8: All tests passed!

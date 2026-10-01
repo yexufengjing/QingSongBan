@@ -1,0 +1,461 @@
+00:00 +0: loading D:/QingSongBan/test/widget_test.dart
+00:00 +0: starts on the home tab with five destinations
+SEMANTICS_DIAGNOSTIC matchingHero=1
+SemanticsNode#0
+ │ Rect.fromLTRB(0.0, 0.0, 2400.0, 1800.0)
+ │
+ └─SemanticsNode#1
+   │ Rect.fromLTRB(0.0, 0.0, 800.0, 600.0) scaled by 3.0x
+   │ textDirection: ltr
+   │ sortKey: OrdinalSortKey#cc927(order: 0.0)
+   │
+   └─SemanticsNode#2
+     │ Rect.fromLTRB(0.0, 0.0, 800.0, 600.0)
+     │ flags: scopesRoute
+     │
+     ├─SemanticsNode#3
+     │ │ Rect.fromLTRB(0.0, 0.0, 800.0, 522.0)
+     │ │ sortKey: OrdinalSortKey#cc927(order: 0.0)
+     │ │
+     │ └─SemanticsNode#4
+     │   │ Rect.fromLTRB(0.0, 0.0, 800.0, 522.0)
+     │   │ flags: scopesRoute
+     │   │
+     │   └─SemanticsNode#5
+     │     │ Rect.fromLTRB(0.0, 0.0, 800.0, 522.0)
+     │     │ actions: scrollToOffset, scrollUp
+     │     │ flags: hasImplicitScrolling
+     │     │ scrollExtentMin: 0.0
+     │     │ scrollPosition: 0.0
+     │     │ scrollExtentMax: 1009.1
+     │     │
+     │     ├─SemanticsNode#6
+     │     │   Rect.fromLTRB(16.0, 8.0, 784.0, 235.2)
+     │     │   flags: isImage
+     │     │   label:
+     │     │     "轻松办人员管理首页，清洁人员与车辆背景，标语：让城市更清洁，让工作更轻松。
+     │     │     本地离线 · 已保存"
+     │     │   textDirection: ltr
+     │     │
+     │     ├─SemanticsNode#7
+     │     │   Rect.fromLTRB(16.0, 259.7, 703.6, 282.7)
+     │     │   label: "今日概览"
+     │     │   textDirection: ltr
+     │     │
+     │     ├─SemanticsNode#8
+     │     │   Rect.fromLTRB(703.6, 247.2, 784.0, 295.2)
+     │     │   actions: focus, tap
+     │     │   flags: isButton, hasEnabledState, isEnabled, isFocusable
+     │     │   label: "查看汇总"
+     │     │   textDirection: ltr
+     │     │
+     │     ├─SemanticsNode#33
+     │     │ │ Rect.fromLTRB(16.0, 301.2, 784.0, 522.0)
+     │     │ │
+     │     │ └─SemanticsNode#46
+     │     │   │ Rect.fromLTRB(0.0, 0.0, 768.0, 220.8)
+     │     │   │ scrollChildren: 6
+     │     │   │ scrollIndex: 0
+     │     │   │ scrollExtentMin: 0.0
+     │     │   │ scrollPosition: 0.0
+     │     │   │ scrollExtentMax: 0.0
+     │     │   │
+     │     │   ├─SemanticsNode#34
+     │     │   │ │ Rect.fromLTRB(0.0, 0.0, 250.7, 205.5)
+     │     │   │ │ tags: RenderViewport.twoPane
+     │     │   │ │ flags: isButton
+     │     │   │ │ label: "当前在岗 0"
+     │     │   │ │ textDirection: ltr
+     │     │   │ │ indexInParent: 0
+     │     │   │ │
+     │     │   │ └─SemanticsNode#35
+     │     │   │     Rect.fromLTRB(0.0, 0.0, 250.7, 205.5)
+     │     │   │     actions: focus, tap
+     │     │   │     flags: isFocusable
+     │     │   │     label:
+     │     │   │       "当前在岗
+     │     │   │       0"
+     │     │   │     textDirection: ltr
+     │     │   │
+     │     │   ├─SemanticsNode#36
+     │     │   │ │ Rect.fromLTRB(258.7, 0.0, 509.3, 205.5)
+     │     │   │ │ tags: RenderViewport.twoPane
+     │     │   │ │ flags: isButton
+     │     │   │ │ label: "本月新增 0"
+     │     │   │ │ textDirection: ltr
+     │     │   │ │ indexInParent: 1
+     │     │   │ │
+     │     │   │ └─SemanticsNode#37
+     │     │   │     Rect.fromLTRB(0.0, 0.0, 250.7, 205.5)
+     │     │   │     actions: focus, tap
+     │     │   │     flags: isFocusable
+     │     │   │     label:
+     │     │   │       "本月新增
+     │     │   │       0"
+     │     │   │     textDirection: ltr
+     │     │   │
+     │     │   ├─SemanticsNode#38
+     │     │   │ │ Rect.fromLTRB(517.3, 0.0, 768.0, 205.5)
+     │     │   │ │ tags: RenderViewport.twoPane
+     │     │   │ │ flags: isButton
+     │     │   │ │ label: "本月离职 0"
+     │     │   │ │ textDirection: ltr
+     │     │   │ │ indexInParent: 2
+     │     │   │ │
+     │     │   │ └─SemanticsNode#39
+     │     │   │     Rect.fromLTRB(0.0, 0.0, 250.7, 205.5)
+     │     │   │     actions: focus, tap
+     │     │   │     flags: isFocusable
+     │     │   │     label:
+     │     │   │       "本月离职
+     │     │   │       0"
+     │     │   │     textDirection: ltr
+     │     │   │
+     │     │   ├─SemanticsNode#40
+     │     │   │ │ Rect.fromLTRB(0.0, 213.5, 250.7, 220.8)
+     │     │   │ │ tags: RenderViewport.twoPane
+     │     │   │ │ flags: isButton
+     │     │   │ │ label: "今日出勤 0"
+     │     │   │ │ textDirection: ltr
+     │     │   │ │ indexInParent: 3
+     │     │   │ │
+     │     │   │ └─SemanticsNode#41
+     │     │   │     Rect.fromLTRB(0.0, 0.0, 250.7, 7.3)
+     │     │   │     actions: focus, tap
+     │     │   │     flags: isFocusable
+     │     │   │     label:
+     │     │   │       "今日出勤
+     │     │   │       0"
+     │     │   │     textDirection: ltr
+     │     │   │
+     │     │   ├─SemanticsNode#42
+     │     │   │ │ Rect.fromLTRB(258.7, 213.5, 509.3, 220.8)
+     │     │   │ │ tags: RenderViewport.twoPane
+     │     │   │ │ flags: isButton
+     │     │   │ │ label: "今日请假 0"
+     │     │   │ │ textDirection: ltr
+     │     │   │ │ indexInParent: 4
+     │     │   │ │
+     │     │   │ └─SemanticsNode#43
+     │     │   │     Rect.fromLTRB(0.0, 0.0, 250.7, 7.3)
+     │     │   │     actions: focus, tap
+     │     │   │     flags: isFocusable
+     │     │   │     label:
+     │     │   │       "今日请假
+     │     │   │       0"
+     │     │   │     textDirection: ltr
+     │     │   │
+     │     │   └─SemanticsNode#44
+     │     │     │ Rect.fromLTRB(517.3, 213.5, 768.0, 220.8)
+     │     │     │ tags: RenderViewport.twoPane
+     │     │     │ flags: isButton
+     │     │     │ label: "即将到期 0"
+     │     │     │ textDirection: ltr
+     │     │     │ indexInParent: 5
+     │     │     │
+     │     │     └─SemanticsNode#45
+     │     │         Rect.fromLTRB(0.0, 0.0, 250.7, 7.3)
+     │     │         actions: focus, tap
+     │     │         flags: isFocusable
+     │     │         label:
+     │     │           "即将到期
+     │     │           0"
+     │     │         textDirection: ltr
+     │     │
+     │     ├─SemanticsNode#10
+     │     │   Rect.fromLTRB(16.0, 744.6, 703.6, 767.6)
+     │     │   flags: isHidden
+     │     │   HIDDEN
+     │     │   label: "快捷操作"
+     │     │   textDirection: ltr
+     │     │
+     │     ├─SemanticsNode#11
+     │     │   Rect.fromLTRB(703.6, 732.1, 784.0, 780.1)
+     │     │   actions: focus, tap
+     │     │   flags: isButton, hasEnabledState, isEnabled, isHidden,
+     │     │     isFocusable
+     │     │   HIDDEN
+     │     │   label: "更多功能"
+     │     │   textDirection: ltr
+     │     │
+     │     ├─SemanticsNode#12
+     │     │ │ Rect.fromLTRB(16.0, 786.1, 784.0, 1339.1)
+     │     │ │
+     │     │ └─SemanticsNode#19
+     │     │   │ Rect.fromLTRB(0.0, 0.0, 768.0, 552.9)
+     │     │   │ flags: isHidden
+     │     │   │ HIDDEN
+     │     │   │ scrollChildren: 6
+     │     │   │ scrollExtentMin: 0.0
+     │     │   │ scrollPosition: 0.0
+     │     │   │ scrollExtentMax: 0.0
+     │     │   │
+     │     │   ├─SemanticsNode#13
+     │     │   │   Rect.fromLTRB(0.0, 0.0, 250.7, 272.5)
+     │     │   │   tags: RenderViewport.twoPane
+     │     │   │   actions: focus, tap
+     │     │   │   flags: isHidden, isFocusable
+     │     │   │   HIDDEN
+     │     │   │   label:
+     │     │   │     "新增人员
+     │     │   │     录入新员工信息"
+     │     │   │   textDirection: ltr
+     │     │   │   indexInParent: 0
+     │     │   │
+     │     │   ├─SemanticsNode#14
+     │     │   │   Rect.fromLTRB(258.7, 0.0, 509.3, 272.5)
+     │     │   │   tags: RenderViewport.twoPane
+     │     │   │   actions: focus, tap
+     │     │   │   flags: isHidden, isFocusable
+     │     │   │   HIDDEN
+     │     │   │   label:
+     │     │   │     "今日考勤
+     │     │   │     记录出勤情况"
+     │     │   │   textDirection: ltr
+     │     │   │   indexInParent: 1
+     │     │   │
+     │     │   ├─SemanticsNode#15
+     │     │   │   Rect.fromLTRB(517.3, 0.0, 768.0, 272.5)
+     │     │   │   tags: RenderViewport.twoPane
+     │     │   │   actions: focus, tap
+     │     │   │   flags: isHidden, isFocusable
+     │     │   │   HIDDEN
+     │     │   │   label:
+     │     │   │     "请假登记
+     │     │   │     记录请假信息"
+     │     │   │   textDirection: ltr
+     │     │   │   indexInParent: 2
+     │     │   │
+     │     │   ├─SemanticsNode#16
+     │     │   │   Rect.fromLTRB(0.0, 280.5, 250.7, 552.9)
+     │     │   │   tags: RenderViewport.twoPane
+     │     │   │   actions: focus, tap
+     │     │   │   flags: isHidden, isFocusable
+     │     │   │   HIDDEN
+     │     │   │   label:
+     │     │   │     "加班登记
+     │     │   │     记录加班时长"
+     │     │   │   textDirection: ltr
+     │     │   │   indexInParent: 3
+     │     │   │
+     │     │   ├─SemanticsNode#17
+     │     │   │   Rect.fromLTRB(258.7, 280.5, 509.3, 552.9)
+     │     │   │   tags: RenderViewport.twoPane
+     │     │   │   actions: focus, tap
+     │     │   │   flags: isHidden, isFocusable
+     │     │   │   HIDDEN
+     │     │   │   label:
+     │     │   │     "离职登记
+     │     │   │     办理离职手续"
+     │     │   │   textDirection: ltr
+     │     │   │   indexInParent: 4
+     │     │   │
+     │     │   └─SemanticsNode#18
+     │     │       Rect.fromLTRB(517.3, 280.5, 768.0, 552.9)
+     │     │       tags: RenderViewport.twoPane
+     │     │       actions: focus, tap
+     │     │       flags: isHidden, isFocusable
+     │     │       HIDDEN
+     │     │       label:
+     │     │         "保险变更
+     │     │         社保与商业保险"
+     │     │       textDirection: ltr
+     │     │       indexInParent: 5
+     │     │
+     │     ├─SemanticsNode#20
+     │     │   Rect.fromLTRB(16.0, 1347.1, 124.4, 1387.1)
+     │     │   actions: focus, tap
+     │     │   flags: isButton, hasEnabledState, isEnabled, isHidden,
+     │     │     isFocusable, hasSelectedState
+     │     │   HIDDEN
+     │     │   label: "物品领取"
+     │     │   textDirection: ltr
+     │     │
+     │     ├─SemanticsNode#21
+     │     │   Rect.fromLTRB(130.4, 1347.1, 238.8, 1387.1)
+     │     │   actions: focus, tap
+     │     │   flags: isButton, hasEnabledState, isEnabled, isHidden,
+     │     │     isFocusable, hasSelectedState
+     │     │   HIDDEN
+     │     │   label: "库存管理"
+     │     │   textDirection: ltr
+     │     │
+     │     ├─SemanticsNode#22
+     │     │   Rect.fromLTRB(244.8, 1347.1, 353.2, 1387.1)
+     │     │   actions: focus, tap
+     │     │   flags: isButton, hasEnabledState, isEnabled, isHidden,
+     │     │     isFocusable, hasSelectedState
+     │     │   HIDDEN
+     │     │   label: "工资造资"
+     │     │   textDirection: ltr
+     │     │
+     │     ├─SemanticsNode#23
+     │     │   Rect.fromLTRB(359.2, 1347.1, 467.6, 1387.1)
+     │     │   actions: focus, tap
+     │     │   flags: isButton, hasEnabledState, isEnabled, isHidden,
+     │     │     isFocusable, hasSelectedState
+     │     │   HIDDEN
+     │     │   label: "新建提醒"
+     │     │   textDirection: ltr
+     │     │
+     │     ├─SemanticsNode#24
+     │     │   Rect.fromLTRB(473.6, 1347.1, 582.0, 1387.1)
+     │     │   actions: focus, tap
+     │     │   flags: isButton, hasEnabledState, isEnabled, isHidden,
+     │     │     isFocusable, hasSelectedState
+     │     │   HIDDEN
+     │     │   label: "车辆管理"
+     │     │   textDirection: ltr
+     │     │
+     │     ├─SemanticsNode#25
+     │     │   Rect.fromLTRB(588.0, 1347.1, 724.6, 1387.1)
+     │     │   actions: focus, tap
+     │     │   flags: isButton, hasEnabledState, isEnabled, isHidden,
+     │     │     isFocusable, hasSelectedState
+     │     │   HIDDEN
+     │     │   label: "园林器械维修"
+     │     │   textDirection: ltr
+     │     │
+     │     ├─SemanticsNode#26
+     │     │   Rect.fromLTRB(16.0, 1387.1, 152.6, 1427.1)
+     │     │   actions: focus, tap
+     │     │   flags: isButton, hasEnabledState, isEnabled, isHidden,
+     │     │     isFocusable, hasSelectedState
+     │     │   HIDDEN
+     │     │   label: "年度油耗汇总"
+     │     │   textDirection: ltr
+     │     │
+     │     └─SemanticsNode#47
+     │         Rect.fromLTRB(16.0, 1439.1, 784.0, 1515.1)
+     │         actions: focus, tap
+     │         flags: isButton, hasEnabledState, isEnabled, isHidden,
+     │           isFocusable, hasSelectedState
+     │         HIDDEN
+     │         label:
+     │           "待办提醒
+     │           当前有 0 项待处理"
+     │         textDirection: ltr
+     │
+     └─SemanticsNode#27
+       │ Rect.fromLTRB(0.0, 522.0, 800.0, 600.0)
+       │ role: tabBar
+       │
+       ├─SemanticsNode#28
+       │   merge boundary ⛔️
+       │   Rect.fromLTRB(0.0, 0.0, 160.0, 78.0)
+       │   actions: focus, tap
+       │   flags: isSelected, isButton, hasEnabledState, isEnabled,
+       │     isFocusable, hasSelectedState
+       │   traversalParentIdentifier: _OverlayPortalState#fbca4
+       │   label:
+       │     "首页
+       │     第 1 个标签，共 5 个"
+       │   textDirection: ltr
+       │   role: tab
+       │
+       ├─SemanticsNode#29
+       │   merge boundary ⛔️
+       │   Rect.fromLTRB(160.0, 0.0, 320.0, 78.0)
+       │   actions: focus, tap
+       │   flags: isButton, hasEnabledState, isEnabled, isFocusable,
+       │     hasSelectedState
+       │   traversalParentIdentifier: _OverlayPortalState#01bb6
+       │   label:
+       │     "人员
+       │     第 2 个标签，共 5 个"
+       │   textDirection: ltr
+       │   role: tab
+       │
+       ├─SemanticsNode#30
+       │   merge boundary ⛔️
+       │   Rect.fromLTRB(320.0, 0.0, 480.0, 78.0)
+       │   actions: focus, tap
+       │   flags: isButton, hasEnabledState, isEnabled, isFocusable,
+       │     hasSelectedState
+       │   traversalParentIdentifier: _OverlayPortalState#d1a7c
+       │   label:
+       │     "考勤
+       │     第 3 个标签，共 5 个"
+       │   textDirection: ltr
+       │   role: tab
+       │
+       ├─SemanticsNode#31
+       │   merge boundary ⛔️
+       │   Rect.fromLTRB(480.0, 0.0, 640.0, 78.0)
+       │   actions: focus, tap
+       │   flags: isButton, hasEnabledState, isEnabled, isFocusable,
+       │     hasSelectedState
+       │   traversalParentIdentifier: _OverlayPortalState#89f34
+       │   label:
+       │     "汇总
+       │     第 4 个标签，共 5 个"
+       │   textDirection: ltr
+       │   role: tab
+       │
+       └─SemanticsNode#32
+           merge boundary ⛔️
+           Rect.fromLTRB(640.0, 0.0, 800.0, 78.0)
+           actions: focus, tap
+           flags: isButton, hasEnabledState, isEnabled, isFocusable,
+             hasSelectedState
+           traversalParentIdentifier: _OverlayPortalState#f9acd
+           label:
+             "我的
+             第 5 个标签，共 5 个"
+           textDirection: ltr
+           role: tab
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running a test:
+A SemanticsHandle was active at the end of the test.
+All SemanticsHandle instances must be disposed by calling dispose() on the SemanticsHandle.
+
+When the exception was thrown, this was the stack:
+#0      WidgetTester._verifySemanticsHandlesWereDisposed (package:flutter_test/src/widget_tester.dart:1074:7)
+#1      WidgetTester._endOfTestVerifications (package:flutter_test/src/widget_tester.dart:1063:5)
+#2      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1969:22)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+The test description was:
+  starts on the home tab with five destinations
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +0 -1: starts on the home tab with five destinations [E]
+  Test failed. See exception logs above.
+  The test description was: starts on the home tab with five destinations
+  
+00:01 +0 -1: navigates personnel overview cards to filtered lists
+OVERVIEW_DIAGNOSTIC uri=/personnel initialHireMonth=2026-10 hireMonthFilter=2026-10 hireMonthHasListeners=true personnelListHasListeners=true
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: '2026-10'
+  Actual: <null>
+   Which: not an <Instance of 'String'>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///D:/QingSongBan/test/widget_test.dart:507:5)
+<asynchronous suspension>
+#5      main.widgetTest.<anonymous closure> (file:///D:/QingSongBan/test/widget_test.dart:52:9)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///D:/QingSongBan/test/widget_test.dart line 507
+The test description was:
+  navigates personnel overview cards to filtered lists
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:03 +0 -2: navigates personnel overview cards to filtered lists [E]
+  Test failed. See exception logs above.
+  The test description was: navigates personnel overview cards to filtered lists
+  
+00:03 +0 -2: Some tests failed.
+
+Failing tests:
+  D:/QingSongBan/test/widget_test.dart: navigates personnel overview cards to filtered lists
+  D:/QingSongBan/test/widget_test.dart: starts on the home tab with five destinations

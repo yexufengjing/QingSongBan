@@ -1,0 +1,14 @@
+01_人员管理首页.png: decoded
+02_人员名单.png: decoded
+03_人员档案.png: decoded
+04_每日考勤.png: decoded
+05_月考勤表.png: decoded
+06_月度汇总.png: decoded
+07_首页业务看板.png: unrecognized data stream contents when reading image file
+08_人员详情附件区.png: unrecognized data stream contents when reading image file
+09_人员统一附件中心.png: unrecognized data stream contents when reading image file
+10_考勤功能入口.png: unrecognized data stream contents when reading image file
+11_离职登记附件状态.png: unrecognized data stream contents when reading image file
+12_保险变更附件状态.png: unrecognized data stream contents when reading image file
+13_月度汇总直接导出.png: unrecognized data stream contents when reading image file
+14_设置功能入口.png: unrecognized data stream contents when reading image file

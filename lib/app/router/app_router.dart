@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/database/database_enums.dart';
@@ -41,6 +42,7 @@ import '../../features/payroll/presentation/wage_job_settings_page.dart';
 import '../../features/item_distribution/presentation/item_distribution_page.dart';
 import '../../features/inventory/inventory_routes.dart';
 import '../../features/settings/presentation/settings_page.dart';
+import '../../features/vehicles/application/vehicle_providers.dart';
 import '../../features/vehicles/presentation/vehicle_detail_page.dart';
 import '../../features/vehicles/presentation/vehicle_archive_page.dart';
 import '../../features/vehicles/presentation/vehicle_reminder_page.dart';
@@ -48,7 +50,9 @@ import '../../features/vehicles/presentation/vehicle_fuel_summary_page.dart';
 import '../../features/vehicles/presentation/vehicle_attachments_page.dart';
 import '../../features/vehicles/presentation/vehicle_form_page.dart';
 import '../../features/vehicles/presentation/vehicle_page.dart';
+import '../../features/vehicles/presentation/vehicle_repair_detail_page.dart';
 import '../../features/vehicles/presentation/vehicle_repair_form_page.dart';
+import '../../features/vehicles/presentation/vehicle_repair_list_page.dart';
 import '../../features/garden_tool_repairs/domain/repair_models.dart';
 import '../../features/garden_tool_repairs/presentation/garden_tool_repair_attachments_page.dart';
 import '../../features/garden_tool_repairs/presentation/garden_tool_repair_analysis_page.dart';
@@ -454,7 +458,26 @@ final GoRouter appRouter = GoRouter(
                 GoRoute(
                   path: 'excel',
                   name: 'excel',
-                  builder: (context, state) => const ExcelPage(),
+                  builder: (context, state) {
+                    final parts = state.uri.queryParameters['month']?.split(
+                      '-',
+                    );
+                    final year = parts != null && parts.length == 2
+                        ? int.tryParse(parts[0])
+                        : null;
+                    final month = parts != null && parts.length == 2
+                        ? int.tryParse(parts[1])
+                        : null;
+                    return ExcelPage(
+                      initialMonth:
+                          year != null &&
+                              month != null &&
+                              month >= 1 &&
+                              month <= 12
+                          ? DateTime(year, month)
+                          : null,
+                    );
+                  },
                 ),
                 GoRoute(
                   path: 'reminders',
@@ -588,6 +611,37 @@ final GoRouter appRouter = GoRouter(
       },
     ),
     GoRoute(
+      path: '/vehicles/repairs',
+      name: 'vehicle-repairs',
+      builder: (context, state) => const VehicleRepairListPage(),
+    ),
+    GoRoute(
+      path: '/vehicles/repairs/:repairOrderId',
+      name: 'vehicle-repair-detail',
+      builder: (context, state) {
+        final repairOrderId = int.tryParse(
+          state.pathParameters['repairOrderId'] ?? '',
+        );
+        if (repairOrderId == null) {
+          return const Scaffold(body: Center(child: Text('无效的维修单编号')));
+        }
+        return VehicleRepairDetailPage(repairOrderId: repairOrderId);
+      },
+    ),
+    GoRoute(
+      path: '/vehicles/repairs/:repairOrderId/edit',
+      name: 'vehicle-repair-edit',
+      builder: (context, state) {
+        final repairOrderId = int.tryParse(
+          state.pathParameters['repairOrderId'] ?? '',
+        );
+        if (repairOrderId == null) {
+          return const Scaffold(body: Center(child: Text('无效的维修单编号')));
+        }
+        return _VehicleRepairEditRoute(repairOrderId: repairOrderId);
+      },
+    ),
+    GoRoute(
       path: '/vehicles',
       name: 'vehicles',
       builder: (context, state) => const VehiclePage(),
@@ -686,6 +740,48 @@ final GoRouter appRouter = GoRouter(
     ),
   ],
 );
+
+class _VehicleRepairEditRoute extends ConsumerStatefulWidget {
+  const _VehicleRepairEditRoute({required this.repairOrderId});
+
+  final int repairOrderId;
+
+  @override
+  ConsumerState<_VehicleRepairEditRoute> createState() =>
+      _VehicleRepairEditRouteState();
+}
+
+class _VehicleRepairEditRouteState
+    extends ConsumerState<_VehicleRepairEditRoute> {
+  late final Future<int?> _vehicleIdFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _vehicleIdFuture = ref
+        .read(repairRepositoryProvider)
+        .findById(widget.repairOrderId)
+        .then((order) => order?.vehicleId);
+  }
+
+  @override
+  Widget build(BuildContext context) => FutureBuilder<int?>(
+    future: _vehicleIdFuture,
+    builder: (context, snapshot) {
+      if (snapshot.connectionState != ConnectionState.done) {
+        return const Scaffold(body: Center(child: CircularProgressIndicator()));
+      }
+      final vehicleId = snapshot.data;
+      if (vehicleId == null) {
+        return const Scaffold(body: Center(child: Text('维修单不存在或已删除')));
+      }
+      return VehicleRepairFormPage(
+        vehicleId: vehicleId,
+        repairOrderId: widget.repairOrderId,
+      );
+    },
+  );
+}
 
 EmployeeStatus? _employeeStatusFromQuery(String? value) {
   return switch (value) {
