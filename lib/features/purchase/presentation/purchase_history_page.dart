@@ -110,174 +110,201 @@ class _PurchaseHistoryPageState extends ConsumerState<PurchaseHistoryPage> {
         .map((row) => row.requestId)
         .toSet()
         .length;
-    return Scaffold(
-      appBar: AppBar(title: const Text('采购历史')),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-            child: Column(
-              children: [
-                TextField(
-                  key: const Key('purchase-history-search'),
-                  controller: _search,
-                  onChanged: (value) =>
-                      setState(() => _filter = _nextFilter(keyword: value)),
-                  decoration: InputDecoration(
-                    hintText: '搜索物资名称 / 型号 / OA编号',
-                    prefixIcon: const Icon(Icons.search),
-                    suffixIcon: _filter.keyword.isEmpty
-                        ? null
-                        : IconButton(
-                            onPressed: () {
-                              _search.clear();
-                              setState(
-                                () => _filter = _nextFilter(keyword: ''),
-                              );
+    return PurchasePageTheme(
+      child: Scaffold(
+        appBar: AppBar(title: const Text('采购历史')),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+              child: Column(
+                children: [
+                  TextField(
+                    key: const Key('purchase-history-search'),
+                    controller: _search,
+                    onChanged: (value) =>
+                        setState(() => _filter = _nextFilter(keyword: value)),
+                    decoration: InputDecoration(
+                      hintText: '搜索物资名称 / 型号 / OA编号',
+                      prefixIcon: const Icon(Icons.search),
+                      suffixIcon: _filter.keyword.isEmpty
+                          ? null
+                          : IconButton(
+                              onPressed: () {
+                                _search.clear();
+                                setState(
+                                  () => _filter = _nextFilter(keyword: ''),
+                                );
+                              },
+                              icon: const Icon(Icons.close),
+                            ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  SegmentedButton<PurchaseHistoryMode>(
+                    expandedInsets: EdgeInsets.zero,
+                    segments: const [
+                      ButtonSegment(
+                        value: PurchaseHistoryMode.byRequest,
+                        label: Text('按记录'),
+                      ),
+                      ButtonSegment(
+                        value: PurchaseHistoryMode.byMaterial,
+                        label: Text('按物资'),
+                      ),
+                    ],
+                    selected: {_filter.mode},
+                    onSelectionChanged: (value) => setState(
+                      () => _filter = _nextFilter(mode: value.single),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        for (final (index, preset) in const [
+                          ('month', '本月'),
+                          ('3m', '近3个月'),
+                          ('year', '本年度'),
+                          ('custom', '自定义'),
+                        ].indexed) ...[
+                          if (index > 0) const SizedBox(width: 8),
+                          ChoiceChip(
+                            label: Text(preset.$2),
+                            selected: preset.$2 == _periodLabel,
+                            selectedColor: const Color(0xFF00A86B),
+                            labelStyle: TextStyle(
+                              color: preset.$2 == _periodLabel
+                                  ? Colors.white
+                                  : const Color(0xFF425D7F),
+                            ),
+                            onSelected: (_) {
+                              if (preset.$1 == 'custom') {
+                                _selectDateRange();
+                              } else {
+                                setState(() => _applyPreset(preset.$1));
+                              }
                             },
-                            icon: const Icon(Icons.close),
                           ),
+                        ],
+                        const SizedBox(width: 8),
+                        PopupMenuButton<String>(
+                          tooltip: '更多日期范围',
+                          onSelected: (value) =>
+                              setState(() => _applyPreset(value)),
+                          itemBuilder: (context) => const [
+                            PopupMenuItem(value: 'all', child: Text('全部日期')),
+                          ],
+                          child: const Chip(
+                            avatar: Icon(Icons.tune, size: 18),
+                            label: Text('筛选'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 6,
+                    runSpacing: 6,
+                    children: [
+                      PopupMenuButton<String>(
+                        onSelected: (value) => setState(() {
+                          _purchaser = value == '__all__' ? null : value;
+                          _filter = _nextFilter(
+                            purchaserName: _purchaser,
+                            clearPurchaser: _purchaser == null,
+                          );
+                        }),
+                        itemBuilder: (context) => [
+                          const PopupMenuItem(
+                            value: '__all__',
+                            child: Text('所有执行人'),
+                          ),
+                          for (final person in purchasers)
+                            PopupMenuItem(value: person, child: Text(person)),
+                        ],
+                        child: Chip(
+                          avatar: const Icon(Icons.person_outline, size: 18),
+                          label: Text(_purchaser ?? '执行人'),
+                        ),
+                      ),
+                      PopupMenuButton<String>(
+                        onSelected: (value) => setState(() {
+                          final status = value == '__all__'
+                              ? <PurchaseStatus>{}
+                              : {PurchaseStatus.parse(value)};
+                          _filter = _nextFilter(historyStatus: status);
+                        }),
+                        itemBuilder: (context) => [
+                          const PopupMenuItem(
+                            value: '__all__',
+                            child: Text('全部状态'),
+                          ),
+                          for (final status in PurchaseStatus.values)
+                            PopupMenuItem(
+                              value: status.storageValue,
+                              child: Text(status.label),
+                            ),
+                        ],
+                        child: const Chip(
+                          avatar: Icon(Icons.filter_alt_outlined, size: 18),
+                          label: Text('状态筛选'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            if (allPeople.valueOrNull != null)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+                child: PurchasePanel(
+                  padding: const EdgeInsets.all(12),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: PurchaseMetricTile(
+                          label: '本年度申报',
+                          value: '$appliedCount 次',
+                          color: const Color(0xFF1677FF),
+                          icon: Icons.description_outlined,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: PurchaseMetricTile(
+                          label: '完成入库',
+                          value: '$completedCount 次',
+                          color: const Color(0xFF00A85D),
+                          icon: Icons.inventory_2_outlined,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 8),
-                SegmentedButton<PurchaseHistoryMode>(
-                  segments: const [
-                    ButtonSegment(
-                      value: PurchaseHistoryMode.byRequest,
-                      label: Text('按记录'),
-                    ),
-                    ButtonSegment(
-                      value: PurchaseHistoryMode.byMaterial,
-                      label: Text('按物资'),
-                    ),
-                  ],
-                  selected: {_filter.mode},
-                  onSelectionChanged: (value) =>
-                      setState(() => _filter = _nextFilter(mode: value.single)),
+              ),
+            Expanded(
+              child: history.when(
+                loading: () => const PurchaseLoadingState(),
+                error: (error, stack) => PurchaseErrorState(
+                  onRetry: () =>
+                      ref.invalidate(purchaseHistoryByFilterProvider(_filter)),
                 ),
-                const SizedBox(height: 8),
-                Wrap(
-                  spacing: 6,
-                  runSpacing: 6,
-                  children: [
-                    PopupMenuButton<String>(
-                      onSelected: (value) {
-                        if (value == 'custom') {
-                          _selectDateRange();
-                        } else {
-                          setState(() => _applyPreset(value));
-                        }
-                      },
-                      itemBuilder: (context) => const [
-                        PopupMenuItem(value: 'month', child: Text('本月')),
-                        PopupMenuItem(value: '3m', child: Text('近3个月')),
-                        PopupMenuItem(value: 'year', child: Text('本年度')),
-                        PopupMenuItem(value: 'all', child: Text('全部日期')),
-                        PopupMenuItem(value: 'custom', child: Text('自定义')),
-                      ],
-                      child: Chip(
-                        avatar: const Icon(
-                          Icons.calendar_month_outlined,
-                          size: 18,
-                        ),
-                        label: Text(_periodLabel),
-                      ),
-                    ),
-                    PopupMenuButton<String>(
-                      onSelected: (value) => setState(() {
-                        _purchaser = value == '__all__' ? null : value;
-                        _filter = _nextFilter(
-                          purchaserName: _purchaser,
-                          clearPurchaser: _purchaser == null,
-                        );
-                      }),
-                      itemBuilder: (context) => [
-                        const PopupMenuItem(
-                          value: '__all__',
-                          child: Text('所有执行人'),
-                        ),
-                        for (final person in purchasers)
-                          PopupMenuItem(value: person, child: Text(person)),
-                      ],
-                      child: Chip(
-                        avatar: const Icon(Icons.person_outline, size: 18),
-                        label: Text(_purchaser ?? '执行人'),
-                      ),
-                    ),
-                    PopupMenuButton<String>(
-                      onSelected: (value) => setState(() {
-                        final status = value == '__all__'
-                            ? <PurchaseStatus>{}
-                            : {PurchaseStatus.parse(value)};
-                        _filter = _nextFilter(historyStatus: status);
-                      }),
-                      itemBuilder: (context) => [
-                        const PopupMenuItem(
-                          value: '__all__',
-                          child: Text('全部状态'),
-                        ),
-                        for (final status in PurchaseStatus.values)
-                          PopupMenuItem(
-                            value: status.storageValue,
-                            child: Text(status.label),
-                          ),
-                      ],
-                      child: const Chip(
-                        avatar: Icon(Icons.filter_alt_outlined, size: 18),
-                        label: Text('状态筛选'),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          if (allPeople.valueOrNull != null)
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-              child: PurchasePanel(
-                padding: const EdgeInsets.all(12),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: PurchaseMetricTile(
-                        label: '本年度申报',
-                        value: '$appliedCount 次',
-                        color: const Color(0xFF1677FF),
-                        icon: Icons.description_outlined,
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: PurchaseMetricTile(
-                        label: '完成入库',
-                        value: '$completedCount 次',
-                        color: const Color(0xFF00A85D),
-                        icon: Icons.inventory_2_outlined,
-                      ),
-                    ),
-                  ],
-                ),
+                data: (rows) => rows.isEmpty
+                    ? const PurchaseEmptyState(
+                        title: '暂无采购历史',
+                        message: '完成采购入库后，将自动形成历史记录。',
+                      )
+                    : _filter.mode == PurchaseHistoryMode.byRequest
+                    ? _buildRequestHistory(rows)
+                    : _buildMaterialHistory(rows),
               ),
             ),
-          Expanded(
-            child: history.when(
-              loading: () => const PurchaseLoadingState(),
-              error: (error, stack) => PurchaseErrorState(
-                onRetry: () =>
-                    ref.invalidate(purchaseHistoryByFilterProvider(_filter)),
-              ),
-              data: (rows) => rows.isEmpty
-                  ? const PurchaseEmptyState(
-                      title: '暂无采购历史',
-                      message: '完成采购入库后，将自动形成历史记录。',
-                    )
-                  : _filter.mode == PurchaseHistoryMode.byRequest
-                  ? _buildRequestHistory(rows)
-                  : _buildMaterialHistory(rows),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

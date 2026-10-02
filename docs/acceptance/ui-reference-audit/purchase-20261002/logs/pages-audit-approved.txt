@@ -1,0 +1,16 @@
+00:00 +0: loading D:/QingSongBan/test/purchase/purchase_pages_test.dart
+00:00 +0: D:/QingSongBan/test/purchase/purchase_pages_test.dart: (setUpAll)
+00:00 +0: D:/QingSongBan/test/purchase/purchase_pages_test.dart: all nine purchase pages render with in-memory records at phone and tablet sizes
+00:08 +1: D:/QingSongBan/test/purchase/purchase_pages_test.dart: (tearDownAll)
+00:08 +1: loading D:/QingSongBan/test/purchase/purchase_ui_audit_test.dart
+00:09 +1: D:/QingSongBan/test/purchase/purchase_ui_audit_test.dart: (setUpAll)
+00:09 +1: D:/QingSongBan/test/purchase/purchase_ui_audit_test.dart: 库存选择、手动新增和重复采购弹窗保留真实操作
+00:13 +2: D:/QingSongBan/test/purchase/purchase_ui_audit_test.dart: OA确认、跟踪分配和通知弹窗显示字段并真实更新采购状态
+00:17 +3: D:/QingSongBan/test/purchase/purchase_ui_audit_test.dart: 详情编辑、状态菜单、跳步与删除确认保留业务语义
+00:18 +4: D:/QingSongBan/test/purchase/purchase_ui_audit_test.dart: 入库正常、超量、历史补录和停用物资三种处理均写入数据库
+00:20 +5: D:/QingSongBan/test/purchase/purchase_ui_audit_test.dart: 历史筛选菜单、物资历史周期和再次申报入口可操作
+00:22 +6: D:/QingSongBan/test/purchase/purchase_ui_audit_test.dart: 入库改选现有库存与新建库存分支均更新关联和库存
+00:23 +7: D:/QingSongBan/test/purchase/purchase_ui_audit_test.dart: 320窄屏、大字号、键盘遮挡和长文本手动物资仍可录入
+00:24 +8: D:/QingSongBan/test/purchase/purchase_ui_audit_test.dart: 采购提醒新建和修改使用真实路由并能正常返回
+00:26 +9: D:/QingSongBan/test/purchase/purchase_ui_audit_test.dart: (tearDownAll)
+00:26 +9: All tests passed!

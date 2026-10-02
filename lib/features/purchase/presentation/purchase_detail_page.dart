@@ -16,59 +16,67 @@ class PurchaseDetailPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final value = ref.watch(purchaseDetailProvider(requestId));
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('采购详情'),
-        actions: [
-          PopupMenuButton<String>(
-            tooltip: '调整状态',
-            icon: const Icon(Icons.more_horiz),
-            onSelected: (item) => item == 'delete'
-                ? _softDelete(context, ref, value.valueOrNull)
-                : _changeStatus(
-                    context,
-                    ref,
-                    value.valueOrNull,
-                    PurchaseStatus.parse(item),
+    return PurchasePageTheme(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('采购详情'),
+          actions: [
+            PopupMenuButton<String>(
+              tooltip: '调整状态',
+              icon: const Icon(Icons.more_horiz),
+              onSelected: (item) => item == 'delete'
+                  ? _softDelete(context, ref, value.valueOrNull)
+                  : _changeStatus(
+                      context,
+                      ref,
+                      value.valueOrNull,
+                      PurchaseStatus.parse(item),
+                    ),
+              itemBuilder: (context) => [
+                for (final status in PurchaseStatus.values)
+                  PopupMenuItem(
+                    value: status.storageValue,
+                    child: Text('设为${status.label}'),
                   ),
-            itemBuilder: (context) => [
-              for (final status in PurchaseStatus.values)
-                PopupMenuItem(
-                  value: status.storageValue,
-                  child: Text('设为${status.label}'),
-                ),
-              if (value.valueOrNull?.stockEntries.isEmpty == true)
-                const PopupMenuItem(value: 'delete', child: Text('删除采购记录')),
-            ],
-          ),
-        ],
-      ),
-      body: value.when(
-        loading: () => const PurchaseLoadingState(),
-        error: (error, stack) => PurchaseErrorState(
-          onRetry: () => ref.invalidate(purchaseDetailProvider(requestId)),
-        ),
-        data: (detail) => detail == null
-            ? const PurchaseEmptyState(title: '采购记录不存在', message: '该记录可能已被删除。')
-            : _DetailBody(detail: detail),
-      ),
-      bottomNavigationBar: value.valueOrNull == null
-          ? null
-          : SafeArea(
-              top: false,
-              minimum: const EdgeInsets.fromLTRB(14, 10, 14, 12),
-              child: _DetailActions(
-                detail: value.valueOrNull!,
-                onEdit: () => _editMetadata(context, ref, value.valueOrNull!),
-                onApplied: () =>
-                    _confirmApplied(context, ref, value.valueOrNull!),
-                onAssign: () => _assign(context, ref, value.valueOrNull!),
-                onReceive: () =>
-                    _markPendingReceive(context, ref, value.valueOrNull!),
-                onStockIn: () =>
-                    context.push(PurchaseRoutes.stockIn(requestId)),
-              ),
+                if (value.valueOrNull?.stockEntries.isEmpty == true)
+                  const PopupMenuItem(value: 'delete', child: Text('删除采购记录')),
+              ],
             ),
+          ],
+        ),
+        body: value.when(
+          loading: () => const PurchaseLoadingState(),
+          error: (error, stack) => PurchaseErrorState(
+            onRetry: () => ref.invalidate(purchaseDetailProvider(requestId)),
+          ),
+          data: (detail) => detail == null
+              ? const PurchaseEmptyState(
+                  title: '采购记录不存在',
+                  message: '该记录可能已被删除。',
+                )
+              : _DetailBody(
+                  detail: detail,
+                  onEdit: () => _editMetadata(context, ref, detail),
+                ),
+        ),
+        bottomNavigationBar: value.valueOrNull == null
+            ? null
+            : SafeArea(
+                top: false,
+                minimum: const EdgeInsets.fromLTRB(14, 10, 14, 12),
+                child: _DetailActions(
+                  detail: value.valueOrNull!,
+                  onEdit: () => _editMetadata(context, ref, value.valueOrNull!),
+                  onApplied: () =>
+                      _confirmApplied(context, ref, value.valueOrNull!),
+                  onAssign: () => _assign(context, ref, value.valueOrNull!),
+                  onReceive: () =>
+                      _markPendingReceive(context, ref, value.valueOrNull!),
+                  onStockIn: () =>
+                      context.push(PurchaseRoutes.stockIn(requestId)),
+                ),
+              ),
+      ),
     );
   }
 
@@ -85,6 +93,7 @@ class PurchaseDetailPage extends ConsumerWidget {
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
+      backgroundColor: Colors.white,
       builder: (context) => PurchaseSheetResources(
         resources: [oaNo, oaTitle, oaUrl],
         child: _DateTextSheet(
@@ -147,6 +156,7 @@ class PurchaseDetailPage extends ConsumerWidget {
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
+      backgroundColor: Colors.white,
       builder: (context) => PurchaseSheetResources(
         resources: [department, purchaser],
         child: _DateTextSheet(
@@ -200,6 +210,7 @@ class PurchaseDetailPage extends ConsumerWidget {
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
+      backgroundColor: Colors.white,
       builder: (context) => PurchaseSheetResources(
         resources: [location],
         child: _DateTextSheet(
@@ -263,6 +274,7 @@ class PurchaseDetailPage extends ConsumerWidget {
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
+      backgroundColor: Colors.white,
       builder: (sheetContext) => PurchaseSheetResources(
         resources: [
           title,
@@ -301,6 +313,7 @@ class PurchaseDetailPage extends ConsumerWidget {
                     const SizedBox(height: 12),
                     Expanded(
                       child: ListView(
+                        padding: const EdgeInsets.only(top: 8),
                         children: [
                           TextField(
                             controller: title,
@@ -476,23 +489,25 @@ class PurchaseDetailPage extends ConsumerWidget {
         !skipped ||
         await showDialog<bool>(
               context: context,
-              builder: (context) => AlertDialog(
-                title: const Text('确认跳过采购状态'),
-                content: Text(
-                  target == PurchaseStatus.stocked
-                      ? '这只会将采购状态改为已入库，不会增加库存或创建库存流水。确定继续吗？'
-                      : '当前操作将跳过部分采购状态，是否继续？',
+              builder: (context) => PurchasePageTheme(
+                child: AlertDialog(
+                  title: const Text('确认跳过采购状态'),
+                  content: Text(
+                    target == PurchaseStatus.stocked
+                        ? '这只会将采购状态改为已入库，不会增加库存或创建库存流水。确定继续吗？'
+                        : '当前操作将跳过部分采购状态，是否继续？',
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, false),
+                      child: const Text('取消'),
+                    ),
+                    FilledButton(
+                      onPressed: () => Navigator.pop(context, true),
+                      child: const Text('继续'),
+                    ),
+                  ],
                 ),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context, false),
-                    child: const Text('取消'),
-                  ),
-                  FilledButton(
-                    onPressed: () => Navigator.pop(context, true),
-                    child: const Text('继续'),
-                  ),
-                ],
               ),
             ) ==
             true;
@@ -522,19 +537,21 @@ class PurchaseDetailPage extends ConsumerWidget {
     if (detail == null) return;
     final confirmed = await showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('删除采购记录'),
-        content: const Text('确认将这条未入库采购记录移入回收状态？'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('取消'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text('确认删除'),
-          ),
-        ],
+      builder: (context) => PurchasePageTheme(
+        child: AlertDialog(
+          title: const Text('删除采购记录'),
+          content: const Text('确认将这条未入库采购记录移入回收状态？'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('取消'),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: const Text('确认删除'),
+            ),
+          ],
+        ),
       ),
     );
     if (confirmed != true) return;
@@ -550,8 +567,9 @@ class PurchaseDetailPage extends ConsumerWidget {
 }
 
 class _DetailBody extends StatelessWidget {
-  const _DetailBody({required this.detail});
+  const _DetailBody({required this.detail, required this.onEdit});
   final PurchaseRequestDetail detail;
+  final VoidCallback onEdit;
 
   @override
   Widget build(BuildContext context) => ListView(
@@ -576,10 +594,16 @@ class _DetailBody extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(height: 8),
-                  for (final item in detail.items)
+                  for (final item in detail.items) ...[
                     Text(
-                      '${item.itemName} · ${item.specification ?? '无规格'} · ${purchaseQuantityLabel(item.requestQuantity)} ${item.unit}',
+                      item.itemName,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
+                    Text('型号：${item.specification ?? '无规格'}'),
+                    Text(
+                      '申报数量：${purchaseQuantityLabel(item.requestQuantity)} ${item.unit}',
+                    ),
+                  ],
                   if (detail.summary.appliedDate != null)
                     Text(
                       'OA申报日期：${purchaseShortDateLabel(detail.summary.appliedDate)}',
@@ -596,12 +620,12 @@ class _DetailBody extends StatelessWidget {
         ),
       ),
       const SizedBox(height: 14),
-      const PurchaseSectionHeading('申报信息'),
-      const SizedBox(height: 8),
       PurchasePanel(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const PurchaseSectionHeading('申报信息'),
+            const SizedBox(height: 10),
             _InfoRow('需求原因', detail.demandReason),
             _InfoRow('创建日期', purchaseDateLabel(detail.summary.requestDate)),
             _InfoRow('OA申报日期', purchaseDateLabel(detail.summary.appliedDate)),
@@ -623,12 +647,20 @@ class _DetailBody extends StatelessWidget {
         ),
       ),
       const SizedBox(height: 14),
-      const PurchaseSectionHeading('采购执行信息'),
-      const SizedBox(height: 8),
       PurchasePanel(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            PurchaseSectionHeading(
+              '采购执行信息',
+              trailing: TextButton.icon(
+                key: const Key('purchase-detail-edit-execution'),
+                onPressed: onEdit,
+                icon: const Icon(Icons.edit_outlined, size: 18),
+                label: const Text('编辑'),
+              ),
+            ),
+            const SizedBox(height: 10),
             _InfoRow('采购分部', detail.purchaseDepartment),
             _InfoRow('采购执行人', detail.summary.purchaserName),
             _InfoRow('分配日期', purchaseDateLabel(detail.summary.assignedDate)),
@@ -642,11 +674,12 @@ class _DetailBody extends StatelessWidget {
         ),
       ),
       const SizedBox(height: 14),
-      const PurchaseSectionHeading('采购进度'),
-      const SizedBox(height: 8),
       PurchasePanel(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const PurchaseSectionHeading('采购进度'),
+            const SizedBox(height: 10),
             if (detail.statusLogs.isEmpty) const Text('暂无状态变更记录'),
             for (final (index, log) in detail.statusLogs.indexed)
               _TimelineRow(
@@ -664,13 +697,14 @@ class _DetailBody extends StatelessWidget {
         ),
       ),
       const SizedBox(height: 14),
-      const PurchaseSectionHeading('物资明细'),
-      const SizedBox(height: 8),
-      for (final item in detail.items) ...[
-        PurchasePanel(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+      PurchasePanel(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const PurchaseSectionHeading('物资明细'),
+            const SizedBox(height: 10),
+            for (final (index, item) in detail.items.indexed) ...[
+              if (index > 0) const Divider(height: 22),
               Text(
                 item.itemName,
                 style: Theme.of(context).textTheme.titleLarge,
@@ -678,21 +712,38 @@ class _DetailBody extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
               Text('规格：${item.specification ?? '未填写'} · 单位：${item.unit}'),
-              const Divider(height: 18),
-              Wrap(
-                spacing: 14,
-                runSpacing: 8,
+              const SizedBox(height: 8),
+              Row(
                 children: [
-                  _QuantityInfo('申报数量', item.requestQuantity, item.unit),
-                  _QuantityInfo('已入库', item.receivedQuantity, item.unit),
-                  _QuantityInfo('剩余数量', item.remainingQuantity, item.unit),
+                  Expanded(
+                    child: _QuantityInfo(
+                      '申报数量',
+                      item.requestQuantity,
+                      item.unit,
+                    ),
+                  ),
+                  Expanded(
+                    child: _QuantityInfo(
+                      '已入库',
+                      item.receivedQuantity,
+                      item.unit,
+                      color: const Color(0xFF00A86B),
+                    ),
+                  ),
+                  Expanded(
+                    child: _QuantityInfo(
+                      '剩余数量',
+                      item.remainingQuantity,
+                      item.unit,
+                      color: const Color(0xFFFF8A1F),
+                    ),
+                  ),
                 ],
               ),
             ],
-          ),
+          ],
         ),
-        const SizedBox(height: 8),
-      ],
+      ),
     ],
   );
 }
@@ -774,8 +825,8 @@ class _TimelineRow extends StatelessWidget {
                 Icons.check_circle,
                 size: 20,
                 color: current
-                    ? const Color(0xFF00C16B)
-                    : const Color(0xFF93A4B7),
+                    ? const Color(0xFF1677FF)
+                    : const Color(0xFF00A86B),
               ),
               if (!last)
                 Expanded(
@@ -795,7 +846,7 @@ class _TimelineRow extends StatelessWidget {
                   '${purchaseShortDateLabel(log.changedAt)}  ${log.newStatus.label}',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     color: current
-                        ? const Color(0xFF0A8F53)
+                        ? const Color(0xFF1677FF)
                         : const Color(0xFF63758A),
                     fontWeight: current ? FontWeight.w700 : FontWeight.normal,
                   ),
@@ -868,10 +919,11 @@ class _InfoRow extends StatelessWidget {
 }
 
 class _QuantityInfo extends StatelessWidget {
-  const _QuantityInfo(this.label, this.value, this.unit);
+  const _QuantityInfo(this.label, this.value, this.unit, {this.color});
   final String label;
   final double value;
   final String unit;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) => Column(
@@ -880,7 +932,7 @@ class _QuantityInfo extends StatelessWidget {
       Text(label),
       Text(
         '${purchaseQuantityLabel(value)} $unit',
-        style: Theme.of(context).textTheme.titleLarge,
+        style: Theme.of(context).textTheme.titleLarge?.copyWith(color: color),
       ),
     ],
   );

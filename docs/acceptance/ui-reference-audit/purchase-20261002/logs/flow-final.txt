@@ -1,0 +1,7 @@
+00:00 +0: loading D:/QingSongBan/test/purchase/purchase_flow_test.dart
+00:00 +0: creates, applies with no purchaser, assigns, receives in two batches and protects stock history
+00:04 +1: manual item fields persist and reload when reopening the request editor
+00:05 +2: manual status correction and unreceived soft delete leave inventory untouched
+00:06 +3: reminder persistence failure leaves pending-receive request unchanged
+00:06 +4: notification sync failure preserves saved reminder source through later edit
+00:07 +5: All tests passed!

@@ -43,7 +43,7 @@ void main() {
       _testFontFamily = family;
     }
     final iconsFont = File(
-      r'D:\YoloList\_tooling\flutter\bin\cache\artifacts\material_fonts\materialicons-regular.otf',
+      r'D:\Flutter\bin\cache\artifacts\material_fonts\materialicons-regular.otf',
     );
     if (iconsFont.existsSync()) {
       final bytes = await iconsFont.readAsBytes();
@@ -190,7 +190,7 @@ void main() {
         (item) => item.id == freshMaterialId,
       );
       final screenshots = <(String, Widget Function(), Finder)>[
-        ('01_采购首页', () => const PurchaseHomePage(), find.text('待领取物资 8 把')),
+        ('01_采购首页', () => const PurchaseHomePage(), find.text('待领取物资')),
         (
           '02_新建采购',
           () => PurchaseCreatePage(
@@ -322,6 +322,35 @@ void main() {
               try {
                 await tester.pumpAndSettle();
                 await tester.runAsync(() => _capture(tester, entry.$1));
+                final lowerAreas = switch (index) {
+                  1 => <(String, Finder)>[
+                    ('下半区', find.textContaining('采购物资（')),
+                  ],
+                  4 => <(String, Finder)>[
+                    ('采购进度', find.text('采购进度')),
+                    ('物资明细', find.text('物资明细')),
+                  ],
+                  7 => <(String, Finder)>[
+                    (
+                      '下半区',
+                      find.byKey(Key('purchase-history-request-$receiveId')),
+                    ),
+                  ],
+                  8 => <(String, Finder)>[('下半区', find.text('历史采购记录'))],
+                  _ => const <(String, Finder)>[],
+                };
+                for (final (suffix, lowerArea) in lowerAreas) {
+                  await tester.scrollUntilVisible(
+                    lowerArea,
+                    280,
+                    scrollable: find.byType(Scrollable).first,
+                  );
+                  await tester.ensureVisible(lowerArea);
+                  await tester.pumpAndSettle();
+                  await tester.runAsync(
+                    () => _capture(tester, '${entry.$1}_$suffix'),
+                  );
+                }
               } finally {
                 debugDisableShadows = previousShadowSetting;
                 await tester.pump();
@@ -415,7 +444,7 @@ Future<void> _capture(WidgetTester tester, String name) async {
   image.dispose();
   if (png == null) return;
   final directory = Directory(
-    '${Directory.current.path}${Platform.pathSeparator}docs${Platform.pathSeparator}development${Platform.pathSeparator}采购管理模块_验收截图',
+    '${Directory.current.path}${Platform.pathSeparator}docs${Platform.pathSeparator}acceptance${Platform.pathSeparator}ui-reference-audit${Platform.pathSeparator}purchase-20261002',
   )..createSync(recursive: true);
   final filename = '${name.replaceAll('/', '_')}.png';
   await File('${directory.path}${Platform.pathSeparator}$filename')

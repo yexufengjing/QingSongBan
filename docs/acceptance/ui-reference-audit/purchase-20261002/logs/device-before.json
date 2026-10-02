@@ -1,0 +1,245 @@
+{
+  "schemaVersion": 22,
+  "tables": {
+    "app_settings": {
+      "count": 1,
+      "sha256": "51aa8159435fafa9dc04f4221d8be0445216d251b9cbcd1be78b07f86be6bd2a"
+    },
+    "attendance_group_members": {
+      "count": 10,
+      "sha256": "368729d7d4d247162e85f3b1ccd5a2a83a4e00c5ac536f8c3d9d016358644fbf"
+    },
+    "attendance_groups": {
+      "count": 3,
+      "sha256": "8faf95466c1423b04efacb566e0a7bcf7207392d92b048619cb143bee827d804"
+    },
+    "attendance_records": {
+      "count": 17,
+      "sha256": "d764f76acecf25f433428e2221beb159bebdfefb66d6ca61980fa68e6dc9a043"
+    },
+    "component_lifecycle_records": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "dictionary_items": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "employee_attachments": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "employee_wage_profiles": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "employees": {
+      "count": 11,
+      "sha256": "a108da00b1b1fe3269b552e9a83af1ec4fed2995189536a4487c9124c1534870"
+    },
+    "fuel_monthly_records": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "garden_tool_repair_attachments": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "garden_tool_repair_groups": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "garden_tool_repair_items": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "garden_tool_repair_persons": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "garden_tool_repair_units": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "insurance_change_records": {
+      "count": 1,
+      "sha256": "679ee7279bee5b9bdb8040aa60a49178acb2604b3f3432886b0f1f699741f450"
+    },
+    "insurance_profiles": {
+      "count": 10,
+      "sha256": "fc07115b9ea92958dcf7b4655e87216cb3c6388fa1a8664bd05d43a12c841648"
+    },
+    "inventory_categories": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "inventory_issue_items": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "inventory_issues": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "inventory_materials": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "inventory_receipt_items": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "inventory_receipts": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "inventory_replenishment_items": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "inventory_stocktake_items": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "inventory_stocktakes": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "inventory_transactions": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "item_distribution_batches": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "item_distribution_entries": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "item_distribution_settings": {
+      "count": 2,
+      "sha256": "4887af9258dd3cc86ffc2b472e5e08bf17b5d5dce49c71d873b9507b69401e5f"
+    },
+    "leave_records": {
+      "count": 4,
+      "sha256": "68c93d0d5653fe0b33db587a414b56fae99fb46bb528c36d3b7060fe4eac58ab"
+    },
+    "maintenance_records": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "maintenance_templates": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "manual_vehicle_expenses": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "monthly_attendance_rosters": {
+      "count": 15,
+      "sha256": "c2829bc6f1568afd00a72823420b3be74d3b02a41a5c174edb3e79d90e0e3638"
+    },
+    "monthly_attendance_summaries": {
+      "count": 10,
+      "sha256": "7a6e9f42737e587ac132a081353f84ad76f7f7a6b4e1fb647c243930fd530553"
+    },
+    "operation_logs": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "overtime_records": {
+      "count": 1,
+      "sha256": "9af6ca768c81c3d4cc1f5fae8252b64664b5d6a0c2db78d72fe2d0b6390d58c3"
+    },
+    "payroll_adjustments": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "payroll_batches": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "payroll_items": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "reminder_alert_rules": {
+      "count": 1,
+      "sha256": "fe136747438f7da8146da22812ae12157308d9d3dceb71b59df47c49a9dd1b9c"
+    },
+    "reminder_links": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "reminder_occurrences": {
+      "count": 1,
+      "sha256": "9f381371723fb235fb1795f09af91dddb02302d1f1f4752e075233742234a63c"
+    },
+    "reminders": {
+      "count": 3,
+      "sha256": "5791c5b466c6c8bfca457229c89bd05c2e3aeef0e0cef2ae4e46a46859b7f337"
+    },
+    "repair_cost_items": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "repair_orders": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "repair_parts": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "social_security_base_history": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "termination_records": {
+      "count": 1,
+      "sha256": "cc3b998cc15d558694c7b13582de9887ca454cc9ea8785e20fe2ae1170db17fe"
+    },
+    "tire_installations": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "tire_repairs": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "tires": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "vehicle_attachments": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "vehicle_condition_items": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "vehicle_condition_snapshots": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "vehicle_maintenance_items": {
+      "count": 4,
+      "sha256": "bef90b058c3054b914e76b58cf7983b8c832fe7c0032a13cd00a1b6f392c3ded"
+    },
+    "vehicles": {
+      "count": 2,
+      "sha256": "e1954f78f41378bd1c70aceddd8cfe07a6c43785e984ce0cde9062f36da2f85b"
+    },
+    "wage_job_types": {
+      "count": 6,
+      "sha256": "c076db284ab2fece7b51b90ab1bedbb09d43c99e689eb88ed43bcde27e1485f5"
+    },
+    "wage_rate_history": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

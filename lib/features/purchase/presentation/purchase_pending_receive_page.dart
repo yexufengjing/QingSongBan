@@ -35,78 +35,80 @@ class _PurchasePendingReceivePageState
   @override
   Widget build(BuildContext context) {
     final requests = ref.watch(purchaseRequestsByFilterProvider(_filter));
-    return Scaffold(
-      appBar: AppBar(title: const Text('待领取')),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
-            child: Column(
-              children: [
-                TextField(
-                  key: const Key('purchase-receive-search'),
-                  controller: _search,
-                  onChanged: (value) => setState(
-                    () => _filter = _filter.copyWith(keyword: value),
-                  ),
-                  decoration: const InputDecoration(
-                    hintText: '搜索物资名称 / 型号 / OA编号',
-                    prefixIcon: Icon(Icons.search),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                requests.when(
-                  loading: () => const LinearProgressIndicator(),
-                  error: (error, stack) => const SizedBox.shrink(),
-                  data: (items) => Row(
-                    children: [
-                      Expanded(
-                        child: PurchaseMetricTile(
-                          label: '待领取',
-                          value: '${items.length} 项',
-                          color: const Color(0xFFFF8A1F),
-                          icon: Icons.inventory_2_outlined,
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: PurchaseMetricTile(
-                          label: '已设置提醒',
-                          value:
-                              '${items.where((item) => item.hasReminder).length} 项',
-                          color: const Color(0xFF00A85D),
-                          icon: Icons.notifications_active_outlined,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: requests.when(
-              loading: () => const PurchaseLoadingState(),
-              error: (error, stack) => PurchaseErrorState(
-                onRetry: () =>
-                    ref.invalidate(purchaseRequestsByFilterProvider(_filter)),
-              ),
-              data: (items) => items.isEmpty
-                  ? const PurchaseEmptyState(
-                      title: '暂无待领取物资',
-                      message: '收到入厂通知后，可将采购记录设为待领取。',
-                    )
-                  : ListView.builder(
-                      padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
-                      itemCount: items.length,
-                      itemBuilder: (context, index) => Padding(
-                        padding: const EdgeInsets.only(bottom: 12),
-                        child: _ReceiveCard(request: items[index]),
-                      ),
+    return PurchasePageTheme(
+      child: Scaffold(
+        appBar: AppBar(title: const Text('待领取')),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+              child: Column(
+                children: [
+                  TextField(
+                    key: const Key('purchase-receive-search'),
+                    controller: _search,
+                    onChanged: (value) => setState(
+                      () => _filter = _filter.copyWith(keyword: value),
                     ),
+                    decoration: const InputDecoration(
+                      hintText: '搜索物资名称 / 型号 / OA编号',
+                      prefixIcon: Icon(Icons.search),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  requests.when(
+                    loading: () => const LinearProgressIndicator(),
+                    error: (error, stack) => const SizedBox.shrink(),
+                    data: (items) => Row(
+                      children: [
+                        Expanded(
+                          child: PurchaseMetricTile(
+                            label: '待领取',
+                            value: '${items.length} 项',
+                            color: const Color(0xFFFF8A1F),
+                            icon: Icons.inventory_2_outlined,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: PurchaseMetricTile(
+                            label: '已设置提醒',
+                            value:
+                                '${items.where((item) => item.hasReminder).length} 项',
+                            color: const Color(0xFF00A85D),
+                            icon: Icons.notifications_active_outlined,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+            Expanded(
+              child: requests.when(
+                loading: () => const PurchaseLoadingState(),
+                error: (error, stack) => PurchaseErrorState(
+                  onRetry: () =>
+                      ref.invalidate(purchaseRequestsByFilterProvider(_filter)),
+                ),
+                data: (items) => items.isEmpty
+                    ? const PurchaseEmptyState(
+                        title: '暂无待领取物资',
+                        message: '收到入厂通知后，可将采购记录设为待领取。',
+                      )
+                    : ListView.builder(
+                        padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
+                        itemCount: items.length,
+                        itemBuilder: (context, index) => Padding(
+                          padding: const EdgeInsets.only(bottom: 12),
+                          child: _ReceiveCard(request: items[index]),
+                        ),
+                      ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -150,10 +152,11 @@ class _ReceiveCard extends ConsumerWidget {
                         status: PurchaseStatus.pendingReceive,
                       ),
                       const SizedBox(height: 5),
-                      Text(
-                        request.title,
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
+                      if (request.items.isEmpty)
+                        Text(
+                          request.title,
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
                       const SizedBox(height: 5),
                       for (final item in request.items)
                         _ItemReceiveInfo(item: item),
@@ -199,7 +202,11 @@ class _ReceiveCard extends ConsumerWidget {
                 onPressed: () =>
                     context.push(PurchaseRoutes.stockIn(request.id)),
                 icon: const Icon(Icons.move_to_inbox_outlined),
-                label: const Text('入库'),
+                label: Text(
+                  request.items.any((item) => item.receivedQuantity > 0)
+                      ? '继续入库'
+                      : '入库',
+                ),
               ),
             ],
           ),
@@ -223,15 +230,39 @@ class _ItemReceiveInfo extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('${item.itemName} · ${item.specification ?? '无规格'}'),
+          Text(item.itemName, style: Theme.of(context).textTheme.titleMedium),
+          Text('型号：${item.specification ?? '无规格'}'),
           Text(
-            '申报 ${purchaseQuantityLabel(item.requestQuantity)} ${item.unit}  ·  已入库 ${purchaseQuantityLabel(item.receivedQuantity)}  ·  剩余 ${purchaseQuantityLabel(item.remainingQuantity)} ${item.unit}',
+            '申报数量：${purchaseQuantityLabel(item.requestQuantity)} ${item.unit}',
           ),
-          const SizedBox(height: 5),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: LinearProgressIndicator(value: ratio, minHeight: 7),
+          Text(
+            '已入库：${purchaseQuantityLabel(item.receivedQuantity)} ${item.unit}',
+            style: const TextStyle(color: Color(0xFF00A86B)),
           ),
+          Text(
+            '剩余数量：${purchaseQuantityLabel(item.remainingQuantity)} ${item.unit}',
+            style: const TextStyle(color: Color(0xFFFF8A1F)),
+          ),
+          if (item.receivedQuantity > 0) ...[
+            const SizedBox(height: 5),
+            Row(
+              children: [
+                Expanded(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: LinearProgressIndicator(value: ratio, minHeight: 7),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Text('${(ratio * 100).round()}%'),
+              ],
+            ),
+            const SizedBox(height: 4),
+            Text(
+              '部分入库，仍有${purchaseQuantityLabel(item.remainingQuantity)}${item.unit}待领取',
+              style: const TextStyle(color: Color(0xFF00A86B)),
+            ),
+          ],
         ],
       ),
     );

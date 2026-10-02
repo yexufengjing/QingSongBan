@@ -54,44 +54,46 @@ class _PurchaseStockInPageState extends ConsumerState<PurchaseStockInPage> {
     final activeMaterials = materials
         .where((item) => item.status == 'active')
         .toList();
-    return Scaffold(
-      appBar: AppBar(title: const Text('采购入库')),
-      body: detailAsync.when(
-        loading: () => const PurchaseLoadingState(),
-        error: (error, stack) => PurchaseErrorState(
-          onRetry: () =>
-              ref.invalidate(purchaseDetailProvider(widget.requestId)),
+    return PurchasePageTheme(
+      child: Scaffold(
+        appBar: AppBar(title: const Text('采购入库')),
+        body: detailAsync.when(
+          loading: () => const PurchaseLoadingState(),
+          error: (error, stack) => PurchaseErrorState(
+            onRetry: () =>
+                ref.invalidate(purchaseDetailProvider(widget.requestId)),
+          ),
+          data: (detail) => detail == null
+              ? const PurchaseEmptyState(title: '采购记录不存在', message: '该记录可能已删除。')
+              : _buildBody(context, detail, materials, activeMaterials),
         ),
-        data: (detail) => detail == null
-            ? const PurchaseEmptyState(title: '采购记录不存在', message: '该记录可能已删除。')
-            : _buildBody(context, detail, materials, activeMaterials),
-      ),
-      bottomNavigationBar: SafeArea(
-        top: false,
-        minimum: const EdgeInsets.fromLTRB(16, 8, 16, 14),
-        child: Row(
-          children: [
-            Expanded(
-              child: OutlinedButton(
-                onPressed: _saving ? null : () => context.pop(),
-                child: const Text('取消'),
+        bottomNavigationBar: SafeArea(
+          top: false,
+          minimum: const EdgeInsets.fromLTRB(16, 8, 16, 14),
+          child: Row(
+            children: [
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: _saving ? null : () => context.pop(),
+                  child: const Text('取消'),
+                ),
               ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: FilledButton.icon(
-                key: const Key('purchase-confirm-stock-in'),
-                onPressed: _saving ? null : () => _save(),
-                icon: _saving
-                    ? const SizedBox.square(
-                        dimension: 18,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
-                    : const Icon(Icons.check),
-                label: Text(_saving ? '处理中…' : '确认入库'),
+              const SizedBox(width: 10),
+              Expanded(
+                child: FilledButton.icon(
+                  key: const Key('purchase-confirm-stock-in'),
+                  onPressed: _saving ? null : () => _save(),
+                  icon: _saving
+                      ? const SizedBox.square(
+                          dimension: 18,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : const Icon(Icons.check),
+                  label: Text(_saving ? '处理中…' : '确认入库'),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -151,35 +153,80 @@ class _PurchaseStockInPageState extends ConsumerState<PurchaseStockInPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                detail.summary.title,
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              for (final item in detail.items)
-                Text('${item.itemName} · ${item.specification ?? '无规格'}'),
-              const Divider(height: 20),
-              Wrap(
-                spacing: 18,
-                runSpacing: 10,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  for (final item in detail.items)
-                    _StockQuantity(
-                      label: '申报 ${item.itemName}',
-                      value: item.requestQuantity,
-                      unit: item.unit,
+                  const PurchaseMaterialIcon(size: 72),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          detail.summary.title,
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                      ],
                     ),
-                  for (final item in detail.items)
-                    _StockQuantity(
-                      label: '已入库',
-                      value: item.receivedQuantity,
-                      unit: item.unit,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              for (final item in detail.items) ...[
+                Text(
+                  item.itemName,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                Text('型号：${item.specification ?? '无规格'}'),
+                const SizedBox(height: 6),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _StockQuantity(
+                        label: '申报数量',
+                        value: item.requestQuantity,
+                        unit: item.unit,
+                      ),
                     ),
-                  for (final item in detail.items)
-                    _StockQuantity(
-                      label: '剩余待入库',
-                      value: item.remainingQuantity,
-                      unit: item.unit,
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: _StockQuantity(
+                        label: '已入库',
+                        value: item.receivedQuantity,
+                        unit: item.unit,
+                        color: const Color(0xFF00A86B),
+                      ),
                     ),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: _StockQuantity(
+                        label: '剩余待入库',
+                        value: item.remainingQuantity,
+                        unit: item.unit,
+                        color: const Color(0xFF1677FF),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+              const SizedBox(height: 8),
+              Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: 8,
+                runSpacing: 4,
+                children: [
+                  const Icon(
+                    Icons.description_outlined,
+                    color: Color(0xFF617B9D),
+                  ),
+                  const SizedBox(width: 8),
+                  const Text('来源：采购申报'),
+                  const SizedBox(width: 8),
+                  Text(
+                    purchaseDateLabel(
+                      detail.summary.appliedDate ?? detail.summary.requestDate,
+                    ),
+                  ),
                 ],
               ),
               if (nonPending) ...[
@@ -195,7 +242,7 @@ class _PurchaseStockInPageState extends ConsumerState<PurchaseStockInPage> {
         const SizedBox(height: 16),
         const PurchaseSectionHeading('本次入库'),
         const SizedBox(height: 8),
-        for (final item in detail.items) ...[
+        for (final (itemIndex, item) in detail.items.indexed) ...[
           PurchasePanel(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -236,6 +283,21 @@ class _PurchaseStockInPageState extends ConsumerState<PurchaseStockInPage> {
                   ),
                   enabled: _includedLines.contains(item.id),
                 ),
+                if (itemIndex == 0)
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.calendar_month_outlined),
+                    title: const Text('入库日期'),
+                    subtitle: Text(purchaseDateLabel(_stockInDate)),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () async {
+                      final date = await pickPurchaseDate(
+                        context,
+                        initialDate: _stockInDate,
+                      );
+                      if (date != null) setState(() => _stockInDate = date);
+                    },
+                  ),
                 const SizedBox(height: 10),
                 _materialSelection(context, item, materials, activeMaterials),
                 const SizedBox(height: 8),
@@ -249,20 +311,6 @@ class _PurchaseStockInPageState extends ConsumerState<PurchaseStockInPage> {
           ),
           const SizedBox(height: 10),
         ],
-        ListTile(
-          contentPadding: EdgeInsets.zero,
-          leading: const Icon(Icons.calendar_month_outlined),
-          title: const Text('入库日期'),
-          subtitle: Text(purchaseDateLabel(_stockInDate)),
-          trailing: const Icon(Icons.chevron_right),
-          onTap: () async {
-            final date = await pickPurchaseDate(
-              context,
-              initialDate: _stockInDate,
-            );
-            if (date != null) setState(() => _stockInDate = date);
-          },
-        ),
         TextField(
           controller: _remark,
           minLines: 2,
@@ -435,21 +483,23 @@ class _PurchaseStockInPageState extends ConsumerState<PurchaseStockInPage> {
     if (excessItems.isNotEmpty) {
       final confirmed = await showDialog<bool>(
         context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('确认超量入库'),
-          content: Text(
-            '本次入库数量超过剩余待入库数量：\n${excessItems.values.join('\n')}\n\n请确认仍要入库。',
+        builder: (context) => PurchasePageTheme(
+          child: AlertDialog(
+            title: const Text('确认超量入库'),
+            content: Text(
+              '本次入库数量超过剩余待入库数量：\n${excessItems.values.join('\n')}\n\n请确认仍要入库。',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: const Text('取消'),
+              ),
+              FilledButton(
+                onPressed: () => Navigator.pop(context, true),
+                child: const Text('仍然入库'),
+              ),
+            ],
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context, false),
-              child: const Text('取消'),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.pop(context, true),
-              child: const Text('仍然入库'),
-            ),
-          ],
         ),
       );
       if (!mounted || confirmed != true) return;
@@ -473,9 +523,78 @@ class _PurchaseStockInPageState extends ConsumerState<PurchaseStockInPage> {
     if (nonPending) {
       final confirmed = await showDialog<bool>(
         context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('确认历史补录入库'),
-          content: const Text('当前采购状态不是待领取。继续后将更新库存并创建入库流水。确定继续吗？'),
+        builder: (context) => PurchasePageTheme(
+          child: AlertDialog(
+            title: const Text('确认历史补录入库'),
+            content: const Text('当前采购状态不是待领取。继续后将更新库存并创建入库流水。确定继续吗？'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: const Text('取消'),
+              ),
+              FilledButton(
+                onPressed: () => Navigator.pop(context, true),
+                child: const Text('确认补录'),
+              ),
+            ],
+          ),
+        ),
+      );
+      if (!mounted || confirmed != true) return;
+    }
+    final reviewed = await showDialog<bool>(
+      context: context,
+      builder: (context) => PurchasePageTheme(
+        child: AlertDialog(
+          title: const Text('确认入库'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                for (final (index, line) in lines.indexed) ...[
+                  if (index > 0) const Divider(height: 20),
+                  Builder(
+                    builder: (context) {
+                      final item = detail.items.firstWhere(
+                        (value) => value.id == line.requestItemId,
+                      );
+                      final location = _locations[item.id]?.text.trim();
+                      return Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const PurchaseMaterialIcon(size: 48),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  item.itemName,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium,
+                                ),
+                                Text('规格：${item.specification ?? '未填写'}'),
+                                Text(
+                                  '本次入库：${purchaseQuantityLabel(line.quantity)} ${item.unit}',
+                                ),
+                                Text(
+                                  '存放位置：${location?.isNotEmpty == true ? location : '未填写'}',
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ],
+                const SizedBox(height: 14),
+                const Text('确认后将更新库存并生成采购入库流水。'),
+              ],
+            ),
+          ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, false),
@@ -483,35 +602,10 @@ class _PurchaseStockInPageState extends ConsumerState<PurchaseStockInPage> {
             ),
             FilledButton(
               onPressed: () => Navigator.pop(context, true),
-              child: const Text('确认补录'),
+              child: const Text('确认入库'),
             ),
           ],
         ),
-      );
-      if (!mounted || confirmed != true) return;
-    }
-    final reviewed = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('确认入库'),
-        content: SingleChildScrollView(
-          child: Text(
-            '${lines.map((line) {
-              final item = detail.items.firstWhere((value) => value.id == line.requestItemId);
-              return '${item.itemName} ${purchaseQuantityLabel(line.quantity)} ${item.unit}，存放位置：${_locations[item.id]?.text.trim().isNotEmpty == true ? _locations[item.id]!.text.trim() : '未填写'}';
-            }).join('\n')}\n\n确认后将更新库存并生成采购入库流水。',
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('取消'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text('确认入库'),
-          ),
-        ],
       ),
     );
     if (!mounted || reviewed != true) return;
@@ -553,10 +647,12 @@ class _StockQuantity extends StatelessWidget {
     required this.label,
     required this.value,
     required this.unit,
+    this.color,
   });
   final String label;
   final double value;
   final String unit;
+  final Color? color;
   @override
   Widget build(BuildContext context) => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -564,7 +660,7 @@ class _StockQuantity extends StatelessWidget {
       Text(label),
       Text(
         '${purchaseQuantityLabel(value)} $unit',
-        style: Theme.of(context).textTheme.titleLarge,
+        style: Theme.of(context).textTheme.titleLarge?.copyWith(color: color),
       ),
     ],
   );

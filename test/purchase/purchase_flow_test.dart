@@ -78,13 +78,13 @@ void main() {
       router.go('/purchase/detail/$requestId');
       await tester.pumpAndSettle();
       final oaButton = find.widgetWithText(TextButton, '查看 OA 流程');
-      await _scrollTo(tester, oaButton);
-      expect(oaButton, findsOneWidget);
-      expect(oaButton.hitTestable(), findsOneWidget);
       tester
           .state<ScaffoldMessengerState>(find.byType(ScaffoldMessenger).first)
           .clearSnackBars();
       await tester.pumpAndSettle();
+      await _scrollTo(tester, oaButton);
+      expect(oaButton, findsOneWidget);
+      expect(oaButton.hitTestable(), findsOneWidget);
       FocusManager.instance.primaryFocus?.unfocus();
       await tester.pump();
       expect(tester.widget<TextButton>(oaButton).onPressed, isNotNull);
@@ -439,6 +439,8 @@ Future<void> _scrollTo(WidgetTester tester, Finder finder) async {
     280,
     scrollable: _mainListScrollable(),
   );
+  await tester.ensureVisible(finder);
+  await tester.pumpAndSettle();
 }
 
 Finder _mainListScrollable() => find

@@ -1,0 +1,385 @@
+{
+  "schemaVersion": 23,
+  "allOriginalRowsRetained": true,
+  "tables": {
+    "app_settings": {
+      "before": 1,
+      "after": 2,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "attendance_group_members": {
+      "before": 10,
+      "after": 10,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "attendance_groups": {
+      "before": 3,
+      "after": 3,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "attendance_records": {
+      "before": 17,
+      "after": 17,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "component_lifecycle_records": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "dictionary_items": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "employee_attachments": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "employee_wage_profiles": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "employees": {
+      "before": 11,
+      "after": 11,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "fuel_monthly_records": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "garden_tool_repair_attachments": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "garden_tool_repair_groups": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "garden_tool_repair_items": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "garden_tool_repair_persons": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "garden_tool_repair_units": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "insurance_change_records": {
+      "before": 1,
+      "after": 1,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "insurance_profiles": {
+      "before": 10,
+      "after": 10,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "inventory_categories": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "inventory_issue_items": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "inventory_issues": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "inventory_materials": {
+      "before": 0,
+      "after": 4,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "inventory_receipt_items": {
+      "before": 0,
+      "after": 5,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "inventory_receipts": {
+      "before": 0,
+      "after": 5,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "inventory_replenishment_items": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "inventory_stocktake_items": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "inventory_stocktakes": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "inventory_transactions": {
+      "before": 0,
+      "after": 5,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "item_distribution_batches": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "item_distribution_entries": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "item_distribution_settings": {
+      "before": 2,
+      "after": 2,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "leave_records": {
+      "before": 4,
+      "after": 4,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "maintenance_records": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "maintenance_templates": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "manual_vehicle_expenses": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "monthly_attendance_rosters": {
+      "before": 15,
+      "after": 15,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "monthly_attendance_summaries": {
+      "before": 10,
+      "after": 10,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "operation_logs": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "overtime_records": {
+      "before": 1,
+      "after": 1,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "payroll_adjustments": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "payroll_batches": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "payroll_items": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "reminder_alert_rules": {
+      "before": 1,
+      "after": 2,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "reminder_links": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "reminder_occurrences": {
+      "before": 1,
+      "after": 2,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "reminders": {
+      "before": 3,
+      "after": 4,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "repair_cost_items": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "repair_orders": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "repair_parts": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "social_security_base_history": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "termination_records": {
+      "before": 1,
+      "after": 1,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "tire_installations": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "tire_repairs": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "tires": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "vehicle_attachments": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "vehicle_condition_items": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "vehicle_condition_snapshots": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "vehicle_maintenance_items": {
+      "before": 4,
+      "after": 4,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "vehicles": {
+      "before": 2,
+      "after": 2,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "wage_job_types": {
+      "before": 6,
+      "after": 6,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    },
+    "wage_rate_history": {
+      "before": 0,
+      "after": 0,
+      "originalRowsRetained": true,
+      "missingCount": 0
+    }
+  },
+  "purchaseCounts": {
+    "purchase_requests": 9,
+    "purchase_request_items": 16,
+    "purchase_stock_entries": 5,
+    "purchase_status_logs": 32,
+    "inventory_materials": 4,
+    "reminders": 4
+  },
+  "statuses": {
+    "applied": 1,
+    "cancelled": 1,
+    "pending_apply": 1,
+    "pending_receive": 2,
+    "purchasing": 1,
+    "stocked": 3
+  },
+  "foreignKeyCheck": [],
+  "reinstallAndRestartCountsUnchanged": true,
+  "apkSha256": "a4978cec3c91ca4a5eed221d36f7220c3462705c9830b5683552b555ce226589"
+}

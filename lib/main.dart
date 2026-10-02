@@ -5,6 +5,7 @@ import 'app/app.dart';
 import 'core/database/app_database.dart';
 import 'core/database/demo_data_seeder.dart';
 import 'core/database/inventory_demo_data_seeder.dart';
+import 'core/database/purchase_demo_data_seeder.dart';
 import 'core/database/vehicle_demo_data_seeder.dart';
 
 Future<void> main() async {
@@ -29,6 +30,14 @@ Future<void> main() async {
     final database = AppDatabase();
     try {
       await InventoryDemoDataSeeder.seed(database);
+    } finally {
+      await database.close();
+    }
+  }
+  if (const bool.fromEnvironment('QSB_SEED_PURCHASE_DATA')) {
+    final database = AppDatabase();
+    try {
+      await PurchaseDemoDataSeeder.seed(database);
     } finally {
       await database.close();
     }

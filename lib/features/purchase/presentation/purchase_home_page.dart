@@ -16,20 +16,22 @@ class PurchaseHomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final dashboard = ref.watch(purchaseDashboardProvider);
-    return Scaffold(
-      appBar: AppBar(title: const Text('采购管理')),
-      floatingActionButton: FloatingActionButton.extended(
-        key: const Key('purchase-home-create'),
-        onPressed: () => context.push(PurchaseRoutes.create),
-        icon: const Icon(Icons.add),
-        label: const Text('新建采购'),
-      ),
-      body: dashboard.when(
-        loading: () => const PurchaseLoadingState(),
-        error: (error, stack) => PurchaseErrorState(
-          onRetry: () => ref.invalidate(purchaseDashboardProvider),
+    return PurchasePageTheme(
+      child: Scaffold(
+        appBar: AppBar(title: const Text('采购管理')),
+        floatingActionButton: FloatingActionButton.extended(
+          key: const Key('purchase-home-create'),
+          onPressed: () => context.push(PurchaseRoutes.create),
+          icon: const Icon(Icons.add),
+          label: const Text('新建采购'),
         ),
-        data: (data) => _DashboardContent(data: data),
+        body: dashboard.when(
+          loading: () => const PurchaseLoadingState(),
+          error: (error, stack) => PurchaseErrorState(
+            onRetry: () => ref.invalidate(purchaseDashboardProvider),
+          ),
+          data: (data) => _DashboardContent(data: data),
+        ),
       ),
     );
   }
@@ -52,25 +54,29 @@ class _DashboardContent extends StatelessWidget {
                   _MetricData(
                     '待申报',
                     data.pendingApplyCount,
-                    Colors.orange,
+                    const Color(0xFFFF8A1F),
+                    Icons.description_outlined,
                     PurchaseRoutes.pendingApply,
                   ),
                   _MetricData(
                     '已申报',
                     data.appliedCount,
-                    const Color(0xFF1677FF),
+                    const Color(0xFF00A86B),
+                    Icons.task_alt_outlined,
                     PurchaseRoutes.tracking,
                   ),
                   _MetricData(
                     '采购中',
                     data.purchasingCount,
-                    const Color(0xFF10B7A3),
+                    const Color(0xFF1677FF),
+                    Icons.shopping_cart_outlined,
                     '${PurchaseRoutes.tracking}?status=purchasing',
                   ),
                   _MetricData(
                     '待领取',
                     data.pendingReceiveCount,
-                    Colors.deepOrange,
+                    const Color(0xFFFF8A1F),
+                    Icons.inventory_2_outlined,
                     PurchaseRoutes.pendingReceive,
                   ),
                 ];
@@ -92,7 +98,7 @@ class _DashboardContent extends StatelessWidget {
                           label: metric.label,
                           value: '${metric.value}',
                           color: metric.color,
-                          icon: twoColumns ? Icons.description_outlined : null,
+                          icon: metric.icon,
                           onTap: () => context.push(metric.route),
                         ),
                       ),
@@ -146,40 +152,72 @@ class _DashboardContent extends StatelessWidget {
       const SizedBox(height: 10),
       const PurchaseSectionHeading('常用功能'),
       const SizedBox(height: 10),
-      Wrap(
-        spacing: 10,
-        runSpacing: 10,
-        children: [
-          _QuickAction(
-            label: '新建采购',
-            icon: Icons.add_circle_outline,
-            route: PurchaseRoutes.create,
-          ),
-          _QuickAction(
-            label: '待申报',
-            icon: Icons.assignment_outlined,
-            route: PurchaseRoutes.pendingApply,
-          ),
-          _QuickAction(
-            label: '采购跟踪',
-            icon: Icons.shopping_cart_outlined,
-            route: PurchaseRoutes.tracking,
-          ),
-          _QuickAction(
-            label: '采购历史',
-            icon: Icons.history,
-            route: PurchaseRoutes.history,
-          ),
-        ],
+      LayoutBuilder(
+        builder: (context, constraints) {
+          final spacing = 8.0;
+          final columns = constraints.maxWidth >= 320 ? 4 : 2;
+          final width =
+              (constraints.maxWidth - spacing * (columns - 1)) / columns;
+          return Wrap(
+            spacing: spacing,
+            runSpacing: spacing,
+            children: [
+              for (final action in const [
+                _QuickActionData(
+                  '新建采购',
+                  Icons.add,
+                  Color(0xFF00A86B),
+                  PurchaseRoutes.create,
+                ),
+                _QuickActionData(
+                  '待申报',
+                  Icons.description_outlined,
+                  Color(0xFF1677FF),
+                  PurchaseRoutes.pendingApply,
+                ),
+                _QuickActionData(
+                  '采购跟踪',
+                  Icons.place_outlined,
+                  Color(0xFFFF8A1F),
+                  PurchaseRoutes.tracking,
+                ),
+                _QuickActionData(
+                  '采购历史',
+                  Icons.schedule,
+                  Color(0xFF7956D8),
+                  PurchaseRoutes.history,
+                ),
+              ])
+                SizedBox(
+                  width: width,
+                  child: _QuickAction(
+                    label: action.label,
+                    icon: action.icon,
+                    color: action.color,
+                    route: action.route,
+                  ),
+                ),
+            ],
+          );
+        },
       ),
     ],
   );
 }
 
 class _MetricData {
-  const _MetricData(this.label, this.value, this.color, this.route);
+  const _MetricData(this.label, this.value, this.color, this.icon, this.route);
   final String label;
   final int value;
+  final Color color;
+  final IconData icon;
+  final String route;
+}
+
+class _QuickActionData {
+  const _QuickActionData(this.label, this.icon, this.color, this.route);
+  final String label;
+  final IconData icon;
   final Color color;
   final String route;
 }
@@ -190,6 +228,7 @@ class _ActionCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final detail = ref.watch(purchaseDetailProvider(request.id)).valueOrNull;
     final reminderId = ref
         .watch(purchaseReminderIdProvider(request.id))
         .valueOrNull;
@@ -213,29 +252,59 @@ class _ActionCard extends ConsumerWidget {
                     children: [
                       PurchaseStatusChip(status: request.status),
                       const SizedBox(height: 6),
-                      Text(
-                        request.itemNames.join('、').isEmpty
-                            ? request.title
-                            : request.itemNames.join('、'),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                      const SizedBox(height: 4),
-                      for (final item in request.items.take(3))
+                      if (request.items.isEmpty)
                         Text(
-                          '${item.itemName} ${purchaseQuantityLabel(item.requestQuantity)} ${item.unit}',
-                          maxLines: 1,
+                          request.title,
+                          maxLines: 2,
                           overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.titleLarge,
                         ),
+                      for (final (index, item)
+                          in request.items.take(3).indexed) ...[
+                        Text(
+                          item.itemName,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: index == 0
+                              ? Theme.of(context).textTheme.titleLarge
+                              : Theme.of(context).textTheme.titleMedium,
+                        ),
+                        if (item.specification?.isNotEmpty == true)
+                          Text(
+                            '规格：${item.specification}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        Text(
+                          '申报数量：${purchaseQuantityLabel(item.requestQuantity)} ${item.unit}',
+                        ),
+                        if (request.status ==
+                            PurchaseStatus.pendingReceive) ...[
+                          Text(
+                            '已入库：${purchaseQuantityLabel(item.receivedQuantity)} ${item.unit}',
+                            style: const TextStyle(color: Color(0xFF00A86B)),
+                          ),
+                          Text(
+                            '剩余数量：${purchaseQuantityLabel(item.remainingQuantity)} ${item.unit}',
+                            style: const TextStyle(color: Color(0xFFFF8A1F)),
+                          ),
+                        ],
+                      ],
                       if (request.status == PurchaseStatus.pendingReceive) ...[
                         Text(
-                          '入厂通知：${purchaseShortDateLabel(request.arrivalNoticeDate)}',
+                          '收到通知：${purchaseShortDateLabel(request.arrivalNoticeDate)}',
                         ),
                         Text(
                           '领取地点：${request.receiveLocation?.isNotEmpty == true ? request.receiveLocation : '未填写'}',
                         ),
+                        if (request.items.any(
+                          (item) => item.receivedQuantity > 0,
+                        ))
+                          _ReceiveProgress(items: request.items),
                       ],
+                      if (request.status == PurchaseStatus.pendingApply &&
+                          detail?.demandReason?.isNotEmpty == true)
+                        Text('需求原因：${detail!.demandReason}'),
                       if (request.purchaserName != null)
                         Text('执行人：${request.purchaserName}'),
                       if (request.status == PurchaseStatus.purchasing ||
@@ -302,7 +371,11 @@ class _ActionCard extends ConsumerWidget {
       FilledButton.icon(
         onPressed: () => context.push(PurchaseRoutes.stockIn(request.id)),
         icon: const Icon(Icons.move_to_inbox_outlined),
-        label: const Text('入库'),
+        label: Text(
+          request.items.any((item) => item.receivedQuantity > 0)
+              ? '继续入库'
+              : '入库',
+        ),
       ),
     ],
     PurchaseStatus.purchasing => [
@@ -353,6 +426,7 @@ class _ActionCard extends ConsumerWidget {
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
+      backgroundColor: Colors.white,
       builder: (context) => PurchaseSheetResources(
         resources: [date, location],
         child: SafeArea(
@@ -447,23 +521,87 @@ class _QuickAction extends StatelessWidget {
   const _QuickAction({
     required this.label,
     required this.icon,
+    required this.color,
     required this.route,
   });
   final String label;
   final IconData icon;
+  final Color color;
   final String route;
 
   @override
   Widget build(BuildContext context) => SizedBox(
-    width: (MediaQuery.sizeOf(context).width - 42) / 2,
-    child: OutlinedButton.icon(
+    height: 88,
+    child: OutlinedButton(
       onPressed: () => context.push(route),
-      icon: Icon(icon),
-      label: Text(label),
-      style: OutlinedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 10),
-        alignment: Alignment.centerLeft,
+      style: OutlinedButton.styleFrom(padding: const EdgeInsets.all(8)),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: .12),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, color: color),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            label,
+            maxLines: 2,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.labelLarge,
+          ),
+        ],
       ),
     ),
   );
+}
+
+class _ReceiveProgress extends StatelessWidget {
+  const _ReceiveProgress({required this.items});
+  final List<PurchaseRequestItemView> items;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          for (final item in items.where(
+            (entry) => entry.receivedQuantity > 0,
+          )) ...[
+            Row(
+              children: [
+                Expanded(
+                  child: LinearProgressIndicator(
+                    value: item.requestQuantity <= 0
+                        ? 0
+                        : (item.receivedQuantity / item.requestQuantity).clamp(
+                            0.0,
+                            1.0,
+                          ),
+                    minHeight: 7,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  '${item.requestQuantity <= 0 ? 0 : (item.receivedQuantity / item.requestQuantity * 100).round()}%',
+                ),
+              ],
+            ),
+            const SizedBox(height: 4),
+            Text(
+              '${items.length > 1 ? '${item.itemName}：' : ''}部分入库，仍有${purchaseQuantityLabel(item.remainingQuantity)}${item.unit}待领取',
+              style: const TextStyle(color: Color(0xFF00A86B)),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
 }

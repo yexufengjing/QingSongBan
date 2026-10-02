@@ -97,195 +97,242 @@ class _PurchaseCreatePageState extends ConsumerState<PurchaseCreatePage> {
     final detail = _isEditing
         ? ref.watch(purchaseDetailProvider(widget.requestId!))
         : null;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(_isEditing ? '编辑待申报采购' : '新建采购'),
-        actions: [
-          if (!_isEditing)
-            TextButton(
-              onPressed: state.isSaving || _editingSaving
-                  ? null
-                  : () => _save(create: true),
-              child: const Text('保存待申报'),
-            ),
-        ],
-      ),
-      body: detail?.isLoading == true
-          ? const PurchaseLoadingState()
-          : detail?.hasError == true
-          ? PurchaseErrorState(
-              onRetry: () =>
-                  ref.invalidate(purchaseDetailProvider(widget.requestId!)),
-            )
-          : detail?.hasValue == true && detail?.valueOrNull == null
-          ? const PurchaseEmptyState(
-              title: '采购记录不存在',
-              message: '该采购记录可能已删除或暂时无法访问。',
-            )
-          : ListView(
-              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-              padding: const EdgeInsets.fromLTRB(16, 10, 16, 120),
-              children: [
-                const PurchaseSectionHeading('基本信息'),
-                const SizedBox(height: 10),
-                PurchasePanel(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextField(
-                        key: const Key('purchase-title-field'),
-                        controller: _titleController,
-                        onChanged: form.setTitle,
-                        decoration: const InputDecoration(
-                          labelText: '采购事项名称',
-                          hintText: '例如：扫路车备件采购',
+    return PurchasePageTheme(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(_isEditing ? '编辑待申报采购' : '新建采购'),
+          actions: [
+            if (!_isEditing)
+              TextButton(
+                onPressed: state.isSaving || _editingSaving
+                    ? null
+                    : () => _save(create: true),
+                child: const Text('保存草稿'),
+              ),
+          ],
+        ),
+        body: detail?.isLoading == true
+            ? const PurchaseLoadingState()
+            : detail?.hasError == true
+            ? PurchaseErrorState(
+                onRetry: () =>
+                    ref.invalidate(purchaseDetailProvider(widget.requestId!)),
+              )
+            : detail?.hasValue == true && detail?.valueOrNull == null
+            ? const PurchaseEmptyState(
+                title: '采购记录不存在',
+                message: '该采购记录可能已删除或暂时无法访问。',
+              )
+            : ListView(
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
+                padding: const EdgeInsets.fromLTRB(16, 10, 16, 120),
+                children: [
+                  PurchasePanel(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const PurchaseSectionHeading('基本信息'),
+                        const SizedBox(height: 12),
+                        TextField(
+                          key: const Key('purchase-title-field'),
+                          controller: _titleController,
+                          onChanged: form.setTitle,
+                          decoration: const InputDecoration(
+                            labelText: '采购事项名称',
+                            hintText: '例如：扫路车备件采购',
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 14),
-                      Text(
-                        '需求原因',
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      const SizedBox(height: 8),
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 8,
-                        children: [
-                          for (final reason in const [
-                            '库存不足',
-                            '临时需求',
-                            '设备维修',
-                            '其他',
-                          ])
-                            ChoiceChip(
-                              label: Text(reason),
-                              selected: _reasonController.text == reason,
-                              onSelected: (_) {
-                                _reasonController.text = reason;
-                                form.setDemandReason(reason);
-                                setState(() {});
-                              },
-                            ),
-                        ],
-                      ),
-                      TextField(
-                        key: const Key('purchase-reason-field'),
-                        controller: _reasonController,
-                        onChanged: form.setDemandReason,
-                        decoration: const InputDecoration(
-                          labelText: '原因补充（选填）',
-                          hintText: '可填写需求原因',
+                        const SizedBox(height: 14),
+                        Text(
+                          '需求原因',
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
+                        const SizedBox(height: 8),
+                        LayoutBuilder(
+                          builder: (context, constraints) {
+                            final chips = [
+                              for (final reason in const [
+                                '库存不足',
+                                '临时需求',
+                                '设备维修',
+                                '其他',
+                              ])
+                                ChoiceChip(
+                                  visualDensity: const VisualDensity(
+                                    horizontal: -2,
+                                    vertical: -2,
+                                  ),
+                                  labelPadding: const EdgeInsets.symmetric(
+                                    horizontal: 3,
+                                  ),
+                                  label: FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: Text(reason),
+                                  ),
+                                  selected: _reasonController.text == reason,
+                                  selectedColor: const Color(0xFFE5F8F0),
+                                  labelStyle: TextStyle(
+                                    color: _reasonController.text == reason
+                                        ? const Color(0xFF00A86B)
+                                        : const Color(0xFF425D7F),
+                                    fontWeight: _reasonController.text == reason
+                                        ? FontWeight.w700
+                                        : FontWeight.normal,
+                                  ),
+                                  side: BorderSide(
+                                    color: _reasonController.text == reason
+                                        ? const Color(0xFF00A86B)
+                                        : const Color(0xFFE0EAF5),
+                                  ),
+                                  onSelected: (_) {
+                                    _reasonController.text = reason;
+                                    form.setDemandReason(reason);
+                                    setState(() {});
+                                  },
+                                ),
+                            ];
+                            if (constraints.maxWidth < 330) {
+                              return SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(children: chips),
+                              );
+                            }
+                            return Row(
+                              children: [
+                                for (final (index, chip) in chips.indexed) ...[
+                                  if (index > 0) const SizedBox(width: 5),
+                                  Expanded(child: Center(child: chip)),
+                                ],
+                              ],
+                            );
+                          },
+                        ),
+                        TextField(
+                          key: const Key('purchase-reason-field'),
+                          controller: _reasonController,
+                          onChanged: form.setDemandReason,
+                          decoration: const InputDecoration(
+                            labelText: '原因补充（选填）',
+                            hintText: '可填写需求原因',
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        ListTile(
+                          contentPadding: EdgeInsets.zero,
+                          leading: const Icon(Icons.calendar_month_outlined),
+                          title: const Text('创建日期'),
+                          subtitle: Text(purchaseDateLabel(state.requestDate)),
+                          trailing: const Icon(Icons.chevron_right),
+                          onTap: () async {
+                            final date = await pickPurchaseDate(
+                              context,
+                              initialDate: state.requestDate,
+                            );
+                            if (date != null) form.setRequestDate(date);
+                          },
+                        ),
+                        TextField(
+                          key: const Key('purchase-remark-field'),
+                          controller: _remarkController,
+                          minLines: 2,
+                          maxLines: 4,
+                          maxLength: 200,
+                          onChanged: form.setRemark,
+                          decoration: const InputDecoration(
+                            labelText: '备注（选填）',
+                            hintText: '补充说明',
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 18),
+                  PurchaseSectionHeading(
+                    '采购物资（${state.items.length}）',
+                    trailing: TextButton.icon(
+                      onPressed: () => _showManualItemDialog(),
+                      icon: const Icon(Icons.add),
+                      label: const Text('添加物资'),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  if (state.items.isEmpty)
+                    const PurchasePanel(child: Text('请选择库存物资或手动新增物资。'))
+                  else
+                    for (
+                      var index = 0;
+                      index < state.items.length;
+                      index++
+                    ) ...[
+                      _PurchaseDraftCard(
+                        item: state.items[index],
+                        index: index,
+                        onChanged: (item) => form.updateItem(index, item),
+                        onRemove: () => form.removeItem(index),
                       ),
                       const SizedBox(height: 10),
-                      ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        leading: const Icon(Icons.calendar_month_outlined),
-                        title: const Text('创建日期'),
-                        subtitle: Text(purchaseDateLabel(state.requestDate)),
-                        trailing: const Icon(Icons.chevron_right),
-                        onTap: () async {
-                          final date = await pickPurchaseDate(
-                            context,
-                            initialDate: state.requestDate,
-                          );
-                          if (date != null) form.setRequestDate(date);
-                        },
+                    ],
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: [
+                      OutlinedButton.icon(
+                        key: const Key('purchase-select-inventory'),
+                        onPressed: _selectInventoryItem,
+                        icon: const Icon(Icons.inventory_2_outlined),
+                        label: const Text('选择库存物资'),
                       ),
-                      TextField(
-                        key: const Key('purchase-remark-field'),
-                        controller: _remarkController,
-                        minLines: 2,
-                        maxLines: 4,
-                        maxLength: 200,
-                        onChanged: form.setRemark,
-                        decoration: const InputDecoration(
-                          labelText: '备注（选填）',
-                          hintText: '补充说明',
-                        ),
+                      OutlinedButton.icon(
+                        onPressed: _showManualItemDialog,
+                        icon: const Icon(Icons.add),
+                        label: const Text('手动新增物资'),
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(height: 18),
-                PurchaseSectionHeading(
-                  '采购物资（${state.items.length}）',
-                  trailing: TextButton.icon(
-                    onPressed: () => _showManualItemDialog(),
-                    icon: const Icon(Icons.add),
-                    label: const Text('添加物资'),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                if (state.items.isEmpty)
-                  const PurchasePanel(child: Text('请选择库存物资或手动新增物资。'))
-                else
-                  for (var index = 0; index < state.items.length; index++) ...[
-                    _PurchaseDraftCard(
-                      item: state.items[index],
-                      index: index,
-                      onChanged: (item) => form.updateItem(index, item),
-                      onRemove: () => form.removeItem(index),
-                    ),
-                    const SizedBox(height: 10),
-                  ],
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: [
-                    OutlinedButton.icon(
-                      key: const Key('purchase-select-inventory'),
-                      onPressed: _selectInventoryItem,
-                      icon: const Icon(Icons.inventory_2_outlined),
-                      label: const Text('选择库存物资'),
-                    ),
-                    OutlinedButton.icon(
-                      onPressed: _showManualItemDialog,
-                      icon: const Icon(Icons.add),
-                      label: const Text('手动新增物资'),
+                  if (state.errorMessage != null) ...[
+                    const SizedBox(height: 12),
+                    Text(
+                      state.errorMessage!,
+                      style: const TextStyle(color: Colors.red),
+                      key: const Key('purchase-form-error'),
                     ),
                   ],
-                ),
-                if (state.errorMessage != null) ...[
-                  const SizedBox(height: 12),
-                  Text(
-                    state.errorMessage!,
-                    style: const TextStyle(color: Colors.red),
-                    key: const Key('purchase-form-error'),
-                  ),
                 ],
-              ],
-            ),
-      bottomNavigationBar: SafeArea(
-        top: false,
-        minimum: const EdgeInsets.fromLTRB(16, 10, 16, 14),
-        child: Row(
-          children: [
-            Expanded(
-              child: OutlinedButton(
-                onPressed: state.isSaving || _editingSaving
-                    ? null
-                    : () => context.pop(),
-                child: const Text('取消'),
               ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: FilledButton(
-                key: const Key('purchase-save-button'),
-                onPressed: state.isSaving || _editingSaving
-                    ? null
-                    : () => _save(create: false),
-                child: Text(
-                  state.isSaving || _editingSaving
-                      ? '保存中…'
+        bottomNavigationBar: SafeArea(
+          top: false,
+          minimum: const EdgeInsets.fromLTRB(16, 10, 16, 14),
+          child: Row(
+            children: [
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: state.isSaving || _editingSaving
+                      ? null
                       : _isEditing
-                      ? '保存修改'
-                      : '创建采购记录',
+                      ? () => context.pop()
+                      : () => _save(create: true),
+                  child: Text(_isEditing ? '取消' : '保存待申报'),
                 ),
               ),
-            ),
-          ],
+              const SizedBox(width: 10),
+              Expanded(
+                child: FilledButton(
+                  key: const Key('purchase-save-button'),
+                  onPressed: state.isSaving || _editingSaving
+                      ? null
+                      : () => _save(create: false),
+                  child: Text(
+                    state.isSaving || _editingSaving
+                        ? '保存中…'
+                        : _isEditing
+                        ? '保存修改'
+                        : '创建采购记录',
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -391,26 +438,28 @@ class _PurchaseCreatePageState extends ConsumerState<PurchaseCreatePage> {
       if (!mounted) return;
       await showDialog<void>(
         context: context,
-        builder: (dialogContext) => AlertDialog(
-          title: const Text('已有未完成采购'),
-          content: Text('$name 当前已有未完成采购记录。'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(dialogContext);
-                if (existingId != null) {
-                  context.push(PurchaseRoutes.detail(existingId));
-                } else {
-                  context.push(PurchaseRoutes.tracking);
-                }
-              },
-              child: const Text('查看已有记录'),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.pop(dialogContext),
-              child: const Text('继续创建'),
-            ),
-          ],
+        builder: (dialogContext) => PurchasePageTheme(
+          child: AlertDialog(
+            title: const Text('已有未完成采购'),
+            content: Text('$name 当前已有未完成采购记录。'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(dialogContext);
+                  if (existingId != null) {
+                    context.push(PurchaseRoutes.detail(existingId));
+                  } else {
+                    context.push(PurchaseRoutes.tracking);
+                  }
+                },
+                child: const Text('查看已有记录'),
+              ),
+              FilledButton(
+                onPressed: () => Navigator.pop(dialogContext),
+                child: const Text('继续创建'),
+              ),
+            ],
+          ),
         ),
       );
     } catch (error) {
@@ -428,7 +477,11 @@ class _PurchaseCreatePageState extends ConsumerState<PurchaseCreatePage> {
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
-      builder: (context) => _InventoryPicker(),
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) => PurchasePageTheme(child: _InventoryPicker()),
     );
     if (result == null || !mounted) return;
     final exists = ref
@@ -455,56 +508,58 @@ class _PurchaseCreatePageState extends ConsumerState<PurchaseCreatePage> {
       context: context,
       builder: (dialogContext) => PurchaseSheetResources(
         resources: [name, specification, unit, quantity],
-        child: AlertDialog(
-          title: const Text('手动新增物资'),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  controller: name,
-                  decoration: const InputDecoration(labelText: '物资名称'),
-                ),
-                TextField(
-                  controller: specification,
-                  decoration: const InputDecoration(labelText: '规格型号（选填）'),
-                ),
-                TextField(
-                  controller: unit,
-                  decoration: const InputDecoration(labelText: '单位'),
-                ),
-                TextField(
-                  controller: quantity,
-                  decoration: const InputDecoration(labelText: '申报数量'),
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
+        child: PurchasePageTheme(
+          child: AlertDialog(
+            title: const Text('手动新增物资'),
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextField(
+                    controller: name,
+                    decoration: const InputDecoration(labelText: '物资名称'),
                   ),
-                ),
-              ],
+                  TextField(
+                    controller: specification,
+                    decoration: const InputDecoration(labelText: '规格型号（选填）'),
+                  ),
+                  TextField(
+                    controller: unit,
+                    decoration: const InputDecoration(labelText: '单位'),
+                  ),
+                  TextField(
+                    controller: quantity,
+                    decoration: const InputDecoration(labelText: '申报数量'),
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
+                  ),
+                ],
+              ),
             ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(dialogContext),
+                child: const Text('取消'),
+              ),
+              FilledButton(
+                onPressed: () {
+                  Navigator.pop(
+                    dialogContext,
+                    PurchaseItemDraft(
+                      itemName: name.text.trim(),
+                      specification: specification.text.trim().isEmpty
+                          ? null
+                          : specification.text.trim(),
+                      unit: unit.text.trim(),
+                      requestQuantity: double.tryParse(quantity.text) ?? 0,
+                    ),
+                  );
+                },
+                child: const Text('添加'),
+              ),
+            ],
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(dialogContext),
-              child: const Text('取消'),
-            ),
-            FilledButton(
-              onPressed: () {
-                Navigator.pop(
-                  dialogContext,
-                  PurchaseItemDraft(
-                    itemName: name.text.trim(),
-                    specification: specification.text.trim().isEmpty
-                        ? null
-                        : specification.text.trim(),
-                    unit: unit.text.trim(),
-                    requestQuantity: double.tryParse(quantity.text) ?? 0,
-                  ),
-                );
-              },
-              child: const Text('添加'),
-            ),
-          ],
         ),
       ),
     );

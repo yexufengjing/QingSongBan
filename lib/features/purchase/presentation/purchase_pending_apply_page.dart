@@ -37,95 +37,109 @@ class _PurchasePendingApplyPageState
   @override
   Widget build(BuildContext context) {
     final requests = ref.watch(purchaseRequestsByFilterProvider(_filter));
-    return Scaffold(
-      appBar: AppBar(title: const Text('待申报')),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-            child: Column(
-              children: [
-                TextField(
-                  key: const Key('purchase-pending-search'),
-                  controller: _searchController,
-                  onChanged: (value) => setState(
-                    () => _filter = _filter.copyWith(keyword: value),
+    return PurchasePageTheme(
+      child: Scaffold(
+        appBar: AppBar(title: const Text('待申报')),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+              child: Column(
+                children: [
+                  TextField(
+                    key: const Key('purchase-pending-search'),
+                    controller: _searchController,
+                    onChanged: (value) => setState(
+                      () => _filter = _filter.copyWith(keyword: value),
+                    ),
+                    decoration: InputDecoration(
+                      hintText: '搜索物资名称 / 型号 / OA编号',
+                      prefixIcon: const Icon(Icons.search),
+                      suffixIcon: _filter.keyword.isEmpty
+                          ? null
+                          : IconButton(
+                              onPressed: () {
+                                _searchController.clear();
+                                setState(
+                                  () => _filter = _filter.copyWith(keyword: ''),
+                                );
+                              },
+                              icon: const Icon(Icons.close),
+                            ),
+                    ),
                   ),
-                  decoration: InputDecoration(
-                    hintText: '搜索物资名称 / 型号 / OA编号',
-                    prefixIcon: const Icon(Icons.search),
-                    suffixIcon: _filter.keyword.isEmpty
-                        ? null
-                        : IconButton(
-                            onPressed: () {
-                              _searchController.clear();
-                              setState(
-                                () => _filter = _filter.copyWith(keyword: ''),
-                              );
-                            },
-                            icon: const Icon(Icons.close),
-                          ),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      for (final reason in const [
-                        null,
-                        '库存不足',
-                        '临时需求',
-                        '设备维修',
-                        '其他',
-                      ])
-                        Padding(
-                          padding: const EdgeInsets.only(right: 8),
-                          child: ChoiceChip(
-                            label: Text(reason ?? '全部'),
-                            selected: _filter.demandReason == reason,
-                            onSelected: (_) => setState(
-                              () => _filter = _filter.copyWith(
-                                demandReason: reason,
-                                clearDemandReason: reason == null,
+                  const SizedBox(height: 8),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        for (final reason in const [
+                          null,
+                          '库存不足',
+                          '临时需求',
+                          '设备维修',
+                          '其他',
+                        ])
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8),
+                            child: ChoiceChip(
+                              label: Text(reason ?? '全部'),
+                              selected: _filter.demandReason == reason,
+                              selectedColor: const Color(0xFF00A86B),
+                              labelStyle: TextStyle(
+                                color: _filter.demandReason == reason
+                                    ? Colors.white
+                                    : const Color(0xFF425D7F),
+                                fontWeight: FontWeight.w600,
+                              ),
+                              side: BorderSide(
+                                color: _filter.demandReason == reason
+                                    ? const Color(0xFF00A86B)
+                                    : const Color(0xFFE0EAF5),
+                              ),
+                              onSelected: (_) => setState(
+                                () => _filter = _filter.copyWith(
+                                  demandReason: reason,
+                                  clearDemandReason: reason == null,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: requests.when(
-              loading: () => const PurchaseLoadingState(),
-              error: (error, stack) => PurchaseErrorState(
-                onRetry: () =>
-                    ref.invalidate(purchaseRequestsByFilterProvider(_filter)),
-              ),
-              data: (items) => items.isEmpty
-                  ? PurchaseEmptyState(
-                      title: '暂无待申报采购',
-                      message: '库存不足或有新的物资需求时，可新建采购记录。',
-                      action: FilledButton.icon(
-                        onPressed: () => context.push(PurchaseRoutes.create),
-                        icon: const Icon(Icons.add),
-                        label: const Text('新建采购'),
-                      ),
-                    )
-                  : ListView.builder(
-                      padding: const EdgeInsets.fromLTRB(16, 4, 16, 28),
-                      itemCount: items.length,
-                      itemBuilder: (context, index) => Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: _PendingApplyCard(request: items[index]),
-                      ),
+                      ],
                     ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+            Expanded(
+              child: requests.when(
+                loading: () => const PurchaseLoadingState(),
+                error: (error, stack) => PurchaseErrorState(
+                  onRetry: () =>
+                      ref.invalidate(purchaseRequestsByFilterProvider(_filter)),
+                ),
+                data: (items) => items.isEmpty
+                    ? PurchaseEmptyState(
+                        title: '暂无待申报采购',
+                        message: '库存不足或有新的物资需求时，可新建采购记录。',
+                        action: FilledButton.icon(
+                          onPressed: () => context.push(PurchaseRoutes.create),
+                          icon: const Icon(Icons.add),
+                          label: const Text('新建采购'),
+                        ),
+                      )
+                    : ListView.builder(
+                        padding: const EdgeInsets.fromLTRB(16, 4, 16, 28),
+                        itemCount: items.length,
+                        itemBuilder: (context, index) => Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: _PendingApplyCard(request: items[index]),
+                        ),
+                      ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -137,6 +151,7 @@ class _PendingApplyCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final detail = ref.watch(purchaseDetailProvider(request.id)).valueOrNull;
     final materials =
         ref.watch(inventoryMaterialsProvider).valueOrNull ?? const [];
     final materialById = {for (final item in materials) item.id: item};
@@ -159,41 +174,37 @@ class _PendingApplyCard extends ConsumerWidget {
                         status: PurchaseStatus.pendingApply,
                       ),
                       const SizedBox(height: 5),
-                      Text(
-                        request.title,
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                      for (final item in request.items.take(3))
+                      if (request.items.isEmpty)
                         Text(
-                          '${item.itemName}${item.specification == null ? '' : ' · ${item.specification}'} · ${purchaseQuantityLabel(item.requestQuantity)} ${item.unit}',
-                          maxLines: 1,
+                          request.title,
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                      for (final item in request.items.take(3)) ...[
+                        Text(
+                          item.itemName,
+                          style: Theme.of(context).textTheme.titleLarge,
+                          maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
+                        Text(
+                          '型号：${item.specification?.isNotEmpty == true ? item.specification : '未填写'}',
+                        ),
+                        Text(
+                          '数量：${purchaseQuantityLabel(item.requestQuantity)} ${item.unit}',
+                        ),
+                      ],
                       if (request.items.isEmpty)
                         Text(
                           request.itemNames.join('、'),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
-                      if (request.items.isNotEmpty)
+                      for (final item in request.items.take(3))
                         Text(
-                          request.items
-                              .map((item) {
-                                final current = item.inventoryMaterialId == null
-                                    ? null
-                                    : materialById[item.inventoryMaterialId]
-                                          ?.currentStock;
-                                final quantity =
-                                    current ?? item.currentStockSnapshot;
-                                final prefix = current == null
-                                    ? '建单时库存'
-                                    : '当前库存';
-                                return '$prefix ${purchaseQuantityLabel(quantity ?? 0)} ${item.unit}';
-                              })
-                              .join(' / '),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
+                          '${item.inventoryMaterialId != null && materialById[item.inventoryMaterialId]?.currentStock != null ? '当前库存' : '建单时库存'}：${purchaseQuantityLabel((item.inventoryMaterialId == null ? null : materialById[item.inventoryMaterialId]?.currentStock) ?? item.currentStockSnapshot ?? 0)} ${item.unit}',
                         ),
+                      if (detail?.demandReason?.isNotEmpty == true)
+                        Text('需求原因：${detail!.demandReason}'),
                       Text(
                         '创建日期：${purchaseShortDateLabel(request.requestDate)}',
                       ),
@@ -240,6 +251,7 @@ class _PendingApplyCard extends ConsumerWidget {
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
+      backgroundColor: Colors.white,
       builder: (context) => PurchaseSheetResources(
         resources: [date, oaNo, oaTitle, oaUrl],
         child: SafeArea(

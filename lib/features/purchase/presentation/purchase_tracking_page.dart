@@ -55,6 +55,17 @@ class _PurchaseTrackingPageState extends ConsumerState<PurchaseTrackingPage> {
   @override
   Widget build(BuildContext context) {
     final requests = ref.watch(purchaseRequestsByFilterProvider(_filter));
+    final statusCounts =
+        ref
+            .watch(
+              purchaseRequestsByFilterProvider(
+                const PurchaseFilter(
+                  statuses: {PurchaseStatus.applied, PurchaseStatus.purchasing},
+                ),
+              ),
+            )
+            .valueOrNull ??
+        const <PurchaseRequestSummary>[];
     final knownPurchasers =
         ref
             .watch(
@@ -75,191 +86,203 @@ class _PurchaseTrackingPageState extends ConsumerState<PurchaseTrackingPage> {
             .toSet()
             .toList() ??
         const <String>[];
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.showAll ? '全部待处理' : '采购跟踪')),
-      body: Column(
-        children: [
-          if (!widget.showAll)
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-              child: SegmentedButton<PurchaseStatus>(
-                segments: const [
-                  ButtonSegment(
-                    value: PurchaseStatus.applied,
-                    label: Text('已申报'),
-                  ),
-                  ButtonSegment(
-                    value: PurchaseStatus.purchasing,
-                    label: Text('采购中'),
-                  ),
-                ],
-                selected: {_selectedStatus ?? PurchaseStatus.applied},
-                onSelectionChanged: (value) => setState(() {
-                  _selectedStatus = value.single;
-                  _filter = _filter.copyWith(statuses: {value.single});
-                }),
-              ),
-            ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 6, 16, 8),
-            child: Column(
-              children: [
-                TextField(
-                  controller: _searchController,
-                  key: const Key('purchase-tracking-search'),
-                  onChanged: (value) => setState(
-                    () => _filter = _filter.copyWith(keyword: value),
-                  ),
-                  decoration: InputDecoration(
-                    hintText: '搜索物资、OA编号、采购执行人',
-                    prefixIcon: const Icon(Icons.search),
-                    suffixIcon: IconButton(
-                      tooltip: '清除搜索',
-                      onPressed: () {
-                        _searchController.clear();
-                        setState(() => _filter = _filter.copyWith(keyword: ''));
-                      },
-                      icon: const Icon(Icons.close),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
+    return PurchasePageTheme(
+      child: Scaffold(
+        appBar: AppBar(title: Text(widget.showAll ? '全部待处理' : '采购跟踪')),
+        body: Column(
+          children: [
+            if (!widget.showAll)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                child: Row(
                   children: [
-                    PopupMenuButton<String>(
-                      tooltip: '日期筛选',
-                      onSelected: (value) async {
-                        final now = DateTime.now();
-                        if (value == 'all') {
-                          setState(() {
-                            _filter = _filter.copyWith(clearDates: true);
-                          });
-                        } else if (value == '30') {
-                          setState(() {
-                            _filter = _filter.copyWith(
-                              startDate: now.subtract(const Duration(days: 30)),
-                              endDate: now,
-                            );
-                          });
-                        } else {
-                          final start = await pickPurchaseDate(
-                            context,
-                            initialDate: _filter.startDate,
-                          );
-                          if (start == null || !context.mounted) return;
-                          final end = await pickPurchaseDate(
-                            context,
-                            initialDate: _filter.endDate ?? now,
-                          );
-                          if (end != null && context.mounted) {
-                            if (end.isBefore(start)) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('结束日期不能早于开始日期')),
-                              );
-                            } else {
-                              setState(
-                                () => _filter = _filter.copyWith(
-                                  startDate: start,
-                                  endDate: end,
-                                ),
-                              );
-                            }
-                          }
-                        }
-                      },
-                      itemBuilder: (context) => const [
-                        PopupMenuItem(value: 'all', child: Text('全部日期')),
-                        PopupMenuItem(value: '30', child: Text('最近30天')),
-                        PopupMenuItem(value: 'custom', child: Text('自定义日期')),
-                      ],
-                      child: Chip(
-                        avatar: const Icon(
-                          Icons.calendar_month_outlined,
-                          size: 18,
-                        ),
-                        label: Text(
-                          _filter.startDate == null
-                              ? '全部日期'
-                              : '${purchaseShortDateLabel(_filter.startDate)}–${purchaseShortDateLabel(_filter.endDate)}',
-                        ),
-                      ),
-                    ),
-                    PopupMenuButton<String>(
-                      tooltip: '采购执行人',
-                      onSelected: (value) => setState(() {
-                        _purchaser = value == '__all__' ? null : value;
-                        _filter = _filter.copyWith(
-                          purchaserName: _purchaser,
-                          clearPurchaser: _purchaser == null,
-                        );
-                      }),
-                      itemBuilder: (context) => [
-                        const PopupMenuItem(
-                          value: '__all__',
-                          child: Text('所有执行人'),
-                        ),
-                        for (final person in knownPurchasers)
-                          PopupMenuItem(value: person, child: Text(person)),
-                      ],
-                      child: Chip(
-                        avatar: const Icon(Icons.person_outline, size: 18),
-                        label: Text(_purchaser ?? '执行人'),
-                      ),
-                    ),
-                    if (widget.showAll)
-                      for (final status in const [
-                        PurchaseStatus.pendingApply,
-                        PurchaseStatus.applied,
-                        PurchaseStatus.purchasing,
-                        PurchaseStatus.pendingReceive,
-                      ])
-                        FilterChip(
-                          label: Text(status.label),
-                          selected: _filter.statuses.contains(status),
-                          onSelected: (selected) => setState(() {
-                            final next = {..._filter.statuses};
-                            selected ? next.add(status) : next.remove(status);
-                            if (next.isEmpty) {
-                              next.addAll(const {
-                                PurchaseStatus.pendingApply,
-                                PurchaseStatus.applied,
-                                PurchaseStatus.purchasing,
-                                PurchaseStatus.pendingReceive,
-                              });
-                            }
-                            _filter = _filter.copyWith(statuses: next);
+                    for (final (index, status) in const [
+                      PurchaseStatus.applied,
+                      PurchaseStatus.purchasing,
+                    ].indexed) ...[
+                      if (index > 0) const SizedBox(width: 8),
+                      Expanded(
+                        child: _TrackingStatusSegment(
+                          status: status,
+                          count: statusCounts
+                              .where((r) => r.status == status)
+                              .length,
+                          selected: _selectedStatus == status,
+                          onTap: () => setState(() {
+                            _selectedStatus = status;
+                            _filter = _filter.copyWith(statuses: {status});
                           }),
                         ),
+                      ),
+                    ],
                   ],
                 ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: requests.when(
-              loading: () => const PurchaseLoadingState(),
-              error: (error, stack) => PurchaseErrorState(
-                onRetry: () =>
-                    ref.invalidate(purchaseRequestsByFilterProvider(_filter)),
               ),
-              data: (items) => items.isEmpty
-                  ? const PurchaseEmptyState(
-                      title: '暂无采购记录',
-                      message: '符合当前筛选条件的采购记录会显示在这里。',
-                    )
-                  : ListView.builder(
-                      padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
-                      itemCount: items.length,
-                      itemBuilder: (context, index) => Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: _TrackingCard(request: items[index]),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 6, 16, 8),
+              child: Column(
+                children: [
+                  TextField(
+                    controller: _searchController,
+                    key: const Key('purchase-tracking-search'),
+                    onChanged: (value) => setState(
+                      () => _filter = _filter.copyWith(keyword: value),
+                    ),
+                    decoration: InputDecoration(
+                      hintText: '搜索物资、OA编号、采购执行人',
+                      prefixIcon: const Icon(Icons.search),
+                      suffixIcon: IconButton(
+                        tooltip: '清除搜索',
+                        onPressed: () {
+                          _searchController.clear();
+                          setState(
+                            () => _filter = _filter.copyWith(keyword: ''),
+                          );
+                        },
+                        icon: const Icon(Icons.close),
                       ),
                     ),
+                  ),
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: [
+                      PopupMenuButton<String>(
+                        tooltip: '日期筛选',
+                        onSelected: (value) async {
+                          final now = DateTime.now();
+                          if (value == 'all') {
+                            setState(() {
+                              _filter = _filter.copyWith(clearDates: true);
+                            });
+                          } else if (value == '30') {
+                            setState(() {
+                              _filter = _filter.copyWith(
+                                startDate: now.subtract(
+                                  const Duration(days: 30),
+                                ),
+                                endDate: now,
+                              );
+                            });
+                          } else {
+                            final start = await pickPurchaseDate(
+                              context,
+                              initialDate: _filter.startDate,
+                            );
+                            if (start == null || !context.mounted) return;
+                            final end = await pickPurchaseDate(
+                              context,
+                              initialDate: _filter.endDate ?? now,
+                            );
+                            if (end != null && context.mounted) {
+                              if (end.isBefore(start)) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('结束日期不能早于开始日期')),
+                                );
+                              } else {
+                                setState(
+                                  () => _filter = _filter.copyWith(
+                                    startDate: start,
+                                    endDate: end,
+                                  ),
+                                );
+                              }
+                            }
+                          }
+                        },
+                        itemBuilder: (context) => const [
+                          PopupMenuItem(value: 'all', child: Text('全部日期')),
+                          PopupMenuItem(value: '30', child: Text('最近30天')),
+                          PopupMenuItem(value: 'custom', child: Text('自定义日期')),
+                        ],
+                        child: Chip(
+                          avatar: const Icon(
+                            Icons.calendar_month_outlined,
+                            size: 18,
+                          ),
+                          label: Text(
+                            _filter.startDate == null
+                                ? '全部日期'
+                                : '${purchaseShortDateLabel(_filter.startDate)}–${purchaseShortDateLabel(_filter.endDate)}',
+                          ),
+                        ),
+                      ),
+                      PopupMenuButton<String>(
+                        tooltip: '采购执行人',
+                        onSelected: (value) => setState(() {
+                          _purchaser = value == '__all__' ? null : value;
+                          _filter = _filter.copyWith(
+                            purchaserName: _purchaser,
+                            clearPurchaser: _purchaser == null,
+                          );
+                        }),
+                        itemBuilder: (context) => [
+                          const PopupMenuItem(
+                            value: '__all__',
+                            child: Text('所有执行人'),
+                          ),
+                          for (final person in knownPurchasers)
+                            PopupMenuItem(value: person, child: Text(person)),
+                        ],
+                        child: Chip(
+                          avatar: const Icon(Icons.person_outline, size: 18),
+                          label: Text(_purchaser ?? '执行人'),
+                        ),
+                      ),
+                      if (widget.showAll)
+                        for (final status in const [
+                          PurchaseStatus.pendingApply,
+                          PurchaseStatus.applied,
+                          PurchaseStatus.purchasing,
+                          PurchaseStatus.pendingReceive,
+                        ])
+                          FilterChip(
+                            label: Text(status.label),
+                            selected: _filter.statuses.contains(status),
+                            onSelected: (selected) => setState(() {
+                              final next = {..._filter.statuses};
+                              selected ? next.add(status) : next.remove(status);
+                              if (next.isEmpty) {
+                                next.addAll(const {
+                                  PurchaseStatus.pendingApply,
+                                  PurchaseStatus.applied,
+                                  PurchaseStatus.purchasing,
+                                  PurchaseStatus.pendingReceive,
+                                });
+                              }
+                              _filter = _filter.copyWith(statuses: next);
+                            }),
+                          ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+            Expanded(
+              child: requests.when(
+                loading: () => const PurchaseLoadingState(),
+                error: (error, stack) => PurchaseErrorState(
+                  onRetry: () =>
+                      ref.invalidate(purchaseRequestsByFilterProvider(_filter)),
+                ),
+                data: (items) => items.isEmpty
+                    ? const PurchaseEmptyState(
+                        title: '暂无采购记录',
+                        message: '符合当前筛选条件的采购记录会显示在这里。',
+                      )
+                    : ListView.builder(
+                        padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
+                        itemCount: items.length,
+                        itemBuilder: (context, index) => Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: _TrackingCard(request: items[index]),
+                        ),
+                      ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -270,102 +293,119 @@ class _TrackingCard extends ConsumerWidget {
   final PurchaseRequestSummary request;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => PurchasePanel(
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        InkWell(
-          onTap: () => context.push(PurchaseRoutes.detail(request.id)),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const PurchaseMaterialIcon(size: 72),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    PurchaseStatusChip(status: request.status),
-                    const SizedBox(height: 5),
-                    Text(
-                      request.title,
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    for (final item in request.items.take(2))
+  Widget build(BuildContext context, WidgetRef ref) {
+    final detail = ref.watch(purchaseDetailProvider(request.id)).valueOrNull;
+    return PurchasePanel(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          InkWell(
+            onTap: () => context.push(PurchaseRoutes.detail(request.id)),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const PurchaseMaterialIcon(size: 72),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      PurchaseStatusChip(status: request.status),
+                      const SizedBox(height: 5),
                       Text(
-                        '${item.itemName} · ${item.specification ?? '无规格'} · ${purchaseQuantityLabel(item.requestQuantity)} ${item.unit}',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                        request.title,
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
-                    Text(
-                      'OA申报日期：${purchaseShortDateLabel(request.appliedDate)}',
-                    ),
-                    if (request.purchaserName != null)
-                      Text('执行人：${request.purchaserName}'),
-                    if (request.assignedDate != null)
+                      for (final item in request.items.take(2)) ...[
+                        Text(
+                          item.itemName,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Text('型号：${item.specification ?? '无规格'}'),
+                        Text(
+                          '数量：${purchaseQuantityLabel(item.requestQuantity)} ${item.unit}',
+                        ),
+                      ],
                       Text(
-                        '分配日期：${purchaseShortDateLabel(request.assignedDate)}',
+                        'OA申报日期：${purchaseShortDateLabel(request.appliedDate)}',
                       ),
-                    if (request.status == PurchaseStatus.applied)
-                      const Text(
-                        '等待资材部分配采购执行人',
-                        style: TextStyle(color: Color(0xFF1677FF)),
-                      ),
-                    if (request.status == PurchaseStatus.purchasing)
-                      Text(
-                        '已等待${_waitingDays(request)}天',
-                        style: const TextStyle(color: Color(0xFF1677FF)),
-                      ),
-                  ],
+                      if (detail?.oaRequestNo?.isNotEmpty == true)
+                        Text('OA流程编号：${detail!.oaRequestNo}'),
+                      if (detail?.purchaseDepartment?.isNotEmpty == true)
+                        Text('采购分部：${detail!.purchaseDepartment}'),
+                      if (request.purchaserName != null)
+                        Text('执行人：${request.purchaserName}'),
+                      if (request.assignedDate != null)
+                        Text(
+                          '分配日期：${purchaseShortDateLabel(request.assignedDate)}',
+                        ),
+                      if (request.status == PurchaseStatus.applied)
+                        const Text(
+                          '等待资材部分配采购执行人',
+                          style: TextStyle(color: Color(0xFF1677FF)),
+                        ),
+                      if (request.status == PurchaseStatus.purchasing)
+                        Text(
+                          '已等待${_waitingDays(request)}天',
+                          style: const TextStyle(color: Color(0xFF1677FF)),
+                        ),
+                    ],
+                  ),
                 ),
+                const Icon(Icons.chevron_right),
+              ],
+            ),
+          ),
+          const Divider(height: 22),
+          Wrap(
+            alignment: WrapAlignment.end,
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              OutlinedButton.icon(
+                onPressed: () =>
+                    context.push(PurchaseRoutes.detail(request.id)),
+                icon: const Icon(Icons.description_outlined),
+                label: const Text('查看详情'),
               ),
-              const Icon(Icons.chevron_right),
+              if (request.status == PurchaseStatus.applied)
+                OutlinedButton.icon(
+                  onPressed: () => _openOa(context, ref),
+                  icon: const Icon(Icons.open_in_new),
+                  label: const Text('查看 OA 流程'),
+                ),
+              if (request.status == PurchaseStatus.applied)
+                FilledButton.icon(
+                  key: Key('purchase-assign-${request.id}'),
+                  onPressed: () => _assign(context, ref),
+                  icon: const Icon(Icons.edit_outlined),
+                  label: const Text('填写采购信息'),
+                ),
+              if (request.status == PurchaseStatus.purchasing)
+                FilledButton.icon(
+                  key: Key('purchase-mark-receive-${request.id}'),
+                  onPressed: () => _markPendingReceive(context, ref),
+                  icon: const Icon(Icons.inventory_2_outlined),
+                  label: const Text('设为待领取'),
+                ),
+              if (request.status == PurchaseStatus.pendingReceive)
+                FilledButton.icon(
+                  onPressed: () =>
+                      context.push(PurchaseRoutes.stockIn(request.id)),
+                  icon: const Icon(Icons.move_to_inbox_outlined),
+                  label: Text(
+                    request.items.any((item) => item.receivedQuantity > 0)
+                        ? '继续入库'
+                        : '入库',
+                  ),
+                ),
             ],
           ),
-        ),
-        const Divider(height: 22),
-        Wrap(
-          alignment: WrapAlignment.end,
-          spacing: 8,
-          runSpacing: 8,
-          children: [
-            OutlinedButton.icon(
-              onPressed: () => context.push(PurchaseRoutes.detail(request.id)),
-              icon: const Icon(Icons.description_outlined),
-              label: const Text('查看详情'),
-            ),
-            if (request.status == PurchaseStatus.applied)
-              OutlinedButton.icon(
-                onPressed: () => _openOa(context, ref),
-                icon: const Icon(Icons.open_in_new),
-                label: const Text('查看 OA 流程'),
-              ),
-            if (request.status == PurchaseStatus.applied)
-              FilledButton.icon(
-                key: Key('purchase-assign-${request.id}'),
-                onPressed: () => _assign(context, ref),
-                icon: const Icon(Icons.edit_outlined),
-                label: const Text('填写采购信息'),
-              ),
-            if (request.status == PurchaseStatus.purchasing)
-              FilledButton.icon(
-                key: Key('purchase-mark-receive-${request.id}'),
-                onPressed: () => _markPendingReceive(context, ref),
-                icon: const Icon(Icons.inventory_2_outlined),
-                label: const Text('设为待领取'),
-              ),
-            if (request.status == PurchaseStatus.pendingReceive)
-              FilledButton.icon(
-                onPressed: () =>
-                    context.push(PurchaseRoutes.stockIn(request.id)),
-                icon: const Icon(Icons.move_to_inbox_outlined),
-                label: const Text('入库'),
-              ),
-          ],
-        ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
+  }
 
   Future<void> _openOa(BuildContext context, WidgetRef ref) async {
     try {
@@ -393,6 +433,7 @@ class _TrackingCard extends ConsumerWidget {
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
+      backgroundColor: Colors.white,
       builder: (context) => PurchaseSheetResources(
         resources: [department, purchaser],
         child: SafeArea(
@@ -485,6 +526,7 @@ class _TrackingCard extends ConsumerWidget {
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
+      backgroundColor: Colors.white,
       builder: (context) => PurchaseSheetResources(
         resources: [location],
         child: SafeArea(
@@ -558,6 +600,79 @@ class _TrackingCard extends ConsumerWidget {
       }
     }
   }
+}
+
+class _TrackingStatusSegment extends StatelessWidget {
+  const _TrackingStatusSegment({
+    required this.status,
+    required this.count,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final PurchaseStatus status;
+  final int count;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, constraints) {
+      final color = status == PurchaseStatus.applied
+          ? const Color(0xFF00A86B)
+          : const Color(0xFF1677FF);
+      final compact =
+          constraints.maxWidth < 190 ||
+          MediaQuery.textScalerOf(context).scale(14) > 18;
+      return Material(
+        color: selected
+            ? color.withValues(alpha: .08)
+            : const Color(0xFFF0F5FB),
+        borderRadius: BorderRadius.circular(16),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: onTap,
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: compact ? 8 : 12,
+              vertical: 10,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  status == PurchaseStatus.applied
+                      ? Icons.task_alt_outlined
+                      : Icons.shopping_cart_outlined,
+                  size: compact ? 18 : 22,
+                  color: color,
+                ),
+                SizedBox(width: compact ? 4 : 7),
+                Flexible(
+                  child: Text(
+                    status.label,
+                    maxLines: 1,
+                    softWrap: false,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: compact ? 12 : null),
+                  ),
+                ),
+                SizedBox(width: compact ? 4 : 7),
+                Text(
+                  '$count',
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    color: color,
+                    fontSize: compact ? 18 : null,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    },
+  );
 }
 
 int _waitingDays(PurchaseRequestSummary request) {

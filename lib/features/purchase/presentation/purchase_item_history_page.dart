@@ -26,63 +26,68 @@ class _PurchaseItemHistoryPageState
     final historyAsync = ref.watch(
       purchaseItemHistoryProvider(widget.inventoryMaterialId),
     );
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('物资采购历史'),
-        actions: [
-          IconButton(
-            tooltip: '查看库存详情',
-            onPressed: () => context.push(
-              '/inventory/materials/${widget.inventoryMaterialId}',
-            ),
-            icon: const Icon(Icons.more_horiz),
-          ),
-        ],
-      ),
-      body: historyAsync.when(
-        loading: () => const PurchaseLoadingState(),
-        error: (error, stack) => PurchaseErrorState(
-          onRetry: () => ref.invalidate(
-            purchaseItemHistoryProvider(widget.inventoryMaterialId),
-          ),
-        ),
-        data: (history) => history == null
-            ? const PurchaseEmptyState(title: '暂无物资历史', message: '该库存物资尚无采购历史。')
-            : _buildHistory(context, history),
-      ),
-      bottomNavigationBar: historyAsync.valueOrNull == null
-          ? null
-          : SafeArea(
-              top: false,
-              minimum: const EdgeInsets.fromLTRB(16, 8, 16, 14),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton.icon(
-                      onPressed: () => context.push(
-                        '/inventory/materials/${widget.inventoryMaterialId}',
-                      ),
-                      icon: const Icon(Icons.inventory_2_outlined),
-                      label: const Text('查看库存详情'),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: FilledButton.icon(
-                      key: const Key('purchase-repeat-request'),
-                      onPressed: () => context.push(
-                        PurchaseRoutes.create,
-                        extra: PurchaseItemPrefill.fromItemHistory(
-                          historyAsync.valueOrNull!,
-                        ),
-                      ),
-                      icon: const Icon(Icons.add),
-                      label: const Text('再次申报采购'),
-                    ),
-                  ),
-                ],
+    return PurchasePageTheme(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('物资采购历史'),
+          actions: [
+            IconButton(
+              tooltip: '查看库存详情',
+              onPressed: () => context.push(
+                '/inventory/materials/${widget.inventoryMaterialId}',
               ),
+              icon: const Icon(Icons.more_horiz),
             ),
+          ],
+        ),
+        body: historyAsync.when(
+          loading: () => const PurchaseLoadingState(),
+          error: (error, stack) => PurchaseErrorState(
+            onRetry: () => ref.invalidate(
+              purchaseItemHistoryProvider(widget.inventoryMaterialId),
+            ),
+          ),
+          data: (history) => history == null
+              ? const PurchaseEmptyState(
+                  title: '暂无物资历史',
+                  message: '该库存物资尚无采购历史。',
+                )
+              : _buildHistory(context, history),
+        ),
+        bottomNavigationBar: historyAsync.valueOrNull == null
+            ? null
+            : SafeArea(
+                top: false,
+                minimum: const EdgeInsets.fromLTRB(16, 8, 16, 14),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        onPressed: () => context.push(
+                          '/inventory/materials/${widget.inventoryMaterialId}',
+                        ),
+                        icon: const Icon(Icons.inventory_2_outlined),
+                        label: const Text('查看库存详情'),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: FilledButton.icon(
+                        key: const Key('purchase-repeat-request'),
+                        onPressed: () => context.push(
+                          PurchaseRoutes.create,
+                          extra: PurchaseItemPrefill.fromItemHistory(
+                            historyAsync.valueOrNull!,
+                          ),
+                        ),
+                        icon: const Icon(Icons.add),
+                        label: const Text('再次申报采购'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+      ),
     );
   }
 
@@ -125,26 +130,46 @@ class _PurchaseItemHistoryPageState
                 ],
               ),
               const Divider(height: 22),
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: [
-                  _DateMetric(
-                    label: '最近申报',
-                    value: purchaseDateLabel(item.mostRecentRequestDate),
-                    icon: Icons.calendar_month_outlined,
-                  ),
-                  _DateMetric(
-                    label: '最近入库',
-                    value: purchaseDateLabel(item.mostRecentStockInDate),
-                    icon: Icons.move_to_inbox_outlined,
-                  ),
-                  _DateMetric(
-                    label: '最近周期',
-                    value: _recentCycleLabel(cycles),
-                    icon: Icons.schedule,
-                  ),
-                ],
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  final metrics = [
+                    _DateMetric(
+                      label: '最近申报',
+                      value: purchaseDateLabel(item.mostRecentRequestDate),
+                      icon: Icons.calendar_month_outlined,
+                    ),
+                    _DateMetric(
+                      label: '最近入库',
+                      value: purchaseDateLabel(item.mostRecentStockInDate),
+                      icon: Icons.move_to_inbox_outlined,
+                    ),
+                    _DateMetric(
+                      label: '最近周期',
+                      value: _recentCycleLabel(cycles),
+                      icon: Icons.schedule,
+                    ),
+                  ];
+                  if (constraints.maxWidth < 280 ||
+                      MediaQuery.textScalerOf(context).scale(14) > 18) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        for (final metric in metrics) ...[
+                          metric,
+                          if (metric != metrics.last) const SizedBox(height: 8),
+                        ],
+                      ],
+                    );
+                  }
+                  return Row(
+                    children: [
+                      for (final (index, metric) in metrics.indexed) ...[
+                        if (index > 0) const SizedBox(width: 8),
+                        Expanded(child: metric),
+                      ],
+                    ],
+                  );
+                },
               ),
             ],
           ),
@@ -159,42 +184,70 @@ class _PurchaseItemHistoryPageState
         ),
         const SizedBox(height: 8),
         PurchasePanel(
-          child: Wrap(
-            spacing: 10,
-            runSpacing: 10,
-            children: [
-              _CycleCard(
-                label: '最近3次采购周期',
-                value: cycles.isEmpty
-                    ? '无足够历史记录'
-                    : cycles.map((e) => '$e天').join(' / '),
-              ),
-              _CycleCard(
-                label: '平均采购周期',
-                value: item.averageCycleDays == null
-                    ? '无足够历史记录'
-                    : '${item.averageCycleDays!.round()}天',
-              ),
-              _CycleCard(
-                label: '最近一次采购执行人',
-                value: _latestPurchaser(item.rows),
-              ),
-            ],
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final cards = [
+                _CycleCard(
+                  label: '最近3次采购周期',
+                  value: cycles.isEmpty
+                      ? '无足够历史记录'
+                      : cycles.map((e) => '$e天').join(' / '),
+                  fitSingleLineValue: true,
+                ),
+                _CycleCard(
+                  label: '平均采购周期',
+                  value: item.averageCycleDays == null
+                      ? '无足够历史记录'
+                      : '${item.averageCycleDays!.round()}天',
+                ),
+                _CycleCard(
+                  label: '最近一次采购执行人',
+                  value: _latestPurchaser(item.rows),
+                ),
+              ];
+              if (constraints.maxWidth < 280 ||
+                  MediaQuery.textScalerOf(context).scale(14) > 18) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    for (final card in cards) ...[
+                      card,
+                      if (card != cards.last) const SizedBox(height: 10),
+                    ],
+                  ],
+                );
+              }
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (final (index, card) in cards.indexed) ...[
+                    if (index > 0) const SizedBox(width: 10),
+                    Expanded(child: card),
+                  ],
+                ],
+              );
+            },
           ),
         ),
         const SizedBox(height: 14),
         const PurchaseSectionHeading('历史采购记录'),
         const SizedBox(height: 6),
-        Wrap(
-          spacing: 6,
-          runSpacing: 4,
+        Row(
           children: [
-            for (final period in const ['全部', '近半年', '本年度'])
-              ChoiceChip(
-                label: Text(period),
-                selected: _period == period,
-                onSelected: (_) => setState(() => _period = period),
+            for (final (index, period) in const [
+              '全部',
+              '近半年',
+              '本年度',
+            ].indexed) ...[
+              if (index > 0) const SizedBox(width: 8),
+              Expanded(
+                child: _HistoryPeriodSegment(
+                  label: period,
+                  selected: _period == period,
+                  onTap: () => setState(() => _period = period),
+                ),
               ),
+            ],
           ],
         ),
         const SizedBox(height: 8),
@@ -235,22 +288,21 @@ class _DateMetric extends StatelessWidget {
   final IconData icon;
   @override
   Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.all(10),
+    padding: const EdgeInsets.all(8),
     decoration: BoxDecoration(
       color: const Color(0xFFF3F7FC),
       borderRadius: BorderRadius.circular(12),
     ),
-    child: Row(
-      mainAxisSize: MainAxisSize.min,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Icon(icon, color: const Color(0xFF1677FF), size: 19),
-        const SizedBox(width: 6),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(label),
-            Text(value, style: Theme.of(context).textTheme.titleMedium),
-          ],
+        const SizedBox(height: 4),
+        Text(label, maxLines: 2, softWrap: true),
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: Text(value, style: Theme.of(context).textTheme.titleSmall),
         ),
       ],
     ),
@@ -258,75 +310,131 @@ class _DateMetric extends StatelessWidget {
 }
 
 class _CycleCard extends StatelessWidget {
-  const _CycleCard({required this.label, required this.value});
+  const _CycleCard({
+    required this.label,
+    required this.value,
+    this.fitSingleLineValue = false,
+  });
   final String label;
   final String value;
+  final bool fitSingleLineValue;
   @override
-  Widget build(BuildContext context) => SizedBox(
-    width: (MediaQuery.sizeOf(context).width - 76)
-        .clamp(120.0, 180.0)
-        .toDouble(),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(label, softWrap: true),
-        const SizedBox(height: 4),
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(label, softWrap: true),
+      const SizedBox(height: 4),
+      if (fitSingleLineValue)
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: Text(
+            value,
+            maxLines: 1,
+            softWrap: false,
+            style: Theme.of(context).textTheme.titleMedium
+                ?.copyWith(color: const Color(0xFF1677FF)),
+          ),
+        )
+      else
         Text(
           value,
           style: Theme.of(context).textTheme.titleMedium
               ?.copyWith(color: const Color(0xFF1677FF)),
           softWrap: true,
         ),
-      ],
+    ],
+  );
+}
+
+class _HistoryPeriodSegment extends StatelessWidget {
+  const _HistoryPeriodSegment({
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) => Material(
+    color: selected ? const Color(0xFF00A86B) : const Color(0xFFF0F5FB),
+    borderRadius: BorderRadius.circular(16),
+    child: InkWell(
+      borderRadius: BorderRadius.circular(16),
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+        child: Center(
+          child: Text(
+            label,
+            style: TextStyle(
+              color: selected ? Colors.white : const Color(0xFF425D7F),
+            ),
+          ),
+        ),
+      ),
     ),
   );
 }
 
-class _ItemHistoryRow extends StatelessWidget {
+class _ItemHistoryRow extends ConsumerWidget {
   const _ItemHistoryRow({required this.row});
   final PurchaseHistoryRow row;
   @override
-  Widget build(BuildContext context) => PurchasePanel(
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            PurchaseStatusChip(status: row.status),
-            const SizedBox(width: 8),
-            Expanded(child: Text('申报日期：${purchaseDateLabel(row.appliedDate)}')),
-          ],
-        ),
-        const SizedBox(height: 8),
-        Wrap(
-          spacing: 14,
-          runSpacing: 6,
-          children: [
-            Text(
-              '申报数量：${purchaseQuantityLabel(row.requestQuantity)} ${row.unit}',
-            ),
-            Text(
-              '实际入库：${purchaseQuantityLabel(row.receivedQuantity)} ${row.unit}',
-            ),
-            Text('执行人：${row.purchaserName ?? '未填写'}'),
-            Text('完成入库：${purchaseDateLabel(row.lastStockInDate)}'),
-            Text(
-              '采购周期：${row.cycleDays == null ? '无足够记录' : '${row.cycleDays}天'}',
-            ),
-          ],
-        ),
-        if (row.requestId > 0)
-          Align(
-            alignment: Alignment.centerRight,
-            child: TextButton(
-              onPressed: () =>
-                  context.push(PurchaseRoutes.detail(row.requestId)),
-              child: const Text('查看采购详情'),
-            ),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final detail = ref.watch(purchaseDetailProvider(row.requestId)).valueOrNull;
+    return PurchasePanel(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              PurchaseStatusChip(status: row.status),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text('申报日期：${purchaseDateLabel(row.appliedDate)}'),
+              ),
+            ],
           ),
-      ],
-    ),
-  );
+          const SizedBox(height: 8),
+          Wrap(
+            spacing: 14,
+            runSpacing: 6,
+            children: [
+              Text(
+                '申报数量：${purchaseQuantityLabel(row.requestQuantity)} ${row.unit}',
+              ),
+              Text(
+                '实际入库：${purchaseQuantityLabel(row.receivedQuantity)} ${row.unit}',
+              ),
+              Text('执行人：${row.purchaserName ?? '未填写'}'),
+              Text(
+                '${row.completedAt != null ? '完成入库' : '最近入库'}：${purchaseDateLabel(row.completedAt ?? row.lastStockInDate)}',
+              ),
+              if (detail?.purchaseDepartment?.isNotEmpty == true)
+                Text('资材分部：${detail!.purchaseDepartment}'),
+              if (detail?.oaRequestNo?.isNotEmpty == true)
+                Text('OA流程编号：${detail!.oaRequestNo}'),
+              Text(
+                '采购周期：${row.cycleDays == null ? '无足够记录' : '${row.cycleDays}天'}',
+              ),
+            ],
+          ),
+          if (row.requestId > 0)
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () =>
+                    context.push(PurchaseRoutes.detail(row.requestId)),
+                child: const Text('查看采购详情'),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
 }
 
 String _recentCycleLabel(List<int> cycles) =>

@@ -1,0 +1,4 @@
+00:00 +0: loading D:/QingSongBan/test/core/purchase_demo_data_seeder_test.dart
+00:00 +0: seeds labeled Chinese purchase scenarios once with repository history
+00:00 +1: preserves existing purchases when adding demo fixtures
+00:00 +2: All tests passed!
