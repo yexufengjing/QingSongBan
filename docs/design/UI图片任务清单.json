@@ -13636,10 +13636,28 @@
           "font_scale": 2.0
         }
       ],
-      "field_order_and_navigation_review": "待生成前逐项核实；源码证据已提取，未宣称语义审查通过",
-      "applicable_states_review": "待逐页核实；不得机械套用所有状态",
-      "generation_status": "未生成",
-      "outputs": []
+      "field_order_and_navigation_review": "按当前人员源码及规范核对；子页返回、隐藏主导航；012分屏保留全部分区，013三屏保留表单字段",
+      "applicable_states_review": "已生成主态；011另含筛选空态，013含只读年龄；首次空、加载、错误、表单校验/提交/成功及编辑差异待补",
+      "generation_status": "阶段4已生成390dp/1.0主态；011含筛选空态；完整状态、编辑差异与适配待补",
+      "outputs": [
+        {
+          "path": "02_工作台/010_人员_人员管理_查看_有数据_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "02_工作台/010_人员_人员管理_查看_有数据_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "有数据",
+          "tool": "built-in imagegen",
+          "sha256": "f29b39a3eae0fd6b9809a8a3f75058b2d6cff4f7d8e6dcba8c4cd6aaceb0e633",
+          "visual_review": "字段、中文、样例关系、只读年龄、筛选空态、操作关系及裁切人工初检；精确dp/sp与动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到任务清单目标1560x3376，不作为4K原生交付"
+        }
+      ]
     },
     {
       "id": "011",
@@ -13804,10 +13822,45 @@
           "font_scale": 2.0
         }
       ],
-      "field_order_and_navigation_review": "待生成前逐项核实；源码证据已提取，未宣称语义审查通过",
-      "applicable_states_review": "待逐页核实；不得机械套用所有状态",
-      "generation_status": "未生成",
-      "outputs": []
+      "field_order_and_navigation_review": "按当前人员源码及规范核对；子页返回、隐藏主导航；012分屏保留全部分区，013三屏保留表单字段",
+      "applicable_states_review": "已生成主态；011另含筛选空态，013含只读年龄；首次空、加载、错误、表单校验/提交/成功及编辑差异待补",
+      "generation_status": "阶段4已生成390dp/1.0主态；011含筛选空态；完整状态、编辑差异与适配待补",
+      "outputs": [
+        {
+          "path": "03_列表与记录/011_人员_人员名单_查看_有数据_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "03_列表与记录/011_人员_人员名单_查看_有数据_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "有数据",
+          "tool": "built-in imagegen",
+          "sha256": "2c06d41506f1843f75adf0bd2cf282bf040d2be58f05f80b9b47fb5c4be6d7cb",
+          "visual_review": "字段、中文、样例关系、只读年龄、筛选空态、操作关系及裁切人工初检；精确dp/sp与动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到任务清单目标1560x3376，不作为4K原生交付"
+        },
+        {
+          "path": "03_列表与记录/011_人员_人员名单_查看_筛选空_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "03_列表与记录/011_人员_人员名单_查看_筛选空_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "筛选空",
+          "tool": "built-in imagegen",
+          "sha256": "8577efab3a6ba611785cf5e28284bcd16114b16a798cd5f32e3b4245fd56d288",
+          "visual_review": "字段、中文、样例关系、只读年龄、筛选空态、操作关系及裁切人工初检；精确dp/sp与动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到任务清单目标1560x3376，不作为4K原生交付"
+        }
+      ]
     },
     {
       "id": "012",
@@ -13992,10 +14045,45 @@
           "font_scale": 2.0
         }
       ],
-      "field_order_and_navigation_review": "待生成前逐项核实；源码证据已提取，未宣称语义审查通过",
-      "applicable_states_review": "待逐页核实；不得机械套用所有状态",
-      "generation_status": "未生成",
-      "outputs": []
+      "field_order_and_navigation_review": "按当前人员源码及规范核对；子页返回、隐藏主导航；012分屏保留全部分区，013三屏保留表单字段",
+      "applicable_states_review": "已生成主态；011另含筛选空态，013含只读年龄；首次空、加载、错误、表单校验/提交/成功及编辑差异待补",
+      "generation_status": "阶段4已生成390dp/1.0主态；011含筛选空态；完整状态、编辑差异与适配待补",
+      "outputs": [
+        {
+          "path": "04_详情/012_人员_人员档案_查看_有数据_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "04_详情/012_人员_人员档案_查看_有数据_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "有数据",
+          "tool": "built-in imagegen",
+          "sha256": "7fb7d20ce0ad1fcad3ef8ab80f92c60614209a0fafc660b40258fd561aeadeaa",
+          "visual_review": "字段、中文、样例关系、只读年龄、筛选空态、操作关系及裁切人工初检；精确dp/sp与动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到任务清单目标1560x3376，不作为4K原生交付"
+        },
+        {
+          "path": "04_详情/012_人员_人员档案_查看_有数据_390dp_fs1p0_p02_v01.png",
+          "prompt_path": "04_详情/012_人员_人员档案_查看_有数据_390dp_fs1p0_p02_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 2,
+          "version": 1,
+          "state": "有数据",
+          "tool": "built-in imagegen",
+          "sha256": "f95d6ff0586832edb49e219a354bddac374a30b8013a83b7be2e45ede6f455f3",
+          "visual_review": "字段、中文、样例关系、只读年龄、筛选空态、操作关系及裁切人工初检；精确dp/sp与动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到任务清单目标1560x3376，不作为4K原生交付"
+        }
+      ]
     },
     {
       "id": "013",
@@ -14144,10 +14232,62 @@
           "font_scale": 2.0
         }
       ],
-      "field_order_and_navigation_review": "待生成前逐项核实；源码证据已提取，未宣称语义审查通过",
-      "applicable_states_review": "待逐页核实；不得机械套用所有状态",
-      "generation_status": "未生成",
-      "outputs": []
+      "field_order_and_navigation_review": "按当前人员源码及规范核对；子页返回、隐藏主导航；012分屏保留全部分区，013三屏保留表单字段",
+      "applicable_states_review": "已生成主态；011另含筛选空态，013含只读年龄；首次空、加载、错误、表单校验/提交/成功及编辑差异待补",
+      "generation_status": "阶段4已生成390dp/1.0主态；011含筛选空态；完整状态、编辑差异与适配待补",
+      "outputs": [
+        {
+          "path": "05_表单与编辑/013_人员_新增人员_新增_已填_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "05_表单与编辑/013_人员_新增人员_新增_已填_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "已填",
+          "tool": "built-in imagegen",
+          "sha256": "8702b05c68b261782e2e127f7c5f1d673a640e42c8d2b8dc3771b88862c0733a",
+          "visual_review": "字段、中文、样例关系、只读年龄、筛选空态、操作关系及裁切人工初检；精确dp/sp与动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到任务清单目标1560x3376，不作为4K原生交付"
+        },
+        {
+          "path": "05_表单与编辑/013_人员_新增人员_新增_已填_390dp_fs1p0_p02_v01.png",
+          "prompt_path": "05_表单与编辑/013_人员_新增人员_新增_已填_390dp_fs1p0_p02_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 2,
+          "version": 1,
+          "state": "已填",
+          "tool": "built-in imagegen",
+          "sha256": "86a30b7c7fc5a68c038aebc025d505e29994882541673ed1288725473a9cbf1d",
+          "visual_review": "字段、中文、样例关系、只读年龄、筛选空态、操作关系及裁切人工初检；精确dp/sp与动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到任务清单目标1560x3376，不作为4K原生交付"
+        },
+        {
+          "path": "05_表单与编辑/013_人员_新增人员_新增_已填_390dp_fs1p0_p03_v01.png",
+          "prompt_path": "05_表单与编辑/013_人员_新增人员_新增_已填_390dp_fs1p0_p03_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 3,
+          "version": 1,
+          "state": "已填",
+          "tool": "built-in imagegen",
+          "sha256": "40e192abbff8649322d63a4cc67f784512de9b1ab4638c4858c393140ff4a96b",
+          "visual_review": "字段、中文、样例关系、只读年龄、筛选空态、操作关系及裁切人工初检；精确dp/sp与动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到任务清单目标1560x3376，不作为4K原生交付"
+        }
+      ]
     },
     {
       "id": "014",
@@ -14316,10 +14456,28 @@
           "font_scale": 2.0
         }
       ],
-      "field_order_and_navigation_review": "待生成前逐项核实；源码证据已提取，未宣称语义审查通过",
-      "applicable_states_review": "待逐页核实；不得机械套用所有状态",
-      "generation_status": "未生成",
-      "outputs": []
+      "field_order_and_navigation_review": "已核对当前源码与规范；014根页有四主导航，015—019隐藏；月度名单/默认组影响范围分开；类型只读手动分组",
+      "applicable_states_review": "阶段5考勤入口主态已生成；适配待补；尚未完整覆盖首次空/加载/失败/只读/提交/成功，按页面实际能力继续补充",
+      "generation_status": "阶段5考勤入口主态已生成；适配待补",
+      "outputs": [
+        {
+          "path": "02_工作台/014_考勤_考勤入口_查看_主态_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "02_工作台/014_考勤_考勤入口_查看_主态_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "主态",
+          "tool": "built-in imagegen",
+          "sha256": "a609a76cc163a0809df1efef71ba30cd3746e671606330ecb9ec5b58377f2a84",
+          "visual_review": "中文、字段、名单与默认组范围、月表矩阵/图例、只读类型和表单错误就近反馈人工初检；精确dp/sp及动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到目标1560x3376，不宣称4K原生交付"
+        }
+      ]
     },
     {
       "id": "015",
@@ -14560,10 +14718,45 @@
           "font_scale": 2.0
         }
       ],
-      "field_order_and_navigation_review": "待生成前逐项核实；源码证据已提取，未宣称语义审查通过",
-      "applicable_states_review": "待逐页核实；不得机械套用所有状态",
-      "generation_status": "未生成",
-      "outputs": []
+      "field_order_and_navigation_review": "已核对当前源码与规范；014根页有四主导航，015—019隐藏；月度名单/默认组影响范围分开；类型只读手动分组",
+      "applicable_states_review": "阶段5月表有名单及空名单2张已生成；适配与其他状态待补；尚未完整覆盖首次空/加载/失败/只读/提交/成功，按页面实际能力继续补充",
+      "generation_status": "阶段5月表有名单及空名单2张已生成；适配与其他状态待补",
+      "outputs": [
+        {
+          "path": "06_台账与表格/015_考勤_月考勤表_查看_有名单_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "06_台账与表格/015_考勤_月考勤表_查看_有名单_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "有名单",
+          "tool": "built-in imagegen",
+          "sha256": "06e21ed8aaa48df9eeabfe001c662d7b206dcae6518e94e7a2339a8febd00d7e",
+          "visual_review": "中文、字段、名单与默认组范围、月表矩阵/图例、只读类型和表单错误就近反馈人工初检；精确dp/sp及动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到目标1560x3376，不宣称4K原生交付"
+        },
+        {
+          "path": "06_台账与表格/015_考勤_月考勤表_查看_空名单_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "06_台账与表格/015_考勤_月考勤表_查看_空名单_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "空名单",
+          "tool": "built-in imagegen",
+          "sha256": "36a7c09f36b7857281746929ccc0c550e9a9ea62666af85071bd2b3117c936ec",
+          "visual_review": "中文、字段、名单与默认组范围、月表矩阵/图例、只读类型和表单错误就近反馈人工初检；精确dp/sp及动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到目标1560x3376，不宣称4K原生交付"
+        }
+      ]
     },
     {
       "id": "016",
@@ -14840,10 +15033,28 @@
           "font_scale": 2.0
         }
       ],
-      "field_order_and_navigation_review": "待生成前逐项核实；源码证据已提取，未宣称语义审查通过",
-      "applicable_states_review": "待逐页核实；不得机械套用所有状态",
-      "generation_status": "未生成",
-      "outputs": []
+      "field_order_and_navigation_review": "已核对当前源码与规范；014根页有四主导航，015—019隐藏；月度名单/默认组影响范围分开；类型只读手动分组",
+      "applicable_states_review": "阶段5月度名单主态已生成；弹层、空态及适配待补；尚未完整覆盖首次空/加载/失败/只读/提交/成功，按页面实际能力继续补充",
+      "generation_status": "阶段5月度名单主态已生成；弹层、空态及适配待补",
+      "outputs": [
+        {
+          "path": "06_台账与表格/016_考勤_月度名单_维护_有名单_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "06_台账与表格/016_考勤_月度名单_维护_有名单_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "有名单",
+          "tool": "built-in imagegen",
+          "sha256": "16b9a9a07e8b10f5e9276886c7c7d5a70f431ddd3180023186e441b2f3a43d86",
+          "visual_review": "中文、字段、名单与默认组范围、月表矩阵/图例、只读类型和表单错误就近反馈人工初检；精确dp/sp及动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到目标1560x3376，不宣称4K原生交付"
+        }
+      ]
     },
     {
       "id": "017",
@@ -14916,10 +15127,28 @@
           "font_scale": 2.0
         }
       ],
-      "field_order_and_navigation_review": "待生成前逐项核实；源码证据已提取，未宣称语义审查通过",
-      "applicable_states_review": "待逐页核实；不得机械套用所有状态",
-      "generation_status": "未生成",
-      "outputs": []
+      "field_order_and_navigation_review": "已核对当前源码与规范；014根页有四主导航，015—019隐藏；月度名单/默认组影响范围分开；类型只读手动分组",
+      "applicable_states_review": "阶段5考勤组列表主态已生成；其他状态及适配待补；尚未完整覆盖首次空/加载/失败/只读/提交/成功，按页面实际能力继续补充",
+      "generation_status": "阶段5考勤组列表主态已生成；其他状态及适配待补",
+      "outputs": [
+        {
+          "path": "03_列表与记录/017_考勤_考勤组_查看_有数据_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "03_列表与记录/017_考勤_考勤组_查看_有数据_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "有数据",
+          "tool": "built-in imagegen",
+          "sha256": "c054bcfe5dc4ecf3de9c03c391f1df33f18753c99353a51560b5175ca1068704",
+          "visual_review": "中文、字段、名单与默认组范围、月表矩阵/图例、只读类型和表单错误就近反馈人工初检；精确dp/sp及动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到目标1560x3376，不宣称4K原生交付"
+        }
+      ]
     },
     {
       "id": "018",
@@ -15076,10 +15305,62 @@
           "font_scale": 2.0
         }
       ],
-      "field_order_and_navigation_review": "待生成前逐项核实；源码证据已提取，未宣称语义审查通过",
-      "applicable_states_review": "待逐页核实；不得机械套用所有状态",
-      "generation_status": "未生成",
-      "outputs": []
+      "field_order_and_navigation_review": "已核对当前源码与规范；014根页有四主导航，015—019隐藏；月度名单/默认组影响范围分开；类型只读手动分组",
+      "applicable_states_review": "阶段5详情主态、成员选择和移出确认3张已生成；停用等状态及适配待补；尚未完整覆盖首次空/加载/失败/只读/提交/成功，按页面实际能力继续补充",
+      "generation_status": "阶段5详情主态、成员选择和移出确认3张已生成；停用等状态及适配待补",
+      "outputs": [
+        {
+          "path": "04_详情/018_考勤_考勤组详情_查看_有成员_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "04_详情/018_考勤_考勤组详情_查看_有成员_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "有成员",
+          "tool": "built-in imagegen",
+          "sha256": "7b1a1b730fdfa0bbba89aa802b95cd3c50ed65293cd75c7e89fd262340b2723f",
+          "visual_review": "中文、字段、名单与默认组范围、月表矩阵/图例、只读类型和表单错误就近反馈人工初检；精确dp/sp及动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到目标1560x3376，不宣称4K原生交付"
+        },
+        {
+          "path": "09_弹层选择器与菜单/018_考勤_考勤组详情_添加_成员选择_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "09_弹层选择器与菜单/018_考勤_考勤组详情_添加_成员选择_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "成员选择",
+          "tool": "built-in imagegen",
+          "sha256": "7d6aa9b7f4f547391bd7e6b6dc3162a9618677aab825d280d4046e43f6b4a7c7",
+          "visual_review": "中文、字段、名单与默认组范围、月表矩阵/图例、只读类型和表单错误就近反馈人工初检；精确dp/sp及动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到目标1560x3376，不宣称4K原生交付"
+        },
+        {
+          "path": "09_弹层选择器与菜单/018_考勤_考勤组详情_确认_移出成员_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "09_弹层选择器与菜单/018_考勤_考勤组详情_确认_移出成员_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "移出成员",
+          "tool": "built-in imagegen",
+          "sha256": "58cded9e9c9d61f4bd36812a072423db87384f23923d8ba04c67e7bee51ca2a9",
+          "visual_review": "中文、字段、名单与默认组范围、月表矩阵/图例、只读类型和表单错误就近反馈人工初检；精确dp/sp及动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到目标1560x3376，不宣称4K原生交付"
+        }
+      ]
     },
     {
       "id": "019",
@@ -15204,10 +15485,45 @@
           "font_scale": 2.0
         }
       ],
-      "field_order_and_navigation_review": "待生成前逐项核实；源码证据已提取，未宣称语义审查通过",
-      "applicable_states_review": "待逐页核实；不得机械套用所有状态",
-      "generation_status": "未生成",
-      "outputs": []
+      "field_order_and_navigation_review": "已核对当前源码与规范；014根页有四主导航，015—019隐藏；月度名单/默认组影响范围分开；类型只读手动分组",
+      "applicable_states_review": "阶段5新增已填和校验错误2张已生成；编辑/提交等状态及适配待补；尚未完整覆盖首次空/加载/失败/只读/提交/成功，按页面实际能力继续补充",
+      "generation_status": "阶段5新增已填和校验错误2张已生成；编辑/提交等状态及适配待补",
+      "outputs": [
+        {
+          "path": "05_表单与编辑/019_考勤_新增考勤组_新增_已填_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "05_表单与编辑/019_考勤_新增考勤组_新增_已填_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "已填",
+          "tool": "built-in imagegen",
+          "sha256": "af5266c4e84930514ea01be930a02b72c31f279acd7a36dbaf7cb6d7b69463a4",
+          "visual_review": "中文、字段、名单与默认组范围、月表矩阵/图例、只读类型和表单错误就近反馈人工初检；精确dp/sp及动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到目标1560x3376，不宣称4K原生交付"
+        },
+        {
+          "path": "05_表单与编辑/019_考勤_新增考勤组_新增_校验错误_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "05_表单与编辑/019_考勤_新增考勤组_新增_校验错误_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "校验错误",
+          "tool": "built-in imagegen",
+          "sha256": "35cfb9532c331dd47b2ceb00863aa8afa834e6895617f2fbed58238354e71ec5",
+          "visual_review": "中文、字段、名单与默认组范围、月表矩阵/图例、只读类型和表单错误就近反馈人工初检；精确dp/sp及动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到目标1560x3376，不宣称4K原生交付"
+        }
+      ]
     },
     {
       "id": "020",
@@ -15362,8 +15678,26 @@
       ],
       "field_order_and_navigation_review": "待生成前逐项核实；源码证据已提取，未宣称语义审查通过",
       "applicable_states_review": "待逐页核实；不得机械套用所有状态",
-      "generation_status": "未生成",
-      "outputs": []
+      "generation_status": "阶段6请假记录主态已生成；删除确认、空态及适配待补",
+      "outputs": [
+        {
+          "path": "03_列表与记录/020_请假_请假记录_查看_有数据_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "03_列表与记录/020_请假_请假记录_查看_有数据_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "有数据",
+          "tool": "built-in imagegen",
+          "sha256": "c1014b8aa07637de0e6c032776bc0b3b62671db0af5a21af7d8c0269117b1233",
+          "visual_review": "中文、日期与时长算术、长表单连续字段、办理事项及撤销影响范围人工初检；精确dp/sp和动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到1560x3376，不宣称4K原生交付"
+        }
+      ]
     },
     {
       "id": "021",
@@ -15494,8 +15828,60 @@
       ],
       "field_order_and_navigation_review": "待生成前逐项核实；源码证据已提取，未宣称语义审查通过",
       "applicable_states_review": "待逐页核实；不得机械套用所有状态",
-      "generation_status": "未生成",
-      "outputs": []
+      "generation_status": "阶段6新增已填连续两屏及校验错误3张已生成；编辑/提交等状态及适配待补",
+      "outputs": [
+        {
+          "path": "05_表单与编辑/021_请假_新增请假_新增_已填_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "05_表单与编辑/021_请假_新增请假_新增_已填_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "已填上半屏",
+          "tool": "built-in imagegen",
+          "sha256": "d30a5189ecff40725e8f06638d8e3eb6c9e950e4a566ba94fcd12b0b56e7b447",
+          "visual_review": "中文、日期与时长算术、长表单连续字段、办理事项及撤销影响范围人工初检；精确dp/sp和动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到1560x3376，不宣称4K原生交付"
+        },
+        {
+          "path": "05_表单与编辑/021_请假_新增请假_新增_已填_390dp_fs1p0_p02_v01.png",
+          "prompt_path": "05_表单与编辑/021_请假_新增请假_新增_已填_390dp_fs1p0_p02_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 2,
+          "version": 1,
+          "state": "已填下半屏",
+          "tool": "built-in imagegen",
+          "sha256": "71f93b694dfae70a6b478c40cbece686202db1bc790eef4ecefd53d5bd8263b7",
+          "visual_review": "中文、日期与时长算术、长表单连续字段、办理事项及撤销影响范围人工初检；精确dp/sp和动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到1560x3376，不宣称4K原生交付"
+        },
+        {
+          "path": "05_表单与编辑/021_请假_新增请假_新增_校验错误_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "05_表单与编辑/021_请假_新增请假_新增_校验错误_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "校验错误",
+          "tool": "built-in imagegen",
+          "sha256": "4421c1892fa06c057a92290c9d1c3a3fc972c988654c2d17a2054cfa99e11584",
+          "visual_review": "中文、日期与时长算术、长表单连续字段、办理事项及撤销影响范围人工初检；精确dp/sp和动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到1560x3376，不宣称4K原生交付"
+        }
+      ]
     },
     {
       "id": "022",
@@ -15646,8 +16032,26 @@
       ],
       "field_order_and_navigation_review": "待生成前逐项核实；源码证据已提取，未宣称语义审查通过",
       "applicable_states_review": "待逐页核实；不得机械套用所有状态",
-      "generation_status": "未生成",
-      "outputs": []
+      "generation_status": "阶段6加班记录主态已生成；删除确认、空态及适配待补",
+      "outputs": [
+        {
+          "path": "03_列表与记录/022_加班_加班记录_查看_有数据_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "03_列表与记录/022_加班_加班记录_查看_有数据_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "有数据",
+          "tool": "built-in imagegen",
+          "sha256": "e8f74af5414ef29aa4349c792c2966eb1d1cfb4c46f56277598f53474ea070a8",
+          "visual_review": "中文、日期与时长算术、长表单连续字段、办理事项及撤销影响范围人工初检；精确dp/sp和动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到1560x3376，不宣称4K原生交付"
+        }
+      ]
     },
     {
       "id": "023",
@@ -15778,8 +16182,60 @@
       ],
       "field_order_and_navigation_review": "待生成前逐项核实；源码证据已提取，未宣称语义审查通过",
       "applicable_states_review": "待逐页核实；不得机械套用所有状态",
-      "generation_status": "未生成",
-      "outputs": []
+      "generation_status": "阶段6新增已填连续两屏及时间错误3张已生成；编辑/提交等状态及适配待补",
+      "outputs": [
+        {
+          "path": "05_表单与编辑/023_加班_新增加班_新增_已填_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "05_表单与编辑/023_加班_新增加班_新增_已填_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "已填上半屏",
+          "tool": "built-in imagegen",
+          "sha256": "3f54656878b945e1bcbe56c652e3bc47d72e8c18ec948a34742a2f6d3bbe3aca",
+          "visual_review": "中文、日期与时长算术、长表单连续字段、办理事项及撤销影响范围人工初检；精确dp/sp和动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到1560x3376，不宣称4K原生交付"
+        },
+        {
+          "path": "05_表单与编辑/023_加班_新增加班_新增_已填_390dp_fs1p0_p02_v01.png",
+          "prompt_path": "05_表单与编辑/023_加班_新增加班_新增_已填_390dp_fs1p0_p02_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 2,
+          "version": 1,
+          "state": "已填下半屏",
+          "tool": "built-in imagegen",
+          "sha256": "2522dd38c51d7ea7a8940047896e6d972abedfbaf68c798e71ca0e8e54561577",
+          "visual_review": "中文、日期与时长算术、长表单连续字段、办理事项及撤销影响范围人工初检；精确dp/sp和动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到1560x3376，不宣称4K原生交付"
+        },
+        {
+          "path": "05_表单与编辑/023_加班_新增加班_新增_时间错误_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "05_表单与编辑/023_加班_新增加班_新增_时间错误_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "时间错误",
+          "tool": "built-in imagegen",
+          "sha256": "9aead75cc430c7aa4595ab13c561175dd42a7850e68578a5a25d968bd04bcf41",
+          "visual_review": "中文、日期与时长算术、长表单连续字段、办理事项及撤销影响范围人工初检；精确dp/sp和动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到1560x3376，不宣称4K原生交付"
+        }
+      ]
     },
     {
       "id": "024",
@@ -15918,8 +16374,43 @@
       ],
       "field_order_and_navigation_review": "待生成前逐项核实；源码证据已提取，未宣称语义审查通过",
       "applicable_states_review": "待逐页核实；不得机械套用所有状态",
-      "generation_status": "未生成",
-      "outputs": []
+      "generation_status": "阶段6离职列表及撤销确认2张已生成；其他状态及适配待补",
+      "outputs": [
+        {
+          "path": "03_列表与记录/024_离职_离职管理_查看_有数据_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "03_列表与记录/024_离职_离职管理_查看_有数据_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "有数据",
+          "tool": "built-in imagegen",
+          "sha256": "4a30aa8e2b81f39018c587e1d20dd9fcad78f8978e26e7c7637f0c6c15402574",
+          "visual_review": "中文、日期与时长算术、长表单连续字段、办理事项及撤销影响范围人工初检；精确dp/sp和动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到1560x3376，不宣称4K原生交付"
+        },
+        {
+          "path": "09_弹层选择器与菜单/024_离职_离职管理_确认_撤销离职_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "09_弹层选择器与菜单/024_离职_离职管理_确认_撤销离职_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "撤销离职",
+          "tool": "built-in imagegen",
+          "sha256": "d62df582ee37ab524b92175413e86b3d02f80bcfcf324925494b935281a3f282",
+          "visual_review": "中文、日期与时长算术、长表单连续字段、办理事项及撤销影响范围人工初检；精确dp/sp和动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到1560x3376，不宣称4K原生交付"
+        }
+      ]
     },
     {
       "id": "025",
@@ -16082,8 +16573,43 @@
       ],
       "field_order_and_navigation_review": "待生成前逐项核实；源码证据已提取，未宣称语义审查通过",
       "applicable_states_review": "待逐页核实；不得机械套用所有状态",
-      "generation_status": "未生成",
-      "outputs": []
+      "generation_status": "阶段6登记已填连续两屏已生成；编辑/校验/提交等状态及适配待补",
+      "outputs": [
+        {
+          "path": "05_表单与编辑/025_离职_登记离职_新增_已填_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "05_表单与编辑/025_离职_登记离职_新增_已填_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "已填上半屏",
+          "tool": "built-in imagegen",
+          "sha256": "4dc979a2966a159f7ba8e875d141f57065845e8db2b1a46be64674e289521137",
+          "visual_review": "中文、日期与时长算术、长表单连续字段、办理事项及撤销影响范围人工初检；精确dp/sp和动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到1560x3376，不宣称4K原生交付"
+        },
+        {
+          "path": "05_表单与编辑/025_离职_登记离职_新增_已填_390dp_fs1p0_p02_v01.png",
+          "prompt_path": "05_表单与编辑/025_离职_登记离职_新增_已填_390dp_fs1p0_p02_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 2,
+          "version": 1,
+          "state": "已填下半屏",
+          "tool": "built-in imagegen",
+          "sha256": "c91443dce80018c55827edaccddba2877f17ecf88f631508220906c54842f57c",
+          "visual_review": "中文、日期与时长算术、长表单连续字段、办理事项及撤销影响范围人工初检；精确dp/sp和动态行为未实测",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到1560x3376，不宣称4K原生交付"
+        }
+      ]
     },
     {
       "id": "026",
@@ -16218,8 +16744,60 @@
       ],
       "field_order_and_navigation_review": "待生成前逐项核实；源码证据已提取，未宣称语义审查通过",
       "applicable_states_review": "待逐页核实；不得机械套用所有状态",
-      "generation_status": "未生成",
-      "outputs": []
+      "generation_status": "阶段7社保主态连续两屏及分区异常3张已生成；其他状态及适配待补",
+      "outputs": [
+        {
+          "path": "03_列表与记录/026_保险_社保保险_查看_有数据_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "03_列表与记录/026_保险_社保保险_查看_有数据_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "主态上半屏",
+          "tool": "built-in imagegen",
+          "sha256": "366a09b4e037ee7a861c576cee16c30aa2996d42b349283ca06c7438c01ca05d",
+          "visual_review": "中文、保险当前状态与办理状态、月份与基数、分区异常、附件数量/分类/隐私/恢复范围人工初检；精确dp/sp及设备未验证",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到1560x3376，不宣称4K原生交付"
+        },
+        {
+          "path": "03_列表与记录/026_保险_社保保险_查看_有数据_390dp_fs1p0_p02_v01.png",
+          "prompt_path": "03_列表与记录/026_保险_社保保险_查看_有数据_390dp_fs1p0_p02_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 2,
+          "version": 1,
+          "state": "主态下半屏",
+          "tool": "built-in imagegen",
+          "sha256": "10d09bff7ef2a4a270b7b781015b78ad0923892fa4f36d01074de33925b62158",
+          "visual_review": "中文、保险当前状态与办理状态、月份与基数、分区异常、附件数量/分类/隐私/恢复范围人工初检；精确dp/sp及设备未验证",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到1560x3376，不宣称4K原生交付"
+        },
+        {
+          "path": "03_列表与记录/026_保险_社保保险_查看_分区异常_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "03_列表与记录/026_保险_社保保险_查看_分区异常_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "分区异常",
+          "tool": "built-in imagegen",
+          "sha256": "bbbacaae06870cee0a8cdb3db8d7b4f9fcd5ee45be4902efe0672ba7513c26cd",
+          "visual_review": "中文、保险当前状态与办理状态、月份与基数、分区异常、附件数量/分类/隐私/恢复范围人工初检；精确dp/sp及设备未验证",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到1560x3376，不宣称4K原生交付"
+        }
+      ]
     },
     {
       "id": "027",
@@ -16342,8 +16920,43 @@
       ],
       "field_order_and_navigation_review": "待生成前逐项核实；源码证据已提取，未宣称语义审查通过",
       "applicable_states_review": "待逐页核实；不得机械套用所有状态",
-      "generation_status": "未生成",
-      "outputs": []
+      "generation_status": "阶段7维护参保开关开启/关闭2张已生成；校验/提交状态及适配待补",
+      "outputs": [
+        {
+          "path": "05_表单与编辑/027_保险_维护参保资料_维护_已参保_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "05_表单与编辑/027_保险_维护参保资料_维护_已参保_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "已参保",
+          "tool": "built-in imagegen",
+          "sha256": "b08e6ee94989ffc8861f925a94e53aa996c38aea9320397ca0bdd52038ebf4a4",
+          "visual_review": "中文、保险当前状态与办理状态、月份与基数、分区异常、附件数量/分类/隐私/恢复范围人工初检；精确dp/sp及设备未验证",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到1560x3376，不宣称4K原生交付"
+        },
+        {
+          "path": "05_表单与编辑/027_保险_维护参保资料_维护_未参保_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "05_表单与编辑/027_保险_维护参保资料_维护_未参保_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "未参保",
+          "tool": "built-in imagegen",
+          "sha256": "ae83162762e38463fa1a105c5d3a701fc51fef5704c92743d9b883e75dd94a51",
+          "visual_review": "中文、保险当前状态与办理状态、月份与基数、分区异常、附件数量/分类/隐私/恢复范围人工初检；精确dp/sp及设备未验证",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到1560x3376，不宣称4K原生交付"
+        }
+      ]
     },
     {
       "id": "028",
@@ -16486,8 +17099,60 @@
       ],
       "field_order_and_navigation_review": "待生成前逐项核实；源码证据已提取，未宣称语义审查通过",
       "applicable_states_review": "待逐页核实；不得机械套用所有状态",
-      "generation_status": "未生成",
-      "outputs": []
+      "generation_status": "阶段7新增已填连续两屏及校验错误3张已生成；编辑/提交等状态及适配待补",
+      "outputs": [
+        {
+          "path": "05_表单与编辑/028_保险_登记保险变更_新增_已填_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "05_表单与编辑/028_保险_登记保险变更_新增_已填_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "已填上半屏",
+          "tool": "built-in imagegen",
+          "sha256": "6931570abb4f999e1ef9e8126ffef476ef1e1becd5ba3d9c9b29f2e932a91176",
+          "visual_review": "中文、保险当前状态与办理状态、月份与基数、分区异常、附件数量/分类/隐私/恢复范围人工初检；精确dp/sp及设备未验证",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到1560x3376，不宣称4K原生交付"
+        },
+        {
+          "path": "05_表单与编辑/028_保险_登记保险变更_新增_已填_390dp_fs1p0_p02_v01.png",
+          "prompt_path": "05_表单与编辑/028_保险_登记保险变更_新增_已填_390dp_fs1p0_p02_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 2,
+          "version": 1,
+          "state": "已填下半屏",
+          "tool": "built-in imagegen",
+          "sha256": "8d3265bc1568410b5fac0606a9adfe71cfc8e5ab91fb55479444210be48e3c03",
+          "visual_review": "中文、保险当前状态与办理状态、月份与基数、分区异常、附件数量/分类/隐私/恢复范围人工初检；精确dp/sp及设备未验证",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到1560x3376，不宣称4K原生交付"
+        },
+        {
+          "path": "05_表单与编辑/028_保险_登记保险变更_新增_校验错误_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "05_表单与编辑/028_保险_登记保险变更_新增_校验错误_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "校验错误",
+          "tool": "built-in imagegen",
+          "sha256": "67a895778b8943c4ee8f564b947479562525d831413d68c69df6c609c7b4fa35",
+          "visual_review": "中文、保险当前状态与办理状态、月份与基数、分区异常、附件数量/分类/隐私/恢复范围人工初检；精确dp/sp及设备未验证",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到1560x3376，不宣称4K原生交付"
+        }
+      ]
     },
     {
       "id": "029",
@@ -16674,8 +17339,77 @@
       ],
       "field_order_and_navigation_review": "待生成前逐项核实；源码证据已提取，未宣称语义审查通过",
       "applicable_states_review": "待逐页核实；不得机械套用所有状态",
-      "generation_status": "未生成",
-      "outputs": []
+      "generation_status": "阶段7附件主态含已删除、敏感预览、分类空及缺本地文件4张已生成；其他状态及适配待补",
+      "outputs": [
+        {
+          "path": "03_列表与记录/029_人员_人员附件_查看_有数据_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "03_列表与记录/029_人员_人员附件_查看_有数据_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "有数据含已删除",
+          "tool": "built-in imagegen",
+          "sha256": "051d9fbb9e52d52f62937a4a4c1e164bde5ff05589caa31027b3abb796db5b61",
+          "visual_review": "中文、保险当前状态与办理状态、月份与基数、分区异常、附件数量/分类/隐私/恢复范围人工初检；精确dp/sp及设备未验证",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到1560x3376，不宣称4K原生交付"
+        },
+        {
+          "path": "09_弹层选择器与菜单/029_人员_人员附件_确认_敏感预览_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "09_弹层选择器与菜单/029_人员_人员附件_确认_敏感预览_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "敏感预览",
+          "tool": "built-in imagegen",
+          "sha256": "6665464d0b648d6d40d4363a53fe658b4d4f1db52b66405b557f477ec3118c4d",
+          "visual_review": "中文、保险当前状态与办理状态、月份与基数、分区异常、附件数量/分类/隐私/恢复范围人工初检；精确dp/sp及设备未验证",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到1560x3376，不宣称4K原生交付"
+        },
+        {
+          "path": "03_列表与记录/029_人员_人员附件_查看_分类空_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "03_列表与记录/029_人员_人员附件_查看_分类空_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "分类空",
+          "tool": "built-in imagegen",
+          "sha256": "7ff5b2fbaf16ee10d3eb48f92d64964c4fa31b630b1eb3b1c569d492fdb6838c",
+          "visual_review": "中文、保险当前状态与办理状态、月份与基数、分区异常、附件数量/分类/隐私/恢复范围人工初检；精确dp/sp及设备未验证",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到1560x3376，不宣称4K原生交付"
+        },
+        {
+          "path": "09_弹层选择器与菜单/029_人员_人员附件_导出_缺本地文件_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "09_弹层选择器与菜单/029_人员_人员附件_导出_缺本地文件_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "缺本地文件",
+          "tool": "built-in imagegen",
+          "sha256": "211d33a78a237ea6cbe8cf04e60aeb7fc9f511ba8baf3c701985a279994ac895",
+          "visual_review": "中文、保险当前状态与办理状态、月份与基数、分区异常、附件数量/分类/隐私/恢复范围人工初检；精确dp/sp及设备未验证",
+          "user_review": "连续生成交付，待用户反馈；未宣称最终验收",
+          "resolution_review": "实际像素如实记录；未达到1560x3376，不宣称4K原生交付"
+        }
+      ]
     },
     {
       "id": "030",
@@ -16996,10 +17730,105 @@
           "font_scale": 2.0
         }
       ],
-      "field_order_and_navigation_review": "待生成前逐项核实；源码证据已提取，未宣称语义审查通过",
-      "applicable_states_review": "待逐页核实；不得机械套用所有状态",
-      "generation_status": "未生成",
-      "outputs": []
+      "field_order_and_navigation_review": "规范4.4与源字段已核对；四模块、独立月份/实际导出范围、异常先于明细；图稿初检，不等于源码完成",
+      "applicable_states_review": "本批覆盖见阶段8索引；加载、错误、其他空态、操作展开/确认及宽度字号适配仍待补",
+      "generation_status": "阶段8主态及关键状态5张已生成；完整状态及适配待补",
+      "outputs": [
+        {
+          "path": "07_分析与汇总/030_汇总_考勤_月度概览_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "07_分析与汇总/030_汇总_考勤_月度概览_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "月度概览",
+          "tool": "built-in imagegen",
+          "sha256": "59d011a28aa1db19062810778c32f81ca99487befaaa49ba591d53da12178c7a",
+          "visual_review": "主要中文、字段、样例算术、状态区分与导航已人工初检；精确尺寸和设备交互未实测",
+          "user_review": "待用户审阅",
+          "resolution_review": "实际像素已记录；未达到目标1560×3376，不通过放大冒充原生分辨率"
+        },
+        {
+          "path": "07_分析与汇总/030_汇总_考勤_人员明细_390dp_fs1p0_p02_v01.png",
+          "prompt_path": "07_分析与汇总/030_汇总_考勤_人员明细_390dp_fs1p0_p02_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 2,
+          "version": 1,
+          "state": "人员明细",
+          "tool": "built-in imagegen",
+          "sha256": "115a93d6b86cc3b9842459d5693995ca3a5f34037aa0a3bee52dd6aa8e7bbc69",
+          "visual_review": "主要中文、字段、样例算术、状态区分与导航已人工初检；精确尺寸和设备交互未实测",
+          "user_review": "待用户审阅",
+          "resolution_review": "实际像素已记录；未达到目标1560×3376，不通过放大冒充原生分辨率"
+        },
+        {
+          "path": "07_分析与汇总/030_汇总_考勤_人员变动_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "07_分析与汇总/030_汇总_考勤_人员变动_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "人员变动",
+          "tool": "built-in imagegen",
+          "sha256": "5f7616757c1dd6391f4d62dbad0113ab379ca6a7c0dcc871b6d9b30447c9af70",
+          "visual_review": "主要中文、字段、样例算术、状态区分与导航已人工初检；精确尺寸和设备交互未实测",
+          "user_review": "待用户审阅",
+          "resolution_review": "实际像素已记录；未达到目标1560×3376，不通过放大冒充原生分辨率"
+        },
+        {
+          "path": "07_分析与汇总/030_汇总_考勤_保险变更_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "07_分析与汇总/030_汇总_考勤_保险变更_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "保险变更",
+          "tool": "built-in imagegen",
+          "sha256": "6de0bfc820e8b7adbd3454cf872582fa52b82ad089368cfb7cefc4da29a7f4a1",
+          "visual_review": "主要中文、字段、样例算术、状态区分与导航已人工初检；精确尺寸和设备交互未实测",
+          "user_review": "待用户审阅",
+          "resolution_review": "实际像素已记录；未达到目标1560×3376，不通过放大冒充原生分辨率"
+        },
+        {
+          "path": "07_分析与汇总/030_汇总_考勤_未生成_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "07_分析与汇总/030_汇总_考勤_未生成_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "未生成",
+          "tool": "built-in imagegen",
+          "sha256": "78f2d89690f2b49acbf27de6b5279838272d1e1a554d2b52810d2c581ec54380",
+          "visual_review": "主要中文、字段、样例算术、状态区分与导航已人工初检；精确尺寸和设备交互未实测",
+          "user_review": "待用户审阅",
+          "resolution_review": "实际像素已记录；未达到目标1560×3376，不通过放大冒充原生分辨率"
+        }
+      ],
+      "generation_sources": [
+        "全量UI重构设计规范.md:337-348",
+        "lib/features/reports/presentation/reports_page.dart:361-381,425-429,480-483,591-629,768-779",
+        "lib/features/reports/domain/monthly_summary_options.dart",
+        "lib/features/vehicles/data/vehicle_expense_repository.dart:65-156",
+        "lib/features/inventory/application/inventory_excel_service.dart:21-56",
+        "lib/features/payroll/application/payroll_excel_service.dart:17-67",
+        "lib/features/payroll/data/payroll_validation_service.dart:18-31,76-82"
+      ]
     },
     {
       "id": "031",
@@ -17320,10 +18149,54 @@
           "font_scale": 2.0
         }
       ],
-      "field_order_and_navigation_review": "待生成前逐项核实；源码证据已提取，未宣称语义审查通过",
-      "applicable_states_review": "待逐页核实；不得机械套用所有状态",
-      "generation_status": "未生成",
-      "outputs": []
+      "field_order_and_navigation_review": "规范4.4与源字段已核对；四模块、独立月份/实际导出范围、异常先于明细；图稿初检，不等于源码完成",
+      "applicable_states_review": "本批覆盖见阶段8索引；加载、错误、其他空态、操作展开/确认及宽度字号适配仍待补",
+      "generation_status": "阶段8主态及关键状态2张已生成；完整状态及适配待补",
+      "outputs": [
+        {
+          "path": "07_分析与汇总/031_汇总_车辆_月度概览_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "07_分析与汇总/031_汇总_车辆_月度概览_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "月度概览",
+          "tool": "built-in imagegen",
+          "sha256": "2eb0fb9170ff90f2bc878bbc328a4b1a8d97ffd581a90dfb806852ff989b2010",
+          "visual_review": "主要中文、字段、样例算术、状态区分与导航已人工初检；精确尺寸和设备交互未实测",
+          "user_review": "待用户审阅",
+          "resolution_review": "实际像素已记录；未达到目标1560×3376，不通过放大冒充原生分辨率"
+        },
+        {
+          "path": "07_分析与汇总/031_汇总_车辆_零值与缺记录_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "07_分析与汇总/031_汇总_车辆_零值与缺记录_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "零值与缺记录",
+          "tool": "built-in imagegen",
+          "sha256": "f08ff2ae5fb01a8f95901d6da68250402bc8d38fdd66039bfeb4e710c8b76984",
+          "visual_review": "主要中文、字段、样例算术、状态区分与导航已人工初检；精确尺寸和设备交互未实测",
+          "user_review": "待用户审阅",
+          "resolution_review": "实际像素已记录；未达到目标1560×3376，不通过放大冒充原生分辨率"
+        }
+      ],
+      "generation_sources": [
+        "全量UI重构设计规范.md:337-348",
+        "lib/features/reports/presentation/reports_page.dart:361-381,425-429,480-483,591-629,768-779",
+        "lib/features/reports/domain/monthly_summary_options.dart",
+        "lib/features/vehicles/data/vehicle_expense_repository.dart:65-156",
+        "lib/features/inventory/application/inventory_excel_service.dart:21-56",
+        "lib/features/payroll/application/payroll_excel_service.dart:17-67",
+        "lib/features/payroll/data/payroll_validation_service.dart:18-31,76-82"
+      ]
     },
     {
       "id": "032",
@@ -17644,10 +18517,54 @@
           "font_scale": 2.0
         }
       ],
-      "field_order_and_navigation_review": "待生成前逐项核实；源码证据已提取，未宣称语义审查通过",
-      "applicable_states_review": "待逐页核实；不得机械套用所有状态",
-      "generation_status": "未生成",
-      "outputs": []
+      "field_order_and_navigation_review": "规范4.4与源字段已核对；四模块、独立月份/实际导出范围、异常先于明细；图稿初检，不等于源码完成",
+      "applicable_states_review": "本批覆盖见阶段8索引；加载、错误、其他空态、操作展开/确认及宽度字号适配仍待补",
+      "generation_status": "阶段8主态及关键状态2张已生成；完整状态及适配待补",
+      "outputs": [
+        {
+          "path": "07_分析与汇总/032_汇总_库存_月度概览_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "07_分析与汇总/032_汇总_库存_月度概览_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "月度概览",
+          "tool": "built-in imagegen",
+          "sha256": "074aa2122855f444b755651091aa85d08c0a12e567fe3003391e2c48637a74c2",
+          "visual_review": "主要中文、字段、样例算术、状态区分与导航已人工初检；精确尺寸和设备交互未实测",
+          "user_review": "待用户审阅",
+          "resolution_review": "实际像素已记录；未达到目标1560×3376，不通过放大冒充原生分辨率"
+        },
+        {
+          "path": "07_分析与汇总/032_汇总_库存_历史不可计算_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "07_分析与汇总/032_汇总_库存_历史不可计算_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "历史不可计算",
+          "tool": "built-in imagegen",
+          "sha256": "61209186f6864ddff2ede57087fe74409da4c0e823525ac801ff1d5336c09b87",
+          "visual_review": "主要中文、字段、样例算术、状态区分与导航已人工初检；精确尺寸和设备交互未实测",
+          "user_review": "待用户审阅",
+          "resolution_review": "实际像素已记录；未达到目标1560×3376，不通过放大冒充原生分辨率"
+        }
+      ],
+      "generation_sources": [
+        "全量UI重构设计规范.md:337-348",
+        "lib/features/reports/presentation/reports_page.dart:361-381,425-429,480-483,591-629,768-779",
+        "lib/features/reports/domain/monthly_summary_options.dart",
+        "lib/features/vehicles/data/vehicle_expense_repository.dart:65-156",
+        "lib/features/inventory/application/inventory_excel_service.dart:21-56",
+        "lib/features/payroll/application/payroll_excel_service.dart:17-67",
+        "lib/features/payroll/data/payroll_validation_service.dart:18-31,76-82"
+      ]
     },
     {
       "id": "033",
@@ -17968,10 +18885,71 @@
           "font_scale": 2.0
         }
       ],
-      "field_order_and_navigation_review": "待生成前逐项核实；源码证据已提取，未宣称语义审查通过",
-      "applicable_states_review": "待逐页核实；不得机械套用所有状态",
-      "generation_status": "未生成",
-      "outputs": []
+      "field_order_and_navigation_review": "规范4.4与源字段已核对；四模块、独立月份/实际导出范围、异常先于明细；图稿初检，不等于源码完成",
+      "applicable_states_review": "本批覆盖见阶段8索引；加载、错误、其他空态、操作展开/确认及宽度字号适配仍待补",
+      "generation_status": "阶段8主态及关键状态3张已生成；完整状态及适配待补",
+      "outputs": [
+        {
+          "path": "07_分析与汇总/033_汇总_工资_批次概览_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "07_分析与汇总/033_汇总_工资_批次概览_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "批次概览",
+          "tool": "built-in imagegen",
+          "sha256": "b81a0488864f8213b67c0f901579c78b64265f648de4b0e723bf0e543b28623e",
+          "visual_review": "主要中文、字段、样例算术、状态区分与导航已人工初检；精确尺寸和设备交互未实测",
+          "user_review": "待用户审阅",
+          "resolution_review": "实际像素已记录；未达到目标1560×3376，不通过放大冒充原生分辨率"
+        },
+        {
+          "path": "07_分析与汇总/033_汇总_工资_未生成_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "07_分析与汇总/033_汇总_工资_未生成_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "未生成",
+          "tool": "built-in imagegen",
+          "sha256": "7068405422f0591fedb2753171627619f7bc9c8b6c4b951a859262e2706c9faa",
+          "visual_review": "主要中文、字段、样例算术、状态区分与导航已人工初检；精确尺寸和设备交互未实测",
+          "user_review": "待用户审阅",
+          "resolution_review": "实际像素已记录；未达到目标1560×3376，不通过放大冒充原生分辨率"
+        },
+        {
+          "path": "07_分析与汇总/033_汇总_工资_已锁定_390dp_fs1p0_p01_v01.png",
+          "prompt_path": "07_分析与汇总/033_汇总_工资_已锁定_390dp_fs1p0_p01_v01.prompt.txt",
+          "pixel_width": 853,
+          "pixel_height": 1844,
+          "logical_width_dp": 390,
+          "logical_height_dp": 844,
+          "font_scale": 1.0,
+          "screen": 1,
+          "version": 1,
+          "state": "已锁定",
+          "tool": "built-in imagegen",
+          "sha256": "47d800f70e3f9bfb068caa55b877ec9a54ce9750f3ebf1102c0a9d4f3ef09610",
+          "visual_review": "主要中文、字段、样例算术、状态区分与导航已人工初检；精确尺寸和设备交互未实测",
+          "user_review": "待用户审阅",
+          "resolution_review": "实际像素已记录；未达到目标1560×3376，不通过放大冒充原生分辨率"
+        }
+      ],
+      "generation_sources": [
+        "全量UI重构设计规范.md:337-348",
+        "lib/features/reports/presentation/reports_page.dart:361-381,425-429,480-483,591-629,768-779",
+        "lib/features/reports/domain/monthly_summary_options.dart",
+        "lib/features/vehicles/data/vehicle_expense_repository.dart:65-156",
+        "lib/features/inventory/application/inventory_excel_service.dart:21-56",
+        "lib/features/payroll/application/payroll_excel_service.dart:17-67",
+        "lib/features/payroll/data/payroll_validation_service.dart:18-31,76-82"
+      ]
     },
     {
       "id": "034",
@@ -30645,13 +31623,16 @@
   "visual_reference": "UI卡片风格参考_20261004.png",
   "visual_override": "\n用户最新视觉要求（优先于旧母Prompt中冲突的视觉限制）：以提供的首页参考图作为整体视觉基准。\n浅蓝白底、白色大圆角模块、模块内浅底小卡片、清晰深色标题、蓝色分段选中、彩色清晰业务图标；指标和业务入口每行四项。允许参考图式的轻浅渐变及必要的二级卡片结构，不使用深重阴影或玻璃效果。\n不要沿用之前组件板过大的规范标题。字号和信息层级按真实移动App，重要文字至少14sp，四列的长标题可两行。按钮可点击区域48dp；表单提交52dp。使用390×844dp逻辑竖屏，正面完整界面，没有手机外框，无iOS状态栏、刘海或Home Indicator；无随机英文、错字、裁切。\n颜色与卡片形态尽量匹配参考图。品牌主蓝只用于操作与选中，业务图标可用蓝/青绿/紫/橙/红；这是视觉分类，不能用任意图标颜色替代业务状态。\n文本和样例明确属于设计样例。不得复制参考图中增长百分比、审批、生产数字，不增加源码或设计规范之外的业务能力。\n单张PNG，目标1560×3376px，输出实际像素记录。只生成指定页面，不做拼图，不输出其它页面。\n\n最新调整：指标图标与名称同层，数字与单位同层，变化与比较口径下方；字号图标缩小；详细参数见UI图片最新视觉要求.md。",
   "current_batch": {
-    "stage": 3,
+    "stage": 8,
     "tasks": [
-      "009"
+      "030",
+      "031",
+      "032",
+      "033"
     ],
-    "main_image_count": 6,
-    "generation_status": "已生成、解码并人工初检6张",
-    "scope": "仅390dp/1.0；全量112项、其他状态与适配尚未完成",
-    "next_stage": "阶段4：010起人员与考勤页面"
+    "main_image_count": 12,
+    "generation_status": "12张PNG已解码并人工初检",
+    "scope": "390dp/1.0；考勤概览与人员明细连续视图、人员变动、保险变更及未生成；车辆主态及零值/缺记录；库存主态及历史不可计算；工资草稿异常、未生成、锁定只读；完整状态及适配未完成",
+    "next_stage": "阶段9：034起临时工薪资；030—033其他状态及适配仍待补"
   }
 }

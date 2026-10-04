@@ -13,30 +13,30 @@
 | 007 | 库存－月度领用记录 | 03_列表与记录 | lib/features/inventory/presentation/inventory_issues_page.dart | 阶段2主态已生成；390dp/1.0，适配及其他状态待补 |
 | 008 | 库存－领用登记 | 05_表单与编辑 | lib/features/inventory/presentation/inventory_issue_form_page.dart | 阶段2已填主态连续两屏已生成；适配及其他状态待补 |
 | 009 | 采购入库 | 05_表单与编辑 | lib/features/purchase/presentation/purchase_stock_in_page.dart | 阶段3六张主态与业务变体已生成；390dp/1.0，适配及其他状态待补 |
-| 010 | 人员管理 | 02_工作台 | lib/features/personnel/presentation/personnel_page.dart | 未生成 |
-| 011 | 人员名单 | 03_列表与记录 | lib/features/personnel/presentation/personnel_list_page.dart | 未生成 |
-| 012 | 人员档案 | 04_详情 | lib/features/personnel/presentation/personnel_detail_page.dart | 未生成 |
-| 013 | 新增／编辑人员 | 05_表单与编辑 | lib/features/personnel/presentation/personnel_form_page.dart | 未生成 |
-| 014 | 考勤入口 | 02_工作台 | lib/features/attendance/presentation/attendance_page.dart | 未生成 |
-| 015 | 月考勤表 | 06_台账与表格 | lib/features/attendance/presentation/monthly_attendance_table_page.dart | 未生成 |
-| 016 | 月度名单 | 06_台账与表格 | lib/features/attendance/presentation/monthly_roster_page.dart | 未生成 |
-| 017 | 考勤组 | 03_列表与记录 | lib/features/attendance/presentation/attendance_group_list_page.dart | 未生成 |
-| 018 | 考勤组详情 | 04_详情 | lib/features/attendance/presentation/attendance_group_detail_page.dart | 未生成 |
-| 019 | 新增／编辑考勤组 | 05_表单与编辑 | lib/features/attendance/presentation/attendance_group_form_page.dart | 未生成 |
-| 020 | 请假记录 | 03_列表与记录 | lib/features/leave/presentation/leave_page.dart | 未生成 |
-| 021 | 新增／编辑请假 | 05_表单与编辑 | lib/features/leave/presentation/leave_form_page.dart | 未生成 |
-| 022 | 加班记录 | 03_列表与记录 | lib/features/overtime/presentation/overtime_page.dart | 未生成 |
-| 023 | 新增／编辑加班 | 05_表单与编辑 | lib/features/overtime/presentation/overtime_form_page.dart | 未生成 |
-| 024 | 离职管理 | 03_列表与记录 | lib/features/termination/presentation/termination_page.dart | 未生成 |
-| 025 | 登记／编辑离职 | 05_表单与编辑 | lib/features/termination/presentation/termination_form_page.dart | 未生成 |
-| 026 | 社保保险 | 03_列表与记录 | lib/features/insurance/presentation/insurance_page.dart | 未生成 |
-| 027 | 维护参保资料 | 05_表单与编辑 | lib/features/insurance/presentation/insurance_profile_form_page.dart | 未生成 |
-| 028 | 登记／编辑保险变更 | 05_表单与编辑 | lib/features/insurance/presentation/insurance_change_form_page.dart | 未生成 |
-| 029 | 人员附件 | 03_列表与记录 | lib/features/attachments/presentation/employee_attachments_page.dart | 未生成 |
-| 030 | 汇总中心－考勤 | 07_分析与汇总 | lib/features/reports/presentation/reports_page.dart | 未生成 |
-| 031 | 汇总中心－车辆 | 07_分析与汇总 | lib/features/reports/presentation/reports_page.dart | 未生成 |
-| 032 | 汇总中心－库存 | 07_分析与汇总 | lib/features/reports/presentation/reports_page.dart | 未生成 |
-| 033 | 汇总中心－工资 | 07_分析与汇总 | lib/features/reports/presentation/reports_page.dart | 未生成 |
+| 010 | 人员管理 | 02_工作台 | lib/features/personnel/presentation/personnel_page.dart | 阶段4人员管理主态已生成；适配及其他状态待补 |
+| 011 | 人员名单 | 03_列表与记录 | lib/features/personnel/presentation/personnel_list_page.dart | 阶段4名单主态、筛选空态已生成；适配及其他状态待补 |
+| 012 | 人员档案 | 04_详情 | lib/features/personnel/presentation/personnel_detail_page.dart | 阶段4档案主态连续两屏已生成；展开状态及适配待补 |
+| 013 | 新增／编辑人员 | 05_表单与编辑 | lib/features/personnel/presentation/personnel_form_page.dart | 阶段4新增已填主态连续三屏已生成；编辑、其他状态及适配待补 |
+| 014 | 考勤入口 | 02_工作台 | lib/features/attendance/presentation/attendance_page.dart | 阶段5考勤入口主态已生成；适配待补 |
+| 015 | 月考勤表 | 06_台账与表格 | lib/features/attendance/presentation/monthly_attendance_table_page.dart | 阶段5月表有名单及空名单2张已生成；适配与其他状态待补 |
+| 016 | 月度名单 | 06_台账与表格 | lib/features/attendance/presentation/monthly_roster_page.dart | 阶段5月度名单主态已生成；弹层、空态及适配待补 |
+| 017 | 考勤组 | 03_列表与记录 | lib/features/attendance/presentation/attendance_group_list_page.dart | 阶段5考勤组列表主态已生成；其他状态及适配待补 |
+| 018 | 考勤组详情 | 04_详情 | lib/features/attendance/presentation/attendance_group_detail_page.dart | 阶段5详情主态、成员选择和移出确认3张已生成；停用等状态及适配待补 |
+| 019 | 新增／编辑考勤组 | 05_表单与编辑 | lib/features/attendance/presentation/attendance_group_form_page.dart | 阶段5新增已填和校验错误2张已生成；编辑/提交等状态及适配待补 |
+| 020 | 请假记录 | 03_列表与记录 | lib/features/leave/presentation/leave_page.dart | 阶段6请假记录主态已生成；删除确认、空态及适配待补 |
+| 021 | 新增／编辑请假 | 05_表单与编辑 | lib/features/leave/presentation/leave_form_page.dart | 阶段6新增已填连续两屏及校验错误3张已生成；编辑/提交等状态及适配待补 |
+| 022 | 加班记录 | 03_列表与记录 | lib/features/overtime/presentation/overtime_page.dart | 阶段6加班记录主态已生成；删除确认、空态及适配待补 |
+| 023 | 新增／编辑加班 | 05_表单与编辑 | lib/features/overtime/presentation/overtime_form_page.dart | 阶段6新增已填连续两屏及时间错误3张已生成；编辑/提交等状态及适配待补 |
+| 024 | 离职管理 | 03_列表与记录 | lib/features/termination/presentation/termination_page.dart | 阶段6离职列表及撤销确认2张已生成；其他状态及适配待补 |
+| 025 | 登记／编辑离职 | 05_表单与编辑 | lib/features/termination/presentation/termination_form_page.dart | 阶段6登记已填连续两屏已生成；编辑/校验/提交等状态及适配待补 |
+| 026 | 社保保险 | 03_列表与记录 | lib/features/insurance/presentation/insurance_page.dart | 阶段7社保主态连续两屏及分区异常3张已生成；其他状态及适配待补 |
+| 027 | 维护参保资料 | 05_表单与编辑 | lib/features/insurance/presentation/insurance_profile_form_page.dart | 阶段7维护参保开关开启/关闭2张已生成；校验/提交状态及适配待补 |
+| 028 | 登记／编辑保险变更 | 05_表单与编辑 | lib/features/insurance/presentation/insurance_change_form_page.dart | 阶段7新增已填连续两屏及校验错误3张已生成；编辑/提交等状态及适配待补 |
+| 029 | 人员附件 | 03_列表与记录 | lib/features/attachments/presentation/employee_attachments_page.dart | 阶段7附件主态含已删除、敏感预览、分类空及缺本地文件4张已生成；其他状态及适配待补 |
+| 030 | 汇总中心－考勤 | 07_分析与汇总 | lib/features/reports/presentation/reports_page.dart | 阶段8主态及关键状态5张已生成；完整状态及适配待补 |
+| 031 | 汇总中心－车辆 | 07_分析与汇总 | lib/features/reports/presentation/reports_page.dart | 阶段8主态及关键状态2张已生成；完整状态及适配待补 |
+| 032 | 汇总中心－库存 | 07_分析与汇总 | lib/features/reports/presentation/reports_page.dart | 阶段8主态及关键状态2张已生成；完整状态及适配待补 |
+| 033 | 汇总中心－工资 | 07_分析与汇总 | lib/features/reports/presentation/reports_page.dart | 阶段8主态及关键状态3张已生成；完整状态及适配待补 |
 | 034 | 临时工薪资 | 02_工作台 | lib/features/payroll/presentation/payroll_home_page.dart | 未生成 |
 | 035 | 工资编辑 | 06_台账与表格 | lib/features/payroll/presentation/payroll_editor_page.dart | 未生成 |
 | 036 | 单人工资明细 | 04_详情 | lib/features/payroll/presentation/payroll_detail_page.dart | 未生成 |
@@ -116,3 +116,7 @@
 | 110 | 禁用／只读状态 | 10_状态反馈 | 共享展示面／组件规范 | 未生成 |
 | 111 | 附件预览／删除／恢复 | 09_弹层选择器与菜单 | 共享展示面／组件规范 | 未生成 |
 | 112 | 其它页面内弹层与菜单 | 09_弹层选择器与菜单 | 共享展示面／组件规范 | 未生成 |
+
+## 阶段8交付
+
+030—033共12张，图片、提示词、实际像素、统计合同与源码差异见[阶段8索引](UI图片阶段8索引.md)。下一阶段034起临时工薪资；各页完整状态和适配待补。
