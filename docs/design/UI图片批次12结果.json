@@ -1,0 +1,489 @@
+{
+  "batch": 12,
+  "spec_stage": 9,
+  "spec_stage_name": "车辆全量",
+  "date": "2026-10-05",
+  "task_ids": [
+    "054",
+    "055",
+    "056",
+    "057",
+    "058",
+    "059",
+    "060",
+    "061"
+  ],
+  "tool": "built-in image_gen",
+  "requested_size": {
+    "width": 1560,
+    "height": 3376
+  },
+  "logical_canvas": {
+    "width_dp": 390,
+    "height_dp": 844,
+    "font_scale": 1
+  },
+  "calls": 13,
+  "returned_image_count": 9,
+  "current_reference_image_count": 6,
+  "retained_old_image_count": 3,
+  "task_with_any_image_count": 5,
+  "task_without_image_ids": [
+    "059",
+    "060",
+    "061"
+  ],
+  "unreturned_calls": [
+    "059p01v01",
+    "060p01v01",
+    "061p01v01",
+    "057p03v01"
+  ],
+  "unstarted_required_prompts": [
+    "058p01v02",
+    "058p02v01"
+  ],
+  "status": "阶段未完成；不能记最终验收",
+  "references": [
+    "D:/QingSongBan/docs/design/03_列表与记录/005_车辆_车辆档案列表_查看_有数据_390dp_fs1p0_p01_v01.png",
+    "D:/QingSongBan/docs/design/04_详情/006_车辆_车辆详情档案_查看_有数据_390dp_fs1p0_p01_v01.png",
+    "D:/QingSongBan/docs/design/03_列表与记录/011_人员_人员名单_查看_有数据_390dp_fs1p0_p01_v01.png",
+    "D:/QingSongBan/docs/design/05_表单与编辑/027_保险_维护参保资料_维护_已参保_390dp_fs1p0_p01_v01.png",
+    "D:/QingSongBan/docs/design/07_分析与汇总/031_汇总_车辆_月度概览_390dp_fs1p0_p01_v01.png"
+  ],
+  "skills": [
+    "stop-that-shit",
+    "design-taste-frontend",
+    "ui-ux-pro-max",
+    "imagegen"
+  ],
+  "tasks": [
+    {
+      "id": "054",
+      "name": "车辆管理",
+      "calls": 1,
+      "outputs": [
+        {
+          "key": "054",
+          "issues": [
+            "车辆统计图标与名称未同层，和最新要求有漂移",
+            "搜索位于业务入口下方，不能据此确认滚动时常驻",
+            "第二个车辆卡底部贴边，缺安全留白",
+            "未覆盖另外两辆连续内容"
+          ],
+          "path": "D:/QingSongBan/docs/design/02_工作台/054_车辆_车辆管理_查看_有数据_390dp_fs1p0_p01_v01.png",
+          "width": 853,
+          "height": 1844,
+          "sha256": "0c7009bbff802e9d077845ff37458a2d5bfe25d739081696d1522f208a081ae3",
+          "decode": "通过",
+          "prompt_path": "D:/QingSongBan/docs/design/02_工作台/054_车辆_车辆管理_查看_有数据_390dp_fs1p0_p01_v01.prompt.txt",
+          "target_width": 1560,
+          "target_height": 3376,
+          "resolution_pass": false,
+          "visual_review": "已知问题待修"
+        }
+      ],
+      "pending": [
+        "布局密度和安全区修订"
+      ]
+    },
+    {
+      "id": "055",
+      "name": "新增／编辑车辆",
+      "calls": 2,
+      "outputs": [
+        {
+          "key": "055",
+          "issues": [],
+          "path": "D:/QingSongBan/docs/design/05_表单与编辑/055_车辆_新增车辆_查看_有数据_390dp_fs1p0_p01_v01.png",
+          "width": 853,
+          "height": 1844,
+          "sha256": "d4278636dff5a34df935657b9a8689ea5830d04f270be5a35e995b11245d5366",
+          "decode": "通过",
+          "prompt_path": "D:/QingSongBan/docs/design/05_表单与编辑/055_车辆_新增车辆_查看_有数据_390dp_fs1p0_p01_v01.prompt.txt",
+          "target_width": 1560,
+          "target_height": 3376,
+          "resolution_pass": false,
+          "visual_review": "仅内容初检"
+        },
+        {
+          "key": "055p02",
+          "issues": [
+            "使用部门/工作区域/责任人增加下拉箭头，源码为普通文本框"
+          ],
+          "path": "D:/QingSongBan/docs/design/05_表单与编辑/055_车辆_新增车辆_查看_有数据_390dp_fs1p0_p02_v01.png",
+          "width": 853,
+          "height": 1844,
+          "sha256": "03cfcd65b7826e8d8a6cf83b7a750e907f1816a64d16e7cb8960197c1dd7ef56",
+          "decode": "通过",
+          "prompt_path": "D:/QingSongBan/docs/design/05_表单与编辑/055_车辆_新增车辆_查看_有数据_390dp_fs1p0_p02_v01.prompt.txt",
+          "target_width": 1560,
+          "target_height": 3376,
+          "resolution_pass": false,
+          "visual_review": "已知问题待修"
+        }
+      ],
+      "pending": [
+        "编辑模式与其余适用状态",
+        "第二屏普通文本框修订"
+      ]
+    },
+    {
+      "id": "056",
+      "name": "全车维修",
+      "calls": 2,
+      "outputs": [
+        {
+          "key": "056",
+          "retained_old": true,
+          "issues": [
+            "三联票未领/已领/已回与当前源码不符"
+          ],
+          "path": "D:/QingSongBan/docs/design/03_列表与记录/056_车辆_全车维修单_查看_有数据_390dp_fs1p0_p01_v01.png",
+          "width": 853,
+          "height": 1844,
+          "sha256": "b6d2cb226cf2a6c5381ca87a64654f2037f4a90ff22f27d1cb7b7d5efd05d786",
+          "decode": "通过",
+          "prompt_path": "D:/QingSongBan/docs/design/03_列表与记录/056_车辆_全车维修单_查看_有数据_390dp_fs1p0_p01_v01.prompt.txt",
+          "target_width": 1560,
+          "target_height": 3376,
+          "resolution_pass": false,
+          "visual_review": "已知问题待修"
+        },
+        {
+          "key": "056v02",
+          "issues": [
+            "FAB遮挡第三记录结账标签",
+            "列表仍偏大卡，摘要行密度待确认"
+          ],
+          "path": "D:/QingSongBan/docs/design/03_列表与记录/056_车辆_全车维修单_查看_有数据_390dp_fs1p0_p01_v02.png",
+          "width": 853,
+          "height": 1844,
+          "sha256": "88c50ba807cf83fbb8627d246a5759dc0ab83ba9af7653c6a35e50bbc4b13ef8",
+          "decode": "通过",
+          "prompt_path": "D:/QingSongBan/docs/design/03_列表与记录/056_车辆_全车维修单_查看_有数据_390dp_fs1p0_p01_v02.prompt.txt",
+          "target_width": 1560,
+          "target_height": 3376,
+          "resolution_pass": false,
+          "visual_review": "已知问题待修"
+        }
+      ],
+      "pending": [
+        "FAB安全留白",
+        "高级筛选页与适用状态"
+      ]
+    },
+    {
+      "id": "057",
+      "name": "报修／维修编辑",
+      "calls": 4,
+      "outputs": [
+        {
+          "key": "057",
+          "retained_old": true,
+          "issues": [
+            "维修地点/供应商被拆为两字段",
+            "增加必填星号与下拉箭头",
+            "额外字符计数",
+            "只覆盖首屏"
+          ],
+          "path": "D:/QingSongBan/docs/design/05_表单与编辑/057_车辆_新建维修单_查看_有数据_390dp_fs1p0_p01_v01.png",
+          "width": 853,
+          "height": 1844,
+          "sha256": "b14dbb2d620b198db5072295eb5bdf45389e8673dee908f0afc9f506ed09c406",
+          "decode": "通过",
+          "prompt_path": "D:/QingSongBan/docs/design/05_表单与编辑/057_车辆_新建维修单_查看_有数据_390dp_fs1p0_p01_v01.prompt.txt",
+          "target_width": 1560,
+          "target_height": 3376,
+          "resolution_pass": false,
+          "visual_review": "已知问题待修"
+        },
+        {
+          "key": "057v02",
+          "issues": [
+            "底部按钮紧贴画布边缘，安全区留白不足"
+          ],
+          "path": "D:/QingSongBan/docs/design/05_表单与编辑/057_车辆_新建维修单_查看_有数据_390dp_fs1p0_p01_v02.png",
+          "width": 853,
+          "height": 1844,
+          "sha256": "7bbcc5bc58e789d8f8498461bdd1e1e041d5cabdad0ebe4de915bf3b6c7d7b8c",
+          "decode": "通过",
+          "prompt_path": "D:/QingSongBan/docs/design/05_表单与编辑/057_车辆_新建维修单_查看_有数据_390dp_fs1p0_p01_v02.prompt.txt",
+          "target_width": 1560,
+          "target_height": 3376,
+          "resolution_pass": false,
+          "visual_review": "已知问题待修"
+        },
+        {
+          "key": "057p02",
+          "issues": [
+            "单位增加下拉箭头，源码为文本输入",
+            "标题蓝色竖条与027参考漂移",
+            "第二项目费用类型在此屏未展示，待第三屏"
+          ],
+          "path": "D:/QingSongBan/docs/design/05_表单与编辑/057_车辆_新建维修单_查看_有数据_390dp_fs1p0_p02_v01.png",
+          "width": 853,
+          "height": 1844,
+          "sha256": "90c96f25f1e28fd8d10df187073c755f5035bde40410f15fddc3efb7f8959f7d",
+          "decode": "通过",
+          "prompt_path": "D:/QingSongBan/docs/design/05_表单与编辑/057_车辆_新建维修单_查看_有数据_390dp_fs1p0_p02_v01.prompt.txt",
+          "target_width": 1560,
+          "target_height": 3376,
+          "resolution_pass": false,
+          "visual_review": "已知问题待修"
+        }
+      ],
+      "pending": [
+        "第三续屏调用超过8分钟后结束等待，无结果无PNG，完整prompt已保存",
+        "编辑模式和适用状态"
+      ]
+    },
+    {
+      "id": "058",
+      "name": "维修单详情",
+      "calls": 1,
+      "outputs": [
+        {
+          "key": "058",
+          "retained_old": true,
+          "issues": [
+            "遗漏设计样例标识与故障现象",
+            "遗漏实际金额",
+            "三联票未领与源码不符",
+            "只读资料添加点击箭头",
+            "增加记录维修费用/上传附件/查看记录按钮",
+            "姓名陈林误为陈栋"
+          ],
+          "path": "D:/QingSongBan/docs/design/04_详情/058_车辆_维修单详情_查看_有数据_390dp_fs1p0_p01_v01.png",
+          "width": 853,
+          "height": 1844,
+          "sha256": "da8c296b47c5a0b707f5201d8344da8842c7066a349ca05f931d96af63a2a5ce",
+          "decode": "通过",
+          "prompt_path": "D:/QingSongBan/docs/design/04_详情/058_车辆_维修单详情_查看_有数据_390dp_fs1p0_p01_v01.prompt.txt",
+          "target_width": 1560,
+          "target_height": 3376,
+          "resolution_pass": false,
+          "visual_review": "已知问题待修"
+        }
+      ],
+      "pending": [
+        "已保存v02修订prompt未调用",
+        "费用/备件续屏未调用"
+      ]
+    },
+    {
+      "id": "059",
+      "name": "年度油耗",
+      "calls": 1,
+      "outputs": [],
+      "pending": [
+        "调用超时结束等待无返回无PNG，保留完整prompt",
+        "首屏和其余指标展开／表格续屏均待补"
+      ],
+      "source_difference": "源码月行车列，规范要求锁车辆身份列，目标拟转置；保留8统计、L/元、缺失与0语义；源码5项模块底导航按规范业务子页隐藏"
+    },
+    {
+      "id": "060",
+      "name": "全车提醒中心",
+      "calls": 1,
+      "outputs": [],
+      "pending": [
+        "调用超时结束等待无返回无PNG，保留完整prompt"
+      ],
+      "source_difference": "源码soon统计含今天，样例今日1、将到期2存在重叠，不应按三个互斥状态相加"
+    },
+    {
+      "id": "061",
+      "name": "车辆附件",
+      "calls": 1,
+      "outputs": [],
+      "pending": [
+        "调用超时结束等待无返回无PNG，保留完整prompt"
+      ],
+      "source_difference": "源码纵向ListTile，规范共用附件合同拟三列网格；导出/删除/恢复菜单关系保留"
+    }
+  ],
+  "outputs": [
+    {
+      "task_id": "054",
+      "key": "054",
+      "issues": [
+        "车辆统计图标与名称未同层，和最新要求有漂移",
+        "搜索位于业务入口下方，不能据此确认滚动时常驻",
+        "第二个车辆卡底部贴边，缺安全留白",
+        "未覆盖另外两辆连续内容"
+      ],
+      "path": "D:/QingSongBan/docs/design/02_工作台/054_车辆_车辆管理_查看_有数据_390dp_fs1p0_p01_v01.png",
+      "width": 853,
+      "height": 1844,
+      "sha256": "0c7009bbff802e9d077845ff37458a2d5bfe25d739081696d1522f208a081ae3",
+      "decode": "通过",
+      "prompt_path": "D:/QingSongBan/docs/design/02_工作台/054_车辆_车辆管理_查看_有数据_390dp_fs1p0_p01_v01.prompt.txt",
+      "target_width": 1560,
+      "target_height": 3376,
+      "resolution_pass": false,
+      "visual_review": "已知问题待修"
+    },
+    {
+      "task_id": "055",
+      "key": "055",
+      "issues": [],
+      "path": "D:/QingSongBan/docs/design/05_表单与编辑/055_车辆_新增车辆_查看_有数据_390dp_fs1p0_p01_v01.png",
+      "width": 853,
+      "height": 1844,
+      "sha256": "d4278636dff5a34df935657b9a8689ea5830d04f270be5a35e995b11245d5366",
+      "decode": "通过",
+      "prompt_path": "D:/QingSongBan/docs/design/05_表单与编辑/055_车辆_新增车辆_查看_有数据_390dp_fs1p0_p01_v01.prompt.txt",
+      "target_width": 1560,
+      "target_height": 3376,
+      "resolution_pass": false,
+      "visual_review": "仅内容初检"
+    },
+    {
+      "task_id": "055",
+      "key": "055p02",
+      "issues": [
+        "使用部门/工作区域/责任人增加下拉箭头，源码为普通文本框"
+      ],
+      "path": "D:/QingSongBan/docs/design/05_表单与编辑/055_车辆_新增车辆_查看_有数据_390dp_fs1p0_p02_v01.png",
+      "width": 853,
+      "height": 1844,
+      "sha256": "03cfcd65b7826e8d8a6cf83b7a750e907f1816a64d16e7cb8960197c1dd7ef56",
+      "decode": "通过",
+      "prompt_path": "D:/QingSongBan/docs/design/05_表单与编辑/055_车辆_新增车辆_查看_有数据_390dp_fs1p0_p02_v01.prompt.txt",
+      "target_width": 1560,
+      "target_height": 3376,
+      "resolution_pass": false,
+      "visual_review": "已知问题待修"
+    },
+    {
+      "task_id": "056",
+      "key": "056",
+      "retained_old": true,
+      "issues": [
+        "三联票未领/已领/已回与当前源码不符"
+      ],
+      "path": "D:/QingSongBan/docs/design/03_列表与记录/056_车辆_全车维修单_查看_有数据_390dp_fs1p0_p01_v01.png",
+      "width": 853,
+      "height": 1844,
+      "sha256": "b6d2cb226cf2a6c5381ca87a64654f2037f4a90ff22f27d1cb7b7d5efd05d786",
+      "decode": "通过",
+      "prompt_path": "D:/QingSongBan/docs/design/03_列表与记录/056_车辆_全车维修单_查看_有数据_390dp_fs1p0_p01_v01.prompt.txt",
+      "target_width": 1560,
+      "target_height": 3376,
+      "resolution_pass": false,
+      "visual_review": "已知问题待修"
+    },
+    {
+      "task_id": "056",
+      "key": "056v02",
+      "issues": [
+        "FAB遮挡第三记录结账标签",
+        "列表仍偏大卡，摘要行密度待确认"
+      ],
+      "path": "D:/QingSongBan/docs/design/03_列表与记录/056_车辆_全车维修单_查看_有数据_390dp_fs1p0_p01_v02.png",
+      "width": 853,
+      "height": 1844,
+      "sha256": "88c50ba807cf83fbb8627d246a5759dc0ab83ba9af7653c6a35e50bbc4b13ef8",
+      "decode": "通过",
+      "prompt_path": "D:/QingSongBan/docs/design/03_列表与记录/056_车辆_全车维修单_查看_有数据_390dp_fs1p0_p01_v02.prompt.txt",
+      "target_width": 1560,
+      "target_height": 3376,
+      "resolution_pass": false,
+      "visual_review": "已知问题待修"
+    },
+    {
+      "task_id": "057",
+      "key": "057",
+      "retained_old": true,
+      "issues": [
+        "维修地点/供应商被拆为两字段",
+        "增加必填星号与下拉箭头",
+        "额外字符计数",
+        "只覆盖首屏"
+      ],
+      "path": "D:/QingSongBan/docs/design/05_表单与编辑/057_车辆_新建维修单_查看_有数据_390dp_fs1p0_p01_v01.png",
+      "width": 853,
+      "height": 1844,
+      "sha256": "b14dbb2d620b198db5072295eb5bdf45389e8673dee908f0afc9f506ed09c406",
+      "decode": "通过",
+      "prompt_path": "D:/QingSongBan/docs/design/05_表单与编辑/057_车辆_新建维修单_查看_有数据_390dp_fs1p0_p01_v01.prompt.txt",
+      "target_width": 1560,
+      "target_height": 3376,
+      "resolution_pass": false,
+      "visual_review": "已知问题待修"
+    },
+    {
+      "task_id": "057",
+      "key": "057v02",
+      "issues": [
+        "底部按钮紧贴画布边缘，安全区留白不足"
+      ],
+      "path": "D:/QingSongBan/docs/design/05_表单与编辑/057_车辆_新建维修单_查看_有数据_390dp_fs1p0_p01_v02.png",
+      "width": 853,
+      "height": 1844,
+      "sha256": "7bbcc5bc58e789d8f8498461bdd1e1e041d5cabdad0ebe4de915bf3b6c7d7b8c",
+      "decode": "通过",
+      "prompt_path": "D:/QingSongBan/docs/design/05_表单与编辑/057_车辆_新建维修单_查看_有数据_390dp_fs1p0_p01_v02.prompt.txt",
+      "target_width": 1560,
+      "target_height": 3376,
+      "resolution_pass": false,
+      "visual_review": "已知问题待修"
+    },
+    {
+      "task_id": "057",
+      "key": "057p02",
+      "issues": [
+        "单位增加下拉箭头，源码为文本输入",
+        "标题蓝色竖条与027参考漂移",
+        "第二项目费用类型在此屏未展示，待第三屏"
+      ],
+      "path": "D:/QingSongBan/docs/design/05_表单与编辑/057_车辆_新建维修单_查看_有数据_390dp_fs1p0_p02_v01.png",
+      "width": 853,
+      "height": 1844,
+      "sha256": "90c96f25f1e28fd8d10df187073c755f5035bde40410f15fddc3efb7f8959f7d",
+      "decode": "通过",
+      "prompt_path": "D:/QingSongBan/docs/design/05_表单与编辑/057_车辆_新建维修单_查看_有数据_390dp_fs1p0_p02_v01.prompt.txt",
+      "target_width": 1560,
+      "target_height": 3376,
+      "resolution_pass": false,
+      "visual_review": "已知问题待修"
+    },
+    {
+      "task_id": "058",
+      "key": "058",
+      "retained_old": true,
+      "issues": [
+        "遗漏设计样例标识与故障现象",
+        "遗漏实际金额",
+        "三联票未领与源码不符",
+        "只读资料添加点击箭头",
+        "增加记录维修费用/上传附件/查看记录按钮",
+        "姓名陈林误为陈栋"
+      ],
+      "path": "D:/QingSongBan/docs/design/04_详情/058_车辆_维修单详情_查看_有数据_390dp_fs1p0_p01_v01.png",
+      "width": 853,
+      "height": 1844,
+      "sha256": "da8c296b47c5a0b707f5201d8344da8842c7066a349ca05f931d96af63a2a5ce",
+      "decode": "通过",
+      "prompt_path": "D:/QingSongBan/docs/design/04_详情/058_车辆_维修单详情_查看_有数据_390dp_fs1p0_p01_v01.prompt.txt",
+      "target_width": 1560,
+      "target_height": 3376,
+      "resolution_pass": false,
+      "visual_review": "已知问题待修"
+    }
+  ],
+  "boundary": "未修改应用源码/数据库，未外部发布，未缩放图片；PNG解码与内容初检不证明精确dp/sp或Flutter设备验收",
+  "pending": [
+    "所有图片1560×3376目标分辨率未达标",
+    "054内容底边与指标布局",
+    "055第二屏普通文本输入被画成下拉",
+    "056新版FAB遮挡",
+    "057第三屏无结果与组件漂移",
+    "058修订与费用/备件连续屏",
+    "059/060/061主态无输出",
+    "360dp/大字体与其它适用状态",
+    "用户最终视觉验收"
+  ],
+  "count_note": "058只有待修首稿，同056v01、057v01一起仅作对照；当前6张，旧／待修对照3张，总9张"
+}

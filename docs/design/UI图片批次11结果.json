@@ -1,0 +1,130 @@
+{
+  "batch": 11,
+  "spec_stage": 8,
+  "task_ids": [
+    "051",
+    "052",
+    "053"
+  ],
+  "outputs": [
+    {
+      "task_id": "051",
+      "output": {
+        "path": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p01_v01.png",
+        "prompt_path": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p01_v01.prompt.txt",
+        "pixel_width": 853,
+        "pixel_height": 1844,
+        "logical_width_dp": 390,
+        "logical_height_dp": 844,
+        "font_scale": 1.0,
+        "screen": 1,
+        "version": 1,
+        "state": "发放表",
+        "tool": "built-in imagegen",
+        "sha256": "55702872ba0393cbe7fd0e2c434aadfdc3e0863f8996d65439a0ce7f132a83e8",
+        "style_reference_ids": [
+          "004"
+        ],
+        "batch": 11,
+        "resolution_requirement_met": false,
+        "visual_review": "逐张初检；实测未达目标像素；已知偏差另列",
+        "user_review": "待最终验收",
+        "known_pending": [
+          "漏写设计样例和福利归属月份标签",
+          "展开姓名旁额外出现数量列，应仅保留姓名标签",
+          "局部修正调用持续未返回，终止等待后无输出"
+        ]
+      }
+    },
+    {
+      "task_id": "051",
+      "output": {
+        "path": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p02_v01.png",
+        "prompt_path": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p02_v01.prompt.txt",
+        "pixel_width": 853,
+        "pixel_height": 1844,
+        "logical_width_dp": 390,
+        "logical_height_dp": 844,
+        "font_scale": 1.0,
+        "screen": 2,
+        "version": 1,
+        "state": "发放表",
+        "tool": "built-in imagegen",
+        "sha256": "4ed3ae69ff305107313ecfcd81a61ab002ebbda761b3d4fdf0a2345ee92224fe",
+        "style_reference_ids": [
+          "004"
+        ],
+        "batch": 11,
+        "resolution_requirement_met": false,
+        "visual_review": "逐张初检；实测未达目标像素；已知偏差另列",
+        "user_review": "待最终验收",
+        "known_pending": [
+          "顶栏缺更多入口，设计样例应移至标题下方",
+          "姓名被绘制为状态行，未完全匹配原姓名标签组件"
+        ]
+      }
+    },
+    {
+      "task_id": "052",
+      "output": {
+        "path": "06_台账与表格/052_领取_办公用品_查看_有记录_390dp_fs1p0_p01_v01.png",
+        "prompt_path": "06_台账与表格/052_领取_办公用品_查看_有记录_390dp_fs1p0_p01_v01.prompt.txt",
+        "pixel_width": 853,
+        "pixel_height": 1844,
+        "logical_width_dp": 390,
+        "logical_height_dp": 844,
+        "font_scale": 1.0,
+        "screen": 1,
+        "version": 1,
+        "state": "有记录",
+        "tool": "built-in imagegen",
+        "sha256": "08ab1febf4dfd29005519d28b958e80f8ba02399daeacbf7857e8108a6465085",
+        "style_reference_ids": [
+          "011"
+        ],
+        "batch": 11,
+        "resolution_requirement_met": false,
+        "visual_review": "逐张初检；实测未达目标像素；已知偏差另列",
+        "user_review": "待最终验收",
+        "known_pending": []
+      }
+    },
+    {
+      "task_id": "053",
+      "output": {
+        "path": "06_台账与表格/053_领取_工具_查看_有记录_390dp_fs1p0_p01_v01.png",
+        "prompt_path": "06_台账与表格/053_领取_工具_查看_有记录_390dp_fs1p0_p01_v01.prompt.txt",
+        "pixel_width": 853,
+        "pixel_height": 1844,
+        "logical_width_dp": 390,
+        "logical_height_dp": 844,
+        "font_scale": 1.0,
+        "screen": 1,
+        "version": 1,
+        "state": "有记录",
+        "tool": "built-in imagegen",
+        "sha256": "60e317012101b2b80fae1dc4149833ad041b5facdf07a9b55fe7f625c7676cfb",
+        "style_reference_ids": [
+          "011"
+        ],
+        "batch": 11,
+        "resolution_requirement_met": false,
+        "visual_review": "逐张初检；实测未达目标像素；已知偏差另列",
+        "user_review": "待最终验收",
+        "known_pending": []
+      }
+    }
+  ],
+  "generation_call_count": 5,
+  "result_image_count": 4,
+  "failed_calls": [
+    "051p01局部修订未返回结果"
+  ],
+  "pending": [
+    "051两屏标识、更多入口、姓名组件",
+    "1560×3376目标分辨率",
+    "其余适用状态",
+    "360dp与大字体",
+    "最终验收"
+  ]
+}

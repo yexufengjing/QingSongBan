@@ -2,6 +2,9 @@
 
 最新视觉基准：`UI卡片风格参考_20261004.png`。当前用户要求优先于旧文档冲突的视觉规则。主态和全部适配／状态交付分开记录。
 
+
+原规范阶段与实际生成批次分开记录，完整顺序见[UI图片阶段推进总览](UI图片阶段推进总览.md)。当前57项有图（含待修／对照稿），045及059—061尝试无结果，062—112共51项未开始；所有阶段完整适配／状态包和最终验收仍未完成。
+
 | 序号 | 展示面 | 类型 | 对应源码 | 进度 |
 |---|---|---|---|---|
 | 001 | 全局组件规范板 | 01_组件规范 | 共享展示面／组件规范 | 四屏旧版保留，第3屏参考图新版v02已生成；其余新版分屏及适配待补 |
@@ -13,58 +16,58 @@
 | 007 | 库存－月度领用记录 | 03_列表与记录 | lib/features/inventory/presentation/inventory_issues_page.dart | 阶段2主态已生成；390dp/1.0，适配及其他状态待补 |
 | 008 | 库存－领用登记 | 05_表单与编辑 | lib/features/inventory/presentation/inventory_issue_form_page.dart | 阶段2已填主态连续两屏已生成；适配及其他状态待补 |
 | 009 | 采购入库 | 05_表单与编辑 | lib/features/purchase/presentation/purchase_stock_in_page.dart | 阶段3六张主态与业务变体已生成；390dp/1.0，适配及其他状态待补 |
-| 010 | 人员管理 | 02_工作台 | lib/features/personnel/presentation/personnel_page.dart | 阶段4人员管理主态已生成；适配及其他状态待补 |
-| 011 | 人员名单 | 03_列表与记录 | lib/features/personnel/presentation/personnel_list_page.dart | 阶段4名单主态、筛选空态已生成；适配及其他状态待补 |
-| 012 | 人员档案 | 04_详情 | lib/features/personnel/presentation/personnel_detail_page.dart | 阶段4档案主态连续两屏已生成；展开状态及适配待补 |
-| 013 | 新增／编辑人员 | 05_表单与编辑 | lib/features/personnel/presentation/personnel_form_page.dart | 阶段4新增已填主态连续三屏已生成；编辑、其他状态及适配待补 |
-| 014 | 考勤入口 | 02_工作台 | lib/features/attendance/presentation/attendance_page.dart | 阶段5考勤入口主态已生成；适配待补 |
-| 015 | 月考勤表 | 06_台账与表格 | lib/features/attendance/presentation/monthly_attendance_table_page.dart | 阶段5月表有名单及空名单2张已生成；适配与其他状态待补 |
-| 016 | 月度名单 | 06_台账与表格 | lib/features/attendance/presentation/monthly_roster_page.dart | 阶段5月度名单主态已生成；弹层、空态及适配待补 |
-| 017 | 考勤组 | 03_列表与记录 | lib/features/attendance/presentation/attendance_group_list_page.dart | 阶段5考勤组列表主态已生成；其他状态及适配待补 |
-| 018 | 考勤组详情 | 04_详情 | lib/features/attendance/presentation/attendance_group_detail_page.dart | 阶段5详情主态、成员选择和移出确认3张已生成；停用等状态及适配待补 |
-| 019 | 新增／编辑考勤组 | 05_表单与编辑 | lib/features/attendance/presentation/attendance_group_form_page.dart | 阶段5新增已填和校验错误2张已生成；编辑/提交等状态及适配待补 |
-| 020 | 请假记录 | 03_列表与记录 | lib/features/leave/presentation/leave_page.dart | 阶段6请假记录主态已生成；删除确认、空态及适配待补 |
-| 021 | 新增／编辑请假 | 05_表单与编辑 | lib/features/leave/presentation/leave_form_page.dart | 阶段6新增已填连续两屏及校验错误3张已生成；编辑/提交等状态及适配待补 |
-| 022 | 加班记录 | 03_列表与记录 | lib/features/overtime/presentation/overtime_page.dart | 阶段6加班记录主态已生成；删除确认、空态及适配待补 |
-| 023 | 新增／编辑加班 | 05_表单与编辑 | lib/features/overtime/presentation/overtime_form_page.dart | 阶段6新增已填连续两屏及时间错误3张已生成；编辑/提交等状态及适配待补 |
-| 024 | 离职管理 | 03_列表与记录 | lib/features/termination/presentation/termination_page.dart | 阶段6离职列表及撤销确认2张已生成；其他状态及适配待补 |
-| 025 | 登记／编辑离职 | 05_表单与编辑 | lib/features/termination/presentation/termination_form_page.dart | 阶段6登记已填连续两屏已生成；编辑/校验/提交等状态及适配待补 |
-| 026 | 社保保险 | 03_列表与记录 | lib/features/insurance/presentation/insurance_page.dart | 阶段7社保主态连续两屏及分区异常3张已生成；其他状态及适配待补 |
-| 027 | 维护参保资料 | 05_表单与编辑 | lib/features/insurance/presentation/insurance_profile_form_page.dart | 阶段7维护参保开关开启/关闭2张已生成；校验/提交状态及适配待补 |
-| 028 | 登记／编辑保险变更 | 05_表单与编辑 | lib/features/insurance/presentation/insurance_change_form_page.dart | 阶段7新增已填连续两屏及校验错误3张已生成；编辑/提交等状态及适配待补 |
-| 029 | 人员附件 | 03_列表与记录 | lib/features/attachments/presentation/employee_attachments_page.dart | 阶段7附件主态含已删除、敏感预览、分类空及缺本地文件4张已生成；其他状态及适配待补 |
-| 030 | 汇总中心－考勤 | 07_分析与汇总 | lib/features/reports/presentation/reports_page.dart | 阶段8主态及关键状态5张已生成；完整状态及适配待补 |
-| 031 | 汇总中心－车辆 | 07_分析与汇总 | lib/features/reports/presentation/reports_page.dart | 阶段8主态及关键状态2张已生成；完整状态及适配待补 |
-| 032 | 汇总中心－库存 | 07_分析与汇总 | lib/features/reports/presentation/reports_page.dart | 阶段8主态及关键状态2张已生成；完整状态及适配待补 |
-| 033 | 汇总中心－工资 | 07_分析与汇总 | lib/features/reports/presentation/reports_page.dart | 阶段8主态及关键状态3张已生成；完整状态及适配待补 |
-| 034 | 临时工薪资 | 02_工作台 | lib/features/payroll/presentation/payroll_home_page.dart | 未生成 |
-| 035 | 工资编辑 | 06_台账与表格 | lib/features/payroll/presentation/payroll_editor_page.dart | 未生成 |
-| 036 | 单人工资明细 | 04_详情 | lib/features/payroll/presentation/payroll_detail_page.dart | 未生成 |
-| 037 | 工资历史 | 03_列表与记录 | lib/features/payroll/presentation/payroll_history_page.dart | 未生成 |
-| 038 | 工资资料与记录 | 04_详情 | lib/features/payroll/presentation/employee_payroll_page.dart | 未生成 |
-| 039 | 工资 Excel 导出 | 08_系统工具 | lib/features/payroll/presentation/payroll_export_page.dart | 未生成 |
-| 040 | 工种日薪设置 | 08_系统工具 | lib/features/payroll/presentation/wage_job_settings_page.dart | 未生成 |
-| 041 | 我的 | 08_系统工具 | lib/features/settings/presentation/settings_page.dart | 未生成 |
-| 042 | 导入导出 | 08_系统工具 | lib/features/excel/presentation/excel_page.dart | 未生成 |
-| 043 | 备忘提醒 | 03_列表与记录 | lib/features/reminders/presentation/reminder_page.dart | 未生成 |
-| 044 | 新建／编辑提醒 | 05_表单与编辑 | lib/features/reminders/presentation/reminder_form_page.dart | 未生成 |
-| 045 | 自定义时间 | 08_系统工具 | lib/features/reminders/presentation/reminder_schedule_page.dart | 未生成 |
-| 046 | 重复设置 | 08_系统工具 | lib/features/reminders/presentation/reminder_repeat_page.dart | 未生成 |
-| 047 | 自定义重复 | 08_系统工具 | lib/features/reminders/presentation/reminder_repeat_page.dart | 未生成 |
-| 048 | 提前提醒 | 08_系统工具 | lib/features/reminders/presentation/reminder_alerts_page.dart | 未生成 |
-| 049 | 备份恢复 | 08_系统工具 | lib/features/backup/presentation/backup_page.dart | 未生成 |
-| 050 | 操作日志 | 08_系统工具 | lib/features/operation_logs/presentation/operation_log_page.dart | 未生成 |
-| 051 | 福利劳保 | 06_台账与表格 | lib/features/item_distribution/presentation/item_distribution_page.dart | 未生成 |
-| 052 | 办公用品 | 06_台账与表格 | lib/features/item_distribution/presentation/item_distribution_page.dart | 未生成 |
-| 053 | 工具领取 | 06_台账与表格 | lib/features/item_distribution/presentation/item_distribution_page.dart | 未生成 |
-| 054 | 车辆管理 | 02_工作台 | lib/features/vehicles/presentation/vehicle_page.dart | 未生成 |
-| 055 | 新增／编辑车辆 | 05_表单与编辑 | lib/features/vehicles/presentation/vehicle_form_page.dart | 未生成 |
-| 056 | 全车维修 | 03_列表与记录 | lib/features/vehicles/presentation/vehicle_repair_list_page.dart | 未生成 |
-| 057 | 报修／维修编辑 | 05_表单与编辑 | lib/features/vehicles/presentation/vehicle_repair_form_page.dart | 未生成 |
-| 058 | 维修单详情 | 04_详情 | lib/features/vehicles/presentation/vehicle_repair_detail_page.dart | 未生成 |
-| 059 | 年度油耗 | 06_台账与表格 | lib/features/vehicles/presentation/vehicle_fuel_summary_page.dart | 未生成 |
-| 060 | 全车提醒中心 | 03_列表与记录 | lib/features/vehicles/presentation/vehicle_reminder_page.dart | 未生成 |
-| 061 | 车辆附件 | 03_列表与记录 | lib/features/vehicles/presentation/vehicle_attachments_page.dart | 未生成 |
+| 010 | 人员管理 | 02_工作台 | lib/features/personnel/presentation/personnel_page.dart | 批次4已生成；适配及完整验收待补 |
+| 011 | 人员名单 | 03_列表与记录 | lib/features/personnel/presentation/personnel_list_page.dart | 批次4已生成；适配及完整验收待补 |
+| 012 | 人员档案 | 04_详情 | lib/features/personnel/presentation/personnel_detail_page.dart | 批次4已生成；适配及完整验收待补 |
+| 013 | 新增／编辑人员 | 05_表单与编辑 | lib/features/personnel/presentation/personnel_form_page.dart | 批次4已生成；适配及完整验收待补 |
+| 014 | 考勤入口 | 02_工作台 | lib/features/attendance/presentation/attendance_page.dart | 批次5已生成；适配及完整验收待补 |
+| 015 | 月考勤表 | 06_台账与表格 | lib/features/attendance/presentation/monthly_attendance_table_page.dart | 批次5已生成；适配及完整验收待补 |
+| 016 | 月度名单 | 06_台账与表格 | lib/features/attendance/presentation/monthly_roster_page.dart | 批次5已生成；适配及完整验收待补 |
+| 017 | 考勤组 | 03_列表与记录 | lib/features/attendance/presentation/attendance_group_list_page.dart | 批次5已生成；适配及完整验收待补 |
+| 018 | 考勤组详情 | 04_详情 | lib/features/attendance/presentation/attendance_group_detail_page.dart | 批次5已生成；适配及完整验收待补 |
+| 019 | 新增／编辑考勤组 | 05_表单与编辑 | lib/features/attendance/presentation/attendance_group_form_page.dart | 批次5已生成；适配及完整验收待补 |
+| 020 | 请假记录 | 03_列表与记录 | lib/features/leave/presentation/leave_page.dart | 批次6已生成；适配及完整验收待补 |
+| 021 | 新增／编辑请假 | 05_表单与编辑 | lib/features/leave/presentation/leave_form_page.dart | 批次6已生成；适配及完整验收待补 |
+| 022 | 加班记录 | 03_列表与记录 | lib/features/overtime/presentation/overtime_page.dart | 批次6已生成；适配及完整验收待补 |
+| 023 | 新增／编辑加班 | 05_表单与编辑 | lib/features/overtime/presentation/overtime_form_page.dart | 批次6已生成；适配及完整验收待补 |
+| 024 | 离职管理 | 03_列表与记录 | lib/features/termination/presentation/termination_page.dart | 批次6已生成；适配及完整验收待补 |
+| 025 | 登记／编辑离职 | 05_表单与编辑 | lib/features/termination/presentation/termination_form_page.dart | 批次6已生成；适配及完整验收待补 |
+| 026 | 社保保险 | 03_列表与记录 | lib/features/insurance/presentation/insurance_page.dart | 批次7已生成；适配及完整验收待补 |
+| 027 | 维护参保资料 | 05_表单与编辑 | lib/features/insurance/presentation/insurance_profile_form_page.dart | 批次7已生成；适配及完整验收待补 |
+| 028 | 登记／编辑保险变更 | 05_表单与编辑 | lib/features/insurance/presentation/insurance_change_form_page.dart | 批次7已生成；适配及完整验收待补 |
+| 029 | 人员附件 | 03_列表与记录 | lib/features/attachments/presentation/employee_attachments_page.dart | 批次7已生成；适配及完整验收待补 |
+| 030 | 汇总中心－考勤 | 07_分析与汇总 | lib/features/reports/presentation/reports_page.dart | 批次8已生成；适配及完整验收待补 |
+| 031 | 汇总中心－车辆 | 07_分析与汇总 | lib/features/reports/presentation/reports_page.dart | 批次8已生成；适配及完整验收待补 |
+| 032 | 汇总中心－库存 | 07_分析与汇总 | lib/features/reports/presentation/reports_page.dart | 批次8已生成；适配及完整验收待补 |
+| 033 | 汇总中心－工资 | 07_分析与汇总 | lib/features/reports/presentation/reports_page.dart | 批次8已生成；适配及完整验收待补 |
+| 034 | 临时工薪资 | 02_工作台 | lib/features/payroll/presentation/payroll_home_page.dart | 批次9主态已生成／修订并初检；待用户验收与适配 |
+| 035 | 工资编辑 | 06_台账与表格 | lib/features/payroll/presentation/payroll_editor_page.dart | 批次9主态已生成／修订并初检；待用户验收与适配；编辑弹层新版待补 |
+| 036 | 单人工资明细 | 04_详情 | lib/features/payroll/presentation/payroll_detail_page.dart | 批次9主态已生成／修订并初检；待用户验收与适配 |
+| 037 | 工资历史 | 03_列表与记录 | lib/features/payroll/presentation/payroll_history_page.dart | 批次9主态已生成／修订并初检；待用户验收与适配 |
+| 038 | 工资资料与记录 | 04_详情 | lib/features/payroll/presentation/employee_payroll_page.dart | 批次9主态已生成／修订并初检；待用户验收与适配 |
+| 039 | 工资 Excel 导出 | 08_系统工具 | lib/features/payroll/presentation/payroll_export_page.dart | 批次9主态已生成／修订并初检；待用户验收与适配 |
+| 040 | 工种日薪设置 | 08_系统工具 | lib/features/payroll/presentation/wage_job_settings_page.dart | 批次9主态已生成／修订并初检；待用户验收与适配 |
+| 041 | 我的 | 08_系统工具 | lib/features/settings/presentation/settings_page.dart | 批次10主态v02已生成；说明位置仍待修，未完成验收 |
+| 042 | 导入导出 | 08_系统工具 | lib/features/excel/presentation/excel_page.dart | 批次10已生成并内容初检；分辨率／适配／最终验收未完成 |
+| 043 | 备忘提醒 | 03_列表与记录 | lib/features/reminders/presentation/reminder_page.dart | 批次10已生成并内容初检；分辨率／适配／最终验收未完成 |
+| 044 | 新建／编辑提醒 | 05_表单与编辑 | lib/features/reminders/presentation/reminder_form_page.dart | 批次10已生成并内容初检；分辨率／适配／最终验收未完成 |
+| 045 | 自定义时间 | 08_系统工具 | lib/features/reminders/presentation/reminder_schedule_page.dart | 调用无结果，待补；提示词已存 |
+| 046 | 重复设置 | 08_系统工具 | lib/features/reminders/presentation/reminder_repeat_page.dart | 批次10已生成并内容初检；分辨率／适配／最终验收未完成 |
+| 047 | 自定义重复 | 08_系统工具 | lib/features/reminders/presentation/reminder_repeat_page.dart | 批次10已生成并内容初检；分辨率／适配／最终验收未完成 |
+| 048 | 提前提醒 | 08_系统工具 | lib/features/reminders/presentation/reminder_alerts_page.dart | 批次10已生成并内容初检；分辨率／适配／最终验收未完成 |
+| 049 | 备份恢复 | 08_系统工具 | lib/features/backup/presentation/backup_page.dart | 批次10已生成并内容初检；分辨率／适配／最终验收未完成 |
+| 050 | 操作日志 | 08_系统工具 | lib/features/operation_logs/presentation/operation_log_page.dart | 批次10已生成并内容初检；分辨率／适配／最终验收未完成 |
+| 051 | 福利劳保 | 06_台账与表格 | lib/features/item_distribution/presentation/item_distribution_page.dart | 批次11已有参考图；051标识与组件待修；目标分辨率、适配及最终验收未完成 |
+| 052 | 办公用品 | 06_台账与表格 | lib/features/item_distribution/presentation/item_distribution_page.dart | 批次11主态已生成并内容初检；目标分辨率、适配及最终验收未完成 |
+| 053 | 工具领取 | 06_台账与表格 | lib/features/item_distribution/presentation/item_distribution_page.dart | 批次11主态已生成并内容初检；目标分辨率、适配及最终验收未完成 |
+| 054 | 车辆管理 | 02_工作台 | lib/features/vehicles/presentation/vehicle_page.dart | 批次12参考图已保存；存在已知内容／组件问题，目标分辨率及验收未完成 |
+| 055 | 新增／编辑车辆 | 05_表单与编辑 | lib/features/vehicles/presentation/vehicle_form_page.dart | 批次12参考图已保存；存在已知内容／组件问题，目标分辨率及验收未完成 |
+| 056 | 全车维修 | 03_列表与记录 | lib/features/vehicles/presentation/vehicle_repair_list_page.dart | 批次12参考图已保存；存在已知内容／组件问题，目标分辨率及验收未完成 |
+| 057 | 报修／维修编辑 | 05_表单与编辑 | lib/features/vehicles/presentation/vehicle_repair_form_page.dart | 批次12参考图已保存；存在已知内容／组件问题，目标分辨率及验收未完成 |
+| 058 | 维修单详情 | 04_详情 | lib/features/vehicles/presentation/vehicle_repair_detail_page.dart | 仅有业务字段不符的首稿对照，不计当前交付；修订与续屏未生成 |
+| 059 | 年度油耗 | 06_台账与表格 | lib/features/vehicles/presentation/vehicle_fuel_summary_page.dart | 批次12调用持续未返回；无PNG，提示词已存，待补 |
+| 060 | 全车提醒中心 | 03_列表与记录 | lib/features/vehicles/presentation/vehicle_reminder_page.dart | 批次12调用持续未返回；无PNG，提示词已存，待补 |
+| 061 | 车辆附件 | 03_列表与记录 | lib/features/vehicles/presentation/vehicle_attachments_page.dart | 批次12调用持续未返回；无PNG，提示词已存，待补 |
 | 062 | 车辆详情－维修 | 04_详情 | lib/features/vehicles/presentation/vehicle_detail_page.dart | 未生成 |
 | 063 | 车辆详情－费用 | 04_详情 | lib/features/vehicles/presentation/vehicle_detail_page.dart | 未生成 |
 | 064 | 车辆详情－车况 | 04_详情 | lib/features/vehicles/presentation/vehicle_detail_page.dart | 未生成 |
@@ -116,7 +119,3 @@
 | 110 | 禁用／只读状态 | 10_状态反馈 | 共享展示面／组件规范 | 未生成 |
 | 111 | 附件预览／删除／恢复 | 09_弹层选择器与菜单 | 共享展示面／组件规范 | 未生成 |
 | 112 | 其它页面内弹层与菜单 | 09_弹层选择器与菜单 | 共享展示面／组件规范 | 未生成 |
-
-## 阶段8交付
-
-030—033共12张，图片、提示词、实际像素、统计合同与源码差异见[阶段8索引](UI图片阶段8索引.md)。下一阶段034起临时工薪资；各页完整状态和适配待补。
