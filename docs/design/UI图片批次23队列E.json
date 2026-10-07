@@ -1,0 +1,54 @@
+[
+  {
+    "task_id": "089",
+    "name": "流水",
+    "source": "lib/features/inventory/presentation/inventory_transactions_page.dart",
+    "old": "03_列表与记录/089_库存_库存流水_查看_有数据_390dp_fs1p0_p01_v01.png",
+    "screen": 1,
+    "issues": [
+      "指标图标在名称上方，未满足同层排列"
+    ],
+    "prompt": "Use case: ui-mockup. 编辑第1图流水。第2图仅为既有风格参照，不复制任何该图文案。只修指定问题：指标图标在名称上方，未满足同层排列。保留全部既有字段、文字、记录、数量、日期、动作、语义状态和模块结构。小彩色扁平图标，不写实、不拟物、不阴影；指标图标18–20dp与名称在同一行，数字/单位第二行。任何三指标布局为四个严格等宽位置，占前三位置，第4位置透明留空无分隔无背景，不是三项均分。390×844dp手机竖屏，无外框无新说明，无新增操作。保留全部/入库/出库/盘点/调整五分段；图标在标题名称旁，小图标无底盒，数值保留4条/2条/2条。保持底部安全留白。仅一张PNG。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-e4934b16-b581-4e89-b6d8-5cc788f5d73a.png",
+    "path": "03_列表与记录/089_库存_库存流水_查看_有数据_390dp_fs1p0_p01_v02.png"
+  },
+  {
+    "task_id": "090",
+    "name": "采购工作台",
+    "source": "lib/features/purchase/presentation/purchase_home_page.dart",
+    "old": "02_工作台/090_采购_采购工作台_查看_有数据_390dp_fs1p0_p01_v02.png",
+    "screen": 1,
+    "issues": [
+      "图标部分拟物、卡片密度仍待视觉终验"
+    ],
+    "prompt": "Use case: ui-mockup. 第一图是局部编辑目标采购工作台，第二图仅是已有参考风格。修改明确缺口：图标部分拟物、卡片密度仍待视觉终验。保留所有业务文案、字段、已选Chip、动作和算术数据。不可删任何卡片/指标/快捷入口；不增新区域/说明/指标。蓝白底、彩色扁平小图标（无3D写实重阴影）；指标图标与标题同层，数字单位同层。390×844dp，fontScale1.0，一张PNG。仅将扫路车滤芯写实图片改为绿色扁平24dp过滤器线图标；其它业务图标收紧24dp，小型指标图标18dp；原四阶段指标2/1/1/1保持四格，三层结构；新建采购FAB不盖内容且底部安全区14dp。不得加入主导航。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-672e909e-ba09-496a-8c37-f9a67430a47b.png",
+    "path": "02_工作台/090_采购_采购工作台_查看_有数据_390dp_fs1p0_p01_v03.png"
+  },
+  {
+    "task_id": "091",
+    "name": "新建／编辑待申报",
+    "source": "lib/features/purchase/presentation/purchase_create_page.dart",
+    "old": "05_表单与编辑/091_采购_新建待申报_新增_已填_390dp_fs1p0_p01_v02.png",
+    "screen": 1,
+    "issues": [
+      "生成图加入必填红星及文本清除图标，原源码未定义，待修"
+    ],
+    "prompt": "Use case: ui-mockup. 第一图是局部编辑目标新建／编辑待申报，第二图仅是已有参考风格。修改明确缺口：生成图加入必填红星及文本清除图标，原源码未定义，待修。保留所有业务文案、字段、已选Chip、动作和算术数据。不可删任何卡片/指标/快捷入口；不增新区域/说明/指标。蓝白底、彩色扁平小图标（无3D写实重阴影）；指标图标与标题同层，数字单位同层。390×844dp，fontScale1.0，一张PNG。仅删除所有红色必填星号以及字段内灰圆X清除图标；删除星号不改变字段本身。保持需求原因四Chip与已选库存不足，保留物资行右上的真实删除X、数量减/加、物资选择/手动新增及两个保存按钮；最底部安全留白约14dp。不得加入主导航。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-b1ecfa51-72c2-43a4-978c-e560bb1dc2d2.png",
+    "path": "05_表单与编辑/091_采购_新建待申报_新增_已填_390dp_fs1p0_p01_v03.png"
+  },
+  {
+    "task_id": "093",
+    "name": "跟踪／全部待处理",
+    "source": "lib/features/purchase/presentation/purchase_tracking_page.dart",
+    "old": "03_列表与记录/093_采购_全部待处理_查看_有数据_390dp_fs1p0_p01_v03.png",
+    "screen": 1,
+    "issues": [
+      "底部留白仍不足目标14dp；按钮完整但安全区仍待视觉验收"
+    ],
+    "prompt": "Use case: ui-mockup. 第一图是局部编辑目标跟踪／全部待处理，第二图仅是已有参考风格。修改明确缺口：底部留白仍不足目标14dp；按钮完整但安全区仍待视觉验收。保留所有业务文案、字段、已选Chip、动作和算术数据。不可删任何卡片/指标/快捷入口；不增新区域/说明/指标。蓝白底、彩色扁平小图标（无3D写实重阴影）；指标图标与标题同层，数字单位同层。390×844dp，fontScale1.0，一张PNG。只增底部安全留白到约14dp，第二记录当前底部按钮完整保留。通过同一页滚动视窗合理上移少许内容及压缩无意义空隙实现，不能缩字号删字段。待申报/已申报/采购中/待领取四FilterChip都选中保持，不替换全部Chip。不得加入主导航。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-f6078110-4a64-4e0a-a9cc-b4c9c88fc315.png",
+    "path": "03_列表与记录/093_采购_全部待处理_查看_有数据_390dp_fs1p0_p01_v04.png"
+  }
+]

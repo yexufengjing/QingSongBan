@@ -1,0 +1,1 @@
+LOCAL EDIT only remove unsupported 0/50 character counter from remarks field and change Dialog title to exact 补领. Remove top-right X (Cancel already provided). Preserve ALL remaining fields, sample data, reason dropdown, actions, blue-white UI.

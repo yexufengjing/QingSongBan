@@ -1,0 +1,1 @@
+Preserve header 当前库存, search and 全部/常用/库存不足/缺货 filters. Replace ALL body metrics, records and bottom summary with single centered empty state: tiny 20x20px flat blue outline box icon with no shadows or rays, title 暂无库存记录, message 先在物资信息中新增物资档案。, one blue 新增物资 button. No counts because source hides metrics on empty; no records.

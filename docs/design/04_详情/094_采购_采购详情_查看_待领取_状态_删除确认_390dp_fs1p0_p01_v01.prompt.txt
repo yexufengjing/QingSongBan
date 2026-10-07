@@ -1,0 +1,1 @@
+Use attached blue-white style. Simple centered dialog title 删除采购记录; exact body 确认将这条未入库采购记录移入回收状态？; buttons 取消 and 确认删除. Dim background must be pending application purchase with NO prior stock-in: status 待申报,申报100双,OA/分配/通知日期 and执行人/领取地点 all —, no stock-in quantity or partial progress. Bottom actions 编辑信息 and 确认已申报. Dialog no illustration.

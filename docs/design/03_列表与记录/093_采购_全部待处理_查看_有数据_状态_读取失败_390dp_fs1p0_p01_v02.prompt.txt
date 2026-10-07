@@ -1,0 +1,1 @@
+Edit this single existing Chinese mobile UI locally. Preserve its blue-white light gradient style. Replace the erroneous title 小图标加载失败、 with exact 加载失败. Small 24dp outline warning icon, no large hero. Exact message 请检查本地数据后重试。 and blue-outline 重新加载 button. Keep all filters. No mockup shell or collage. Do not insert the English instructions as UI text.

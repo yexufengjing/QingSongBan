@@ -1,0 +1,529 @@
+[
+  {
+    "task_id": "035",
+    "state": "草稿菜单",
+    "old": "06_台账与表格/035_工资_工资编辑_编辑_草稿_390dp_fs1p0_p01_v02.png",
+    "path": "09_弹层选择器与菜单/035_批次24_状态_草稿菜单_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：顶部更多PopupMenu。仅真实草稿项：重新生成名单、同步最新考勤、异常检查、确认工资、删除工资草稿、导出工资 Excel。保留原工资两人背景。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-0a82d708-cfd6-4390-8297-4083fd73397e.png"
+  },
+  {
+    "task_id": "035",
+    "state": "删除草稿确认",
+    "old": "06_台账与表格/035_工资_工资编辑_编辑_草稿_390dp_fs1p0_p01_v02.png",
+    "path": "09_弹层选择器与菜单/035_批次24_状态_删除草稿确认_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：居中确认Dialog标题 删除工资草稿？；正文 工资草稿会被软删除，之后重新进入该月份时可以恢复原批次。；取消／确认删除。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-947a23ff-9d72-40e1-9065-b076dfee879b.png"
+  },
+  {
+    "task_id": "035",
+    "state": "撤销解锁原因",
+    "old": "06_台账与表格/035_工资_工资编辑_编辑_草稿_390dp_fs1p0_p01_v02.png",
+    "path": "09_弹层选择器与菜单/035_批次24_状态_撤销解锁原因_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：背景工资状态已锁定（不是草稿），居中Dialog标题 撤销确认 / 解锁原因；原因输入框空；取消／确认。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-3f38cdd3-7bdf-48e2-85c9-9ba7e105683b.png"
+  },
+  {
+    "task_id": "035",
+    "state": "无出勤人工加入",
+    "old": "06_台账与表格/035_工资_工资编辑_编辑_草稿_390dp_fs1p0_p01_v02.png",
+    "path": "09_弹层选择器与菜单/035_批次24_状态_无出勤人工加入_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：居中Dialog标题 确认加入工资名单？；正文 张明 本月实际出勤为 0 天，请确认是否仍加入工资造资。；取消／确认加入。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-393c1956-17c9-47cd-9cc2-358bbcbab675.png"
+  },
+  {
+    "task_id": "035",
+    "state": "人工人员选择",
+    "old": "06_台账与表格/035_工资_工资编辑_编辑_草稿_390dp_fs1p0_p01_v02.png",
+    "path": "09_弹层选择器与菜单/035_批次24_状态_人工人员选择_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：居中Dialog标题 选择人员；人员列表 张明、赵平，正常姓名文本选择行，取消。不要工资金额。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-c08e7266-b00f-41ef-88e6-a766c75f14d4.png"
+  },
+  {
+    "task_id": "035",
+    "state": "确认警告说明",
+    "old": "06_台账与表格/035_工资_工资编辑_编辑_草稿_390dp_fs1p0_p01_v02.png",
+    "path": "09_弹层选择器与菜单/035_批次24_状态_确认警告说明_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：居中Dialog标题 确认说明（存在警告）；原因输入框空；取消／确认。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-7ec0dd09-154e-47fc-a157-c29d90557c6d.png"
+  },
+  {
+    "task_id": "035",
+    "state": "金额无效禁用",
+    "old": "06_台账与表格/035_工资_工资编辑_编辑_草稿_390dp_fs1p0_p01_v02.png",
+    "path": "09_弹层选择器与菜单/035_批次24_状态_金额无效禁用_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：工资明细居中Dialog 周平 工资明细。只读出勤20天，工种绿化工，日薪输入abc，基础工资 输入有效金额，补助0，保险扣除50，最终工资 输入有效金额，备注空；取消可用，保存灰色禁用。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-c7428921-0c94-42c9-823f-40eebc207338.png"
+  },
+  {
+    "task_id": "040",
+    "state": "生效日薪",
+    "old": "08_系统工具/040_工资_工种日薪设置_查看_有数据_390dp_fs1p0_p01_v01.png",
+    "path": "09_弹层选择器与菜单/040_批次24_状态_生效日薪_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：居中Dialog 绿化工 生效日薪。原生说明 设置从某个月开始执行的日薪。同一工种同一月份重复保存会更新原记录。；生效月份2026-10只读可选，helper 按月生效，不区分具体日期；日薪（元）200；取消／保存日薪。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-650ab456-6c65-464d-8964-f5b5ceb0ff73.png"
+  },
+  {
+    "task_id": "040",
+    "state": "生效月份选择",
+    "old": "08_系统工具/040_工资_工种日薪设置_查看_有数据_390dp_fs1p0_p01_v01.png",
+    "path": "09_弹层选择器与菜单/040_批次24_状态_生效月份选择_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：居中Dialog 选择生效月份；顶部年份2026年可选择；十二个月份按钮1月至12月，10月选中；取消／确定月份。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-bcadb289-e9f2-4d7b-a1c0-811390309360.png"
+  },
+  {
+    "task_id": "040",
+    "state": "修改工种",
+    "old": "08_系统工具/040_工资_工种日薪设置_查看_有数据_390dp_fs1p0_p01_v01.png",
+    "path": "09_弹层选择器与菜单/040_批次24_状态_修改工种_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：居中Dialog 修改工种；字段 工种名称绿化工，默认日薪（元）200，备注（可选）空，启用工种 switch开启，可用于新工资资料和造资；说明 修改只影响后续新建或生成的工资批次，已生成工资保留原快照。；取消／保存工种。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-7969b954-fb08-4bb4-9a10-5e772f16d6c3.png"
+  },
+  {
+    "task_id": "042",
+    "state": "导入预览通过",
+    "old": "08_系统工具/042_工具_Excel导入导出_查看_主态_390dp_fs1p0_p01_v01.png",
+    "path": "09_弹层选择器与菜单/042_批次24_状态_导入预览通过_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：保留Excel页月度导出与人员导入。人员名单导入卡增加蓝色信息 校验通过，可导入 2 人。确认导入 2 人按钮启用，文件选择仍在。不伪造完整人员表。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-c5012c4c-16ae-4edd-ba66-025bf7519e27.png"
+  },
+  {
+    "task_id": "042",
+    "state": "导入预览错误",
+    "old": "08_系统工具/042_工具_Excel导入导出_查看_主态_390dp_fs1p0_p01_v01.png",
+    "path": "09_弹层选择器与菜单/042_批次24_状态_导入预览错误_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：保留Excel页月度导出与人员导入。校验区域橙色 发现 1 个问题，暂不能导入；样例问题 第2行：姓名不能为空。确认导入按钮灰色禁用。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-5a33bb5b-a485-487e-abbd-171f7e61a76c.png"
+  },
+  {
+    "task_id": "043",
+    "state": "首次空",
+    "old": "03_列表与记录/043_提醒_备忘提醒_查看_待办_390dp_fs1p0_p01_v02.png",
+    "path": "09_弹层选择器与菜单/043_批次24_状态_首次空_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：备忘提醒保留搜索、今天0/逾期0/7天内0指标、待办/计划/已完成。正文小扁平图标 当前没有待办事项；创建一个提醒，时间和完成记录都会保留。；新建第一个提醒。不显示原提醒列表。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-308348fe-04f1-4324-9744-c45f651346eb.png"
+  },
+  {
+    "task_id": "043",
+    "state": "筛选空",
+    "old": "03_列表与记录/043_提醒_备忘提醒_查看_待办_390dp_fs1p0_p01_v02.png",
+    "path": "09_弹层选择器与菜单/043_批次24_状态_筛选空_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：搜索框滤芯；保留待办/计划/已完成与原全局统计1/1/1。正文小扁平图标 没有找到相关提醒；换个关键词试试。无新建第一个提醒按钮。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-529ee3d9-4a27-400d-b75a-326935db67df.png"
+  },
+  {
+    "task_id": "043",
+    "state": "删除确认",
+    "old": "03_列表与记录/043_提醒_备忘提醒_查看_待办_390dp_fs1p0_p01_v02.png",
+    "path": "09_弹层选择器与菜单/043_批次24_状态_删除确认_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：背景现存 核对9月汇总；居中Dialog 删除提醒？；正文 “核对9月汇总”的未来通知会一并取消，完成记录不再显示。；取消／删除提醒。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-db23ce69-4445-41d5-a449-0796c2c85bd5.png"
+  },
+  {
+    "task_id": "043",
+    "state": "循环提醒菜单",
+    "old": "03_列表与记录/043_提醒_备忘提醒_查看_待办_390dp_fs1p0_p01_v02.png",
+    "path": "09_弹层选择器与菜单/043_批次24_状态_循环提醒菜单_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：现场巡检循环事项右上菜单：编辑提醒、跳过本期、停用提醒、删除提醒。只显示这四项。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-487c249d-366f-4965-af09-b0b83e5db047.png"
+  },
+  {
+    "task_id": "049",
+    "state": "恢复完成",
+    "old": "08_系统工具/049_工具_备份恢复_查看_主态_390dp_fs1p0_p01_v02.png",
+    "path": "09_弹层选择器与菜单/049_批次24_状态_恢复完成_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：在备份页背景上Dialog 恢复完成。正文 已生成恢复前安全备份：/storage/emulated/0/Download/qingsongban/safety_backup.qsb\\n点击确认后应用将安全重启。；只有蓝色 重启应用。设计样例标识保留。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-97889b8e-76d1-4c3c-9b15-8f6fc43eb649.png"
+  },
+  {
+    "task_id": "051",
+    "state": "福利设置",
+    "old": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p01_v02.png",
+    "path": "09_弹层选择器与菜单/051_批次24_状态_福利设置_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：在福利领取页面背景上Dialog 福利发放设置；扫路车数量6 helper 每辆对应1份洗衣膏福利；公用福利份数1 helper 按实际公用份数填写；取消／保存设置。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-b2249efa-4574-4dfd-9b30-a74fde6b726d.png"
+  },
+  {
+    "task_id": "051",
+    "state": "补领",
+    "old": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p01_v02.png",
+    "path": "09_弹层选择器与菜单/051_批次24_状态_补领_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：福利背景居中Dialog 补领。人员：张明；福利来源：正式工 · 司机；物品：洗衣膏 1袋；补领原因下拉破损，备注（可选）空；取消／确认补领。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-c5881a48-4d1c-41e0-bc7f-79b7aa72ef33.png"
+  },
+  {
+    "task_id": "051",
+    "state": "未领来源",
+    "old": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p01_v02.png",
+    "path": "09_弹层选择器与菜单/051_批次24_状态_未领来源_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：福利背景BottomSheet 张明；正式工 · 司机；本月福利来源；洗衣膏1袋 未领取 登记：2026-10-01 09:00；线手套1副 未领取 登记：2026-10-01 09:00；底部 标记为已领取。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-6944131b-4e28-46d6-a88b-64b2ffc489b3.png"
+  },
+  {
+    "task_id": "051",
+    "state": "已领来源",
+    "old": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p01_v02.png",
+    "path": "09_弹层选择器与菜单/051_批次24_状态_已领来源_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：福利背景BottomSheet 张明；正式工 · 司机；本月福利来源；洗衣膏1袋 已领取 ✓ · 签收：2026-10-02 09:00；线手套1副 已领取 ✓ · 签收：2026-10-02 09:00；均登记2026-10-01 09:00；底部 改为未领取／补领。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-2ef4a009-f977-4f15-8279-3c38d5135e79.png"
+  },
+  {
+    "task_id": "051",
+    "state": "重置领取确认",
+    "old": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p01_v02.png",
+    "path": "09_弹层选择器与菜单/051_批次24_状态_重置领取确认_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：Dialog 确认修改领取状态？；正文 张明 当前为“已领取”。修改后将恢复为“未领取”。原领取时间会保留在操作日志中。；取消／确认改为未领取。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-178f0a65-89fb-41e5-be47-d2052f33a6ad.png"
+  },
+  {
+    "task_id": "051",
+    "state": "扫路车分配",
+    "old": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p01_v02.png",
+    "path": "09_弹层选择器与菜单/051_批次24_状态_扫路车分配_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：福利背景BottomSheet 扫路车福利分配；车辆数量：6 · 福利份数：6 · 已选择：2人；优先推荐：正式工司机；每人对应1份洗衣膏。；张明、赵平复选已选，陈强未选；保存分配按钮。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-0065c34b-0b0f-4daf-8303-88a59a718132.png"
+  },
+  {
+    "task_id": "051",
+    "state": "分配未满确认",
+    "old": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p01_v02.png",
+    "path": "09_弹层选择器与菜单/051_批次24_状态_分配未满确认_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：福利背景Dialog 还有福利未分配；还有4份福利未分配，仍要保存吗？；返回继续分配／仍然保存。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-b1aa75cf-0509-4739-bf25-479275381e54.png"
+  },
+  {
+    "task_id": "051",
+    "state": "公用领取人",
+    "old": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p01_v02.png",
+    "path": "09_弹层选择器与菜单/051_批次24_状态_公用领取人_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：福利背景BottomSheet 公用福利领取人；默认推荐当前在岗的正式员工，可按实际情况更换。；张明、赵平选择列表，张明选中；保存领取人。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-2b00a91d-3560-40d9-b114-c7814f17984f.png"
+  },
+  {
+    "task_id": "051",
+    "state": "临时名单",
+    "old": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p01_v02.png",
+    "path": "09_弹层选择器与菜单/051_批次24_状态_临时名单_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：福利背景BottomSheet 修改临时工名单；推荐来源：对应福利月份的月度考勤名单；搜索人员；全选／清空；周平和孙雨复选已选；保存名单 2人。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-eb4efe54-2e55-4aef-b0e8-60d90c1be87e.png"
+  },
+  {
+    "task_id": "051",
+    "state": "福利首次空",
+    "old": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p01_v02.png",
+    "path": "09_弹层选择器与菜单/051_批次24_状态_福利首次空_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：物品领取福利Tab，月份2026年09月福利与实际发放2026年10月保留。列表隐藏。小扁平图标 本月还没有福利发放表；生成福利发放表蓝色按钮。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-a392ce90-22ad-49bd-bfa6-459622ad6295.png"
+  },
+  {
+    "task_id": "052",
+    "state": "新增办公领用",
+    "old": "06_台账与表格/052_领取_办公用品_查看_有记录_390dp_fs1p0_p01_v01.png",
+    "path": "09_弹层选择器与菜单/052_批次24_状态_新增办公领用_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：物品领取办公用品Tab背景，居中Dialog 新增办公用品领用；领取人/领取对象 张明；物品名称 签字笔；数量1，单位件，备注（可选）空；取消／保存记录。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-8f7de39d-cbb8-40de-9a93-23659f19601b.png"
+  },
+  {
+    "task_id": "053",
+    "state": "新增工具领用",
+    "old": "06_台账与表格/053_领取_工具_查看_有记录_390dp_fs1p0_p01_v01.png",
+    "path": "09_弹层选择器与菜单/053_批次24_状态_新增工具领用_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：物品领取工具Tab背景，居中Dialog 新增工具领用；领取人/领取对象 张明；物品名称 扳手；数量1，单位件，备注（可选）空；取消／保存记录。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-cba0573d-a44c-4226-9a35-8d71e9f18433.png"
+  },
+  {
+    "task_id": "052",
+    "state": "领用表单校验",
+    "old": "06_台账与表格/052_领取_办公用品_查看_有记录_390dp_fs1p0_p01_v01.png",
+    "path": "09_弹层选择器与菜单/052_批次24_状态_领用表单校验_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：办公用品背景Dialog 新增办公用品领用；领取人/领取对象空、物品名称空、数量1、单位件、备注（可选）空；红字 请填写领取人和物品名称；取消／保存记录。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-56b6f0af-a7ed-40b9-b3ea-e68fe58de58c.png"
+  },
+  {
+    "task_id": "052",
+    "state": "重复领取确认",
+    "old": "06_台账与表格/052_领取_办公用品_查看_有记录_390dp_fs1p0_p01_v01.png",
+    "path": "09_弹层选择器与菜单/052_批次24_状态_重复领取确认_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：办公用品背景Dialog 重复领取提醒；张明 本月已有“签字笔”记录，是否仍要继续登记？；返回检查／仍然登记。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-70abe0f9-6055-47c0-a5fd-9bf31a564f2c.png"
+  },
+  {
+    "task_id": "053",
+    "state": "重复领取确认",
+    "old": "06_台账与表格/053_领取_工具_查看_有记录_390dp_fs1p0_p01_v01.png",
+    "path": "09_弹层选择器与菜单/053_批次24_状态_重复领取确认_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：工具Tab背景Dialog 重复领取提醒；张明 本月已有“扳手”记录，是否仍要继续登记？；返回检查／仍然登记。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-bb0b684c-dc7d-4d7b-b251-da7f9ebdf0b5.png"
+  },
+  {
+    "task_id": "052",
+    "state": "删除办公领用",
+    "old": "06_台账与表格/052_领取_办公用品_查看_有记录_390dp_fs1p0_p01_v01.png",
+    "path": "09_弹层选择器与菜单/052_批次24_状态_删除办公领用_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：办公用品背景Dialog 删除办公用品领用记录？；张明 · 签字笔 1件；登记时间：2026-10-01 09:00；删除后记录将从当前列表隐藏，但操作日志会保留。；取消／确认删除。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-f51d63e9-1d54-49d3-885a-eae11c610104.png"
+  },
+  {
+    "task_id": "053",
+    "state": "删除工具领用",
+    "old": "06_台账与表格/053_领取_工具_查看_有记录_390dp_fs1p0_p01_v01.png",
+    "path": "09_弹层选择器与菜单/053_批次24_状态_删除工具领用_v01.png",
+    "prompt": "依据附图既有UI生成同一业务页的单张真实原生状态图，唯一风格依据附图蓝白底白卡字体，小彩色扁平图标，8/16/24间距，不做大图标或拟物。只画指定状态，不拼贴，保留设计样例标识。需要弹层时背景原页面变暗但不改数据，只有指定一个Dialog或BottomSheet；正文要清晰可读。不要把指令画在UI，不增字段或操作。实际状态：工具背景Dialog 删除工具领用记录？；张明 · 扳手 1件；登记时间：2026-10-01 09:00；删除后记录将从当前列表隐藏，但操作日志会保留。；取消／确认删除。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-c2e45da4-24c3-498d-a900-64054545bac9.png"
+  },
+  {
+    "task_id": "037",
+    "state": "工资历史空",
+    "old": "03_列表与记录/037_工资_工资历史_查看_有数据_390dp_fs1p0_p01_v02.png",
+    "path": "09_弹层选择器与菜单/037_批次24_状态_工资历史空_v01.png",
+    "prompt": "以附图既有蓝白底白卡字体为唯一风格参考，单张竖屏真实移动UI，保留设计样例与小彩色平面图标/8,16,24间距。仅指定真实状态，无设备壳无拼贴，无解释。需弹层时原页背景变暗，只画一个指定Dialog/BottomSheet。不得新增字段/操作。实际状态：保留工资历史顶栏、设计样例，把2条工资记录移除。正文小平面图标 尚无工资历史。无额外新建按钮。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-b6c0281e-dce5-415d-8a1b-ed2eec10ca9c.png"
+  },
+  {
+    "task_id": "038",
+    "state": "工种默认日薪",
+    "old": "04_详情/038_工资_工资资料与记录_编辑_已填_390dp_fs1p0_p01_v01.png",
+    "path": "09_弹层选择器与菜单/038_批次24_状态_工种默认日薪_v01.png",
+    "prompt": "以附图既有蓝白底白卡字体为唯一风格参考，单张竖屏真实移动UI，保留设计样例与小彩色平面图标/8,16,24间距。仅指定真实状态，无设备壳无拼贴，无解释。需弹层时原页背景变暗，只画一个指定Dialog/BottomSheet。不得新增字段/操作。实际状态：只改既有页面 使用工种默认日薪 switch开启；个人特殊日薪输入框隐藏；工资工种绿化工、周平、参与核算开启、工资备注、历史工资全部保留。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-c04ae252-8485-4e35-ab24-f151e215bfa1.png"
+  },
+  {
+    "task_id": "039",
+    "state": "导出已完成",
+    "old": "08_系统工具/039_工资_工资Excel导出_查看_预览_390dp_fs1p0_p01_v01.png",
+    "path": "09_弹层选择器与菜单/039_批次24_状态_导出已完成_v01.png",
+    "prompt": "以附图既有蓝白底白卡字体为唯一风格参考，单张竖屏真实移动UI，保留设计样例与小彩色平面图标/8,16,24间距。仅指定真实状态，无设备壳无拼贴，无解释。需弹层时原页背景变暗，只画一个指定Dialog/BottomSheet。不得新增字段/操作。实际状态：保留工资Excel预览，增加绿色文件反馈卡文字 文件已保存到： /storage/emulated/0/Download/qingsongban/临时工工资_2026-09.xlsx。底部原导出及应用内查看表格按钮保留。不造分享操作。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-8030c896-7065-4d59-9e06-28c6e8214a14.png"
+  },
+  {
+    "task_id": "044",
+    "state": "编辑提醒",
+    "old": "05_表单与编辑/044_提醒_新建提醒_新增_已填_390dp_fs1p0_p01_v01.png",
+    "path": "09_弹层选择器与菜单/044_批次24_状态_编辑提醒_v01.png",
+    "prompt": "以附图既有蓝白底白卡字体为唯一风格参考，单张竖屏真实移动UI，保留设计样例与小彩色平面图标/8,16,24间距。仅指定真实状态，无设备壳无拼贴，无解释。需弹层时原页背景变暗，只画一个指定Dialog/BottomSheet。不得新增字段/操作。实际状态：既有新建提醒页面改顶栏 编辑提醒；现场巡检及全部原字段值保持；底部 保存提醒。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-3973dba7-b8a2-4720-9b22-adeb4c38296d.png"
+  },
+  {
+    "task_id": "044",
+    "state": "关联人员选择",
+    "old": "05_表单与编辑/044_提醒_新建提醒_新增_已填_390dp_fs1p0_p01_v01.png",
+    "path": "09_弹层选择器与菜单/044_批次24_状态_关联人员选择_v01.png",
+    "prompt": "以附图既有蓝白底白卡字体为唯一风格参考，单张竖屏真实移动UI，保留设计样例与小彩色平面图标/8,16,24间距。仅指定真实状态，无设备壳无拼贴，无解释。需弹层时原页背景变暗，只画一个指定Dialog/BottomSheet。不得新增字段/操作。实际状态：原提醒页背景BottomSheet 关联人员；取消／完成；张明 EMP-0001已选、赵平 EMP-0002未选复选列表。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-7ef89c5b-a1f3-4fa1-8a5d-eb56177a9dc1.png"
+  },
+  {
+    "task_id": "044",
+    "state": "标题校验",
+    "old": "05_表单与编辑/044_提醒_新建提醒_新增_已填_390dp_fs1p0_p01_v01.png",
+    "path": "09_弹层选择器与菜单/044_批次24_状态_标题校验_v01.png",
+    "prompt": "以附图既有蓝白底白卡字体为唯一风格参考，单张竖屏真实移动UI，保留设计样例与小彩色平面图标/8,16,24间距。仅指定真实状态，无设备壳无拼贴，无解释。需弹层时原页背景变暗，只画一个指定Dialog/BottomSheet。不得新增字段/操作。实际状态：原新建提醒表单，仅提醒事项输入空；底部SnackBar 请先输入要做的事情。原日期、类型、系统通知及保存按钮保留。无新增字段行内错误。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-ed235d50-5056-4a15-b3e4-62e541d94c06.png"
+  },
+  {
+    "task_id": "047",
+    "state": "每月重复",
+    "old": "08_系统工具/047_提醒_自定义重复_设置_每周_390dp_fs1p0_p01_v02.png",
+    "path": "09_弹层选择器与菜单/047_批次24_状态_每月重复_v01.png",
+    "prompt": "以附图既有蓝白底白卡字体为唯一风格参考，单张竖屏真实移动UI，保留设计样例与小彩色平面图标/8,16,24间距。仅指定真实状态，无设备壳无拼贴，无解释。需弹层时原页背景变暗，只画一个指定Dialog/BottomSheet。不得新增字段/操作。实际状态：自定义重复页面：顶栏取消／自定义重复／完成。重复频率 每1月；选择提醒日期（可多选）；7列数字1至31只出现一次，1和15蓝色选中。结束重复 永不结束。无星期区。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-fb67250d-298b-4fac-93d8-0753625693ca.png"
+  },
+  {
+    "task_id": "047",
+    "state": "结束重复选择",
+    "old": "08_系统工具/047_提醒_自定义重复_设置_每周_390dp_fs1p0_p01_v02.png",
+    "path": "09_弹层选择器与菜单/047_批次24_状态_结束重复选择_v01.png",
+    "prompt": "以附图既有蓝白底白卡字体为唯一风格参考，单张竖屏真实移动UI，保留设计样例与小彩色平面图标/8,16,24间距。仅指定真实状态，无设备壳无拼贴，无解释。需弹层时原页背景变暗，只画一个指定Dialog/BottomSheet。不得新增字段/操作。实际状态：原自定义重复页背景BottomSheet 结束重复；radio 永不结束选中、按日期、按次数。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-42e6295b-d945-4d72-8602-2e63ac06a045.png"
+  },
+  {
+    "task_id": "048",
+    "state": "自定义提前",
+    "old": "08_系统工具/048_提醒_提前提醒_设置_多选_390dp_fs1p0_p01_v01.png",
+    "path": "09_弹层选择器与菜单/048_批次24_状态_自定义提前_v01.png",
+    "prompt": "以附图既有蓝白底白卡字体为唯一风格参考，单张竖屏真实移动UI，保留设计样例与小彩色平面图标/8,16,24间距。仅指定真实状态，无设备壳无拼贴，无解释。需弹层时原页背景变暗，只画一个指定Dialog/BottomSheet。不得新增字段/操作。实际状态：提前提醒页背景BottomSheet 取消／确定；两列滚轮：数值3选中、单位小时选中；单位分钟/小时/天/周。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-8e7a2725-ba41-4526-8665-a7ff70f6c5d1.png"
+  },
+  {
+    "task_id": "050",
+    "state": "日志有记录",
+    "old": "03_列表与记录/050_工具_操作日志_查看_首次空_390dp_fs1p0_p01_v01.png",
+    "path": "09_弹层选择器与菜单/050_批次24_状态_日志有记录_v01.png",
+    "prompt": "以附图既有蓝白底白卡字体为唯一风格参考，单张竖屏真实移动UI，保留设计样例与小彩色平面图标/8,16,24间距。仅指定真实状态，无设备壳无拼贴，无解释。需弹层时原页背景变暗，只画一个指定Dialog/BottomSheet。不得新增字段/操作。实际状态：操作日志页面保留设计样例与返回我的，移除空态。两条白卡：delete · item_distribution；删除办公用品领用记录：张明 · 签字笔 2支；2026-09-18 09:30:00。第二条update · payroll_profile；周平工资资料已保存；2026-09-17 10:00:00。图标小平面无身份大圆。无搜索与删除按钮。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-6918ad47-b209-400c-8823-dd6b042b6cef.png"
+  },
+  {
+    "task_id": "050",
+    "state": "日志首次空修正",
+    "old": "03_列表与记录/050_工具_操作日志_查看_首次空_390dp_fs1p0_p01_v01.png",
+    "path": "09_弹层选择器与菜单/050_批次24_状态_日志首次空修正_v01.png",
+    "prompt": "以附图既有蓝白底白卡字体为唯一风格参考，单张竖屏真实移动UI，保留设计样例与小彩色平面图标/8,16,24间距。仅指定真实状态，无设备壳无拼贴，无解释。需弹层时原页背景变暗，只画一个指定Dialog/BottomSheet。不得新增字段/操作。实际状态：仅缩小已有空态中心图标到正文行高，去掉大圆底。正文只 暂无操作日志；删除无源码的 执行操作后，会在这里生成记录。其余保留。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-772a09e0-a2c3-45f2-94d7-b80f3d85866c.png"
+  },
+  {
+    "task_id": "052",
+    "state": "办公用品月空",
+    "old": "06_台账与表格/052_领取_办公用品_查看_有记录_390dp_fs1p0_p01_v01.png",
+    "path": "09_弹层选择器与菜单/052_批次24_状态_办公用品月空_v01.png",
+    "prompt": "以附图既有蓝白底白卡字体为唯一风格参考，单张竖屏真实移动UI，保留设计样例与小彩色平面图标/8,16,24间距。仅指定真实状态，无设备壳无拼贴，无解释。需弹层时原页背景变暗，只画一个指定Dialog/BottomSheet。不得新增字段/操作。实际状态：办公用品Tab与2026年09月保持。隐藏原两条记录。正文小扁平图标 本月还没有办公用品领用记录，请点击右下角新增。右下新增保留。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-deb67f5f-c8c1-4c89-9ada-56d35abe0a44.png"
+  },
+  {
+    "task_id": "053",
+    "state": "工具月空",
+    "old": "06_台账与表格/053_领取_工具_查看_有记录_390dp_fs1p0_p01_v01.png",
+    "path": "09_弹层选择器与菜单/053_批次24_状态_工具月空_v01.png",
+    "prompt": "以附图既有蓝白底白卡字体为唯一风格参考，单张竖屏真实移动UI，保留设计样例与小彩色平面图标/8,16,24间距。仅指定真实状态，无设备壳无拼贴，无解释。需弹层时原页背景变暗，只画一个指定Dialog/BottomSheet。不得新增字段/操作。实际状态：工具Tab与2026年09月保持。隐藏原两条记录。正文小扁平图标 本月还没有工具领用记录，请点击右下角新增。右下新增保留。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-6a0b43fb-f4a7-4113-aa74-afdf8f91091a.png"
+  },
+  {
+    "task_id": "052",
+    "state": "办公用品来源",
+    "old": "06_台账与表格/052_领取_办公用品_查看_有记录_390dp_fs1p0_p01_v01.png",
+    "path": "09_弹层选择器与菜单/052_批次24_状态_办公用品来源_v01.png",
+    "prompt": "以附图既有蓝白底白卡字体为唯一风格参考，单张竖屏真实移动UI，保留设计样例与小彩色平面图标/8,16,24间距。仅指定真实状态，无设备壳无拼贴，无解释。需弹层时原页背景变暗，只画一个指定Dialog/BottomSheet。不得新增字段/操作。实际状态：办公用品Tab背景BottomSheet 张明；人员 · 其他；领用明细；签字笔 2支；已领取 ✓ · 签收：2026-09-18 09:30；登记：2026-09-18 09:30；该行删除图标；底部 改为未领取／补领。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-89e3fd2c-6297-474a-b960-8aa4573d95fe.png"
+  },
+  {
+    "task_id": "053",
+    "state": "工具来源",
+    "old": "06_台账与表格/053_领取_工具_查看_有记录_390dp_fs1p0_p01_v01.png",
+    "path": "09_弹层选择器与菜单/053_批次24_状态_工具来源_v01.png",
+    "prompt": "以附图既有蓝白底白卡字体为唯一风格参考，单张竖屏真实移动UI，保留设计样例与小彩色平面图标/8,16,24间距。仅指定真实状态，无设备壳无拼贴，无解释。需弹层时原页背景变暗，只画一个指定Dialog/BottomSheet。不得新增字段/操作。实际状态：工具Tab背景BottomSheet 陈林；人员 · 其他；领用明细；活动扳手 1把；已领取 ✓ · 签收：2026-09-16 08:45；登记：2026-09-16 08:45；该行删除图标；底部 改为未领取／补领。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-bdf382fd-870a-4894-bfab-1d38b26185a9.png"
+  },
+  {
+    "task_id": "053",
+    "state": "领用表单校验",
+    "old": "06_台账与表格/053_领取_工具_查看_有记录_390dp_fs1p0_p01_v01.png",
+    "path": "09_弹层选择器与菜单/053_批次24_状态_领用表单校验_v01.png",
+    "prompt": "以附图既有蓝白底白卡字体为唯一风格参考，单张竖屏真实移动UI，保留设计样例与小彩色平面图标/8,16,24间距。仅指定真实状态，无设备壳无拼贴，无解释。需弹层时原页背景变暗，只画一个指定Dialog/BottomSheet。不得新增字段/操作。实际状态：工具Tab背景Dialog 新增工具领用；领取人/领取对象空、物品名称空、数量1、单位件、备注（可选）空；红字 请填写领取人和物品名称；取消／保存记录。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-b07772f6-0ad3-470b-94d2-c8c1d1f76480.png"
+  },
+  {
+    "task_id": "035",
+    "state": "阻断检查",
+    "old": "06_台账与表格/035_工资_工资编辑_编辑_草稿_390dp_fs1p0_p01_v02.png",
+    "content": "居中Dialog 存在阻断问题；红色小图标 月度考勤汇总尚未确认，不能确认工资；关闭。",
+    "path": "09_弹层选择器与菜单/035_批次24_状态_阻断检查_v01.png",
+    "prompt": "生成附图既有蓝白白卡字体原生UI状态。小平面彩色图标、8/16/24间距，单张页面，不拼贴，不加业务或说明，设计样例保留。指定状态：居中Dialog 存在阻断问题；红色小图标 月度考勤汇总尚未确认，不能确认工资；关闭。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-fbcb1a48-030e-480d-bb7f-938bb2d29399.png"
+  },
+  {
+    "task_id": "035",
+    "state": "警告检查",
+    "old": "06_台账与表格/035_工资_工资编辑_编辑_草稿_390dp_fs1p0_p01_v02.png",
+    "content": "居中Dialog 异常检查；橙色小图标 考勤汇总在工资生成后发生变化，请先同步最新考勤；关闭。",
+    "path": "09_弹层选择器与菜单/035_批次24_状态_警告检查_v01.png",
+    "prompt": "生成附图既有蓝白白卡字体原生UI状态。小平面彩色图标、8/16/24间距，单张页面，不拼贴，不加业务或说明，设计样例保留。指定状态：居中Dialog 异常检查；橙色小图标 考勤汇总在工资生成后发生变化，请先同步最新考勤；关闭。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-4f72d9d2-731b-4883-981c-6f3b51e1bc37.png"
+  },
+  {
+    "task_id": "035",
+    "state": "无异常检查",
+    "old": "06_台账与表格/035_工资_工资编辑_编辑_草稿_390dp_fs1p0_p01_v02.png",
+    "content": "居中Dialog 异常检查；蓝色小图标 未发现异常；关闭。",
+    "path": "09_弹层选择器与菜单/035_批次24_状态_无异常检查_v01.png",
+    "prompt": "生成附图既有蓝白白卡字体原生UI状态。小平面彩色图标、8/16/24间距，单张页面，不拼贴，不加业务或说明，设计样例保留。指定状态：居中Dialog 异常检查；蓝色小图标 未发现异常；关闭。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-1b685812-b61d-4598-80e4-f27db54259ac.png"
+  },
+  {
+    "task_id": "035",
+    "state": "已确认菜单",
+    "old": "06_台账与表格/035_工资_工资编辑_编辑_草稿_390dp_fs1p0_p01_v02.png",
+    "content": "原工资批次状态已确认，禁止人工增加与明细编辑，不出现拖拽把手。顶部原生菜单只两行：锁定工资、撤销确认 / 解锁、导出工资 Excel（共三项）。",
+    "path": "09_弹层选择器与菜单/035_批次24_状态_已确认菜单_v01.png",
+    "prompt": "生成附图既有蓝白白卡字体原生UI状态。小平面彩色图标、8/16/24间距，单张页面，不拼贴，不加业务或说明，设计样例保留。指定状态：原工资批次状态已确认，禁止人工增加与明细编辑，不出现拖拽把手。顶部原生菜单只两行：锁定工资、撤销确认 / 解锁、导出工资 Excel（共三项）。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-6411ffd3-c468-47b7-8106-d747c396329f.png"
+  },
+  {
+    "task_id": "035",
+    "state": "名单空",
+    "old": "06_台账与表格/035_工资_工资编辑_编辑_草稿_390dp_fs1p0_p01_v02.png",
+    "content": "工资批次草稿汇总0人/出勤0天/最终0.00元；保留筛选。列表空正文 当前工资名单为空，请重新生成或人工增加人员。保留人工增加人员和更多菜单入口。不造记录。",
+    "path": "09_弹层选择器与菜单/035_批次24_状态_名单空_v01.png",
+    "prompt": "生成附图既有蓝白白卡字体原生UI状态。小平面彩色图标、8/16/24间距，单张页面，不拼贴，不加业务或说明，设计样例保留。指定状态：工资批次草稿汇总0人/出勤0天/最终0.00元；保留筛选。列表空正文 当前工资名单为空，请重新生成或人工增加人员。保留人工增加人员和更多菜单入口。不造记录。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-544e09ab-b7d3-4b43-9dad-7a01c94f3ada.png"
+  },
+  {
+    "task_id": "043",
+    "state": "业务提醒偏好",
+    "old": "03_列表与记录/043_提醒_备忘提醒_查看_待办_390dp_fs1p0_p01_v02.png",
+    "content": "打开业务提醒偏好区域（页面可向下滚动），六行switch：每日考勤提醒、月度名单提醒、月度汇总提醒、工资造资提醒、保险变更提醒、证件到期提醒，各副标题 当天；发送测试通知。不要提前天数输入。",
+    "path": "09_弹层选择器与菜单/043_批次24_状态_业务提醒偏好_v01.png",
+    "prompt": "生成附图既有蓝白白卡字体原生UI状态。小平面彩色图标、8/16/24间距，单张页面，不拼贴，不加业务或说明，设计样例保留。指定状态：打开业务提醒偏好区域（页面可向下滚动），六行switch：每日考勤提醒、月度名单提醒、月度汇总提醒、工资造资提醒、保险变更提醒、证件到期提醒，各副标题 当天；发送测试通知。不要提前天数输入。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-ec64b409-6f6a-437a-9d6e-52fbff74c032.png"
+  },
+  {
+    "task_id": "047",
+    "state": "结束次数",
+    "old": "08_系统工具/047_提醒_自定义重复_设置_每周_390dp_fs1p0_p01_v02.png",
+    "content": "原自定义重复每1周/周一周三保持；只改变结束重复为 10次后结束，去掉永不结束。",
+    "path": "09_弹层选择器与菜单/047_批次24_状态_结束次数_v01.png",
+    "prompt": "生成附图既有蓝白白卡字体原生UI状态。小平面彩色图标、8/16/24间距，单张页面，不拼贴，不加业务或说明，设计样例保留。指定状态：原自定义重复每1周/周一周三保持；只改变结束重复为 10次后结束，去掉永不结束。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-20a3252b-ddf8-4919-b360-dbde763c88f3.png"
+  },
+  {
+    "task_id": "035",
+    "state": "撤销解锁原因修正",
+    "old": "C:/Users/Administrator/.codex/generated_images/01a11346-efec-7181-b2ac-1c948447b18b/exec-3f38cdd3-7bdf-48e2-85c9-9ba7e105683b.png",
+    "path": "09_弹层选择器与菜单/035_批次24_状态_撤销解锁原因_v02.png",
+    "prompt": "LOCAL EDIT only Dialog text. Title must exact one coherent title 撤销确认 / 解锁原因 (may wrap2lines). Input label exact 原因, placeholder empty. Remove current wrong separate 撤销确认 and 解锁原因 and 请输入解锁原因. Preserve ALL rest background/values/buttons. Single image.",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-239ca75b-1375-4c3b-8dbd-1ce264af5f43.png"
+  },
+  {
+    "task_id": "035",
+    "state": "人工人员选择修正",
+    "old": "C:/Users/Administrator/.codex/generated_images/01a11346-efec-7181-b2ac-1c948447b18b/exec-c08e7266-b00f-41ef-88e6-a766c75f14d4.png",
+    "path": "09_弹层选择器与菜单/035_批次24_状态_人工人员选择_v02.png",
+    "prompt": "LOCAL EDIT only clearly failed UI elements. Add exact secondary identity line below each name: 张明 → EMP-0001 · 正式工；赵平 → EMP-0002 · 正式工。Remove radio circles: immediate tap ListTile selection, no persistent selected radio. Preserve title and Cancel, no other new control. Single existing screenshot, all remaining blue-white style/data untouched.",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-f6022ae3-390c-4eba-95e0-5db5d55a2a0a.png"
+  },
+  {
+    "task_id": "035",
+    "state": "确认警告说明修正",
+    "old": "C:/Users/Administrator/.codex/generated_images/01a11346-efec-7181-b2ac-1c948447b18b/exec-7ec0dd09-154e-47fc-a157-c29d90557c6d.png",
+    "path": "09_弹层选择器与菜单/035_批次24_状态_确认警告说明_v02.png",
+    "prompt": "LOCAL EDIT only clearly failed UI elements. Dialog title exact 确认说明（存在警告）. Remove the orange explanatory banner entirely, since no such instruction paragraph in source. Field label 原因, empty field. Cancel/Confirm unchanged. No extra subtitle or icon. Single existing screenshot, all remaining blue-white style/data untouched.",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-ede702cb-5421-4f9e-8bf5-dcaf6b565b96.png"
+  },
+  {
+    "task_id": "035",
+    "state": "金额无效禁用修正",
+    "old": "C:/Users/Administrator/.codex/generated_images/01a11346-efec-7181-b2ac-1c948447b18b/exec-c7428921-0c94-42c9-823f-40eebc207338.png",
+    "path": "09_弹层选择器与菜单/035_批次24_状态_金额无效禁用_v02.png",
+    "prompt": "LOCAL EDIT only clearly failed UI elements. Title exact 周平 工资明细. Keep 日薪 abc and disabled Save. Change BOTH readonly 基础工资 value4000 and 最终工资3950 to exact 输入有效金额 (not money). Readonly attendance20, no editable border on readonly amounts. Preserve all other data and form labels. Single existing screenshot, all remaining blue-white style/data untouched.",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-d9e3c23e-a58b-4095-885c-51747f707c25.png"
+  },
+  {
+    "task_id": "043",
+    "state": "首次空修正",
+    "old": "C:/Users/Administrator/.codex/generated_images/01a11346-efec-7181-b2ac-1c948447b18b/exec-308348fe-04f1-4324-9744-c45f651346eb.png",
+    "path": "09_弹层选择器与菜单/043_批次24_状态_首次空_v02.png",
+    "prompt": "LOCAL EDIT only clearly failed UI elements. Replace large central 3D illustration with small flat blue outline note icon at height of ONE body text line. No shadows, rays, halo, background circle or tile. Preserve exact text/current controls/data. Move 新建第一个提醒 button into central empty block below message; retain plus 新建 FAB at bottom right as source is separate FAB (not labeled first reminder). Single existing screenshot, all remaining blue-white style/data untouched.",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-aa3a229a-9e1c-43a1-99b4-4e1da6c3e235.png"
+  },
+  {
+    "task_id": "051",
+    "state": "福利标准展开",
+    "old": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p01_v02.png",
+    "path": "09_弹层选择器与菜单/051_批次24_状态_福利标准展开_v01.png",
+    "prompt": "以附图蓝白白卡/既有字体/小平面彩色图标/8,16,24间距生成单张真实状态，设计样例保留，无拼贴无设备壳。仅把本月发放标准展开，按钮文字 收起，四行：正式工 洗衣膏1袋/人 · 线手套1副/人 · 1月、7月毛巾1条/人；临时工 洗衣膏1袋/人 · 单数月线手套1副/人 · 1月、7月毛巾1条/人；扫路车 洗衣膏1袋/车 · 不发手套、毛巾；公用 洗衣膏1袋 · 不发手套、毛巾。保持既有9月样例表数据，上下可滚动，不增加编辑按钮。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-5f095c16-acdc-40dc-9dd4-3c66bd4969a6.png"
+  },
+  {
+    "task_id": "051",
+    "state": "数量详情",
+    "old": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p01_v02.png",
+    "path": "09_弹层选择器与菜单/051_批次24_状态_数量详情_v01.png",
+    "prompt": "以附图蓝白白卡/既有字体/小平面彩色图标/8,16,24间距生成单张真实状态，设计样例保留，无拼贴无设备壳。福利背景BottomSheet 洗衣膏数量详情；标准人数：2人；标准数量：2袋；实际数量：2袋；原生说明 实际数量默认按标准人数生成；特殊调整可在后续数量调整入口中记录原因。；关闭按钮。无数量编辑入口。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-8a117ebd-0ead-43a6-9fd2-e361cd7a005a.png"
+  },
+  {
+    "task_id": "051",
+    "state": "补领修正",
+    "old": "C:/Users/Administrator/.codex/generated_images/01a11346-efec-7181-b2ac-1c948447b18b/exec-c5881a48-4d1c-41e0-bc7f-79b7aa72ef33.png",
+    "path": "09_弹层选择器与菜单/051_批次24_状态_补领_v02.png",
+    "prompt": "LOCAL EDIT only remove unsupported 0/50 character counter from remarks field and change Dialog title to exact 补领. Remove top-right X (Cancel already provided). Preserve ALL remaining fields, sample data, reason dropdown, actions, blue-white UI.",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-2609d05c-4a91-46fe-85e6-6b47a582f328.png"
+  }
+]

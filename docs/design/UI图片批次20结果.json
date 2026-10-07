@@ -1,0 +1,301 @@
+{
+  "batch": 20,
+  "spec_stage": 9,
+  "date": "2026-10-07",
+  "task_ids": [
+    "059",
+    "060",
+    "061"
+  ],
+  "calls": 9,
+  "calls_count_basis": "9次内置imagegen均返回：子代理059首轮3张+续屏删虚构指标1次，061首轮1张+文字修正1次+单一新增横向FAB修正1次；主代理060首轮1次+四位置修正1次。旧失败v01提示词无PNG不计调用/旧图。",
+  "returned_image_count": 9,
+  "current_reference_image_count": 5,
+  "retained_old_image_count": 4,
+  "outputs": [
+    {
+      "task_id": "059",
+      "path": "06_台账与表格/059_车辆_年度油耗汇总_查看_有数据_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "06_台账与表格/059_车辆_年度油耗汇总_查看_有数据_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "issues": [
+        "样例标识后擅加统计说明；部分指标图标略拟物，字体/尺度待视觉终验"
+      ],
+      "resolution_requirement_met": false,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "58bb601897ed955e0bf9d5259a6637db3751a9eb5cb54b3babc368e60a361ca6",
+      "prompt_pair_verified": true,
+      "batch": 20,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "visual_review": "字段/数值/操作关系内容初检；精确dp/sp和设备未验收",
+      "user_review": "待最终验收"
+    },
+    {
+      "task_id": "059",
+      "path": "06_台账与表格/059_车辆_年度油耗汇总_查看_有数据_390dp_fs1p0_p02_v02.png",
+      "prompt_path": "06_台账与表格/059_车辆_年度油耗汇总_查看_有数据_390dp_fs1p0_p02_v02.prompt.txt",
+      "screen": 2,
+      "version": 2,
+      "issues": [
+        "样例标识后擅加按月统计说明，白名单外文案"
+      ],
+      "resolution_requirement_met": false,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "47482d7427c6c47e02cccf8688347da619e73b15be8703e12ff84419947b1ba4",
+      "prompt_pair_verified": true,
+      "batch": 20,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "visual_review": "字段/数值/操作关系内容初检；精确dp/sp和设备未验收",
+      "user_review": "待最终验收"
+    },
+    {
+      "task_id": "059",
+      "path": "06_台账与表格/059_车辆_年度油耗汇总_查看_有数据_390dp_fs1p0_p03_v03.png",
+      "prompt_path": "06_台账与表格/059_车辆_年度油耗汇总_查看_有数据_390dp_fs1p0_p03_v03.prompt.txt",
+      "screen": 3,
+      "version": 3,
+      "issues": [],
+      "resolution_requirement_met": false,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "82cc144536c05aa5928fcc57474cd49b40fbf705d4eb5da31bf5dd940446378f",
+      "prompt_pair_verified": true,
+      "batch": 20,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "visual_review": "字段/数值/操作关系内容初检；精确dp/sp和设备未验收",
+      "user_review": "待最终验收"
+    },
+    {
+      "task_id": "060",
+      "path": "03_列表与记录/060_车辆_全车提醒中心_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "03_列表与记录/060_车辆_全车提醒中心_查看_有数据_390dp_fs1p0_p01_v03.prompt.txt",
+      "screen": 1,
+      "version": 3,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "e162b456e1a106daba72b5ef3d0125a1540dfe37dd230eb4018073e6095467b3",
+      "batch": 20,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "resolution_requirement_met": false,
+      "issues": [
+        "精确字阶、组件及图标尺度待视觉验收"
+      ],
+      "visual_review": "四等宽位置前三有值第四留白；三车辆及分类/计数/操作/规则入口已内容初检；非最终验收",
+      "user_review": "待最终验收",
+      "source_evidence": "lib/features/vehicles/presentation/vehicle_reminder_page.dart；005/031既有参考",
+      "status": "当前参考"
+    },
+    {
+      "task_id": "061",
+      "path": "03_列表与记录/061_车辆_车辆附件_查看_有数据_390dp_fs1p0_p01_v04.png",
+      "prompt_path": "03_列表与记录/061_车辆_车辆附件_查看_有数据_390dp_fs1p0_p01_v04.prompt.txt",
+      "screen": 1,
+      "version": 4,
+      "issues": [
+        "身份卡车图标偏大且带水滴装饰，精确组件尺度待视觉验收",
+        "添加按钮阴影偏重"
+      ],
+      "resolution_requirement_met": false,
+      "pixel_width": 852,
+      "pixel_height": 1846,
+      "sha256": "ef02ffa45f679322d8e49c3f9655b0fd7cf6c44076347ba8edbefd56c7506d4e",
+      "prompt_pair_verified": true,
+      "batch": 20,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "visual_review": "字段/数值/操作关系内容初检；精确dp/sp和设备未验收",
+      "user_review": "待最终验收"
+    }
+  ],
+  "retained_old_outputs": [
+    {
+      "task_id": "059",
+      "path": "06_台账与表格/059_车辆_年度油耗汇总_查看_有数据_390dp_fs1p0_p03_v02.png",
+      "prompt_path": "06_台账与表格/059_车辆_年度油耗汇总_查看_有数据_390dp_fs1p0_p03_v02.prompt.txt",
+      "screen": 3,
+      "version": 2,
+      "issues": [
+        "重画已滚出指标，且新增记录条数/应记录条数等非源码指标；样例后额外说明"
+      ],
+      "resolution_requirement_met": false,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "15fe13505c93434b3089c75a589904c5a5dc8001983e2ab3f8a606ec70fda5f9",
+      "prompt_pair_verified": true,
+      "batch": 20,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "visual_review": "字段/数值/操作关系内容初检；精确dp/sp和设备未验收",
+      "user_review": "待最终验收"
+    },
+    {
+      "task_id": "061",
+      "path": "03_列表与记录/061_车辆_车辆附件_查看_有数据_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "03_列表与记录/061_车辆_车辆附件_查看_有数据_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "issues": [
+        "设计样例标识漏；车辆名删示例；显示已删除附件标签删显示；卡车图标偏大"
+      ],
+      "resolution_requirement_met": false,
+      "pixel_width": 852,
+      "pixel_height": 1846,
+      "sha256": "e4c1919dbd039ad2b79eac746493075cf7cc5dfbe36d87ffa6327d19ac64fea9",
+      "prompt_pair_verified": true,
+      "batch": 20,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "visual_review": "字段/数值/操作关系内容初检；精确dp/sp和设备未验收",
+      "user_review": "待最终验收"
+    },
+    {
+      "task_id": "061",
+      "path": "03_列表与记录/061_车辆_车辆附件_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "03_列表与记录/061_车辆_车辆附件_查看_有数据_390dp_fs1p0_p01_v03.prompt.txt",
+      "screen": 1,
+      "version": 3,
+      "issues": [
+        "身份卡车图标及FAB偏大，组件尺寸待终验"
+      ],
+      "resolution_requirement_met": false,
+      "pixel_width": 852,
+      "pixel_height": 1846,
+      "sha256": "f6d2b8cad1d0ea2723de100b9383cd439f21d61a04007c723490805de8e48d04",
+      "prompt_pair_verified": true,
+      "batch": 20,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "visual_review": "字段/数值/操作关系内容初检；精确dp/sp和设备未验收",
+      "user_review": "待最终验收"
+    },
+    {
+      "task_id": "060",
+      "path": "03_列表与记录/060_车辆_全车提醒中心_查看_有数据_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "03_列表与记录/060_车辆_全车提醒中心_查看_有数据_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "b888c0ac5b011d21ce3f3df37274ae5f736303b5636ab7f390c1e0cc32463c39",
+      "batch": 20,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "resolution_requirement_met": false,
+      "issues": [
+        "统计卡实际三项均分，未按四位置留空；图标及精确组件尺度待视觉验收"
+      ],
+      "visual_review": "三车辆、五分类、今日1/即将2/逾期1、三操作及规则入口已内容初检；非最终验收",
+      "user_review": "待最终验收",
+      "source_evidence": "lib/features/vehicles/presentation/vehicle_reminder_page.dart；005/031既有参考",
+      "status": "旧稿三均分指标布局不合合同，保留对照"
+    }
+  ],
+  "source_evidence": [
+    {
+      "task_id": "059",
+      "path": "lib/features/vehicles/presentation/vehicle_fuel_summary_page.dart",
+      "lines": "60–108,312–367,404–680",
+      "contract": "年份前后/选择；8项统计；异常及缺失条件提示.take(8)；年度油耗费用统计横表：月份1—12行、车辆名称/编号成组列、固定左右月份/月度合计、中间横滑，L/元两子值，车辆总计和有效月份平均两行，数值跳具体车辆油耗月；末全部车辆年度油耗趋势"
+    },
+    {
+      "task_id": "059",
+      "path": "lib/features/vehicles/domain/fuel_year_summary_options.dart",
+      "contract": "完整度actual/expected*100；本月按运行当前月10；单车有效月份均值；已录入月份有记录月计数"
+    },
+    {
+      "task_id": "059",
+      "path": "lib/features/vehicles/application/fuel_year_summary_service.dart",
+      "contract": "当前年份expected车辆数×当前10月；月聚合油量/金额分别求和，右底平均为各月份有效车辆均值再对12个月平均；含正常/待维修/维修中车辆及有记录车；缺失提示只到当前月"
+    },
+    {
+      "task_id": "060",
+      "path": "lib/features/vehicles/presentation/vehicle_reminder_page.dart",
+      "contract": "全车vehicle实体且isPending，5分类；今日/即将7天含今日/逾期；点击指标时间筛选；按时间排序；每条车辆名称/分类/标题/到期/车牌、查看详情/忽略/去处理；规则入口"
+    },
+    {
+      "task_id": "061",
+      "path": "lib/features/vehicles/presentation/vehicle_attachments_page.dart",
+      "lines": "44–157,256–368,416–463",
+      "contract": "单车身份名称编号有效附件数；全部+5类别；显示已删除开关；有效卡点击预览/更多查看导出副本删除，删除卡不可预览且更多仅恢复；_view图片InteractiveViewer/nonimage系统打开导出；顶部+与FAB均实际源码有，本图依规范单一新增只留底FAB"
+    },
+    {
+      "task_id": "061",
+      "path": "lib/features/vehicles/domain/vehicle_attachment_options.dart",
+      "contract": "车辆照片/故障维修照片/保养资料/车辆证照/其他资料，图片extension判断"
+    },
+    {
+      "task_ids": [
+        "059",
+        "060",
+        "061"
+      ],
+      "path": "docs/design/全量UI重构设计规范.md",
+      "lines": "681,686–688",
+      "contract": "子页隐藏主导航；源码VehicleNavigationBar五导航与四项规范冲突按规范及005/006参考处理，未修改源码"
+    }
+  ],
+  "visual_references": [
+    "03_列表与记录/005_车辆_车辆档案列表_查看_有数据_390dp_fs1p0_p01_v01.png",
+    "04_详情/006_车辆_车辆详情档案_查看_有数据_390dp_fs1p0_p01_v01.png",
+    "07_分析与汇总/031_汇总_车辆_月度概览_390dp_fs1p0_p01_v01.png",
+    "03_列表与记录/029_人员_人员附件_查看_有数据_390dp_fs1p0_p01_v01.png",
+    "03_列表与记录/043_提醒_备忘提醒_查看_待办_390dp_fs1p0_p01_v02.png"
+  ],
+  "sample_data": {
+    "year": 2026,
+    "current_month": 10,
+    "vehicles": 3,
+    "records": 3,
+    "expected_records": 30,
+    "annual_liters": 300,
+    "annual_yuan": 2250,
+    "current_month_recorded_vehicles": 1,
+    "current_month_liters": 120,
+    "current_month_yuan": 900,
+    "recorded_months": "2/12",
+    "completeness_percent": 10,
+    "vehicle_CL001_total_liters": 220,
+    "vehicle_CL001_total_yuan": 1650,
+    "vehicle_CL001_average_liters": 110,
+    "vehicle_CL001_average_yuan": 825,
+    "all_month_average_liters": 17.5,
+    "all_month_average_yuan": 131.25,
+    "reminder_sample_today": "2026-10-06",
+    "attachment_valid_count": 2,
+    "attachment_deleted_count": 1
+  },
+  "pending": [
+    "全部原生PNG尺寸未达1560×3376，未放大替代，resolution_requirement_met=false",
+    "059p01/p02样例后擅加说明、部分图标略拟物，未作额外视觉循环；仅CL001横表可见，CL002/CL003横滑视窗未覆盖",
+    "059三纵向视窗覆盖8指标/缺失提示/12月份/两合计/趋势，表精确固定列/触达尚待实现验收；源趋势月份聚合0不等于单车已登记0",
+    "060分类筛选/指标点击/排序菜单/忽略及详情sheet/无提醒等其它态未覆盖；四位置修正已内容初检",
+    "061身份图标偏大有水滴装饰，添加按钮阴影偏重；预览/导出/删除恢复菜单、上传/失败/缺文件另态未覆盖",
+    "三ID各代表主态，360dp/fontScale1.3及2.0、精确dp/sp、Flutter设备验证和用户最终视觉验收待办"
+  ],
+  "unreturned_requests": []
+}

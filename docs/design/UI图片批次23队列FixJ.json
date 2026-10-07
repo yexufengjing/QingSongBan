@@ -1,0 +1,53 @@
+[
+  {
+    "task_id": "075",
+    "name": "物资信息",
+    "source": "lib/features/inventory/presentation/inventory_materials_page.dart",
+    "old": "03_列表与记录/075_库存_物资信息_状态_读取失败_390dp_fs1p0_p01_v01.png",
+    "screen": 1,
+    "path": "03_列表与记录/075_库存_物资信息_状态_读取失败_390dp_fs1p0_p01_v02.png",
+    "issues": [
+      "真实源码状态补图：读取失败"
+    ],
+    "prompt": "只局部编辑附图正文空态/失败图标，保持所有文字、统计、搜索、按钮与蓝白样式。把巨大插画彻底删除，替换为24dp的小扁平蓝色线性箱子图标（读取失败用24dp小三角警示）。不要圆形大底、光晕、阴影、立体插画。正文的标题和说明上方仅一个小图标，整体干净紧凑，布局其余不变。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-13d93dc6-a581-48e6-8d8e-d1a666ecfa8e.png"
+  },
+  {
+    "task_id": "075",
+    "name": "物资信息",
+    "source": "lib/features/inventory/presentation/inventory_materials_page.dart",
+    "old": "03_列表与记录/075_库存_物资信息_状态_首次空_390dp_fs1p0_p01_v01.png",
+    "screen": 1,
+    "path": "03_列表与记录/075_库存_物资信息_状态_首次空_390dp_fs1p0_p01_v02.png",
+    "issues": [
+      "真实源码状态补图：首次空"
+    ],
+    "prompt": "只局部编辑附图正文空态/失败图标，保持所有文字、统计、搜索、按钮与蓝白样式。把巨大插画彻底删除，替换为24dp的小扁平蓝色线性箱子图标（读取失败用24dp小三角警示）。不要圆形大底、光晕、阴影、立体插画。正文的标题和说明上方仅一个小图标，整体干净紧凑，布局其余不变。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-adf51b04-69e0-428d-bbc0-b25af9572fd7.png"
+  },
+  {
+    "task_id": "075",
+    "name": "物资信息",
+    "source": "lib/features/inventory/presentation/inventory_materials_page.dart",
+    "old": "03_列表与记录/075_库存_物资信息_状态_筛选空_390dp_fs1p0_p01_v01.png",
+    "screen": 1,
+    "path": "03_列表与记录/075_库存_物资信息_状态_筛选空_390dp_fs1p0_p01_v02.png",
+    "issues": [
+      "真实源码状态补图：筛选空"
+    ],
+    "prompt": "只局部编辑附图正文空态/失败图标，保持所有文字、统计、搜索、按钮与蓝白样式。把巨大插画彻底删除，替换为24dp的小扁平蓝色线性箱子图标（读取失败用24dp小三角警示）。不要圆形大底、光晕、阴影、立体插画。正文的标题和说明上方仅一个小图标，整体干净紧凑，布局其余不变。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-0019c3c6-6ec2-4230-a096-1af529f8a731.png"
+  },
+  {
+    "task_id": "096",
+    "source": "lib/features/purchase/presentation/purchase_history_page.dart",
+    "old": "03_列表与记录/096_采购_采购历史_按记录_有数据_390dp_fs1p0_p01_v02.png",
+    "path": "03_列表与记录/096_采购_采购历史_按记录_有数据_390dp_fs1p0_p01_v03.png",
+    "screen": 1,
+    "issues": [
+      "统一实际筛选组件和指标容器"
+    ],
+    "prompt": "局部编辑第一张按记录采购历史。第二张仅作为筛选和指标组件的精准结构参考：第一页从搜索到指标区，改为与第二张完全相同的白色外层卡片、浅灰搜索内底、两条分段选择条、浅灰下拉按钮；选中按记录、本年度蓝底白字。指标同第二张一整块白卡、两个指标图标与标题同行、数值下方、无大圆形图标底。第一图下面2026-09分组、劳保手套记录与6个数据字段完全保留（100双，李明，7天，9月1/8），不能替换成按物资列表。蓝白风格原样。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-a8575b1d-86da-4b47-995f-e8e2c3ceeee1.png"
+  }
+]

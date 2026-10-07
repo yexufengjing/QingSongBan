@@ -1,0 +1,277 @@
+{
+  "batch": 17,
+  "spec_stage": 14,
+  "date": "2026-10-06",
+  "task_ids": [
+    "099",
+    "100",
+    "101",
+    "102",
+    "103",
+    "111",
+    "112"
+  ],
+  "calls": 11,
+  "calls_count_basis": "7张初稿及100/101/102/103各一次必要局部编辑；全部返回",
+  "returned_image_count": 11,
+  "current_reference_image_count": 7,
+  "retained_old_image_count": 4,
+  "outputs": [
+    {
+      "task_id": "099",
+      "path": "09_弹层选择器与菜单/099_附属_高级筛选_查看_已选_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/099_附属_高级筛选_查看_已选_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "0343e60d73d1291893e4f53a479e3bc5f22079a8b7fc9cbfca1ae9b6d394b3ba",
+      "batch": 17,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1.0,
+      "resolution_requirement_met": false,
+      "issues": [
+        "Sheet标题偏大，精确字阶与间距未验收"
+      ],
+      "visual_review": "内容/参考视觉初检；组件尺度及设备未验收",
+      "user_review": "待最终验收",
+      "source_evidence": "lib/features/personnel/presentation/personnel_list_page.dart:402",
+      "content_contract": "人员名单背景沿用011，上方可见返回标题“人员名单”和“设计样例”。底部白色弹层、标题“筛选人员”。只有考勤组下拉（蓝色小组图标，值“示例一组”）、用工类型下拉（紫色身份图标，值“临时工”）、可移除Chip“入职月份：2026-10”、未选中的FilterChip“显示已删除档案”（灰色回收站小图标）、全宽蓝按钮“完成筛选”。不要重置/取消/应用/日期范围/年龄/性别等其它内容。背景列表沿用李华EMP-00002在岗。"
+    },
+    {
+      "task_id": "100",
+      "path": "09_弹层选择器与菜单/100_附属_日期选择_查看_20261006_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "09_弹层选择器与菜单/100_附属_日期选择_查看_20261006_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "e90095ab1c54753e3ad2d33d3747c331273ce8cca270e1cf0772dbe3817bfe81",
+      "batch": 17,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1.0,
+      "resolution_requirement_met": false,
+      "issues": [
+        "完整月份/时间独立变体待补"
+      ],
+      "visual_review": "内容/参考视觉初检；组件尺度及设备未验收",
+      "user_review": "待最终验收",
+      "source_evidence": "lib/features/reminders/presentation/reminder_schedule_page.dart:175",
+      "content_contract": "提醒日期时间页背景顶栏“日期与时间”，辅助“设计样例”，可见日期2026-10-06和时间09:30；底部仅一个白色日期滚轮Sheet高340dp，细灰拖拽条，标题“选择日期”，左“取消”右“确定”。三列年/月/日滚轮，选中行2026年 / 10月 / 6日，附近年月日淡灰。源码CupertinoPicker轮式仅是滚轮控件，整页依然Android，不加iOS导航条/键盘/独立日历或时钟。选中日期行正确同层。"
+    },
+    {
+      "task_id": "101",
+      "path": "09_弹层选择器与菜单/101_附属_物资选择_查看_有数据_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "09_弹层选择器与菜单/101_附属_物资选择_查看_有数据_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "571329eb9c520f79a6c2e919f1d36a8d95417a565c099dd2f9eb787cae32b96b",
+      "batch": 17,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1.0,
+      "resolution_requirement_met": false,
+      "issues": [
+        "背景需求原因被画为普通输入，源码为Chip；人员/车辆选择待补"
+      ],
+      "visual_review": "内容/参考视觉初检；组件尺度及设备未验收",
+      "user_review": "待最终验收",
+      "source_evidence": "lib/features/purchase/presentation/purchase_create_page.dart:476",
+      "content_contract": "新建采购页背景返回/标题“新建采购”/“设计样例”，底部打开72%高白色Sheet，细拖拽条，标题“选择库存物资”。只读3条可选择行：劳保手套／“通用型 · 库存 20 双”；扫帚／“长柄 · 库存 2 把”；工作服／“M码 · 库存 0 件”。每行右侧蓝色加号圆线图标；行高72dp以上细分隔，不用巨型空卡片。不加搜索、数量输入、复选框、批量确认、取消、底部保存或分类筛选——源码点击单行立即返回物资。行前无大图标，必要彩色小图标只保留背景采购模块。"
+    },
+    {
+      "task_id": "102",
+      "path": "09_弹层选择器与菜单/102_附属_状态选择_查看_未选择_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "09_弹层选择器与菜单/102_附属_状态选择_查看_未选择_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "6b998333c14d9c40604b9208ea5bc88dc2eb7417c642110e45576b708abe49a0",
+      "batch": 17,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1.0,
+      "resolution_requirement_met": false,
+      "issues": [
+        "当前源码为PopupMenu，本图Sheet容器迁移未实现",
+        "模态遮罩丢失，扫帚写实大图标，未满足前阶段风格"
+      ],
+      "visual_review": "内容/参考视觉初检；组件尺度及设备未验收",
+      "user_review": "待最终验收",
+      "source_evidence": "lib/features/inventory/presentation/inventory_replenishments_page.dart:238",
+      "content_contract": "待采购 / 待补充页背景保留扫帚2把、建议3把、计划3把设计样例；只生成原状态菜单的底部弹层组件稿，标题“更新补充状态”，白色Sheet拖拽条。严格五行选项：待处理／已申报／已采购 / 已领取／已入库 / 已领取／取消。对应橙时钟、蓝文档、蓝购物车、绿入库、灰取消的小线图标，24dp。每行48dp以上，点击一行即更新原状态，不加确定或保存按钮，不把“取消”误作删除业务，不加已完成/审批/付款。此图仅将原PopupMenu视觉容器按099—103规范呈现为Sheet，不改变五状态/选择立即更新逻辑。"
+    },
+    {
+      "task_id": "103",
+      "path": "09_弹层选择器与菜单/103_附属_危险确认_查看_移出考勤组_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "09_弹层选择器与菜单/103_附属_危险确认_查看_移出考勤组_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "50684bb64b1bb475c1da3a231f45acb977adb5dbae0e2a64863291870bfb1020",
+      "batch": 17,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1.0,
+      "resolution_requirement_met": false,
+      "issues": [
+        "背景新增未定义组编码GRP-001及演示说明，待删除",
+        "其它删除/撤销/停用/覆盖恢复变体待补"
+      ],
+      "visual_review": "内容/参考视觉初检；组件尺度及设备未验收",
+      "user_review": "待最终验收",
+      "source_evidence": "lib/features/attendance/presentation/attendance_group_detail_page.dart:145",
+      "content_contract": "考勤组详情弱化背景，标题“示例一组”，辅助“设计样例”，列表可见李华。中央白色AlertDialog：标题“移出考勤组？”，正文逐字“移出后，李华 将暂时没有默认考勤组，之后可以重新指定。”，下方左蓝文字按钮“取消”，右深红实心按钮“移出”。两按钮完整，点击48dp，周边清晰留白。仅此危险确认，不加倒计时/输入姓名/复选框/不可恢复警告/删除人员。"
+    },
+    {
+      "task_id": "111",
+      "path": "09_弹层选择器与菜单/111_附属_附件预览_查看_文档_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/111_附属_附件预览_查看_文档_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "bcd97f6a694970c1e42daa04c7894353318958be84796aa30110e9cb5b1cfb4b",
+      "batch": 17,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1.0,
+      "resolution_requirement_met": false,
+      "issues": [
+        "仅文档预览；图片缩放/删除/恢复变体待补"
+      ],
+      "visual_review": "内容/参考视觉初检；组件尺度及设备未验收",
+      "user_review": "待最终验收",
+      "source_evidence": "lib/features/vehicles/presentation/vehicle_attachments_page.dart:231",
+      "content_contract": "车辆附件页弱化背景标题“车辆附件”，辅助“设计样例”，文件为“行驶证示例.pdf”，类别“行驶证”，大小“120.0 KB”。中央AlertDialog：标题“行驶证示例.pdf”；正文按行“行驶证”“120.0 KB”，空行后“该文件类型将通过导出副本或系统文件管理器查看。”；按钮严格三个“关闭”（文字次按钮）、“系统打开”（蓝主按钮）、“导出副本”（蓝描边次按钮），必须完整，可换行但不缩字。不创造PDF文件内容、证件人像、证号、车牌或真实图片；不加下载分享删除。"
+    },
+    {
+      "task_id": "112",
+      "path": "09_弹层选择器与菜单/112_附属_页面菜单_查看_物资操作_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/112_附属_页面菜单_查看_物资操作_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "afef197c9f5aed3d85219605c83e0111b54c8c9031cb3846980f1912b2af6f1b",
+      "batch": 17,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1.0,
+      "resolution_requirement_met": false,
+      "issues": [
+        "背景常用物资被画成下拉框，源码为FilterChip，待修"
+      ],
+      "visual_review": "内容/参考视觉初检；组件尺度及设备未验收",
+      "user_review": "待最终验收",
+      "source_evidence": "lib/features/inventory/presentation/inventory_materials_page.dart:308",
+      "content_contract": "物资信息页，“设计样例”，仅可见劳保手套LB-001通用型双、一号仓、当前库存20双，图标沿用前期彩色扁平小图标；在该行右侧更多省略号处打开标准白色PopupMenu。菜单唯一一行文字“编辑物资”，不加删除、停用、启用、复制、导出或菜单标题。菜单行48dp，蓝小编辑线图标可省略，背景弱化。搜索“搜索名称、型号或编码”未填，常用物资筛选未选中。"
+    }
+  ],
+  "retained_old_outputs": [
+    {
+      "task_id": "100",
+      "path": "09_弹层选择器与菜单/100_附属_日期选择_查看_20261006_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/100_附属_日期选择_查看_20261006_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "c6a81e48e3231a4a08f1194500c90352a64ad38edbf2fd577f3d5f7e33fb8ecf",
+      "batch": 17,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1.0,
+      "resolution_requirement_met": false,
+      "issues": [
+        "已被新版取代，仅作对照"
+      ],
+      "visual_review": "内容/参考视觉初检；组件尺度及设备未验收",
+      "user_review": "待最终验收"
+    },
+    {
+      "task_id": "101",
+      "path": "09_弹层选择器与菜单/101_附属_物资选择_查看_有数据_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/101_附属_物资选择_查看_有数据_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "164f5364ba7d5c5f2f69560618b215e40c69de6662d97e073902f2dce64f72fb",
+      "batch": 17,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1.0,
+      "resolution_requirement_met": false,
+      "issues": [
+        "已被新版取代，仅作对照"
+      ],
+      "visual_review": "内容/参考视觉初检；组件尺度及设备未验收",
+      "user_review": "待最终验收"
+    },
+    {
+      "task_id": "102",
+      "path": "09_弹层选择器与菜单/102_附属_状态选择_查看_未选择_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/102_附属_状态选择_查看_未选择_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "2c594ddbe58f4cc43c152c610770ef9f57079dd22344268c9dede415a5a69919",
+      "batch": 17,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1.0,
+      "resolution_requirement_met": false,
+      "issues": [
+        "已被新版取代，仅作对照"
+      ],
+      "visual_review": "内容/参考视觉初检；组件尺度及设备未验收",
+      "user_review": "待最终验收"
+    },
+    {
+      "task_id": "103",
+      "path": "09_弹层选择器与菜单/103_附属_危险确认_查看_移出考勤组_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/103_附属_危险确认_查看_移出考勤组_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "bf94d762a9ba1cc718d6ffc03b6cc79ec418155d9d4ba5359656cee1c1963c57",
+      "batch": 17,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1.0,
+      "resolution_requirement_met": false,
+      "issues": [
+        "已被新版取代，仅作对照"
+      ],
+      "visual_review": "内容/参考视觉初检；组件尺度及设备未验收",
+      "user_review": "待最终验收"
+    }
+  ],
+  "status": "代表态归档；具体偏差、分辨率及完整变体未通过",
+  "pending": [
+    "原生尺寸未达1560×3376，不缩放替代",
+    "101原因组件、102遮罩/图标、103未定义编码/说明、112FilterChip待修",
+    "100月份/时间、101人员/车辆、103其它危险动作、111其它附件态、112其它菜单待补",
+    "四种宽度/字体组合及最终验收未完成"
+  ]
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "task_id": "094",
+    "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+    "old": "04_详情/094_采购_采购详情_查看_待领取_390dp_fs1p0_p01_v04.png",
+    "screen": 1,
+    "path": "04_详情/094_采购_采购详情_查看_待领取_状态_入厂通知填写_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "原生流程状态补图"
+    ],
+    "prompt": "以附图为唯一既有蓝白轻渐变UI参考，输出单张390dp/fontScale1真实原生弹层流程画面。业务背景模糊变暗不改样例数据，弹层简洁可读小彩色扁平图标。灰色背景白色Bottom Sheet：收到物资入厂通知；通知日期2026-10-04（可点）；领取地点（选填）物资仓库；设为待领取。无数量、进度或库存更新。只显示指定一个真实弹层，不拼贴、不加设备壳和解释文字。背景采购记录处于采购中，状态标签改为采购中，入厂通知未保存，不能仍显示待领取。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-ae9bbe76-cda3-4027-985a-9ff7b5de126f.png"
+  },
+  {
+    "task_id": "088",
+    "source": "lib/features/inventory/presentation/inventory_replenishments_page.dart",
+    "old": "03_列表与记录/088_库存_待采购待补充_查看_有数据_390dp_fs1p0_p01_v04.png",
+    "screen": 1,
+    "path": "03_列表与记录/088_库存_待采购待补充_查看_有数据_状态_新增清单项_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "原生流程状态补图"
+    ],
+    "prompt": "以附图为唯一既有蓝白轻渐变UI参考，输出单张390dp/fontScale1真实原生弹层流程画面。业务背景模糊变暗不改样例数据，弹层简洁可读小彩色扁平图标。灰色背景白色居中圆角对话框，新增待补充事项，字段名称（空）、单位（件）、计划补充数量（1）、补充方式（总库领取，真实下拉）、需求原因（可选）（空）；取消／保存。不增加勾选物资范围。只显示指定一个真实弹层，不拼贴、不加设备壳和解释文字。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-24d24863-c4c0-46d4-bc87-c6fa32c86faf.png"
+  },
+  {
+    "task_id": "093",
+    "source": "lib/features/purchase/presentation/purchase_tracking_page.dart",
+    "old": "03_列表与记录/093_采购_全部待处理_查看_有数据_状态_读取失败_390dp_fs1p0_p01_v01.png",
+    "screen": 1,
+    "path": "03_列表与记录/093_采购_全部待处理_查看_有数据_状态_读取失败_390dp_fs1p0_p01_v02.png",
+    "issues": [
+      "实际状态补图"
+    ],
+    "prompt": "Edit this single existing Chinese mobile UI locally. Preserve its blue-white light gradient style. Replace the erroneous title 小图标加载失败、 with exact 加载失败. Small 24dp outline warning icon, no large hero. Exact message 请检查本地数据后重试。 and blue-outline 重新加载 button. Keep all filters. No mockup shell or collage. Do not insert the English instructions as UI text.",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-4196e091-f733-46e4-8434-629d20b62ab6.png"
+  },
+  {
+    "task_id": "097",
+    "source": "lib/features/purchase/presentation/purchase_history_page.dart",
+    "old": "03_列表与记录/097_采购_采购历史_按物资_有数据_390dp_fs1p0_p01_v03.png",
+    "path": "03_列表与记录/097_采购_采购历史_按物资_有数据_390dp_fs1p0_p01_v04.png",
+    "screen": 1,
+    "issues": [
+      "筛选统计容器与096统一"
+    ],
+    "prompt": "Edit only the top filter/metrics area of FIRST screenshot (purchase history BY MATERIAL). Match the exact shapes of SECOND screenshot (BY RECORD): one white panel contains search, mode segments, period segments, 3 dropdowns, 2 metrics; same gray search background, rounded-rectangle period buttons, blue/white selected. Switch only mode selection to 按物资 on right. Keep BY MATERIAL list entirely: 按物资列表, 劳保手套, 通用型·双, current stock20双, purchases3次, recent application2026-09-01, recent cycle7天. Do not change to a record list. Icons same small flat colors and metric icon/title inline. Preserve blue-white gradient.",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-15446407-1f6d-4071-8e36-0756c1772969.png"
+  }
+]

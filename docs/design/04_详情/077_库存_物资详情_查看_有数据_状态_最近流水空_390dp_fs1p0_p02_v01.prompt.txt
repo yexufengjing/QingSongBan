@@ -1,0 +1,1 @@
+Only change 最近库存流水 section to no transaction history. Preserve identity and 账面库存20双, 全部流水 link, all actions. Four metrics: 本月入库数量0双, 本月出库数量0双, 最近入库日期暂无记录, 最近出库日期暂无记录. Replace record list with tiny20x20px flat blue outline box, title 暂无流水, message 物资库存发生变化后会显示在这里。. No fabricated records or dates. Existing20 stock can be opening quantity. No shadows.

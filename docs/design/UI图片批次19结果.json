@@ -1,0 +1,44 @@
+{
+  "batch": 19,
+  "spec_stage": 7,
+  "date": "2026-10-07",
+  "task_ids": [
+    "045"
+  ],
+  "calls": 1,
+  "calls_count_basis": "本批1次调用1次返回，历史批10失败尝试不计入本批",
+  "returned_image_count": 1,
+  "current_reference_image_count": 1,
+  "retained_old_image_count": 0,
+  "outputs": [
+    {
+      "task_id": "045",
+      "path": "08_系统工具/045_提醒_自定义时间_设置_已选_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "08_系统工具/045_提醒_自定义时间_设置_已选_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "717b97d6ebe2a9c98b683dbe4232eb71e8c397bd4d0036cecf54808a49a76e77",
+      "batch": 19,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "resolution_requirement_met": false,
+      "issues": [
+        "响铃说明末尾多句号；精确字阶、间距及组件尺度未验收"
+      ],
+      "visual_review": "内容初检：月历日期与星期对应正确；取消、完成、时间、重复、提醒、响铃均保留；最终验收未完成",
+      "user_review": "待最终验收",
+      "source_evidence": "lib/features/reminders/presentation/reminder_schedule_page.dart:38-154；参考046/047设置页"
+    }
+  ],
+  "retained_old_outputs": [],
+  "status": "045主态补图归档；非最终验收",
+  "pending": [
+    "原生尺寸853×1844，未达到1560×3376，不缩放替代",
+    "日期与时间选择器、禁用响铃及其它适用状态待补",
+    "360dp及fontScale1.3/2.0、精确dp/sp和最终验收待完成"
+  ]
+}

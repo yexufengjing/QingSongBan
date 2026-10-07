@@ -1,0 +1,79 @@
+{
+  "batch": 31,
+  "date": "2026-10-07",
+  "calls": 5,
+  "returned_png": 5,
+  "current_outputs": [
+    {
+      "task_id": "054",
+      "path": "02_工作台/054_车辆_车辆管理_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "02_工作台/054_车辆_车辆管理_查看_有数据_390dp_fs1p0_p01_v03.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "f7fbe936b367c812b8a1f9280b9e936159f382c9df3ca8d1114437d0ea769138",
+      "batch": 31,
+      "tool": "built-in imagegen",
+      "state": "车辆管理_样例一致性修正",
+      "visual_review": "逐图内容初检；运行时触达与设备验收延期",
+      "user_review": "未逐图用户验收",
+      "issues": []
+    },
+    {
+      "task_id": "054",
+      "path": "02_工作台/054_车辆管理_其余车辆续屏_内容状态_v01.png",
+      "prompt_path": "02_工作台/054_车辆管理_其余车辆续屏_内容状态_v01.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "3e5d653ad39cca0f7333e424a376a59cd53b981ba15202c8a49a21083260babe",
+      "batch": 31,
+      "tool": "built-in imagegen",
+      "state": "车辆管理_其余车辆续屏",
+      "visual_review": "逐图内容初检；运行时触达与设备验收延期",
+      "user_review": "未逐图用户验收",
+      "issues": []
+    },
+    {
+      "task_id": "069",
+      "path": "05_表单与编辑/069_器械维修_表单附件续屏_内容状态_v01.png",
+      "prompt_path": "05_表单与编辑/069_器械维修_表单附件续屏_内容状态_v01.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "bfe546404afd069a00b24ff1d5b49a49fcb1c1194e0eadfb28b7d97014c2cf07",
+      "batch": 31,
+      "tool": "built-in imagegen",
+      "state": "器械维修_表单附件续屏",
+      "visual_review": "逐图内容初检；运行时触达与设备验收延期",
+      "user_review": "未逐图用户验收",
+      "issues": []
+    },
+    {
+      "task_id": "071",
+      "path": "10_状态反馈/071_器械维修_比价筛选无记录_内容状态_v01.png",
+      "prompt_path": "10_状态反馈/071_器械维修_比价筛选无记录_内容状态_v01.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "77399e8f058d2e1be8cb769afd56bdf86c19a81d611b6fe06494b49fda9b716e",
+      "batch": 31,
+      "tool": "built-in imagegen",
+      "state": "器械维修_比价筛选无记录",
+      "visual_review": "逐图内容初检；运行时触达与设备验收延期",
+      "user_review": "未逐图用户验收",
+      "issues": []
+    },
+    {
+      "task_id": "073",
+      "path": "10_状态反馈/073_器械维修_附件为空_内容状态_v01.png",
+      "prompt_path": "10_状态反馈/073_器械维修_附件为空_内容状态_v01.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "a80ac4eab78aa5122b9fb9411d6d3c99e1385b2aa8e8d433d1ee4adf1d0fb089",
+      "batch": 31,
+      "tool": "built-in imagegen",
+      "state": "器械维修_附件为空",
+      "visual_review": "逐图内容初检；运行时触达与设备验收延期",
+      "user_review": "未逐图用户验收",
+      "issues": []
+    }
+  ],
+  "old_outputs": []
+}

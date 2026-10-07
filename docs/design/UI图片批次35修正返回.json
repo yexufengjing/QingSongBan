@@ -1,0 +1,433 @@
+{
+  "items": [
+    {
+      "handoff_id": 2,
+      "batch": 35,
+      "task_id": "051",
+      "state": "已领来源",
+      "mode": "local_edit",
+      "input_path": "09_弹层选择器与菜单/051_批次35_状态_已领来源_v02.png",
+      "referenced_image_paths": [
+        "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-c95276d0-c3d6-401d-af8a-083899ec251e.png"
+      ],
+      "input_sha256": "5445e4c3b26efd57b3c5915f05306902cd390e05cdaacac1a259a050084316be",
+      "input_dims": [
+        853,
+        1844
+      ],
+      "input_inspection": "已在批次24逐图view_image初检；047参考本次重新view_image；执行调用前必须再次view_image目标",
+      "supersedes_path": "09_弹层选择器与菜单/051_批次35_状态_已领来源_v02.png",
+      "output_path": "09_弹层选择器与菜单/051_批次35_状态_已领来源_v03.png",
+      "version": 3,
+      "prompt_path": "09_弹层选择器与菜单/051_批次35_状态_已领来源_v03.prompt.txt",
+      "prompt": "对附图进行单次局部内容修正。蓝白白卡、字体、布局和8/16/24间距全部沿用。只改以下明确错误，不增字段或装饰。\n仅替换Sheet底部左侧按钮文字为「改为未领取」，完整五字。右侧「补领」及全部已领取状态、其它字段保持。",
+      "source": "lib/features/item_distribution/presentation/item_distribution_page.dart",
+      "source_sha256": "d1928aac0d164f200c565773d64f89a32adad3c16582352cffedae37e5caa409",
+      "status": "prepared_not_called_usage_limit",
+      "acceptance": [
+        "无额外字段/说明/操作",
+        "真实字段和条件不缺失",
+        "保留输入图字体布局间距和小平面图标",
+        "PNG解码、提示词、SHA",
+        "逐图内容初检；不等于运行时或设备验收"
+      ],
+      "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-dd9ac068-e991-4c14-af53-753fcd350351.png"
+    },
+    {
+      "handoff_id": 7,
+      "batch": 35,
+      "task_id": "052",
+      "state": "新增办公领用",
+      "mode": "local_edit",
+      "input_path": "09_弹层选择器与菜单/052_批次35_状态_新增办公领用_v02.png",
+      "referenced_image_paths": [
+        "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-0f8a2032-0959-4bc9-aa4d-84b533ff7505.png"
+      ],
+      "input_sha256": "0f3aeed97ecb03b904cc923c78a20dddca13555032becb273d9746ca4b660088",
+      "input_dims": [
+        853,
+        1844
+      ],
+      "input_inspection": "已在批次24逐图view_image初检；047参考本次重新view_image；执行调用前必须再次view_image目标",
+      "supersedes_path": "09_弹层选择器与菜单/052_批次35_状态_新增办公领用_v02.png",
+      "output_path": "09_弹层选择器与菜单/052_批次35_状态_新增办公领用_v03.png",
+      "version": 3,
+      "prompt_path": "09_弹层选择器与菜单/052_批次35_状态_新增办公领用_v03.prompt.txt",
+      "prompt": "对附图进行单次局部内容修正。蓝白白卡、字体、布局和8/16/24间距全部沿用。只改以下明确错误，不增字段或装饰。\n仅恢复五个现有自由文本框的值：领取人/领取对象=张明，物品名称=签字笔，数量=1，单位=件，备注为空。不得出现箭头、步进器。其它原样。",
+      "source": "lib/features/item_distribution/presentation/item_distribution_page.dart",
+      "source_sha256": "d1928aac0d164f200c565773d64f89a32adad3c16582352cffedae37e5caa409",
+      "status": "prepared_not_called_usage_limit",
+      "acceptance": [
+        "无额外字段/说明/操作",
+        "真实字段和条件不缺失",
+        "保留输入图字体布局间距和小平面图标",
+        "PNG解码、提示词、SHA",
+        "逐图内容初检；不等于运行时或设备验收"
+      ],
+      "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-5b113e5c-e0fb-42cc-9b99-9a1bd5e63290.png"
+    },
+    {
+      "handoff_id": 8,
+      "batch": 35,
+      "task_id": "053",
+      "state": "新增工具领用",
+      "mode": "local_edit",
+      "input_path": "09_弹层选择器与菜单/053_批次35_状态_新增工具领用_v02.png",
+      "referenced_image_paths": [
+        "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-9167307b-536e-47f3-b18a-9183a4a52317.png"
+      ],
+      "input_sha256": "adf0579d78130f6853e40da021c8976252295e3f34e2ecc9dc2b6fc916a86131",
+      "input_dims": [
+        853,
+        1844
+      ],
+      "input_inspection": "已在批次24逐图view_image初检；047参考本次重新view_image；执行调用前必须再次view_image目标",
+      "supersedes_path": "09_弹层选择器与菜单/053_批次35_状态_新增工具领用_v02.png",
+      "output_path": "09_弹层选择器与菜单/053_批次35_状态_新增工具领用_v03.png",
+      "version": 3,
+      "prompt_path": "09_弹层选择器与菜单/053_批次35_状态_新增工具领用_v03.prompt.txt",
+      "prompt": "对附图进行单次局部内容修正。蓝白白卡、字体、布局和8/16/24间距全部沿用。只改以下明确错误，不增字段或装饰。\n仅恢复五个现有自由文本框的值：领取人/领取对象=张明，物品名称=扳手，数量=1，单位=件，备注为空。不得出现箭头、步进器。其它原样。",
+      "source": "lib/features/item_distribution/presentation/item_distribution_page.dart",
+      "source_sha256": "d1928aac0d164f200c565773d64f89a32adad3c16582352cffedae37e5caa409",
+      "status": "prepared_not_called_usage_limit",
+      "acceptance": [
+        "无额外字段/说明/操作",
+        "真实字段和条件不缺失",
+        "保留输入图字体布局间距和小平面图标",
+        "PNG解码、提示词、SHA",
+        "逐图内容初检；不等于运行时或设备验收"
+      ],
+      "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-fa20d375-df9b-4918-9586-53196f56fc0c.png"
+    },
+    {
+      "handoff_id": 12,
+      "batch": 35,
+      "task_id": "053",
+      "state": "删除工具领用",
+      "mode": "local_edit",
+      "input_path": "09_弹层选择器与菜单/053_批次35_状态_删除工具领用_v02.png",
+      "referenced_image_paths": [
+        "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-8a5ac8cf-f254-49c9-a5b7-fd1bf3dea154.png"
+      ],
+      "input_sha256": "7d2303e5bef7e7cb19f1a68a784e5a293cc23e5a9a1425eaabf048e79368466c",
+      "input_dims": [
+        853,
+        1844
+      ],
+      "input_inspection": "已在批次24逐图view_image初检；047参考本次重新view_image；执行调用前必须再次view_image目标",
+      "supersedes_path": "09_弹层选择器与菜单/053_批次35_状态_删除工具领用_v02.png",
+      "output_path": "09_弹层选择器与菜单/053_批次35_状态_删除工具领用_v03.png",
+      "version": 3,
+      "prompt_path": "09_弹层选择器与菜单/053_批次35_状态_删除工具领用_v03.prompt.txt",
+      "prompt": "对附图进行单次局部内容修正。蓝白白卡、字体、布局和8/16/24间距全部沿用。只改以下明确错误，不增字段或装饰。\n仅纠正两处真实业务用词：弹窗标题「删除工具领用记录？」；背景右下按钮「新增工具领用」。陈林、活动扳手1把、登记2026-09-16 08:45、全部影响说明和取消/删除不改。",
+      "source": "lib/features/item_distribution/presentation/item_distribution_page.dart",
+      "source_sha256": "d1928aac0d164f200c565773d64f89a32adad3c16582352cffedae37e5caa409",
+      "status": "prepared_not_called_usage_limit",
+      "acceptance": [
+        "无额外字段/说明/操作",
+        "真实字段和条件不缺失",
+        "保留输入图字体布局间距和小平面图标",
+        "PNG解码、提示词、SHA",
+        "逐图内容初检；不等于运行时或设备验收"
+      ],
+      "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-5989fc59-c04c-4977-b51e-414de8b63cd6.png"
+    },
+    {
+      "handoff_id": 14,
+      "batch": 35,
+      "task_id": "052",
+      "state": "办公用品月空",
+      "mode": "local_edit",
+      "input_path": "09_弹层选择器与菜单/052_批次35_状态_办公用品月空_v02.png",
+      "referenced_image_paths": [
+        "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-3b51e1a0-ca76-4ac4-a223-11ace7f9067f.png"
+      ],
+      "input_sha256": "20f1be2116aef8e06da0296464075d1e0b3147db89d3a8df29365bf42c090c53",
+      "input_dims": [
+        853,
+        1844
+      ],
+      "input_inspection": "已在批次24逐图view_image初检；047参考本次重新view_image；执行调用前必须再次view_image目标",
+      "supersedes_path": "09_弹层选择器与菜单/052_批次35_状态_办公用品月空_v02.png",
+      "output_path": "09_弹层选择器与菜单/052_批次35_状态_办公用品月空_v03.png",
+      "version": 3,
+      "prompt_path": "09_弹层选择器与菜单/052_批次35_状态_办公用品月空_v03.prompt.txt",
+      "prompt": "对附图进行单次局部内容修正。蓝白白卡、字体、布局和8/16/24间距全部沿用。只改以下明确错误，不增字段或装饰。\n仅纠正空态正文为「本月还没有办公用品领用记录，请点击右下角新增。」；保留新增办公用品按钮，所有其它布局与数据原样。",
+      "source": "lib/features/item_distribution/presentation/item_distribution_page.dart",
+      "source_sha256": "d1928aac0d164f200c565773d64f89a32adad3c16582352cffedae37e5caa409",
+      "status": "prepared_not_called_usage_limit",
+      "acceptance": [
+        "无额外字段/说明/操作",
+        "真实字段和条件不缺失",
+        "保留输入图字体布局间距和小平面图标",
+        "PNG解码、提示词、SHA",
+        "逐图内容初检；不等于运行时或设备验收"
+      ],
+      "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-6576963a-4ed5-417e-b794-9d0db2759c5d.png"
+    },
+    {
+      "handoff_id": 15,
+      "batch": 35,
+      "task_id": "053",
+      "state": "工具月空",
+      "mode": "local_edit",
+      "input_path": "09_弹层选择器与菜单/053_批次35_状态_工具月空_v02.png",
+      "referenced_image_paths": [
+        "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-07a953e4-4c9d-47aa-ad77-5ac4ac93477d.png"
+      ],
+      "input_sha256": "7842aa91e87db8e13c1965bdbba265f7f6bed598a0ca571059c3ddfe9eff5b79",
+      "input_dims": [
+        853,
+        1844
+      ],
+      "input_inspection": "已在批次24逐图view_image初检；047参考本次重新view_image；执行调用前必须再次view_image目标",
+      "supersedes_path": "09_弹层选择器与菜单/053_批次35_状态_工具月空_v02.png",
+      "output_path": "09_弹层选择器与菜单/053_批次35_状态_工具月空_v03.png",
+      "version": 3,
+      "prompt_path": "09_弹层选择器与菜单/053_批次35_状态_工具月空_v03.prompt.txt",
+      "prompt": "对附图进行单次局部内容修正。蓝白白卡、字体、布局和8/16/24间距全部沿用。只改以下明确错误，不增字段或装饰。\n仅纠正空态正文为「本月还没有工具领用记录，请点击右下角新增。」及按钮「新增工具领用」。所有其它原样。",
+      "source": "lib/features/item_distribution/presentation/item_distribution_page.dart",
+      "source_sha256": "d1928aac0d164f200c565773d64f89a32adad3c16582352cffedae37e5caa409",
+      "status": "prepared_not_called_usage_limit",
+      "acceptance": [
+        "无额外字段/说明/操作",
+        "真实字段和条件不缺失",
+        "保留输入图字体布局间距和小平面图标",
+        "PNG解码、提示词、SHA",
+        "逐图内容初检；不等于运行时或设备验收"
+      ],
+      "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-5740675b-f790-4e26-b149-0ec2598a2abf.png"
+    },
+    {
+      "handoff_id": 16,
+      "batch": 35,
+      "task_id": "052",
+      "state": "办公用品来源",
+      "mode": "local_edit",
+      "input_path": "09_弹层选择器与菜单/052_批次35_状态_办公用品来源_v02.png",
+      "referenced_image_paths": [
+        "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-8eb066e1-a160-4b90-a9f8-705221bf9345.png"
+      ],
+      "input_sha256": "3a0f7c7ca0ab20c59366efa95970a72ea920939e78cfdc2d67050a140859251a",
+      "input_dims": [
+        853,
+        1844
+      ],
+      "input_inspection": "已在批次24逐图view_image初检；047参考本次重新view_image；执行调用前必须再次view_image目标",
+      "supersedes_path": "09_弹层选择器与菜单/052_批次35_状态_办公用品来源_v02.png",
+      "output_path": "09_弹层选择器与菜单/052_批次35_状态_办公用品来源_v03.png",
+      "version": 3,
+      "prompt_path": "09_弹层选择器与菜单/052_批次35_状态_办公用品来源_v03.prompt.txt",
+      "prompt": "对附图进行单次局部内容修正。蓝白白卡、字体、布局和8/16/24间距全部沿用。只改以下明确错误，不增字段或装饰。\n仅修正Sheet里签字笔2支领取状态为绿色「已领取」（原未领取错误），底部左侧按钮「改为未领取」。签收和登记均2026-09-18 09:30、人员·其他、垃圾桶、补领和背景不变。",
+      "source": "lib/features/item_distribution/presentation/item_distribution_page.dart",
+      "source_sha256": "d1928aac0d164f200c565773d64f89a32adad3c16582352cffedae37e5caa409",
+      "status": "prepared_not_called_usage_limit",
+      "acceptance": [
+        "无额外字段/说明/操作",
+        "真实字段和条件不缺失",
+        "保留输入图字体布局间距和小平面图标",
+        "PNG解码、提示词、SHA",
+        "逐图内容初检；不等于运行时或设备验收"
+      ],
+      "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-6acb8433-cb1c-452c-92df-516f3b1d8a46.png"
+    },
+    {
+      "handoff_id": 17,
+      "batch": 35,
+      "task_id": "053",
+      "state": "工具来源",
+      "mode": "local_edit",
+      "input_path": "09_弹层选择器与菜单/053_批次35_状态_工具来源_v02.png",
+      "referenced_image_paths": [
+        "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-26ef9e44-ec02-455e-bf9e-9b92a9c1e53b.png"
+      ],
+      "input_sha256": "367c09f7889d9baf7a39110b48a55e66f345f65500f028a7069dbda06fe474b2",
+      "input_dims": [
+        853,
+        1844
+      ],
+      "input_inspection": "已在批次24逐图view_image初检；047参考本次重新view_image；执行调用前必须再次view_image目标",
+      "supersedes_path": "09_弹层选择器与菜单/053_批次35_状态_工具来源_v02.png",
+      "output_path": "09_弹层选择器与菜单/053_批次35_状态_工具来源_v03.png",
+      "version": 3,
+      "prompt_path": "09_弹层选择器与菜单/053_批次35_状态_工具来源_v03.prompt.txt",
+      "prompt": "对附图进行单次局部内容修正。蓝白白卡、字体、布局和8/16/24间距全部沿用。只改以下明确错误，不增字段或装饰。\n仅修正Sheet领取状态为绿色「已领取」（原未领取错误），底部左侧按钮「改为未领取」。陈林活动扳手1把、签收登记2026-09-16 08:45、人员·其他、垃圾桶、补领和背景不变。",
+      "source": "lib/features/item_distribution/presentation/item_distribution_page.dart",
+      "source_sha256": "d1928aac0d164f200c565773d64f89a32adad3c16582352cffedae37e5caa409",
+      "status": "prepared_not_called_usage_limit",
+      "acceptance": [
+        "无额外字段/说明/操作",
+        "真实字段和条件不缺失",
+        "保留输入图字体布局间距和小平面图标",
+        "PNG解码、提示词、SHA",
+        "逐图内容初检；不等于运行时或设备验收"
+      ],
+      "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-8e388de8-77ab-4f0d-b939-01be600b36c1.png"
+    },
+    {
+      "handoff_id": 18,
+      "batch": 35,
+      "task_id": "053",
+      "state": "领用表单校验",
+      "mode": "local_edit",
+      "input_path": "09_弹层选择器与菜单/053_批次35_状态_领用表单校验_v02.png",
+      "referenced_image_paths": [
+        "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-c6f298e5-6dab-473a-a06d-09d60b456cac.png"
+      ],
+      "input_sha256": "14c62d98d7535c977fa70d37ddf225c77cb99b48146a81ea0261214f47cf1e0d",
+      "input_dims": [
+        853,
+        1844
+      ],
+      "input_inspection": "已在批次24逐图view_image初检；047参考本次重新view_image；执行调用前必须再次view_image目标",
+      "supersedes_path": "09_弹层选择器与菜单/053_批次35_状态_领用表单校验_v02.png",
+      "output_path": "09_弹层选择器与菜单/053_批次35_状态_领用表单校验_v03.png",
+      "version": 3,
+      "prompt_path": "09_弹层选择器与菜单/053_批次35_状态_领用表单校验_v03.prompt.txt",
+      "prompt": "对附图进行单次局部内容修正。蓝白白卡、字体、布局和8/16/24间距全部沿用。只改以下明确错误，不增字段或装饰。\n仅将红色校验文字「请填写领取人和物品名称」从标题下移到备注输入框下、按钮分隔线上。标题下原位置不留错误文案。五个自由文本框、数量1、单位件、取消/保存记录原样。",
+      "source": "lib/features/item_distribution/presentation/item_distribution_page.dart",
+      "source_sha256": "d1928aac0d164f200c565773d64f89a32adad3c16582352cffedae37e5caa409",
+      "status": "prepared_not_called_usage_limit",
+      "acceptance": [
+        "无额外字段/说明/操作",
+        "真实字段和条件不缺失",
+        "保留输入图字体布局间距和小平面图标",
+        "PNG解码、提示词、SHA",
+        "逐图内容初检；不等于运行时或设备验收"
+      ],
+      "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-025f6d91-e595-4c19-8fc1-a8bbf5f1f8ed.png"
+    },
+    {
+      "handoff_id": 20,
+      "batch": 35,
+      "task_id": "035",
+      "state": "警告检查",
+      "mode": "local_edit",
+      "input_path": "09_弹层选择器与菜单/035_批次35_状态_警告检查_v02.png",
+      "referenced_image_paths": [
+        "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-ee44c112-e27e-47bd-9970-1a27a858b1d1.png"
+      ],
+      "input_sha256": "12e9f60e8cb1f6c567fd82fba0928560d289f51f9eefbf64022940aa87db4fcd",
+      "input_dims": [
+        853,
+        1844
+      ],
+      "input_inspection": "已在批次24逐图view_image初检；047参考本次重新view_image；执行调用前必须再次view_image目标",
+      "supersedes_path": "09_弹层选择器与菜单/035_批次35_状态_警告检查_v02.png",
+      "output_path": "09_弹层选择器与菜单/035_批次35_状态_警告检查_v03.png",
+      "version": 3,
+      "prompt_path": "09_弹层选择器与菜单/035_批次35_状态_警告检查_v03.prompt.txt",
+      "prompt": "对附图进行单次局部内容修正。蓝白白卡、字体、布局和8/16/24间距全部沿用。只改以下明确错误，不增字段或装饰。\n仅把异常检查弹窗正文恢复为一行ListTile：小橙色warning图标置左，右侧文本「考勤汇总在工资生成后发生变化，请先同步最新考勤」。删除正文上方大橙色独立插画及其占位。保留标题异常检查和关闭按钮，背景全部原样。",
+      "source": "lib/features/payroll/presentation/payroll_editor_page.dart",
+      "source_sha256": "a5a301e1e6c322d78aee7363dbce647993240ab675820021d3015a5ff584a64f",
+      "status": "prepared_not_called_usage_limit",
+      "acceptance": [
+        "无额外字段/说明/操作",
+        "真实字段和条件不缺失",
+        "保留输入图字体布局间距和小平面图标",
+        "PNG解码、提示词、SHA",
+        "逐图内容初检；不等于运行时或设备验收"
+      ],
+      "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-f2047392-4dc1-4285-90fe-148342b87948.png"
+    },
+    {
+      "handoff_id": 21,
+      "batch": 35,
+      "task_id": "035",
+      "state": "无异常检查",
+      "mode": "local_edit",
+      "input_path": "09_弹层选择器与菜单/035_批次35_状态_无异常检查_v02.png",
+      "referenced_image_paths": [
+        "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-909281a5-2586-4598-b285-4bfc4c44ff9d.png"
+      ],
+      "input_sha256": "874253cbc2bb35f5a6cadd63ffe552caa6144c488759548bbfd5af5c2f2b9d9f",
+      "input_dims": [
+        853,
+        1844
+      ],
+      "input_inspection": "已在批次24逐图view_image初检；047参考本次重新view_image；执行调用前必须再次view_image目标",
+      "supersedes_path": "09_弹层选择器与菜单/035_批次35_状态_无异常检查_v02.png",
+      "output_path": "09_弹层选择器与菜单/035_批次35_状态_无异常检查_v03.png",
+      "version": 3,
+      "prompt_path": "09_弹层选择器与菜单/035_批次35_状态_无异常检查_v03.prompt.txt",
+      "prompt": "对附图进行单次局部内容修正。蓝白白卡、字体、布局和8/16/24间距全部沿用。只改以下明确错误，不增字段或装饰。\n仅删除弹窗顶部多出的巨大蓝色纸张勾选插画及其专用占位。保留标题「异常检查」、小蓝色勾选的ListTile「未发现异常」和关闭按钮，背景全部原样。",
+      "source": "lib/features/payroll/presentation/payroll_editor_page.dart",
+      "source_sha256": "a5a301e1e6c322d78aee7363dbce647993240ab675820021d3015a5ff584a64f",
+      "status": "prepared_not_called_usage_limit",
+      "acceptance": [
+        "无额外字段/说明/操作",
+        "真实字段和条件不缺失",
+        "保留输入图字体布局间距和小平面图标",
+        "PNG解码、提示词、SHA",
+        "逐图内容初检；不等于运行时或设备验收"
+      ],
+      "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-bf7e9e0f-51bc-4bf3-8b3a-fbf3c904f1c8.png"
+    },
+    {
+      "handoff_id": 23,
+      "batch": 35,
+      "task_id": "035",
+      "state": "名单空",
+      "mode": "local_edit",
+      "input_path": "09_弹层选择器与菜单/035_批次35_状态_名单空_v02.png",
+      "referenced_image_paths": [
+        "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-b1d23d0c-6428-4abd-bd56-28417f463380.png"
+      ],
+      "input_sha256": "11a68142b6fafe6a1bd21eee183c751e79f73f8af69ce4c3e69fa8487974f09c",
+      "input_dims": [
+        853,
+        1844
+      ],
+      "input_inspection": "已在批次24逐图view_image初检；047参考本次重新view_image；执行调用前必须再次view_image目标",
+      "supersedes_path": "09_弹层选择器与菜单/035_批次35_状态_名单空_v02.png",
+      "output_path": "09_弹层选择器与菜单/035_批次35_状态_名单空_v03.png",
+      "version": 3,
+      "prompt_path": "09_弹层选择器与菜单/035_批次35_状态_名单空_v03.prompt.txt",
+      "prompt": "对附图进行单次局部内容修正。蓝白白卡、字体、布局和8/16/24间距全部沿用。只改以下明确错误，不增字段或装饰。\n仅补回全部考勤组旁的原有说明「筛选只影响显示，批次汇总仍按全部人员计算。」由右侧小信息图标引出。空态文字、0人/出勤0天/最终0.00元、草稿及底部两操作保持。",
+      "source": "lib/features/payroll/presentation/payroll_editor_page.dart",
+      "source_sha256": "a5a301e1e6c322d78aee7363dbce647993240ab675820021d3015a5ff584a64f",
+      "status": "prepared_not_called_usage_limit",
+      "acceptance": [
+        "无额外字段/说明/操作",
+        "真实字段和条件不缺失",
+        "保留输入图字体布局间距和小平面图标",
+        "PNG解码、提示词、SHA",
+        "逐图内容初检；不等于运行时或设备验收"
+      ],
+      "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-755e7bee-c360-411f-b72a-b513236306b5.png"
+    },
+    {
+      "handoff_id": 28,
+      "batch": 35,
+      "task_id": "051",
+      "state": "福利标准展开",
+      "mode": "local_edit",
+      "input_path": "09_弹层选择器与菜单/051_批次35_状态_福利标准展开_v02.png",
+      "referenced_image_paths": [
+        "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-ffc53da6-c337-457b-bab9-9e4f3df15b2f.png"
+      ],
+      "input_sha256": "4301a870e921efcd27be1b3b76d423f1bc8f96bc9163f353a84b073aaae74c91",
+      "input_dims": [
+        853,
+        1844
+      ],
+      "input_inspection": "已在批次24逐图view_image初检；047参考本次重新view_image；执行调用前必须再次view_image目标",
+      "supersedes_path": "09_弹层选择器与菜单/051_批次35_状态_福利标准展开_v02.png",
+      "output_path": "09_弹层选择器与菜单/051_批次35_状态_福利标准展开_v03.png",
+      "version": 3,
+      "prompt_path": "09_弹层选择器与菜单/051_批次35_状态_福利标准展开_v03.prompt.txt",
+      "prompt": "仅修正附图公用行中的两个错误字：现有「不发毛套、毛巾」改为「不发手套、毛巾」。准确写手字，整行最终显示「公用　洗衣膏1袋　·　不发手套、毛巾」。除此全部原样保留，严禁修改四类标准和表格值。",
+      "source": "lib/features/item_distribution/presentation/item_distribution_page.dart",
+      "source_sha256": "d1928aac0d164f200c565773d64f89a32adad3c16582352cffedae37e5caa409",
+      "status": "prepared_not_called_usage_limit",
+      "acceptance": [
+        "无额外字段/说明/操作",
+        "真实字段和条件不缺失",
+        "保留输入图字体布局间距和小平面图标",
+        "PNG解码、提示词、SHA",
+        "逐图内容初检；不等于运行时或设备验收"
+      ],
+      "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-5eabcbfa-fb61-4c82-be09-921e9c22f89f.png"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+LOCAL fix only missing-empty state body. Use compact flat blue cart icon the height of a single body textline, no rays/shadow/background circle. Belowicon title 暂无物资历史, then message 该库存物资尚无采购历史。. No detailidentity or statistics or bottomactions because notfound state. Preserveheader.

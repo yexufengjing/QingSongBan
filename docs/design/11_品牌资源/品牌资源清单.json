@@ -1,0 +1,87 @@
+{
+  "assets": [
+    {
+      "id": "113",
+      "svg": "11_品牌资源/113_蓝色符号与字标_v01.svg",
+      "png": "11_品牌资源/113_蓝色符号与字标_v01.png",
+      "background": "transparent",
+      "pixel_width": 236,
+      "pixel_height": 96,
+      "sha256": "619b41b177e2b71122367d00ad82288aee4f86d457e0bf40c15b50242b2e701e",
+      "svg_sha256": "1d4f3deb5fce33646644ffdd9ba2cf89af7fa3de799d43e1c662b1160ce5fa83"
+    },
+    {
+      "id": "114",
+      "svg": "11_品牌资源/114_单色符号与字标_v01.svg",
+      "png": "11_品牌资源/114_单色符号与字标_v01.png",
+      "background": "transparent",
+      "pixel_width": 236,
+      "pixel_height": 96,
+      "sha256": "92b37f04736fb041a78be45d1c85b3065c1c9bceeac055c777111c39e9de4e1c",
+      "svg_sha256": "b37b7d66ade1910264db465db99ba8afbe6b1811d89da7826bcc10349db929d3"
+    },
+    {
+      "id": "115",
+      "svg": "11_品牌资源/115_反白符号与字标_v01.svg",
+      "png": "11_品牌资源/115_反白符号与字标_v01.png",
+      "background": "transparent",
+      "pixel_width": 236,
+      "pixel_height": 96,
+      "sha256": "b629cae545b659aa67c790aaeb6b15afda5757f62ab228549b1ce7b845eadedb",
+      "svg_sha256": "97a43c570c02271676afe3b79009b17a90dad3f434a3ac71457631679ae663a1"
+    },
+    {
+      "id": "116",
+      "svg": "11_品牌资源/116_图标前景_v01.svg",
+      "png": "11_品牌资源/116_图标前景_v01.png",
+      "background": "transparent",
+      "pixel_width": 108,
+      "pixel_height": 108,
+      "sha256": "629c7676b4ef7256eb3961741046c60a3fe9590e87ccb0ecd69e3844ea717aff",
+      "svg_sha256": "d72bca1e45447e5e74dec422645b14f5be02945786d6882243530352088b6e53"
+    },
+    {
+      "id": "117",
+      "svg": "11_品牌资源/117_图标背景_v01.svg",
+      "png": "11_品牌资源/117_图标背景_v01.png",
+      "background": "#F8FAFC",
+      "pixel_width": 108,
+      "pixel_height": 108,
+      "sha256": "685888693264905b4a657c48870b9d2b9db3f4fa6f41c3031e9d7d75168078aa",
+      "svg_sha256": "6a2356924fd7edeec4dccdf2b93a665ed67a3615ff759562f864448c5bceb880"
+    },
+    {
+      "id": "118",
+      "svg": "11_品牌资源/118_图标单色层_v01.svg",
+      "png": "11_品牌资源/118_图标单色层_v01.png",
+      "background": "transparent",
+      "pixel_width": 108,
+      "pixel_height": 108,
+      "sha256": "7e596832384fe5204830d095300e529e760a5872d93e2f39bd54f15f1af8a90e",
+      "svg_sha256": "4eb694a73592c93beaaddfba4605f67b94c77991bca676adc2705e4855ada3ff"
+    },
+    {
+      "id": "119",
+      "svg": "11_品牌资源/119_启动中央图标_v01.svg",
+      "png": "11_品牌资源/119_启动中央图标_v01.png",
+      "background": "transparent",
+      "pixel_width": 288,
+      "pixel_height": 288,
+      "sha256": "4ef84424a014c1c1950c4ab682d66bff68bdc817003e9c2f7b6300b47c9e4094",
+      "svg_sha256": "48c0d32db4761098c07b30a388fc11e41b90c300280b51ae810b6bbeb96218eb"
+    },
+    {
+      "id": "119",
+      "svg": "11_品牌资源/119_静态启动画面_v01.svg",
+      "png": "11_品牌资源/119_静态启动画面_v01.png",
+      "background": "#F8FAFC",
+      "pixel_width": 390,
+      "pixel_height": 844,
+      "sha256": "1e043a81db3111c0b1c2ae11e698158648b52afa1f2bbdb79cb21ce272f71e48",
+      "svg_sha256": "1b4cb3d3bc48a97656670ab521e2e78065b9eb591517b28e27b834ee6c719a78"
+    }
+  ],
+  "symbol_contract": "三条有序线段与简洁勾转折，非复选框、无业务专属图形",
+  "user_review": "待用户查看具体图形，不宣称已批准",
+  "application": "仅设计资源交付，未应用代码或设备验收"
+}

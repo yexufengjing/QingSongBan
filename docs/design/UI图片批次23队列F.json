@@ -1,0 +1,28 @@
+[
+  {
+    "task_id": "074",
+    "name": "库存首页",
+    "source": "lib/features/inventory/presentation/inventory_home_page.dart",
+    "old": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p01_v03.png",
+    "screen": 1,
+    "issues": [
+      "快捷主操作与指标仍为三列铺满，未满足四位置末位透明留白"
+    ],
+    "prompt": "Use case: ui-mockup. 第1图为库存管理修图目标。只能局部调整“库存概览”卡片内部位置：当前物资3种、库存预警2项、待补充2项三格，每格各占内容宽度1/4，右侧完整四分之一透明空白。不改变其他任何像素区域，不调整顶部和下方快捷入口；下方快捷入口必须仍8个：物资信息、入库管理、领用出库、当前库存、库存盘点、库存预警、待采购、库存流水，4列2行，绝不能删掉第4列！上方三主动作仍新增入库、登记领用、盘点加透明第4位置。其余完全保持，一张390dpPNG。",
+    "path": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p01_v05.png",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-984272d5-534d-4ade-a2bc-a1699f591938.png"
+  },
+  {
+    "task_id": "088",
+    "name": "待采购／待补充",
+    "source": "lib/features/inventory/presentation/inventory_replenishments_page.dart",
+    "old": "03_列表与记录/088_库存_待采购待补充_查看_有数据_390dp_fs1p0_p01_v03.png",
+    "screen": 1,
+    "issues": [
+      "顶、底三指标仍三列铺满，四位置透明留白未满足"
+    ],
+    "prompt": "Use case: ui-mockup. 第1图待采购/待补充有两条记录核心字段被生成误删。仅恢复各记录第4列“计划数量”：扫帚为3把，工作服为5件。各记录数据区域是四列：当前库存/最低库存/建议补充/计划数量；扫帚2把/5把/3把/3把，工作服0件/5件/5件/5件，四项全部完整，不是3指标+留空。顶部和最下补充进度仍为三个状态指标1/1/0+透明末位，与记录四字段区不同。保留所有其他内容：日期、原因、状态、更多、只读补充方式总库领取/外部采购、名称型号单位。不能删字段，不能增操作。蓝白彩色小扁平图标，只一张390dpPNG。",
+    "path": "03_列表与记录/088_库存_待采购待补充_查看_有数据_390dp_fs1p0_p01_v04.png",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-d50eb38d-58da-44b3-a8cd-cc8d8ecd9f7b.png"
+  }
+]

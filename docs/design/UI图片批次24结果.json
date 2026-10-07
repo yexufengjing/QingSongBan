@@ -1,0 +1,3819 @@
+{
+  "batch": 24,
+  "spec_stage": [
+    6,
+    7,
+    8
+  ],
+  "date": "2026-10-07",
+  "task_ids": [
+    "034",
+    "035",
+    "036",
+    "037",
+    "038",
+    "039",
+    "040",
+    "041",
+    "042",
+    "043",
+    "044",
+    "045",
+    "046",
+    "047",
+    "048",
+    "049",
+    "050",
+    "051",
+    "052",
+    "053"
+  ],
+  "calls": 75,
+  "returned_image_count": 75,
+  "current_reference_image_count": 66,
+  "retained_old_image_count": 9,
+  "outputs": [
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_工资_工资明细编辑_编辑_已填_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "09_弹层选择器与菜单/035_工资_工资明细编辑_编辑_已填_390dp_fs1p0_p01_v03.prompt.txt",
+      "state": "明细编辑BottomSheet",
+      "screen": 1,
+      "version": 3,
+      "batch": 24,
+      "pixel_width": 853,
+      "sha256": "e988270ffd921af9408076d0d60634a0245629ed34f2176c5f4123acc604e2e6",
+      "pixel_height": 1844,
+      "issues": [],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true,
+      "visual_review": "逐图内容初检",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "041",
+      "path": "08_系统工具/041_我的_工具入口_查看_展开_390dp_fs1p0_p01_v04.png",
+      "prompt_path": "08_系统工具/041_我的_工具入口_查看_展开_390dp_fs1p0_p01_v04.prompt.txt",
+      "state": "展开说明修正",
+      "screen": 1,
+      "version": 4,
+      "batch": 24,
+      "pixel_width": 853,
+      "sha256": "6d287566d4b7c1bc58228f2bbaa313302f8413ae0d8e4759265135a1eb88b5c0",
+      "pixel_height": 1844,
+      "issues": [],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true,
+      "visual_review": "逐图内容初检",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "045",
+      "path": "08_系统工具/045_提醒_自定义时间_设置_已选_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "08_系统工具/045_提醒_自定义时间_设置_已选_390dp_fs1p0_p01_v03.prompt.txt",
+      "state": "响铃说明标点修正",
+      "screen": 1,
+      "version": 3,
+      "batch": 24,
+      "sha256": "2b5b5c71dae48037d50f905c42be3a71c51f55239ecfe46bc5f422b51e81e39f",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "issues": [],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true,
+      "visual_review": "逐图内容初检",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "045",
+      "path": "08_系统工具/045_提醒_自定义时间_设置_禁用响铃_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "08_系统工具/045_提醒_自定义时间_设置_禁用响铃_390dp_fs1p0_p01_v01.prompt.txt",
+      "state": "无提醒响铃禁用",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "pixel_height": 1844,
+      "pixel_width": 853,
+      "sha256": "9a40f94cfa3221b586a814fcea0e92c6817e03c9399775f3af61b8e4aa4c11f6",
+      "issues": [],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true,
+      "visual_review": "逐图内容初检",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "051",
+      "path": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p01_v02.prompt.txt",
+      "state": "福利发放表首屏修正",
+      "screen": 1,
+      "version": 2,
+      "batch": 24,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "06de9e6927a25d0b67fc70cbbded64d3f681094782b9b833e0d480452fcb6219",
+      "issues": [],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true,
+      "visual_review": "逐图内容初检",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "051",
+      "path": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p02_v03.png",
+      "prompt_path": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p02_v03.prompt.txt",
+      "state": "福利发放表续屏修正",
+      "screen": 2,
+      "version": 3,
+      "batch": 24,
+      "pixel_height": 1844,
+      "pixel_width": 853,
+      "sha256": "f48b51ce47f91751be3ff9106638fbc8527b95ff8099c5ca04d8ac1e958e5d51",
+      "issues": [],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true,
+      "visual_review": "逐图内容初检",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "034",
+      "path": "02_工作台/034_工资_临时工薪资_查看_待检查_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "02_工作台/034_工资_临时工薪资_查看_待检查_390dp_fs1p0_p01_v01.prompt.txt",
+      "state": "待检查",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "bde8b9e0c3f8f777d7a7a5435d5321683a43450c40eef15dd36c39e361991374",
+      "issues": [],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true,
+      "visual_review": "逐图内容初检",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_草稿菜单_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_草稿菜单_v01.prompt.txt",
+      "state": "草稿菜单",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "257bf15d6b343d53e29a0c72b5818e782faa10577bc0cfcd422f48aec77d6bc3",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_删除草稿确认_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_删除草稿确认_v01.prompt.txt",
+      "state": "删除草稿确认",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "71ded97ed3ece177239e9b5c1a542d67d8fd57513461c26a35d6c5a19f3079db",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_撤销解锁原因_v02.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_撤销解锁原因_v02.prompt.txt",
+      "state": "撤销解锁原因修正",
+      "screen": 1,
+      "version": 2,
+      "batch": 24,
+      "dims": [
+        853,
+        1843
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1843,
+      "sha256": "0b3a228d988bd0fa800e1fa85875a90ba0f05856480a3506386bbf82d0649160",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_无出勤人工加入_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_无出勤人工加入_v01.prompt.txt",
+      "state": "无出勤人工加入",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "284923e071eab7505a29492da986144f5c46476b321bf05221a8752ba9a81af9",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_人工人员选择_v02.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_人工人员选择_v02.prompt.txt",
+      "state": "人工人员选择修正",
+      "screen": 1,
+      "version": 2,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "5c5dc76222499a5c8c8e23b81d25451507098194acc674127d5d84df52256686",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_确认警告说明_v02.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_确认警告说明_v02.prompt.txt",
+      "state": "确认警告说明修正",
+      "screen": 1,
+      "version": 2,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "26f70f31a899140b4ddf5ebc29af66754c6309680f070f074074a86c03fb36a8",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_金额无效禁用_v02.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_金额无效禁用_v02.prompt.txt",
+      "state": "金额无效禁用修正",
+      "screen": 1,
+      "version": 2,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "ad5e8fb89bf5c62b5461f3d87af8a43ffa5dd8ffd7761c52256725c88933b19c",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "040",
+      "path": "09_弹层选择器与菜单/040_批次24_状态_生效日薪_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/040_批次24_状态_生效日薪_v01.prompt.txt",
+      "state": "生效日薪",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "5d3fb083a765d004ca1a1520addc70c8f546b8f866a44b74600fa7e58ae7baa6",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "040",
+      "path": "09_弹层选择器与菜单/040_批次24_状态_生效月份选择_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/040_批次24_状态_生效月份选择_v01.prompt.txt",
+      "state": "生效月份选择",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "7168553fcaea4150d82d614fd0ebe1cd6066de974abd28e0d7bc906fe9201c84",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "040",
+      "path": "09_弹层选择器与菜单/040_批次24_状态_修改工种_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/040_批次24_状态_修改工种_v01.prompt.txt",
+      "state": "修改工种",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "f31a53fa59339a3cd26d27432aed8be6f74f77e078dc7d87b7f17f34456b9b78",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "042",
+      "path": "09_弹层选择器与菜单/042_批次24_状态_导入预览通过_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/042_批次24_状态_导入预览通过_v01.prompt.txt",
+      "state": "导入预览通过",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "daa260895c5e8dafa0da8b15e359386f9e9accf607dabaa034487cf1d2a5eee2",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "042",
+      "path": "09_弹层选择器与菜单/042_批次24_状态_导入预览错误_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/042_批次24_状态_导入预览错误_v01.prompt.txt",
+      "state": "导入预览错误",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "047133a38d37f4231f406a1c49fb70c0e4c35efea6688a9522ccb916f6772c3a",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "043",
+      "path": "09_弹层选择器与菜单/043_批次24_状态_首次空_v02.png",
+      "prompt_path": "09_弹层选择器与菜单/043_批次24_状态_首次空_v02.prompt.txt",
+      "state": "首次空修正",
+      "screen": 1,
+      "version": 2,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "b39fc831c83644365ffed7e40f95990d8ae2cac9a681c3eef814e7632ce1830a",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "043",
+      "path": "09_弹层选择器与菜单/043_批次24_状态_筛选空_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/043_批次24_状态_筛选空_v01.prompt.txt",
+      "state": "筛选空",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "68f03a29d5177accb4289b8456d2089e7fbcf050e18d7d785da5055be85ebb19",
+      "tool": "built-in imagegen",
+      "issues": [
+        "将巨型拟物插图替换为小彩色平面放大镜，保留真实筛选空文案。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "043",
+      "path": "09_弹层选择器与菜单/043_批次24_状态_删除确认_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/043_批次24_状态_删除确认_v01.prompt.txt",
+      "state": "删除确认",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "b0cbf86b3a56cf7058049f8675de4f0543a4294aa629ac972dd8c54b7e6da699",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "043",
+      "path": "09_弹层选择器与菜单/043_批次24_状态_循环提醒菜单_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/043_批次24_状态_循环提醒菜单_v01.prompt.txt",
+      "state": "循环提醒菜单",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "2afbfb47e362684317c6bc889350e473632813d463e7010495e510fded77ef4f",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "051",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_临时名单_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/051_批次24_状态_临时名单_v01.prompt.txt",
+      "state": "临时名单",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "29960f3ddf06e75744ba2a08ecaffd073d07ad676ed11f58b46703fb7f0e76f6",
+      "tool": "built-in imagegen",
+      "issues": [
+        "补推荐来源：对应福利月份的月度考勤名单；全选/清空保持TextButton，不能部分选择却全选勾选；候选次级行工号和在岗/已离职。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "051",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_福利首次空_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/051_批次24_状态_福利首次空_v01.prompt.txt",
+      "state": "福利首次空",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "c1d2bd6fce4c3705d739b782142ddeb827c657716de36c98e439866ac04b8feb",
+      "tool": "built-in imagegen",
+      "issues": [
+        "换小彩色平面福利图标，去巨型3D箱子、飞机和阴影。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "052",
+      "path": "09_弹层选择器与菜单/052_批次24_状态_新增办公领用_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/052_批次24_状态_新增办公领用_v01.prompt.txt",
+      "state": "新增办公领用",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "0f3aeed97ecb03b904cc923c78a20dddca13555032becb273d9746ca4b660088",
+      "tool": "built-in imagegen",
+      "issues": [
+        "领取人/领取对象是一个自由文本输入；物品名称、数量、单位均TextField，移除箭头/选择器和顶右X，不新增字段。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "053",
+      "path": "09_弹层选择器与菜单/053_批次24_状态_新增工具领用_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/053_批次24_状态_新增工具领用_v01.prompt.txt",
+      "state": "新增工具领用",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "adf0579d78130f6853e40da021c8976252295e3f34e2ecc9dc2b6fc916a86131",
+      "tool": "built-in imagegen",
+      "issues": [
+        "合并领取人和领取对象为一个自由文本字段，物品名称、数量、单位均TextField，移除选择箭头和顶右X。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "052",
+      "path": "09_弹层选择器与菜单/052_批次24_状态_领用表单校验_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/052_批次24_状态_领用表单校验_v01.prompt.txt",
+      "state": "领用表单校验",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "8345b95965f8faec61899d86773ceeefcf20ab16e2e53c00804c0047f47fdf69",
+      "tool": "built-in imagegen",
+      "issues": [
+        "仅一个领取人/领取对象TextField；物品名称/数量/单位都是文本输入，无选择箭头或步进器；校验文字置备注后。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "052",
+      "path": "09_弹层选择器与菜单/052_批次24_状态_重复领取确认_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/052_批次24_状态_重复领取确认_v01.prompt.txt",
+      "state": "重复领取确认",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "585adbf3666312d52d25cc1957f9f63086c5022c1e80430516e0691eeee5c4ef",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "053",
+      "path": "09_弹层选择器与菜单/053_批次24_状态_重复领取确认_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/053_批次24_状态_重复领取确认_v01.prompt.txt",
+      "state": "重复领取确认",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "b72658e428fce832fec8cee8ce03d96bb191d809d896156f1064a4a1c617ea19",
+      "tool": "built-in imagegen",
+      "issues": [
+        "补回Dialog标题 重复领取提醒，正文保持所填对象和物品，操作返回检查/仍然登记。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "052",
+      "path": "09_弹层选择器与菜单/052_批次24_状态_删除办公领用_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/052_批次24_状态_删除办公领用_v01.prompt.txt",
+      "state": "删除办公领用",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "c7b1d706c129f402603d990d8fd7ad70d743798f2e0f460e80c7fef0ce73c929",
+      "tool": "built-in imagegen",
+      "issues": [
+        "删除对象与背景一致：张明 · 签字笔 2支，登记2026-09-18 09:30，禁止删除另一日期/数量。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "053",
+      "path": "09_弹层选择器与菜单/053_批次24_状态_删除工具领用_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/053_批次24_状态_删除工具领用_v01.prompt.txt",
+      "state": "删除工具领用",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "7d2303e5bef7e7cb19f1a68a784e5a293cc23e5a9a1425eaabf048e79368466c",
+      "tool": "built-in imagegen",
+      "issues": [
+        "删除对象与背景一致：陈林 · 活动扳手 1把，登记2026-09-16 08:45。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "049",
+      "path": "09_弹层选择器与菜单/049_批次24_状态_恢复完成_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/049_批次24_状态_恢复完成_v01.prompt.txt",
+      "state": "恢复完成",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "8d3243d44240b3a1bbba2eef3c261dfedf2cc5b836e4c0b19d477d0426f8790d",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "051",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_福利设置_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/051_批次24_状态_福利设置_v01.prompt.txt",
+      "state": "福利设置",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "101e6f82c1fcdc907166c8ff277c60821cac2f73fb806dc6616f763300ff240c",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "051",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_补领_v02.png",
+      "prompt_path": "09_弹层选择器与菜单/051_批次24_状态_补领_v02.prompt.txt",
+      "state": "补领修正",
+      "screen": 1,
+      "version": 2,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "70becf9c11b482d11ae605564155cbcbaf9125d8440041974f0e47c36406a063",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "051",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_未领来源_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/051_批次24_状态_未领来源_v01.prompt.txt",
+      "state": "未领来源",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "b569c75417f9e42c68746555493be7c1887767d2ec568c5d62deea7c0a12a7bc",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "051",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_已领来源_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/051_批次24_状态_已领来源_v01.prompt.txt",
+      "state": "已领来源",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "5445e4c3b26efd57b3c5915f05306902cd390e05cdaacac1a259a050084316be",
+      "tool": "built-in imagegen",
+      "issues": [
+        "来源底部动作文字改为 改为未领取；保持实际签收及登记时间。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "051",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_重置领取确认_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/051_批次24_状态_重置领取确认_v01.prompt.txt",
+      "state": "重置领取确认",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "c9512ac0f43777581354b0156117464036ebe9984046cd2c83e84255b006a5b8",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "051",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_扫路车分配_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/051_批次24_状态_扫路车分配_v01.prompt.txt",
+      "state": "扫路车分配",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "0108dd075eb89c7a7fb34cf3a968620a42035f23bc30eee0091453ae065e157a",
+      "tool": "built-in imagegen",
+      "issues": [
+        "扫路车候选人每行名称下显示employeeNo；去不存在洗衣膏数量列及工种身份替代。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "051",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_分配未满确认_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/051_批次24_状态_分配未满确认_v01.prompt.txt",
+      "state": "分配未满确认",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "c40dd368063edde6c36de077ea67de4d8dc7f4e309e549ec0de09a4207f52b25",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "051",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_公用领取人_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/051_批次24_状态_公用领取人_v01.prompt.txt",
+      "state": "公用领取人",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "3898bc6941bf338722236a4591e25956fc026d6ecfc6093b1f5e036bf1643d6f",
+      "tool": "built-in imagegen",
+      "issues": [
+        "候选人次级行保留 EMP-0001 · 当前在岗 和 EMP-0002 · 当前在岗。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "037",
+      "path": "09_弹层选择器与菜单/037_批次24_状态_工资历史空_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/037_批次24_状态_工资历史空_v01.prompt.txt",
+      "state": "工资历史空",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "59ed7e2fcdbe2ce19e43c4eac506dfdf57eb22a0c8c4b103bed33d3933223a01",
+      "tool": "built-in imagegen",
+      "issues": [
+        "工资历史空时标题样例计数共0条，不能共2条；小平面图标去拟物阴影。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "038",
+      "path": "09_弹层选择器与菜单/038_批次24_状态_工种默认日薪_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/038_批次24_状态_工种默认日薪_v01.prompt.txt",
+      "state": "工种默认日薪",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "8213c6fb4bc858d2b4ebcbfdf5c21a3a5d2055c202b1d7c2680448d8c8b7a35f",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "039",
+      "path": "09_弹层选择器与菜单/039_批次24_状态_导出已完成_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/039_批次24_状态_导出已完成_v01.prompt.txt",
+      "state": "导出已完成",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "8777d00c25722a354e44dfb5479ba7538f515f1129d188885f6da44634acb4ff",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "044",
+      "path": "09_弹层选择器与菜单/044_批次24_状态_编辑提醒_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/044_批次24_状态_编辑提醒_v01.prompt.txt",
+      "state": "编辑提醒",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "36b32eb7ad75b5382539c48c1559c73c698def871805d3f523466640650363fe",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "044",
+      "path": "09_弹层选择器与菜单/044_批次24_状态_关联人员选择_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/044_批次24_状态_关联人员选择_v01.prompt.txt",
+      "state": "关联人员选择",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "0d3496e5fab364d996737a47991f10fca4a2ced40777e5bea3c83d27c36171e8",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "044",
+      "path": "09_弹层选择器与菜单/044_批次24_状态_标题校验_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/044_批次24_状态_标题校验_v01.prompt.txt",
+      "state": "标题校验",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "87bd3e16718648e53b1152d98e52cd30f7854e6397a6b3cbc8abbe647c57799b",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "047",
+      "path": "09_弹层选择器与菜单/047_批次24_状态_每月重复_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/047_批次24_状态_每月重复_v01.prompt.txt",
+      "state": "每月重复",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "66155e74d2cd1ecbf8db0a721b3cd67bf41e2e7dcac8159582257e5d7a683799",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "047",
+      "path": "09_弹层选择器与菜单/047_批次24_状态_结束重复选择_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/047_批次24_状态_结束重复选择_v01.prompt.txt",
+      "state": "结束重复选择",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "cdf733caa49f14983fb81ea835117b7d5e690f6ae55e8a7e6aa6987041009d1a",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "048",
+      "path": "09_弹层选择器与菜单/048_批次24_状态_自定义提前_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/048_批次24_状态_自定义提前_v01.prompt.txt",
+      "state": "自定义提前",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "ad9e0ec9e7b7693944a889d6b881e44abee88e174cd83cb274a186946f49f610",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "050",
+      "path": "09_弹层选择器与菜单/050_批次24_状态_日志有记录_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/050_批次24_状态_日志有记录_v01.prompt.txt",
+      "state": "日志有记录",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "d0854f61e7ace1f49133495c7bcc8beec2484ec73392527687124cb690749e80",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "050",
+      "path": "09_弹层选择器与菜单/050_批次24_状态_日志首次空修正_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/050_批次24_状态_日志首次空修正_v01.prompt.txt",
+      "state": "日志首次空修正",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "f277fc0a4e7a252ff069edb6eb92e984134b6169b3b828cac265e0ec1ae8e2e9",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "052",
+      "path": "09_弹层选择器与菜单/052_批次24_状态_办公用品月空_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/052_批次24_状态_办公用品月空_v01.prompt.txt",
+      "state": "办公用品月空",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "20f1be2116aef8e06da0296464075d1e0b3147db89d3a8df29365bf42c090c53",
+      "tool": "built-in imagegen",
+      "issues": [
+        "将大型拟物箱子改为小平面办公用品图标，保留真实本月空文案。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "053",
+      "path": "09_弹层选择器与菜单/053_批次24_状态_工具月空_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/053_批次24_状态_工具月空_v01.prompt.txt",
+      "state": "工具月空",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "7842aa91e87db8e13c1965bdbba265f7f6bed598a0ca571059c3ddfe9eff5b79",
+      "tool": "built-in imagegen",
+      "issues": [
+        "将大型拟物箱子改为小平面工具图标，保留真实本月空文案。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "052",
+      "path": "09_弹层选择器与菜单/052_批次24_状态_办公用品来源_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/052_批次24_状态_办公用品来源_v01.prompt.txt",
+      "state": "办公用品来源",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "3a0f7c7ca0ab20c59366efa95970a72ea920939e78cfdc2d67050a140859251a",
+      "tool": "built-in imagegen",
+      "issues": [
+        "来源动作改为 改为未领取，保持签收/登记时间。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "053",
+      "path": "09_弹层选择器与菜单/053_批次24_状态_工具来源_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/053_批次24_状态_工具来源_v01.prompt.txt",
+      "state": "工具来源",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "367c09f7889d9baf7a39110b48a55e66f345f65500f028a7069dbda06fe474b2",
+      "tool": "built-in imagegen",
+      "issues": [
+        "来源动作改为 改为未领取，保持工具对象和签收/登记时间。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "053",
+      "path": "09_弹层选择器与菜单/053_批次24_状态_领用表单校验_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/053_批次24_状态_领用表单校验_v01.prompt.txt",
+      "state": "领用表单校验",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "14c62d98d7535c977fa70d37ddf225c77cb99b48146a81ea0261214f47cf1e0d",
+      "tool": "built-in imagegen",
+      "issues": [
+        "一个领取人/领取对象自由文本字段；物品名称、数量、单位TextField，无箭头/步进器；校验置备注后。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_阻断检查_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_阻断检查_v01.prompt.txt",
+      "state": "阻断检查",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "ac097ef2e1e06e8e45163f69d1276c025061dcfd8441b759d3e7c94b1a5d57fa",
+      "tool": "built-in imagegen",
+      "issues": [
+        "Dialog补标题 存在阻断问题；内容保留真实阻断消息ListTile；删除新增大型居中符号。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_警告检查_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_警告检查_v01.prompt.txt",
+      "state": "警告检查",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "12e9f60e8cb1f6c567fd82fba0928560d289f51f9eefbf64022940aa87db4fcd",
+      "tool": "built-in imagegen",
+      "issues": [
+        "Dialog补标题 异常检查；保留警告ListTile真实消息。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_无异常检查_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_无异常检查_v01.prompt.txt",
+      "state": "无异常检查",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "874253cbc2bb35f5a6cadd63ffe552caa6144c488759548bbfd5af5c2f2b9d9f",
+      "tool": "built-in imagegen",
+      "issues": [
+        "Dialog标题 异常检查；小图标ListTile 未发现异常；无异常背景不得保留橙色警告banner。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_已确认菜单_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_已确认菜单_v01.prompt.txt",
+      "state": "已确认菜单",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "4e56e13a1d90b2ef55a1a31c8c747ffc5069576ef47fc01731f18f5fc90413ff",
+      "tool": "built-in imagegen",
+      "issues": [
+        "已确认时锁定工资可用，不应置灰；顶部全量人数/出勤/最终8100汇总不能丢失。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_名单空_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_名单空_v01.prompt.txt",
+      "state": "名单空",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "11a68142b6fafe6a1bd21eee183c751e79f73f8af69ce4c3e69fa8487974f09c",
+      "tool": "built-in imagegen",
+      "issues": [
+        "名单空换小彩色平面图标，去巨型拟物；保留筛选提示。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "043",
+      "path": "09_弹层选择器与菜单/043_批次24_状态_业务提醒偏好_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/043_批次24_状态_业务提醒偏好_v01.prompt.txt",
+      "state": "业务提醒偏好",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "72d7110f640a3350f8748ec9bab13b1ec312cf2e1c654159a8468e05a72d8836",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "047",
+      "path": "09_弹层选择器与菜单/047_批次24_状态_结束次数_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/047_批次24_状态_结束次数_v01.prompt.txt",
+      "state": "结束次数",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "37e12ccd572720bda69131e051440a7366085646b0239fb4bb10bced755362df",
+      "tool": "built-in imagegen",
+      "issues": [
+        "结束重复显示值精确 重复 10 次。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "051",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_福利标准展开_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/051_批次24_状态_福利标准展开_v01.prompt.txt",
+      "state": "福利标准展开",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "4301a870e921efcd27be1b3b76d423f1bc8f96bc9163f353a84b073aaae74c91",
+      "tool": "built-in imagegen",
+      "issues": [
+        "公用标准最后一句应为 不发手套、毛巾，纠正错误毛套字。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "051",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_数量详情_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/051_批次24_状态_数量详情_v01.prompt.txt",
+      "state": "数量详情",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "d742e6f89eecacbfb73d24dd1b478e163dde16f26696b8a34c139b7ba6f66a54",
+      "tool": "built-in imagegen",
+      "issues": [
+        "补回源码已有底部 关闭 按钮，不新增数量编辑操作。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    }
+  ],
+  "retained_old_outputs": [
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_撤销解锁原因_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_撤销解锁原因_v01.prompt.txt",
+      "state": "撤销解锁原因",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "dbf278b215fde9d1e92c695c4c294d97fcacfcc7aa58e293cda831c69df1e7d2",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "待接续目检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_人工人员选择_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_人工人员选择_v01.prompt.txt",
+      "state": "人工人员选择",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "dba169d15dc512adcbf8f95e7bddae4d76e6bff48a0de773811fa5c2d1780850",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "待接续目检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_确认警告说明_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_确认警告说明_v01.prompt.txt",
+      "state": "确认警告说明",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "1d0439eea7b28efc71fe8ac19022326f0efd5ede911941e3db47679614c62d58",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "待接续目检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_金额无效禁用_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_金额无效禁用_v01.prompt.txt",
+      "state": "金额无效禁用",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "1fc1b85f8ec90ddb0ff8af1aecfd8dfebe1a82a91f77fe858398b31dfad90aff",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "待接续目检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免"
+    },
+    {
+      "task_id": "043",
+      "path": "09_弹层选择器与菜单/043_批次24_状态_首次空_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/043_批次24_状态_首次空_v01.prompt.txt",
+      "state": "首次空",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "056bd20656245aa6934d5d200d3070bb5a2c241ed066019233421395f8f19670",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "待接续目检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免"
+    },
+    {
+      "task_id": "051",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_补领_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/051_批次24_状态_补领_v01.prompt.txt",
+      "state": "补领",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "b5eb916982b7331165b6768e8345271962b6bf99f4904f1a5952bcdd881db84e",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "待接续目检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_工资_工资明细编辑_编辑_已填_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "09_弹层选择器与菜单/035_工资_工资明细编辑_编辑_已填_390dp_fs1p0_p01_v02.prompt.txt",
+      "state": "明细编辑BottomSheet",
+      "screen": 1,
+      "version": 2,
+      "batch": 24,
+      "sha256": "6a69267850a090144473647516ad5ecf5cdf0ed6fe5a6b825936a8f0c97ac165",
+      "pixel_height": 1844,
+      "pixel_width": 853,
+      "issues": [
+        "字段输入标签仍在同层左侧，未落实上方标签；逐字段新增彩色图标不符既有普通表单克制原则，具体字阶未验收"
+      ],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "041",
+      "path": "08_系统工具/041_我的_工具入口_查看_展开_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "08_系统工具/041_我的_工具入口_查看_展开_390dp_fs1p0_p01_v03.prompt.txt",
+      "state": "展开说明修正",
+      "screen": 1,
+      "version": 3,
+      "batch": 24,
+      "pixel_height": 1844,
+      "sha256": "b0fc96f4dc190c59fdf2fd77114317c5162eb844ae3cb661655329b72befc10d",
+      "pixel_width": 853,
+      "issues": [
+        "第四位已透明、说明移出卡但仍横向三列，未落实纵向三行，需必要修正"
+      ],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "051",
+      "path": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p02_v02.png",
+      "prompt_path": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p02_v02.prompt.txt",
+      "state": "福利发放表续屏修正",
+      "screen": 2,
+      "version": 2,
+      "batch": 24,
+      "pixel_height": 1844,
+      "sha256": "8baf4fcd5ddc85004273ba3fe8628dddee8eeab8fb0e0ca4bd38bcd3d348e110",
+      "pixel_width": 853,
+      "issues": [
+        "标题下设计样例漏，需局部补标识"
+      ],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    }
+  ],
+  "source_evidence": [],
+  "pending": [
+    {
+      "task_id": "043",
+      "state": "筛选空",
+      "old": "03_列表与记录/043_提醒_备忘提醒_查看_待办_390dp_fs1p0_p01_v02.png",
+      "path": "09_弹层选择器与菜单/043_批次24_状态_筛选空_v01.png",
+      "prompt": "局部修正附图，保持原风格蓝白白卡字体8/16/24、小平面彩色图标，仅修：将巨型拟物插图替换为小彩色平面放大镜，保留真实筛选空文案。",
+      "kind": "failed_revision",
+      "reason": "将巨型拟物插图替换为小彩色平面放大镜，保留真实筛选空文案。",
+      "status": "待额度恢复后单轮修正",
+      "attempted": true
+    },
+    {
+      "task_id": "051",
+      "state": "已领来源",
+      "old": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p01_v02.png",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_已领来源_v01.png",
+      "prompt": "局部修正附图，保持原风格蓝白白卡字体8/16/24、小平面彩色图标，仅修：来源底部动作文字改为 改为未领取；保持实际签收及登记时间。",
+      "kind": "content_revision",
+      "reason": "来源底部动作文字改为 改为未领取；保持实际签收及登记时间。",
+      "status": "待额度恢复后单轮修正",
+      "attempted": false
+    },
+    {
+      "task_id": "051",
+      "state": "扫路车分配",
+      "old": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p01_v02.png",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_扫路车分配_v01.png",
+      "prompt": "局部修正附图，保持原风格蓝白白卡字体8/16/24、小平面彩色图标，仅修：扫路车候选人每行名称下显示employeeNo；去不存在洗衣膏数量列及工种身份替代。",
+      "kind": "content_revision",
+      "reason": "扫路车候选人每行名称下显示employeeNo；去不存在洗衣膏数量列及工种身份替代。",
+      "status": "待额度恢复后单轮修正",
+      "attempted": false
+    },
+    {
+      "task_id": "051",
+      "state": "公用领取人",
+      "old": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p01_v02.png",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_公用领取人_v01.png",
+      "prompt": "局部修正附图，保持原风格蓝白白卡字体8/16/24、小平面彩色图标，仅修：候选人次级行保留 EMP-0001 · 当前在岗 和 EMP-0002 · 当前在岗。",
+      "kind": "content_revision",
+      "reason": "候选人次级行保留 EMP-0001 · 当前在岗 和 EMP-0002 · 当前在岗。",
+      "status": "待额度恢复后单轮修正",
+      "attempted": false
+    },
+    {
+      "task_id": "051",
+      "state": "临时名单",
+      "old": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p01_v02.png",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_临时名单_v01.png",
+      "prompt": "局部修正附图，保持原风格蓝白白卡字体8/16/24、小平面彩色图标，仅修：补推荐来源：对应福利月份的月度考勤名单；全选/清空保持TextButton，不能部分选择却全选勾选；候选次级行工号和在岗/已离职。",
+      "kind": "content_revision",
+      "reason": "补推荐来源：对应福利月份的月度考勤名单；全选/清空保持TextButton，不能部分选择却全选勾选；候选次级行工号和在岗/已离职。",
+      "status": "待额度恢复后单轮修正",
+      "attempted": false
+    },
+    {
+      "task_id": "051",
+      "state": "福利首次空",
+      "old": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p01_v02.png",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_福利首次空_v01.png",
+      "prompt": "局部修正附图，保持原风格蓝白白卡字体8/16/24、小平面彩色图标，仅修：换小彩色平面福利图标，去巨型3D箱子、飞机和阴影。",
+      "kind": "content_revision",
+      "reason": "换小彩色平面福利图标，去巨型3D箱子、飞机和阴影。",
+      "status": "待额度恢复后单轮修正",
+      "attempted": false
+    },
+    {
+      "task_id": "052",
+      "state": "新增办公领用",
+      "old": "06_台账与表格/052_领取_办公用品_查看_有记录_390dp_fs1p0_p01_v01.png",
+      "path": "09_弹层选择器与菜单/052_批次24_状态_新增办公领用_v01.png",
+      "prompt": "局部修正附图，保持原风格蓝白白卡字体8/16/24、小平面彩色图标，仅修：领取人/领取对象是一个自由文本输入；物品名称、数量、单位均TextField，移除箭头/选择器和顶右X，不新增字段。",
+      "kind": "content_revision",
+      "reason": "领取人/领取对象是一个自由文本输入；物品名称、数量、单位均TextField，移除箭头/选择器和顶右X，不新增字段。",
+      "status": "待额度恢复后单轮修正",
+      "attempted": false
+    },
+    {
+      "task_id": "053",
+      "state": "新增工具领用",
+      "old": "06_台账与表格/053_领取_工具_查看_有记录_390dp_fs1p0_p01_v01.png",
+      "path": "09_弹层选择器与菜单/053_批次24_状态_新增工具领用_v01.png",
+      "prompt": "局部修正附图，保持原风格蓝白白卡字体8/16/24、小平面彩色图标，仅修：合并领取人和领取对象为一个自由文本字段，物品名称、数量、单位均TextField，移除选择箭头和顶右X。",
+      "kind": "content_revision",
+      "reason": "合并领取人和领取对象为一个自由文本字段，物品名称、数量、单位均TextField，移除选择箭头和顶右X。",
+      "status": "待额度恢复后单轮修正",
+      "attempted": false
+    },
+    {
+      "task_id": "052",
+      "state": "领用表单校验",
+      "old": "06_台账与表格/052_领取_办公用品_查看_有记录_390dp_fs1p0_p01_v01.png",
+      "path": "09_弹层选择器与菜单/052_批次24_状态_领用表单校验_v01.png",
+      "prompt": "局部修正附图，保持原风格蓝白白卡字体8/16/24、小平面彩色图标，仅修：仅一个领取人/领取对象TextField；物品名称/数量/单位都是文本输入，无选择箭头或步进器；校验文字置备注后。",
+      "kind": "content_revision",
+      "reason": "仅一个领取人/领取对象TextField；物品名称/数量/单位都是文本输入，无选择箭头或步进器；校验文字置备注后。",
+      "status": "待额度恢复后单轮修正",
+      "attempted": false
+    },
+    {
+      "task_id": "053",
+      "state": "重复领取确认",
+      "old": "06_台账与表格/053_领取_工具_查看_有记录_390dp_fs1p0_p01_v01.png",
+      "path": "09_弹层选择器与菜单/053_批次24_状态_重复领取确认_v01.png",
+      "prompt": "局部修正附图，保持原风格蓝白白卡字体8/16/24、小平面彩色图标，仅修：补回Dialog标题 重复领取提醒，正文保持所填对象和物品，操作返回检查/仍然登记。",
+      "kind": "content_revision",
+      "reason": "补回Dialog标题 重复领取提醒，正文保持所填对象和物品，操作返回检查/仍然登记。",
+      "status": "待额度恢复后单轮修正",
+      "attempted": false
+    },
+    {
+      "task_id": "052",
+      "state": "删除办公领用",
+      "old": "06_台账与表格/052_领取_办公用品_查看_有记录_390dp_fs1p0_p01_v01.png",
+      "path": "09_弹层选择器与菜单/052_批次24_状态_删除办公领用_v01.png",
+      "prompt": "局部修正附图，保持原风格蓝白白卡字体8/16/24、小平面彩色图标，仅修：删除对象与背景一致：张明 · 签字笔 2支，登记2026-09-18 09:30，禁止删除另一日期/数量。",
+      "kind": "content_revision",
+      "reason": "删除对象与背景一致：张明 · 签字笔 2支，登记2026-09-18 09:30，禁止删除另一日期/数量。",
+      "status": "待额度恢复后单轮修正",
+      "attempted": false
+    },
+    {
+      "task_id": "053",
+      "state": "删除工具领用",
+      "old": "06_台账与表格/053_领取_工具_查看_有记录_390dp_fs1p0_p01_v01.png",
+      "path": "09_弹层选择器与菜单/053_批次24_状态_删除工具领用_v01.png",
+      "prompt": "局部修正附图，保持原风格蓝白白卡字体8/16/24、小平面彩色图标，仅修：删除对象与背景一致：陈林 · 活动扳手 1把，登记2026-09-16 08:45。",
+      "kind": "content_revision",
+      "reason": "删除对象与背景一致：陈林 · 活动扳手 1把，登记2026-09-16 08:45。",
+      "status": "待额度恢复后单轮修正",
+      "attempted": false
+    },
+    {
+      "task_id": "037",
+      "state": "工资历史空",
+      "old": "03_列表与记录/037_工资_工资历史_查看_有数据_390dp_fs1p0_p01_v02.png",
+      "path": "09_弹层选择器与菜单/037_批次24_状态_工资历史空_v01.png",
+      "prompt": "局部修正附图，保持原风格蓝白白卡字体8/16/24、小平面彩色图标，仅修：工资历史空时标题样例计数共0条，不能共2条；小平面图标去拟物阴影。",
+      "kind": "content_revision",
+      "reason": "工资历史空时标题样例计数共0条，不能共2条；小平面图标去拟物阴影。",
+      "status": "待额度恢复后单轮修正",
+      "attempted": false
+    },
+    {
+      "task_id": "052",
+      "state": "办公用品月空",
+      "old": "06_台账与表格/052_领取_办公用品_查看_有记录_390dp_fs1p0_p01_v01.png",
+      "path": "09_弹层选择器与菜单/052_批次24_状态_办公用品月空_v01.png",
+      "prompt": "局部修正附图，保持原风格蓝白白卡字体8/16/24、小平面彩色图标，仅修：将大型拟物箱子改为小平面办公用品图标，保留真实本月空文案。",
+      "kind": "content_revision",
+      "reason": "将大型拟物箱子改为小平面办公用品图标，保留真实本月空文案。",
+      "status": "待额度恢复后单轮修正",
+      "attempted": false
+    },
+    {
+      "task_id": "053",
+      "state": "工具月空",
+      "old": "06_台账与表格/053_领取_工具_查看_有记录_390dp_fs1p0_p01_v01.png",
+      "path": "09_弹层选择器与菜单/053_批次24_状态_工具月空_v01.png",
+      "prompt": "局部修正附图，保持原风格蓝白白卡字体8/16/24、小平面彩色图标，仅修：将大型拟物箱子改为小平面工具图标，保留真实本月空文案。",
+      "kind": "content_revision",
+      "reason": "将大型拟物箱子改为小平面工具图标，保留真实本月空文案。",
+      "status": "待额度恢复后单轮修正",
+      "attempted": false
+    },
+    {
+      "task_id": "052",
+      "state": "办公用品来源",
+      "old": "06_台账与表格/052_领取_办公用品_查看_有记录_390dp_fs1p0_p01_v01.png",
+      "path": "09_弹层选择器与菜单/052_批次24_状态_办公用品来源_v01.png",
+      "prompt": "局部修正附图，保持原风格蓝白白卡字体8/16/24、小平面彩色图标，仅修：来源动作改为 改为未领取，保持签收/登记时间。",
+      "kind": "content_revision",
+      "reason": "来源动作改为 改为未领取，保持签收/登记时间。",
+      "status": "待额度恢复后单轮修正",
+      "attempted": false
+    },
+    {
+      "task_id": "053",
+      "state": "工具来源",
+      "old": "06_台账与表格/053_领取_工具_查看_有记录_390dp_fs1p0_p01_v01.png",
+      "path": "09_弹层选择器与菜单/053_批次24_状态_工具来源_v01.png",
+      "prompt": "局部修正附图，保持原风格蓝白白卡字体8/16/24、小平面彩色图标，仅修：来源动作改为 改为未领取，保持工具对象和签收/登记时间。",
+      "kind": "content_revision",
+      "reason": "来源动作改为 改为未领取，保持工具对象和签收/登记时间。",
+      "status": "待额度恢复后单轮修正",
+      "attempted": false
+    },
+    {
+      "task_id": "053",
+      "state": "领用表单校验",
+      "old": "06_台账与表格/053_领取_工具_查看_有记录_390dp_fs1p0_p01_v01.png",
+      "path": "09_弹层选择器与菜单/053_批次24_状态_领用表单校验_v01.png",
+      "prompt": "局部修正附图，保持原风格蓝白白卡字体8/16/24、小平面彩色图标，仅修：一个领取人/领取对象自由文本字段；物品名称、数量、单位TextField，无箭头/步进器；校验置备注后。",
+      "kind": "content_revision",
+      "reason": "一个领取人/领取对象自由文本字段；物品名称、数量、单位TextField，无箭头/步进器；校验置备注后。",
+      "status": "待额度恢复后单轮修正",
+      "attempted": false
+    },
+    {
+      "task_id": "035",
+      "state": "阻断检查",
+      "old": "06_台账与表格/035_工资_工资编辑_编辑_草稿_390dp_fs1p0_p01_v02.png",
+      "content": "居中Dialog 存在阻断问题；红色小图标 月度考勤汇总尚未确认，不能确认工资；关闭。",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_阻断检查_v01.png",
+      "prompt": "局部修正附图，保持原风格蓝白白卡字体8/16/24、小平面彩色图标，仅修：Dialog补标题 存在阻断问题；内容保留真实阻断消息ListTile；删除新增大型居中符号。",
+      "kind": "content_revision",
+      "reason": "Dialog补标题 存在阻断问题；内容保留真实阻断消息ListTile；删除新增大型居中符号。",
+      "status": "待额度恢复后单轮修正",
+      "attempted": false
+    },
+    {
+      "task_id": "035",
+      "state": "警告检查",
+      "old": "06_台账与表格/035_工资_工资编辑_编辑_草稿_390dp_fs1p0_p01_v02.png",
+      "content": "居中Dialog 异常检查；橙色小图标 考勤汇总在工资生成后发生变化，请先同步最新考勤；关闭。",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_警告检查_v01.png",
+      "prompt": "局部修正附图，保持原风格蓝白白卡字体8/16/24、小平面彩色图标，仅修：Dialog补标题 异常检查；保留警告ListTile真实消息。",
+      "kind": "content_revision",
+      "reason": "Dialog补标题 异常检查；保留警告ListTile真实消息。",
+      "status": "待额度恢复后单轮修正",
+      "attempted": false
+    },
+    {
+      "task_id": "035",
+      "state": "无异常检查",
+      "old": "06_台账与表格/035_工资_工资编辑_编辑_草稿_390dp_fs1p0_p01_v02.png",
+      "content": "居中Dialog 异常检查；蓝色小图标 未发现异常；关闭。",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_无异常检查_v01.png",
+      "prompt": "局部修正附图，保持原风格蓝白白卡字体8/16/24、小平面彩色图标，仅修：Dialog标题 异常检查；小图标ListTile 未发现异常；无异常背景不得保留橙色警告banner。",
+      "kind": "content_revision",
+      "reason": "Dialog标题 异常检查；小图标ListTile 未发现异常；无异常背景不得保留橙色警告banner。",
+      "status": "待额度恢复后单轮修正",
+      "attempted": false
+    },
+    {
+      "task_id": "035",
+      "state": "已确认菜单",
+      "old": "06_台账与表格/035_工资_工资编辑_编辑_草稿_390dp_fs1p0_p01_v02.png",
+      "content": "原工资批次状态已确认，禁止人工增加与明细编辑，不出现拖拽把手。顶部原生菜单只两行：锁定工资、撤销确认 / 解锁、导出工资 Excel（共三项）。",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_已确认菜单_v01.png",
+      "prompt": "局部修正附图，保持原风格蓝白白卡字体8/16/24、小平面彩色图标，仅修：已确认时锁定工资可用，不应置灰；顶部全量人数/出勤/最终8100汇总不能丢失。",
+      "kind": "content_revision",
+      "reason": "已确认时锁定工资可用，不应置灰；顶部全量人数/出勤/最终8100汇总不能丢失。",
+      "status": "待额度恢复后单轮修正",
+      "attempted": false
+    },
+    {
+      "task_id": "035",
+      "state": "名单空",
+      "old": "06_台账与表格/035_工资_工资编辑_编辑_草稿_390dp_fs1p0_p01_v02.png",
+      "content": "工资批次草稿汇总0人/出勤0天/最终0.00元；保留筛选。列表空正文 当前工资名单为空，请重新生成或人工增加人员。保留人工增加人员和更多菜单入口。不造记录。",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_名单空_v01.png",
+      "prompt": "局部修正附图，保持原风格蓝白白卡字体8/16/24、小平面彩色图标，仅修：名单空换小彩色平面图标，去巨型拟物；保留筛选提示。",
+      "kind": "content_revision",
+      "reason": "名单空换小彩色平面图标，去巨型拟物；保留筛选提示。",
+      "status": "待额度恢复后单轮修正",
+      "attempted": false
+    },
+    {
+      "task_id": "047",
+      "state": "结束次数",
+      "old": "08_系统工具/047_提醒_自定义重复_设置_每周_390dp_fs1p0_p01_v02.png",
+      "content": "原自定义重复每1周/周一周三保持；只改变结束重复为 10次后结束，去掉永不结束。",
+      "path": "09_弹层选择器与菜单/047_批次24_状态_结束次数_v01.png",
+      "prompt": "局部修正附图，保持原风格蓝白白卡字体8/16/24、小平面彩色图标，仅修：结束重复显示值精确 重复 10 次。",
+      "kind": "content_revision",
+      "reason": "结束重复显示值精确 重复 10 次。",
+      "status": "待额度恢复后单轮修正",
+      "attempted": false
+    },
+    {
+      "task_id": "047",
+      "state": "频率选择",
+      "old": "08_系统工具/047_提醒_自定义重复_设置_每周_390dp_fs1p0_p01_v02.png",
+      "path": "09_弹层选择器与菜单/047_批次24_状态_频率选择_v01.png",
+      "prompt": "以附图既有蓝白底白卡字体为唯一风格参考，单张竖屏真实移动UI，保留设计样例与小彩色平面图标/8,16,24间距。仅指定真实状态，无设备壳无拼贴，无解释。需弹层时原页背景变暗，只画一个指定Dialog/BottomSheet。不得新增字段/操作。实际状态：原自定义重复页背景BottomSheet，取消／确定；两列滚轮：数值1选中、单位周选中。单位天/周/月/年，数值上下可见2和3。不加额外业务。",
+      "kind": "missing_image",
+      "status": "usage_limit_reached",
+      "attempted": true
+    },
+    {
+      "task_id": "047",
+      "state": "结束日期",
+      "old": "08_系统工具/047_提醒_自定义重复_设置_每周_390dp_fs1p0_p01_v02.png",
+      "content": "原自定义重复每1周/周一周三保持；只改变结束重复为 2026-11-05结束，去掉永不结束。",
+      "path": "09_弹层选择器与菜单/047_批次24_状态_结束日期_v01.png",
+      "prompt": "生成附图既有蓝白白卡字体原生UI状态。小平面彩色图标、8/16/24间距，单张页面，不拼贴，不加业务或说明，设计样例保留。指定状态：原自定义重复每1周/周一周三保持；只改变结束重复为 2026-11-05结束，去掉永不结束。",
+      "kind": "missing_image",
+      "status": "usage_limit_reached",
+      "attempted": true
+    },
+    {
+      "task_id": "051",
+      "state": "数量详情",
+      "old": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p01_v02.png",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_数量详情_v01.png",
+      "prompt": "局部编辑附图仅修正：补回源码已有底部 关闭 按钮，不新增数量编辑操作。",
+      "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-8a117ebd-0ead-43a6-9fd2-e361cd7a005a.png",
+      "kind": "content_revision",
+      "reason": "补回源码已有底部 关闭 按钮，不新增数量编辑操作。",
+      "status": "待额度恢复后单轮修正",
+      "attempted": false
+    },
+    {
+      "task_id": "051",
+      "state": "福利标准展开",
+      "old": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p01_v02.png",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_福利标准展开_v01.png",
+      "prompt": "局部编辑附图仅修正：公用标准最后一句应为 不发手套、毛巾，纠正错误毛套字。",
+      "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-5f095c16-acdc-40dc-9dd4-3c66bd4969a6.png",
+      "kind": "content_revision",
+      "reason": "公用标准最后一句应为 不发手套、毛巾，纠正错误毛套字。",
+      "status": "待额度恢复后单轮修正",
+      "attempted": false
+    }
+  ],
+  "cancelled_requirements": [
+    "像素尺寸",
+    "宽度适配",
+    "大字体图片"
+  ],
+  "device_acceptance": "用户延期",
+  "unreturned_requests": [],
+  "current_outputs": [
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_工资_工资明细编辑_编辑_已填_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "09_弹层选择器与菜单/035_工资_工资明细编辑_编辑_已填_390dp_fs1p0_p01_v03.prompt.txt",
+      "state": "明细编辑BottomSheet",
+      "screen": 1,
+      "version": 3,
+      "batch": 24,
+      "pixel_width": 853,
+      "sha256": "e988270ffd921af9408076d0d60634a0245629ed34f2176c5f4123acc604e2e6",
+      "pixel_height": 1844,
+      "issues": [],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true,
+      "visual_review": "逐图内容初检",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "041",
+      "path": "08_系统工具/041_我的_工具入口_查看_展开_390dp_fs1p0_p01_v04.png",
+      "prompt_path": "08_系统工具/041_我的_工具入口_查看_展开_390dp_fs1p0_p01_v04.prompt.txt",
+      "state": "展开说明修正",
+      "screen": 1,
+      "version": 4,
+      "batch": 24,
+      "pixel_width": 853,
+      "sha256": "6d287566d4b7c1bc58228f2bbaa313302f8413ae0d8e4759265135a1eb88b5c0",
+      "pixel_height": 1844,
+      "issues": [],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true,
+      "visual_review": "逐图内容初检",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "045",
+      "path": "08_系统工具/045_提醒_自定义时间_设置_已选_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "08_系统工具/045_提醒_自定义时间_设置_已选_390dp_fs1p0_p01_v03.prompt.txt",
+      "state": "响铃说明标点修正",
+      "screen": 1,
+      "version": 3,
+      "batch": 24,
+      "sha256": "2b5b5c71dae48037d50f905c42be3a71c51f55239ecfe46bc5f422b51e81e39f",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "issues": [],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true,
+      "visual_review": "逐图内容初检",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "045",
+      "path": "08_系统工具/045_提醒_自定义时间_设置_禁用响铃_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "08_系统工具/045_提醒_自定义时间_设置_禁用响铃_390dp_fs1p0_p01_v01.prompt.txt",
+      "state": "无提醒响铃禁用",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "pixel_height": 1844,
+      "pixel_width": 853,
+      "sha256": "9a40f94cfa3221b586a814fcea0e92c6817e03c9399775f3af61b8e4aa4c11f6",
+      "issues": [],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true,
+      "visual_review": "逐图内容初检",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "051",
+      "path": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p01_v02.prompt.txt",
+      "state": "福利发放表首屏修正",
+      "screen": 1,
+      "version": 2,
+      "batch": 24,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "06de9e6927a25d0b67fc70cbbded64d3f681094782b9b833e0d480452fcb6219",
+      "issues": [],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true,
+      "visual_review": "逐图内容初检",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "051",
+      "path": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p02_v03.png",
+      "prompt_path": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p02_v03.prompt.txt",
+      "state": "福利发放表续屏修正",
+      "screen": 2,
+      "version": 3,
+      "batch": 24,
+      "pixel_height": 1844,
+      "pixel_width": 853,
+      "sha256": "f48b51ce47f91751be3ff9106638fbc8527b95ff8099c5ca04d8ac1e958e5d51",
+      "issues": [],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true,
+      "visual_review": "逐图内容初检",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "034",
+      "path": "02_工作台/034_工资_临时工薪资_查看_待检查_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "02_工作台/034_工资_临时工薪资_查看_待检查_390dp_fs1p0_p01_v01.prompt.txt",
+      "state": "待检查",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "bde8b9e0c3f8f777d7a7a5435d5321683a43450c40eef15dd36c39e361991374",
+      "issues": [],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true,
+      "visual_review": "逐图内容初检",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_草稿菜单_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_草稿菜单_v01.prompt.txt",
+      "state": "草稿菜单",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "257bf15d6b343d53e29a0c72b5818e782faa10577bc0cfcd422f48aec77d6bc3",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_删除草稿确认_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_删除草稿确认_v01.prompt.txt",
+      "state": "删除草稿确认",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "71ded97ed3ece177239e9b5c1a542d67d8fd57513461c26a35d6c5a19f3079db",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_撤销解锁原因_v02.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_撤销解锁原因_v02.prompt.txt",
+      "state": "撤销解锁原因修正",
+      "screen": 1,
+      "version": 2,
+      "batch": 24,
+      "dims": [
+        853,
+        1843
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1843,
+      "sha256": "0b3a228d988bd0fa800e1fa85875a90ba0f05856480a3506386bbf82d0649160",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_无出勤人工加入_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_无出勤人工加入_v01.prompt.txt",
+      "state": "无出勤人工加入",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "284923e071eab7505a29492da986144f5c46476b321bf05221a8752ba9a81af9",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_人工人员选择_v02.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_人工人员选择_v02.prompt.txt",
+      "state": "人工人员选择修正",
+      "screen": 1,
+      "version": 2,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "5c5dc76222499a5c8c8e23b81d25451507098194acc674127d5d84df52256686",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_确认警告说明_v02.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_确认警告说明_v02.prompt.txt",
+      "state": "确认警告说明修正",
+      "screen": 1,
+      "version": 2,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "26f70f31a899140b4ddf5ebc29af66754c6309680f070f074074a86c03fb36a8",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_金额无效禁用_v02.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_金额无效禁用_v02.prompt.txt",
+      "state": "金额无效禁用修正",
+      "screen": 1,
+      "version": 2,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "ad5e8fb89bf5c62b5461f3d87af8a43ffa5dd8ffd7761c52256725c88933b19c",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "040",
+      "path": "09_弹层选择器与菜单/040_批次24_状态_生效日薪_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/040_批次24_状态_生效日薪_v01.prompt.txt",
+      "state": "生效日薪",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "5d3fb083a765d004ca1a1520addc70c8f546b8f866a44b74600fa7e58ae7baa6",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "040",
+      "path": "09_弹层选择器与菜单/040_批次24_状态_生效月份选择_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/040_批次24_状态_生效月份选择_v01.prompt.txt",
+      "state": "生效月份选择",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "7168553fcaea4150d82d614fd0ebe1cd6066de974abd28e0d7bc906fe9201c84",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "040",
+      "path": "09_弹层选择器与菜单/040_批次24_状态_修改工种_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/040_批次24_状态_修改工种_v01.prompt.txt",
+      "state": "修改工种",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "f31a53fa59339a3cd26d27432aed8be6f74f77e078dc7d87b7f17f34456b9b78",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "042",
+      "path": "09_弹层选择器与菜单/042_批次24_状态_导入预览通过_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/042_批次24_状态_导入预览通过_v01.prompt.txt",
+      "state": "导入预览通过",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "daa260895c5e8dafa0da8b15e359386f9e9accf607dabaa034487cf1d2a5eee2",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "042",
+      "path": "09_弹层选择器与菜单/042_批次24_状态_导入预览错误_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/042_批次24_状态_导入预览错误_v01.prompt.txt",
+      "state": "导入预览错误",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "047133a38d37f4231f406a1c49fb70c0e4c35efea6688a9522ccb916f6772c3a",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "043",
+      "path": "09_弹层选择器与菜单/043_批次24_状态_首次空_v02.png",
+      "prompt_path": "09_弹层选择器与菜单/043_批次24_状态_首次空_v02.prompt.txt",
+      "state": "首次空修正",
+      "screen": 1,
+      "version": 2,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "b39fc831c83644365ffed7e40f95990d8ae2cac9a681c3eef814e7632ce1830a",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "043",
+      "path": "09_弹层选择器与菜单/043_批次24_状态_筛选空_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/043_批次24_状态_筛选空_v01.prompt.txt",
+      "state": "筛选空",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "68f03a29d5177accb4289b8456d2089e7fbcf050e18d7d785da5055be85ebb19",
+      "tool": "built-in imagegen",
+      "issues": [
+        "将巨型拟物插图替换为小彩色平面放大镜，保留真实筛选空文案。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "043",
+      "path": "09_弹层选择器与菜单/043_批次24_状态_删除确认_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/043_批次24_状态_删除确认_v01.prompt.txt",
+      "state": "删除确认",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "b0cbf86b3a56cf7058049f8675de4f0543a4294aa629ac972dd8c54b7e6da699",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "043",
+      "path": "09_弹层选择器与菜单/043_批次24_状态_循环提醒菜单_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/043_批次24_状态_循环提醒菜单_v01.prompt.txt",
+      "state": "循环提醒菜单",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "2afbfb47e362684317c6bc889350e473632813d463e7010495e510fded77ef4f",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "051",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_临时名单_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/051_批次24_状态_临时名单_v01.prompt.txt",
+      "state": "临时名单",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "29960f3ddf06e75744ba2a08ecaffd073d07ad676ed11f58b46703fb7f0e76f6",
+      "tool": "built-in imagegen",
+      "issues": [
+        "补推荐来源：对应福利月份的月度考勤名单；全选/清空保持TextButton，不能部分选择却全选勾选；候选次级行工号和在岗/已离职。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "051",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_福利首次空_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/051_批次24_状态_福利首次空_v01.prompt.txt",
+      "state": "福利首次空",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "c1d2bd6fce4c3705d739b782142ddeb827c657716de36c98e439866ac04b8feb",
+      "tool": "built-in imagegen",
+      "issues": [
+        "换小彩色平面福利图标，去巨型3D箱子、飞机和阴影。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "052",
+      "path": "09_弹层选择器与菜单/052_批次24_状态_新增办公领用_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/052_批次24_状态_新增办公领用_v01.prompt.txt",
+      "state": "新增办公领用",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "0f3aeed97ecb03b904cc923c78a20dddca13555032becb273d9746ca4b660088",
+      "tool": "built-in imagegen",
+      "issues": [
+        "领取人/领取对象是一个自由文本输入；物品名称、数量、单位均TextField，移除箭头/选择器和顶右X，不新增字段。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "053",
+      "path": "09_弹层选择器与菜单/053_批次24_状态_新增工具领用_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/053_批次24_状态_新增工具领用_v01.prompt.txt",
+      "state": "新增工具领用",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "adf0579d78130f6853e40da021c8976252295e3f34e2ecc9dc2b6fc916a86131",
+      "tool": "built-in imagegen",
+      "issues": [
+        "合并领取人和领取对象为一个自由文本字段，物品名称、数量、单位均TextField，移除选择箭头和顶右X。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "052",
+      "path": "09_弹层选择器与菜单/052_批次24_状态_领用表单校验_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/052_批次24_状态_领用表单校验_v01.prompt.txt",
+      "state": "领用表单校验",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "8345b95965f8faec61899d86773ceeefcf20ab16e2e53c00804c0047f47fdf69",
+      "tool": "built-in imagegen",
+      "issues": [
+        "仅一个领取人/领取对象TextField；物品名称/数量/单位都是文本输入，无选择箭头或步进器；校验文字置备注后。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "052",
+      "path": "09_弹层选择器与菜单/052_批次24_状态_重复领取确认_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/052_批次24_状态_重复领取确认_v01.prompt.txt",
+      "state": "重复领取确认",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "585adbf3666312d52d25cc1957f9f63086c5022c1e80430516e0691eeee5c4ef",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "053",
+      "path": "09_弹层选择器与菜单/053_批次24_状态_重复领取确认_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/053_批次24_状态_重复领取确认_v01.prompt.txt",
+      "state": "重复领取确认",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "b72658e428fce832fec8cee8ce03d96bb191d809d896156f1064a4a1c617ea19",
+      "tool": "built-in imagegen",
+      "issues": [
+        "补回Dialog标题 重复领取提醒，正文保持所填对象和物品，操作返回检查/仍然登记。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "052",
+      "path": "09_弹层选择器与菜单/052_批次24_状态_删除办公领用_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/052_批次24_状态_删除办公领用_v01.prompt.txt",
+      "state": "删除办公领用",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "c7b1d706c129f402603d990d8fd7ad70d743798f2e0f460e80c7fef0ce73c929",
+      "tool": "built-in imagegen",
+      "issues": [
+        "删除对象与背景一致：张明 · 签字笔 2支，登记2026-09-18 09:30，禁止删除另一日期/数量。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "053",
+      "path": "09_弹层选择器与菜单/053_批次24_状态_删除工具领用_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/053_批次24_状态_删除工具领用_v01.prompt.txt",
+      "state": "删除工具领用",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "7d2303e5bef7e7cb19f1a68a784e5a293cc23e5a9a1425eaabf048e79368466c",
+      "tool": "built-in imagegen",
+      "issues": [
+        "删除对象与背景一致：陈林 · 活动扳手 1把，登记2026-09-16 08:45。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "049",
+      "path": "09_弹层选择器与菜单/049_批次24_状态_恢复完成_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/049_批次24_状态_恢复完成_v01.prompt.txt",
+      "state": "恢复完成",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "8d3243d44240b3a1bbba2eef3c261dfedf2cc5b836e4c0b19d477d0426f8790d",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "051",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_福利设置_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/051_批次24_状态_福利设置_v01.prompt.txt",
+      "state": "福利设置",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "101e6f82c1fcdc907166c8ff277c60821cac2f73fb806dc6616f763300ff240c",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "051",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_补领_v02.png",
+      "prompt_path": "09_弹层选择器与菜单/051_批次24_状态_补领_v02.prompt.txt",
+      "state": "补领修正",
+      "screen": 1,
+      "version": 2,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "70becf9c11b482d11ae605564155cbcbaf9125d8440041974f0e47c36406a063",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "051",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_未领来源_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/051_批次24_状态_未领来源_v01.prompt.txt",
+      "state": "未领来源",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "b569c75417f9e42c68746555493be7c1887767d2ec568c5d62deea7c0a12a7bc",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "051",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_已领来源_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/051_批次24_状态_已领来源_v01.prompt.txt",
+      "state": "已领来源",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "5445e4c3b26efd57b3c5915f05306902cd390e05cdaacac1a259a050084316be",
+      "tool": "built-in imagegen",
+      "issues": [
+        "来源底部动作文字改为 改为未领取；保持实际签收及登记时间。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "051",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_重置领取确认_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/051_批次24_状态_重置领取确认_v01.prompt.txt",
+      "state": "重置领取确认",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "c9512ac0f43777581354b0156117464036ebe9984046cd2c83e84255b006a5b8",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "051",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_扫路车分配_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/051_批次24_状态_扫路车分配_v01.prompt.txt",
+      "state": "扫路车分配",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "0108dd075eb89c7a7fb34cf3a968620a42035f23bc30eee0091453ae065e157a",
+      "tool": "built-in imagegen",
+      "issues": [
+        "扫路车候选人每行名称下显示employeeNo；去不存在洗衣膏数量列及工种身份替代。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "051",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_分配未满确认_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/051_批次24_状态_分配未满确认_v01.prompt.txt",
+      "state": "分配未满确认",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "c40dd368063edde6c36de077ea67de4d8dc7f4e309e549ec0de09a4207f52b25",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "051",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_公用领取人_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/051_批次24_状态_公用领取人_v01.prompt.txt",
+      "state": "公用领取人",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "3898bc6941bf338722236a4591e25956fc026d6ecfc6093b1f5e036bf1643d6f",
+      "tool": "built-in imagegen",
+      "issues": [
+        "候选人次级行保留 EMP-0001 · 当前在岗 和 EMP-0002 · 当前在岗。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "037",
+      "path": "09_弹层选择器与菜单/037_批次24_状态_工资历史空_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/037_批次24_状态_工资历史空_v01.prompt.txt",
+      "state": "工资历史空",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "59ed7e2fcdbe2ce19e43c4eac506dfdf57eb22a0c8c4b103bed33d3933223a01",
+      "tool": "built-in imagegen",
+      "issues": [
+        "工资历史空时标题样例计数共0条，不能共2条；小平面图标去拟物阴影。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "038",
+      "path": "09_弹层选择器与菜单/038_批次24_状态_工种默认日薪_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/038_批次24_状态_工种默认日薪_v01.prompt.txt",
+      "state": "工种默认日薪",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "8213c6fb4bc858d2b4ebcbfdf5c21a3a5d2055c202b1d7c2680448d8c8b7a35f",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "039",
+      "path": "09_弹层选择器与菜单/039_批次24_状态_导出已完成_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/039_批次24_状态_导出已完成_v01.prompt.txt",
+      "state": "导出已完成",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "8777d00c25722a354e44dfb5479ba7538f515f1129d188885f6da44634acb4ff",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "044",
+      "path": "09_弹层选择器与菜单/044_批次24_状态_编辑提醒_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/044_批次24_状态_编辑提醒_v01.prompt.txt",
+      "state": "编辑提醒",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "36b32eb7ad75b5382539c48c1559c73c698def871805d3f523466640650363fe",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "044",
+      "path": "09_弹层选择器与菜单/044_批次24_状态_关联人员选择_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/044_批次24_状态_关联人员选择_v01.prompt.txt",
+      "state": "关联人员选择",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "0d3496e5fab364d996737a47991f10fca4a2ced40777e5bea3c83d27c36171e8",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "044",
+      "path": "09_弹层选择器与菜单/044_批次24_状态_标题校验_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/044_批次24_状态_标题校验_v01.prompt.txt",
+      "state": "标题校验",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "87bd3e16718648e53b1152d98e52cd30f7854e6397a6b3cbc8abbe647c57799b",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "047",
+      "path": "09_弹层选择器与菜单/047_批次24_状态_每月重复_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/047_批次24_状态_每月重复_v01.prompt.txt",
+      "state": "每月重复",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "66155e74d2cd1ecbf8db0a721b3cd67bf41e2e7dcac8159582257e5d7a683799",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "047",
+      "path": "09_弹层选择器与菜单/047_批次24_状态_结束重复选择_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/047_批次24_状态_结束重复选择_v01.prompt.txt",
+      "state": "结束重复选择",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "cdf733caa49f14983fb81ea835117b7d5e690f6ae55e8a7e6aa6987041009d1a",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "048",
+      "path": "09_弹层选择器与菜单/048_批次24_状态_自定义提前_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/048_批次24_状态_自定义提前_v01.prompt.txt",
+      "state": "自定义提前",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "ad9e0ec9e7b7693944a889d6b881e44abee88e174cd83cb274a186946f49f610",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "050",
+      "path": "09_弹层选择器与菜单/050_批次24_状态_日志有记录_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/050_批次24_状态_日志有记录_v01.prompt.txt",
+      "state": "日志有记录",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "d0854f61e7ace1f49133495c7bcc8beec2484ec73392527687124cb690749e80",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "050",
+      "path": "09_弹层选择器与菜单/050_批次24_状态_日志首次空修正_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/050_批次24_状态_日志首次空修正_v01.prompt.txt",
+      "state": "日志首次空修正",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "f277fc0a4e7a252ff069edb6eb92e984134b6169b3b828cac265e0ec1ae8e2e9",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "052",
+      "path": "09_弹层选择器与菜单/052_批次24_状态_办公用品月空_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/052_批次24_状态_办公用品月空_v01.prompt.txt",
+      "state": "办公用品月空",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "20f1be2116aef8e06da0296464075d1e0b3147db89d3a8df29365bf42c090c53",
+      "tool": "built-in imagegen",
+      "issues": [
+        "将大型拟物箱子改为小平面办公用品图标，保留真实本月空文案。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "053",
+      "path": "09_弹层选择器与菜单/053_批次24_状态_工具月空_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/053_批次24_状态_工具月空_v01.prompt.txt",
+      "state": "工具月空",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "7842aa91e87db8e13c1965bdbba265f7f6bed598a0ca571059c3ddfe9eff5b79",
+      "tool": "built-in imagegen",
+      "issues": [
+        "将大型拟物箱子改为小平面工具图标，保留真实本月空文案。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "052",
+      "path": "09_弹层选择器与菜单/052_批次24_状态_办公用品来源_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/052_批次24_状态_办公用品来源_v01.prompt.txt",
+      "state": "办公用品来源",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "3a0f7c7ca0ab20c59366efa95970a72ea920939e78cfdc2d67050a140859251a",
+      "tool": "built-in imagegen",
+      "issues": [
+        "来源动作改为 改为未领取，保持签收/登记时间。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "053",
+      "path": "09_弹层选择器与菜单/053_批次24_状态_工具来源_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/053_批次24_状态_工具来源_v01.prompt.txt",
+      "state": "工具来源",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "367c09f7889d9baf7a39110b48a55e66f345f65500f028a7069dbda06fe474b2",
+      "tool": "built-in imagegen",
+      "issues": [
+        "来源动作改为 改为未领取，保持工具对象和签收/登记时间。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "053",
+      "path": "09_弹层选择器与菜单/053_批次24_状态_领用表单校验_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/053_批次24_状态_领用表单校验_v01.prompt.txt",
+      "state": "领用表单校验",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "14c62d98d7535c977fa70d37ddf225c77cb99b48146a81ea0261214f47cf1e0d",
+      "tool": "built-in imagegen",
+      "issues": [
+        "一个领取人/领取对象自由文本字段；物品名称、数量、单位TextField，无箭头/步进器；校验置备注后。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_阻断检查_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_阻断检查_v01.prompt.txt",
+      "state": "阻断检查",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "ac097ef2e1e06e8e45163f69d1276c025061dcfd8441b759d3e7c94b1a5d57fa",
+      "tool": "built-in imagegen",
+      "issues": [
+        "Dialog补标题 存在阻断问题；内容保留真实阻断消息ListTile；删除新增大型居中符号。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_警告检查_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_警告检查_v01.prompt.txt",
+      "state": "警告检查",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "12e9f60e8cb1f6c567fd82fba0928560d289f51f9eefbf64022940aa87db4fcd",
+      "tool": "built-in imagegen",
+      "issues": [
+        "Dialog补标题 异常检查；保留警告ListTile真实消息。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_无异常检查_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_无异常检查_v01.prompt.txt",
+      "state": "无异常检查",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "874253cbc2bb35f5a6cadd63ffe552caa6144c488759548bbfd5af5c2f2b9d9f",
+      "tool": "built-in imagegen",
+      "issues": [
+        "Dialog标题 异常检查；小图标ListTile 未发现异常；无异常背景不得保留橙色警告banner。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_已确认菜单_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_已确认菜单_v01.prompt.txt",
+      "state": "已确认菜单",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "4e56e13a1d90b2ef55a1a31c8c747ffc5069576ef47fc01731f18f5fc90413ff",
+      "tool": "built-in imagegen",
+      "issues": [
+        "已确认时锁定工资可用，不应置灰；顶部全量人数/出勤/最终8100汇总不能丢失。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_名单空_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_名单空_v01.prompt.txt",
+      "state": "名单空",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "11a68142b6fafe6a1bd21eee183c751e79f73f8af69ce4c3e69fa8487974f09c",
+      "tool": "built-in imagegen",
+      "issues": [
+        "名单空换小彩色平面图标，去巨型拟物；保留筛选提示。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "043",
+      "path": "09_弹层选择器与菜单/043_批次24_状态_业务提醒偏好_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/043_批次24_状态_业务提醒偏好_v01.prompt.txt",
+      "state": "业务提醒偏好",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "72d7110f640a3350f8748ec9bab13b1ec312cf2e1c654159a8468e05a72d8836",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "初检通过"
+    },
+    {
+      "task_id": "047",
+      "path": "09_弹层选择器与菜单/047_批次24_状态_结束次数_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/047_批次24_状态_结束次数_v01.prompt.txt",
+      "state": "结束次数",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "37e12ccd572720bda69131e051440a7366085646b0239fb4bb10bced755362df",
+      "tool": "built-in imagegen",
+      "issues": [
+        "结束重复显示值精确 重复 10 次。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "051",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_福利标准展开_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/051_批次24_状态_福利标准展开_v01.prompt.txt",
+      "state": "福利标准展开",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "4301a870e921efcd27be1b3b76d423f1bc8f96bc9163f353a84b073aaae74c91",
+      "tool": "built-in imagegen",
+      "issues": [
+        "公用标准最后一句应为 不发手套、毛巾，纠正错误毛套字。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    },
+    {
+      "task_id": "051",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_数量详情_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/051_批次24_状态_数量详情_v01.prompt.txt",
+      "state": "数量详情",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "d742e6f89eecacbfb73d24dd1b478e163dde16f26696b8a34c139b7ba6f66a54",
+      "tool": "built-in imagegen",
+      "issues": [
+        "补回源码已有底部 关闭 按钮，不新增数量编辑操作。"
+      ],
+      "visual_review": "逐图内容初检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "content_review_status": "需修正"
+    }
+  ],
+  "old_outputs": [
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_撤销解锁原因_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_撤销解锁原因_v01.prompt.txt",
+      "state": "撤销解锁原因",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "dbf278b215fde9d1e92c695c4c294d97fcacfcc7aa58e293cda831c69df1e7d2",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "待接续目检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_人工人员选择_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_人工人员选择_v01.prompt.txt",
+      "state": "人工人员选择",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "dba169d15dc512adcbf8f95e7bddae4d76e6bff48a0de773811fa5c2d1780850",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "待接续目检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_确认警告说明_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_确认警告说明_v01.prompt.txt",
+      "state": "确认警告说明",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "1d0439eea7b28efc71fe8ac19022326f0efd5ede911941e3db47679614c62d58",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "待接续目检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_批次24_状态_金额无效禁用_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/035_批次24_状态_金额无效禁用_v01.prompt.txt",
+      "state": "金额无效禁用",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "1fc1b85f8ec90ddb0ff8af1aecfd8dfebe1a82a91f77fe858398b31dfad90aff",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "待接续目检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免"
+    },
+    {
+      "task_id": "043",
+      "path": "09_弹层选择器与菜单/043_批次24_状态_首次空_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/043_批次24_状态_首次空_v01.prompt.txt",
+      "state": "首次空",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "056bd20656245aa6934d5d200d3070bb5a2c241ed066019233421395f8f19670",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "待接续目检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免"
+    },
+    {
+      "task_id": "051",
+      "path": "09_弹层选择器与菜单/051_批次24_状态_补领_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/051_批次24_状态_补领_v01.prompt.txt",
+      "state": "补领",
+      "screen": 1,
+      "version": 1,
+      "batch": 24,
+      "dims": [
+        853,
+        1844
+      ],
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "b5eb916982b7331165b6768e8345271962b6bf99f4904f1a5952bcdd881db84e",
+      "tool": "built-in imagegen",
+      "issues": [],
+      "visual_review": "待接续目检",
+      "decoded_metadata_verified": true,
+      "resolution_requirement_status": "用户豁免"
+    },
+    {
+      "task_id": "035",
+      "path": "09_弹层选择器与菜单/035_工资_工资明细编辑_编辑_已填_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "09_弹层选择器与菜单/035_工资_工资明细编辑_编辑_已填_390dp_fs1p0_p01_v02.prompt.txt",
+      "state": "明细编辑BottomSheet",
+      "screen": 1,
+      "version": 2,
+      "batch": 24,
+      "sha256": "6a69267850a090144473647516ad5ecf5cdf0ed6fe5a6b825936a8f0c97ac165",
+      "pixel_height": 1844,
+      "pixel_width": 853,
+      "issues": [
+        "字段输入标签仍在同层左侧，未落实上方标签；逐字段新增彩色图标不符既有普通表单克制原则，具体字阶未验收"
+      ],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "041",
+      "path": "08_系统工具/041_我的_工具入口_查看_展开_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "08_系统工具/041_我的_工具入口_查看_展开_390dp_fs1p0_p01_v03.prompt.txt",
+      "state": "展开说明修正",
+      "screen": 1,
+      "version": 3,
+      "batch": 24,
+      "pixel_height": 1844,
+      "sha256": "b0fc96f4dc190c59fdf2fd77114317c5162eb844ae3cb661655329b72befc10d",
+      "pixel_width": 853,
+      "issues": [
+        "第四位已透明、说明移出卡但仍横向三列，未落实纵向三行，需必要修正"
+      ],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "051",
+      "path": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p02_v02.png",
+      "prompt_path": "06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p02_v02.prompt.txt",
+      "state": "福利发放表续屏修正",
+      "screen": 2,
+      "version": 2,
+      "batch": 24,
+      "pixel_height": 1844,
+      "sha256": "8baf4fcd5ddc85004273ba3fe8628dddee8eeab8fb0e0ca4bd38bcd3d348e110",
+      "pixel_width": 853,
+      "issues": [
+        "标题下设计样例漏，需局部补标识"
+      ],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    }
+  ],
+  "image_content_delivery": "已有返回图已归档、逐图初检和源码状态合同已交付；图片业务修正及缺图因额度未完成",
+  "failed_calls": 3,
+  "attempted_calls": 78,
+  "usable_current_image_count": 40,
+  "failed_requests": [
+    {
+      "task_id": "043",
+      "state": "筛选空",
+      "old": "03_列表与记录/043_提醒_备忘提醒_查看_待办_390dp_fs1p0_p01_v02.png",
+      "path": "09_弹层选择器与菜单/043_批次24_状态_筛选空_v01.png",
+      "prompt": "局部修正附图，保持原风格蓝白白卡字体8/16/24、小平面彩色图标，仅修：将巨型拟物插图替换为小彩色平面放大镜，保留真实筛选空文案。",
+      "kind": "failed_revision",
+      "reason": "将巨型拟物插图替换为小彩色平面放大镜，保留真实筛选空文案。",
+      "status": "待额度恢复后单轮修正",
+      "attempted": true
+    },
+    {
+      "task_id": "047",
+      "state": "频率选择",
+      "old": "08_系统工具/047_提醒_自定义重复_设置_每周_390dp_fs1p0_p01_v02.png",
+      "path": "09_弹层选择器与菜单/047_批次24_状态_频率选择_v01.png",
+      "prompt": "以附图既有蓝白底白卡字体为唯一风格参考，单张竖屏真实移动UI，保留设计样例与小彩色平面图标/8,16,24间距。仅指定真实状态，无设备壳无拼贴，无解释。需弹层时原页背景变暗，只画一个指定Dialog/BottomSheet。不得新增字段/操作。实际状态：原自定义重复页背景BottomSheet，取消／确定；两列滚轮：数值1选中、单位周选中。单位天/周/月/年，数值上下可见2和3。不加额外业务。",
+      "kind": "missing_image",
+      "status": "usage_limit_reached",
+      "attempted": true
+    },
+    {
+      "task_id": "047",
+      "state": "结束日期",
+      "old": "08_系统工具/047_提醒_自定义重复_设置_每周_390dp_fs1p0_p01_v02.png",
+      "content": "原自定义重复每1周/周一周三保持；只改变结束重复为 2026-11-05结束，去掉永不结束。",
+      "path": "09_弹层选择器与菜单/047_批次24_状态_结束日期_v01.png",
+      "prompt": "生成附图既有蓝白白卡字体原生UI状态。小平面彩色图标、8/16/24间距，单张页面，不拼贴，不加业务或说明，设计样例保留。指定状态：原自定义重复每1周/周一周三保持；只改变结束重复为 2026-11-05结束，去掉永不结束。",
+      "kind": "missing_image",
+      "status": "usage_limit_reached",
+      "attempted": true
+    }
+  ],
+  "blocker": "imagegen usage_limit_reached"
+}

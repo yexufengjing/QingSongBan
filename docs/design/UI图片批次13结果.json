@@ -1,0 +1,463 @@
+{
+  "batch": 13,
+  "spec_stage": 10,
+  "date": "2026-10-06",
+  "task_ids": [
+    "062",
+    "063",
+    "064",
+    "065",
+    "066",
+    "067"
+  ],
+  "calls": 17,
+  "returned_image_count": 17,
+  "current_reference_image_count": 10,
+  "retained_old_image_count": 7,
+  "outputs": [
+    {
+      "task_id": "062",
+      "path": "04_详情/062_车辆_详情维修_查看_有数据_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "04_详情/062_车辆_详情维修_查看_有数据_390dp_fs1p0_p01_v02.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "181ca505e9509afbbebf143c121eefe76f0ac4e81e4dee78a000a092fdbf2b62",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1.0,
+      "version": 2,
+      "screen": 1,
+      "state": "有数据",
+      "batch": 13,
+      "tool": "built-in imagegen",
+      "style_reference_ids": [
+        "006",
+        "031"
+      ],
+      "issues": [],
+      "resolution_requirement_met": false,
+      "visual_review": "内容初检，精确视觉与设备未验收",
+      "user_review": "待最终验收"
+    },
+    {
+      "task_id": "063",
+      "path": "04_详情/063_车辆_详情费用_查看_年度明细_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "04_详情/063_车辆_详情费用_查看_年度明细_390dp_fs1p0_p01_v02.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "c9d696181eedb7b18ae566c75129410ee31e2bd5201bd8be5ce9befe173b50b4",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1.0,
+      "version": 2,
+      "screen": 1,
+      "state": "年度明细",
+      "batch": 13,
+      "tool": "built-in imagegen",
+      "style_reference_ids": [
+        "006",
+        "031"
+      ],
+      "issues": [],
+      "resolution_requirement_met": false,
+      "visual_review": "内容初检，精确视觉与设备未验收",
+      "user_review": "待最终验收"
+    },
+    {
+      "task_id": "063",
+      "path": "04_详情/063_车辆_详情费用_查看_年度明细_390dp_fs1p0_p02_v01.png",
+      "prompt_path": "04_详情/063_车辆_详情费用_查看_年度明细_390dp_fs1p0_p02_v01.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "6113cbba6ae0350d346988a703b3f8e510cdf03a62750973970a94f94be9af9e",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1.0,
+      "version": 1,
+      "screen": 2,
+      "state": "年度明细",
+      "batch": 13,
+      "tool": "built-in imagegen",
+      "style_reference_ids": [
+        "006",
+        "031"
+      ],
+      "issues": [],
+      "resolution_requirement_met": false,
+      "visual_review": "内容初检，精确视觉与设备未验收",
+      "user_review": "待最终验收"
+    },
+    {
+      "task_id": "064",
+      "path": "04_详情/064_车辆_详情车况_查看_正常_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "04_详情/064_车辆_详情车况_查看_正常_390dp_fs1p0_p01_v02.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "4f9aadd9b4bbb8759a6c9a28312d56536fea2bccdde48e81c67d753d79ecef1a",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1.0,
+      "version": 2,
+      "screen": 1,
+      "state": "正常",
+      "batch": 13,
+      "tool": "built-in imagegen",
+      "style_reference_ids": [
+        "006",
+        "031"
+      ],
+      "issues": [
+        "工作区域与责任人仍未补回身份卡；空态/示意图占比偏大，字体与组件比例需验收"
+      ],
+      "resolution_requirement_met": false,
+      "visual_review": "已知偏差待修",
+      "user_review": "待最终验收"
+    },
+    {
+      "task_id": "064",
+      "path": "04_详情/064_车辆_详情车况_查看_正常_390dp_fs1p0_p02_v01.png",
+      "prompt_path": "04_详情/064_车辆_详情车况_查看_正常_390dp_fs1p0_p02_v01.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "c07180ebc68c52c52c5e8e5f13e5d2c3ce818b414d4450116ffee272b53e2650",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1.0,
+      "version": 1,
+      "screen": 2,
+      "state": "正常",
+      "batch": 13,
+      "tool": "built-in imagegen",
+      "style_reference_ids": [
+        "006",
+        "031"
+      ],
+      "issues": [],
+      "resolution_requirement_met": false,
+      "visual_review": "内容初检，精确视觉与设备未验收",
+      "user_review": "待最终验收"
+    },
+    {
+      "task_id": "065",
+      "path": "04_详情/065_车辆_详情保养备件_查看_保养计划_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "04_详情/065_车辆_详情保养备件_查看_保养计划_390dp_fs1p0_p01_v02.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "104b6905613debbbc2cfc9ebfd9ad930a69e88a76a2385eff89ee7cbcf02ec72",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1.0,
+      "version": 2,
+      "screen": 1,
+      "state": "保养计划",
+      "batch": 13,
+      "tool": "built-in imagegen",
+      "style_reference_ids": [
+        "006",
+        "031"
+      ],
+      "issues": [
+        "保养名称仍误写主机油/主机油滤芯，未准确保留主机机油/主机机油滤芯"
+      ],
+      "resolution_requirement_met": false,
+      "visual_review": "已知偏差待修",
+      "user_review": "待最终验收"
+    },
+    {
+      "task_id": "065",
+      "path": "04_详情/065_车辆_详情保养备件_查看_备件寿命_390dp_fs1p0_p02_v02.png",
+      "prompt_path": "04_详情/065_车辆_详情保养备件_查看_备件寿命_390dp_fs1p0_p02_v02.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "cf044b70be866a0b9cfb8cfa0723fed16b995b7abc789b24f6895df1776d3dc8",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1.0,
+      "version": 2,
+      "screen": 2,
+      "state": "备件寿命",
+      "batch": 13,
+      "tool": "built-in imagegen",
+      "style_reference_ids": [
+        "006",
+        "031"
+      ],
+      "issues": [],
+      "resolution_requirement_met": false,
+      "visual_review": "内容初检，精确视觉与设备未验收",
+      "user_review": "待最终验收"
+    },
+    {
+      "task_id": "066",
+      "path": "04_详情/066_车辆_详情油耗_录入_已填_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "04_详情/066_车辆_详情油耗_录入_已填_390dp_fs1p0_p01_v01.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "eae47491bb2f6fce9f99d2234887c5aa4afe86311255236f281c94e04cad9191",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1.0,
+      "version": 1,
+      "screen": 1,
+      "state": "已填",
+      "batch": 13,
+      "tool": "built-in imagegen",
+      "style_reference_ids": [
+        "006",
+        "031"
+      ],
+      "issues": [],
+      "resolution_requirement_met": false,
+      "visual_review": "内容初检，精确视觉与设备未验收",
+      "user_review": "待最终验收"
+    },
+    {
+      "task_id": "066",
+      "path": "04_详情/066_车辆_详情油耗_查看_年度汇总_390dp_fs1p0_p02_v02.png",
+      "prompt_path": "04_详情/066_车辆_详情油耗_查看_年度汇总_390dp_fs1p0_p02_v02.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "da5e1a00da6eb337d988bbf7f1ffa4633ebed0766793eac15c4b1abf39b895e1",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1.0,
+      "version": 2,
+      "screen": 2,
+      "state": "年度汇总",
+      "batch": 13,
+      "tool": "built-in imagegen",
+      "style_reference_ids": [
+        "006",
+        "031"
+      ],
+      "issues": [
+        "三个指标的图标与名称仍分层，没有落实同层约束"
+      ],
+      "resolution_requirement_met": false,
+      "visual_review": "已知偏差待修",
+      "user_review": "待最终验收"
+    },
+    {
+      "task_id": "067",
+      "path": "04_详情/067_车辆_详情提醒_查看_首次空_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "04_详情/067_车辆_详情提醒_查看_首次空_390dp_fs1p0_p01_v02.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "4c5420ad6f73a1eadd5af1490d5463750e85a6c80748508a9fae9d28167ad0ce",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1.0,
+      "version": 2,
+      "screen": 1,
+      "state": "首次空",
+      "batch": 13,
+      "tool": "built-in imagegen",
+      "style_reference_ids": [
+        "006",
+        "031"
+      ],
+      "issues": [
+        "修订遗漏异常筛选项",
+        "工作区域与责任人被加为独立档案分区，未补入固定身份卡",
+        "空态图标仍偏大，未按要求改为小扁平图标"
+      ],
+      "resolution_requirement_met": false,
+      "visual_review": "已知偏差待修",
+      "user_review": "待最终验收"
+    }
+  ],
+  "retained_old_outputs": [
+    {
+      "task_id": "062",
+      "path": "04_详情/062_车辆_详情维修_查看_有数据_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "04_详情/062_车辆_详情维修_查看_有数据_390dp_fs1p0_p01_v01.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "27cab2e914d3fb82310b6c16829f63460bbdb972aa1aac92d45ea049bf1a8b49",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1.0,
+      "version": 1,
+      "screen": 1,
+      "state": "有数据",
+      "batch": 13,
+      "tool": "built-in imagegen",
+      "style_reference_ids": [
+        "006",
+        "031"
+      ],
+      "issues": [
+        "被新版取代，仅作对照"
+      ],
+      "resolution_requirement_met": false,
+      "visual_review": "内容初检，精确视觉与设备未验收",
+      "user_review": "待最终验收"
+    },
+    {
+      "task_id": "063",
+      "path": "04_详情/063_车辆_详情费用_查看_年度明细_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "04_详情/063_车辆_详情费用_查看_年度明细_390dp_fs1p0_p01_v01.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "f1fdfa2e5283bbb7bed61379368b2a77c3ae4515858d29efdcd5c373612f5c52",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1.0,
+      "version": 1,
+      "screen": 1,
+      "state": "年度明细",
+      "batch": 13,
+      "tool": "built-in imagegen",
+      "style_reference_ids": [
+        "006",
+        "031"
+      ],
+      "issues": [
+        "被新版取代，仅作对照"
+      ],
+      "resolution_requirement_met": false,
+      "visual_review": "内容初检，精确视觉与设备未验收",
+      "user_review": "待最终验收"
+    },
+    {
+      "task_id": "064",
+      "path": "04_详情/064_车辆_详情车况_查看_正常_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "04_详情/064_车辆_详情车况_查看_正常_390dp_fs1p0_p01_v01.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "6fd566b84ee87ee1e47a5a20bcff8fd849325ddf6b7b6ce49f8a7d6d15b17cca",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1.0,
+      "version": 1,
+      "screen": 1,
+      "state": "正常",
+      "batch": 13,
+      "tool": "built-in imagegen",
+      "style_reference_ids": [
+        "006",
+        "031"
+      ],
+      "issues": [
+        "被新版取代，仅作对照"
+      ],
+      "resolution_requirement_met": false,
+      "visual_review": "已知偏差待修",
+      "user_review": "待最终验收"
+    },
+    {
+      "task_id": "065",
+      "path": "04_详情/065_车辆_详情保养备件_查看_保养计划_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "04_详情/065_车辆_详情保养备件_查看_保养计划_390dp_fs1p0_p01_v01.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "462a9b4a3cf4f17103ba66eb0a0b64b0d8b369e355fc067f53a274934e4b1d9b",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1.0,
+      "version": 1,
+      "screen": 1,
+      "state": "保养计划",
+      "batch": 13,
+      "tool": "built-in imagegen",
+      "style_reference_ids": [
+        "006",
+        "031"
+      ],
+      "issues": [
+        "被新版取代，仅作对照"
+      ],
+      "resolution_requirement_met": false,
+      "visual_review": "已知偏差待修",
+      "user_review": "待最终验收"
+    },
+    {
+      "task_id": "065",
+      "path": "04_详情/065_车辆_详情保养备件_查看_备件寿命_390dp_fs1p0_p02_v01.png",
+      "prompt_path": "04_详情/065_车辆_详情保养备件_查看_备件寿命_390dp_fs1p0_p02_v01.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "31218d83e095e74b003525f5f068eca3aa5ee4ef83dd332acbba055c09f06940",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1.0,
+      "version": 1,
+      "screen": 2,
+      "state": "备件寿命",
+      "batch": 13,
+      "tool": "built-in imagegen",
+      "style_reference_ids": [
+        "006",
+        "031"
+      ],
+      "issues": [
+        "被新版取代，仅作对照"
+      ],
+      "resolution_requirement_met": false,
+      "visual_review": "内容初检，精确视觉与设备未验收",
+      "user_review": "待最终验收"
+    },
+    {
+      "task_id": "066",
+      "path": "04_详情/066_车辆_详情油耗_查看_年度汇总_390dp_fs1p0_p02_v01.png",
+      "prompt_path": "04_详情/066_车辆_详情油耗_查看_年度汇总_390dp_fs1p0_p02_v01.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "6451951b309b93ff30599be419cd05ac2a0d7bb4c9d01161476a4e58253fa197",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1.0,
+      "version": 1,
+      "screen": 2,
+      "state": "年度汇总",
+      "batch": 13,
+      "tool": "built-in imagegen",
+      "style_reference_ids": [
+        "006",
+        "031"
+      ],
+      "issues": [
+        "被新版取代，仅作对照"
+      ],
+      "resolution_requirement_met": false,
+      "visual_review": "已知偏差待修",
+      "user_review": "待最终验收"
+    },
+    {
+      "task_id": "067",
+      "path": "04_详情/067_车辆_详情提醒_查看_首次空_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "04_详情/067_车辆_详情提醒_查看_首次空_390dp_fs1p0_p01_v01.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "75593b255b691e94bc146cbc4ac4e8deeb79cf939fbf18d631d75d386051276f",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1.0,
+      "version": 1,
+      "screen": 1,
+      "state": "首次空",
+      "batch": 13,
+      "tool": "built-in imagegen",
+      "style_reference_ids": [
+        "006",
+        "031"
+      ],
+      "issues": [
+        "被新版取代，仅作对照"
+      ],
+      "resolution_requirement_met": false,
+      "visual_review": "已知偏差待修",
+      "user_review": "待最终验收"
+    }
+  ],
+  "status": "全部低于目标分辨率；存在已知内容/组件缺口，阶段未完成",
+  "pending": [
+    "064身份卡字段",
+    "065保养项目名",
+    "066指标同层",
+    "067异常筛选与身份卡/空态",
+    "1560×3376目标分辨率",
+    "其余适用状态、360dp及大字体",
+    "最终验收"
+  ]
+}

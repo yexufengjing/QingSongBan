@@ -1,0 +1,1 @@
+Edit attached existing mobile UI. Preserve blue-white gradient, all source business fields. One standalone 390dp screenshot, no collage or shell. Only change bottom 保存物资 button to disabled pale-blue busy button with small spinner and EXACT 正在保存…. All entered fields/switch states preserved. No full-screen blocking spinner, no success notification, no percentage.

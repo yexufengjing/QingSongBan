@@ -1,0 +1,1 @@
+Make only these LOCAL corrections to attached blue-white mobile modal UI, do not add or change anything else. Remove dropdown arrow from 领取地点, a plain text field. Remove 取消 button. Exactly ONE full-width blue 设为待领取. Title EXACT 收到物资入厂通知. Preserve通知日期2026-10-04,领取地点（选填）物资仓库. Header tiny flat outline icon without square background. Output one screenshot, no collage/shell.

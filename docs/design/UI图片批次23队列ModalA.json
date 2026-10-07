@@ -1,0 +1,50 @@
+[
+  {
+    "task_id": "091",
+    "source": "lib/features/purchase/presentation/purchase_create_page.dart",
+    "old": "05_表单与编辑/091_采购_新建待申报_新增_已填_390dp_fs1p0_p01_v03.png",
+    "screen": 1,
+    "path": "05_表单与编辑/091_采购_新建待申报_新增_已填_状态_手动新增物资_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "原生流程状态补图"
+    ],
+    "prompt": "以附图为唯一既有蓝白轻渐变UI参考，输出单张390dp/fontScale1真实原生弹层流程画面。业务背景模糊变暗不改样例数据，弹层简洁可读小彩色扁平图标。灰色背景上白色居中圆角对话框，标题手动新增物资。4字段：物资名称（空）、规格型号（选填）（空）、单位（件）、申报数量（1）；取消／添加。没有库存绑定信息、当前库存或最低库存。只显示指定一个真实弹层，不拼贴、不加设备壳和解释文字。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-980ca16d-a45d-42f2-b2ef-ce5a83819d8c.png"
+  },
+  {
+    "task_id": "091",
+    "source": "lib/features/purchase/presentation/purchase_create_page.dart",
+    "old": "05_表单与编辑/091_采购_新建待申报_新增_已填_390dp_fs1p0_p01_v03.png",
+    "screen": 1,
+    "path": "05_表单与编辑/091_采购_新建待申报_新增_已填_状态_重复采购提醒_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "原生流程状态补图"
+    ],
+    "prompt": "以附图为唯一既有蓝白轻渐变UI参考，输出单张390dp/fontScale1真实原生弹层流程画面。业务背景模糊变暗不改样例数据，弹层简洁可读小彩色扁平图标。灰色背景白色居中对话框：已有未完成采购；劳保手套 当前已有未完成采购记录。；查看已有记录／继续创建。不增加强制禁止创建。只显示指定一个真实弹层，不拼贴、不加设备壳和解释文字。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-23476d26-394e-4f51-b7ac-773634817b27.png"
+  },
+  {
+    "task_id": "094",
+    "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+    "old": "04_详情/094_采购_采购详情_查看_待领取_390dp_fs1p0_p01_v04.png",
+    "screen": 1,
+    "path": "04_详情/094_采购_采购详情_查看_待领取_状态_OA申报确认_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "原生流程状态补图"
+    ],
+    "prompt": "以附图为唯一既有蓝白轻渐变UI参考，输出单张390dp/fontScale1真实原生弹层流程画面。业务背景模糊变暗不改样例数据，弹层简洁可读小彩色扁平图标。当前采购详情做灰色背景，下方白色圆角Bottom Sheet：确认已完成 OA 申报；OA申报日期2026-09-25（可点）；OA流程编号（可选）OA-20260925-01；OA流程标题（可选）劳保用品采购；OA流程链接（可选）https://oa.example.com/20260925；单个蓝色确认按钮。无取消动作、无保存进度。只显示指定一个真实弹层，不拼贴、不加设备壳和解释文字。背景采购记录处于待申报，状态标签改为待申报，OA日期及采购执行日期尚未保存；不能仍显示待领取。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-8e2a9c0a-a073-4146-a1e0-02d6dafb13d8.png"
+  },
+  {
+    "task_id": "094",
+    "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+    "old": "04_详情/094_采购_采购详情_查看_待领取_390dp_fs1p0_p01_v04.png",
+    "screen": 1,
+    "path": "04_详情/094_采购_采购详情_查看_待领取_状态_采购分配填写_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "原生流程状态补图"
+    ],
+    "prompt": "以附图为唯一既有蓝白轻渐变UI参考，输出单张390dp/fontScale1真实原生弹层流程画面。业务背景模糊变暗不改样例数据，弹层简洁可读小彩色扁平图标。灰色背景白色Bottom Sheet：采购执行信息；分配日期2026-09-26（可点）；采购分部（选填）资材分部；采购执行人（选填）李明；确认按钮。无强制必填星号。只显示指定一个真实弹层，不拼贴、不加设备壳和解释文字。背景采购记录处于已申报，状态标签改为已申报，分配与入厂通知尚未保存，不能仍显示待领取。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-e35e0e7b-e939-4ab0-bc6d-c8c0f9bd7c32.png"
+  }
+]

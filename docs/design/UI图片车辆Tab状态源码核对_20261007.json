@@ -1,0 +1,292 @@
+[
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_condition_tab.dart",
+    "line": 92,
+    "text": "final result = await showDialog<(VehicleConditionStatus, String)?>("
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_condition_tab.dart",
+    "line": 141,
+    "text": "Widget build(BuildContext context) => AlertDialog("
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_condition_tab.dart",
+    "line": 142,
+    "text": "title: Text("
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_condition_tab.dart",
+    "line": 151,
+    "text": "decoration: const InputDecoration(labelText: '状态'),"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_condition_tab.dart",
+    "line": 168,
+    "text": "labelText: '问题或处理备注',"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_condition_tab.dart",
+    "line": 176,
+    "text": "TextButton(onPressed: () => context.pop(), child: const Text('取消')),"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_condition_tab.dart",
+    "line": 177,
+    "text": "FilledButton("
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_condition_tab.dart",
+    "line": 221,
+    "text": "'暂无需要处理的部件问题',"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_condition_tab.dart",
+    "line": 270,
+    "text": "TextButton("
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_condition_tab.dart",
+    "line": 319,
+    "text": "issueCount == 0 ? '暂无异常' : '$issueCount 项异常',"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_condition_tab.dart",
+    "line": 367,
+    "text": "title: VehicleConditionOptions.componentLabel(component.$1),"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_condition_tab.dart",
+    "line": 402,
+    "text": "title: Text(title),"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_condition_tab.dart",
+    "line": 403,
+    "text": "subtitle: Text("
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_condition_tab.dart",
+    "line": 406,
+    "text": "trailing: TextButton("
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_condition_tab.dart",
+    "line": 556,
+    "text": "title: const Text('车况数据加载失败'),"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_condition_tab.dart",
+    "line": 557,
+    "text": "subtitle: Text(message),"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_expense_tab.dart",
+    "line": 63,
+    "text": "error: (error, _) => Text('费用加载失败：$error'),"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_expense_tab.dart",
+    "line": 486,
+    "text": "title: Text(item.category),"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_expense_tab.dart",
+    "line": 487,
+    "text": "subtitle: Text("
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_expense_tab.dart",
+    "line": 521,
+    "text": "error: (_, _) => const Text('维修项目加载失败'),"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_expense_tab.dart",
+    "line": 543,
+    "text": "'本年度暂无维修项目记录',"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_expense_tab.dart",
+    "line": 557,
+    "text": "title: Text("
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_expense_tab.dart",
+    "line": 627,
+    "text": "const Text('暂无异常或临近到期提醒', style: TextStyle(color: AppColors.body))"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_expense_tab.dart",
+    "line": 637,
+    "text": "title: Text("
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_expense_tab.dart",
+    "line": 640,
+    "text": "subtitle: Text("
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_expense_tab.dart",
+    "line": 654,
+    "text": "title: Text(item.reminder.title),"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_expense_tab.dart",
+    "line": 655,
+    "text": "subtitle: Text("
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_fuel_tab.dart",
+    "line": 108,
+    "text": "error: (error, _) => Text('油耗记录加载失败：$error'),"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_fuel_tab.dart",
+    "line": 213,
+    "text": "labelText: '月份',"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_fuel_tab.dart",
+    "line": 240,
+    "text": "labelText: '油耗量 (L)',"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_fuel_tab.dart",
+    "line": 256,
+    "text": "labelText: '金额 (元)',"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_fuel_tab.dart",
+    "line": 268,
+    "text": "child: FilledButton("
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_fuel_tab.dart",
+    "line": 270,
+    "text": "style: FilledButton.styleFrom("
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_fuel_tab.dart",
+    "line": 336,
+    "text": "final saved = await showDialog<bool>("
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_fuel_tab.dart",
+    "line": 371,
+    "text": "final confirmed = await showDialog<bool>("
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_fuel_tab.dart",
+    "line": 373,
+    "text": "builder: (dialogContext) => AlertDialog("
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_fuel_tab.dart",
+    "line": 374,
+    "text": "title: const Text('删除这条油耗记录？'),"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_fuel_tab.dart",
+    "line": 377,
+    "text": "TextButton("
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_fuel_tab.dart",
+    "line": 381,
+    "text": "FilledButton("
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_fuel_tab.dart",
+    "line": 430,
+    "text": "Widget build(BuildContext context) => AlertDialog("
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_fuel_tab.dart",
+    "line": 431,
+    "text": "title: Text(widget.existing ? '编辑月度油耗' : '录入月度油耗'),"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_fuel_tab.dart",
+    "line": 439,
+    "text": "decoration: const InputDecoration(labelText: '月份（1-12）'),"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_fuel_tab.dart",
+    "line": 445,
+    "text": "decoration: const InputDecoration(labelText: '加油量（升）'),"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_fuel_tab.dart",
+    "line": 451,
+    "text": "decoration: const InputDecoration(labelText: '油费金额（元）'),"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_fuel_tab.dart",
+    "line": 459,
+    "text": "TextButton("
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_fuel_tab.dart",
+    "line": 463,
+    "text": "FilledButton("
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_fuel_tab.dart",
+    "line": 597,
+    "text": "title: Text(AppDateUtils.yearMonth(DateTime(item.year, item.month))),"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_fuel_tab.dart",
+    "line": 598,
+    "text": "subtitle: Text("
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_maintenance_tab.dart",
+    "line": 61,
+    "text": "TextButton.icon("
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_maintenance_tab.dart",
+    "line": 71,
+    "text": "error: (error, _) => Text('保养项目加载失败：$error'),"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_maintenance_tab.dart",
+    "line": 96,
+    "text": "error: (error, _) => Text('部件寿命加载失败：$error'),"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_maintenance_tab.dart",
+    "line": 320,
+    "text": "title: Text(record.name),"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_maintenance_tab.dart",
+    "line": 321,
+    "text": "subtitle: Text("
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_repair_tab.dart",
+    "line": 116,
+    "text": "FilledButton.icon("
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_repair_tab.dart",
+    "line": 118,
+    "text": "style: FilledButton.styleFrom("
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_repair_tab.dart",
+    "line": 239,
+    "text": "const Text('暂无维修记录'),"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_repair_tab.dart",
+    "line": 480,
+    "text": "title: const Text('维修记录加载失败'),"
+  },
+  {
+    "source": "lib/features/vehicles/presentation/vehicle_repair_tab.dart",
+    "line": 481,
+    "text": "subtitle: Text(message),"
+  }
+]

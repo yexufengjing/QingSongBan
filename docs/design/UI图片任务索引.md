@@ -1,121 +1,953 @@
-# UI 图片任务索引
+# UI图片任务索引
 
-最新视觉基准：`UI卡片风格参考_20261004.png`。当前用户要求优先于旧文档冲突的视觉规则。主态和全部适配／状态交付分开记录。
+## 2026-10-07用户停止任务（当前）
+
+已记录进度并停止生图。本轮50张当前候选：35批29、36批8、37批13；48张内容初检通过，2张仍需明确文字修正。尺寸/宽度/大字体取消，设备及代码交互延期。下文旧待办为历史记录，当前以[暂停记录](UI图片当前任务暂停记录_20261007.md)及[交接JSON](UI图片本轮未完成交接_20261007.json)为准。
 
 
-原规范阶段与实际生成批次分开记录，完整顺序见[UI图片阶段推进总览](UI图片阶段推进总览.md)。当前57项有图（含待修／对照稿），045及059—061尝试无结果，062—112共51项未开始；所有阶段完整适配／状态包和最终验收仍未完成。
+## 2026-10-07额度恢复前历史快照
 
-| 序号 | 展示面 | 类型 | 对应源码 | 进度 |
-|---|---|---|---|---|
-| 001 | 全局组件规范板 | 01_组件规范 | 共享展示面／组件规范 | 四屏旧版保留，第3屏参考图新版v02已生成；其余新版分屏及适配待补 |
-| 002 | 首页－概览视图 | 02_工作台 | lib/features/home/presentation/home_page.dart | 首页主态v02调整完成；旧版保留，适配和其它状态未生成 |
-| 003 | 首页－处理视图 | 02_工作台 | lib/features/home/presentation/home_page.dart | 首页主态v02调整完成；旧版保留，适配和其它状态未生成 |
-| 004 | 每日考勤 | 06_台账与表格 | lib/features/attendance/presentation/daily_attendance_page.dart | 阶段2主态已生成；390dp/1.0，适配及其他状态待补 |
-| 005 | 车辆档案列表 | 03_列表与记录 | lib/features/vehicles/presentation/vehicle_archive_page.dart | 阶段2主态已生成；390dp/1.0，适配及其他状态待补 |
-| 006 | 车辆详情－档案 | 04_详情 | lib/features/vehicles/presentation/vehicle_detail_page.dart | 阶段2主态已生成；390dp/1.0，适配及其他状态待补 |
-| 007 | 库存－月度领用记录 | 03_列表与记录 | lib/features/inventory/presentation/inventory_issues_page.dart | 阶段2主态已生成；390dp/1.0，适配及其他状态待补 |
-| 008 | 库存－领用登记 | 05_表单与编辑 | lib/features/inventory/presentation/inventory_issue_form_page.dart | 阶段2已填主态连续两屏已生成；适配及其他状态待补 |
-| 009 | 采购入库 | 05_表单与编辑 | lib/features/purchase/presentation/purchase_stock_in_page.dart | 阶段3六张主态与业务变体已生成；390dp/1.0，适配及其他状态待补 |
-| 010 | 人员管理 | 02_工作台 | lib/features/personnel/presentation/personnel_page.dart | 批次4已生成；适配及完整验收待补 |
-| 011 | 人员名单 | 03_列表与记录 | lib/features/personnel/presentation/personnel_list_page.dart | 批次4已生成；适配及完整验收待补 |
-| 012 | 人员档案 | 04_详情 | lib/features/personnel/presentation/personnel_detail_page.dart | 批次4已生成；适配及完整验收待补 |
-| 013 | 新增／编辑人员 | 05_表单与编辑 | lib/features/personnel/presentation/personnel_form_page.dart | 批次4已生成；适配及完整验收待补 |
-| 014 | 考勤入口 | 02_工作台 | lib/features/attendance/presentation/attendance_page.dart | 批次5已生成；适配及完整验收待补 |
-| 015 | 月考勤表 | 06_台账与表格 | lib/features/attendance/presentation/monthly_attendance_table_page.dart | 批次5已生成；适配及完整验收待补 |
-| 016 | 月度名单 | 06_台账与表格 | lib/features/attendance/presentation/monthly_roster_page.dart | 批次5已生成；适配及完整验收待补 |
-| 017 | 考勤组 | 03_列表与记录 | lib/features/attendance/presentation/attendance_group_list_page.dart | 批次5已生成；适配及完整验收待补 |
-| 018 | 考勤组详情 | 04_详情 | lib/features/attendance/presentation/attendance_group_detail_page.dart | 批次5已生成；适配及完整验收待补 |
-| 019 | 新增／编辑考勤组 | 05_表单与编辑 | lib/features/attendance/presentation/attendance_group_form_page.dart | 批次5已生成；适配及完整验收待补 |
-| 020 | 请假记录 | 03_列表与记录 | lib/features/leave/presentation/leave_page.dart | 批次6已生成；适配及完整验收待补 |
-| 021 | 新增／编辑请假 | 05_表单与编辑 | lib/features/leave/presentation/leave_form_page.dart | 批次6已生成；适配及完整验收待补 |
-| 022 | 加班记录 | 03_列表与记录 | lib/features/overtime/presentation/overtime_page.dart | 批次6已生成；适配及完整验收待补 |
-| 023 | 新增／编辑加班 | 05_表单与编辑 | lib/features/overtime/presentation/overtime_form_page.dart | 批次6已生成；适配及完整验收待补 |
-| 024 | 离职管理 | 03_列表与记录 | lib/features/termination/presentation/termination_page.dart | 批次6已生成；适配及完整验收待补 |
-| 025 | 登记／编辑离职 | 05_表单与编辑 | lib/features/termination/presentation/termination_form_page.dart | 批次6已生成；适配及完整验收待补 |
-| 026 | 社保保险 | 03_列表与记录 | lib/features/insurance/presentation/insurance_page.dart | 批次7已生成；适配及完整验收待补 |
-| 027 | 维护参保资料 | 05_表单与编辑 | lib/features/insurance/presentation/insurance_profile_form_page.dart | 批次7已生成；适配及完整验收待补 |
-| 028 | 登记／编辑保险变更 | 05_表单与编辑 | lib/features/insurance/presentation/insurance_change_form_page.dart | 批次7已生成；适配及完整验收待补 |
-| 029 | 人员附件 | 03_列表与记录 | lib/features/attachments/presentation/employee_attachments_page.dart | 批次7已生成；适配及完整验收待补 |
-| 030 | 汇总中心－考勤 | 07_分析与汇总 | lib/features/reports/presentation/reports_page.dart | 批次8已生成；适配及完整验收待补 |
-| 031 | 汇总中心－车辆 | 07_分析与汇总 | lib/features/reports/presentation/reports_page.dart | 批次8已生成；适配及完整验收待补 |
-| 032 | 汇总中心－库存 | 07_分析与汇总 | lib/features/reports/presentation/reports_page.dart | 批次8已生成；适配及完整验收待补 |
-| 033 | 汇总中心－工资 | 07_分析与汇总 | lib/features/reports/presentation/reports_page.dart | 批次8已生成；适配及完整验收待补 |
-| 034 | 临时工薪资 | 02_工作台 | lib/features/payroll/presentation/payroll_home_page.dart | 批次9主态已生成／修订并初检；待用户验收与适配 |
-| 035 | 工资编辑 | 06_台账与表格 | lib/features/payroll/presentation/payroll_editor_page.dart | 批次9主态已生成／修订并初检；待用户验收与适配；编辑弹层新版待补 |
-| 036 | 单人工资明细 | 04_详情 | lib/features/payroll/presentation/payroll_detail_page.dart | 批次9主态已生成／修订并初检；待用户验收与适配 |
-| 037 | 工资历史 | 03_列表与记录 | lib/features/payroll/presentation/payroll_history_page.dart | 批次9主态已生成／修订并初检；待用户验收与适配 |
-| 038 | 工资资料与记录 | 04_详情 | lib/features/payroll/presentation/employee_payroll_page.dart | 批次9主态已生成／修订并初检；待用户验收与适配 |
-| 039 | 工资 Excel 导出 | 08_系统工具 | lib/features/payroll/presentation/payroll_export_page.dart | 批次9主态已生成／修订并初检；待用户验收与适配 |
-| 040 | 工种日薪设置 | 08_系统工具 | lib/features/payroll/presentation/wage_job_settings_page.dart | 批次9主态已生成／修订并初检；待用户验收与适配 |
-| 041 | 我的 | 08_系统工具 | lib/features/settings/presentation/settings_page.dart | 批次10主态v02已生成；说明位置仍待修，未完成验收 |
-| 042 | 导入导出 | 08_系统工具 | lib/features/excel/presentation/excel_page.dart | 批次10已生成并内容初检；分辨率／适配／最终验收未完成 |
-| 043 | 备忘提醒 | 03_列表与记录 | lib/features/reminders/presentation/reminder_page.dart | 批次10已生成并内容初检；分辨率／适配／最终验收未完成 |
-| 044 | 新建／编辑提醒 | 05_表单与编辑 | lib/features/reminders/presentation/reminder_form_page.dart | 批次10已生成并内容初检；分辨率／适配／最终验收未完成 |
-| 045 | 自定义时间 | 08_系统工具 | lib/features/reminders/presentation/reminder_schedule_page.dart | 调用无结果，待补；提示词已存 |
-| 046 | 重复设置 | 08_系统工具 | lib/features/reminders/presentation/reminder_repeat_page.dart | 批次10已生成并内容初检；分辨率／适配／最终验收未完成 |
-| 047 | 自定义重复 | 08_系统工具 | lib/features/reminders/presentation/reminder_repeat_page.dart | 批次10已生成并内容初检；分辨率／适配／最终验收未完成 |
-| 048 | 提前提醒 | 08_系统工具 | lib/features/reminders/presentation/reminder_alerts_page.dart | 批次10已生成并内容初检；分辨率／适配／最终验收未完成 |
-| 049 | 备份恢复 | 08_系统工具 | lib/features/backup/presentation/backup_page.dart | 批次10已生成并内容初检；分辨率／适配／最终验收未完成 |
-| 050 | 操作日志 | 08_系统工具 | lib/features/operation_logs/presentation/operation_log_page.dart | 批次10已生成并内容初检；分辨率／适配／最终验收未完成 |
-| 051 | 福利劳保 | 06_台账与表格 | lib/features/item_distribution/presentation/item_distribution_page.dart | 批次11已有参考图；051标识与组件待修；目标分辨率、适配及最终验收未完成 |
-| 052 | 办公用品 | 06_台账与表格 | lib/features/item_distribution/presentation/item_distribution_page.dart | 批次11主态已生成并内容初检；目标分辨率、适配及最终验收未完成 |
-| 053 | 工具领取 | 06_台账与表格 | lib/features/item_distribution/presentation/item_distribution_page.dart | 批次11主态已生成并内容初检；目标分辨率、适配及最终验收未完成 |
-| 054 | 车辆管理 | 02_工作台 | lib/features/vehicles/presentation/vehicle_page.dart | 批次12参考图已保存；存在已知内容／组件问题，目标分辨率及验收未完成 |
-| 055 | 新增／编辑车辆 | 05_表单与编辑 | lib/features/vehicles/presentation/vehicle_form_page.dart | 批次12参考图已保存；存在已知内容／组件问题，目标分辨率及验收未完成 |
-| 056 | 全车维修 | 03_列表与记录 | lib/features/vehicles/presentation/vehicle_repair_list_page.dart | 批次12参考图已保存；存在已知内容／组件问题，目标分辨率及验收未完成 |
-| 057 | 报修／维修编辑 | 05_表单与编辑 | lib/features/vehicles/presentation/vehicle_repair_form_page.dart | 批次12参考图已保存；存在已知内容／组件问题，目标分辨率及验收未完成 |
-| 058 | 维修单详情 | 04_详情 | lib/features/vehicles/presentation/vehicle_repair_detail_page.dart | 仅有业务字段不符的首稿对照，不计当前交付；修订与续屏未生成 |
-| 059 | 年度油耗 | 06_台账与表格 | lib/features/vehicles/presentation/vehicle_fuel_summary_page.dart | 批次12调用持续未返回；无PNG，提示词已存，待补 |
-| 060 | 全车提醒中心 | 03_列表与记录 | lib/features/vehicles/presentation/vehicle_reminder_page.dart | 批次12调用持续未返回；无PNG，提示词已存，待补 |
-| 061 | 车辆附件 | 03_列表与记录 | lib/features/vehicles/presentation/vehicle_attachments_page.dart | 批次12调用持续未返回；无PNG，提示词已存，待补 |
-| 062 | 车辆详情－维修 | 04_详情 | lib/features/vehicles/presentation/vehicle_detail_page.dart | 未生成 |
-| 063 | 车辆详情－费用 | 04_详情 | lib/features/vehicles/presentation/vehicle_detail_page.dart | 未生成 |
-| 064 | 车辆详情－车况 | 04_详情 | lib/features/vehicles/presentation/vehicle_detail_page.dart | 未生成 |
-| 065 | 车辆详情－保养备件 | 04_详情 | lib/features/vehicles/presentation/vehicle_detail_page.dart | 未生成 |
-| 066 | 车辆详情－油耗 | 04_详情 | lib/features/vehicles/presentation/vehicle_detail_page.dart | 未生成 |
-| 067 | 车辆详情－当前车辆提醒 | 04_详情 | lib/features/vehicles/presentation/vehicle_detail_page.dart | 未生成 |
-| 068 | 器械维修－月度台账 | 06_台账与表格 | lib/features/garden_tool_repairs/presentation/garden_tool_repair_page.dart | 未生成 |
-| 069 | 器械维修－新增／编辑维修 | 05_表单与编辑 | lib/features/garden_tool_repairs/presentation/garden_tool_repair_form_page.dart | 未生成 |
-| 070 | 器械维修－分析 | 07_分析与汇总 | lib/features/garden_tool_repairs/presentation/garden_tool_repair_analysis_page.dart | 未生成 |
-| 071 | 器械维修－比价 | 07_分析与汇总 | lib/features/garden_tool_repairs/presentation/garden_tool_repair_price_page.dart | 未生成 |
-| 072 | 器械维修－维修单位 | 03_列表与记录 | lib/features/garden_tool_repairs/presentation/garden_tool_repair_units_page.dart | 未生成 |
-| 073 | 器械维修－维修附件 | 03_列表与记录 | lib/features/garden_tool_repairs/presentation/garden_tool_repair_attachments_page.dart | 未生成 |
-| 074 | 库存首页 | 02_工作台 | lib/features/inventory/presentation/inventory_home_page.dart | 未生成 |
-| 075 | 物资信息 | 03_列表与记录 | lib/features/inventory/presentation/inventory_materials_page.dart | 未生成 |
-| 076 | 新增／编辑物资 | 05_表单与编辑 | lib/features/inventory/presentation/inventory_material_form_page.dart | 未生成 |
-| 077 | 物资详情 | 04_详情 | lib/features/inventory/presentation/inventory_material_detail_page.dart | 未生成 |
-| 078 | 月度入库 | 03_列表与记录 | lib/features/inventory/presentation/inventory_receipts_page.dart | 未生成 |
-| 079 | 新增入库 | 05_表单与编辑 | lib/features/inventory/presentation/inventory_receipt_form_page.dart | 未生成 |
-| 080 | 入库详情 | 04_详情 | lib/features/inventory/presentation/inventory_receipt_detail_page.dart | 未生成 |
-| 081 | 出库详情 | 04_详情 | lib/features/inventory/presentation/inventory_issue_detail_page.dart | 未生成 |
-| 082 | 当前库存 | 03_列表与记录 | lib/features/inventory/presentation/inventory_stock_page.dart | 未生成 |
-| 083 | 数量调整 | 05_表单与编辑 | lib/features/inventory/presentation/inventory_stock_adjustment_page.dart | 未生成 |
-| 084 | 盘点列表 | 03_列表与记录 | lib/features/inventory/presentation/inventory_stocktakes_page.dart | 未生成 |
-| 085 | 新建盘点 | 05_表单与编辑 | lib/features/inventory/presentation/inventory_stocktake_form_page.dart | 未生成 |
-| 086 | 盘点详情 | 06_台账与表格 | lib/features/inventory/presentation/inventory_stocktake_detail_page.dart | 未生成 |
-| 087 | 预警与补充 | 03_列表与记录 | lib/features/inventory/presentation/inventory_warnings_page.dart | 未生成 |
-| 088 | 待采购／待补充 | 03_列表与记录 | lib/features/inventory/presentation/inventory_replenishments_page.dart | 未生成 |
-| 089 | 流水 | 03_列表与记录 | lib/features/inventory/presentation/inventory_transactions_page.dart | 未生成 |
-| 090 | 采购工作台 | 02_工作台 | lib/features/purchase/presentation/purchase_home_page.dart | 未生成 |
-| 091 | 新建／编辑待申报 | 05_表单与编辑 | lib/features/purchase/presentation/purchase_create_page.dart | 未生成 |
-| 092 | 待申报 | 03_列表与记录 | lib/features/purchase/presentation/purchase_pending_apply_page.dart | 未生成 |
-| 093 | 跟踪／全部待处理 | 03_列表与记录 | lib/features/purchase/presentation/purchase_tracking_page.dart | 未生成 |
-| 094 | 采购详情 | 04_详情 | lib/features/purchase/presentation/purchase_detail_page.dart | 未生成 |
-| 095 | 待领取 | 03_列表与记录 | lib/features/purchase/presentation/purchase_pending_receive_page.dart | 未生成 |
-| 096 | 采购历史－按记录 | 03_列表与记录 | lib/features/purchase/presentation/purchase_history_page.dart | 未生成 |
-| 097 | 采购历史－按物资 | 03_列表与记录 | lib/features/purchase/presentation/purchase_history_page.dart | 未生成 |
-| 098 | 单个物资采购历史 | 04_详情 | lib/features/purchase/presentation/purchase_item_history_page.dart | 未生成 |
-| 099 | 全局高级筛选 | 09_弹层选择器与菜单 | 共享展示面／组件规范 | 未生成 |
-| 100 | 日期／月份／时间选择器 | 09_弹层选择器与菜单 | 共享展示面／组件规范 | 未生成 |
-| 101 | 人员／车辆／物资选择 Bottom Sheet | 09_弹层选择器与菜单 | 共享展示面／组件规范 | 未生成 |
-| 102 | 状态选择 Bottom Sheet | 09_弹层选择器与菜单 | 共享展示面／组件规范 | 未生成 |
-| 103 | 删除／撤销／停用／覆盖恢复危险确认 | 09_弹层选择器与菜单 | 共享展示面／组件规范 | 未生成 |
-| 104 | 加载状态 | 10_状态反馈 | 共享展示面／组件规范 | 未生成 |
-| 105 | 首次空状态 | 10_状态反馈 | 共享展示面／组件规范 | 未生成 |
-| 106 | 筛选空状态 | 10_状态反馈 | 共享展示面／组件规范 | 未生成 |
-| 107 | 错误状态 | 10_状态反馈 | 共享展示面／组件规范 | 未生成 |
-| 108 | 提交中 | 10_状态反馈 | 共享展示面／组件规范 | 未生成 |
-| 109 | 提交成功 | 10_状态反馈 | 共享展示面／组件规范 | 未生成 |
-| 110 | 禁用／只读状态 | 10_状态反馈 | 共享展示面／组件规范 | 未生成 |
-| 111 | 附件预览／删除／恢复 | 09_弹层选择器与菜单 | 共享展示面／组件规范 | 未生成 |
-| 112 | 其它页面内弹层与菜单 | 09_弹层选择器与菜单 | 共享展示面／组件规范 | 未生成 |
+本次没有新PNG：实际生图仍返回429 usage_limit_reached。已完成50项可执行输入/提示词核对（35批29、36批8、37批13），并整理根代理52页源码状态映射。图片任务仍未完成，48个工作包待生成/修正；合同整理不能计为图片完成。
+
+已纠正交接口径：064下拉是六个可保存状态；062空态按钮新建报修；069第四类其他凭证；063无费用流水与无维修项目是不同区域。018移出确认复用旧图，只补无成员。047结束重复选择Sheet多出完成按钮列为第48个真实缺口。
+
+[完整续作清单](UI图片本轮未完成交接_20261007.md) · [52页状态映射](UI图片根代理状态覆盖合同_20261007.md)。尺寸/宽度/大字体补图取消；设备与代码验收延期。
+
+
+2026-10-07：112任务/83源码页均有图；320张当前候选、140张历史图。候选含26张待修正图，文件覆盖不等于全状态完成。尺寸/宽度/大字体补图取消，代码设备验收延期。
+
+[未完成交接](UI图片本轮未完成交接_20261007.md) · [阶段总览](UI图片阶段推进总览.md)
+
+## 001 全局组件规范板
+
+源码：`None`；原阶段0。
+
+- [001_组件规范_全局组件规范板_规范_主态_390dp_fs1p0_p03_v02.png](01_组件规范/001_组件规范_全局组件规范板_规范_主态_390dp_fs1p0_p03_v02.png) — 初检边界见批次索引
+- [001_组件规范_全局组件规范板_规范_主态_390dp_fs1p0_p01_v02.png](01_组件规范/001_组件规范_全局组件规范板_规范_主态_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+- [001_组件规范_全局组件规范板_规范_主态_390dp_fs1p0_p02_v02.png](01_组件规范/001_组件规范_全局组件规范板_规范_主态_390dp_fs1p0_p02_v02.png) — 初检边界见批次索引
+- [001_组件规范_全局组件规范板_规范_主态_390dp_fs1p0_p04_v02.png](01_组件规范/001_组件规范_全局组件规范板_规范_主态_390dp_fs1p0_p04_v02.png) — 初检边界见批次索引
+
+## 002 首页－概览视图
+
+源码：`lib/features/home/presentation/home_page.dart`；原阶段1。
+
+- [002_首页_概览视图_查看_有数据_390dp_fs1p0_p01_v02.png](02_工作台/002_首页_概览视图_查看_有数据_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+- [002_首页概览_加载_内容状态_v01.png](10_状态反馈/002_首页概览_加载_内容状态_v01.png) — 初检边界见批次索引
+- [002_首页概览_错误_内容状态_v01.png](10_状态反馈/002_首页概览_错误_内容状态_v01.png) — 初检边界见批次索引
+
+## 003 首页－处理视图
+
+源码：`lib/features/home/presentation/home_page.dart`；原阶段1。
+
+- [003_首页_处理视图_办理_有数据_390dp_fs1p0_p01_v02.png](02_工作台/003_首页_处理视图_办理_有数据_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+- [003_首页处理_无待办_内容状态_v01.png](10_状态反馈/003_首页处理_无待办_内容状态_v01.png) — 初检边界见批次索引
+
+## 004 每日考勤
+
+源码：`lib/features/attendance/presentation/daily_attendance_page.dart`；原阶段2。
+
+- [004_考勤_每日考勤_登记_有名单_390dp_fs1p0_p01_v01.png](06_台账与表格/004_考勤_每日考勤_登记_有名单_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [004_每日考勤_备注对话框_内容状态_v01.png](09_弹层选择器与菜单/004_每日考勤_备注对话框_内容状态_v01.png) — 初检边界见批次索引
+- [004_每日考勤_半日状态菜单_内容状态_v01.png](09_弹层选择器与菜单/004_每日考勤_半日状态菜单_内容状态_v01.png) — 初检边界见批次索引
+- [004_每日考勤_无名单_内容状态_v01.png](10_状态反馈/004_每日考勤_无名单_内容状态_v01.png) — 初检边界见批次索引
+- [004_每日考勤_无启用组_内容状态_v01.png](10_状态反馈/004_每日考勤_无启用组_内容状态_v01.png) — 初检边界见批次索引
+
+待办：批量操作四种入口。
+
+## 005 车辆档案列表
+
+源码：`lib/features/vehicles/presentation/vehicle_archive_page.dart`；原阶段2。
+
+- [005_车辆_车辆档案列表_查看_有数据_390dp_fs1p0_p01_v01.png](03_列表与记录/005_车辆_车辆档案列表_查看_有数据_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+
+## 006 车辆详情－档案
+
+源码：`lib/features/vehicles/presentation/vehicle_detail_page.dart`；原阶段2。
+
+- [006_车辆_车辆详情档案_查看_有数据_390dp_fs1p0_p01_v01.png](04_详情/006_车辆_车辆详情档案_查看_有数据_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [006_车辆_停用确认_内容状态_v01.png](09_弹层选择器与菜单/006_车辆_停用确认_内容状态_v01.png) — 初检边界见批次索引
+
+## 007 库存－月度领用记录
+
+源码：`lib/features/inventory/presentation/inventory_issues_page.dart`；原阶段2。
+
+- [007_库存_月度领用记录_查看_有数据_390dp_fs1p0_p01_v01.png](03_列表与记录/007_库存_月度领用记录_查看_有数据_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+
+待办：首次及筛选空态。
+
+## 008 库存－领用登记
+
+源码：`lib/features/inventory/presentation/inventory_issue_form_page.dart`；原阶段2。
+
+- [008_库存_领用登记_新增_已填_390dp_fs1p0_p01_v01.png](05_表单与编辑/008_库存_领用登记_新增_已填_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [008_库存_领用登记_新增_已填_390dp_fs1p0_p02_v01.png](05_表单与编辑/008_库存_领用登记_新增_已填_390dp_fs1p0_p02_v01.png) — 初检边界见批次索引
+
+## 009 采购入库
+
+源码：`lib/features/purchase/presentation/purchase_stock_in_page.dart`；原阶段3。
+
+- [009_采购_采购入库_登记_正常_390dp_fs1p0_p01_v01.png](05_表单与编辑/009_采购_采购入库_登记_正常_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [009_采购_采购入库_登记_部分入库_390dp_fs1p0_p01_v01.png](05_表单与编辑/009_采购_采购入库_登记_部分入库_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [009_采购_采购入库_确认_超量确认_390dp_fs1p0_p01_v01.png](09_弹层选择器与菜单/009_采购_采购入库_确认_超量确认_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [009_采购_采购入库_确认_历史补录确认_390dp_fs1p0_p01_v01.png](09_弹层选择器与菜单/009_采购_采购入库_确认_历史补录确认_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [009_采购_采购入库_登记_绑定异常_390dp_fs1p0_p01_v01.png](05_表单与编辑/009_采购_采购入库_登记_绑定异常_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [009_采购_采购入库_确认_最终确认_390dp_fs1p0_p01_v01.png](09_弹层选择器与菜单/009_采购_采购入库_确认_最终确认_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+
+## 010 人员管理
+
+源码：`lib/features/personnel/presentation/personnel_page.dart`；原阶段4。
+
+- [010_人员_人员管理_查看_有数据_390dp_fs1p0_p01_v01.png](02_工作台/010_人员_人员管理_查看_有数据_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+
+## 011 人员名单
+
+源码：`lib/features/personnel/presentation/personnel_list_page.dart`；原阶段4。
+
+- [011_人员_人员名单_查看_有数据_390dp_fs1p0_p01_v01.png](03_列表与记录/011_人员_人员名单_查看_有数据_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [011_人员_人员名单_查看_筛选空_390dp_fs1p0_p01_v01.png](03_列表与记录/011_人员_人员名单_查看_筛选空_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+
+待办：人员名单_首次为空。
+
+## 012 人员档案
+
+源码：`lib/features/personnel/presentation/personnel_detail_page.dart`；原阶段4。
+
+- [012_人员_人员档案_查看_有数据_390dp_fs1p0_p01_v01.png](04_详情/012_人员_人员档案_查看_有数据_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [012_人员_人员档案_查看_有数据_390dp_fs1p0_p02_v01.png](04_详情/012_人员_人员档案_查看_有数据_390dp_fs1p0_p02_v01.png) — 初检边界见批次索引
+- [012_人员_删除档案确认_内容状态_v01.png](09_弹层选择器与菜单/012_人员_删除档案确认_内容状态_v01.png) — 初检边界见批次索引
+
+## 013 新增／编辑人员
+
+源码：`lib/features/personnel/presentation/personnel_form_page.dart`；原阶段4。
+
+- [013_人员_新增人员_新增_已填_390dp_fs1p0_p01_v01.png](05_表单与编辑/013_人员_新增人员_新增_已填_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [013_人员_新增人员_新增_已填_390dp_fs1p0_p02_v01.png](05_表单与编辑/013_人员_新增人员_新增_已填_390dp_fs1p0_p02_v01.png) — 初检边界见批次索引
+- [013_人员_新增人员_新增_已填_390dp_fs1p0_p03_v01.png](05_表单与编辑/013_人员_新增人员_新增_已填_390dp_fs1p0_p03_v01.png) — 初检边界见批次索引
+- [013_编辑人员_编辑模式_v01.png](05_表单与编辑/013_编辑人员_编辑模式_v01.png) — 初检边界见批次索引
+
+## 014 考勤入口
+
+源码：`lib/features/attendance/presentation/attendance_page.dart`；原阶段4。
+
+- [014_考勤_考勤入口_查看_主态_390dp_fs1p0_p01_v01.png](02_工作台/014_考勤_考勤入口_查看_主态_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+
+## 015 月考勤表
+
+源码：`lib/features/attendance/presentation/monthly_attendance_table_page.dart`；原阶段4。
+
+- [015_考勤_月考勤表_查看_有名单_390dp_fs1p0_p01_v01.png](06_台账与表格/015_考勤_月考勤表_查看_有名单_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [015_考勤_月考勤表_查看_空名单_390dp_fs1p0_p01_v01.png](06_台账与表格/015_考勤_月考勤表_查看_空名单_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [015_月考勤表_编辑单日_内容状态_v01.png](09_弹层选择器与菜单/015_月考勤表_编辑单日_内容状态_v01.png) — 初检边界见批次索引
+
+## 016 月度名单
+
+源码：`lib/features/attendance/presentation/monthly_roster_page.dart`；原阶段4。
+
+- [016_考勤_月度名单_维护_有名单_390dp_fs1p0_p01_v01.png](06_台账与表格/016_考勤_月度名单_维护_有名单_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [016_月名单_复制上月确认_内容状态_v01.png](09_弹层选择器与菜单/016_月名单_复制上月确认_内容状态_v01.png) — 初检边界见批次索引
+- [016_月名单_移除确认_内容状态_v01.png](09_弹层选择器与菜单/016_月名单_移除确认_内容状态_v01.png) — 初检边界见批次索引
+- [016_月名单_默认组加入确认_内容状态_v01.png](09_弹层选择器与菜单/016_月名单_默认组加入确认_内容状态_v01.png) — 初检边界见批次索引
+
+待办：添加本月人员Sheet。
+
+## 017 考勤组
+
+源码：`lib/features/attendance/presentation/attendance_group_list_page.dart`；原阶段4。
+
+- [017_考勤_考勤组_查看_有数据_390dp_fs1p0_p01_v01.png](03_列表与记录/017_考勤_考勤组_查看_有数据_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+
+待办：考勤组_首次为空。
+
+## 018 考勤组详情
+
+源码：`lib/features/attendance/presentation/attendance_group_detail_page.dart`；原阶段4。
+
+- [018_考勤_考勤组详情_查看_有成员_390dp_fs1p0_p01_v01.png](04_详情/018_考勤_考勤组详情_查看_有成员_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [018_考勤_考勤组详情_添加_成员选择_390dp_fs1p0_p01_v01.png](09_弹层选择器与菜单/018_考勤_考勤组详情_添加_成员选择_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [018_考勤_考勤组详情_确认_移出成员_390dp_fs1p0_p01_v01.png](09_弹层选择器与菜单/018_考勤_考勤组详情_确认_移出成员_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+
+待办：移出组及成员为空。
+
+## 019 新增／编辑考勤组
+
+源码：`lib/features/attendance/presentation/attendance_group_form_page.dart`；原阶段4。
+
+- [019_考勤_新增考勤组_新增_已填_390dp_fs1p0_p01_v01.png](05_表单与编辑/019_考勤_新增考勤组_新增_已填_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [019_考勤_新增考勤组_新增_校验错误_390dp_fs1p0_p01_v01.png](05_表单与编辑/019_考勤_新增考勤组_新增_校验错误_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [019_编辑考勤组_编辑模式_v01.png](05_表单与编辑/019_编辑考勤组_编辑模式_v01.png) — 初检边界见批次索引
+
+## 020 请假记录
+
+源码：`lib/features/leave/presentation/leave_page.dart`；原阶段5。
+
+- [020_请假_请假记录_查看_有数据_390dp_fs1p0_p01_v01.png](03_列表与记录/020_请假_请假记录_查看_有数据_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [020_请假_删除确认_内容状态_v01.png](09_弹层选择器与菜单/020_请假_删除确认_内容状态_v01.png) — 初检边界见批次索引
+
+待办：请假_当月为空。
+
+## 021 新增／编辑请假
+
+源码：`lib/features/leave/presentation/leave_form_page.dart`；原阶段5。
+
+- [021_请假_新增请假_新增_已填_390dp_fs1p0_p01_v01.png](05_表单与编辑/021_请假_新增请假_新增_已填_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [021_请假_新增请假_新增_已填_390dp_fs1p0_p02_v01.png](05_表单与编辑/021_请假_新增请假_新增_已填_390dp_fs1p0_p02_v01.png) — 初检边界见批次索引
+- [021_请假_新增请假_新增_校验错误_390dp_fs1p0_p01_v01.png](05_表单与编辑/021_请假_新增请假_新增_校验错误_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [021_编辑请假_编辑模式_v01.png](05_表单与编辑/021_编辑请假_编辑模式_v01.png) — 初检边界见批次索引
+
+## 022 加班记录
+
+源码：`lib/features/overtime/presentation/overtime_page.dart`；原阶段5。
+
+- [022_加班_加班记录_查看_有数据_390dp_fs1p0_p01_v01.png](03_列表与记录/022_加班_加班记录_查看_有数据_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [022_加班_删除确认_内容状态_v01.png](09_弹层选择器与菜单/022_加班_删除确认_内容状态_v01.png) — 初检边界见批次索引
+
+待办：加班_当月为空。
+
+## 023 新增／编辑加班
+
+源码：`lib/features/overtime/presentation/overtime_form_page.dart`；原阶段5。
+
+- [023_加班_新增加班_新增_已填_390dp_fs1p0_p01_v01.png](05_表单与编辑/023_加班_新增加班_新增_已填_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [023_加班_新增加班_新增_已填_390dp_fs1p0_p02_v01.png](05_表单与编辑/023_加班_新增加班_新增_已填_390dp_fs1p0_p02_v01.png) — 初检边界见批次索引
+- [023_加班_新增加班_新增_时间错误_390dp_fs1p0_p01_v01.png](05_表单与编辑/023_加班_新增加班_新增_时间错误_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [023_编辑加班_编辑模式_v01.png](05_表单与编辑/023_编辑加班_编辑模式_v01.png) — 初检边界见批次索引
+
+## 024 离职管理
+
+源码：`lib/features/termination/presentation/termination_page.dart`；原阶段5。
+
+- [024_离职_离职管理_查看_有数据_390dp_fs1p0_p01_v01.png](03_列表与记录/024_离职_离职管理_查看_有数据_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [024_离职_离职管理_确认_撤销离职_390dp_fs1p0_p01_v01.png](09_弹层选择器与菜单/024_离职_离职管理_确认_撤销离职_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+
+待办：离职管理_首次为空。
+
+## 025 登记／编辑离职
+
+源码：`lib/features/termination/presentation/termination_form_page.dart`；原阶段5。
+
+- [025_离职_登记离职_新增_已填_390dp_fs1p0_p01_v01.png](05_表单与编辑/025_离职_登记离职_新增_已填_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [025_离职_登记离职_新增_已填_390dp_fs1p0_p02_v01.png](05_表单与编辑/025_离职_登记离职_新增_已填_390dp_fs1p0_p02_v01.png) — 初检边界见批次索引
+- [025_编辑离职_编辑模式_v01.png](05_表单与编辑/025_编辑离职_编辑模式_v01.png) — 初检边界见批次索引
+
+## 026 社保保险
+
+源码：`lib/features/insurance/presentation/insurance_page.dart`；原阶段5。
+
+- [026_保险_社保保险_查看_分区异常_390dp_fs1p0_p01_v01.png](03_列表与记录/026_保险_社保保险_查看_分区异常_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [026_保险_社保保险_查看_有数据_390dp_fs1p0_p01_v01.png](03_列表与记录/026_保险_社保保险_查看_有数据_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [026_保险_社保保险_查看_有数据_390dp_fs1p0_p02_v01.png](03_列表与记录/026_保险_社保保险_查看_有数据_390dp_fs1p0_p02_v01.png) — 初检边界见批次索引
+
+## 027 维护参保资料
+
+源码：`lib/features/insurance/presentation/insurance_profile_form_page.dart`；原阶段5。
+
+- [027_保险_维护参保资料_维护_已参保_390dp_fs1p0_p01_v01.png](05_表单与编辑/027_保险_维护参保资料_维护_已参保_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [027_保险_维护参保资料_维护_未参保_390dp_fs1p0_p01_v01.png](05_表单与编辑/027_保险_维护参保资料_维护_未参保_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+
+## 028 登记／编辑保险变更
+
+源码：`lib/features/insurance/presentation/insurance_change_form_page.dart`；原阶段5。
+
+- [028_保险_登记保险变更_新增_已填_390dp_fs1p0_p01_v01.png](05_表单与编辑/028_保险_登记保险变更_新增_已填_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [028_保险_登记保险变更_新增_已填_390dp_fs1p0_p02_v01.png](05_表单与编辑/028_保险_登记保险变更_新增_已填_390dp_fs1p0_p02_v01.png) — 初检边界见批次索引
+- [028_保险_登记保险变更_新增_校验错误_390dp_fs1p0_p01_v01.png](05_表单与编辑/028_保险_登记保险变更_新增_校验错误_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [028_编辑保险变更_编辑模式_v01.png](05_表单与编辑/028_编辑保险变更_编辑模式_v01.png) — 初检边界见批次索引
+
+## 029 人员附件
+
+源码：`lib/features/attachments/presentation/employee_attachments_page.dart`；原阶段5。
+
+- [029_人员_人员附件_查看_分类空_390dp_fs1p0_p01_v01.png](03_列表与记录/029_人员_人员附件_查看_分类空_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [029_人员_人员附件_查看_有数据_390dp_fs1p0_p01_v01.png](03_列表与记录/029_人员_人员附件_查看_有数据_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [029_人员_人员附件_导出_缺本地文件_390dp_fs1p0_p01_v01.png](09_弹层选择器与菜单/029_人员_人员附件_导出_缺本地文件_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [029_人员_人员附件_确认_敏感预览_390dp_fs1p0_p01_v01.png](09_弹层选择器与菜单/029_人员_人员附件_确认_敏感预览_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [029_人员附件_正常菜单_内容状态_v01.png](09_弹层选择器与菜单/029_人员附件_正常菜单_内容状态_v01.png) — 初检边界见批次索引
+- [029_人员附件_已删除菜单_内容状态_v01.png](09_弹层选择器与菜单/029_人员附件_已删除菜单_内容状态_v01.png) — 初检边界见批次索引
+- [029_人员附件_上传分类选择_内容状态_v01.png](09_弹层选择器与菜单/029_人员附件_上传分类选择_内容状态_v01.png) — 初检边界见批次索引
+
+## 030 汇总中心－考勤
+
+源码：`lib/features/reports/presentation/reports_page.dart`；原阶段6。
+
+- [030_汇总_考勤_人员变动_390dp_fs1p0_p01_v01.png](07_分析与汇总/030_汇总_考勤_人员变动_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [030_汇总_考勤_人员明细_390dp_fs1p0_p02_v01.png](07_分析与汇总/030_汇总_考勤_人员明细_390dp_fs1p0_p02_v01.png) — 初检边界见批次索引
+- [030_汇总_考勤_保险变更_390dp_fs1p0_p01_v01.png](07_分析与汇总/030_汇总_考勤_保险变更_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [030_汇总_考勤_月度概览_390dp_fs1p0_p01_v01.png](07_分析与汇总/030_汇总_考勤_月度概览_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [030_汇总_考勤_未生成_390dp_fs1p0_p01_v01.png](07_分析与汇总/030_汇总_考勤_未生成_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [030_月度汇总_解锁原因_内容状态_v01.png](09_弹层选择器与菜单/030_月度汇总_解锁原因_内容状态_v01.png) — 初检边界见批次索引
+
+## 031 汇总中心－车辆
+
+源码：`lib/features/reports/presentation/reports_page.dart`；原阶段6。
+
+- [031_汇总_车辆_月度概览_390dp_fs1p0_p01_v01.png](07_分析与汇总/031_汇总_车辆_月度概览_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [031_汇总_车辆_零值与缺记录_390dp_fs1p0_p01_v01.png](07_分析与汇总/031_汇总_车辆_零值与缺记录_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+
+## 032 汇总中心－库存
+
+源码：`lib/features/reports/presentation/reports_page.dart`；原阶段6。
+
+- [032_汇总_库存_历史不可计算_390dp_fs1p0_p01_v01.png](07_分析与汇总/032_汇总_库存_历史不可计算_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [032_汇总_库存_月度概览_390dp_fs1p0_p01_v01.png](07_分析与汇总/032_汇总_库存_月度概览_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+
+## 033 汇总中心－工资
+
+源码：`lib/features/reports/presentation/reports_page.dart`；原阶段6。
+
+- [033_汇总_工资_已锁定_390dp_fs1p0_p01_v01.png](07_分析与汇总/033_汇总_工资_已锁定_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [033_汇总_工资_批次概览_390dp_fs1p0_p01_v01.png](07_分析与汇总/033_汇总_工资_批次概览_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [033_汇总_工资_未生成_390dp_fs1p0_p01_v01.png](07_分析与汇总/033_汇总_工资_未生成_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+
+## 034 临时工薪资
+
+源码：`lib/features/payroll/presentation/payroll_home_page.dart`；原阶段6。
+
+- [034_工资_临时工薪资_查看_无批次_390dp_fs1p0_p01_v02.png](02_工作台/034_工资_临时工薪资_查看_无批次_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+- [034_工资_临时工薪资_查看_草稿_390dp_fs1p0_p01_v02.png](02_工作台/034_工资_临时工薪资_查看_草稿_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+- [034_工资_临时工薪资_查看_待检查_390dp_fs1p0_p01_v01.png](02_工作台/034_工资_临时工薪资_查看_待检查_390dp_fs1p0_p01_v01.png) — 初检通过
+
+## 035 工资编辑
+
+源码：`lib/features/payroll/presentation/payroll_editor_page.dart`；原阶段6。
+
+- [035_工资_工资编辑_查看_已锁定_390dp_fs1p0_p01_v02.png](06_台账与表格/035_工资_工资编辑_查看_已锁定_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+- [035_工资_工资编辑_编辑_草稿_390dp_fs1p0_p01_v02.png](06_台账与表格/035_工资_工资编辑_编辑_草稿_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+- [035_工资_工资明细编辑_编辑_已填_390dp_fs1p0_p01_v03.png](09_弹层选择器与菜单/035_工资_工资明细编辑_编辑_已填_390dp_fs1p0_p01_v03.png) — 初检通过
+- [035_批次24_状态_草稿菜单_v01.png](09_弹层选择器与菜单/035_批次24_状态_草稿菜单_v01.png) — 初检通过
+- [035_批次24_状态_删除草稿确认_v01.png](09_弹层选择器与菜单/035_批次24_状态_删除草稿确认_v01.png) — 初检通过
+- [035_批次24_状态_撤销解锁原因_v02.png](09_弹层选择器与菜单/035_批次24_状态_撤销解锁原因_v02.png) — 初检通过
+- [035_批次24_状态_无出勤人工加入_v01.png](09_弹层选择器与菜单/035_批次24_状态_无出勤人工加入_v01.png) — 初检通过
+- [035_批次24_状态_人工人员选择_v02.png](09_弹层选择器与菜单/035_批次24_状态_人工人员选择_v02.png) — 初检通过
+- [035_批次24_状态_确认警告说明_v02.png](09_弹层选择器与菜单/035_批次24_状态_确认警告说明_v02.png) — 初检通过
+- [035_批次24_状态_金额无效禁用_v02.png](09_弹层选择器与菜单/035_批次24_状态_金额无效禁用_v02.png) — 初检通过
+- [035_批次24_状态_阻断检查_v01.png](09_弹层选择器与菜单/035_批次24_状态_阻断检查_v01.png) — 需修正
+- [035_批次24_状态_警告检查_v01.png](09_弹层选择器与菜单/035_批次24_状态_警告检查_v01.png) — 需修正
+- [035_批次24_状态_无异常检查_v01.png](09_弹层选择器与菜单/035_批次24_状态_无异常检查_v01.png) — 需修正
+- [035_批次24_状态_已确认菜单_v01.png](09_弹层选择器与菜单/035_批次24_状态_已确认菜单_v01.png) — 需修正
+- [035_批次24_状态_名单空_v01.png](09_弹层选择器与菜单/035_批次24_状态_名单空_v01.png) — 需修正
+
+待办：阻断检查；警告检查；无异常检查；已确认菜单；名单空。
+
+## 036 单人工资明细
+
+源码：`lib/features/payroll/presentation/payroll_detail_page.dart`；原阶段6。
+
+- [036_工资_单人工资明细_查看_有数据_390dp_fs1p0_p01_v02.png](04_详情/036_工资_单人工资明细_查看_有数据_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+
+## 037 工资历史
+
+源码：`lib/features/payroll/presentation/payroll_history_page.dart`；原阶段6。
+
+- [037_工资_工资历史_查看_有数据_390dp_fs1p0_p01_v02.png](03_列表与记录/037_工资_工资历史_查看_有数据_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+- [037_批次24_状态_工资历史空_v01.png](09_弹层选择器与菜单/037_批次24_状态_工资历史空_v01.png) — 需修正
+
+待办：工资历史空。
+
+## 038 工资资料与记录
+
+源码：`lib/features/payroll/presentation/employee_payroll_page.dart`；原阶段6。
+
+- [038_工资_工资资料与记录_编辑_已填_390dp_fs1p0_p01_v01.png](04_详情/038_工资_工资资料与记录_编辑_已填_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [038_批次24_状态_工种默认日薪_v01.png](09_弹层选择器与菜单/038_批次24_状态_工种默认日薪_v01.png) — 初检通过
+
+## 039 工资 Excel 导出
+
+源码：`lib/features/payroll/presentation/payroll_export_page.dart`；原阶段6。
+
+- [039_工资_工资Excel导出_查看_预览_390dp_fs1p0_p01_v01.png](08_系统工具/039_工资_工资Excel导出_查看_预览_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [039_批次24_状态_导出已完成_v01.png](09_弹层选择器与菜单/039_批次24_状态_导出已完成_v01.png) — 初检通过
+
+## 040 工种日薪设置
+
+源码：`lib/features/payroll/presentation/wage_job_settings_page.dart`；原阶段6。
+
+- [040_工资_工种日薪设置_查看_有数据_390dp_fs1p0_p01_v01.png](08_系统工具/040_工资_工种日薪设置_查看_有数据_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [040_批次24_状态_生效日薪_v01.png](09_弹层选择器与菜单/040_批次24_状态_生效日薪_v01.png) — 初检通过
+- [040_批次24_状态_生效月份选择_v01.png](09_弹层选择器与菜单/040_批次24_状态_生效月份选择_v01.png) — 初检通过
+- [040_批次24_状态_修改工种_v01.png](09_弹层选择器与菜单/040_批次24_状态_修改工种_v01.png) — 初检通过
+
+## 041 我的
+
+源码：`lib/features/settings/presentation/settings_page.dart`；原阶段7。
+
+- [041_我的_工具入口_查看_展开_390dp_fs1p0_p01_v04.png](08_系统工具/041_我的_工具入口_查看_展开_390dp_fs1p0_p01_v04.png) — 初检通过
+
+## 042 导入导出
+
+源码：`lib/features/excel/presentation/excel_page.dart`；原阶段7。
+
+- [042_工具_Excel导入导出_查看_主态_390dp_fs1p0_p01_v01.png](08_系统工具/042_工具_Excel导入导出_查看_主态_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [042_批次24_状态_导入预览通过_v01.png](09_弹层选择器与菜单/042_批次24_状态_导入预览通过_v01.png) — 初检通过
+- [042_批次24_状态_导入预览错误_v01.png](09_弹层选择器与菜单/042_批次24_状态_导入预览错误_v01.png) — 初检通过
+
+## 043 备忘提醒
+
+源码：`lib/features/reminders/presentation/reminder_page.dart`；原阶段7。
+
+- [043_提醒_备忘提醒_查看_待办_390dp_fs1p0_p01_v02.png](03_列表与记录/043_提醒_备忘提醒_查看_待办_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+- [043_批次24_状态_首次空_v02.png](09_弹层选择器与菜单/043_批次24_状态_首次空_v02.png) — 初检通过
+- [043_批次24_状态_筛选空_v01.png](09_弹层选择器与菜单/043_批次24_状态_筛选空_v01.png) — 需修正
+- [043_批次24_状态_删除确认_v01.png](09_弹层选择器与菜单/043_批次24_状态_删除确认_v01.png) — 初检通过
+- [043_批次24_状态_循环提醒菜单_v01.png](09_弹层选择器与菜单/043_批次24_状态_循环提醒菜单_v01.png) — 初检通过
+- [043_批次24_状态_业务提醒偏好_v01.png](09_弹层选择器与菜单/043_批次24_状态_业务提醒偏好_v01.png) — 初检通过
+
+待办：筛选空。
+
+## 044 新建／编辑提醒
+
+源码：`lib/features/reminders/presentation/reminder_form_page.dart`；原阶段7。
+
+- [044_提醒_新建提醒_新增_已填_390dp_fs1p0_p01_v01.png](05_表单与编辑/044_提醒_新建提醒_新增_已填_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [044_批次24_状态_编辑提醒_v01.png](09_弹层选择器与菜单/044_批次24_状态_编辑提醒_v01.png) — 初检通过
+- [044_批次24_状态_关联人员选择_v01.png](09_弹层选择器与菜单/044_批次24_状态_关联人员选择_v01.png) — 初检通过
+- [044_批次24_状态_标题校验_v01.png](09_弹层选择器与菜单/044_批次24_状态_标题校验_v01.png) — 初检通过
+
+## 045 自定义时间
+
+源码：`lib/features/reminders/presentation/reminder_schedule_page.dart`；原阶段7。
+
+- [045_提醒_自定义时间_设置_已选_390dp_fs1p0_p01_v03.png](08_系统工具/045_提醒_自定义时间_设置_已选_390dp_fs1p0_p01_v03.png) — 初检通过
+- [045_提醒_自定义时间_设置_禁用响铃_390dp_fs1p0_p01_v01.png](08_系统工具/045_提醒_自定义时间_设置_禁用响铃_390dp_fs1p0_p01_v01.png) — 初检通过
+
+## 046 重复设置
+
+源码：`lib/features/reminders/presentation/reminder_repeat_page.dart`；原阶段7。
+
+- [046_提醒_重复设置_设置_自定义已选_390dp_fs1p0_p01_v02.png](08_系统工具/046_提醒_重复设置_设置_自定义已选_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+
+## 047 自定义重复
+
+源码：`lib/features/reminders/presentation/reminder_repeat_page.dart`；原阶段7。
+
+- [047_提醒_自定义重复_设置_每周_390dp_fs1p0_p01_v02.png](08_系统工具/047_提醒_自定义重复_设置_每周_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+- [047_批次24_状态_每月重复_v01.png](09_弹层选择器与菜单/047_批次24_状态_每月重复_v01.png) — 初检通过
+- [047_批次24_状态_结束重复选择_v01.png](09_弹层选择器与菜单/047_批次24_状态_结束重复选择_v01.png) — 初检通过
+- [047_批次24_状态_结束次数_v01.png](09_弹层选择器与菜单/047_批次24_状态_结束次数_v01.png) — 需修正
+
+待办：结束次数；频率选择；结束日期。
+
+## 048 提前提醒
+
+源码：`lib/features/reminders/presentation/reminder_alerts_page.dart`；原阶段7。
+
+- [048_提醒_提前提醒_设置_多选_390dp_fs1p0_p01_v01.png](08_系统工具/048_提醒_提前提醒_设置_多选_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [048_批次24_状态_自定义提前_v01.png](09_弹层选择器与菜单/048_批次24_状态_自定义提前_v01.png) — 初检通过
+
+## 049 备份恢复
+
+源码：`lib/features/backup/presentation/backup_page.dart`；原阶段7。
+
+- [049_工具_备份恢复_查看_主态_390dp_fs1p0_p01_v02.png](08_系统工具/049_工具_备份恢复_查看_主态_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+- [049_工具_备份密码_设置_未填_390dp_fs1p0_p01_v01.png](09_弹层选择器与菜单/049_工具_备份密码_设置_未填_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [049_工具_恢复覆盖_确认_危险确认_390dp_fs1p0_p01_v01.png](09_弹层选择器与菜单/049_工具_恢复覆盖_确认_危险确认_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [049_批次24_状态_恢复完成_v01.png](09_弹层选择器与菜单/049_批次24_状态_恢复完成_v01.png) — 初检通过
+
+## 050 操作日志
+
+源码：`lib/features/operation_logs/presentation/operation_log_page.dart`；原阶段7。
+
+- [050_工具_操作日志_查看_首次空_390dp_fs1p0_p01_v01.png](03_列表与记录/050_工具_操作日志_查看_首次空_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [050_批次24_状态_日志有记录_v01.png](09_弹层选择器与菜单/050_批次24_状态_日志有记录_v01.png) — 初检通过
+- [050_批次24_状态_日志首次空修正_v01.png](09_弹层选择器与菜单/050_批次24_状态_日志首次空修正_v01.png) — 初检通过
+
+## 051 福利劳保
+
+源码：`lib/features/item_distribution/presentation/item_distribution_page.dart`；原阶段8。
+
+- [051_领取_福利劳保_查看_发放表_390dp_fs1p0_p01_v02.png](06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p01_v02.png) — 初检通过
+- [051_领取_福利劳保_查看_发放表_390dp_fs1p0_p02_v03.png](06_台账与表格/051_领取_福利劳保_查看_发放表_390dp_fs1p0_p02_v03.png) — 初检通过
+- [051_批次24_状态_临时名单_v01.png](09_弹层选择器与菜单/051_批次24_状态_临时名单_v01.png) — 需修正
+- [051_批次24_状态_福利首次空_v01.png](09_弹层选择器与菜单/051_批次24_状态_福利首次空_v01.png) — 需修正
+- [051_批次24_状态_福利设置_v01.png](09_弹层选择器与菜单/051_批次24_状态_福利设置_v01.png) — 初检通过
+- [051_批次24_状态_补领_v02.png](09_弹层选择器与菜单/051_批次24_状态_补领_v02.png) — 初检通过
+- [051_批次24_状态_未领来源_v01.png](09_弹层选择器与菜单/051_批次24_状态_未领来源_v01.png) — 初检通过
+- [051_批次24_状态_已领来源_v01.png](09_弹层选择器与菜单/051_批次24_状态_已领来源_v01.png) — 需修正
+- [051_批次24_状态_重置领取确认_v01.png](09_弹层选择器与菜单/051_批次24_状态_重置领取确认_v01.png) — 初检通过
+- [051_批次24_状态_扫路车分配_v01.png](09_弹层选择器与菜单/051_批次24_状态_扫路车分配_v01.png) — 需修正
+- [051_批次24_状态_分配未满确认_v01.png](09_弹层选择器与菜单/051_批次24_状态_分配未满确认_v01.png) — 初检通过
+- [051_批次24_状态_公用领取人_v01.png](09_弹层选择器与菜单/051_批次24_状态_公用领取人_v01.png) — 需修正
+- [051_批次24_状态_福利标准展开_v01.png](09_弹层选择器与菜单/051_批次24_状态_福利标准展开_v01.png) — 需修正
+- [051_批次24_状态_数量详情_v01.png](09_弹层选择器与菜单/051_批次24_状态_数量详情_v01.png) — 需修正
+
+待办：已领来源；扫路车分配；公用领取人；临时名单；福利首次空；数量详情；福利标准展开。
+
+## 052 办公用品
+
+源码：`lib/features/item_distribution/presentation/item_distribution_page.dart`；原阶段8。
+
+- [052_领取_办公用品_查看_有记录_390dp_fs1p0_p01_v01.png](06_台账与表格/052_领取_办公用品_查看_有记录_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [052_批次24_状态_新增办公领用_v01.png](09_弹层选择器与菜单/052_批次24_状态_新增办公领用_v01.png) — 需修正
+- [052_批次24_状态_领用表单校验_v01.png](09_弹层选择器与菜单/052_批次24_状态_领用表单校验_v01.png) — 需修正
+- [052_批次24_状态_重复领取确认_v01.png](09_弹层选择器与菜单/052_批次24_状态_重复领取确认_v01.png) — 初检通过
+- [052_批次24_状态_删除办公领用_v01.png](09_弹层选择器与菜单/052_批次24_状态_删除办公领用_v01.png) — 需修正
+- [052_批次24_状态_办公用品月空_v01.png](09_弹层选择器与菜单/052_批次24_状态_办公用品月空_v01.png) — 需修正
+- [052_批次24_状态_办公用品来源_v01.png](09_弹层选择器与菜单/052_批次24_状态_办公用品来源_v01.png) — 需修正
+
+待办：新增办公领用；领用表单校验；删除办公领用；办公用品月空；办公用品来源。
+
+## 053 工具领取
+
+源码：`lib/features/item_distribution/presentation/item_distribution_page.dart`；原阶段8。
+
+- [053_领取_工具_查看_有记录_390dp_fs1p0_p01_v01.png](06_台账与表格/053_领取_工具_查看_有记录_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [053_批次24_状态_新增工具领用_v01.png](09_弹层选择器与菜单/053_批次24_状态_新增工具领用_v01.png) — 需修正
+- [053_批次24_状态_重复领取确认_v01.png](09_弹层选择器与菜单/053_批次24_状态_重复领取确认_v01.png) — 需修正
+- [053_批次24_状态_删除工具领用_v01.png](09_弹层选择器与菜单/053_批次24_状态_删除工具领用_v01.png) — 需修正
+- [053_批次24_状态_工具月空_v01.png](09_弹层选择器与菜单/053_批次24_状态_工具月空_v01.png) — 需修正
+- [053_批次24_状态_工具来源_v01.png](09_弹层选择器与菜单/053_批次24_状态_工具来源_v01.png) — 需修正
+- [053_批次24_状态_领用表单校验_v01.png](09_弹层选择器与菜单/053_批次24_状态_领用表单校验_v01.png) — 需修正
+
+待办：新增工具领用；重复领取确认；删除工具领用；工具月空；工具来源；领用表单校验。
+
+## 054 车辆管理
+
+源码：`lib/features/vehicles/presentation/vehicle_page.dart`；原阶段9。
+
+- [054_车辆_车辆管理_查看_有数据_390dp_fs1p0_p01_v03.png](02_工作台/054_车辆_车辆管理_查看_有数据_390dp_fs1p0_p01_v03.png) — 初检边界见批次索引
+- [054_车辆管理_其余车辆续屏_内容状态_v01.png](02_工作台/054_车辆管理_其余车辆续屏_内容状态_v01.png) — 初检边界见批次索引
+
+## 055 新增／编辑车辆
+
+源码：`lib/features/vehicles/presentation/vehicle_form_page.dart`；原阶段9。
+
+- [055_车辆_新增车辆_查看_有数据_390dp_fs1p0_p01_v01.png](05_表单与编辑/055_车辆_新增车辆_查看_有数据_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [055_车辆_新增车辆_查看_有数据_390dp_fs1p0_p02_v02.png](05_表单与编辑/055_车辆_新增车辆_查看_有数据_390dp_fs1p0_p02_v02.png) — 初检边界见批次索引
+- [055_编辑车辆_编辑模式_v01.png](05_表单与编辑/055_编辑车辆_编辑模式_v01.png) — 初检边界见批次索引
+
+## 056 全车维修
+
+源码：`lib/features/vehicles/presentation/vehicle_repair_list_page.dart`；原阶段9。
+
+- [056_车辆_全车维修单_查看_有数据_390dp_fs1p0_p01_v03.png](03_列表与记录/056_车辆_全车维修单_查看_有数据_390dp_fs1p0_p01_v03.png) — 初检边界见批次索引
+- [056_维修单_高级筛选_内容状态_v01.png](09_弹层选择器与菜单/056_维修单_高级筛选_内容状态_v01.png) — 初检边界见批次索引
+- [056_维修单_排序菜单_内容状态_v01.png](09_弹层选择器与菜单/056_维修单_排序菜单_内容状态_v01.png) — 初检边界见批次索引
+
+## 057 报修／维修编辑
+
+源码：`lib/features/vehicles/presentation/vehicle_repair_form_page.dart`；原阶段9。
+
+- [057_车辆_新建维修单_查看_有数据_390dp_fs1p0_p01_v03.png](05_表单与编辑/057_车辆_新建维修单_查看_有数据_390dp_fs1p0_p01_v03.png) — 初检边界见批次索引
+- [057_车辆_新建维修单_查看_有数据_390dp_fs1p0_p02_v02.png](05_表单与编辑/057_车辆_新建维修单_查看_有数据_390dp_fs1p0_p02_v02.png) — 初检边界见批次索引
+- [057_车辆_新建维修单_查看_有数据_390dp_fs1p0_p03_v02.png](05_表单与编辑/057_车辆_新建维修单_查看_有数据_390dp_fs1p0_p03_v02.png) — 初检边界见批次索引
+- [057_编辑维修单_编辑模式_v01.png](05_表单与编辑/057_编辑维修单_编辑模式_v01.png) — 初检边界见批次索引
+
+## 058 维修单详情
+
+源码：`lib/features/vehicles/presentation/vehicle_repair_detail_page.dart`；原阶段9。
+
+- [058_车辆_维修单详情_查看_有数据_390dp_fs1p0_p02_v03.png](04_详情/058_车辆_维修单详情_查看_有数据_390dp_fs1p0_p02_v03.png) — 初检边界见批次索引
+- [058_车辆_维修单详情_查看_有数据_390dp_fs1p0_p01_v05.png](04_详情/058_车辆_维修单详情_查看_有数据_390dp_fs1p0_p01_v05.png) — 初检边界见批次索引
+
+## 059 年度油耗
+
+源码：`lib/features/vehicles/presentation/vehicle_fuel_summary_page.dart`；原阶段9。
+
+- [059_车辆_年度油耗汇总_查看_有数据_390dp_fs1p0_p03_v03.png](06_台账与表格/059_车辆_年度油耗汇总_查看_有数据_390dp_fs1p0_p03_v03.png) — 初检边界见批次索引
+- [059_车辆_年度油耗汇总_查看_有数据_390dp_fs1p0_p01_v03.png](06_台账与表格/059_车辆_年度油耗汇总_查看_有数据_390dp_fs1p0_p01_v03.png) — 初检边界见批次索引
+- [059_车辆_年度油耗汇总_查看_有数据_390dp_fs1p0_p02_v03.png](06_台账与表格/059_车辆_年度油耗汇总_查看_有数据_390dp_fs1p0_p02_v03.png) — 初检边界见批次索引
+- [059_车辆_年度油耗汇总_横滑_CL003_390dp_fs1p0_p06_v01.png](06_台账与表格/059_车辆_年度油耗汇总_横滑_CL003_390dp_fs1p0_p06_v01.png) — 初检边界见批次索引
+- [059_车辆_年度油耗汇总_横滑_CL003_390dp_fs1p0_p07_v01.png](06_台账与表格/059_车辆_年度油耗汇总_横滑_CL003_390dp_fs1p0_p07_v01.png) — 初检边界见批次索引
+- [059_车辆_年度油耗汇总_横滑_CL002_390dp_fs1p0_p04_v02.png](06_台账与表格/059_车辆_年度油耗汇总_横滑_CL002_390dp_fs1p0_p04_v02.png) — 初检边界见批次索引
+- [059_车辆_年度油耗汇总_横滑_CL002_390dp_fs1p0_p05_v02.png](06_台账与表格/059_车辆_年度油耗汇总_横滑_CL002_390dp_fs1p0_p05_v02.png) — 初检边界见批次索引
+
+## 060 全车提醒中心
+
+源码：`lib/features/vehicles/presentation/vehicle_reminder_page.dart`；原阶段9。
+
+- [060_车辆_全车提醒中心_查看_有数据_390dp_fs1p0_p01_v03.png](03_列表与记录/060_车辆_全车提醒中心_查看_有数据_390dp_fs1p0_p01_v03.png) — 初检边界见批次索引
+- [060_车辆_全车提醒中心_筛选_今日保养_390dp_fs1p0_p02_v01.png](03_列表与记录/060_车辆_全车提醒中心_筛选_今日保养_390dp_fs1p0_p02_v01.png) — 初检边界见批次索引
+- [060_车辆_全车提醒中心_菜单_排序_390dp_fs1p0_p03_v01.png](03_列表与记录/060_车辆_全车提醒中心_菜单_排序_390dp_fs1p0_p03_v01.png) — 初检边界见批次索引
+- [060_车辆_全车提醒中心_忽略后_390dp_fs1p0_p04_v02.png](03_列表与记录/060_车辆_全车提醒中心_忽略后_390dp_fs1p0_p04_v02.png) — 初检边界见批次索引
+- [060_车辆_全车提醒中心_空态_无提醒_390dp_fs1p0_p06_v02.png](03_列表与记录/060_车辆_全车提醒中心_空态_无提醒_390dp_fs1p0_p06_v02.png) — 初检边界见批次索引
+- [060_车辆_全车提醒中心_弹层_详情_390dp_fs1p0_p05_v02.png](03_列表与记录/060_车辆_全车提醒中心_弹层_详情_390dp_fs1p0_p05_v02.png) — 初检边界见批次索引
+
+## 061 车辆附件
+
+源码：`lib/features/vehicles/presentation/vehicle_attachments_page.dart`；原阶段9。
+
+- [061_车辆_车辆附件_查看_有数据_390dp_fs1p0_p01_v06.png](03_列表与记录/061_车辆_车辆附件_查看_有数据_390dp_fs1p0_p01_v06.png) — 初检边界见批次索引
+- [061_车辆_车辆附件_更多_有效附件_390dp_fs1p0_p01_v02.png](09_弹层选择器与菜单/061_车辆_车辆附件_更多_有效附件_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+- [061_车辆_车辆附件_更多_已删除_390dp_fs1p0_p01_v02.png](09_弹层选择器与菜单/061_车辆_车辆附件_更多_已删除_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+- [061_车辆_车辆附件_预览_文档_390dp_fs1p0_p01_v02.png](09_弹层选择器与菜单/061_车辆_车辆附件_预览_文档_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+- [061_车辆_车辆附件_添加_类别选择_390dp_fs1p0_p01_v01.png](09_弹层选择器与菜单/061_车辆_车辆附件_添加_类别选择_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [061_车辆_车辆附件_添加_忙碌禁用_390dp_fs1p0_p01_v01.png](10_通用状态/061_车辆_车辆附件_添加_忙碌禁用_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [061_车辆_车辆附件_添加_已保存_390dp_fs1p0_p01_v02.png](10_通用状态/061_车辆_车辆附件_添加_已保存_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+- [061_车辆_车辆附件_添加_失败_390dp_fs1p0_p01_v02.png](10_通用状态/061_车辆_车辆附件_添加_失败_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+- [061_车辆_车辆附件_查看_文件缺失_390dp_fs1p0_p01_v02.png](10_通用状态/061_车辆_车辆附件_查看_文件缺失_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+- [061_车辆_车辆附件_恢复_已恢复_390dp_fs1p0_p01_v01.png](03_列表与记录/061_车辆_车辆附件_恢复_已恢复_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [061_车辆_车辆附件_预览_图片_390dp_fs1p0_p01_v01.png](09_弹层选择器与菜单/061_车辆_车辆附件_预览_图片_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+
+## 062 车辆详情－维修
+
+源码：`lib/features/vehicles/presentation/vehicle_detail_page.dart`；原阶段10。
+
+- [062_车辆_详情维修_查看_有数据_390dp_fs1p0_p01_v02.png](04_详情/062_车辆_详情维修_查看_有数据_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+
+待办：维修Tab空态。
+
+## 063 车辆详情－费用
+
+源码：`lib/features/vehicles/presentation/vehicle_detail_page.dart`；原阶段10。
+
+- [063_车辆_详情费用_查看_年度明细_390dp_fs1p0_p01_v02.png](04_详情/063_车辆_详情费用_查看_年度明细_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+- [063_车辆_详情费用_查看_年度明细_390dp_fs1p0_p02_v01.png](04_详情/063_车辆_详情费用_查看_年度明细_390dp_fs1p0_p02_v01.png) — 初检边界见批次索引
+
+待办：费用Tab空态。
+
+## 064 车辆详情－车况
+
+源码：`lib/features/vehicles/presentation/vehicle_detail_page.dart`；原阶段10。
+
+- [064_车辆_详情车况_查看_正常_390dp_fs1p0_p02_v01.png](04_详情/064_车辆_详情车况_查看_正常_390dp_fs1p0_p02_v01.png) — 初检边界见批次索引
+- [064_车辆_详情车况_查看_正常_390dp_fs1p0_p01_v04.png](04_详情/064_车辆_详情车况_查看_正常_390dp_fs1p0_p01_v04.png) — 初检边界见批次索引
+- [064_车辆车况_部件状态编辑_内容状态_v01.png](09_弹层选择器与菜单/064_车辆车况_部件状态编辑_内容状态_v01.png) — 初检边界见批次索引
+
+待办：部件状态下拉展开。
+
+## 065 车辆详情－保养备件
+
+源码：`lib/features/vehicles/presentation/vehicle_detail_page.dart`；原阶段10。
+
+- [065_车辆_详情保养备件_查看_备件寿命_390dp_fs1p0_p02_v02.png](04_详情/065_车辆_详情保养备件_查看_备件寿命_390dp_fs1p0_p02_v02.png) — 初检边界见批次索引
+- [065_车辆_详情保养备件_查看_保养计划_390dp_fs1p0_p01_v03.png](04_详情/065_车辆_详情保养备件_查看_保养计划_390dp_fs1p0_p01_v03.png) — 初检边界见批次索引
+
+待办：保养及寿命件空态。
+
+## 066 车辆详情－油耗
+
+源码：`lib/features/vehicles/presentation/vehicle_detail_page.dart`；原阶段10。
+
+- [066_车辆_详情油耗_录入_已填_390dp_fs1p0_p01_v01.png](04_详情/066_车辆_详情油耗_录入_已填_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [066_车辆_详情油耗_查看_年度汇总_390dp_fs1p0_p02_v04.png](04_详情/066_车辆_详情油耗_查看_年度汇总_390dp_fs1p0_p02_v04.png) — 初检边界见批次索引
+- [066_车辆油耗_编辑月记录_内容状态_v01.png](09_弹层选择器与菜单/066_车辆油耗_编辑月记录_内容状态_v01.png) — 初检边界见批次索引
+- [066_车辆油耗_删除确认_内容状态_v01.png](09_弹层选择器与菜单/066_车辆油耗_删除确认_内容状态_v01.png) — 初检边界见批次索引
+
+## 067 车辆详情－当前车辆提醒
+
+源码：`lib/features/vehicles/presentation/vehicle_detail_page.dart`；原阶段10。
+
+- [067_车辆_详情提醒_查看_首次空_390dp_fs1p0_p01_v04.png](04_详情/067_车辆_详情提醒_查看_首次空_390dp_fs1p0_p01_v04.png) — 初检边界见批次索引
+
+## 068 器械维修－月度台账
+
+源码：`lib/features/garden_tool_repairs/presentation/garden_tool_repair_page.dart`；原阶段11。
+
+- [068_器械维修_月度台账_查看_有数据_390dp_fs1p0_p01_v03.png](06_台账与表格/068_器械维修_月度台账_查看_有数据_390dp_fs1p0_p01_v03.png) — 初检边界见批次索引
+- [068_器械维修_月度台账_查看_有数据_390dp_fs1p0_p02_v02.png](06_台账与表格/068_器械维修_月度台账_查看_有数据_390dp_fs1p0_p02_v02.png) — 初检边界见批次索引
+- [068_器械维修_删除记录组确认_内容状态_v01.png](09_弹层选择器与菜单/068_器械维修_删除记录组确认_内容状态_v01.png) — 初检边界见批次索引
+
+待办：器械维修_当月为空。
+
+## 069 器械维修－新增／编辑维修
+
+源码：`lib/features/garden_tool_repairs/presentation/garden_tool_repair_form_page.dart`；原阶段11。
+
+- [069_器械维修_新增维修记录_查看_有数据_390dp_fs1p0_p01_v04.png](05_表单与编辑/069_器械维修_新增维修记录_查看_有数据_390dp_fs1p0_p01_v04.png) — 初检边界见批次索引
+- [069_器械维修_新增维修记录_查看_有数据_390dp_fs1p0_p02_v05.png](05_表单与编辑/069_器械维修_新增维修记录_查看_有数据_390dp_fs1p0_p02_v05.png) — 初检边界见批次索引
+- [069_器械维修_新增维修记录_查看_有数据_390dp_fs1p0_p03_v02.png](05_表单与编辑/069_器械维修_新增维修记录_查看_有数据_390dp_fs1p0_p03_v02.png) — 初检边界见批次索引
+- [069_器械维修_新增维修人_内容状态_v01.png](09_弹层选择器与菜单/069_器械维修_新增维修人_内容状态_v01.png) — 初检边界见批次索引
+- [069_器械维修_照片来源_内容状态_v01.png](09_弹层选择器与菜单/069_器械维修_照片来源_内容状态_v01.png) — 初检边界见批次索引
+- [069_器械维修_编辑模式_内容状态_v01.png](05_表单与编辑/069_器械维修_编辑模式_内容状态_v01.png) — 初检边界见批次索引
+- [069_器械维修_表单附件续屏_内容状态_v01.png](05_表单与编辑/069_器械维修_表单附件续屏_内容状态_v01.png) — 初检边界见批次索引
+
+待办：附件类别Sheet。
+
+## 070 器械维修－分析
+
+源码：`lib/features/garden_tool_repairs/presentation/garden_tool_repair_analysis_page.dart`；原阶段11。
+
+- [070_器械维修_数据分析_查看_有数据_390dp_fs1p0_p01_v04.png](07_分析与汇总/070_器械维修_数据分析_查看_有数据_390dp_fs1p0_p01_v04.png) — 初检边界见批次索引
+- [070_器械维修_数据分析_查看_有数据_390dp_fs1p0_p02_v04.png](07_分析与汇总/070_器械维修_数据分析_查看_有数据_390dp_fs1p0_p02_v04.png) — 初检边界见批次索引
+
+待办：器械维修_分析为空。
+
+## 071 器械维修－比价
+
+源码：`lib/features/garden_tool_repairs/presentation/garden_tool_repair_price_page.dart`；原阶段11。
+
+- [071_器械维修_价格比对_查看_有数据_390dp_fs1p0_p01_v04.png](07_分析与汇总/071_器械维修_价格比对_查看_有数据_390dp_fs1p0_p01_v04.png) — 初检边界见批次索引
+- [071_器械维修_价格比对_查看_有数据_390dp_fs1p0_p02_v03.png](07_分析与汇总/071_器械维修_价格比对_查看_有数据_390dp_fs1p0_p02_v03.png) — 初检边界见批次索引
+- [071_器械维修_价格点详情_内容状态_v01.png](09_弹层选择器与菜单/071_器械维修_价格点详情_内容状态_v01.png) — 初检边界见批次索引
+- [071_器械维修_比价筛选无记录_内容状态_v01.png](10_状态反馈/071_器械维修_比价筛选无记录_内容状态_v01.png) — 初检边界见批次索引
+
+待办：初始无价格项目。
+
+## 072 器械维修－维修单位
+
+源码：`lib/features/garden_tool_repairs/presentation/garden_tool_repair_units_page.dart`；原阶段11。
+
+- [072_器械维修_维修单位_查看_有数据_390dp_fs1p0_p01_v01.png](03_列表与记录/072_器械维修_维修单位_查看_有数据_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [072_器械维修_编辑单位_内容状态_v01.png](09_弹层选择器与菜单/072_器械维修_编辑单位_内容状态_v01.png) — 初检边界见批次索引
+- [072_器械维修_单位菜单_内容状态_v01.png](09_弹层选择器与菜单/072_器械维修_单位菜单_内容状态_v01.png) — 初检边界见批次索引
+
+待办：器械维修_单位为空；编辑单位标签。
+
+## 073 器械维修－维修附件
+
+源码：`lib/features/garden_tool_repairs/presentation/garden_tool_repair_attachments_page.dart`；原阶段11。
+
+- [073_器械维修_维修附件预览_查看_有数据_390dp_fs1p0_p01_v02.png](03_列表与记录/073_器械维修_维修附件预览_查看_有数据_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+- [073_器械维修_照片预览_内容状态_v01.png](09_弹层选择器与菜单/073_器械维修_照片预览_内容状态_v01.png) — 初检边界见批次索引
+- [073_器械维修_附件为空_内容状态_v01.png](10_状态反馈/073_器械维修_附件为空_内容状态_v01.png) — 初检边界见批次索引
+
+## 074 库存首页
+
+源码：`lib/features/inventory/presentation/inventory_home_page.dart`；原阶段12。
+
+- [074_库存_库存首页_查看_有数据_状态_最近流水空_390dp_fs1p0_p02_v02.png](02_工作台/074_库存_库存首页_查看_有数据_状态_最近流水空_390dp_fs1p0_p02_v02.png) — 初检边界见批次索引
+- [074_库存_库存首页_查看_有数据_390dp_fs1p0_p02_v03.png](02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p02_v03.png) — 初检边界见批次索引
+
+## 075 物资信息
+
+源码：`lib/features/inventory/presentation/inventory_materials_page.dart`；原阶段12。
+
+- [075_库存_物资信息_状态_加载中_390dp_fs1p0_p01_v01.png](03_列表与记录/075_库存_物资信息_状态_加载中_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [075_库存_物资信息_状态_读取失败_390dp_fs1p0_p01_v03.png](03_列表与记录/075_库存_物资信息_状态_读取失败_390dp_fs1p0_p01_v03.png) — 初检边界见批次索引
+- [075_库存_物资信息_状态_首次空_390dp_fs1p0_p01_v03.png](03_列表与记录/075_库存_物资信息_状态_首次空_390dp_fs1p0_p01_v03.png) — 初检边界见批次索引
+- [075_库存_物资信息_状态_筛选空_390dp_fs1p0_p01_v03.png](03_列表与记录/075_库存_物资信息_状态_筛选空_390dp_fs1p0_p01_v03.png) — 初检边界见批次索引
+
+## 076 新增／编辑物资
+
+源码：`lib/features/inventory/presentation/inventory_material_form_page.dart`；原阶段12。
+
+- [076_库存_新增物资_新增_已填_状态_编辑状态_390dp_fs1p0_p02_v01.png](05_表单与编辑/076_库存_新增物资_新增_已填_状态_编辑状态_390dp_fs1p0_p02_v01.png) — 初检边界见批次索引
+- [076_库存_新增物资_新增_已填_状态_校验失败_390dp_fs1p0_p01_v01.png](05_表单与编辑/076_库存_新增物资_新增_已填_状态_校验失败_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [076_库存_新增物资_新增_已填_状态_保存中_390dp_fs1p0_p02_v01.png](05_表单与编辑/076_库存_新增物资_新增_已填_状态_保存中_390dp_fs1p0_p02_v01.png) — 初检边界见批次索引
+- [076_库存_新增物资_新增_已填_状态_新增分类_390dp_fs1p0_p01_v01.png](05_表单与编辑/076_库存_新增物资_新增_已填_状态_新增分类_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+
+## 077 物资详情
+
+源码：`lib/features/inventory/presentation/inventory_material_detail_page.dart`；原阶段12。
+
+- [077_库存_物资详情_查看_有数据_390dp_fs1p0_p01_v04.png](04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p01_v04.png) — 初检边界见批次索引
+- [077_库存_物资详情_查看_有数据_状态_最近流水空_390dp_fs1p0_p02_v01.png](04_详情/077_库存_物资详情_查看_有数据_状态_最近流水空_390dp_fs1p0_p02_v01.png) — 初检边界见批次索引
+
+## 078 月度入库
+
+源码：`lib/features/inventory/presentation/inventory_receipts_page.dart`；原阶段12。
+
+- [078_库存_月度入库_查看_有数据_状态_本月无记录_390dp_fs1p0_p01_v01.png](03_列表与记录/078_库存_月度入库_查看_有数据_状态_本月无记录_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+
+## 079 新增入库
+
+源码：`lib/features/inventory/presentation/inventory_receipt_form_page.dart`；原阶段12。
+
+- [079_库存_新增入库_新增_已填_390dp_fs1p0_p02_v02.png](05_表单与编辑/079_库存_新增入库_新增_已填_390dp_fs1p0_p02_v02.png) — 初检边界见批次索引
+- [079_库存_新增入库_新增_已填_状态_无物资_390dp_fs1p0_p01_v02.png](05_表单与编辑/079_库存_新增入库_新增_已填_状态_无物资_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+
+## 080 入库详情
+
+源码：`lib/features/inventory/presentation/inventory_receipt_detail_page.dart`；原阶段12。
+
+- [080_库存_入库详情_查看_有数据_状态_撤销确认_390dp_fs1p0_p01_v01.png](04_详情/080_库存_入库详情_查看_有数据_状态_撤销确认_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+
+## 081 出库详情
+
+源码：`lib/features/inventory/presentation/inventory_issue_detail_page.dart`；原阶段12。
+
+- [081_库存_出库详情_查看_有数据_状态_撤销确认_390dp_fs1p0_p01_v01.png](04_详情/081_库存_出库详情_查看_有数据_状态_撤销确认_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+
+## 082 当前库存
+
+源码：`lib/features/inventory/presentation/inventory_stock_page.dart`；原阶段12。
+
+- [082_库存_当前库存_查看_有数据_状态_首次空_390dp_fs1p0_p01_v01.png](03_列表与记录/082_库存_当前库存_查看_有数据_状态_首次空_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [082_库存_当前库存_查看_有数据_状态_筛选空_390dp_fs1p0_p01_v01.png](03_列表与记录/082_库存_当前库存_查看_有数据_状态_筛选空_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+
+## 083 数量调整
+
+源码：`lib/features/inventory/presentation/inventory_stock_adjustment_page.dart`；原阶段12。
+
+- [083_库存_数量调整_办理_已填_状态_校验失败_390dp_fs1p0_p01_v01.png](05_表单与编辑/083_库存_数量调整_办理_已填_状态_校验失败_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+
+## 084 盘点列表
+
+源码：`lib/features/inventory/presentation/inventory_stocktakes_page.dart`；原阶段12。
+
+- [084_库存_盘点列表_查看_有数据_状态_筛选无盘点_390dp_fs1p0_p01_v02.png](03_列表与记录/084_库存_盘点列表_查看_有数据_状态_筛选无盘点_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+
+## 085 新建盘点
+
+源码：`lib/features/inventory/presentation/inventory_stocktake_form_page.dart`；原阶段12。
+
+- [085_库存_新建盘点_新增_已填_状态_无可盘点_390dp_fs1p0_p01_v02.png](05_表单与编辑/085_库存_新建盘点_新增_已填_状态_无可盘点_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+
+## 086 盘点详情
+
+源码：`lib/features/inventory/presentation/inventory_stocktake_detail_page.dart`；原阶段12。
+
+- [086_库存_盘点详情_办理_草稿_状态_盘点确认_390dp_fs1p0_p01_v01.png](06_台账与表格/086_库存_盘点详情_办理_草稿_状态_盘点确认_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+
+## 087 预警与补充
+
+源码：`lib/features/inventory/presentation/inventory_warnings_page.dart`；原阶段12。
+
+- [087_库存_预警与补充_查看_有数据_状态_无预警无补充_390dp_fs1p0_p01_v01.png](03_列表与记录/087_库存_预警与补充_查看_有数据_状态_无预警无补充_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+
+## 088 待采购／待补充
+
+源码：`lib/features/inventory/presentation/inventory_replenishments_page.dart`；原阶段12。
+
+- [088_库存_待采购待补充_查看_有数据_状态_首次空_390dp_fs1p0_p01_v03.png](03_列表与记录/088_库存_待采购待补充_查看_有数据_状态_首次空_390dp_fs1p0_p01_v03.png) — 初检边界见批次索引
+- [088_库存_待采购待补充_查看_有数据_状态_新增清单项_390dp_fs1p0_p01_v02.png](03_列表与记录/088_库存_待采购待补充_查看_有数据_状态_新增清单项_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+
+## 089 流水
+
+源码：`lib/features/inventory/presentation/inventory_transactions_page.dart`；原阶段12。
+
+- [089_库存_库存流水_查看_有数据_状态_筛选空_390dp_fs1p0_p01_v01.png](03_列表与记录/089_库存_库存流水_查看_有数据_状态_筛选空_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+
+## 090 采购工作台
+
+源码：`lib/features/purchase/presentation/purchase_home_page.dart`；原阶段13。
+
+- [090_采购_采购工作台_查看_有数据_状态_无需要处理_390dp_fs1p0_p01_v01.png](02_工作台/090_采购_采购工作台_查看_有数据_状态_无需要处理_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+
+## 091 新建／编辑待申报
+
+源码：`lib/features/purchase/presentation/purchase_create_page.dart`；原阶段13。
+
+- [091_采购_新建待申报_新增_已填_状态_手动新增物资_390dp_fs1p0_p01_v02.png](05_表单与编辑/091_采购_新建待申报_新增_已填_状态_手动新增物资_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+- [091_采购_新建待申报_新增_已填_状态_重复采购提醒_390dp_fs1p0_p01_v01.png](05_表单与编辑/091_采购_新建待申报_新增_已填_状态_重复采购提醒_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [091_采购_新建待申报_新增_已填_状态_编辑待申报_390dp_fs1p0_p01_v01.png](05_表单与编辑/091_采购_新建待申报_新增_已填_状态_编辑待申报_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+
+## 092 待申报
+
+源码：`lib/features/purchase/presentation/purchase_pending_apply_page.dart`；原阶段13。
+
+- [092_采购_待申报_查看_有数据_状态_首次空_390dp_fs1p0_p01_v02.png](03_列表与记录/092_采购_待申报_查看_有数据_状态_首次空_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+
+## 093 跟踪／全部待处理
+
+源码：`lib/features/purchase/presentation/purchase_tracking_page.dart`；原阶段13。
+
+- [093_采购_全部待处理_查看_有数据_状态_筛选空_390dp_fs1p0_p01_v01.png](03_列表与记录/093_采购_全部待处理_查看_有数据_状态_筛选空_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [093_采购_全部待处理_查看_有数据_状态_读取失败_390dp_fs1p0_p01_v02.png](03_列表与记录/093_采购_全部待处理_查看_有数据_状态_读取失败_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+
+## 094 采购详情
+
+源码：`lib/features/purchase/presentation/purchase_detail_page.dart`；原阶段13。
+
+- [094_采购_采购详情_查看_待领取_状态_OA申报确认_390dp_fs1p0_p01_v02.png](04_详情/094_采购_采购详情_查看_待领取_状态_OA申报确认_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+- [094_采购_采购详情_查看_待领取_状态_采购分配填写_390dp_fs1p0_p01_v02.png](04_详情/094_采购_采购详情_查看_待领取_状态_采购分配填写_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+- [094_采购_采购详情_查看_待领取_状态_入厂通知填写_390dp_fs1p0_p01_v02.png](04_详情/094_采购_采购详情_查看_待领取_状态_入厂通知填写_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+- [094_采购_采购详情_查看_待领取_状态_编辑采购信息首屏_390dp_fs1p0_p01_v01.png](04_详情/094_采购_采购详情_查看_待领取_状态_编辑采购信息首屏_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+- [094_采购_采购详情_查看_待领取_状态_编辑采购信息续屏_390dp_fs1p0_p02_v01.png](04_详情/094_采购_采购详情_查看_待领取_状态_编辑采购信息续屏_390dp_fs1p0_p02_v01.png) — 初检边界见批次索引
+- [094_采购_采购详情_查看_待领取_状态_跳过采购状态_390dp_fs1p0_p01_v02.png](04_详情/094_采购_采购详情_查看_待领取_状态_跳过采购状态_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+- [094_采购_采购详情_查看_待领取_状态_删除确认_390dp_fs1p0_p01_v01.png](04_详情/094_采购_采购详情_查看_待领取_状态_删除确认_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+
+## 095 待领取
+
+源码：`lib/features/purchase/presentation/purchase_pending_receive_page.dart`；原阶段13。
+
+- [095_采购_待领取_查看_部分入库_状态_待领取空_390dp_fs1p0_p01_v03.png](03_列表与记录/095_采购_待领取_查看_部分入库_状态_待领取空_390dp_fs1p0_p01_v03.png) — 初检边界见批次索引
+
+## 096 采购历史－按记录
+
+源码：`lib/features/purchase/presentation/purchase_history_page.dart`；原阶段13。
+
+- [096_采购_采购历史_按记录_有数据_390dp_fs1p0_p01_v04.png](03_列表与记录/096_采购_采购历史_按记录_有数据_390dp_fs1p0_p01_v04.png) — 初检边界见批次索引
+- [096_采购_采购历史_按记录_有数据_状态_历史空_390dp_fs1p0_p01_v01.png](03_列表与记录/096_采购_采购历史_按记录_有数据_状态_历史空_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+
+## 097 采购历史－按物资
+
+源码：`lib/features/purchase/presentation/purchase_history_page.dart`；原阶段13。
+
+- [097_采购_采购历史_按物资_有数据_390dp_fs1p0_p01_v05.png](03_列表与记录/097_采购_采购历史_按物资_有数据_390dp_fs1p0_p01_v05.png) — 初检边界见批次索引
+
+## 098 单个物资采购历史
+
+源码：`lib/features/purchase/presentation/purchase_item_history_page.dart`；原阶段13。
+
+- [098_采购_物资采购历史_查看_有数据_390dp_fs1p0_p02_v02.png](04_详情/098_采购_物资采购历史_查看_有数据_390dp_fs1p0_p02_v02.png) — 初检边界见批次索引
+- [098_采购_物资采购历史_查看_有数据_状态_物资历史缺失_390dp_fs1p0_p01_v02.png](04_详情/098_采购_物资采购历史_查看_有数据_状态_物资历史缺失_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+
+## 099 全局高级筛选
+
+源码：`None`；原阶段14。
+
+- [099_附属_高级筛选_查看_已选_390dp_fs1p0_p01_v02.png](09_弹层选择器与菜单/099_附属_高级筛选_查看_已选_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+
+## 100 日期／月份／时间选择器
+
+源码：`None`；原阶段14。
+
+- [100_附属_日期选择_查看_20261006_390dp_fs1p0_p01_v02.png](09_弹层选择器与菜单/100_附属_日期选择_查看_20261006_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+
+## 101 人员／车辆／物资选择 Bottom Sheet
+
+源码：`None`；原阶段14。
+
+- [101_附属_物资选择_查看_有数据_390dp_fs1p0_p01_v03.png](09_弹层选择器与菜单/101_附属_物资选择_查看_有数据_390dp_fs1p0_p01_v03.png) — 初检边界见批次索引
+- [101_通用人员选择Sheet_内容状态_v01.png](09_弹层选择器与菜单/101_通用人员选择Sheet_内容状态_v01.png) — 初检边界见批次索引
+- [101_通用车辆选择Sheet_内容状态_v01.png](09_弹层选择器与菜单/101_通用车辆选择Sheet_内容状态_v01.png) — 初检边界见批次索引
+
+## 102 状态选择 Bottom Sheet
+
+源码：`None`；原阶段14。
+
+- [102_附属_状态选择_查看_未选择_390dp_fs1p0_p01_v03.png](09_弹层选择器与菜单/102_附属_状态选择_查看_未选择_390dp_fs1p0_p01_v03.png) — 初检边界见批次索引
+
+## 103 删除／撤销／停用／覆盖恢复危险确认
+
+源码：`None`；原阶段14。
+
+- [103_附属_危险确认_查看_移出考勤组_390dp_fs1p0_p01_v03.png](09_弹层选择器与菜单/103_附属_危险确认_查看_移出考勤组_390dp_fs1p0_p01_v03.png) — 初检边界见批次索引
+
+## 104 加载状态
+
+源码：`None`；原阶段14。
+
+- [104_库存_物资信息_加载_390dp_fs1p0_p01_v03.png](10_状态反馈/104_库存_物资信息_加载_390dp_fs1p0_p01_v03.png) — 初检边界见批次索引
+
+## 105 首次空状态
+
+源码：`None`；原阶段14。
+
+- [105_库存_物资信息_首次空_390dp_fs1p0_p01_v02.png](10_状态反馈/105_库存_物资信息_首次空_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+
+## 106 筛选空状态
+
+源码：`None`；原阶段14。
+
+- [106_库存_物资信息_筛选空_390dp_fs1p0_p01_v05.png](10_状态反馈/106_库存_物资信息_筛选空_390dp_fs1p0_p01_v05.png) — 初检边界见批次索引
+
+## 107 错误状态
+
+源码：`None`；原阶段14。
+
+- [107_库存_物资信息_加载失败_390dp_fs1p0_p01_v04.png](10_状态反馈/107_库存_物资信息_加载失败_390dp_fs1p0_p01_v04.png) — 初检边界见批次索引
+
+## 108 提交中
+
+源码：`None`；原阶段14。
+
+- [108_库存_盘点详情_确认中_390dp_fs1p0_p01_v04.png](10_状态反馈/108_库存_盘点详情_确认中_390dp_fs1p0_p01_v04.png) — 初检边界见批次索引
+
+## 109 提交成功
+
+源码：`None`；原阶段14。
+
+- [109_库存_盘点详情_确认成功_390dp_fs1p0_p01_v03.png](10_状态反馈/109_库存_盘点详情_确认成功_390dp_fs1p0_p01_v03.png) — 初检边界见批次索引
+
+## 110 禁用／只读状态
+
+源码：`None`；原阶段14。
+
+- [110_库存_盘点详情_已完成只读_390dp_fs1p0_p01_v04.png](10_状态反馈/110_库存_盘点详情_已完成只读_390dp_fs1p0_p01_v04.png) — 初检边界见批次索引
+
+## 111 附件预览／删除／恢复
+
+源码：`None`；原阶段14。
+
+- [111_附属_附件预览_查看_文档_390dp_fs1p0_p01_v01.png](09_弹层选择器与菜单/111_附属_附件预览_查看_文档_390dp_fs1p0_p01_v01.png) — 初检边界见批次索引
+
+## 112 其它页面内弹层与菜单
+
+源码：`None`；原阶段14。
+
+- [112_附属_页面菜单_查看_物资操作_390dp_fs1p0_p01_v02.png](09_弹层选择器与菜单/112_附属_页面菜单_查看_物资操作_390dp_fs1p0_p01_v02.png) — 初检边界见批次索引
+
+## 品牌补充113—119
+
+[资源清单](11_品牌资源/品牌资源清单.json) · [交付说明](11_品牌资源/品牌资源交付.md)。资源交付，代码接入延期。

@@ -1,0 +1,41 @@
+[
+  {
+    "task_id": "074",
+    "name": "库存首页",
+    "source": "lib/features/inventory/presentation/inventory_home_page.dart",
+    "old": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p01_v03.png",
+    "screen": 1,
+    "issues": [
+      "快捷主操作与指标仍为三列铺满，未满足四位置末位透明留白"
+    ],
+    "prompt": "Use case: ui-mockup. 局部编辑这张库存管理UI，只把库存概览卡三个指标改为四个等宽栅格位置，前三格宽度各为卡片内容宽度的25%，第四格完整空白。前三格分别当前物资3种、库存预警2项、待补充2项。三个现有彩色小图标与名称同一行，数字与单位同一行。右端必须明显空出四分之一宽度。快捷三入口同样第四格空白。其余页面一切保持，不改任何文字、数值、字号、间距、操作和字段，不新增区域。仅一张390×844dp PNG。",
+    "path": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p01_v04.png",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-7f91b815-2c4f-4238-9559-d52b490cd1e5.png"
+  },
+  {
+    "task_id": "077",
+    "name": "物资详情",
+    "source": "lib/features/inventory/presentation/inventory_material_detail_page.dart",
+    "old": "04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p01_v03.png",
+    "screen": 1,
+    "issues": [
+      "身份图标明显偏大；操作色与前阶段按钮规范待统一"
+    ],
+    "prompt": "Use case: ui-mockup. 精确局部编辑第1图物资详情。只删除中间整个无依据重复分区“物资指标”（当前库存20双、最低库存10双、存放位置一号仓三项）。该分区是生成时错误新增；删除后下方操作及最近库存流水顺次上移。其余身份卡、物资档案全部九字段、设计样例、快速入库/快速出库/申报采购/加入待采购待补充四操作保持原样，按钮蓝色样式保持。不能新增任何分区或字段。底部留安全空白，只一张PNG。",
+    "path": "04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p01_v04.png",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-c7272f91-b619-467a-bb26-7bdbeca3887c.png"
+  },
+  {
+    "task_id": "077",
+    "name": "物资详情",
+    "source": "lib/features/inventory/presentation/inventory_material_detail_page.dart",
+    "old": "04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p02_v02.png",
+    "screen": 2,
+    "issues": [
+      "指标呈两列两行，须复核四位置规则及长日期布局"
+    ],
+    "prompt": "Use case: ui-mockup. 第一张是要修正的物资详情第2滚动屏。恢复且严格完整展示四个指标，不是三个：第1格本月入库数量24双；第2格本月出库数量4双；第3格最近一次入库2026-10-01；第4格最近一次出库2026-10-04。四格同一行等宽，每格小图标在标题旁边同一层，数值和单位下一层。日期允许2026-和10-01/10-04两行，标题可换行，但不能删第四指标或改日期。保留下方最近库存流水/全部流水、出库2026-10-04 -4双、入库2026-10-01 +24双。不要添加其它内容。蓝白、彩色扁平小图标，390×844dp，一张PNG。",
+    "path": "04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p02_v03.png",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-d67ce32e-707a-4a9e-86ef-fc0fdef279b1.png"
+  }
+]

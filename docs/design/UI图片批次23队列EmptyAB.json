@@ -1,0 +1,98 @@
+[
+  {
+    "task_id": "079",
+    "source": "lib/features/inventory/presentation/inventory_receipt_form_page.dart",
+    "old": "05_表单与编辑/079_库存_新增入库_新增_已填_390dp_fs1p0_p01_v02.png",
+    "screen": 1,
+    "path": "05_表单与编辑/079_库存_新增入库_新增_已填_状态_无物资_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "实际状态补图"
+    ],
+    "prompt": "基于所附UI唯一蓝白轻渐变参考，生成同一页面的真实原生状态。单张竖屏390dp/844dp/fontScale1，无手机外壳无拼贴。不虚构功能、不改数据逻辑。正文状态只能用24dp小扁平线性图标，无大插画、圆底、光晕和立体箱子。只显示小扁平箱子图标、先新增物资档案、入库单需要关联已有物资。、蓝色新增物资按钮。表单全部隐藏，不创建空明细。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-bec53268-8310-4d86-b14d-7c1964746d2c.png"
+  },
+  {
+    "task_id": "085",
+    "source": "lib/features/inventory/presentation/inventory_stocktake_form_page.dart",
+    "old": "05_表单与编辑/085_库存_新建盘点_新增_已填_390dp_fs1p0_p01_v02.png",
+    "screen": 1,
+    "path": "05_表单与编辑/085_库存_新建盘点_新增_已填_状态_无可盘点_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "实际状态补图"
+    ],
+    "prompt": "基于所附UI唯一蓝白轻渐变参考，生成同一页面的真实原生状态。单张竖屏390dp/844dp/fontScale1，无手机外壳无拼贴。不虚构功能、不改数据逻辑。正文状态只能用24dp小扁平线性图标，无大插画、圆底、光晕和立体箱子。只显示小扁平箱子图标、没有可盘点的物资、先新增物资档案。整页表单、日期、经办人、备注、范围、创建按钮全部隐藏，只保留页面标题与小图标空态说明，不能有新增按钮。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-590f8719-5c99-4fda-ac63-a321733c1ade.png"
+  },
+  {
+    "task_id": "078",
+    "source": "lib/features/inventory/presentation/inventory_receipts_page.dart",
+    "old": "03_列表与记录/078_库存_月度入库_查看_有数据_390dp_fs1p0_p01_v02.png",
+    "screen": 1,
+    "path": "03_列表与记录/078_库存_月度入库_查看_有数据_状态_本月无记录_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "实际状态补图"
+    ],
+    "prompt": "基于所附UI唯一蓝白轻渐变参考，生成同一页面的真实原生状态。单张竖屏390dp/844dp/fontScale1，无手机外壳无拼贴。不虚构功能、不改数据逻辑。正文状态只能用24dp小扁平线性图标，无大插画、圆底、光晕和立体箱子。保留月份2026年10月、来源筛选和新建入口，指标本月入库0/记录组数0/条目条数0三项按四位置末格透明。正文小箱子图标、本月暂无入库记录、调整月份或来源筛选后再试。、新增入库按钮。不得展示原入库组数据与数量分单位。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-f687f46c-417c-48d6-9d34-4a638feb5180.png"
+  },
+  {
+    "task_id": "084",
+    "source": "lib/features/inventory/presentation/inventory_stocktakes_page.dart",
+    "old": "03_列表与记录/084_库存_盘点列表_查看_有数据_390dp_fs1p0_p01_v03.png",
+    "screen": 1,
+    "path": "03_列表与记录/084_库存_盘点列表_查看_有数据_状态_筛选无盘点_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "实际状态补图"
+    ],
+    "prompt": "基于所附UI唯一蓝白轻渐变参考，生成同一页面的真实原生状态。单张竖屏390dp/844dp/fontScale1，无手机外壳无拼贴。不虚构功能、不改数据逻辑。正文状态只能用24dp小扁平线性图标，无大插画、圆底、光晕和立体箱子。保留月份2026年10月、待盘点/已完成选择待盘点、顶部新建。正文小箱子、本月暂无待盘点任务、可切换月份或状态查看。原记录隐藏，差异不读为0，统计如源码空列表为0。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-e528e9ab-ab49-4b2b-8baf-c601ba8d0228.png"
+  },
+  {
+    "task_id": "087",
+    "source": "lib/features/inventory/presentation/inventory_warnings_page.dart",
+    "old": "03_列表与记录/087_库存_预警与补充_查看_有数据_390dp_fs1p0_p01_v03.png",
+    "screen": 1,
+    "path": "03_列表与记录/087_库存_预警与补充_查看_有数据_状态_无预警无补充_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "实际状态补图"
+    ],
+    "prompt": "基于所附UI唯一蓝白轻渐变参考，生成同一页面的真实原生状态。单张竖屏390dp/844dp/fontScale1，无手机外壳无拼贴。不虚构功能、不改数据逻辑。正文状态只能用24dp小扁平线性图标，无大插画、圆底、光晕和立体箱子。预警物资0、缺货0、待处理0（4位置三指标末留空），预警列表小图标没有库存预警、所有启用预警的物资库存都高于最低库存。下方待补充0项、小图标清单还是空的、可以从库存预警中一键加入待补充。保留查看全部入口，不加虚构推荐。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-9d03598e-183f-4a61-bdcf-0507453d3975.png"
+  },
+  {
+    "task_id": "088",
+    "source": "lib/features/inventory/presentation/inventory_replenishments_page.dart",
+    "old": "03_列表与记录/088_库存_待采购待补充_查看_有数据_390dp_fs1p0_p01_v04.png",
+    "screen": 1,
+    "path": "03_列表与记录/088_库存_待采购待补充_查看_有数据_状态_首次空_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "实际状态补图"
+    ],
+    "prompt": "基于所附UI唯一蓝白轻渐变参考，生成同一页面的真实原生状态。单张竖屏390dp/844dp/fontScale1，无手机外壳无拼贴。不虚构功能、不改数据逻辑。正文状态只能用24dp小扁平线性图标，无大插画、圆底、光晕和立体箱子。保留原页面导航新增入口，顶部3指标全0。正文小图标待补充清单为空、可以手动新建，或从库存预警中一键加入。、新增清单项按钮。所有列表记录与底部数量汇总隐藏。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-859807f6-e66d-4ee0-a68a-c0cd831fab36.png"
+  },
+  {
+    "task_id": "089",
+    "source": "lib/features/inventory/presentation/inventory_transactions_page.dart",
+    "old": "03_列表与记录/089_库存_库存流水_查看_有数据_390dp_fs1p0_p01_v02.png",
+    "screen": 1,
+    "path": "03_列表与记录/089_库存_库存流水_查看_有数据_状态_筛选空_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "实际状态补图"
+    ],
+    "prompt": "基于所附UI唯一蓝白轻渐变参考，生成同一页面的真实原生状态。单张竖屏390dp/844dp/fontScale1，无手机外壳无拼贴。不虚构功能、不改数据逻辑。正文状态只能用24dp小扁平线性图标，无大插画、圆底、光晕和立体箱子。顶部类型分段中选择盘点，标题库存流水，正文小图标该类型暂无流水、选择其他类型查看。计当前月份各类总量保持4/2/2，原记录隐藏，不增加新建操作或月份选择器。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-11567927-9423-410f-aba0-e7bafdadcac8.png"
+  },
+  {
+    "task_id": "090",
+    "source": "lib/features/purchase/presentation/purchase_home_page.dart",
+    "old": "02_工作台/090_采购_采购工作台_查看_有数据_390dp_fs1p0_p01_v04.png",
+    "screen": 1,
+    "path": "02_工作台/090_采购_采购工作台_查看_有数据_状态_无需要处理_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "实际状态补图"
+    ],
+    "prompt": "基于所附UI唯一蓝白轻渐变参考，生成同一页面的真实原生状态。单张竖屏390dp/844dp/fontScale1，无手机外壳无拼贴。不虚构功能、不改数据逻辑。正文状态只能用24dp小扁平线性图标，无大插画、圆底、光晕和立体箱子。顶部指标都0，本月已入库0项；需要处理区显示暂无需要处理的采购记录。保留常用功能四入口和新建采购浮动按钮；无业务记录卡，无大插画。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-82e4ddb9-cb9e-4d97-9aa8-597e38989c9d.png"
+  }
+]

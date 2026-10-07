@@ -1,0 +1,1 @@
+LOCAL EDIT only clearly failed UI elements. Add exact secondary identity line below each name: 张明 → EMP-0001 · 正式工；赵平 → EMP-0002 · 正式工。Remove radio circles: immediate tap ListTile selection, no persistent selected radio. Preserve title and Cancel, no other new control. Single existing screenshot, all remaining blue-white style/data untouched.

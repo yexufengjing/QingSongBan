@@ -1,0 +1,1 @@
+Edit attached existing mobile UI. Preserve blue-white gradient, all source business fields. One standalone 390dp screenshot, no collage or shell. Set adjusted quantity input to -1 with red border and EXACT red validation 请输入大于或等于 0 的数量. Current stock20双 unchanged, difference preview -21双 (unsaved invalid draft). Keep reason实物盘点后修正 and 保存调整 button. No dialog, no inventory update.

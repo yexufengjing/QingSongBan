@@ -1,0 +1,54 @@
+[
+  {
+    "task_id": "082",
+    "old": "03_列表与记录/082_库存_当前库存_查看_有数据_390dp_fs1p0_p01_v03.png",
+    "screen": 1,
+    "label": "首次空",
+    "prompt": "Preserve header 当前库存, search and 全部/常用/库存不足/缺货 filters. Replace ALL body metrics, records and bottom summary with single centered empty state: tiny 20x20px flat blue outline box icon with no shadows or rays, title 暂无库存记录, message 先在物资信息中新增物资档案。, one blue 新增物资 button. No counts because source hides metrics on empty; no records.",
+    "source": "lib/features/inventory/presentation/inventory_stock_page.dart",
+    "path": "03_列表与记录/082_库存_当前库存_查看_有数据_状态_首次空_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "真实空态补图"
+    ],
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-3544c0bb-4ae1-407f-8101-024070a7dec3.png"
+  },
+  {
+    "task_id": "082",
+    "old": "03_列表与记录/082_库存_当前库存_查看_有数据_390dp_fs1p0_p01_v03.png",
+    "screen": 1,
+    "label": "筛选空",
+    "prompt": "Preserve header 当前库存, search and 全部/常用/库存不足/缺货 filters, search value 不存在的物资. Replace ALL body metrics, records and summary with one empty state: tiny20x20px flat blue outline search icon, no shadow/rays. Title 没有匹配的物资, message 调整筛选条件后再试。. No add button or metrics.",
+    "source": "lib/features/inventory/presentation/inventory_stock_page.dart",
+    "path": "03_列表与记录/082_库存_当前库存_查看_有数据_状态_筛选空_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "真实空态补图"
+    ],
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-38c2bd39-c364-4ef1-bfe5-ccf996bdd2a2.png"
+  },
+  {
+    "task_id": "074",
+    "old": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p02_v02.png",
+    "screen": 2,
+    "label": "最近流水空",
+    "prompt": "Only replace 最近记录 list with empty state tiny20x20px flat blue icon, no shadow/rays, title 暂无库存流水, message 入库、出库、盘点或调整后会在这里显示。. Retain all other header, shortcut and real controls in attached screenshot. No new actions. Set 本月出入库摘要 all three metrics 入库条数0 出库条数0 其他变动0; use first3 of four equal positions with transparent fourth.",
+    "source": "lib/features/inventory/presentation/inventory_home_page.dart",
+    "path": "02_工作台/074_库存_库存首页_查看_有数据_状态_最近流水空_390dp_fs1p0_p02_v01.png",
+    "issues": [
+      "真实空态补图"
+    ],
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-fa5e636c-50b3-4340-bbc3-7f9403055cd6.png"
+  },
+  {
+    "task_id": "077",
+    "old": "04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p02_v03.png",
+    "screen": 2,
+    "label": "最近流水空",
+    "prompt": "Only change 最近库存流水 section to no transaction history. Preserve identity and 账面库存20双, 全部流水 link, all actions. Four metrics: 本月入库数量0双, 本月出库数量0双, 最近入库日期暂无记录, 最近出库日期暂无记录. Replace record list with tiny20x20px flat blue outline box, title 暂无流水, message 物资库存发生变化后会显示在这里。. No fabricated records or dates. Existing20 stock can be opening quantity. No shadows.",
+    "source": "lib/features/inventory/presentation/inventory_material_detail_page.dart",
+    "path": "04_详情/077_库存_物资详情_查看_有数据_状态_最近流水空_390dp_fs1p0_p02_v01.png",
+    "issues": [
+      "真实空态补图"
+    ],
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-433b93ad-5c5f-4338-a70e-66706f991b4e.png"
+  }
+]

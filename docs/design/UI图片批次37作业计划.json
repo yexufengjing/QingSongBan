@@ -1,0 +1,1043 @@
+[
+  {
+    "batch": 37,
+    "task_id": "004",
+    "state": "批量操作四入口",
+    "name": "批量操作四入口",
+    "ref": "06_台账与表格/004_考勤_每日考勤_登记_有名单_390dp_fs1p0_p01_v01.png",
+    "refs": [
+      "D:/QingSongBan/docs/design/06_台账与表格/004_考勤_每日考勤_登记_有名单_390dp_fs1p0_p01_v01.png"
+    ],
+    "path": "09_弹层选择器与菜单/004_批次37_批量操作四入口_v01.png",
+    "source": "lib/features/attendance/presentation/daily_attendance_page.dart",
+    "source_sha256": "9f3d61613cf7b81ced3d34a5369e59223029ed65eb0b9a1b71d5fbfedc375c0e",
+    "source_evidence": [
+      {
+        "line": 24,
+        "text": "title: const Text('每日考勤'),"
+      },
+      {
+        "line": 32,
+        "text": "label: Text('自动保存'),"
+      },
+      {
+        "line": 329,
+        "text": "label: Text("
+      },
+      {
+        "line": 591,
+        "text": "DailyAttendanceOptions.statusLabel(status),"
+      },
+      {
+        "line": 618,
+        "text": "DailyAttendanceOptions.statusLabel(option),"
+      },
+      {
+        "line": 642,
+        "text": "title: const Text('考勤备注'),"
+      },
+      {
+        "line": 717,
+        "text": "Text('本月暂无考勤人员', style: Theme.of(context).textTheme.titleLarge),"
+      },
+      {
+        "line": 758,
+        "text": "Text('暂无启用中的考勤组', style: Theme.of(context).textTheme.titleLarge),"
+      },
+      {
+        "line": 769,
+        "text": "label: const Text('去管理考勤组'),"
+      }
+    ],
+    "body": "保持原有人员台账作为背景，加蒙层和简洁底部Sheet。标题“批量操作”，四行小扁平彩色图标及“一键全勤”“复制前一天”“批量公休”“批量停工”，点选直接执行，无第二次确认或保存按钮。",
+    "prompt": "Use case: ui-mockup. 以附图为中文字体/字号/顶栏/白卡/浅蓝灰背景/8-16-24间距/按钮/彩色小扁平图标的直接基准，只改变白名单。完整单张纵向页面，无手机框、拼图、3D、巨型图标、水滴装饰、额外说明、额外字段或伪业务数据。字段和真实操作严格按以下定义；不缩字或放大空卡填满画布。保持原有人员台账作为背景，加蒙层和简洁底部Sheet。标题“批量操作”，四行小扁平彩色图标及“一键全勤”“复制前一天”“批量公休”“批量停工”，点选直接执行，无第二次确认或保存按钮。",
+    "status": "已生成并逐图内容初检",
+    "pending_prompt_path": "09_弹层选择器与菜单/004_批次37_批量操作四入口_v01.pending.prompt.txt",
+    "input_path": "06_台账与表格/004_考勤_每日考勤_登记_有名单_390dp_fs1p0_p01_v01.png",
+    "input_sha256": "2125efdb1a8abf4750d78bb7b2698a67cb00888e2e5301c4151258864a338e48",
+    "input_dims": [
+      853,
+      1844
+    ],
+    "output_path": "09_弹层选择器与菜单/004_批次37_批量操作四入口_v01.png",
+    "referenced_image_paths": [
+      "D:/QingSongBan/docs/design/06_台账与表格/004_考勤_每日考勤_登记_有名单_390dp_fs1p0_p01_v01.png"
+    ],
+    "input_inspection": "仅准备输入配对；imagegen执行前view_image",
+    "prompt_path": "09_弹层选择器与菜单/004_批次37_批量操作四入口_v01.prompt.txt",
+    "output_sha256": "5b83704f01e1600a181bb0c12d323c5d7c37258b736c66b31a77b5eae7ad2075",
+    "calls": 1
+  },
+  {
+    "batch": 37,
+    "task_id": "007",
+    "state": "出库首次空",
+    "name": "出库首次空",
+    "ref": "03_列表与记录/007_库存_月度领用记录_查看_有数据_390dp_fs1p0_p01_v01.png",
+    "refs": [
+      "D:/QingSongBan/docs/design/03_列表与记录/007_库存_月度领用记录_查看_有数据_390dp_fs1p0_p01_v01.png"
+    ],
+    "path": "09_弹层选择器与菜单/007_批次37_出库首次空_v01.png",
+    "source": "lib/features/inventory/presentation/inventory_issues_page.dart",
+    "source_sha256": "c8e54de49db569c464b5d0491d4972cb5daeeba73adab6ad683c27a3dab3cf89",
+    "source_evidence": [
+      {
+        "line": 28,
+        "text": "title: Text('${_month.month}月领用出库'),"
+      },
+      {
+        "line": 105,
+        "text": "label: '本月出库',"
+      },
+      {
+        "line": 116,
+        "text": "label: '领取人次',"
+      },
+      {
+        "line": 127,
+        "text": "label: '条目条数',"
+      },
+      {
+        "line": 136,
+        "text": "title: allIssues.isEmpty ? '暂无出库记录' : '本月暂无出库记录',"
+      },
+      {
+        "line": 144,
+        "text": "label: const Text('登记领用'),"
+      },
+      {
+        "line": 163,
+        "text": "label: '本月出库',"
+      },
+      {
+        "line": 174,
+        "text": "label: '领取人次',"
+      },
+      {
+        "line": 185,
+        "text": "label: '条目条数',"
+      },
+      {
+        "line": 199,
+        "text": "title: '本月领用汇总',"
+      }
+    ],
+    "body": "保留原月份、类型筛选及页头。本月出库/领取人次/条目条数均为0，无任何记录卡。小24dp彩色线图标，标题“暂无出库记录”，说明“员工领取或其他领用完成后会在此显示。”，蓝色“＋ 登记领用”。禁止自创清除筛选。",
+    "prompt": "Use case: ui-mockup. 以附图为中文字体/字号/顶栏/白卡/浅蓝灰背景/8-16-24间距/按钮/彩色小扁平图标的直接基准，只改变白名单。完整单张纵向页面，无手机框、拼图、3D、巨型图标、水滴装饰、额外说明、额外字段或伪业务数据。字段和真实操作严格按以下定义；不缩字或放大空卡填满画布。保留原月份、类型筛选及页头。本月出库/领取人次/条目条数均为0，无任何记录卡。小24dp彩色线图标，标题“暂无出库记录”，说明“员工领取或其他领用完成后会在此显示。”，蓝色“＋ 登记领用”。禁止自创清除筛选。",
+    "status": "已生成并逐图内容初检",
+    "pending_prompt_path": "09_弹层选择器与菜单/007_批次37_出库首次空_v01.pending.prompt.txt",
+    "input_path": "03_列表与记录/007_库存_月度领用记录_查看_有数据_390dp_fs1p0_p01_v01.png",
+    "input_sha256": "303fd6def1d123c5004a720bd7b8221bf0e01397ed483efe7c2a843dec9b33a0",
+    "input_dims": [
+      853,
+      1844
+    ],
+    "output_path": "09_弹层选择器与菜单/007_批次37_出库首次空_v01.png",
+    "referenced_image_paths": [
+      "D:/QingSongBan/docs/design/03_列表与记录/007_库存_月度领用记录_查看_有数据_390dp_fs1p0_p01_v01.png"
+    ],
+    "input_inspection": "仅准备输入配对；imagegen执行前view_image",
+    "prompt_path": "09_弹层选择器与菜单/007_批次37_出库首次空_v01.prompt.txt",
+    "output_sha256": "e271ff802ac12f5aac44226b04e6c24652716decd46edbcc0a26cdad684fcd86",
+    "calls": 2
+  },
+  {
+    "batch": 37,
+    "task_id": "007",
+    "state": "出库筛选空",
+    "name": "出库筛选空",
+    "ref": "03_列表与记录/007_库存_月度领用记录_查看_有数据_390dp_fs1p0_p01_v01.png",
+    "refs": [
+      "D:/QingSongBan/docs/design/03_列表与记录/007_库存_月度领用记录_查看_有数据_390dp_fs1p0_p01_v01.png"
+    ],
+    "path": "09_弹层选择器与菜单/007_批次37_出库筛选空_v01.png",
+    "source": "lib/features/inventory/presentation/inventory_issues_page.dart",
+    "source_sha256": "c8e54de49db569c464b5d0491d4972cb5daeeba73adab6ad683c27a3dab3cf89",
+    "source_evidence": [
+      {
+        "line": 28,
+        "text": "title: Text('${_month.month}月领用出库'),"
+      },
+      {
+        "line": 105,
+        "text": "label: '本月出库',"
+      },
+      {
+        "line": 116,
+        "text": "label: '领取人次',"
+      },
+      {
+        "line": 127,
+        "text": "label: '条目条数',"
+      },
+      {
+        "line": 136,
+        "text": "title: allIssues.isEmpty ? '暂无出库记录' : '本月暂无出库记录',"
+      },
+      {
+        "line": 144,
+        "text": "label: const Text('登记领用'),"
+      },
+      {
+        "line": 163,
+        "text": "label: '本月出库',"
+      },
+      {
+        "line": 174,
+        "text": "label: '领取人次',"
+      },
+      {
+        "line": 185,
+        "text": "label: '条目条数',"
+      },
+      {
+        "line": 199,
+        "text": "title: '本月领用汇总',"
+      }
+    ],
+    "body": "保留原月份、类型筛选及页头，本月出库/领取人次/条目条数均0，无记录卡。小24dp彩色线图标，标题“本月暂无出库记录”，说明“调整月份或类型筛选后再试。”，蓝色“＋ 登记领用”。不是首次无历史，不清空历史说明。",
+    "prompt": "Use case: ui-mockup. 以附图为中文字体/字号/顶栏/白卡/浅蓝灰背景/8-16-24间距/按钮/彩色小扁平图标的直接基准，只改变白名单。完整单张纵向页面，无手机框、拼图、3D、巨型图标、水滴装饰、额外说明、额外字段或伪业务数据。字段和真实操作严格按以下定义；不缩字或放大空卡填满画布。保留原月份、类型筛选及页头，本月出库/领取人次/条目条数均0，无记录卡。小24dp彩色线图标，标题“本月暂无出库记录”，说明“调整月份或类型筛选后再试。”，蓝色“＋ 登记领用”。不是首次无历史，不清空历史说明。",
+    "status": "已生成并逐图内容初检",
+    "pending_prompt_path": "09_弹层选择器与菜单/007_批次37_出库筛选空_v01.pending.prompt.txt",
+    "input_path": "03_列表与记录/007_库存_月度领用记录_查看_有数据_390dp_fs1p0_p01_v01.png",
+    "input_sha256": "303fd6def1d123c5004a720bd7b8221bf0e01397ed483efe7c2a843dec9b33a0",
+    "input_dims": [
+      853,
+      1844
+    ],
+    "output_path": "09_弹层选择器与菜单/007_批次37_出库筛选空_v01.png",
+    "referenced_image_paths": [
+      "D:/QingSongBan/docs/design/03_列表与记录/007_库存_月度领用记录_查看_有数据_390dp_fs1p0_p01_v01.png"
+    ],
+    "input_inspection": "仅准备输入配对；imagegen执行前view_image",
+    "prompt_path": "09_弹层选择器与菜单/007_批次37_出库筛选空_v01.prompt.txt",
+    "output_sha256": "8fd2679d20abc35d6bbc86ddc5d1cca17e343a0640c1ed29c3d81ccc9248cf8c",
+    "calls": 3
+  },
+  {
+    "batch": 37,
+    "task_id": "016",
+    "state": "添加本月人员无候选",
+    "name": "添加本月人员无候选",
+    "ref": "06_台账与表格/016_考勤_月度名单_维护_有名单_390dp_fs1p0_p01_v01.png",
+    "refs": [
+      "D:/QingSongBan/docs/design/06_台账与表格/016_考勤_月度名单_维护_有名单_390dp_fs1p0_p01_v01.png"
+    ],
+    "path": "09_弹层选择器与菜单/016_批次37_添加本月人员无候选_v01.png",
+    "source": "lib/features/attendance/presentation/monthly_roster_page.dart",
+    "source_sha256": "092f0e75d2507654c310268b8c1d69c829e162397619e1b2a7ceb612b3d5f80f",
+    "source_evidence": [
+      {
+        "line": 20,
+        "text": "title: const Text('月度考勤名单'),"
+      },
+      {
+        "line": 132,
+        "text": "label: const Text('显示已移除'),"
+      },
+      {
+        "line": 201,
+        "text": "title: const Text('按默认组加入？'),"
+      },
+      {
+        "line": 246,
+        "text": "title: const Text('复制上月名单？'),"
+      },
+      {
+        "line": 291,
+        "text": "title: const Text('移除本月名单？'),"
+      },
+      {
+        "line": 401,
+        "text": "label: group.isEnabled ? '可维护' : '历史查看',"
+      },
+      {
+        "line": 459,
+        "text": "label: Text("
+      },
+      {
+        "line": 469,
+        "text": "labelText: '考勤组',"
+      },
+      {
+        "line": 505,
+        "text": "label: '本月有效',"
+      },
+      {
+        "line": 513,
+        "text": "label: '已移除',"
+      },
+      {
+        "line": 596,
+        "text": "label: const Text('添加人员'),"
+      },
+      {
+        "line": 606,
+        "text": "label: const Text('按默认组加入'),"
+      },
+      {
+        "line": 615,
+        "text": "label: const Text('复制上月'),"
+      },
+      {
+        "line": 649,
+        "text": "PersonnelOptions.statusLabel(employee.status),"
+      },
+      {
+        "line": 688,
+        "text": "label: removed ? '已移除' : '有效',"
+      },
+      {
+        "line": 766,
+        "text": "showRemoved ? '本月还没有名单记录' : '本月暂无有效人员',"
+      },
+      {
+        "line": 782,
+        "text": "label: const Text('添加人员'),"
+      },
+      {
+        "line": 819,
+        "text": "Text('暂无考勤组', style: Theme.of(context).textTheme.titleLarge),"
+      },
+      {
+        "line": 830,
+        "text": "label: const Text('去管理考勤组'),"
+      },
+      {
+        "line": 955,
+        "text": "items.isEmpty ? '暂无符合月份规则的人员。' : '没有匹配的未加入人员。',"
+      },
+      {
+        "line": 973,
+        "text": "title: Text(employee.name),"
+      },
+      {
+        "line": 974,
+        "text": "subtitle: Text("
+      },
+      {
+        "line": 975,
+        "text": "'${employee.employeeNo} · ${employee.position?.isNotEmpty == true ? employee.position : '岗位未填写'} · ${PersonnelOptions.statusLabel(employee.status)}',"
+      }
+    ],
+    "body": "以名单页为蒙层背景，BottomSheet标题“添加本月人员”；说明“2026-10 · 仅显示入职日期不晚于本月末的人员。”；搜索占位“搜索姓名、编号、岗位或用工类型”；中央“没有匹配的未加入人员。”。这是已有档案但未加入候选为空的状态。候选正常时每行名称/工号/岗位/在岗状态及加号，点选直接加入；本图不虚构新人员，不加单选radio/确认按钮。",
+    "prompt": "Use case: ui-mockup. 以附图为中文字体/字号/顶栏/白卡/浅蓝灰背景/8-16-24间距/按钮/彩色小扁平图标的直接基准，只改变白名单。完整单张纵向页面，无手机框、拼图、3D、巨型图标、水滴装饰、额外说明、额外字段或伪业务数据。字段和真实操作严格按以下定义；不缩字或放大空卡填满画布。以名单页为蒙层背景，BottomSheet标题“添加本月人员”；说明“2026-10 · 仅显示入职日期不晚于本月末的人员。”；搜索占位“搜索姓名、编号、岗位或用工类型”；中央“没有匹配的未加入人员。”。这是已有档案但未加入候选为空的状态。候选正常时每行名称/工号/岗位/在岗状态及加号，点选直接加入；本图不虚构新人员，不加单选radio/确认按钮。",
+    "status": "已生成并逐图内容初检",
+    "pending_prompt_path": "09_弹层选择器与菜单/016_批次37_添加本月人员无候选_v01.pending.prompt.txt",
+    "input_path": "06_台账与表格/016_考勤_月度名单_维护_有名单_390dp_fs1p0_p01_v01.png",
+    "input_sha256": "16b9a9a07e8b10f5e9276886c7c7d5a70f431ddd3180023186e441b2f3a43d86",
+    "input_dims": [
+      853,
+      1844
+    ],
+    "output_path": "09_弹层选择器与菜单/016_批次37_添加本月人员无候选_v01.png",
+    "referenced_image_paths": [
+      "D:/QingSongBan/docs/design/06_台账与表格/016_考勤_月度名单_维护_有名单_390dp_fs1p0_p01_v01.png"
+    ],
+    "input_inspection": "仅准备输入配对；imagegen执行前view_image",
+    "prompt_path": "09_弹层选择器与菜单/016_批次37_添加本月人员无候选_v01.prompt.txt",
+    "output_sha256": "c43d9b1ac913586f43f44dad0422c084265cee4f97f0c3ab39cbd37677758065",
+    "calls": 2
+  },
+  {
+    "batch": 37,
+    "task_id": "018",
+    "state": "考勤组无成员",
+    "name": "考勤组无成员",
+    "ref": "04_详情/018_考勤_考勤组详情_查看_有成员_390dp_fs1p0_p01_v01.png",
+    "refs": [
+      "D:/QingSongBan/docs/design/04_详情/018_考勤_考勤组详情_查看_有成员_390dp_fs1p0_p01_v01.png"
+    ],
+    "path": "09_弹层选择器与菜单/018_批次37_考勤组无成员_v01.png",
+    "source": "lib/features/attendance/presentation/attendance_group_detail_page.dart",
+    "source_sha256": "b13967061aa193fd20b4abc8ef1ec6df7c6cd3eca88a4832d04a93ff11a4196a",
+    "source_evidence": [
+      {
+        "line": 22,
+        "text": "title: const Text('考勤组详情'),"
+      },
+      {
+        "line": 105,
+        "text": "label: const Text('添加成员并设为默认组'),"
+      },
+      {
+        "line": 148,
+        "text": "title: const Text('移出考勤组？'),"
+      },
+      {
+        "line": 343,
+        "text": "Text('还没有组成员', style: Theme.of(context).textTheme.titleLarge),"
+      },
+      {
+        "line": 462,
+        "text": "title: Text(employee.name),"
+      },
+      {
+        "line": 463,
+        "text": "subtitle: Text("
+      }
+    ],
+    "body": "保留现有示例一组身份与启用状态，成员数全部改0，移除成员列表。白卡小24dp彩色人员线图标、“还没有组成员”、“添加人员后，该考勤组会成为其默认考勤组。”；保持原底部“添加成员并设为默认组”入口。禁止误写月名单范围或新增删除按钮。",
+    "prompt": "Use case: ui-mockup. 以附图为中文字体/字号/顶栏/白卡/浅蓝灰背景/8-16-24间距/按钮/彩色小扁平图标的直接基准，只改变白名单。完整单张纵向页面，无手机框、拼图、3D、巨型图标、水滴装饰、额外说明、额外字段或伪业务数据。字段和真实操作严格按以下定义；不缩字或放大空卡填满画布。保留现有示例一组身份与启用状态，成员数全部改0，移除成员列表。白卡小24dp彩色人员线图标、“还没有组成员”、“添加人员后，该考勤组会成为其默认考勤组。”；保持原底部“添加成员并设为默认组”入口。禁止误写月名单范围或新增删除按钮。",
+    "status": "已生成并逐图内容初检",
+    "pending_prompt_path": "09_弹层选择器与菜单/018_批次37_考勤组无成员_v01.pending.prompt.txt",
+    "input_path": "04_详情/018_考勤_考勤组详情_查看_有成员_390dp_fs1p0_p01_v01.png",
+    "input_sha256": "7b1a1b730fdfa0bbba89aa802b95cd3c50ed65293cd75c7e89fd262340b2723f",
+    "input_dims": [
+      853,
+      1844
+    ],
+    "output_path": "09_弹层选择器与菜单/018_批次37_考勤组无成员_v01.png",
+    "referenced_image_paths": [
+      "D:/QingSongBan/docs/design/04_详情/018_考勤_考勤组详情_查看_有成员_390dp_fs1p0_p01_v01.png"
+    ],
+    "input_inspection": "仅准备输入配对；imagegen执行前view_image",
+    "prompt_path": "09_弹层选择器与菜单/018_批次37_考勤组无成员_v01.prompt.txt",
+    "output_sha256": "9811de6915dffd8d8d1d780e1cc6a0e7108e3737ccf4e71fdac791a6891273d5",
+    "calls": 2
+  },
+  {
+    "batch": 37,
+    "task_id": "062",
+    "state": "车辆维修无记录",
+    "name": "车辆维修无记录",
+    "ref": "04_详情/062_车辆_详情维修_查看_有数据_390dp_fs1p0_p01_v02.png",
+    "refs": [
+      "D:/QingSongBan/docs/design/04_详情/062_车辆_详情维修_查看_有数据_390dp_fs1p0_p01_v02.png"
+    ],
+    "path": "09_弹层选择器与菜单/062_批次37_车辆维修无记录_v01.png",
+    "source": "lib/features/vehicles/presentation/vehicle_repair_tab.dart",
+    "source_sha256": "5be59a2aa8a47f489890a769ea796a06d7a920ea53c1554c512ddd503b5f8658",
+    "source_evidence": [
+      {
+        "line": 122,
+        "text": "label: const Text('新建报修'),"
+      },
+      {
+        "line": 130,
+        "text": "label: '待维修',"
+      },
+      {
+        "line": 136,
+        "text": "label: '维修中',"
+      },
+      {
+        "line": 142,
+        "text": "label: '已完成',"
+      },
+      {
+        "line": 148,
+        "text": "label: '本月费用',"
+      },
+      {
+        "line": 166,
+        "text": "label: '全部',"
+      },
+      {
+        "line": 176,
+        "text": "label: RepairOptions.statusLabel(value),"
+      },
+      {
+        "line": 239,
+        "text": "const Text('暂无维修记录'),"
+      },
+      {
+        "line": 252,
+        "text": "label: const Text('新建报修'),"
+      },
+      {
+        "line": 335,
+        "text": "label: RepairOptions.statusLabel(order.status),"
+      },
+      {
+        "line": 446,
+        "text": "label: Text(label),"
+      },
+      {
+        "line": 480,
+        "text": "title: const Text('维修记录加载失败'),"
+      },
+      {
+        "line": 481,
+        "text": "subtitle: Text(message),"
+      }
+    ],
+    "body": "保留现有车辆身份、维修Tab和状态/月筛选、日期排序入口。待维修/维修中/已完成/月费用指标全部0。无维修卡；正文小24dp彩色维修单线图标、“暂无维修记录”、“从车况问题或这里直接创建报修单。”与描边“＋ 新建报修”。按钮必须新建报修，不能新建维修单。",
+    "prompt": "Use case: ui-mockup. 以附图为中文字体/字号/顶栏/白卡/浅蓝灰背景/8-16-24间距/按钮/彩色小扁平图标的直接基准，只改变白名单。完整单张纵向页面，无手机框、拼图、3D、巨型图标、水滴装饰、额外说明、额外字段或伪业务数据。字段和真实操作严格按以下定义；不缩字或放大空卡填满画布。保留现有车辆身份、维修Tab和状态/月筛选、日期排序入口。待维修/维修中/已完成/月费用指标全部0。无维修卡；正文小24dp彩色维修单线图标、“暂无维修记录”、“从车况问题或这里直接创建报修单。”与描边“＋ 新建报修”。按钮必须新建报修，不能新建维修单。",
+    "status": "已生成并逐图内容初检",
+    "pending_prompt_path": "09_弹层选择器与菜单/062_批次37_车辆维修无记录_v01.pending.prompt.txt",
+    "input_path": "04_详情/062_车辆_详情维修_查看_有数据_390dp_fs1p0_p01_v02.png",
+    "input_sha256": "181ca505e9509afbbebf143c121eefe76f0ac4e81e4dee78a000a092fdbf2b62",
+    "input_dims": [
+      853,
+      1844
+    ],
+    "output_path": "09_弹层选择器与菜单/062_批次37_车辆维修无记录_v01.png",
+    "referenced_image_paths": [
+      "D:/QingSongBan/docs/design/04_详情/062_车辆_详情维修_查看_有数据_390dp_fs1p0_p01_v02.png"
+    ],
+    "input_inspection": "仅准备输入配对；imagegen执行前view_image",
+    "prompt_path": "09_弹层选择器与菜单/062_批次37_车辆维修无记录_v01.prompt.txt",
+    "output_sha256": "c3191ea40b4df41325488cc3ce707032f099a5036ac2dea1c60506ca534c1bc2",
+    "calls": 2
+  },
+  {
+    "batch": 37,
+    "task_id": "063",
+    "state": "车辆费用年度无流水",
+    "name": "车辆费用年度无流水",
+    "ref": "04_详情/063_车辆_详情费用_查看_年度明细_390dp_fs1p0_p01_v02.png",
+    "refs": [
+      "D:/QingSongBan/docs/design/04_详情/063_车辆_详情费用_查看_年度明细_390dp_fs1p0_p01_v02.png"
+    ],
+    "path": "09_弹层选择器与菜单/063_批次37_车辆费用年度无流水_v01.png",
+    "source": "lib/features/vehicles/presentation/vehicle_expense_tab.dart",
+    "source_sha256": "0a29c3e13ab5ac640b91a4cb96b17c05076a82168eb14caef5a7e68f177ec94f",
+    "source_evidence": [
+      {
+        "line": 98,
+        "text": "const Text('本年度还没有费用流水'),"
+      },
+      {
+        "line": 150,
+        "text": "label: '本年累计总费用',"
+      },
+      {
+        "line": 156,
+        "text": "label: '本月费用',"
+      },
+      {
+        "line": 162,
+        "text": "label: '油费占比',"
+      },
+      {
+        "line": 168,
+        "text": "label: '维修次数',"
+      },
+      {
+        "line": 440,
+        "text": "_LegendItem(label: '油耗', color: AppColors.techBlue),"
+      },
+      {
+        "line": 441,
+        "text": "_LegendItem(label: '维修', color: Color(0xffff8a3d)),"
+      },
+      {
+        "line": 442,
+        "text": "_LegendItem(label: '保养', color: Color(0xff32ba84)),"
+      },
+      {
+        "line": 443,
+        "text": "_LegendItem(label: '其他', color: AppColors.purple),"
+      },
+      {
+        "line": 486,
+        "text": "title: Text(item.category),"
+      },
+      {
+        "line": 487,
+        "text": "subtitle: Text("
+      },
+      {
+        "line": 543,
+        "text": "'本年度暂无维修项目记录',"
+      },
+      {
+        "line": 557,
+        "text": "title: Text("
+      },
+      {
+        "line": 627,
+        "text": "const Text('暂无异常或临近到期提醒', style: TextStyle(color: AppColors.body))"
+      },
+      {
+        "line": 637,
+        "text": "title: Text("
+      },
+      {
+        "line": 640,
+        "text": "subtitle: Text("
+      },
+      {
+        "line": 643,
+        "text": ": VehicleConditionOptions.statusLabel(item.status),"
+      },
+      {
+        "line": 654,
+        "text": "title: Text(item.reminder.title),"
+      },
+      {
+        "line": 655,
+        "text": "subtitle: Text("
+      }
+    ],
+    "body": "保留车辆身份、费用Tab、原年度选择。年度/本月费用0、燃油占比0%、维修记录0；无趋势、占比和费用流水。小24dp彩色分析线图标、“本年度还没有费用流水”、“油耗、维修、保养和其他费用会自动汇总到这里。”；继续保留常见维修项目区“本年度暂无维修项目记录”与提醒区“暂无异常或临近到期提醒”。不新增费用录入或补录按钮。",
+    "prompt": "Use case: ui-mockup. 以附图为中文字体/字号/顶栏/白卡/浅蓝灰背景/8-16-24间距/按钮/彩色小扁平图标的直接基准，只改变白名单。完整单张纵向页面，无手机框、拼图、3D、巨型图标、水滴装饰、额外说明、额外字段或伪业务数据。字段和真实操作严格按以下定义；不缩字或放大空卡填满画布。保留车辆身份、费用Tab、原年度选择。年度/本月费用0、燃油占比0%、维修记录0；无趋势、占比和费用流水。小24dp彩色分析线图标、“本年度还没有费用流水”、“油耗、维修、保养和其他费用会自动汇总到这里。”；继续保留常见维修项目区“本年度暂无维修项目记录”与提醒区“暂无异常或临近到期提醒”。不新增费用录入或补录按钮。",
+    "status": "已生成并逐图内容初检",
+    "pending_prompt_path": "09_弹层选择器与菜单/063_批次37_车辆费用年度无流水_v01.pending.prompt.txt",
+    "input_path": "04_详情/063_车辆_详情费用_查看_年度明细_390dp_fs1p0_p01_v02.png",
+    "input_sha256": "c9d696181eedb7b18ae566c75129410ee31e2bd5201bd8be5ce9befe173b50b4",
+    "input_dims": [
+      853,
+      1844
+    ],
+    "output_path": "09_弹层选择器与菜单/063_批次37_车辆费用年度无流水_v01.png",
+    "referenced_image_paths": [
+      "D:/QingSongBan/docs/design/04_详情/063_车辆_详情费用_查看_年度明细_390dp_fs1p0_p01_v02.png"
+    ],
+    "input_inspection": "仅准备输入配对；imagegen执行前view_image",
+    "prompt_path": "09_弹层选择器与菜单/063_批次37_车辆费用年度无流水_v01.prompt.txt",
+    "output_sha256": "98a818cf276fceefc15701529110203601a1a262c29ca35f64b2e5276360fef8",
+    "calls": 4
+  },
+  {
+    "batch": 37,
+    "task_id": "064",
+    "state": "部件状态六选项",
+    "name": "部件状态六选项",
+    "ref": "09_弹层选择器与菜单/064_车辆车况_部件状态编辑_内容状态_v01.png",
+    "refs": [
+      "D:/QingSongBan/docs/design/09_弹层选择器与菜单/064_车辆车况_部件状态编辑_内容状态_v01.png"
+    ],
+    "path": "09_弹层选择器与菜单/064_批次37_部件状态六选项_v01.png",
+    "source": "lib/features/vehicles/domain/condition_options.dart",
+    "source_sha256": "0887fc0866b2c78716c2c5f1caf9c2ac22bcbad7bcec089e28e0808668430f8a",
+    "source_evidence": [
+      {
+        "line": 6,
+        "text": "static String statusLabel(VehicleConditionStatus value) => switch (value) {"
+      }
+    ],
+    "body": "保持发动机状态Dialog、原背景蒙层、空备注、取消/保存。展开状态下拉，六行精确“正常”“轻微异常”“需要关注”“待维修”“维修中”“停用/不可用”，正常选中。来源VehicleConditionStatus，禁止用图例“待处理/异常/未记录”替代枚举，未记录不是可保存值。",
+    "prompt": "Use case: ui-mockup. 以附图为中文字体/字号/顶栏/白卡/浅蓝灰背景/8-16-24间距/按钮/彩色小扁平图标的直接基准，只改变白名单。完整单张纵向页面，无手机框、拼图、3D、巨型图标、水滴装饰、额外说明、额外字段或伪业务数据。字段和真实操作严格按以下定义；不缩字或放大空卡填满画布。保持发动机状态Dialog、原背景蒙层、空备注、取消/保存。展开状态下拉，六行精确“正常”“轻微异常”“需要关注”“待维修”“维修中”“停用/不可用”，正常选中。来源VehicleConditionStatus，禁止用图例“待处理/异常/未记录”替代枚举，未记录不是可保存值。",
+    "status": "已生成并逐图内容初检",
+    "pending_prompt_path": "09_弹层选择器与菜单/064_批次37_部件状态六选项_v01.pending.prompt.txt",
+    "input_path": "09_弹层选择器与菜单/064_车辆车况_部件状态编辑_内容状态_v01.png",
+    "input_sha256": "cf906418b88cb64da3a58ae87b37a401a35e574bd956137cb79cdddf6f4ceb49",
+    "input_dims": [
+      853,
+      1844
+    ],
+    "output_path": "09_弹层选择器与菜单/064_批次37_部件状态六选项_v01.png",
+    "referenced_image_paths": [
+      "D:/QingSongBan/docs/design/09_弹层选择器与菜单/064_车辆车况_部件状态编辑_内容状态_v01.png"
+    ],
+    "input_inspection": "仅准备输入配对；imagegen执行前view_image",
+    "prompt_path": "09_弹层选择器与菜单/064_批次37_部件状态六选项_v01.prompt.txt",
+    "output_sha256": "682a9121f9c2af8bbe9b611c514d7d014da109ff0f3b2638a06c9b80fcc40a9e",
+    "calls": 1
+  },
+  {
+    "batch": 37,
+    "task_id": "065",
+    "state": "保养无计划",
+    "name": "保养无计划",
+    "ref": "04_详情/065_车辆_详情保养备件_查看_保养计划_390dp_fs1p0_p01_v03.png",
+    "refs": [
+      "D:/QingSongBan/docs/design/04_详情/065_车辆_详情保养备件_查看_保养计划_390dp_fs1p0_p01_v03.png"
+    ],
+    "path": "09_弹层选择器与菜单/065_批次37_保养无计划_v01.png",
+    "source": "lib/features/vehicles/presentation/vehicle_maintenance_tab.dart",
+    "source_sha256": "ccdbaae099b293669f1466f2f69833eb310caeabd990fbbc5900eb91b98cb198",
+    "source_evidence": [
+      {
+        "line": 47,
+        "text": "ButtonSegment(value: false, label: Text('保养计划')),"
+      },
+      {
+        "line": 48,
+        "text": "ButtonSegment(value: true, label: Text('备件寿命')),"
+      },
+      {
+        "line": 64,
+        "text": "label: const Text('初始化默认项目'),"
+      },
+      {
+        "line": 80,
+        "text": "child: Text('还没有保养项目。可以先初始化主机和副机的机油、机油滤芯项目。'),"
+      },
+      {
+        "line": 163,
+        "text": "label: '即将到期',"
+      },
+      {
+        "line": 169,
+        "text": "label: '已到期',"
+      },
+      {
+        "line": 175,
+        "text": "label: '超期未处理',"
+      },
+      {
+        "line": 181,
+        "text": "label: '保养项目',"
+      },
+      {
+        "line": 245,
+        "text": "MaintenanceOptions.statusLabel(status),"
+      },
+      {
+        "line": 260,
+        "text": "label: '上次保养',"
+      },
+      {
+        "line": 266,
+        "text": "label: '保养周期',"
+      },
+      {
+        "line": 273,
+        "text": "label: '下次到期',"
+      },
+      {
+        "line": 320,
+        "text": "title: Text(record.name),"
+      },
+      {
+        "line": 321,
+        "text": "subtitle: Text("
+      }
+    ],
+    "body": "保留车辆身份、保养/备件Tab及保养计划选中。即将到期/已到期/超期未处理/保养项目指标全部0，删除计划卡。保持TextButton“初始化默认项目”；白卡文字“还没有保养项目。可以先初始化主机和副机的机油、机油滤芯项目。”。不新增初始化确认弹窗/项目编辑/记录按钮。",
+    "prompt": "Use case: ui-mockup. 以附图为中文字体/字号/顶栏/白卡/浅蓝灰背景/8-16-24间距/按钮/彩色小扁平图标的直接基准，只改变白名单。完整单张纵向页面，无手机框、拼图、3D、巨型图标、水滴装饰、额外说明、额外字段或伪业务数据。字段和真实操作严格按以下定义；不缩字或放大空卡填满画布。保留车辆身份、保养/备件Tab及保养计划选中。即将到期/已到期/超期未处理/保养项目指标全部0，删除计划卡。保持TextButton“初始化默认项目”；白卡文字“还没有保养项目。可以先初始化主机和副机的机油、机油滤芯项目。”。不新增初始化确认弹窗/项目编辑/记录按钮。",
+    "status": "已生成并逐图内容初检",
+    "pending_prompt_path": "09_弹层选择器与菜单/065_批次37_保养无计划_v01.pending.prompt.txt",
+    "input_path": "04_详情/065_车辆_详情保养备件_查看_保养计划_390dp_fs1p0_p01_v03.png",
+    "input_sha256": "7f7f1e016eff3f9e931f38d9acbfc1d7bf9acfd6ab410707c0180f3708de89c7",
+    "input_dims": [
+      853,
+      1844
+    ],
+    "output_path": "09_弹层选择器与菜单/065_批次37_保养无计划_v01.png",
+    "referenced_image_paths": [
+      "D:/QingSongBan/docs/design/04_详情/065_车辆_详情保养备件_查看_保养计划_390dp_fs1p0_p01_v03.png"
+    ],
+    "input_inspection": "仅准备输入配对；imagegen执行前view_image",
+    "prompt_path": "09_弹层选择器与菜单/065_批次37_保养无计划_v01.prompt.txt",
+    "output_sha256": "0f9ecfd05771fc2da165da813b4e49aa352bd8f4ff0eae824f3a377864fb8731",
+    "calls": 2
+  },
+  {
+    "batch": 37,
+    "task_id": "065",
+    "state": "无寿命件",
+    "name": "无寿命件",
+    "ref": "04_详情/065_车辆_详情保养备件_查看_备件寿命_390dp_fs1p0_p02_v02.png",
+    "refs": [
+      "D:/QingSongBan/docs/design/04_详情/065_车辆_详情保养备件_查看_备件寿命_390dp_fs1p0_p02_v02.png"
+    ],
+    "path": "09_弹层选择器与菜单/065_批次37_无寿命件_v01.png",
+    "source": "lib/features/vehicles/presentation/vehicle_maintenance_tab.dart",
+    "source_sha256": "ccdbaae099b293669f1466f2f69833eb310caeabd990fbbc5900eb91b98cb198",
+    "source_evidence": [
+      {
+        "line": 47,
+        "text": "ButtonSegment(value: false, label: Text('保养计划')),"
+      },
+      {
+        "line": 48,
+        "text": "ButtonSegment(value: true, label: Text('备件寿命')),"
+      },
+      {
+        "line": 64,
+        "text": "label: const Text('初始化默认项目'),"
+      },
+      {
+        "line": 80,
+        "text": "child: Text('还没有保养项目。可以先初始化主机和副机的机油、机油滤芯项目。'),"
+      },
+      {
+        "line": 163,
+        "text": "label: '即将到期',"
+      },
+      {
+        "line": 169,
+        "text": "label: '已到期',"
+      },
+      {
+        "line": 175,
+        "text": "label: '超期未处理',"
+      },
+      {
+        "line": 181,
+        "text": "label: '保养项目',"
+      },
+      {
+        "line": 245,
+        "text": "MaintenanceOptions.statusLabel(status),"
+      },
+      {
+        "line": 260,
+        "text": "label: '上次保养',"
+      },
+      {
+        "line": 266,
+        "text": "label: '保养周期',"
+      },
+      {
+        "line": 273,
+        "text": "label: '下次到期',"
+      },
+      {
+        "line": 320,
+        "text": "title: Text(record.name),"
+      },
+      {
+        "line": 321,
+        "text": "subtitle: Text("
+      }
+    ],
+    "body": "保留车辆身份、保养/备件Tab及备件寿命选中，删除部件卡、寿命进度、数量。白卡文字“暂未登记寿命件。轮胎、滤芯等需要按实际更换或安装记录累计使用。”。不新增上传、寿命件编辑或初始化入口。",
+    "prompt": "Use case: ui-mockup. 以附图为中文字体/字号/顶栏/白卡/浅蓝灰背景/8-16-24间距/按钮/彩色小扁平图标的直接基准，只改变白名单。完整单张纵向页面，无手机框、拼图、3D、巨型图标、水滴装饰、额外说明、额外字段或伪业务数据。字段和真实操作严格按以下定义；不缩字或放大空卡填满画布。保留车辆身份、保养/备件Tab及备件寿命选中，删除部件卡、寿命进度、数量。白卡文字“暂未登记寿命件。轮胎、滤芯等需要按实际更换或安装记录累计使用。”。不新增上传、寿命件编辑或初始化入口。",
+    "status": "已生成并逐图内容初检",
+    "pending_prompt_path": "09_弹层选择器与菜单/065_批次37_无寿命件_v01.pending.prompt.txt",
+    "input_path": "04_详情/065_车辆_详情保养备件_查看_备件寿命_390dp_fs1p0_p02_v02.png",
+    "input_sha256": "cf044b70be866a0b9cfb8cfa0723fed16b995b7abc789b24f6895df1776d3dc8",
+    "input_dims": [
+      853,
+      1844
+    ],
+    "output_path": "09_弹层选择器与菜单/065_批次37_无寿命件_v01.png",
+    "referenced_image_paths": [
+      "D:/QingSongBan/docs/design/04_详情/065_车辆_详情保养备件_查看_备件寿命_390dp_fs1p0_p02_v02.png"
+    ],
+    "input_inspection": "仅准备输入配对；imagegen执行前view_image",
+    "prompt_path": "09_弹层选择器与菜单/065_批次37_无寿命件_v01.prompt.txt",
+    "output_sha256": "8c03281d3bd82851444f04a6f4b020f84924a3f94385c704baffa81e952ec3e6",
+    "calls": 2
+  },
+  {
+    "batch": 37,
+    "task_id": "069",
+    "state": "附件四类Sheet",
+    "name": "附件四类Sheet",
+    "ref": "05_表单与编辑/069_器械维修_表单附件续屏_内容状态_v01.png",
+    "refs": [
+      "D:/QingSongBan/docs/design/05_表单与编辑/069_器械维修_表单附件续屏_内容状态_v01.png"
+    ],
+    "path": "09_弹层选择器与菜单/069_批次37_附件四类Sheet_v01.png",
+    "source": "lib/features/garden_tool_repairs/domain/repair_models.dart",
+    "source_sha256": "1b72ab6fae5ea1bde301ce50930a03f40addc955383bdf9859252e7ad9ab3a31",
+    "source_evidence": [
+      {
+        "line": 17,
+        "text": "GardenToolRepairAttachmentType.other => '其他凭证',"
+      }
+    ],
+    "body": "附件0/9上传区和底部原合计/保存/保存并继续作为蒙层背景。底部Sheet仅四行小扁平彩色图标及“维修票据”“维修前照片”“维修后照片”“其他凭证”。点击选类后进入此前拍照/相册流程，不增加确定、取消、说明或重新分类下拉。第四项必须其他凭证。",
+    "prompt": "Use case: ui-mockup. 以附图为中文字体/字号/顶栏/白卡/浅蓝灰背景/8-16-24间距/按钮/彩色小扁平图标的直接基准，只改变白名单。完整单张纵向页面，无手机框、拼图、3D、巨型图标、水滴装饰、额外说明、额外字段或伪业务数据。字段和真实操作严格按以下定义；不缩字或放大空卡填满画布。附件0/9上传区和底部原合计/保存/保存并继续作为蒙层背景。底部Sheet仅四行小扁平彩色图标及“维修票据”“维修前照片”“维修后照片”“其他凭证”。点击选类后进入此前拍照/相册流程，不增加确定、取消、说明或重新分类下拉。第四项必须其他凭证。",
+    "status": "已生成并逐图内容初检",
+    "pending_prompt_path": "09_弹层选择器与菜单/069_批次37_附件四类Sheet_v01.pending.prompt.txt",
+    "input_path": "05_表单与编辑/069_器械维修_表单附件续屏_内容状态_v01.png",
+    "input_sha256": "bfe546404afd069a00b24ff1d5b49a49fcb1c1194e0eadfb28b7d97014c2cf07",
+    "input_dims": [
+      853,
+      1844
+    ],
+    "output_path": "09_弹层选择器与菜单/069_批次37_附件四类Sheet_v01.png",
+    "referenced_image_paths": [
+      "D:/QingSongBan/docs/design/05_表单与编辑/069_器械维修_表单附件续屏_内容状态_v01.png"
+    ],
+    "input_inspection": "仅准备输入配对；imagegen执行前view_image",
+    "prompt_path": "09_弹层选择器与菜单/069_批次37_附件四类Sheet_v01.prompt.txt",
+    "output_sha256": "a80694c127df768e263e059eeacee1bf172bd383b27b2c5c7261134433ad3422",
+    "calls": 1
+  },
+  {
+    "batch": 37,
+    "task_id": "071",
+    "state": "初始无历史项目",
+    "name": "初始无历史项目",
+    "ref": "07_分析与汇总/071_器械维修_价格比对_查看_有数据_390dp_fs1p0_p01_v04.png",
+    "refs": [
+      "D:/QingSongBan/docs/design/07_分析与汇总/071_器械维修_价格比对_查看_有数据_390dp_fs1p0_p01_v04.png"
+    ],
+    "path": "09_弹层选择器与菜单/071_批次37_初始无历史项目_v01.png",
+    "source": "lib/features/garden_tool_repairs/presentation/garden_tool_repair_price_page.dart",
+    "source_sha256": "b34293fb7c4e3d47c4404233168dc3eafac5ea10d2077cdfbf6f50775f67d347",
+    "source_evidence": [
+      {
+        "line": 36,
+        "text": "appBar: AppBar(title: const Text('价格比对')),"
+      },
+      {
+        "line": 122,
+        "text": "? const _NoPriceData(message: '当前项目在所选时间范围内暂无价格记录')"
+      },
+      {
+        "line": 150,
+        "text": "labelText: '项目名称',"
+      },
+      {
+        "line": 174,
+        "text": "labelText: '规格型号',"
+      },
+      {
+        "line": 205,
+        "text": "labelText: '计数单位',"
+      },
+      {
+        "line": 226,
+        "text": "labelText: '时间范围',"
+      },
+      {
+        "line": 251,
+        "text": "label: '全部单位',"
+      },
+      {
+        "line": 257,
+        "text": "label: unit.name,"
+      },
+      {
+        "line": 284,
+        "text": "? '暂无对比'"
+      },
+      {
+        "line": 286,
+        "text": "'${change == null ? '暂无涨跌幅' : '${change >= 0 ? '+' : ''}${change.toStringAsFixed(1)}%'}';"
+      },
+      {
+        "line": 295,
+        "text": "label: '当前价格',"
+      },
+      {
+        "line": 304,
+        "text": "label: '上次价格',"
+      },
+      {
+        "line": 306,
+        "text": "? '暂无对比'"
+      },
+      {
+        "line": 315,
+        "text": "label: '涨跌幅',"
+      },
+      {
+        "line": 324,
+        "text": "label: '平均价格',"
+      },
+      {
+        "line": 376,
+        "text": "DataColumn(label: Text('日期')),"
+      },
+      {
+        "line": 377,
+        "text": "DataColumn(label: Text('维修单位')),"
+      },
+      {
+        "line": 378,
+        "text": "DataColumn(label: Text('维修人')),"
+      },
+      {
+        "line": 379,
+        "text": "DataColumn(label: Text('单价'), numeric: true),"
+      },
+      {
+        "line": 406,
+        "text": "label: '最低价',"
+      },
+      {
+        "line": 415,
+        "text": "label: '最高价',"
+      },
+      {
+        "line": 424,
+        "text": "label: '记录数',"
+      },
+      {
+        "line": 440,
+        "text": "title: Text(formatRepairMoney(point.unitPriceCents)),"
+      },
+      {
+        "line": 527,
+        "text": "label: Text(label),"
+      },
+      {
+        "line": 665,
+        "text": "const _NoPriceData({this.message = '暂无历史价格项目'});"
+      }
+    ],
+    "body": "保留“价格比对”或原图标题及返回，正文白卡小24dp彩色价格线图标与“暂无历史价格项目”。移除全部项目/规格/单位/时间范围/维修单位筛选、指标、图表和历史表；源码在options为空时直接返回_NoPriceData，不保留不存在的项目选值，无新增按钮。",
+    "prompt": "Use case: ui-mockup. 以附图为中文字体/字号/顶栏/白卡/浅蓝灰背景/8-16-24间距/按钮/彩色小扁平图标的直接基准，只改变白名单。完整单张纵向页面，无手机框、拼图、3D、巨型图标、水滴装饰、额外说明、额外字段或伪业务数据。字段和真实操作严格按以下定义；不缩字或放大空卡填满画布。保留“价格比对”或原图标题及返回，正文白卡小24dp彩色价格线图标与“暂无历史价格项目”。移除全部项目/规格/单位/时间范围/维修单位筛选、指标、图表和历史表；源码在options为空时直接返回_NoPriceData，不保留不存在的项目选值，无新增按钮。",
+    "status": "已生成并逐图内容初检",
+    "pending_prompt_path": "09_弹层选择器与菜单/071_批次37_初始无历史项目_v01.pending.prompt.txt",
+    "input_path": "07_分析与汇总/071_器械维修_价格比对_查看_有数据_390dp_fs1p0_p01_v04.png",
+    "input_sha256": "f731718dfc79d9ee3fda6def713c23db53bb26157e1e8296a922daa4307217d3",
+    "input_dims": [
+      853,
+      1844
+    ],
+    "output_path": "09_弹层选择器与菜单/071_批次37_初始无历史项目_v01.png",
+    "referenced_image_paths": [
+      "D:/QingSongBan/docs/design/07_分析与汇总/071_器械维修_价格比对_查看_有数据_390dp_fs1p0_p01_v04.png"
+    ],
+    "input_inspection": "仅准备输入配对；imagegen执行前view_image",
+    "prompt_path": "09_弹层选择器与菜单/071_批次37_初始无历史项目_v01.prompt.txt",
+    "output_sha256": "6d902ce25d557458e4fe07c853c89d696136aa5ae67e7346322c90bc7adbed6f",
+    "calls": 1
+  },
+  {
+    "batch": 37,
+    "task_id": "072",
+    "state": "编辑单位标签修正",
+    "name": "编辑单位标签修正",
+    "ref": "09_弹层选择器与菜单/072_器械维修_编辑单位_内容状态_v01.png",
+    "refs": [
+      "D:/QingSongBan/docs/design/09_弹层选择器与菜单/072_器械维修_编辑单位_内容状态_v01.png"
+    ],
+    "path": "09_弹层选择器与菜单/072_批次37_编辑单位标签修正_v01.png",
+    "source": "lib/features/garden_tool_repairs/presentation/garden_tool_repair_units_page.dart",
+    "source_sha256": "1a84ddd66b5ed762857b7b7a342c7b3080c16c3a0d78c885699c753d02072af3",
+    "source_evidence": [
+      {
+        "line": 15,
+        "text": "appBar: AppBar(title: const Text('维修单位')),"
+      },
+      {
+        "line": 19,
+        "text": "label: const Text('新增单位'),"
+      },
+      {
+        "line": 25,
+        "text": "? const Center(child: Text('暂无维修单位，请先新增'))"
+      },
+      {
+        "line": 45,
+        "text": "title: Text(unit.name),"
+      },
+      {
+        "line": 46,
+        "text": "subtitle: Text(unit.isActive ? '启用中' : '已停用'),"
+      },
+      {
+        "line": 89,
+        "text": "title: unit == null ? '新增维修单位' : '编辑维修单位',"
+      },
+      {
+        "line": 137,
+        "text": "title: Text(widget.title),"
+      },
+      {
+        "line": 141,
+        "text": "decoration: const InputDecoration(labelText: '单位名称'),"
+      }
+    ],
+    "body": "局部编辑当前Dialog，只补输入框浮动/上方可见标签“单位名称”。保留原“编辑维修单位”标题（以图原题为准）、原示例维修单位值、取消和保存，背景、字体、间隔、按钮不变，不加其它字段。",
+    "prompt": "Use case: ui-mockup. 以附图为中文字体/字号/顶栏/白卡/浅蓝灰背景/8-16-24间距/按钮/彩色小扁平图标的直接基准，只改变白名单。完整单张纵向页面，无手机框、拼图、3D、巨型图标、水滴装饰、额外说明、额外字段或伪业务数据。字段和真实操作严格按以下定义；不缩字或放大空卡填满画布。局部编辑当前Dialog，只补输入框浮动/上方可见标签“单位名称”。保留原“编辑维修单位”标题（以图原题为准）、原示例维修单位值、取消和保存，背景、字体、间隔、按钮不变，不加其它字段。",
+    "status": "已生成并逐图内容初检",
+    "pending_prompt_path": "09_弹层选择器与菜单/072_批次37_编辑单位标签修正_v01.pending.prompt.txt",
+    "input_path": "09_弹层选择器与菜单/072_器械维修_编辑单位_内容状态_v01.png",
+    "input_sha256": "e22dba26b6975fdd9af52c9feef2849481d33c98ec3da2613edcf7d584419bd9",
+    "input_dims": [
+      853,
+      1844
+    ],
+    "output_path": "09_弹层选择器与菜单/072_批次37_编辑单位标签修正_v01.png",
+    "referenced_image_paths": [
+      "D:/QingSongBan/docs/design/09_弹层选择器与菜单/072_器械维修_编辑单位_内容状态_v01.png"
+    ],
+    "input_inspection": "仅准备输入配对；imagegen执行前view_image",
+    "prompt_path": "09_弹层选择器与菜单/072_批次37_编辑单位标签修正_v01.prompt.txt",
+    "output_sha256": "953345bc7f79991b365d8578ad5d54ffcc97ecedd9af842b959a1880c9652eaa",
+    "calls": 1
+  }
+]

@@ -1,0 +1,1497 @@
+[
+  {
+    "task_id": "074",
+    "name": "库存首页",
+    "source": "lib/features/inventory/presentation/inventory_home_page.dart",
+    "evidence": [
+      {
+        "line": 44,
+        "text": "title: const Text('库存管理'),"
+      },
+      {
+        "line": 90,
+        "text": "loading: () => const InventoryLoadingState(),"
+      },
+      {
+        "line": 91,
+        "text": "error: (_, _) => InventoryErrorState("
+      },
+      {
+        "line": 131,
+        "text": "title: '快捷入口',"
+      },
+      {
+        "line": 142,
+        "text": "title: '物资信息',"
+      },
+      {
+        "line": 143,
+        "text": "subtitle: '查看物资档案',"
+      },
+      {
+        "line": 148,
+        "text": "title: '入库管理',"
+      },
+      {
+        "line": 149,
+        "text": "subtitle: '物资入库登记',"
+      },
+      {
+        "line": 154,
+        "text": "title: '领用出库',"
+      },
+      {
+        "line": 155,
+        "text": "subtitle: '物资领用发放',"
+      },
+      {
+        "line": 161,
+        "text": "title: '当前库存',"
+      },
+      {
+        "line": 162,
+        "text": "subtitle: '实时库存查询',"
+      },
+      {
+        "line": 167,
+        "text": "title: '库存盘点',"
+      },
+      {
+        "line": 168,
+        "text": "subtitle: '盘点任务管理',"
+      },
+      {
+        "line": 173,
+        "text": "title: '库存预警',"
+      },
+      {
+        "line": 174,
+        "text": "subtitle: '预警物资查看',"
+      },
+      {
+        "line": 180,
+        "text": "title: '待采购',"
+      },
+      {
+        "line": 181,
+        "text": "subtitle: '采购需求管理',"
+      },
+      {
+        "line": 187,
+        "text": "title: '库存流水',"
+      },
+      {
+        "line": 188,
+        "text": "subtitle: '出入库记录',"
+      },
+      {
+        "line": 197,
+        "text": "title: '最近记录',"
+      },
+      {
+        "line": 205,
+        "text": "loading: () => const InventoryLoadingState(),"
+      },
+      {
+        "line": 206,
+        "text": "error: (_, _) => InventoryErrorState("
+      },
+      {
+        "line": 210,
+        "text": "? const InventoryEmptyState("
+      },
+      {
+        "line": 211,
+        "text": "title: '暂无库存流水',"
+      },
+      {
+        "line": 212,
+        "text": "message: '入库、出库、盘点或调整后会在这里显示。',"
+      },
+      {
+        "line": 226,
+        "text": "const InventoryEmptyState("
+      },
+      {
+        "line": 227,
+        "text": "title: '本月暂无记录',"
+      },
+      {
+        "line": 228,
+        "text": "message: '选择其他月份查看库存变化。',"
+      },
+      {
+        "line": 236,
+        "text": "loading: () => const SizedBox.shrink(),"
+      },
+      {
+        "line": 237,
+        "text": "error: (_, _) => const SizedBox.shrink(),"
+      },
+      {
+        "line": 239,
+        "text": "loading: () => const SizedBox.shrink(),"
+      },
+      {
+        "line": 240,
+        "text": "error: (_, _) => const SizedBox.shrink(),"
+      },
+      {
+        "line": 242,
+        "text": "title: '本月出入库摘要',"
+      }
+    ]
+  },
+  {
+    "task_id": "075",
+    "name": "物资信息",
+    "source": "lib/features/inventory/presentation/inventory_materials_page.dart",
+    "evidence": [
+      {
+        "line": 42,
+        "text": "title: const Text('物资信息'),"
+      },
+      {
+        "line": 121,
+        "text": "loading: () => const SizedBox.shrink(),"
+      },
+      {
+        "line": 122,
+        "text": "error: (_, _) => const SizedBox.shrink(),"
+      },
+      {
+        "line": 169,
+        "text": "loading: () => const InventoryLoadingState(),"
+      },
+      {
+        "line": 170,
+        "text": "error: (_, _) => InventoryErrorState("
+      },
+      {
+        "line": 186,
+        "text": "return InventoryEmptyState("
+      },
+      {
+        "line": 187,
+        "text": "title: items.isEmpty ? '还没有物资' : '没有匹配的物资',"
+      },
+      {
+        "line": 188,
+        "text": "message: items.isEmpty"
+      }
+    ]
+  },
+  {
+    "task_id": "076",
+    "name": "新增／编辑物资",
+    "source": "lib/features/inventory/presentation/inventory_material_form_page.dart",
+    "evidence": [
+      {
+        "line": 113,
+        "text": "ScaffoldMessenger.of(context).showSnackBar("
+      },
+      {
+        "line": 114,
+        "text": "SnackBar("
+      },
+      {
+        "line": 123,
+        "text": ".showSnackBar(SnackBar(content: Text('保存失败：$error')));"
+      },
+      {
+        "line": 135,
+        "text": "title: const Text('新增物资分类'),"
+      },
+      {
+        "line": 164,
+        "text": ".showSnackBar(SnackBar(content: Text('新增分类失败：$error')));"
+      },
+      {
+        "line": 173,
+        "text": "appBar: AppBar(title: Text(widget.materialId == null ? '新增物资' : '编辑物资')),"
+      },
+      {
+        "line": 175,
+        "text": "loading: () => const InventoryLoadingState(),"
+      },
+      {
+        "line": 176,
+        "text": "error: (_, _) => InventoryErrorState("
+      },
+      {
+        "line": 188,
+        "text": "return const InventoryEmptyState("
+      },
+      {
+        "line": 189,
+        "text": "title: '物资不存在',"
+      },
+      {
+        "line": 190,
+        "text": "message: '该物资档案可能已被移除。',"
+      },
+      {
+        "line": 206,
+        "text": "validator: _required,"
+      },
+      {
+        "line": 211,
+        "text": "validator: _required,"
+      },
+      {
+        "line": 250,
+        "text": "validator: _required,"
+      },
+      {
+        "line": 262,
+        "text": "validator: _nonNegative,"
+      },
+      {
+        "line": 270,
+        "text": "validator: (value) =>"
+      },
+      {
+        "line": 293,
+        "text": "title: const Text('启用库存预警'),"
+      },
+      {
+        "line": 299,
+        "text": "title: const Text('常用物资'),"
+      },
+      {
+        "line": 305,
+        "text": "title: const Text('物资状态'),"
+      },
+      {
+        "line": 333,
+        "text": "label: Text(_saving ? '正在保存…' : '保存物资'),"
+      }
+    ]
+  },
+  {
+    "task_id": "077",
+    "name": "物资详情",
+    "source": "lib/features/inventory/presentation/inventory_material_detail_page.dart",
+    "evidence": [
+      {
+        "line": 50,
+        "text": ".showSnackBar(const SnackBar(content: Text('已加入待采购 / 待补充清单')));"
+      },
+      {
+        "line": 55,
+        "text": ".showSnackBar(SnackBar(content: Text('加入失败：$error')));"
+      },
+      {
+        "line": 72,
+        "text": "title: const Text('物资详情'),"
+      },
+      {
+        "line": 91,
+        "text": "return const InventoryEmptyState(title: '物资不存在');"
+      },
+      {
+        "line": 255,
+        "text": "label: Text(_addingReplenishment ? '正在加入…' : '加入待采购 / 待补充'),"
+      },
+      {
+        "line": 259,
+        "text": "title: '最近库存流水',"
+      },
+      {
+        "line": 335,
+        "text": "? '暂无记录'"
+      },
+      {
+        "line": 342,
+        "text": "? '暂无记录'"
+      },
+      {
+        "line": 347,
+        "text": "const InventoryEmptyState("
+      },
+      {
+        "line": 348,
+        "text": "title: '暂无流水',"
+      },
+      {
+        "line": 349,
+        "text": "message: '物资库存发生变化后会显示在这里。',"
+      },
+      {
+        "line": 355,
+        "text": "title: Text("
+      },
+      {
+        "line": 358,
+        "text": "subtitle: Text("
+      }
+    ]
+  },
+  {
+    "task_id": "078",
+    "name": "月度入库",
+    "source": "lib/features/inventory/presentation/inventory_receipts_page.dart",
+    "evidence": [
+      {
+        "line": 28,
+        "text": "title: Text('${_month.month}月入库管理'),"
+      },
+      {
+        "line": 74,
+        "text": "loading: () => const InventoryLoadingState(),"
+      },
+      {
+        "line": 75,
+        "text": "error: (_, _) => InventoryErrorState("
+      },
+      {
+        "line": 141,
+        "text": "InventoryEmptyState("
+      },
+      {
+        "line": 142,
+        "text": "title: allReceipts.isEmpty ? '暂无入库记录' : '本月暂无入库记录',"
+      },
+      {
+        "line": 143,
+        "text": "message: allReceipts.isEmpty"
+      },
+      {
+        "line": 205,
+        "text": "title: '本月入库汇总',"
+      },
+      {
+        "line": 350,
+        "text": "loading: () => const Padding("
+      },
+      {
+        "line": 354,
+        "text": "error: (_, _) => const Padding("
+      }
+    ]
+  },
+  {
+    "task_id": "079",
+    "name": "新增入库",
+    "source": "lib/features/inventory/presentation/inventory_receipt_form_page.dart",
+    "evidence": [
+      {
+        "line": 58,
+        "text": ".showSnackBar(const SnackBar(content: Text('请选择物资并填写大于 0 的数量')));"
+      },
+      {
+        "line": 92,
+        "text": ".showSnackBar(const SnackBar(content: Text('入库已保存，库存和流水已更新')));"
+      },
+      {
+        "line": 98,
+        "text": ".showSnackBar(SnackBar(content: Text('入库失败：$error')));"
+      },
+      {
+        "line": 119,
+        "text": "appBar: AppBar(title: const Text('新增入库')),"
+      },
+      {
+        "line": 121,
+        "text": "loading: () => const InventoryLoadingState(),"
+      },
+      {
+        "line": 122,
+        "text": "error: (_, _) => InventoryErrorState("
+      },
+      {
+        "line": 126,
+        "text": "? InventoryEmptyState("
+      },
+      {
+        "line": 127,
+        "text": "title: '先新增物资档案',"
+      },
+      {
+        "line": 128,
+        "text": "message: '入库单需要关联已有物资。',"
+      },
+      {
+        "line": 150,
+        "text": "title: const Text('入库日期'),"
+      },
+      {
+        "line": 151,
+        "text": "subtitle: Text(_dateLabel(_date)),"
+      },
+      {
+        "line": 215,
+        "text": "title: '入库明细',"
+      },
+      {
+        "line": 251,
+        "text": "label: Text(_saving ? '正在保存…' : '保存入库单'),"
+      },
+      {
+        "line": 330,
+        "text": "validator: (value) {"
+      }
+    ]
+  },
+  {
+    "task_id": "080",
+    "name": "入库详情",
+    "source": "lib/features/inventory/presentation/inventory_receipt_detail_page.dart",
+    "evidence": [
+      {
+        "line": 40,
+        "text": "title: const Text('撤销这笔入库？'),"
+      },
+      {
+        "line": 68,
+        "text": ".showSnackBar(SnackBar(content: Text('撤销失败：$error')));"
+      },
+      {
+        "line": 78,
+        "text": "title: const Text('入库详情'),"
+      },
+      {
+        "line": 81,
+        "text": "tooltip: _deleting ? '正在撤销' : '撤销入库',"
+      },
+      {
+        "line": 100,
+        "text": "if (receipt == null) return const InventoryEmptyState(title: '入库单不存在');"
+      },
+      {
+        "line": 150,
+        "text": "title: '入库明细',"
+      },
+      {
+        "line": 153,
+        "text": "? const InventoryEmptyState(title: '没有明细')"
+      },
+      {
+        "line": 159,
+        "text": "title: Text(item.materialNameSnapshot),"
+      },
+      {
+        "line": 160,
+        "text": "subtitle: Text("
+      }
+    ]
+  },
+  {
+    "task_id": "081",
+    "name": "出库详情",
+    "source": "lib/features/inventory/presentation/inventory_issue_detail_page.dart",
+    "evidence": [
+      {
+        "line": 40,
+        "text": "title: const Text('撤销这笔出库？'),"
+      },
+      {
+        "line": 68,
+        "text": ".showSnackBar(SnackBar(content: Text('撤销失败：$error')));"
+      },
+      {
+        "line": 78,
+        "text": "title: const Text('出库详情'),"
+      },
+      {
+        "line": 100,
+        "text": "if (issue == null) return const InventoryEmptyState(title: '出库单不存在');"
+      },
+      {
+        "line": 152,
+        "text": "title: '领用明细',"
+      },
+      {
+        "line": 155,
+        "text": "? const InventoryEmptyState(title: '没有明细')"
+      },
+      {
+        "line": 161,
+        "text": "title: Text(item.materialNameSnapshot),"
+      },
+      {
+        "line": 162,
+        "text": "subtitle: Text("
+      }
+    ]
+  },
+  {
+    "task_id": "082",
+    "name": "当前库存",
+    "source": "lib/features/inventory/presentation/inventory_stock_page.dart",
+    "evidence": [
+      {
+        "line": 33,
+        "text": "title: const Text('当前库存'),"
+      },
+      {
+        "line": 88,
+        "text": "loading: () => const SizedBox.shrink(),"
+      },
+      {
+        "line": 89,
+        "text": "error: (_, _) => const SizedBox.shrink(),"
+      },
+      {
+        "line": 138,
+        "text": "loading: () => const InventoryLoadingState(),"
+      },
+      {
+        "line": 139,
+        "text": "error: (_, _) => InventoryErrorState("
+      },
+      {
+        "line": 171,
+        "text": "return InventoryEmptyState("
+      },
+      {
+        "line": 172,
+        "text": "title: rows.isEmpty ? '暂无库存记录' : '没有匹配的物资',"
+      },
+      {
+        "line": 173,
+        "text": "message: rows.isEmpty ? '先在物资信息中新增物资档案。' : '调整筛选条件后再试。',"
+      },
+      {
+        "line": 195,
+        "text": "title: '库存状态摘要',"
+      }
+    ]
+  },
+  {
+    "task_id": "083",
+    "name": "数量调整",
+    "source": "lib/features/inventory/presentation/inventory_stock_adjustment_page.dart",
+    "evidence": [
+      {
+        "line": 60,
+        "text": ".showSnackBar(const SnackBar(content: Text('库存已调整，流水已记录')));"
+      },
+      {
+        "line": 66,
+        "text": ".showSnackBar(SnackBar(content: Text('调整失败：$error')));"
+      },
+      {
+        "line": 75,
+        "text": "appBar: AppBar(title: const Text('调整库存')),"
+      },
+      {
+        "line": 85,
+        "text": "return const InventoryEmptyState("
+      },
+      {
+        "line": 86,
+        "text": "title: '物资不存在',"
+      },
+      {
+        "line": 87,
+        "text": "message: '该物资档案可能已被移除。',"
+      },
+      {
+        "line": 99,
+        "text": "title: Text(material.materialName),"
+      },
+      {
+        "line": 100,
+        "text": "subtitle: Text("
+      },
+      {
+        "line": 142,
+        "text": "validator: (value) {"
+      },
+      {
+        "line": 169,
+        "text": "label: Text(_saving ? '正在保存…' : '保存调整'),"
+      }
+    ]
+  },
+  {
+    "task_id": "084",
+    "name": "盘点列表",
+    "source": "lib/features/inventory/presentation/inventory_stocktakes_page.dart",
+    "evidence": [
+      {
+        "line": 27,
+        "text": "title: const Text('库存盘点'),"
+      },
+      {
+        "line": 68,
+        "text": "loading: () => const InventoryLoadingState(),"
+      },
+      {
+        "line": 69,
+        "text": "error: (_, _) => InventoryErrorState("
+      },
+      {
+        "line": 146,
+        "text": "InventoryEmptyState("
+      },
+      {
+        "line": 147,
+        "text": "title: allItems.isEmpty"
+      },
+      {
+        "line": 148,
+        "text": "? '暂无盘点记录'"
+      },
+      {
+        "line": 149,
+        "text": ": '本月暂无${_status == 'draft' ? '待盘点' : '已完成'}任务',"
+      },
+      {
+        "line": 150,
+        "text": "message: allItems.isEmpty"
+      },
+      {
+        "line": 207,
+        "text": "title: '盘点汇总',"
+      },
+      {
+        "line": 320,
+        "text": "loading: () => const Padding("
+      },
+      {
+        "line": 324,
+        "text": "error: (_, _) => const Padding("
+      }
+    ]
+  },
+  {
+    "task_id": "085",
+    "name": "新建盘点",
+    "source": "lib/features/inventory/presentation/inventory_stocktake_form_page.dart",
+    "evidence": [
+      {
+        "line": 68,
+        "text": ".showSnackBar(SnackBar(content: Text('创建失败：$error')));"
+      },
+      {
+        "line": 79,
+        "text": "appBar: AppBar(title: const Text('新建库存盘点')),"
+      },
+      {
+        "line": 81,
+        "text": "loading: () => const InventoryLoadingState(),"
+      },
+      {
+        "line": 82,
+        "text": "error: (_, _) => InventoryErrorState("
+      },
+      {
+        "line": 86,
+        "text": "? const InventoryEmptyState(title: '没有可盘点的物资', message: '先新增物资档案。')"
+      },
+      {
+        "line": 98,
+        "text": "title: const Text('盘点日期'),"
+      },
+      {
+        "line": 99,
+        "text": "subtitle: Text(_dateLabel(_date)),"
+      },
+      {
+        "line": 121,
+        "text": "title: '盘点范围 · ${rows.length} 种物资',"
+      },
+      {
+        "line": 128,
+        "text": "title: Text(row.material.materialName),"
+      },
+      {
+        "line": 129,
+        "text": "subtitle: Text("
+      },
+      {
+        "line": 147,
+        "text": "label: Text(_saving ? '正在创建…' : '创建盘点任务'),"
+      },
+      {
+        "line": 151,
+        "text": "'创建后可逐项录入实盘数量，确认时由库存服务统一登记盘盈或盘亏。',"
+      }
+    ]
+  },
+  {
+    "task_id": "086",
+    "name": "盘点详情",
+    "source": "lib/features/inventory/presentation/inventory_stocktake_detail_page.dart",
+    "evidence": [
+      {
+        "line": 54,
+        "text": ".showSnackBar(const SnackBar(content: Text('请为每项填写大于或等于 0 的实盘数量')));"
+      },
+      {
+        "line": 62,
+        "text": "title: const Text('确认盘点？'),"
+      },
+      {
+        "line": 63,
+        "text": "content: const Text('确认后将按实盘数量更新库存，并为盘盈盘亏生成库存流水。'),"
+      },
+      {
+        "line": 71,
+        "text": "child: const Text('确认盘点'),"
+      },
+      {
+        "line": 93,
+        "text": ".showSnackBar(const SnackBar(content: Text('盘点已确认，库存已更新')));"
+      },
+      {
+        "line": 99,
+        "text": ".showSnackBar(SnackBar(content: Text('确认失败：$error')));"
+      },
+      {
+        "line": 114,
+        "text": ".showSnackBar(const SnackBar(content: Text('请为每项填写大于或等于 0 的实盘数量')));"
+      },
+      {
+        "line": 128,
+        "text": ".showSnackBar(const SnackBar(content: Text('实盘数量已保存，差异已更新')));"
+      },
+      {
+        "line": 133,
+        "text": ".showSnackBar(SnackBar(content: Text('保存失败：$error')));"
+      },
+      {
+        "line": 142,
+        "text": "appBar: AppBar(title: const Text('盘点详情')),"
+      },
+      {
+        "line": 152,
+        "text": "return const InventoryEmptyState(title: '盘点记录不存在');"
+      },
+      {
+        "line": 167,
+        "text": "title: Text("
+      },
+      {
+        "line": 171,
+        "text": "subtitle: Text("
+      },
+      {
+        "line": 184,
+        "text": "title: '盘点明细',"
+      },
+      {
+        "line": 187,
+        "text": "? const InventoryEmptyState(title: '没有盘点明细')"
+      },
+      {
+        "line": 216,
+        "text": "label: Text(_saving ? '正在保存…' : '保存实盘数并查看差异'),"
+      },
+      {
+        "line": 230,
+        "text": "label: Text(_confirming ? '正在确认…' : '保存实盘数量并确认'),"
+      }
+    ]
+  },
+  {
+    "task_id": "087",
+    "name": "预警与补充",
+    "source": "lib/features/inventory/presentation/inventory_warnings_page.dart",
+    "evidence": [
+      {
+        "line": 29,
+        "text": "title: const Text('库存预警与待补充'),"
+      },
+      {
+        "line": 93,
+        "text": "title: '库存预警',"
+      },
+      {
+        "line": 96,
+        "text": "loading: () => const InventoryLoadingState(),"
+      },
+      {
+        "line": 97,
+        "text": "error: (_, _) => InventoryErrorState("
+      },
+      {
+        "line": 101,
+        "text": "? const InventoryEmptyState("
+      },
+      {
+        "line": 102,
+        "text": "title: '没有库存预警',"
+      },
+      {
+        "line": 103,
+        "text": "message: '所有启用预警的物资库存都高于最低库存。',"
+      },
+      {
+        "line": 114,
+        "text": "title: '待补充摘要',"
+      },
+      {
+        "line": 121,
+        "text": "loading: () => const InventoryLoadingState(),"
+      },
+      {
+        "line": 122,
+        "text": "error: (_, _) => InventoryErrorState("
+      },
+      {
+        "line": 131,
+        "text": "? const InventoryEmptyState("
+      },
+      {
+        "line": 132,
+        "text": "title: '清单还是空的',"
+      },
+      {
+        "line": 133,
+        "text": "message: '可以从库存预警中一键加入待补充。',"
+      },
+      {
+        "line": 149,
+        "text": "title: '补充进度',"
+      },
+      {
+        "line": 192,
+        "text": ".showSnackBar(const SnackBar(content: Text('已加入待补充清单')));"
+      },
+      {
+        "line": 197,
+        "text": ".showSnackBar(SnackBar(content: Text('加入失败：$error')));"
+      }
+    ]
+  },
+  {
+    "task_id": "088",
+    "name": "待采购／待补充",
+    "source": "lib/features/inventory/presentation/inventory_replenishments_page.dart",
+    "evidence": [
+      {
+        "line": 17,
+        "text": "title: const Text('待采购 / 待补充'),"
+      },
+      {
+        "line": 31,
+        "text": "loading: () => const InventoryLoadingState(),"
+      },
+      {
+        "line": 32,
+        "text": "error: (_, _) => InventoryErrorState("
+      },
+      {
+        "line": 71,
+        "text": "InventoryEmptyState("
+      },
+      {
+        "line": 72,
+        "text": "title: '待补充清单为空',"
+      },
+      {
+        "line": 73,
+        "text": "message: '可以手动新建，或从库存预警中一键加入。',"
+      },
+      {
+        "line": 130,
+        "text": "title: '补充进度',"
+      },
+      {
+        "line": 164,
+        "text": ".showSnackBar(const SnackBar(content: Text('已新增待补充事项')));"
+      },
+      {
+        "line": 169,
+        "text": ".showSnackBar(SnackBar(content: Text('保存失败：$error')));"
+      },
+      {
+        "line": 194,
+        "text": "ScaffoldMessenger.of(context).showSnackBar("
+      },
+      {
+        "line": 195,
+        "text": "SnackBar(content: Text('状态已更新：${_statusLabel(status)}')),"
+      },
+      {
+        "line": 201,
+        "text": ".showSnackBar(SnackBar(content: Text('更新失败：$error')));"
+      },
+      {
+        "line": 346,
+        "text": "title: const Text('新增待补充事项'),"
+      },
+      {
+        "line": 356,
+        "text": "validator: (value) =>"
+      },
+      {
+        "line": 369,
+        "text": "validator: (value) {"
+      }
+    ]
+  },
+  {
+    "task_id": "089",
+    "name": "流水",
+    "source": "lib/features/inventory/presentation/inventory_transactions_page.dart",
+    "evidence": [
+      {
+        "line": 28,
+        "text": "title: const Text('库存流水'),"
+      },
+      {
+        "line": 61,
+        "text": "loading: () => const InventoryLoadingState(),"
+      },
+      {
+        "line": 62,
+        "text": "error: (_, _) => InventoryErrorState("
+      },
+      {
+        "line": 126,
+        "text": "InventoryEmptyState("
+      },
+      {
+        "line": 127,
+        "text": "title: items.isEmpty ? '还没有库存流水' : '该类型暂无流水',"
+      },
+      {
+        "line": 128,
+        "text": "message: items.isEmpty"
+      },
+      {
+        "line": 179,
+        "text": "title: '流水汇总',"
+      }
+    ]
+  },
+  {
+    "task_id": "090",
+    "name": "采购工作台",
+    "source": "lib/features/purchase/presentation/purchase_home_page.dart",
+    "evidence": [
+      {
+        "line": 21,
+        "text": "appBar: AppBar(title: const Text('采购管理')),"
+      },
+      {
+        "line": 29,
+        "text": "loading: () => const PurchaseLoadingState(),"
+      },
+      {
+        "line": 30,
+        "text": "error: (error, stack) => PurchaseErrorState("
+      },
+      {
+        "line": 146,
+        "text": "const PurchasePanel(child: Text('暂无需要处理的采购记录。'))"
+      },
+      {
+        "line": 400,
+        "text": "child: const Text('确认已申报'),"
+      },
+      {
+        "line": 450,
+        "text": "title: const Text('通知日期'),"
+      },
+      {
+        "line": 451,
+        "text": "subtitle: Text(purchaseDateLabel(date.value)),"
+      },
+      {
+        "line": 500,
+        "text": ".showSnackBar(SnackBar(content: Text('更新失败：$error')));"
+      }
+    ]
+  },
+  {
+    "task_id": "091",
+    "name": "新建／编辑待申报",
+    "source": "lib/features/purchase/presentation/purchase_create_page.dart",
+    "evidence": [
+      {
+        "line": 103,
+        "text": "title: Text(_isEditing ? '编辑待申报采购' : '新建采购'),"
+      },
+      {
+        "line": 122,
+        "text": "? const PurchaseEmptyState("
+      },
+      {
+        "line": 123,
+        "text": "title: '采购记录不存在',"
+      },
+      {
+        "line": 124,
+        "text": "message: '该采购记录可能已删除或暂时无法访问。',"
+      },
+      {
+        "line": 224,
+        "text": "title: const Text('创建日期'),"
+      },
+      {
+        "line": 225,
+        "text": "subtitle: Text(purchaseDateLabel(state.requestDate)),"
+      },
+      {
+        "line": 327,
+        "text": "? '保存中…'"
+      },
+      {
+        "line": 348,
+        "text": ".showSnackBar(SnackBar(content: Text(error)));"
+      },
+      {
+        "line": 362,
+        "text": "title: state.title,"
+      },
+      {
+        "line": 367,
+        "text": "oaTitle: detail.oaTitle,"
+      },
+      {
+        "line": 384,
+        "text": ".showSnackBar(SnackBar(content: Text('保存失败：$error')));"
+      },
+      {
+        "line": 396,
+        "text": ".showSnackBar(SnackBar(content: Text(message)));"
+      },
+      {
+        "line": 405,
+        "text": ").showSnackBar(SnackBar(content: Text(create ? '已保存到待申报' : '采购记录已创建')));"
+      },
+      {
+        "line": 443,
+        "text": "title: const Text('已有未完成采购'),"
+      },
+      {
+        "line": 468,
+        "text": ".showSnackBar(SnackBar(content: Text('重复采购检查失败，仍可继续创建：$error')));"
+      },
+      {
+        "line": 493,
+        "text": ".showSnackBar(const SnackBar(content: Text('该物资已在本次采购中')));"
+      },
+      {
+        "line": 513,
+        "text": "title: const Text('手动新增物资'),"
+      },
+      {
+        "line": 746,
+        "text": "loading: () => const PurchaseLoadingState(),"
+      },
+      {
+        "line": 747,
+        "text": "error: (error, stack) => const Center(child: Text('库存物资加载失败')),"
+      },
+      {
+        "line": 753,
+        "text": "return const Center(child: Text('暂无可用的库存物资'));"
+      },
+      {
+        "line": 760,
+        "text": "title: Text(item.materialName),"
+      },
+      {
+        "line": 761,
+        "text": "subtitle: Text("
+      }
+    ]
+  },
+  {
+    "task_id": "092",
+    "name": "待申报",
+    "source": "lib/features/purchase/presentation/purchase_pending_apply_page.dart",
+    "evidence": [
+      {
+        "line": 42,
+        "text": "appBar: AppBar(title: const Text('待申报')),"
+      },
+      {
+        "line": 116,
+        "text": "loading: () => const PurchaseLoadingState(),"
+      },
+      {
+        "line": 117,
+        "text": "error: (error, stack) => PurchaseErrorState("
+      },
+      {
+        "line": 122,
+        "text": "? PurchaseEmptyState("
+      },
+      {
+        "line": 123,
+        "text": "title: '暂无待申报采购',"
+      },
+      {
+        "line": 124,
+        "text": "message: '库存不足或有新的物资需求时，可新建采购记录。',"
+      },
+      {
+        "line": 236,
+        "text": "label: const Text('确认已申报'),"
+      },
+      {
+        "line": 272,
+        "text": "'确认已完成 OA 申报',"
+      },
+      {
+        "line": 279,
+        "text": "title: const Text('OA申报日期'),"
+      },
+      {
+        "line": 280,
+        "text": "subtitle: Text(purchaseDateLabel(date.value)),"
+      },
+      {
+        "line": 317,
+        "text": "child: const Text('确认'),"
+      },
+      {
+        "line": 337,
+        "text": "oaTitle: oaTitle.text.trim().isEmpty"
+      },
+      {
+        "line": 348,
+        "text": ".showSnackBar(SnackBar(content: Text('更新失败：$error')));"
+      }
+    ]
+  },
+  {
+    "task_id": "093",
+    "name": "跟踪／全部待处理",
+    "source": "lib/features/purchase/presentation/purchase_tracking_page.dart",
+    "evidence": [
+      {
+        "line": 91,
+        "text": "appBar: AppBar(title: Text(widget.showAll ? '全部待处理' : '采购跟踪')),"
+      },
+      {
+        "line": 180,
+        "text": "ScaffoldMessenger.of(context).showSnackBar("
+      },
+      {
+        "line": 181,
+        "text": "const SnackBar(content: Text('结束日期不能早于开始日期')),"
+      },
+      {
+        "line": 264,
+        "text": "loading: () => const PurchaseLoadingState(),"
+      },
+      {
+        "line": 265,
+        "text": "error: (error, stack) => PurchaseErrorState("
+      },
+      {
+        "line": 270,
+        "text": "? const PurchaseEmptyState("
+      },
+      {
+        "line": 271,
+        "text": "title: '暂无采购记录',"
+      },
+      {
+        "line": 272,
+        "text": "message: '符合当前筛选条件的采购记录会显示在这里。',"
+      },
+      {
+        "line": 416,
+        "text": ".showSnackBar(const SnackBar(content: Text('采购详情暂时无法加载，请稍后重试。')));"
+      },
+      {
+        "line": 423,
+        "text": ".showSnackBar(const SnackBar(content: Text('采购详情暂时无法加载，请稍后重试。')));"
+      },
+      {
+        "line": 469,
+        "text": "title: const Text('分配日期'),"
+      },
+      {
+        "line": 470,
+        "text": "subtitle: Text(purchaseDateLabel(assigned)),"
+      },
+      {
+        "line": 485,
+        "text": "child: const Text('确认'),"
+      },
+      {
+        "line": 516,
+        "text": ".showSnackBar(SnackBar(content: Text('保存失败：$error')));"
+      },
+      {
+        "line": 550,
+        "text": "title: const Text('通知日期'),"
+      },
+      {
+        "line": 551,
+        "text": "subtitle: Text(purchaseDateLabel(arrivalDate)),"
+      },
+      {
+        "line": 598,
+        "text": ".showSnackBar(SnackBar(content: Text('更新失败：$error')));"
+      }
+    ]
+  },
+  {
+    "task_id": "094",
+    "name": "采购详情",
+    "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+    "evidence": [
+      {
+        "line": 22,
+        "text": "title: const Text('采购详情'),"
+      },
+      {
+        "line": 48,
+        "text": "loading: () => const PurchaseLoadingState(),"
+      },
+      {
+        "line": 49,
+        "text": "error: (error, stack) => PurchaseErrorState("
+      },
+      {
+        "line": 53,
+        "text": "? const PurchaseEmptyState("
+      },
+      {
+        "line": 54,
+        "text": "title: '采购记录不存在',"
+      },
+      {
+        "line": 55,
+        "text": "message: '该记录可能已被删除。',"
+      },
+      {
+        "line": 100,
+        "text": "title: '确认已完成 OA 申报',"
+      },
+      {
+        "line": 132,
+        "text": "oaTitle: _nullable(oaTitle.text),"
+      },
+      {
+        "line": 138,
+        "text": "if (context.mounted) _message(context, '更新失败：$error');"
+      },
+      {
+        "line": 163,
+        "text": "title: '采购执行信息',"
+      },
+      {
+        "line": 195,
+        "text": "if (context.mounted) _message(context, '保存失败：$error');"
+      },
+      {
+        "line": 217,
+        "text": "title: '收到物资入厂通知',"
+      },
+      {
+        "line": 244,
+        "text": "if (context.mounted) _message(context, '更新失败：$error');"
+      },
+      {
+        "line": 454,
+        "text": "title: title.text.trim(),"
+      },
+      {
+        "line": 458,
+        "text": "oaTitle: _nullable(oaTitle.text),"
+      },
+      {
+        "line": 471,
+        "text": "if (context.mounted) _message(context, '保存失败：$error');"
+      },
+      {
+        "line": 494,
+        "text": "title: const Text('确认跳过采购状态'),"
+      },
+      {
+        "line": 528,
+        "text": "if (context.mounted) _message(context, '状态更新失败：$error');"
+      },
+      {
+        "line": 542,
+        "text": "title: const Text('删除采购记录'),"
+      },
+      {
+        "line": 543,
+        "text": "content: const Text('确认将这条未入库采购记录移入回收状态？'),"
+      },
+      {
+        "line": 551,
+        "text": "child: const Text('确认删除'),"
+      },
+      {
+        "line": 683,
+        "text": "if (detail.statusLogs.isEmpty) const Text('暂无状态变更记录'),"
+      },
+      {
+        "line": 772,
+        "text": "child: const Text('确认已申报'),"
+      },
+      {
+        "line": 954,
+        "text": "title: Text(label),"
+      },
+      {
+        "line": 955,
+        "text": "subtitle: Text(purchaseDateLabel(value)),"
+      },
+      {
+        "line": 968,
+        "text": "this.actionLabel = '确认',"
+      },
+      {
+        "line": 1001,
+        "text": "title: Text(widget.dateLabel),"
+      },
+      {
+        "line": 1002,
+        "text": "subtitle: Text(purchaseDateLabel(_date)),"
+      },
+      {
+        "line": 1053,
+        "text": "ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(value)));"
+      }
+    ]
+  },
+  {
+    "task_id": "095",
+    "name": "待领取",
+    "source": "lib/features/purchase/presentation/purchase_pending_receive_page.dart",
+    "evidence": [
+      {
+        "line": 40,
+        "text": "appBar: AppBar(title: const Text('待领取')),"
+      },
+      {
+        "line": 60,
+        "text": "loading: () => const LinearProgressIndicator(),"
+      },
+      {
+        "line": 61,
+        "text": "error: (error, stack) => const SizedBox.shrink(),"
+      },
+      {
+        "line": 90,
+        "text": "loading: () => const PurchaseLoadingState(),"
+      },
+      {
+        "line": 91,
+        "text": "error: (error, stack) => PurchaseErrorState("
+      },
+      {
+        "line": 96,
+        "text": "? const PurchaseEmptyState("
+      },
+      {
+        "line": 97,
+        "text": "title: '暂无待领取物资',"
+      },
+      {
+        "line": 98,
+        "text": "message: '收到入厂通知后，可将采购记录设为待领取。',"
+      }
+    ]
+  },
+  {
+    "task_id": "096",
+    "name": "采购历史－按记录",
+    "source": "lib/features/purchase/presentation/purchase_history_page.dart",
+    "evidence": [
+      {
+        "line": 115,
+        "text": "appBar: AppBar(title: const Text('采购历史')),"
+      },
+      {
+        "line": 291,
+        "text": "loading: () => const PurchaseLoadingState(),"
+      },
+      {
+        "line": 292,
+        "text": "error: (error, stack) => PurchaseErrorState("
+      },
+      {
+        "line": 297,
+        "text": "? const PurchaseEmptyState("
+      },
+      {
+        "line": 298,
+        "text": "title: '暂无采购历史',"
+      },
+      {
+        "line": 299,
+        "text": "message: '完成采购入库后，将自动形成历史记录。',"
+      },
+      {
+        "line": 380,
+        "text": ".showSnackBar(const SnackBar(content: Text('结束日期不能早于开始日期')));"
+      }
+    ]
+  },
+  {
+    "task_id": "097",
+    "name": "采购历史－按物资",
+    "source": "lib/features/purchase/presentation/purchase_history_page.dart",
+    "evidence": [
+      {
+        "line": 115,
+        "text": "appBar: AppBar(title: const Text('采购历史')),"
+      },
+      {
+        "line": 291,
+        "text": "loading: () => const PurchaseLoadingState(),"
+      },
+      {
+        "line": 292,
+        "text": "error: (error, stack) => PurchaseErrorState("
+      },
+      {
+        "line": 297,
+        "text": "? const PurchaseEmptyState("
+      },
+      {
+        "line": 298,
+        "text": "title: '暂无采购历史',"
+      },
+      {
+        "line": 299,
+        "text": "message: '完成采购入库后，将自动形成历史记录。',"
+      },
+      {
+        "line": 380,
+        "text": ".showSnackBar(const SnackBar(content: Text('结束日期不能早于开始日期')));"
+      }
+    ]
+  },
+  {
+    "task_id": "098",
+    "name": "单个物资采购历史",
+    "source": "lib/features/purchase/presentation/purchase_item_history_page.dart",
+    "evidence": [
+      {
+        "line": 32,
+        "text": "title: const Text('物资采购历史'),"
+      },
+      {
+        "line": 44,
+        "text": "loading: () => const PurchaseLoadingState(),"
+      },
+      {
+        "line": 45,
+        "text": "error: (error, stack) => PurchaseErrorState("
+      },
+      {
+        "line": 51,
+        "text": "? const PurchaseEmptyState("
+      },
+      {
+        "line": 52,
+        "text": "title: '暂无物资历史',"
+      },
+      {
+        "line": 53,
+        "text": "message: '该库存物资尚无采购历史。',"
+      },
+      {
+        "line": 255,
+        "text": "const PurchasePanel(child: Text('当前时间范围内没有采购记录。'))"
+      }
+    ]
+  }
+]

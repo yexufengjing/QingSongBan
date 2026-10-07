@@ -1,0 +1,1 @@
+Use existing exact blue-white mobile style. Dim existing material form and show compact centered white dialog title 新增物资分类, ONE plain text input 分类名称 (empty), buttons 取消 and 新增. No large illustration, no X, no other fields, no dropdown, no stars. Preserve background data.

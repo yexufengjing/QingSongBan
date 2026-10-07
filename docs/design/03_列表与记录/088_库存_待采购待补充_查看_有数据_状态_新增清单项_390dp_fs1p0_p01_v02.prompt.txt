@@ -1,0 +1,1 @@
+LOCAL edit only the modal. Exact title 新增待补充事项. Field labels 名称, 单位, 计划补充数量, 补充方式, 需求原因（可选）. Unit 件 is a plain text input WITHOUT arrow. Quantity 1 is a plain text input WITHOUT minus/plus. Only 补充方式 总库领取 has a dropdown arrow. Remove close X and 0/200 counter. Keep 取消 保存. Preserve background and all other content.

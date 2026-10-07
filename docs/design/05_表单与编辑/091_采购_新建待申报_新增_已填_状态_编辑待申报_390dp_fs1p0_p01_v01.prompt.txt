@@ -1,0 +1,1 @@
+LOCAL edit only new-vs-edit state. Title 编辑待申报采购, remove 尚未保存 tag, bottom left 取消 and right 保存修改. Preserve all existing fields, selected reason 库存不足, creation date2026-09-24, note秋季补充,100双 existing material qty/currentstock20. No stars, no clear icons, no new fields. Existing awaiting application record in edit mode.

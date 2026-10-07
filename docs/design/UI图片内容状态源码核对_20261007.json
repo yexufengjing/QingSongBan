@@ -1,0 +1,2181 @@
+[
+  {
+    "task_id": "002",
+    "name": "首页－概览视图",
+    "source": "lib/features/home/presentation/home_page.dart",
+    "evidence": [
+      {
+        "line": 24,
+        "text": "loading: () => const _DashboardLoading(),"
+      },
+      {
+        "line": 25,
+        "text": "error: (error, _) => _DashboardError(message: error.toString()),"
+      }
+    ]
+  },
+  {
+    "task_id": "003",
+    "name": "首页－处理视图",
+    "source": "lib/features/home/presentation/home_page.dart",
+    "evidence": [
+      {
+        "line": 24,
+        "text": "loading: () => const _DashboardLoading(),"
+      },
+      {
+        "line": 25,
+        "text": "error: (error, _) => _DashboardError(message: error.toString()),"
+      }
+    ]
+  },
+  {
+    "task_id": "004",
+    "name": "每日考勤",
+    "source": "lib/features/attendance/presentation/daily_attendance_page.dart",
+    "evidence": [
+      {
+        "line": 45,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 46,
+        "text": "error: (_, _) => _DailyAttendanceError("
+      },
+      {
+        "line": 91,
+        "text": "loading: () => '加载中',"
+      },
+      {
+        "line": 92,
+        "text": "error: (_, _) => '暂不可用',"
+      },
+      {
+        "line": 124,
+        "text": "loading: () => const Padding("
+      },
+      {
+        "line": 128,
+        "text": "error: (_, _) => _DailyAttendanceError("
+      },
+      {
+        "line": 179,
+        "text": "if (context.mounted) _showMessage(context, '保存失败：$error');"
+      },
+      {
+        "line": 639,
+        "text": "final result = await showDialog<String>("
+      },
+      {
+        "line": 641,
+        "text": "builder: (context) => AlertDialog("
+      },
+      {
+        "line": 717,
+        "text": "Text('本月暂无考勤人员', style: Theme.of(context).textTheme.titleLarge),"
+      },
+      {
+        "line": 758,
+        "text": "Text('暂无启用中的考勤组', style: Theme.of(context).textTheme.titleLarge),"
+      }
+    ]
+  },
+  {
+    "task_id": "005",
+    "name": "车辆档案列表",
+    "source": "lib/features/vehicles/presentation/vehicle_archive_page.dart",
+    "evidence": [
+      {
+        "line": 118,
+        "text": "loading: () => const SizedBox(height: 48),"
+      },
+      {
+        "line": 119,
+        "text": "error: (_, _) => const SizedBox.shrink(),"
+      },
+      {
+        "line": 235,
+        "text": "loading: () => const SizedBox.shrink(),"
+      },
+      {
+        "line": 236,
+        "text": "error: (_, _) => const SizedBox.shrink(),"
+      },
+      {
+        "line": 240,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 241,
+        "text": "error: (error, _) => Text('车辆档案加载失败：$error'),"
+      }
+    ]
+  },
+  {
+    "task_id": "006",
+    "name": "车辆详情－档案",
+    "source": "lib/features/vehicles/presentation/vehicle_detail_page.dart",
+    "evidence": [
+      {
+        "line": 69,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 70,
+        "text": "error: (error, _) => Center(child: Text(error.toString())),"
+      },
+      {
+        "line": 72,
+        "text": "if (item == null) return const Center(child: Text('车辆不存在'));"
+      },
+      {
+        "line": 141,
+        "text": "final confirmed = await showDialog<bool>("
+      },
+      {
+        "line": 143,
+        "text": "builder: (context) => AlertDialog("
+      },
+      {
+        "line": 422,
+        "text": "? '暂无登记中的问题，建议按计划完成日常检查。'"
+      }
+    ]
+  },
+  {
+    "task_id": "007",
+    "name": "库存－月度领用记录",
+    "source": "lib/features/inventory/presentation/inventory_issues_page.dart",
+    "evidence": [
+      {
+        "line": 74,
+        "text": "loading: () => const InventoryLoadingState(),"
+      },
+      {
+        "line": 75,
+        "text": "error: (_, _) => InventoryErrorState("
+      },
+      {
+        "line": 136,
+        "text": "title: allIssues.isEmpty ? '暂无出库记录' : '本月暂无出库记录',"
+      },
+      {
+        "line": 352,
+        "text": "loading: () => const Padding("
+      },
+      {
+        "line": 356,
+        "text": "error: (_, _) => const Padding("
+      }
+    ]
+  },
+  {
+    "task_id": "008",
+    "name": "库存－领用登记",
+    "source": "lib/features/inventory/presentation/inventory_issue_form_page.dart",
+    "evidence": [
+      {
+        "line": 31,
+        "text": "bool _saving = false;"
+      },
+      {
+        "line": 91,
+        "text": "setState(() => _saving = true);"
+      },
+      {
+        "line": 130,
+        "text": "if (mounted) setState(() => _saving = false);"
+      },
+      {
+        "line": 150,
+        "text": "loading: () => const InventoryLoadingState(),"
+      },
+      {
+        "line": 151,
+        "text": "error: (_, _) => InventoryErrorState("
+      },
+      {
+        "line": 155,
+        "text": "loading: () => const InventoryLoadingState(),"
+      },
+      {
+        "line": 156,
+        "text": "error: (_, _) => InventoryErrorState("
+      },
+      {
+        "line": 269,
+        "text": "validator: (value) =>"
+      },
+      {
+        "line": 282,
+        "text": "validator: (value) =>"
+      },
+      {
+        "line": 338,
+        "text": "onPressed: _saving ? null : () => _save(items, people),"
+      },
+      {
+        "line": 339,
+        "text": "icon: _saving"
+      },
+      {
+        "line": 347,
+        "text": "label: Text(_saving ? '正在保存…' : '确认出库'),"
+      },
+      {
+        "line": 427,
+        "text": "validator: (value) {"
+      }
+    ]
+  },
+  {
+    "task_id": "009",
+    "name": "采购入库",
+    "source": "lib/features/purchase/presentation/purchase_stock_in_page.dart",
+    "evidence": [
+      {
+        "line": 33,
+        "text": "bool _saving = false;"
+      },
+      {
+        "line": 61,
+        "text": "loading: () => const PurchaseLoadingState(),"
+      },
+      {
+        "line": 62,
+        "text": "error: (error, stack) => PurchaseErrorState("
+      },
+      {
+        "line": 67,
+        "text": "? const PurchaseEmptyState(title: '采购记录不存在', message: '该记录可能已删除。')"
+      },
+      {
+        "line": 77,
+        "text": "onPressed: _saving ? null : () => context.pop(),"
+      },
+      {
+        "line": 85,
+        "text": "onPressed: _saving ? null : () => _save(),"
+      },
+      {
+        "line": 86,
+        "text": "icon: _saving"
+      },
+      {
+        "line": 92,
+        "text": "label: Text(_saving ? '处理中…' : '确认入库'),"
+      },
+      {
+        "line": 484,
+        "text": "final confirmed = await showDialog<bool>("
+      },
+      {
+        "line": 487,
+        "text": "child: AlertDialog("
+      },
+      {
+        "line": 524,
+        "text": "final confirmed = await showDialog<bool>("
+      },
+      {
+        "line": 527,
+        "text": "child: AlertDialog("
+      },
+      {
+        "line": 545,
+        "text": "final reviewed = await showDialog<bool>("
+      },
+      {
+        "line": 548,
+        "text": "child: AlertDialog("
+      },
+      {
+        "line": 612,
+        "text": "setState(() => _saving = true);"
+      },
+      {
+        "line": 635,
+        "text": "if (mounted) setState(() => _saving = false);"
+      }
+    ]
+  },
+  {
+    "task_id": "010",
+    "name": "人员管理",
+    "source": "lib/features/personnel/presentation/personnel_page.dart",
+    "evidence": [
+      {
+        "line": 21,
+        "text": "loading: () => const _PersonnelHomeLoading(),"
+      },
+      {
+        "line": 22,
+        "text": "error: (_, _) => PersonnelErrorState("
+      }
+    ]
+  },
+  {
+    "task_id": "011",
+    "name": "人员名单",
+    "source": "lib/features/personnel/presentation/personnel_list_page.dart",
+    "evidence": [
+      {
+        "line": 70,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 71,
+        "text": "error: (_, _) => PersonnelErrorState("
+      },
+      {
+        "line": 174,
+        "text": "onPressed: () => showModalBottomSheet<void>("
+      },
+      {
+        "line": 236,
+        "text": "loading: () => const Text("
+      },
+      {
+        "line": 240,
+        "text": "error: (_, _) => const Text("
+      },
+      {
+        "line": 246,
+        "text": "'暂无考勤组',"
+      },
+      {
+        "line": 561,
+        "text": "loading: () => '加载中',"
+      },
+      {
+        "line": 562,
+        "text": "error: (_, _) => '暂不可用',"
+      }
+    ]
+  },
+  {
+    "task_id": "012",
+    "name": "人员档案",
+    "source": "lib/features/personnel/presentation/personnel_detail_page.dart",
+    "evidence": [
+      {
+        "line": 30,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 31,
+        "text": "error: (_, _) => PersonnelErrorState("
+      },
+      {
+        "line": 36,
+        "text": "return const Center(child: Text('档案不存在或已被移除'));"
+      },
+      {
+        "line": 53,
+        "text": "final confirmed = await showDialog<bool>("
+      },
+      {
+        "line": 55,
+        "text": "builder: (context) => AlertDialog("
+      },
+      {
+        "line": 196,
+        "text": "loading: () => '加载中',"
+      },
+      {
+        "line": 197,
+        "text": "error: (_, _) => '暂不可用',"
+      },
+      {
+        "line": 208,
+        "text": "loading: () => '加载中',"
+      },
+      {
+        "line": 209,
+        "text": "error: (_, _) => '暂不可用',"
+      },
+      {
+        "line": 216,
+        "text": "loading: () => '加载中',"
+      },
+      {
+        "line": 217,
+        "text": "error: (_, _) => '暂不可用',"
+      },
+      {
+        "line": 226,
+        "text": "loading: () => '加载中',"
+      },
+      {
+        "line": 227,
+        "text": "error: (_, _) => '暂不可用',"
+      },
+      {
+        "line": 236,
+        "text": "loading: () => '加载中',"
+      },
+      {
+        "line": 237,
+        "text": "error: (_, _) => '暂不可用',"
+      },
+      {
+        "line": 239,
+        "text": "? '暂无记录'"
+      },
+      {
+        "line": 249,
+        "text": "loading: attachmentsState.isLoading,"
+      },
+      {
+        "line": 250,
+        "text": "error: attachmentsState.hasError,"
+      }
+    ]
+  },
+  {
+    "task_id": "013",
+    "name": "新增／编辑人员",
+    "source": "lib/features/personnel/presentation/personnel_form_page.dart",
+    "evidence": [
+      {
+        "line": 18,
+        "text": "bool get isEditing => employeeId != null;"
+      },
+      {
+        "line": 45,
+        "text": "bool _saving = false;"
+      },
+      {
+        "line": 78,
+        "text": "appBar: AppBar(title: Text(widget.isEditing ? '编辑人员' : '新增人员')),"
+      },
+      {
+        "line": 84,
+        "text": "appBar: AppBar(title: Text(widget.isEditing ? '编辑人员' : '新增人员')),"
+      },
+      {
+        "line": 85,
+        "text": "body: Center(child: Text('档案加载失败：${snapshot.error}')),"
+      },
+      {
+        "line": 88,
+        "text": "if (widget.isEditing && snapshot.data == null) {"
+      },
+      {
+        "line": 91,
+        "text": "body: const Center(child: Text('档案不存在或已被移除')),"
+      },
+      {
+        "line": 144,
+        "text": "title: Text(widget.isEditing ? '编辑人员' : '新增人员'),"
+      },
+      {
+        "line": 146,
+        "text": "if (!widget.isEditing)"
+      },
+      {
+        "line": 168,
+        "text": "_FormHint(editing: widget.isEditing),"
+      },
+      {
+        "line": 179,
+        "text": "validator: (value) =>"
+      },
+      {
+        "line": 299,
+        "text": "'暂无可用考勤组，请先在考勤页建立',"
+      },
+      {
+        "line": 347,
+        "text": "onPressed: _saving ? null : _save,"
+      },
+      {
+        "line": 348,
+        "text": "icon: _saving"
+      },
+      {
+        "line": 358,
+        "text": "label: Text(_saving ? '保存中…' : '保存档案'),"
+      },
+      {
+        "line": 387,
+        "text": "validator: validator,"
+      },
+      {
+        "line": 487,
+        "text": "setState(() => _saving = true);"
+      },
+      {
+        "line": 521,
+        "text": "setState(() => _saving = false);"
+      },
+      {
+        "line": 523,
+        "text": ".showSnackBar(SnackBar(content: Text('保存失败：$error')));"
+      }
+    ]
+  },
+  {
+    "task_id": "014",
+    "name": "考勤入口",
+    "source": "lib/features/attendance/presentation/attendance_page.dart",
+    "evidence": []
+  },
+  {
+    "task_id": "015",
+    "name": "月考勤表",
+    "source": "lib/features/attendance/presentation/monthly_attendance_table_page.dart",
+    "evidence": [
+      {
+        "line": 77,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 78,
+        "text": "error: (_, _) => _MonthlyTableError("
+      },
+      {
+        "line": 215,
+        "text": "loading: () => const SizedBox("
+      },
+      {
+        "line": 219,
+        "text": "error: (_, _) => SizedBox("
+      },
+      {
+        "line": 259,
+        "text": "final draft = await showDialog<DailyAttendanceDraft>("
+      },
+      {
+        "line": 271,
+        "text": "if (context.mounted) _showMessage(context, '保存失败：$error');"
+      },
+      {
+        "line": 817,
+        "text": "return AlertDialog("
+      },
+      {
+        "line": 908,
+        "text": "Text('本月暂无考勤名单', style: Theme.of(context).textTheme.titleLarge),"
+      },
+      {
+        "line": 955,
+        "text": "Text('暂无考勤组', style: Theme.of(context).textTheme.titleLarge),"
+      }
+    ]
+  },
+  {
+    "task_id": "016",
+    "name": "月度名单",
+    "source": "lib/features/attendance/presentation/monthly_roster_page.dart",
+    "evidence": [
+      {
+        "line": 30,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 31,
+        "text": "error: (_, _) => _RosterError("
+      },
+      {
+        "line": 139,
+        "text": "loading: () => const Padding("
+      },
+      {
+        "line": 143,
+        "text": "error: (_, _) => _RosterError("
+      },
+      {
+        "line": 185,
+        "text": "await showModalBottomSheet<void>("
+      },
+      {
+        "line": 198,
+        "text": "final confirmed = await showDialog<bool>("
+      },
+      {
+        "line": 200,
+        "text": "builder: (context) => AlertDialog("
+      },
+      {
+        "line": 243,
+        "text": "final confirmed = await showDialog<bool>("
+      },
+      {
+        "line": 245,
+        "text": "builder: (context) => AlertDialog("
+      },
+      {
+        "line": 288,
+        "text": "final confirmed = await showDialog<bool>("
+      },
+      {
+        "line": 290,
+        "text": "builder: (context) => AlertDialog("
+      },
+      {
+        "line": 766,
+        "text": "showRemoved ? '本月还没有名单记录' : '本月暂无有效人员',"
+      },
+      {
+        "line": 819,
+        "text": "Text('暂无考勤组', style: Theme.of(context).textTheme.titleLarge),"
+      },
+      {
+        "line": 935,
+        "text": "loading: () =>"
+      },
+      {
+        "line": 937,
+        "text": "error: (_, _) => const Center(child: Text('人员列表加载失败')),"
+      },
+      {
+        "line": 955,
+        "text": "items.isEmpty ? '暂无符合月份规则的人员。' : '没有匹配的未加入人员。',"
+      }
+    ]
+  },
+  {
+    "task_id": "017",
+    "name": "考勤组",
+    "source": "lib/features/attendance/presentation/attendance_group_list_page.dart",
+    "evidence": [
+      {
+        "line": 30,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 31,
+        "text": "error: (_, _) => AttendanceGroupErrorState("
+      }
+    ]
+  },
+  {
+    "task_id": "018",
+    "name": "考勤组详情",
+    "source": "lib/features/attendance/presentation/attendance_group_detail_page.dart",
+    "evidence": [
+      {
+        "line": 38,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 39,
+        "text": "error: (_, _) => AttendanceGroupErrorState("
+      },
+      {
+        "line": 44,
+        "text": "return const Center(child: Text('考勤组不存在或已被移除'));"
+      },
+      {
+        "line": 63,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 64,
+        "text": "error: (_, _) => AttendanceGroupErrorState("
+      },
+      {
+        "line": 131,
+        "text": "await showModalBottomSheet<void>("
+      },
+      {
+        "line": 145,
+        "text": "final confirmed = await showDialog<bool>("
+      },
+      {
+        "line": 147,
+        "text": "builder: (context) => AlertDialog("
+      },
+      {
+        "line": 421,
+        "text": "loading: () =>"
+      },
+      {
+        "line": 423,
+        "text": "error: (_, _) => const Center(child: Text('人员列表加载失败')),"
+      }
+    ]
+  },
+  {
+    "task_id": "019",
+    "name": "新增／编辑考勤组",
+    "source": "lib/features/attendance/presentation/attendance_group_form_page.dart",
+    "evidence": [
+      {
+        "line": 15,
+        "text": "bool get isEditing => groupId != null;"
+      },
+      {
+        "line": 32,
+        "text": "bool _saving = false;"
+      },
+      {
+        "line": 57,
+        "text": "appBar: AppBar(title: Text(widget.isEditing ? '编辑考勤组' : '新增考勤组')),"
+      },
+      {
+        "line": 63,
+        "text": "appBar: AppBar(title: Text(widget.isEditing ? '编辑考勤组' : '新增考勤组')),"
+      },
+      {
+        "line": 64,
+        "text": "body: Center(child: Text('考勤组加载失败：${snapshot.error}')),"
+      },
+      {
+        "line": 67,
+        "text": "if (widget.isEditing && snapshot.data == null) {"
+      },
+      {
+        "line": 70,
+        "text": "body: const Center(child: Text('考勤组不存在或已被移除')),"
+      },
+      {
+        "line": 94,
+        "text": "title: Text(widget.isEditing ? '编辑考勤组' : '新增考勤组'),"
+      },
+      {
+        "line": 147,
+        "text": "validator: (value) =>"
+      },
+      {
+        "line": 173,
+        "text": "validator: (value) {"
+      },
+      {
+        "line": 213,
+        "text": "onPressed: _saving ? null : _save,"
+      },
+      {
+        "line": 214,
+        "text": "icon: _saving"
+      },
+      {
+        "line": 224,
+        "text": "label: Text(_saving ? '保存中…' : '保存考勤组'),"
+      },
+      {
+        "line": 237,
+        "text": "setState(() => _saving = true);"
+      },
+      {
+        "line": 256,
+        "text": "setState(() => _saving = false);"
+      },
+      {
+        "line": 258,
+        "text": ".showSnackBar(SnackBar(content: Text('保存失败：$error')));"
+      }
+    ]
+  },
+  {
+    "task_id": "020",
+    "name": "请假记录",
+    "source": "lib/features/leave/presentation/leave_page.dart",
+    "evidence": [
+      {
+        "line": 41,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 42,
+        "text": "error: (error, _) => _LeaveError("
+      },
+      {
+        "line": 83,
+        "text": "final confirmed = await showDialog<bool>("
+      },
+      {
+        "line": 85,
+        "text": "builder: (context) => AlertDialog("
+      },
+      {
+        "line": 337,
+        "text": "'${AppDateUtils.yearMonth(month)} 暂无请假记录',"
+      }
+    ]
+  },
+  {
+    "task_id": "021",
+    "name": "新增／编辑请假",
+    "source": "lib/features/leave/presentation/leave_form_page.dart",
+    "evidence": [
+      {
+        "line": 18,
+        "text": "bool get isEditing => leaveId != null;"
+      },
+      {
+        "line": 36,
+        "text": "bool _saving = false;"
+      },
+      {
+        "line": 64,
+        "text": "return _errorScaffold('请假记录加载失败：${snapshot.error}');"
+      },
+      {
+        "line": 66,
+        "text": "if (widget.isEditing && snapshot.data == null) {"
+      },
+      {
+        "line": 67,
+        "text": "return _errorScaffold('请假记录不存在或已被删除');"
+      },
+      {
+        "line": 72,
+        "text": "loading: () => _loadingScaffold(),"
+      },
+      {
+        "line": 73,
+        "text": "error: (error, _) => _errorScaffold('人员列表加载失败：$error'),"
+      },
+      {
+        "line": 98,
+        "text": "title: Text(widget.isEditing ? '编辑请假' : '新增请假'),"
+      },
+      {
+        "line": 155,
+        "text": "child: const Text('暂无可用人员，请先建立人员档案。'),"
+      },
+      {
+        "line": 173,
+        "text": "validator: (value) => value == null ? '请选择人员' : null,"
+      },
+      {
+        "line": 271,
+        "text": "onPressed: _saving || employees.isEmpty ? null : _save,"
+      },
+      {
+        "line": 272,
+        "text": "icon: _saving"
+      },
+      {
+        "line": 282,
+        "text": "label: Text(_saving ? '保存中…' : '保存请假'),"
+      },
+      {
+        "line": 432,
+        "text": "setState(() => _saving = true);"
+      },
+      {
+        "line": 451,
+        "text": "setState(() => _saving = false);"
+      },
+      {
+        "line": 453,
+        "text": ".showSnackBar(SnackBar(content: Text('保存失败：$error')));"
+      },
+      {
+        "line": 459,
+        "text": "appBar: AppBar(title: Text(widget.isEditing ? '编辑请假' : '新增请假')),"
+      },
+      {
+        "line": 466,
+        "text": "appBar: AppBar(title: Text(widget.isEditing ? '编辑请假' : '新增请假')),"
+      }
+    ]
+  },
+  {
+    "task_id": "022",
+    "name": "加班记录",
+    "source": "lib/features/overtime/presentation/overtime_page.dart",
+    "evidence": [
+      {
+        "line": 40,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 41,
+        "text": "error: (error, _) => _OvertimeError("
+      },
+      {
+        "line": 89,
+        "text": "final confirmed = await showDialog<bool>("
+      },
+      {
+        "line": 91,
+        "text": "builder: (context) => AlertDialog("
+      },
+      {
+        "line": 334,
+        "text": "'${AppDateUtils.yearMonth(month)} 暂无加班记录',"
+      }
+    ]
+  },
+  {
+    "task_id": "023",
+    "name": "新增／编辑加班",
+    "source": "lib/features/overtime/presentation/overtime_form_page.dart",
+    "evidence": [
+      {
+        "line": 17,
+        "text": "bool get isEditing => overtimeId != null;"
+      },
+      {
+        "line": 36,
+        "text": "bool _saving = false;"
+      },
+      {
+        "line": 68,
+        "text": "return _errorScaffold('加班记录加载失败：${snapshot.error}');"
+      },
+      {
+        "line": 70,
+        "text": "if (widget.isEditing && snapshot.data == null) {"
+      },
+      {
+        "line": 71,
+        "text": "return _errorScaffold('加班记录不存在或已被删除');"
+      },
+      {
+        "line": 77,
+        "text": "loading: () => _loadingScaffold(),"
+      },
+      {
+        "line": 78,
+        "text": "error: (error, _) => _errorScaffold('人员列表加载失败：$error'),"
+      },
+      {
+        "line": 106,
+        "text": "title: Text(widget.isEditing ? '编辑加班' : '新增加班'),"
+      },
+      {
+        "line": 163,
+        "text": "child: const Text('暂无可用人员，请先建立人员档案。'),"
+      },
+      {
+        "line": 181,
+        "text": "validator: (value) => value == null ? '请选择人员' : null,"
+      },
+      {
+        "line": 271,
+        "text": "onPressed: _saving || employees.isEmpty ? null : _save,"
+      },
+      {
+        "line": 272,
+        "text": "icon: _saving"
+      },
+      {
+        "line": 282,
+        "text": "label: Text(_saving ? '保存中…' : '保存加班'),"
+      },
+      {
+        "line": 427,
+        "text": "setState(() => _saving = true);"
+      },
+      {
+        "line": 448,
+        "text": "setState(() => _saving = false);"
+      },
+      {
+        "line": 450,
+        "text": ".showSnackBar(SnackBar(content: Text('保存失败：$error')));"
+      },
+      {
+        "line": 456,
+        "text": "appBar: AppBar(title: Text(widget.isEditing ? '编辑加班' : '新增加班')),"
+      },
+      {
+        "line": 463,
+        "text": "appBar: AppBar(title: Text(widget.isEditing ? '编辑加班' : '新增加班')),"
+      }
+    ]
+  },
+  {
+    "task_id": "024",
+    "name": "离职管理",
+    "source": "lib/features/termination/presentation/termination_page.dart",
+    "evidence": [
+      {
+        "line": 28,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 29,
+        "text": "error: (error, _) => _TerminationError("
+      },
+      {
+        "line": 81,
+        "text": "final confirmed = await showDialog<bool>("
+      },
+      {
+        "line": 83,
+        "text": "builder: (context) => AlertDialog("
+      },
+      {
+        "line": 259,
+        "text": "Text('暂无离职记录', style: Theme.of(context).textTheme.titleLarge),"
+      }
+    ]
+  },
+  {
+    "task_id": "025",
+    "name": "登记／编辑离职",
+    "source": "lib/features/termination/presentation/termination_form_page.dart",
+    "evidence": [
+      {
+        "line": 22,
+        "text": "bool get isEditing => terminationId != null;"
+      },
+      {
+        "line": 42,
+        "text": "bool _saving = false;"
+      },
+      {
+        "line": 72,
+        "text": "return _errorScaffold('离职记录加载失败：${snapshot.error}');"
+      },
+      {
+        "line": 74,
+        "text": "if (widget.isEditing && snapshot.data == null) {"
+      },
+      {
+        "line": 75,
+        "text": "return _errorScaffold('离职记录不存在或已被撤销');"
+      },
+      {
+        "line": 81,
+        "text": "loading: () => _loadingScaffold(),"
+      },
+      {
+        "line": 82,
+        "text": "error: (error, _) => _errorScaffold('人员列表加载失败：$error'),"
+      },
+      {
+        "line": 117,
+        "text": "title: Text(widget.isEditing ? '编辑离职' : '登记离职'),"
+      },
+      {
+        "line": 176,
+        "text": "child: const Text('暂无可登记离职的在岗人员。'),"
+      },
+      {
+        "line": 194,
+        "text": "validator: (value) => value == null ? '请选择人员' : null,"
+      },
+      {
+        "line": 204,
+        "text": "onChanged: widget.isEditing"
+      },
+      {
+        "line": 290,
+        "text": "onPressed: _saving || employees.isEmpty ? null : _save,"
+      },
+      {
+        "line": 291,
+        "text": "icon: _saving"
+      },
+      {
+        "line": 301,
+        "text": "label: Text(_saving ? '保存中…' : '保存离职'),"
+      },
+      {
+        "line": 390,
+        "text": "setState(() => _saving = true);"
+      },
+      {
+        "line": 426,
+        "text": "setState(() => _saving = false);"
+      },
+      {
+        "line": 428,
+        "text": ".showSnackBar(SnackBar(content: Text('保存失败：$error')));"
+      },
+      {
+        "line": 434,
+        "text": "appBar: AppBar(title: Text(widget.isEditing ? '编辑离职' : '登记离职')),"
+      },
+      {
+        "line": 441,
+        "text": "appBar: AppBar(title: Text(widget.isEditing ? '编辑离职' : '登记离职')),"
+      }
+    ]
+  },
+  {
+    "task_id": "026",
+    "name": "社保保险",
+    "source": "lib/features/insurance/presentation/insurance_page.dart",
+    "evidence": [
+      {
+        "line": 40,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 41,
+        "text": "error: (error, _) => Text('加载失败：$error'),"
+      },
+      {
+        "line": 85,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 86,
+        "text": "error: (error, _) => Text('加载失败：$error'),"
+      },
+      {
+        "line": 88,
+        "text": "? const _InsuranceSectionEmpty(message: '本月暂无保险变更')"
+      },
+      {
+        "line": 102,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 103,
+        "text": "error: (error, _) => Text('加载失败：$error'),"
+      }
+    ]
+  },
+  {
+    "task_id": "027",
+    "name": "维护参保资料",
+    "source": "lib/features/insurance/presentation/insurance_profile_form_page.dart",
+    "evidence": [
+      {
+        "line": 29,
+        "text": "bool _saving = false;"
+      },
+      {
+        "line": 47,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 48,
+        "text": "error: (error, _) => Center(child: Text('人员列表加载失败：$error')),"
+      },
+      {
+        "line": 51,
+        "text": "return const Center(child: Text('暂无人员，请先建立人员档案。'));"
+      },
+      {
+        "line": 109,
+        "text": "validator: (value) =>"
+      },
+      {
+        "line": 142,
+        "text": "validator: (value) =>"
+      },
+      {
+        "line": 203,
+        "text": "onPressed: _saving ? null : _save,"
+      },
+      {
+        "line": 204,
+        "text": "icon: _saving"
+      },
+      {
+        "line": 214,
+        "text": "label: Text(_saving ? '保存中…' : '保存参保信息'),"
+      },
+      {
+        "line": 264,
+        "text": "setState(() => _saving = true);"
+      },
+      {
+        "line": 281,
+        "text": "setState(() => _saving = false);"
+      },
+      {
+        "line": 283,
+        "text": ".showSnackBar(SnackBar(content: Text('保存失败：$error')));"
+      }
+    ]
+  },
+  {
+    "task_id": "028",
+    "name": "登记／编辑保险变更",
+    "source": "lib/features/insurance/presentation/insurance_change_form_page.dart",
+    "evidence": [
+      {
+        "line": 34,
+        "text": "bool _saving = false;"
+      },
+      {
+        "line": 64,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 65,
+        "text": "error: (error, _) => Center(child: Text('人员列表加载失败：$error')),"
+      },
+      {
+        "line": 68,
+        "text": "return const Center(child: Text('暂无人员，请先建立人员档案。'));"
+      },
+      {
+        "line": 122,
+        "text": "validator: (value) =>"
+      },
+      {
+        "line": 174,
+        "text": "validator: (value) {"
+      },
+      {
+        "line": 243,
+        "text": "onPressed: _saving ? null : _save,"
+      },
+      {
+        "line": 244,
+        "text": "icon: _saving"
+      },
+      {
+        "line": 254,
+        "text": "label: Text(_saving ? '保存中…' : '保存保险变更'),"
+      },
+      {
+        "line": 305,
+        "text": "setState(() => _saving = true);"
+      },
+      {
+        "line": 333,
+        "text": "setState(() => _saving = false);"
+      },
+      {
+        "line": 335,
+        "text": ".showSnackBar(SnackBar(content: Text('保存失败：$error')));"
+      },
+      {
+        "line": 346,
+        "text": ".showSnackBar(const SnackBar(content: Text('保险变更记录不存在或已被删除')));"
+      }
+    ]
+  },
+  {
+    "task_id": "029",
+    "name": "人员附件",
+    "source": "lib/features/attachments/presentation/employee_attachments_page.dart",
+    "evidence": [
+      {
+        "line": 48,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 49,
+        "text": "error: (error, _) => Center(child: Text('人员加载失败：$error')),"
+      },
+      {
+        "line": 51,
+        "text": "if (person == null) return const Center(child: Text('人员档案不存在'));"
+      },
+      {
+        "line": 53,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 54,
+        "text": "error: (error, _) => Center(child: Text('附件加载失败：$error')),"
+      },
+      {
+        "line": 176,
+        "text": "return showDialog<String>("
+      },
+      {
+        "line": 178,
+        "text": "builder: (context) => SimpleDialog("
+      },
+      {
+        "line": 182,
+        "text": "SimpleDialogOption("
+      },
+      {
+        "line": 193,
+        "text": "await showDialog<void>("
+      },
+      {
+        "line": 195,
+        "text": "builder: (context) => AlertDialog("
+      },
+      {
+        "line": 211,
+        "text": "final reveal = await showDialog<bool>("
+      },
+      {
+        "line": 213,
+        "text": "builder: (context) => AlertDialog("
+      },
+      {
+        "line": 232,
+        "text": "await showDialog<void>("
+      },
+      {
+        "line": 363,
+        "text": "Text('暂无附件资料'),"
+      }
+    ]
+  },
+  {
+    "task_id": "030",
+    "name": "汇总中心－考勤",
+    "source": "lib/features/reports/presentation/reports_page.dart",
+    "evidence": [
+      {
+        "line": 95,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 96,
+        "text": "error: (error, _) => _SummaryError("
+      },
+      {
+        "line": 329,
+        "text": "loading: () => const Center("
+      },
+      {
+        "line": 335,
+        "text": "error: (_, _) => const ListTile("
+      },
+      {
+        "line": 412,
+        "text": "title: Text('本月暂无人员变动记录'),"
+      },
+      {
+        "line": 467,
+        "text": "title: Text('本月暂无保险变更记录'),"
+      },
+      {
+        "line": 560,
+        "text": "final value = await showDialog<String>("
+      },
+      {
+        "line": 562,
+        "text": "builder: (context) => AlertDialog("
+      }
+    ]
+  },
+  {
+    "task_id": "031",
+    "name": "汇总中心－车辆",
+    "source": "lib/features/reports/presentation/reports_page.dart",
+    "evidence": [
+      {
+        "line": 95,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 96,
+        "text": "error: (error, _) => _SummaryError("
+      },
+      {
+        "line": 329,
+        "text": "loading: () => const Center("
+      },
+      {
+        "line": 335,
+        "text": "error: (_, _) => const ListTile("
+      },
+      {
+        "line": 412,
+        "text": "title: Text('本月暂无人员变动记录'),"
+      },
+      {
+        "line": 467,
+        "text": "title: Text('本月暂无保险变更记录'),"
+      },
+      {
+        "line": 560,
+        "text": "final value = await showDialog<String>("
+      },
+      {
+        "line": 562,
+        "text": "builder: (context) => AlertDialog("
+      }
+    ]
+  },
+  {
+    "task_id": "032",
+    "name": "汇总中心－库存",
+    "source": "lib/features/reports/presentation/reports_page.dart",
+    "evidence": [
+      {
+        "line": 95,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 96,
+        "text": "error: (error, _) => _SummaryError("
+      },
+      {
+        "line": 329,
+        "text": "loading: () => const Center("
+      },
+      {
+        "line": 335,
+        "text": "error: (_, _) => const ListTile("
+      },
+      {
+        "line": 412,
+        "text": "title: Text('本月暂无人员变动记录'),"
+      },
+      {
+        "line": 467,
+        "text": "title: Text('本月暂无保险变更记录'),"
+      },
+      {
+        "line": 560,
+        "text": "final value = await showDialog<String>("
+      },
+      {
+        "line": 562,
+        "text": "builder: (context) => AlertDialog("
+      }
+    ]
+  },
+  {
+    "task_id": "033",
+    "name": "汇总中心－工资",
+    "source": "lib/features/reports/presentation/reports_page.dart",
+    "evidence": [
+      {
+        "line": 95,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 96,
+        "text": "error: (error, _) => _SummaryError("
+      },
+      {
+        "line": 329,
+        "text": "loading: () => const Center("
+      },
+      {
+        "line": 335,
+        "text": "error: (_, _) => const ListTile("
+      },
+      {
+        "line": 412,
+        "text": "title: Text('本月暂无人员变动记录'),"
+      },
+      {
+        "line": 467,
+        "text": "title: Text('本月暂无保险变更记录'),"
+      },
+      {
+        "line": 560,
+        "text": "final value = await showDialog<String>("
+      },
+      {
+        "line": 562,
+        "text": "builder: (context) => AlertDialog("
+      }
+    ]
+  },
+  {
+    "task_id": "054",
+    "name": "车辆管理",
+    "source": "lib/features/vehicles/presentation/vehicle_page.dart",
+    "evidence": [
+      {
+        "line": 55,
+        "text": "loading: () => const _StatsLoading(),"
+      },
+      {
+        "line": 56,
+        "text": "error: (error, _) => _ErrorCard(message: error.toString()),"
+      },
+      {
+        "line": 79,
+        "text": "loading: () => const SizedBox.shrink(),"
+      },
+      {
+        "line": 80,
+        "text": "error: (_, _) => const SizedBox.shrink(),"
+      },
+      {
+        "line": 116,
+        "text": "loading: () => const Padding("
+      },
+      {
+        "line": 120,
+        "text": "error: (error, _) => _ErrorCard(message: error.toString()),"
+      }
+    ]
+  },
+  {
+    "task_id": "055",
+    "name": "新增／编辑车辆",
+    "source": "lib/features/vehicles/presentation/vehicle_form_page.dart",
+    "evidence": [
+      {
+        "line": 36,
+        "text": "bool _saving = false;"
+      },
+      {
+        "line": 85,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 86,
+        "text": "error: (error, _) => Center(child: Text(error.toString())),"
+      },
+      {
+        "line": 89,
+        "text": "return const Center(child: Text('车辆不存在或已删除'));"
+      },
+      {
+        "line": 108,
+        "text": "validator: (value) =>"
+      },
+      {
+        "line": 118,
+        "text": "validator: (value) =>"
+      },
+      {
+        "line": 229,
+        "text": "onPressed: _saving ? null : _save,"
+      },
+      {
+        "line": 230,
+        "text": "icon: _saving"
+      },
+      {
+        "line": 236,
+        "text": "label: Text(_saving ? '保存中...' : '保存车辆'),"
+      },
+      {
+        "line": 267,
+        "text": "setState(() => _saving = true);"
+      },
+      {
+        "line": 293,
+        "text": ".showSnackBar(SnackBar(content: Text('保存失败：$error')));"
+      },
+      {
+        "line": 295,
+        "text": "if (mounted) setState(() => _saving = false);"
+      }
+    ]
+  },
+  {
+    "task_id": "056",
+    "name": "全车维修",
+    "source": "lib/features/vehicles/presentation/vehicle_repair_list_page.dart",
+    "evidence": [
+      {
+        "line": 87,
+        "text": "final selected = await showDialog<int>("
+      },
+      {
+        "line": 89,
+        "text": "builder: (dialogContext) => AlertDialog("
+      },
+      {
+        "line": 117,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 118,
+        "text": "error: (e, _) => Center(child: Text('维修单加载失败：$e')),"
+      },
+      {
+        "line": 120,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 121,
+        "text": "error: (e, _) => Center(child: Text('车辆加载失败：$e')),"
+      },
+      {
+        "line": 248,
+        "text": "? '暂无维修单，点击“新建维修单”开始记录。'"
+      }
+    ]
+  },
+  {
+    "task_id": "057",
+    "name": "报修／维修编辑",
+    "source": "lib/features/vehicles/presentation/vehicle_repair_form_page.dart",
+    "evidence": [
+      {
+        "line": 39,
+        "text": "bool _saving = false;"
+      },
+      {
+        "line": 143,
+        "text": "validator: (value) =>"
+      },
+      {
+        "line": 267,
+        "text": "onPressed: _saving ? null : _save,"
+      },
+      {
+        "line": 268,
+        "text": "icon: _saving"
+      },
+      {
+        "line": 274,
+        "text": "label: Text(_saving ? '保存中...' : '保存维修单'),"
+      },
+      {
+        "line": 360,
+        "text": "setState(() => _saving = true);"
+      },
+      {
+        "line": 389,
+        "text": ".showSnackBar(SnackBar(content: Text('保存失败：$error')));"
+      },
+      {
+        "line": 392,
+        "text": "if (mounted) setState(() => _saving = false);"
+      }
+    ]
+  },
+  {
+    "task_id": "058",
+    "name": "维修单详情",
+    "source": "lib/features/vehicles/presentation/vehicle_repair_detail_page.dart",
+    "evidence": [
+      {
+        "line": 92,
+        "text": "if (d == null) return const Center(child: Text('维修单不存在或已删除'));"
+      }
+    ]
+  },
+  {
+    "task_id": "059",
+    "name": "年度油耗",
+    "source": "lib/features/vehicles/presentation/vehicle_fuel_summary_page.dart",
+    "evidence": [
+      {
+        "line": 49,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 50,
+        "text": "error: (error, _) => Center(child: Text('年度油耗加载失败：$error')),"
+      },
+      {
+        "line": 102,
+        "text": "child: Text('当前年份暂无可统计车辆。'),"
+      },
+      {
+        "line": 125,
+        "text": "final value = await showDialog<int>("
+      },
+      {
+        "line": 153,
+        "text": "Widget build(BuildContext context) => AlertDialog("
+      }
+    ]
+  },
+  {
+    "task_id": "060",
+    "name": "全车提醒中心",
+    "source": "lib/features/vehicles/presentation/vehicle_reminder_page.dart",
+    "evidence": [
+      {
+        "line": 44,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 45,
+        "text": "error: (error, _) => Center(child: Text('提醒加载失败：$error')),"
+      },
+      {
+        "line": 537,
+        "text": "onPressed: () => showModalBottomSheet<void>("
+      }
+    ]
+  },
+  {
+    "task_id": "061",
+    "name": "车辆附件",
+    "source": "lib/features/vehicles/presentation/vehicle_attachments_page.dart",
+    "evidence": [
+      {
+        "line": 56,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 57,
+        "text": "error: (error, _) => Center(child: Text('车辆加载失败：$error')),"
+      },
+      {
+        "line": 59,
+        "text": "if (item == null) return const Center(child: Text('车辆档案不存在'));"
+      },
+      {
+        "line": 61,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 62,
+        "text": "error: (error, _) => Center(child: Text('附件加载失败：$error')),"
+      },
+      {
+        "line": 144,
+        "text": "Text('暂无附件资料'),"
+      },
+      {
+        "line": 205,
+        "text": "return showDialog<VehicleAttachmentCategory>("
+      },
+      {
+        "line": 207,
+        "text": "builder: (dialogContext) => SimpleDialog("
+      },
+      {
+        "line": 211,
+        "text": "SimpleDialogOption("
+      },
+      {
+        "line": 234,
+        "text": "await showDialog<void>("
+      },
+      {
+        "line": 236,
+        "text": "builder: (dialogContext) => AlertDialog("
+      },
+      {
+        "line": 271,
+        "text": "await showDialog<void>("
+      }
+    ]
+  },
+  {
+    "task_id": "062",
+    "name": "车辆详情－维修",
+    "source": "lib/features/vehicles/presentation/vehicle_detail_page.dart",
+    "evidence": [
+      {
+        "line": 69,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 70,
+        "text": "error: (error, _) => Center(child: Text(error.toString())),"
+      },
+      {
+        "line": 72,
+        "text": "if (item == null) return const Center(child: Text('车辆不存在'));"
+      },
+      {
+        "line": 141,
+        "text": "final confirmed = await showDialog<bool>("
+      },
+      {
+        "line": 143,
+        "text": "builder: (context) => AlertDialog("
+      },
+      {
+        "line": 422,
+        "text": "? '暂无登记中的问题，建议按计划完成日常检查。'"
+      }
+    ]
+  },
+  {
+    "task_id": "063",
+    "name": "车辆详情－费用",
+    "source": "lib/features/vehicles/presentation/vehicle_detail_page.dart",
+    "evidence": [
+      {
+        "line": 69,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 70,
+        "text": "error: (error, _) => Center(child: Text(error.toString())),"
+      },
+      {
+        "line": 72,
+        "text": "if (item == null) return const Center(child: Text('车辆不存在'));"
+      },
+      {
+        "line": 141,
+        "text": "final confirmed = await showDialog<bool>("
+      },
+      {
+        "line": 143,
+        "text": "builder: (context) => AlertDialog("
+      },
+      {
+        "line": 422,
+        "text": "? '暂无登记中的问题，建议按计划完成日常检查。'"
+      }
+    ]
+  },
+  {
+    "task_id": "064",
+    "name": "车辆详情－车况",
+    "source": "lib/features/vehicles/presentation/vehicle_detail_page.dart",
+    "evidence": [
+      {
+        "line": 69,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 70,
+        "text": "error: (error, _) => Center(child: Text(error.toString())),"
+      },
+      {
+        "line": 72,
+        "text": "if (item == null) return const Center(child: Text('车辆不存在'));"
+      },
+      {
+        "line": 141,
+        "text": "final confirmed = await showDialog<bool>("
+      },
+      {
+        "line": 143,
+        "text": "builder: (context) => AlertDialog("
+      },
+      {
+        "line": 422,
+        "text": "? '暂无登记中的问题，建议按计划完成日常检查。'"
+      }
+    ]
+  },
+  {
+    "task_id": "065",
+    "name": "车辆详情－保养备件",
+    "source": "lib/features/vehicles/presentation/vehicle_detail_page.dart",
+    "evidence": [
+      {
+        "line": 69,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 70,
+        "text": "error: (error, _) => Center(child: Text(error.toString())),"
+      },
+      {
+        "line": 72,
+        "text": "if (item == null) return const Center(child: Text('车辆不存在'));"
+      },
+      {
+        "line": 141,
+        "text": "final confirmed = await showDialog<bool>("
+      },
+      {
+        "line": 143,
+        "text": "builder: (context) => AlertDialog("
+      },
+      {
+        "line": 422,
+        "text": "? '暂无登记中的问题，建议按计划完成日常检查。'"
+      }
+    ]
+  },
+  {
+    "task_id": "066",
+    "name": "车辆详情－油耗",
+    "source": "lib/features/vehicles/presentation/vehicle_detail_page.dart",
+    "evidence": [
+      {
+        "line": 69,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 70,
+        "text": "error: (error, _) => Center(child: Text(error.toString())),"
+      },
+      {
+        "line": 72,
+        "text": "if (item == null) return const Center(child: Text('车辆不存在'));"
+      },
+      {
+        "line": 141,
+        "text": "final confirmed = await showDialog<bool>("
+      },
+      {
+        "line": 143,
+        "text": "builder: (context) => AlertDialog("
+      },
+      {
+        "line": 422,
+        "text": "? '暂无登记中的问题，建议按计划完成日常检查。'"
+      }
+    ]
+  },
+  {
+    "task_id": "067",
+    "name": "车辆详情－当前车辆提醒",
+    "source": "lib/features/vehicles/presentation/vehicle_detail_page.dart",
+    "evidence": [
+      {
+        "line": 69,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 70,
+        "text": "error: (error, _) => Center(child: Text(error.toString())),"
+      },
+      {
+        "line": 72,
+        "text": "if (item == null) return const Center(child: Text('车辆不存在'));"
+      },
+      {
+        "line": 141,
+        "text": "final confirmed = await showDialog<bool>("
+      },
+      {
+        "line": 143,
+        "text": "builder: (context) => AlertDialog("
+      },
+      {
+        "line": 422,
+        "text": "? '暂无登记中的问题，建议按计划完成日常检查。'"
+      }
+    ]
+  },
+  {
+    "task_id": "068",
+    "name": "器械维修－月度台账",
+    "source": "lib/features/garden_tool_repairs/presentation/garden_tool_repair_page.dart",
+    "evidence": [
+      {
+        "line": 92,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 93,
+        "text": "error: (error, _) => _LoadError(message: error.toString()),"
+      },
+      {
+        "line": 198,
+        "text": "final shouldDelete = await showDialog<bool>("
+      },
+      {
+        "line": 200,
+        "text": "builder: (context) => AlertDialog("
+      },
+      {
+        "line": 615,
+        "text": "const Text('本月暂无维修记录'),"
+      },
+      {
+        "line": 642,
+        "text": "const Text('维修台账加载失败'),"
+      }
+    ]
+  },
+  {
+    "task_id": "069",
+    "name": "器械维修－新增／编辑维修",
+    "source": "lib/features/garden_tool_repairs/presentation/garden_tool_repair_form_page.dart",
+    "evidence": [
+      {
+        "line": 47,
+        "text": "bool _saving = false;"
+      },
+      {
+        "line": 49,
+        "text": "bool get _isEditing => _editingGroupId != null;"
+      },
+      {
+        "line": 94,
+        "text": "appBar: AppBar(title: Text(_isEditing ? '编辑维修记录' : '新增维修记录')),"
+      },
+      {
+        "line": 183,
+        "text": "loading: () => const LinearProgressIndicator(),"
+      },
+      {
+        "line": 184,
+        "text": "error: (error, _) => Text('维修单位加载失败：$error'),"
+      },
+      {
+        "line": 236,
+        "text": "validator: (value) =>"
+      },
+      {
+        "line": 317,
+        "text": "loading: () => const SizedBox(height: 2),"
+      },
+      {
+        "line": 318,
+        "text": "error: (error, _) => Text('维修人员加载失败：$error'),"
+      },
+      {
+        "line": 570,
+        "text": "Text('已存附件加载失败：${attachmentsAsync!.error}'),"
+      },
+      {
+        "line": 637,
+        "text": "onPressed: _saving ? null : () => _save(continueEntry: false),"
+      },
+      {
+        "line": 650,
+        "text": "onPressed: _saving ? null : () => _save(continueEntry: true),"
+      },
+      {
+        "line": 651,
+        "text": "child: _saving"
+      },
+      {
+        "line": 669,
+        "text": "final camera = await showModalBottomSheet<bool>("
+      },
+      {
+        "line": 709,
+        "text": "if (entry == null) throw StateError('维修记录组不存在或已删除');"
+      },
+      {
+        "line": 718,
+        "text": ".showSnackBar(SnackBar(content: Text('维修记录加载失败：$error')));"
+      },
+      {
+        "line": 781,
+        "text": "final name = await showDialog<String>("
+      },
+      {
+        "line": 804,
+        "text": "final type = await showModalBottomSheet<GardenToolRepairAttachmentType>("
+      },
+      {
+        "line": 886,
+        "text": "setState(() => _saving = true);"
+      },
+      {
+        "line": 940,
+        "text": "if (mounted) setState(() => _saving = false);"
+      },
+      {
+        "line": 1308,
+        "text": "Widget build(BuildContext context) => AlertDialog("
+      }
+    ]
+  },
+  {
+    "task_id": "070",
+    "name": "器械维修－分析",
+    "source": "lib/features/garden_tool_repairs/presentation/garden_tool_repair_analysis_page.dart",
+    "evidence": [
+      {
+        "line": 67,
+        "text": "loading: () => const Padding("
+      },
+      {
+        "line": 71,
+        "text": "error: (error, _) => _AnalysisError("
+      },
+      {
+        "line": 184,
+        "text": "loading: () => const LinearProgressIndicator(),"
+      },
+      {
+        "line": 185,
+        "text": "error: (error, _) => const Text('维修单位加载失败'),"
+      },
+      {
+        "line": 1000,
+        "text": "Text('当前条件暂无维修数据', style: Theme.of(context).textTheme.titleLarge),"
+      },
+      {
+        "line": 1021,
+        "text": "Text('数据分析加载失败：$message'),"
+      }
+    ]
+  },
+  {
+    "task_id": "071",
+    "name": "器械维修－比价",
+    "source": "lib/features/garden_tool_repairs/presentation/garden_tool_repair_price_page.dart",
+    "evidence": [
+      {
+        "line": 42,
+        "text": "loading: () => const Card("
+      },
+      {
+        "line": 48,
+        "text": "error: (error, _) => Card("
+      },
+      {
+        "line": 51,
+        "text": "child: Text('历史项目加载失败：$error'),"
+      },
+      {
+        "line": 111,
+        "text": "loading: () => const Padding("
+      },
+      {
+        "line": 115,
+        "text": "error: (error, _) => Card("
+      },
+      {
+        "line": 118,
+        "text": "child: Text('价格记录加载失败：$error'),"
+      },
+      {
+        "line": 122,
+        "text": "? const _NoPriceData(message: '当前项目在所选时间范围内暂无价格记录')"
+      },
+      {
+        "line": 284,
+        "text": "? '暂无对比'"
+      },
+      {
+        "line": 286,
+        "text": "'${change == null ? '暂无涨跌幅' : '${change >= 0 ? '+' : ''}${change.toStringAsFixed(1)}%'}';"
+      },
+      {
+        "line": 306,
+        "text": "? '暂无对比'"
+      },
+      {
+        "line": 437,
+        "text": "await showDialog<void>("
+      },
+      {
+        "line": 439,
+        "text": "builder: (context) => AlertDialog("
+      },
+      {
+        "line": 665,
+        "text": "const _NoPriceData({this.message = '暂无历史价格项目'});"
+      }
+    ]
+  },
+  {
+    "task_id": "072",
+    "name": "器械维修－维修单位",
+    "source": "lib/features/garden_tool_repairs/presentation/garden_tool_repair_units_page.dart",
+    "evidence": [
+      {
+        "line": 22,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 23,
+        "text": "error: (error, _) => Center(child: Text('单位数据加载失败：$error')),"
+      },
+      {
+        "line": 25,
+        "text": "? const Center(child: Text('暂无维修单位，请先新增'))"
+      },
+      {
+        "line": 86,
+        "text": "final name = await showDialog<String>("
+      },
+      {
+        "line": 106,
+        "text": ".showSnackBar(SnackBar(content: Text('保存失败：$error')));"
+      },
+      {
+        "line": 136,
+        "text": "Widget build(BuildContext context) => AlertDialog("
+      }
+    ]
+  },
+  {
+    "task_id": "073",
+    "name": "器械维修－维修附件",
+    "source": "lib/features/garden_tool_repairs/presentation/garden_tool_repair_attachments_page.dart",
+    "evidence": [
+      {
+        "line": 22,
+        "text": "loading: () => const Center(child: CircularProgressIndicator()),"
+      },
+      {
+        "line": 23,
+        "text": "error: (error, _) => Center(child: Text('附件加载失败：$error')),"
+      },
+      {
+        "line": 25,
+        "text": "? const Center(child: Text('该维修组暂无附件'))"
+      },
+      {
+        "line": 54,
+        "text": "await showDialog<void>("
+      }
+    ]
+  }
+]

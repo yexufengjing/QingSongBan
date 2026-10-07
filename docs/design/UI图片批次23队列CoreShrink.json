@@ -1,0 +1,98 @@
+[
+  {
+    "task_id": "096",
+    "source": "lib/features/purchase/presentation/purchase_history_page.dart",
+    "old": "03_列表与记录/096_采购_采购历史_按记录_有数据_390dp_fs1p0_p01_v03.png",
+    "screen": 1,
+    "prompt": "LOCAL unify components with attached second reference097. Keep ALL096 record data unchanged. Split filter/search controls and metric row into TWO separate white rounded panels separated by blue background gap, exactly as097. Two equal metric columns: tiny flat colored icon immediately inline left of title at same baseline, count below title: 本年度申报3次 / 完成入库3次. No large icon left spanning label and count. Period buttons use same rounded rectangle shape and blue selected colors as097. Onlythese changes.",
+    "path": "03_列表与记录/096_采购_采购历史_按记录_有数据_390dp_fs1p0_p01_v04.png",
+    "issues": [
+      "明确视觉修正"
+    ],
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-a7335ad6-e418-44da-ac16-47c351766457.png"
+  },
+  {
+    "task_id": "074",
+    "source": "lib/features/inventory/presentation/inventory_home_page.dart",
+    "old": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p02_v02.png",
+    "screen": 2,
+    "prompt": "LOCAL change only 本月出入库摘要 layout: exactly FOUR equal width positions. 入库条数2 first;出库条数2 second;其他变动0 third; fourth100%transparent blank. Tiny colored flat icons INLINE LEFT of labels on same baseline, number below, no large left spanningtwo rows. Keep original ALL records/samplevalues/header/actions unchanged.",
+    "path": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p02_v03.png",
+    "issues": [
+      "明确视觉修正"
+    ],
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-f83d5789-bd77-41f2-80d3-5de82d460541.png"
+  },
+  {
+    "task_id": "074",
+    "source": "lib/features/inventory/presentation/inventory_home_page.dart",
+    "old": "02_工作台/074_库存_库存首页_查看_有数据_状态_最近流水空_390dp_fs1p0_p02_v01.png",
+    "screen": 2,
+    "prompt": "LOCAL change only 本月出入库摘要 to four equal positions, first3 labels入库条数0 出库条数0 其他变动0 and fourthtransparent blank. Tiny flat icons inlineleftoflabel samebaseline, countbelow. Keep empty最近记录body unchanged. Shrink central empty icon to same height as subtitle line, no shadow.",
+    "path": "02_工作台/074_库存_库存首页_查看_有数据_状态_最近流水空_390dp_fs1p0_p02_v02.png",
+    "issues": [
+      "明确视觉修正"
+    ],
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-cc44f562-e911-49ec-905c-33e836b85f83.png"
+  },
+  {
+    "task_id": "098",
+    "source": "lib/features/purchase/presentation/purchase_material_history_page.dart",
+    "old": "04_详情/098_采购_物资采购历史_查看_有数据_状态_物资历史缺失_390dp_fs1p0_p01_v01.png",
+    "screen": 1,
+    "prompt": "LOCAL fix only missing-empty state body. Use compact flat blue cart icon the height of a single body textline, no rays/shadow/background circle. Belowicon title 暂无物资历史, then message 该库存物资尚无采购历史。. No detailidentity or statistics or bottomactions because notfound state. Preserveheader.",
+    "path": "04_详情/098_采购_物资采购历史_查看_有数据_状态_物资历史缺失_390dp_fs1p0_p01_v02.png",
+    "issues": [
+      "明确视觉修正"
+    ],
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-6b935b03-6982-4eb9-b6cd-d5ccf7f58ea7.png"
+  },
+  {
+    "task_id": "085",
+    "source": "lib/features/inventory/presentation/inventory_stocktake_form_page.dart",
+    "old": "05_表单与编辑/085_库存_新建盘点_新增_已填_状态_无可盘点_390dp_fs1p0_p01_v01.png",
+    "screen": 1,
+    "path": "05_表单与编辑/085_库存_新建盘点_新增_已填_状态_无可盘点_390dp_fs1p0_p01_v02.png",
+    "issues": [
+      "空态图标偏大/投影修正"
+    ],
+    "prompt": "LOCAL edit only central empty illustration: replace with a SMALL flat blue outline icon no taller than ONE subtitle body-text line (about 24dp). No background tile/circle, NO shadow, rays, gradient, 3D or decorations. Preserve all text, controls, zero quantities and empty-state layout. Exact title 没有可盘点的物资, message 先新增物资档案。. No button.",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-a299e334-f5a5-451f-8ae9-422875a6299c.png"
+  },
+  {
+    "task_id": "088",
+    "source": "lib/features/inventory/presentation/inventory_replenishments_page.dart",
+    "old": "03_列表与记录/088_库存_待采购待补充_查看_有数据_状态_首次空_390dp_fs1p0_p01_v02.png",
+    "screen": 1,
+    "path": "03_列表与记录/088_库存_待采购待补充_查看_有数据_状态_首次空_390dp_fs1p0_p01_v03.png",
+    "issues": [
+      "空态图标偏大/投影修正"
+    ],
+    "prompt": "LOCAL edit only central empty illustration: replace with a SMALL flat blue outline icon no taller than ONE subtitle body-text line (about 24dp). No background tile/circle, NO shadow, rays, gradient, 3D or decorations. Preserve all text, controls, zero quantities and empty-state layout.",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-220335a0-aac2-463e-b8e6-e709d13554ba.png"
+  },
+  {
+    "task_id": "095",
+    "source": "lib/features/purchase/presentation/purchase_pending_receive_page.dart",
+    "old": "03_列表与记录/095_采购_待领取_查看_部分入库_状态_待领取空_390dp_fs1p0_p01_v02.png",
+    "screen": 1,
+    "path": "03_列表与记录/095_采购_待领取_查看_部分入库_状态_待领取空_390dp_fs1p0_p01_v03.png",
+    "issues": [
+      "空态图标偏大/投影修正"
+    ],
+    "prompt": "LOCAL edit only central empty illustration: replace with a SMALL flat blue outline icon no taller than ONE subtitle body-text line (about 24dp). No background tile/circle, NO shadow, rays, gradient, 3D or decorations. Preserve all text, controls, zero quantities and empty-state layout.",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-c3f4508b-d5d2-4030-aea3-0a842c62fc55.png"
+  },
+  {
+    "task_id": "092",
+    "source": "lib/features/purchase/presentation/purchase_pending_apply_page.dart",
+    "old": "03_列表与记录/092_采购_待申报_查看_有数据_状态_首次空_390dp_fs1p0_p01_v01.png",
+    "screen": 1,
+    "path": "03_列表与记录/092_采购_待申报_查看_有数据_状态_首次空_390dp_fs1p0_p01_v02.png",
+    "issues": [
+      "空态图标偏大/投影修正"
+    ],
+    "prompt": "LOCAL edit only central empty illustration: replace with a SMALL flat blue outline icon no taller than ONE subtitle body-text line (about 24dp). No background tile/circle, NO shadow, rays, gradient, 3D or decorations. Preserve all text, controls, zero quantities and empty-state layout.",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-d8cdb9d2-48a6-4289-a3e9-3e0f287b008c.png"
+  }
+]

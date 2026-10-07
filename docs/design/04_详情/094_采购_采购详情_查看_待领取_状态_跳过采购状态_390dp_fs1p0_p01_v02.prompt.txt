@@ -1,0 +1,1 @@
+LOCAL edit only background so native skip confirmation is reachable: current status badge 采购中 (NOT待领取), 入厂通知日期 and 领取地点 display —, bottom right action 设为待领取. Keep dialog exact text and buttons unchanged. This is existing purchase with partial stock-in, manually returned to采购中; don't change quantities or make inventory updates.

@@ -1,0 +1,1706 @@
+{
+  "date": "2026-10-07",
+  "scope": "图片缺口审计，不修改共享主清单/源码/数据",
+  "summary": {
+    "deduplicated_work_package_count": 83,
+    "by_status_type": [
+      {
+        "type": "布局适配图片可补充",
+        "count": 1
+      },
+      {
+        "type": "品牌图像及资源可制作",
+        "count": 7
+      },
+      {
+        "type": "适用状态需核实",
+        "count": 13
+      },
+      {
+        "type": "图片可补充",
+        "count": 13
+      },
+      {
+        "type": "图片可修正",
+        "count": 46
+      },
+      {
+        "type": "未来代码验证",
+        "count": 1
+      },
+      {
+        "type": "未来设备及最终验收",
+        "count": 1
+      },
+      {
+        "type": "像素尺寸豁免",
+        "count": 1
+      }
+    ],
+    "explicit_fix_task_count": 46,
+    "historical_missing_excluded": [
+      "045",
+      "059",
+      "060",
+      "061"
+    ],
+    "baseline": "2026-10-07 主清单与批次19/20；058/059/060/061由其它工作流同时推进，审计不覆盖其本轮新结果",
+    "current_status_counts": {
+      "本轮指定内容/视觉及适用状态已初检，代码设备验收延期": 24,
+      "主态已补修；其余状态仍有明确缺口": 2,
+      "本轮指定图片内容已初检": 2,
+      "本轮指定图片内容已完成": 27,
+      "待处理": 5,
+      "逐页源码及公共/已有/待生成参考已映射；欠图未完成": 10,
+      "源码已核对；适用状态映射及补图未闭合": 2,
+      "设计资源已交付，接入设备阶段延期": 7,
+      "用户取消，不作未办项": 1,
+      "本轮豁免": 1,
+      "延期至代码UI复刻": 2
+    },
+    "latest_user_pause": {
+      "current_candidates": 50,
+      "content_checked": 48,
+      "remaining_work_packages": 2,
+      "remaining_task_ids": [
+        "052",
+        "053"
+      ],
+      "authoritative_progress": "UI图片当前任务暂停记录_20261007.md"
+    }
+  },
+  "policy": [
+    "最新视觉要求优先旧视觉冲突条款，保留参考与彩色小图标",
+    "原阶段与批次分开，历史快照不当当前状态",
+    "issues按实际ID去重，059-061 pending包含其它ID问题不得三次计数",
+    "适用状态需核实是工作包，不是已证实的每页新图数量",
+    "像素目标豁免与布局适配分别记录",
+    "用户明确取消像素、宽度、大字体缩放补图；仅内容、视觉与实际状态缺口继续"
+  ],
+  "items": [
+    {
+      "key": "fix-001",
+      "task_ids": [
+        "001"
+      ],
+      "original_stages": [
+        0
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "其余新版规范分屏p01色彩/字阶/按钮、p02输入/选择/开关/勾选、p04弹层/危险确认/加载空错误/Snackbar；p03 v02已存在，不重做。",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=001] outputs/style_status",
+        "UI图片阶段推进总览.md 原阶段0",
+        "批次23/26/28/29/31/32结果与逐页状态合同"
+      ],
+      "priority": 1,
+      "status": "本轮指定内容/视觉及适用状态已初检，代码设备验收延期"
+    },
+    {
+      "key": "fix-035",
+      "task_ids": [
+        "035"
+      ],
+      "original_stages": [
+        6
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "工资明细编辑Bottom Sheet新版未取得；旧v01因字体/布局/间隔/组件漂移只作对照。",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=035] outputs/issues/generation_status",
+        "UI图片阶段9索引.md 当前图片及待办"
+      ],
+      "priority": 0,
+      "status": "主态已补修；其余状态仍有明确缺口"
+    },
+    {
+      "key": "fix-041",
+      "task_ids": [
+        "041"
+      ],
+      "original_stages": [
+        7
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "说明移至网格下方纵向三行；第四位置透明留空，删除空位底色。",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=041] outputs/issues/generation_status",
+        "UI图片阶段10索引.md 当前图片及待办"
+      ],
+      "priority": 0,
+      "status": "本轮指定图片内容已初检"
+    },
+    {
+      "key": "fix-045",
+      "task_ids": [
+        "045"
+      ],
+      "original_stages": [
+        7
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "响铃说明末尾多句号；精确字阶、间距及组件尺度未验收",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=045] outputs/issues/generation_status",
+        "UI图片阶段19索引.md 当前图片及待办"
+      ],
+      "priority": 1,
+      "status": "本轮指定图片内容已初检"
+    },
+    {
+      "key": "fix-051",
+      "task_ids": [
+        "051"
+      ],
+      "original_stages": [
+        8
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "p01补设计样例及福利归属月份，删除姓名旁无依据数量；p02恢复更多入口，统一样例位置及姓名组件。",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=051] outputs/issues/generation_status",
+        "UI图片阶段11索引.md 当前图片及待办"
+      ],
+      "priority": 0,
+      "status": "主态已补修；其余状态仍有明确缺口"
+    },
+    {
+      "key": "fix-054",
+      "task_ids": [
+        "054"
+      ],
+      "original_stages": [
+        9
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "车辆统计图标与名称未同层；第二个车辆卡底部贴边缺安全留白。搜索滚动常驻留未来代码验证，另外两车续屏另列continue-054。",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=054] outputs/issues/generation_status",
+        "UI图片阶段12索引.md 当前图片及待办"
+      ],
+      "priority": 0,
+      "status": "本轮指定图片内容已完成",
+      "result_batches": [
+        25
+      ]
+    },
+    {
+      "key": "fix-055",
+      "task_ids": [
+        "055"
+      ],
+      "original_stages": [
+        9
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "使用部门/工作区域/责任人增加下拉箭头，源码为普通文本框",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=055] outputs/issues/generation_status",
+        "UI图片阶段12索引.md 当前图片及待办"
+      ],
+      "priority": 1,
+      "status": "本轮指定图片内容已完成",
+      "result_batches": [
+        25
+      ]
+    },
+    {
+      "key": "fix-056",
+      "task_ids": [
+        "056"
+      ],
+      "original_stages": [
+        9
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "列表仍偏大卡，摘要行密度待确认；FAB遮挡第三记录结账标签",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=056] outputs/issues/generation_status",
+        "UI图片阶段12索引.md 当前图片及待办"
+      ],
+      "priority": 1,
+      "status": "本轮指定图片内容已完成",
+      "result_batches": [
+        25
+      ]
+    },
+    {
+      "key": "fix-057",
+      "task_ids": [
+        "057"
+      ],
+      "original_stages": [
+        9
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "标题蓝色竖条与027参考漂移；单位误加下拉箭头（应文本输入）；底部按钮贴边缺安全留白。第三屏另列continue-057。",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=057] outputs/issues/generation_status",
+        "UI图片阶段12索引.md 当前图片及待办"
+      ],
+      "priority": 0,
+      "status": "本轮指定图片内容已完成",
+      "result_batches": [
+        25
+      ]
+    },
+    {
+      "key": "fix-058",
+      "task_ids": [
+        "058"
+      ],
+      "original_stages": [
+        9
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "只有错误旧稿；补设计样例/故障现象/实际与申报金额，三联票恢复未开/已开/不需要，去只读箭头及新增三个按钮，陈栋改陈林，并补费用/备件续屏。",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=058] outputs/issues/generation_status",
+        "UI图片阶段12索引.md 当前图片及待办"
+      ],
+      "priority": 0,
+      "status": "本轮指定图片内容已完成",
+      "result_batches": [
+        21,
+        22
+      ]
+    },
+    {
+      "key": "fix-059",
+      "task_ids": [
+        "059"
+      ],
+      "original_stages": [
+        9
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "样例标识后擅加按月统计说明，白名单外文案；样例标识后擅加统计说明；部分指标图标略拟物，字体/尺度待视觉终验",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=059] outputs/issues/generation_status",
+        "UI图片阶段20索引.md 当前图片及待办"
+      ],
+      "priority": 1,
+      "status": "本轮指定图片内容已完成",
+      "result_batches": [
+        21,
+        22
+      ]
+    },
+    {
+      "key": "fix-061",
+      "task_ids": [
+        "061"
+      ],
+      "original_stages": [
+        9
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "身份卡车图标偏大且带水滴装饰，精确组件尺度待视觉验收；添加按钮阴影偏重",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=061] outputs/issues/generation_status",
+        "UI图片阶段20索引.md 当前图片及待办"
+      ],
+      "priority": 1,
+      "status": "本轮指定图片内容已完成",
+      "result_batches": [
+        21,
+        22
+      ]
+    },
+    {
+      "key": "fix-064",
+      "task_ids": [
+        "064"
+      ],
+      "original_stages": [
+        10
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "工作区域与责任人仍未补回身份卡；空态/示意图占比偏大，字体与组件比例需验收",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=064] outputs/issues/generation_status",
+        "UI图片阶段13索引.md 当前图片及待办"
+      ],
+      "priority": 1,
+      "status": "本轮指定图片内容已完成",
+      "result_batches": [
+        25
+      ]
+    },
+    {
+      "key": "fix-065",
+      "task_ids": [
+        "065"
+      ],
+      "original_stages": [
+        10
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "保养名称仍误写主机油/主机油滤芯，未准确保留主机机油/主机机油滤芯",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=065] outputs/issues/generation_status",
+        "UI图片阶段13索引.md 当前图片及待办"
+      ],
+      "priority": 1,
+      "status": "本轮指定图片内容已完成",
+      "result_batches": [
+        25
+      ]
+    },
+    {
+      "key": "fix-066",
+      "task_ids": [
+        "066"
+      ],
+      "original_stages": [
+        10
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "三个指标的图标与名称仍分层，没有落实同层约束",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=066] outputs/issues/generation_status",
+        "UI图片阶段13索引.md 当前图片及待办"
+      ],
+      "priority": 1,
+      "status": "本轮指定图片内容已完成",
+      "result_batches": [
+        25
+      ]
+    },
+    {
+      "key": "fix-067",
+      "task_ids": [
+        "067"
+      ],
+      "original_stages": [
+        10
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "工作区域与责任人被加为独立档案分区，未补入固定身份卡；空态图标仍偏大，未按要求改为小扁平图标；修订遗漏异常筛选项",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=067] outputs/issues/generation_status",
+        "UI图片阶段13索引.md 当前图片及待办"
+      ],
+      "priority": 1,
+      "status": "本轮指定图片内容已完成",
+      "result_batches": [
+        25
+      ]
+    },
+    {
+      "key": "fix-070",
+      "task_ids": [
+        "070"
+      ],
+      "original_stages": [
+        11
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "环图偏大，需按既有组件尺度复核；指标图标在名称上方，尚未满足同层排布",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=070] outputs/issues/generation_status",
+        "UI图片阶段14索引.md 当前图片及待办"
+      ],
+      "priority": 1,
+      "status": "本轮指定图片内容已完成",
+      "result_batches": [
+        25
+      ]
+    },
+    {
+      "key": "fix-071",
+      "task_ids": [
+        "071"
+      ],
+      "original_stages": [
+        11
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "指标图标在名称上方，尚未满足同层排布",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=071] outputs/issues/generation_status",
+        "UI图片阶段14索引.md 当前图片及待办"
+      ],
+      "priority": 1,
+      "status": "本轮指定图片内容已完成",
+      "result_batches": [
+        25
+      ]
+    },
+    {
+      "key": "fix-074",
+      "task_ids": [
+        "074"
+      ],
+      "original_stages": [
+        12
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "快捷主操作与指标仍为三列铺满，未满足四位置末位透明留白",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=074] outputs/issues/generation_status",
+        "UI图片阶段15索引.md 当前图片及待办",
+        "批次23/26/28/29/31/32结果与逐页状态合同"
+      ],
+      "priority": 1,
+      "status": "本轮指定内容/视觉及适用状态已初检，代码设备验收延期"
+    },
+    {
+      "key": "fix-075",
+      "task_ids": [
+        "075"
+      ],
+      "original_stages": [
+        12
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "物资图标仍偏大，须与前阶段小图标统一",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=075] outputs/issues/generation_status",
+        "UI图片阶段15索引.md 当前图片及待办",
+        "批次23/26/28/29/31/32结果与逐页状态合同"
+      ],
+      "priority": 1,
+      "status": "本轮指定内容/视觉及适用状态已初检，代码设备验收延期"
+    },
+    {
+      "key": "fix-077",
+      "task_ids": [
+        "077"
+      ],
+      "original_stages": [
+        12
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "身份图标明显偏大；操作色与前阶段按钮规范待统一；指标呈两列两行，须复核四位置规则及长日期布局",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=077] outputs/issues/generation_status",
+        "UI图片阶段15索引.md 当前图片及待办",
+        "批次23/26/28/29/31/32结果与逐页状态合同"
+      ],
+      "priority": 1,
+      "status": "本轮指定内容/视觉及适用状态已初检，代码设备验收延期"
+    },
+    {
+      "key": "fix-078",
+      "task_ids": [
+        "078"
+      ],
+      "original_stages": [
+        12
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "三指标仍三列铺满，四位置透明留白未满足",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=078] outputs/issues/generation_status",
+        "UI图片阶段15索引.md 当前图片及待办",
+        "批次23/26/28/29/31/32结果与逐页状态合同"
+      ],
+      "priority": 1,
+      "status": "本轮指定内容/视觉及适用状态已初检，代码设备验收延期"
+    },
+    {
+      "key": "fix-082",
+      "task_ids": [
+        "082"
+      ],
+      "original_stages": [
+        12
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "三指标仍三列铺满，四位置透明留白未满足；底部摘要缺源码查看入口",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=082] outputs/issues/generation_status",
+        "UI图片阶段15索引.md 当前图片及待办",
+        "批次23/26/28/29/31/32结果与逐页状态合同"
+      ],
+      "priority": 1,
+      "status": "本轮指定内容/视觉及适用状态已初检，代码设备验收延期"
+    },
+    {
+      "key": "fix-084",
+      "task_ids": [
+        "084"
+      ],
+      "original_stages": [
+        12
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "三指标仍三列铺满，四位置透明留白未满足",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=084] outputs/issues/generation_status",
+        "UI图片阶段15索引.md 当前图片及待办",
+        "批次23/26/28/29/31/32结果与逐页状态合同"
+      ],
+      "priority": 1,
+      "status": "本轮指定内容/视觉及适用状态已初检，代码设备验收延期"
+    },
+    {
+      "key": "fix-085",
+      "task_ids": [
+        "085"
+      ],
+      "original_stages": [
+        12
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "物资图标风格与前阶段彩色小图标不完全一致",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=085] outputs/issues/generation_status",
+        "UI图片阶段15索引.md 当前图片及待办",
+        "批次23/26/28/29/31/32结果与逐页状态合同"
+      ],
+      "priority": 1,
+      "status": "本轮指定内容/视觉及适用状态已初检，代码设备验收延期"
+    },
+    {
+      "key": "fix-087",
+      "task_ids": [
+        "087"
+      ],
+      "original_stages": [
+        12
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "指标图标在名称上方，未满足同层排列",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=087] outputs/issues/generation_status",
+        "UI图片阶段15索引.md 当前图片及待办",
+        "批次23/26/28/29/31/32结果与逐页状态合同"
+      ],
+      "priority": 1,
+      "status": "本轮指定内容/视觉及适用状态已初检，代码设备验收延期"
+    },
+    {
+      "key": "fix-088",
+      "task_ids": [
+        "088"
+      ],
+      "original_stages": [
+        12
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "顶、底三指标仍三列铺满，四位置透明留白未满足",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=088] outputs/issues/generation_status",
+        "UI图片阶段15索引.md 当前图片及待办",
+        "批次23/26/28/29/31/32结果与逐页状态合同"
+      ],
+      "priority": 1,
+      "status": "本轮指定内容/视觉及适用状态已初检，代码设备验收延期"
+    },
+    {
+      "key": "fix-089",
+      "task_ids": [
+        "089"
+      ],
+      "original_stages": [
+        12
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "指标图标在名称上方，未满足同层排列",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=089] outputs/issues/generation_status",
+        "UI图片阶段15索引.md 当前图片及待办",
+        "批次23/26/28/29/31/32结果与逐页状态合同"
+      ],
+      "priority": 1,
+      "status": "本轮指定内容/视觉及适用状态已初检，代码设备验收延期"
+    },
+    {
+      "key": "fix-090",
+      "task_ids": [
+        "090"
+      ],
+      "original_stages": [
+        13
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "图标部分拟物、卡片密度仍待视觉终验",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=090] outputs/issues/generation_status",
+        "UI图片阶段16索引.md 当前图片及待办",
+        "批次23/26/28/29/31/32结果与逐页状态合同"
+      ],
+      "priority": 1,
+      "status": "本轮指定内容/视觉及适用状态已初检，代码设备验收延期"
+    },
+    {
+      "key": "fix-091",
+      "task_ids": [
+        "091"
+      ],
+      "original_stages": [
+        13
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "生成图加入必填红星及文本清除图标，原源码未定义，待修",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=091] outputs/issues/generation_status",
+        "UI图片阶段16索引.md 当前图片及待办",
+        "批次23/26/28/29/31/32结果与逐页状态合同"
+      ],
+      "priority": 1,
+      "status": "本轮指定内容/视觉及适用状态已初检，代码设备验收延期"
+    },
+    {
+      "key": "fix-093",
+      "task_ids": [
+        "093"
+      ],
+      "original_stages": [
+        13
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "底部留白仍不足目标14dp；按钮完整但安全区仍待视觉验收",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=093] outputs/issues/generation_status",
+        "UI图片阶段16索引.md 当前图片及待办",
+        "批次23/26/28/29/31/32结果与逐页状态合同"
+      ],
+      "priority": 1,
+      "status": "本轮指定内容/视觉及适用状态已初检，代码设备验收延期"
+    },
+    {
+      "key": "fix-094",
+      "task_ids": [
+        "094"
+      ],
+      "original_stages": [
+        13
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "底部留白不足目标；两屏次按钮样式与前阶段仍不一致；两屏底部编辑信息的字色/边框/图标不一致，待统一",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=094] outputs/issues/generation_status",
+        "UI图片阶段16索引.md 当前图片及待办",
+        "批次23/26/28/29/31/32结果与逐页状态合同"
+      ],
+      "priority": 1,
+      "status": "本轮指定内容/视觉及适用状态已初检，代码设备验收延期"
+    },
+    {
+      "key": "fix-096",
+      "task_ids": [
+        "096"
+      ],
+      "original_stages": [
+        13
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "与097筛选和指标组件形态、选中色不一致，待统一",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=096] outputs/issues/generation_status",
+        "UI图片阶段16索引.md 当前图片及待办",
+        "批次23/26/28/29/31/32结果与逐页状态合同"
+      ],
+      "priority": 1,
+      "status": "本轮指定内容/视觉及适用状态已初检，代码设备验收延期"
+    },
+    {
+      "key": "fix-097",
+      "task_ids": [
+        "097"
+      ],
+      "original_stages": [
+        13
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "与096筛选和指标组件形态、选中色不一致，待统一",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=097] outputs/issues/generation_status",
+        "UI图片阶段16索引.md 当前图片及待办",
+        "批次23/26/28/29/31/32结果与逐页状态合同"
+      ],
+      "priority": 1,
+      "status": "本轮指定内容/视觉及适用状态已初检，代码设备验收延期"
+    },
+    {
+      "key": "fix-098",
+      "task_ids": [
+        "098"
+      ],
+      "original_stages": [
+        13
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "两屏库存详情次按钮边框不一致，待统一",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=098] outputs/issues/generation_status",
+        "UI图片阶段16索引.md 当前图片及待办",
+        "批次23/26/28/29/31/32结果与逐页状态合同"
+      ],
+      "priority": 1,
+      "status": "本轮指定内容/视觉及适用状态已初检，代码设备验收延期"
+    },
+    {
+      "key": "fix-099",
+      "task_ids": [
+        "099"
+      ],
+      "original_stages": [
+        14
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "Sheet标题偏大，精确字阶与间距未验收",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=099] outputs/issues/generation_status",
+        "UI图片阶段17索引.md 当前图片及待办"
+      ],
+      "priority": 1,
+      "status": "本轮指定图片内容已完成",
+      "result_batches": [
+        25
+      ]
+    },
+    {
+      "key": "fix-101",
+      "task_ids": [
+        "101"
+      ],
+      "original_stages": [
+        14
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "背景需求原因被画为普通输入，源码为Chip；人员/车辆选择补图另列selector-101。",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=101] outputs/issues/generation_status",
+        "UI图片阶段17索引.md 当前图片及待办"
+      ],
+      "priority": 1,
+      "status": "本轮指定图片内容已完成",
+      "result_batches": [
+        25
+      ]
+    },
+    {
+      "key": "fix-102",
+      "task_ids": [
+        "102"
+      ],
+      "original_stages": [
+        14
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "模态遮罩丢失，扫帚写实大图标，未满足前阶段风格",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=102] outputs/issues/generation_status",
+        "UI图片阶段17索引.md 当前图片及待办"
+      ],
+      "priority": 1,
+      "status": "本轮指定图片内容已完成",
+      "result_batches": [
+        25
+      ]
+    },
+    {
+      "key": "fix-103",
+      "task_ids": [
+        "103"
+      ],
+      "original_stages": [
+        14
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "背景新增未定义组编码GRP-001及演示说明，待删除",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=103] outputs/issues/generation_status",
+        "UI图片阶段17索引.md 当前图片及待办"
+      ],
+      "priority": 1,
+      "status": "本轮指定图片内容已完成",
+      "result_batches": [
+        25
+      ]
+    },
+    {
+      "key": "fix-105",
+      "task_ids": [
+        "105"
+      ],
+      "original_stages": [
+        14
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "标题下模型擅加管理物资档案说明；指标仍三项均分而非四位置；空态图标偏大",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=105] outputs/issues/generation_status",
+        "UI图片阶段18索引.md 当前图片及待办"
+      ],
+      "priority": 1,
+      "status": "本轮指定图片内容已完成",
+      "result_batches": [
+        25
+      ]
+    },
+    {
+      "key": "fix-106",
+      "task_ids": [
+        "106"
+      ],
+      "original_stages": [
+        14
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "指标仍三项均分而非四位置；空态图标偏大",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=106] outputs/issues/generation_status",
+        "UI图片阶段18索引.md 当前图片及待办"
+      ],
+      "priority": 1,
+      "status": "本轮指定图片内容已完成",
+      "result_batches": [
+        25
+      ]
+    },
+    {
+      "key": "fix-107",
+      "task_ids": [
+        "107"
+      ],
+      "original_stages": [
+        14
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "错误态箱图标偏大且有投影",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=107] outputs/issues/generation_status",
+        "UI图片阶段18索引.md 当前图片及待办"
+      ],
+      "priority": 1,
+      "status": "本轮指定图片内容已完成",
+      "result_batches": [
+        25
+      ]
+    },
+    {
+      "key": "fix-108",
+      "task_ids": [
+        "108"
+      ],
+      "original_stages": [
+        14
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "物资图标仍偏大",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=108] outputs/issues/generation_status",
+        "UI图片阶段18索引.md 当前图片及待办"
+      ],
+      "priority": 1,
+      "status": "本轮指定图片内容已完成",
+      "result_batches": [
+        25
+      ]
+    },
+    {
+      "key": "fix-109",
+      "task_ids": [
+        "109"
+      ],
+      "original_stages": [
+        14
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "标题居中漂移；物资图标偏大；SnackBar末句号与源码有标点差异",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=109] outputs/issues/generation_status",
+        "UI图片阶段18索引.md 当前图片及待办"
+      ],
+      "priority": 1,
+      "status": "本轮指定图片内容已完成",
+      "result_batches": [
+        25
+      ]
+    },
+    {
+      "key": "fix-110",
+      "task_ids": [
+        "110"
+      ],
+      "original_stages": [
+        14
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "标题居中漂移；身份卡图标偏大；平面物资图标已恢复但仍偏大",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=110] outputs/issues/generation_status",
+        "UI图片阶段18索引.md 当前图片及待办"
+      ],
+      "priority": 1,
+      "status": "本轮指定图片内容已完成",
+      "result_batches": [
+        25
+      ]
+    },
+    {
+      "key": "fix-112",
+      "task_ids": [
+        "112"
+      ],
+      "original_stages": [
+        14
+      ],
+      "status_type": "图片可修正",
+      "actual_gap": "背景常用物资被画成下拉框，源码为FilterChip，待修",
+      "evidence": [
+        "UI图片任务清单.json tasks[id=112] outputs/issues/generation_status",
+        "UI图片阶段17索引.md 当前图片及待办"
+      ],
+      "priority": 1,
+      "status": "本轮指定图片内容已完成",
+      "result_batches": [
+        25
+      ]
+    },
+    {
+      "key": "continue-054",
+      "task_ids": [
+        "054"
+      ],
+      "original_stages": [
+        9
+      ],
+      "status_type": "图片可补充",
+      "actual_gap": "另外两辆车辆列表连续视窗未覆盖；与054修图统一保存同页续屏。",
+      "evidence": [
+        "UI图片阶段12索引.md 054当前图已知问题",
+        "批次23/26/28/29/31/32结果与逐页状态合同"
+      ],
+      "priority": 1,
+      "status": "本轮指定内容/视觉及适用状态已初检，代码设备验收延期"
+    },
+    {
+      "key": "continue-057",
+      "task_ids": [
+        "057"
+      ],
+      "original_stages": [
+        9
+      ],
+      "status_type": "图片可补充",
+      "actual_gap": "第三续屏无PNG；第二项目费用类型、申报金额与备注未取得。先复核两屏已呈现内容，接续同一表单。",
+      "evidence": [
+        "UI图片阶段12索引.md 无结果与待补",
+        "批次23/26/28/29/31/32结果与逐页状态合同"
+      ],
+      "priority": 0,
+      "status": "本轮指定内容/视觉及适用状态已初检，代码设备验收延期"
+    },
+    {
+      "key": "continue-059",
+      "task_ids": [
+        "059"
+      ],
+      "original_stages": [
+        9
+      ],
+      "status_type": "图片可补充",
+      "actual_gap": "现有三纵向屏仅CL001横表；补CL002/CL003横滑视窗，月份为行、车为组列，保留L/元与两合计。",
+      "evidence": [
+        "UI图片阶段20索引.md 待办第2条"
+      ],
+      "priority": 1,
+      "status": "本轮指定图片内容已完成",
+      "result_batches": [
+        21,
+        22
+      ]
+    },
+    {
+      "key": "selector-100",
+      "task_ids": [
+        "045",
+        "100"
+      ],
+      "original_stages": [
+        7,
+        14
+      ],
+      "status_type": "图片可补充",
+      "actual_gap": "已有日期代表态；补月份、时间与045禁用响铃。045日期/时间选择与100同组件同业务上下文时复用归档，不重复生成。",
+      "evidence": [
+        "UI图片阶段19索引.md 待办",
+        "UI图片阶段17索引.md 100"
+      ],
+      "priority": 2,
+      "status": "待处理"
+    },
+    {
+      "key": "selector-101",
+      "task_ids": [
+        "101"
+      ],
+      "original_stages": [
+        14
+      ],
+      "status_type": "图片可补充",
+      "actual_gap": "物资选择已有；补人员选择和车辆选择，逐入口核对单选/即时返回/筛选，不新增批量确认。",
+      "evidence": [
+        "UI图片阶段17索引.md 101",
+        "批次23/26/28/29/31/32结果与逐页状态合同"
+      ],
+      "priority": 2,
+      "status": "本轮指定内容/视觉及适用状态已初检，代码设备验收延期"
+    },
+    {
+      "key": "danger-103",
+      "task_ids": [
+        "024",
+        "049",
+        "103"
+      ],
+      "original_stages": [
+        5,
+        7,
+        14
+      ],
+      "status_type": "图片可补充",
+      "actual_gap": "删除/撤销/停用/覆盖恢复按不同实际影响补代表变体；已存在024撤销及049恢复覆盖确认应复用，不能把四词机械生成为四张新图。",
+      "evidence": [
+        "UI图片阶段6索引.md 024",
+        "UI图片阶段10索引.md 049",
+        "UI图片阶段17索引.md 103"
+      ],
+      "priority": 2,
+      "status": "待处理"
+    },
+    {
+      "key": "attachments-111",
+      "task_ids": [
+        "029",
+        "061",
+        "073",
+        "111"
+      ],
+      "original_stages": [
+        5,
+        9,
+        11,
+        14
+      ],
+      "status_type": "图片可补充",
+      "actual_gap": "111仅文档预览；补图片预览、删除与恢复（仅有操作能力的人员/车辆附件）；029敏感确认/缺文件已存在，073只读预览不新增删除/恢复。与061补态合并去重。",
+      "evidence": [
+        "UI图片阶段7索引.md 029",
+        "UI图片最新视觉要求.md 器械附件只读",
+        "UI图片阶段17索引.md 111",
+        "UI图片阶段20索引.md 061"
+      ],
+      "priority": 2,
+      "status": "待处理"
+    },
+    {
+      "key": "states-034-040",
+      "task_ids": [
+        "034",
+        "035",
+        "036",
+        "037",
+        "038",
+        "039",
+        "040"
+      ],
+      "original_stages": [
+        6
+      ],
+      "status_type": "图片可补充",
+      "actual_gap": "034待检查/已确认/筛选空；035编辑校验/异常检查/更多菜单/人工补录/危险确认；036不存在/加载/错误；037空/错误；038默认日薪/局部加载/保存反馈；039生成中/成功/失败；040工种编辑/生效日薪/月弹层。现存草稿/锁定等不重复。",
+      "evidence": [
+        "UI图片阶段9索引.md 待办第2条"
+      ],
+      "priority": 2,
+      "status": "待处理"
+    },
+    {
+      "key": "states-051-053",
+      "task_ids": [
+        "051",
+        "052",
+        "053"
+      ],
+      "original_stages": [
+        8
+      ],
+      "status_type": "图片可补充",
+      "actual_gap": "福利标准展开/编辑、司机分配、公用、来源、补领、修改、重复确认；办公/工具登记。按实际入口与已覆盖图逐项去重。",
+      "evidence": [
+        "UI图片阶段11索引.md 待办第4条"
+      ],
+      "priority": 2,
+      "status": "待处理"
+    },
+    {
+      "key": "states-055-057",
+      "task_ids": [
+        "055",
+        "056",
+        "057"
+      ],
+      "original_stages": [
+        9
+      ],
+      "status_type": "图片可补充",
+      "actual_gap": "055车辆编辑模式，056高级筛选，057维修编辑模式；仅生成和当前新增主态有可见差异的内容。",
+      "evidence": [
+        "UI图片任务清单.json tasks[055-057].pending",
+        "批次23/26/28/29/31/32结果与逐页状态合同"
+      ],
+      "priority": 2,
+      "status": "本轮指定内容/视觉及适用状态已初检，代码设备验收延期"
+    },
+    {
+      "key": "states-060",
+      "task_ids": [
+        "060"
+      ],
+      "original_stages": [
+        9
+      ],
+      "status_type": "图片可补充",
+      "actual_gap": "分类筛选/排序菜单/忽略及详情sheet/无提醒；指标点击是导航行为，只有新展示面才补图。",
+      "evidence": [
+        "UI图片阶段20索引.md 060待办"
+      ],
+      "priority": 2,
+      "status": "本轮指定图片内容已完成",
+      "result_batches": [
+        21,
+        22
+      ]
+    },
+    {
+      "key": "states-061",
+      "task_ids": [
+        "061"
+      ],
+      "original_stages": [
+        9
+      ],
+      "status_type": "图片可补充",
+      "actual_gap": "预览/导出/删除恢复菜单、上传中/失败/缺文件；与111及029已覆盖同类组件去重，车辆身份和操作关系保留。",
+      "evidence": [
+        "UI图片阶段20索引.md 061待办"
+      ],
+      "priority": 2,
+      "status": "本轮指定图片内容已完成",
+      "result_batches": [
+        21,
+        22
+      ]
+    },
+    {
+      "key": "states-090-098",
+      "task_ids": [
+        "091",
+        "093",
+        "094",
+        "098"
+      ],
+      "original_stages": [
+        13
+      ],
+      "status_type": "图片可补充",
+      "actual_gap": "091编辑差异；093其它跟踪主态；094其它采购状态；OA申报/执行/待领取/库存选择/手动新增/重复提醒弹层。101已有物资选择代表态；非实际适用状态不套模板。",
+      "evidence": [
+        "UI图片阶段16索引.md 待办第2段",
+        "批次23/26/28/29/31/32结果与逐页状态合同"
+      ],
+      "priority": 2,
+      "status": "本轮指定内容/视觉及适用状态已初检，代码设备验收延期"
+    },
+    {
+      "key": "state-audit-002-003",
+      "task_ids": [
+        "002",
+        "003"
+      ],
+      "original_stages": [
+        1
+      ],
+      "status_type": "适用状态需核实",
+      "actual_gap": "文档保留其它适用状态/编辑差异/加载空错/提交成功等待办。先以源码能力、design_contract及已有outputs核实，再补真实缺图；不因applicable_states_review通用文字而机械生成每页全部模板状态。跨模块具有不同字段/操作/语义者保留，完全同组件仅复用证据。",
+      "evidence": [
+        "UI图片任务清单.json tasks[002-003].design_contract/source_evidence/outputs",
+        "全量UI重构设计规范.md 13.1六类必交状态",
+        "对应原阶段索引 当前状态与待办",
+        "UI图片根代理状态覆盖合同_20261007.json"
+      ],
+      "priority": 3,
+      "status": "逐页源码及公共/已有/待生成参考已映射；欠图未完成"
+    },
+    {
+      "key": "state-audit-004-008",
+      "task_ids": [
+        "004",
+        "005",
+        "006",
+        "007",
+        "008"
+      ],
+      "original_stages": [
+        2
+      ],
+      "status_type": "适用状态需核实",
+      "actual_gap": "文档保留其它适用状态/编辑差异/加载空错/提交成功等待办。先以源码能力、design_contract及已有outputs核实，再补真实缺图；不因applicable_states_review通用文字而机械生成每页全部模板状态。跨模块具有不同字段/操作/语义者保留，完全同组件仅复用证据。",
+      "evidence": [
+        "UI图片任务清单.json tasks[004-008].design_contract/source_evidence/outputs",
+        "全量UI重构设计规范.md 13.1六类必交状态",
+        "对应原阶段索引 当前状态与待办",
+        "UI图片根代理状态覆盖合同_20261007.json"
+      ],
+      "priority": 3,
+      "status": "逐页源码及公共/已有/待生成参考已映射；欠图未完成"
+    },
+    {
+      "key": "state-audit-009-009",
+      "task_ids": [
+        "009"
+      ],
+      "original_stages": [
+        3
+      ],
+      "status_type": "适用状态需核实",
+      "actual_gap": "文档保留其它适用状态/编辑差异/加载空错/提交成功等待办。先以源码能力、design_contract及已有outputs核实，再补真实缺图；不因applicable_states_review通用文字而机械生成每页全部模板状态。跨模块具有不同字段/操作/语义者保留，完全同组件仅复用证据。",
+      "evidence": [
+        "UI图片任务清单.json tasks[009-009].design_contract/source_evidence/outputs",
+        "全量UI重构设计规范.md 13.1六类必交状态",
+        "对应原阶段索引 当前状态与待办",
+        "UI图片根代理状态覆盖合同_20261007.json"
+      ],
+      "priority": 3,
+      "status": "逐页源码及公共/已有/待生成参考已映射；欠图未完成"
+    },
+    {
+      "key": "state-audit-010-013",
+      "task_ids": [
+        "010",
+        "011",
+        "012",
+        "013"
+      ],
+      "original_stages": [
+        4
+      ],
+      "status_type": "适用状态需核实",
+      "actual_gap": "文档保留其它适用状态/编辑差异/加载空错/提交成功等待办。先以源码能力、design_contract及已有outputs核实，再补真实缺图；不因applicable_states_review通用文字而机械生成每页全部模板状态。跨模块具有不同字段/操作/语义者保留，完全同组件仅复用证据。",
+      "evidence": [
+        "UI图片任务清单.json tasks[010-013].design_contract/source_evidence/outputs",
+        "全量UI重构设计规范.md 13.1六类必交状态",
+        "对应原阶段索引 当前状态与待办",
+        "UI图片根代理状态覆盖合同_20261007.json"
+      ],
+      "priority": 3,
+      "status": "逐页源码及公共/已有/待生成参考已映射；欠图未完成"
+    },
+    {
+      "key": "state-audit-014-019",
+      "task_ids": [
+        "014",
+        "015",
+        "016",
+        "017",
+        "018",
+        "019"
+      ],
+      "original_stages": [
+        4
+      ],
+      "status_type": "适用状态需核实",
+      "actual_gap": "文档保留其它适用状态/编辑差异/加载空错/提交成功等待办。先以源码能力、design_contract及已有outputs核实，再补真实缺图；不因applicable_states_review通用文字而机械生成每页全部模板状态。跨模块具有不同字段/操作/语义者保留，完全同组件仅复用证据。",
+      "evidence": [
+        "UI图片任务清单.json tasks[014-019].design_contract/source_evidence/outputs",
+        "全量UI重构设计规范.md 13.1六类必交状态",
+        "对应原阶段索引 当前状态与待办",
+        "UI图片根代理状态覆盖合同_20261007.json"
+      ],
+      "priority": 3,
+      "status": "逐页源码及公共/已有/待生成参考已映射；欠图未完成"
+    },
+    {
+      "key": "state-audit-020-025",
+      "task_ids": [
+        "020",
+        "021",
+        "022",
+        "023",
+        "024",
+        "025"
+      ],
+      "original_stages": [
+        5
+      ],
+      "status_type": "适用状态需核实",
+      "actual_gap": "文档保留其它适用状态/编辑差异/加载空错/提交成功等待办。先以源码能力、design_contract及已有outputs核实，再补真实缺图；不因applicable_states_review通用文字而机械生成每页全部模板状态。跨模块具有不同字段/操作/语义者保留，完全同组件仅复用证据。",
+      "evidence": [
+        "UI图片任务清单.json tasks[020-025].design_contract/source_evidence/outputs",
+        "全量UI重构设计规范.md 13.1六类必交状态",
+        "对应原阶段索引 当前状态与待办",
+        "UI图片根代理状态覆盖合同_20261007.json"
+      ],
+      "priority": 3,
+      "status": "逐页源码及公共/已有/待生成参考已映射；欠图未完成"
+    },
+    {
+      "key": "state-audit-026-029",
+      "task_ids": [
+        "026",
+        "027",
+        "028",
+        "029"
+      ],
+      "original_stages": [
+        5
+      ],
+      "status_type": "适用状态需核实",
+      "actual_gap": "文档保留其它适用状态/编辑差异/加载空错/提交成功等待办。先以源码能力、design_contract及已有outputs核实，再补真实缺图；不因applicable_states_review通用文字而机械生成每页全部模板状态。跨模块具有不同字段/操作/语义者保留，完全同组件仅复用证据。",
+      "evidence": [
+        "UI图片任务清单.json tasks[026-029].design_contract/source_evidence/outputs",
+        "全量UI重构设计规范.md 13.1六类必交状态",
+        "对应原阶段索引 当前状态与待办",
+        "UI图片根代理状态覆盖合同_20261007.json"
+      ],
+      "priority": 3,
+      "status": "逐页源码及公共/已有/待生成参考已映射；欠图未完成"
+    },
+    {
+      "key": "state-audit-030-033",
+      "task_ids": [
+        "030",
+        "031",
+        "032",
+        "033"
+      ],
+      "original_stages": [
+        6
+      ],
+      "status_type": "适用状态需核实",
+      "actual_gap": "文档保留其它适用状态/编辑差异/加载空错/提交成功等待办。先以源码能力、design_contract及已有outputs核实，再补真实缺图；不因applicable_states_review通用文字而机械生成每页全部模板状态。跨模块具有不同字段/操作/语义者保留，完全同组件仅复用证据。",
+      "evidence": [
+        "UI图片任务清单.json tasks[030-033].design_contract/source_evidence/outputs",
+        "全量UI重构设计规范.md 13.1六类必交状态",
+        "对应原阶段索引 当前状态与待办",
+        "UI图片根代理状态覆盖合同_20261007.json"
+      ],
+      "priority": 3,
+      "status": "逐页源码及公共/已有/待生成参考已映射；欠图未完成"
+    },
+    {
+      "key": "state-audit-041-050",
+      "task_ids": [
+        "041",
+        "042",
+        "043",
+        "044",
+        "046",
+        "047",
+        "048",
+        "049",
+        "050"
+      ],
+      "original_stages": [
+        7
+      ],
+      "status_type": "适用状态需核实",
+      "actual_gap": "文档保留其它适用状态/编辑差异/加载空错/提交成功等待办。先以源码能力、design_contract及已有outputs核实，再补真实缺图；不因applicable_states_review通用文字而机械生成每页全部模板状态。跨模块具有不同字段/操作/语义者保留，完全同组件仅复用证据。",
+      "evidence": [
+        "UI图片任务清单.json tasks[041-050].design_contract/source_evidence/outputs",
+        "全量UI重构设计规范.md 13.1六类必交状态",
+        "对应原阶段索引 当前状态与待办"
+      ],
+      "priority": 3,
+      "status": "源码已核对；适用状态映射及补图未闭合"
+    },
+    {
+      "key": "state-audit-062-067",
+      "task_ids": [
+        "062",
+        "063",
+        "064",
+        "065",
+        "066",
+        "067"
+      ],
+      "original_stages": [
+        10
+      ],
+      "status_type": "适用状态需核实",
+      "actual_gap": "文档保留其它适用状态/编辑差异/加载空错/提交成功等待办。先以源码能力、design_contract及已有outputs核实，再补真实缺图；不因applicable_states_review通用文字而机械生成每页全部模板状态。跨模块具有不同字段/操作/语义者保留，完全同组件仅复用证据。",
+      "evidence": [
+        "UI图片任务清单.json tasks[062-067].design_contract/source_evidence/outputs",
+        "全量UI重构设计规范.md 13.1六类必交状态",
+        "对应原阶段索引 当前状态与待办",
+        "UI图片根代理状态覆盖合同_20261007.json"
+      ],
+      "priority": 3,
+      "status": "逐页源码及公共/已有/待生成参考已映射；欠图未完成"
+    },
+    {
+      "key": "state-audit-068-073",
+      "task_ids": [
+        "068",
+        "069",
+        "070",
+        "071",
+        "072",
+        "073"
+      ],
+      "original_stages": [
+        11
+      ],
+      "status_type": "适用状态需核实",
+      "actual_gap": "文档保留其它适用状态/编辑差异/加载空错/提交成功等待办。先以源码能力、design_contract及已有outputs核实，再补真实缺图；不因applicable_states_review通用文字而机械生成每页全部模板状态。跨模块具有不同字段/操作/语义者保留，完全同组件仅复用证据。",
+      "evidence": [
+        "UI图片任务清单.json tasks[068-073].design_contract/source_evidence/outputs",
+        "全量UI重构设计规范.md 13.1六类必交状态",
+        "对应原阶段索引 当前状态与待办",
+        "UI图片根代理状态覆盖合同_20261007.json"
+      ],
+      "priority": 3,
+      "status": "逐页源码及公共/已有/待生成参考已映射；欠图未完成"
+    },
+    {
+      "key": "state-audit-074-089",
+      "task_ids": [
+        "074",
+        "075",
+        "076",
+        "077",
+        "078",
+        "079",
+        "080",
+        "081",
+        "082",
+        "083",
+        "084",
+        "085",
+        "086",
+        "087",
+        "088",
+        "089"
+      ],
+      "original_stages": [
+        12
+      ],
+      "status_type": "适用状态需核实",
+      "actual_gap": "文档保留其它适用状态/编辑差异/加载空错/提交成功等待办。先以源码能力、design_contract及已有outputs核实，再补真实缺图；不因applicable_states_review通用文字而机械生成每页全部模板状态。跨模块具有不同字段/操作/语义者保留，完全同组件仅复用证据。",
+      "evidence": [
+        "UI图片任务清单.json tasks[074-089].design_contract/source_evidence/outputs",
+        "全量UI重构设计规范.md 13.1六类必交状态",
+        "对应原阶段索引 当前状态与待办",
+        "批次23/26/28/29/31/32结果与逐页状态合同"
+      ],
+      "priority": 3,
+      "status": "本轮指定内容/视觉及适用状态已初检，代码设备验收延期"
+    },
+    {
+      "key": "state-audit-099-112",
+      "task_ids": [
+        "099",
+        "102",
+        "104",
+        "105",
+        "106",
+        "107",
+        "108",
+        "109",
+        "110",
+        "112"
+      ],
+      "original_stages": [
+        14
+      ],
+      "status_type": "适用状态需核实",
+      "actual_gap": "文档保留其它适用状态/编辑差异/加载空错/提交成功等待办。先以源码能力、design_contract及已有outputs核实，再补真实缺图；不因applicable_states_review通用文字而机械生成每页全部模板状态。跨模块具有不同字段/操作/语义者保留，完全同组件仅复用证据。",
+      "evidence": [
+        "UI图片任务清单.json tasks[099-112].design_contract/source_evidence/outputs",
+        "全量UI重构设计规范.md 13.1六类必交状态",
+        "对应原阶段索引 当前状态与待办"
+      ],
+      "priority": 3,
+      "status": "源码已核对；适用状态映射及补图未闭合"
+    },
+    {
+      "key": "brand-113",
+      "task_ids": [
+        "113"
+      ],
+      "original_stages": [],
+      "status_type": "品牌图像及资源可制作",
+      "actual_gap": "蓝色符号与字标尚无独立交付记录；蓝色/单色/反白Logo需SVG及PNG；图标层与启动画面遵守平台容器，生成预览不等于原生资源已应用。",
+      "evidence": [
+        "UI图片任务清单.json brand_supplement.required（113起顺序映射，本审计标识）",
+        "全量UI重构设计规范.md 198-201",
+        "11_品牌资源/品牌资源交付.md"
+      ],
+      "priority": 2,
+      "status": "设计资源已交付，接入设备阶段延期"
+    },
+    {
+      "key": "brand-114",
+      "task_ids": [
+        "114"
+      ],
+      "original_stages": [],
+      "status_type": "品牌图像及资源可制作",
+      "actual_gap": "单色版尚无独立交付记录；蓝色/单色/反白Logo需SVG及PNG；图标层与启动画面遵守平台容器，生成预览不等于原生资源已应用。",
+      "evidence": [
+        "UI图片任务清单.json brand_supplement.required（113起顺序映射，本审计标识）",
+        "全量UI重构设计规范.md 198-201",
+        "11_品牌资源/品牌资源交付.md"
+      ],
+      "priority": 2,
+      "status": "设计资源已交付，接入设备阶段延期"
+    },
+    {
+      "key": "brand-115",
+      "task_ids": [
+        "115"
+      ],
+      "original_stages": [],
+      "status_type": "品牌图像及资源可制作",
+      "actual_gap": "反白版尚无独立交付记录；蓝色/单色/反白Logo需SVG及PNG；图标层与启动画面遵守平台容器，生成预览不等于原生资源已应用。",
+      "evidence": [
+        "UI图片任务清单.json brand_supplement.required（113起顺序映射，本审计标识）",
+        "全量UI重构设计规范.md 198-201",
+        "11_品牌资源/品牌资源交付.md"
+      ],
+      "priority": 2,
+      "status": "设计资源已交付，接入设备阶段延期"
+    },
+    {
+      "key": "brand-116",
+      "task_ids": [
+        "116"
+      ],
+      "original_stages": [],
+      "status_type": "品牌图像及资源可制作",
+      "actual_gap": "图标前景尚无独立交付记录；蓝色/单色/反白Logo需SVG及PNG；图标层与启动画面遵守平台容器，生成预览不等于原生资源已应用。",
+      "evidence": [
+        "UI图片任务清单.json brand_supplement.required（113起顺序映射，本审计标识）",
+        "全量UI重构设计规范.md 198-201",
+        "11_品牌资源/品牌资源交付.md"
+      ],
+      "priority": 2,
+      "status": "设计资源已交付，接入设备阶段延期"
+    },
+    {
+      "key": "brand-117",
+      "task_ids": [
+        "117"
+      ],
+      "original_stages": [],
+      "status_type": "品牌图像及资源可制作",
+      "actual_gap": "图标背景尚无独立交付记录；蓝色/单色/反白Logo需SVG及PNG；图标层与启动画面遵守平台容器，生成预览不等于原生资源已应用。",
+      "evidence": [
+        "UI图片任务清单.json brand_supplement.required（113起顺序映射，本审计标识）",
+        "全量UI重构设计规范.md 198-201",
+        "11_品牌资源/品牌资源交付.md"
+      ],
+      "priority": 2,
+      "status": "设计资源已交付，接入设备阶段延期"
+    },
+    {
+      "key": "brand-118",
+      "task_ids": [
+        "118"
+      ],
+      "original_stages": [],
+      "status_type": "品牌图像及资源可制作",
+      "actual_gap": "图标单色层尚无独立交付记录；蓝色/单色/反白Logo需SVG及PNG；图标层与启动画面遵守平台容器，生成预览不等于原生资源已应用。",
+      "evidence": [
+        "UI图片任务清单.json brand_supplement.required（113起顺序映射，本审计标识）",
+        "全量UI重构设计规范.md 198-201",
+        "11_品牌资源/品牌资源交付.md"
+      ],
+      "priority": 2,
+      "status": "设计资源已交付，接入设备阶段延期"
+    },
+    {
+      "key": "brand-119",
+      "task_ids": [
+        "119"
+      ],
+      "original_stages": [],
+      "status_type": "品牌图像及资源可制作",
+      "actual_gap": "静态启动画面尚无独立交付记录；蓝色/单色/反白Logo需SVG及PNG；图标层与启动画面遵守平台容器，生成预览不等于原生资源已应用。",
+      "evidence": [
+        "UI图片任务清单.json brand_supplement.required（113起顺序映射，本审计标识）",
+        "全量UI重构设计规范.md 198-201",
+        "11_品牌资源/品牌资源交付.md"
+      ],
+      "priority": 2,
+      "status": "设计资源已交付，接入设备阶段延期"
+    },
+    {
+      "key": "adaptation-all",
+      "task_ids": [
+        "001-112"
+      ],
+      "original_stages": [],
+      "status_type": "布局适配图片可补充",
+      "actual_gap": "112任务主态四组合：390/1.0已有基线，360/1.0、390/1.3、360/2.0尚缺；其它实际适用状态以390/1.0补，密集表格/长表单/弹层追加必要适配。布局重排、换行、卡高/两列及连续分屏属于适配，不是PNG尺寸放大。四组合不能按四张固定计数：同页续屏可能增加，已有覆盖要扣除。",
+      "evidence": [
+        "UI图片任务清单.json main_variants/variant_policy",
+        "UI图片最新视觉要求.md 宽度及大字体约束",
+        "全量UI重构设计规范.md 13.1/13.2"
+      ],
+      "priority": 3,
+      "status": "用户取消，不作未办项",
+      "resolution": "2026-10-07用户明确取消宽度及大字体图"
+    },
+    {
+      "key": "native-resolution",
+      "task_ids": [
+        "001-112"
+      ],
+      "original_stages": [],
+      "status_type": "像素尺寸豁免",
+      "actual_gap": "原1560×3376目标和resolution_requirement_met=false仅保留历史事实；用户本轮明确尺寸缩放不做补充修正，不为物理像素重新生成/放大，不能将其记为已达标。",
+      "evidence": [
+        "本轮用户授权：尺寸缩放不做补充修正"
+      ],
+      "priority": 9,
+      "status": "本轮豁免"
+    },
+    {
+      "key": "future-code",
+      "task_ids": [
+        "001-112"
+      ],
+      "original_stages": [],
+      "status_type": "未来代码验证",
+      "actual_gap": "精确dp/sp/HEX/对比/点击区/键盘避让、搜索常驻、冻结表头及横滑、导航与数据行为、102 PopupMenu转Sheet、已锁定只读、上传/导出/恢复真实动作留至UI复刻。图像仅可给出布局内容证据。",
+      "evidence": [
+        "所有阶段索引验证边界",
+        "UI图片阶段13索引.md 七Tab目标",
+        "UI图片阶段17索引.md 102",
+        "UI图片生成与验收记录.md 验证边界"
+      ],
+      "priority": 9,
+      "status": "延期至代码UI复刻"
+    },
+    {
+      "key": "future-device",
+      "task_ids": [
+        "001-112",
+        "113-119"
+      ],
+      "original_stages": [],
+      "status_type": "未来设备及最终验收",
+      "actual_gap": "Flutter设备显示/交互/触达、系统启动/图标蒙版、真实字体缩放与最终用户验收延期；图稿内容/参考视觉初检仍要完成。",
+      "evidence": [
+        "本轮用户授权：设备验收未来代码UI复刻后"
+      ],
+      "priority": 9,
+      "status": "延期至代码UI复刻"
+    }
+  ],
+  "current_handoff": "UI图片本轮未完成交接_20261007.json",
+  "latest_resume": {
+    "new_png": 0,
+    "prepared_image_jobs": 50,
+    "explicit_work_packages": 48,
+    "quota": "仍usage_limit_reached"
+  }
+}

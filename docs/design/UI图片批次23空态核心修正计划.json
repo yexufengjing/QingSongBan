@@ -1,0 +1,62 @@
+[
+  {
+    "task_id": "079",
+    "source": "lib/features/inventory/presentation/inventory_receipt_form_page.dart",
+    "old": "05_表单与编辑/079_库存_新增入库_新增_已填_状态_无物资_390dp_fs1p0_p01_v01.png",
+    "screen": 1,
+    "path": "05_表单与编辑/079_库存_新增入库_新增_已填_状态_无物资_390dp_fs1p0_p01_v02.png",
+    "issues": [
+      "实际状态补图"
+    ],
+    "prompt": "Edit this single existing Chinese mobile UI locally. Preserve its blue-white light gradient style. REMOVE the entire common-information form above the empty state. There must be no date/source/operator/remark fields, no 入库明细 section title. Only keep the page header. Center a tiny 24dp outline cube above EXACT title 先新增物资档案, exact message 入库单需要关联已有物资。, and one blue 新增物资 button. No mockup shell or collage. Do not insert the English instructions as UI text.",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-bec53268-8310-4d86-b14d-7c1964746d2c.png"
+  },
+  {
+    "task_id": "084",
+    "source": "lib/features/inventory/presentation/inventory_stocktakes_page.dart",
+    "old": "03_列表与记录/084_库存_盘点列表_查看_有数据_状态_筛选无盘点_390dp_fs1p0_p01_v01.png",
+    "screen": 1,
+    "path": "03_列表与记录/084_库存_盘点列表_查看_有数据_状态_筛选无盘点_390dp_fs1p0_p01_v02.png",
+    "issues": [
+      "实际状态补图"
+    ],
+    "prompt": "Edit this single existing Chinese mobile UI locally. Preserve its blue-white light gradient style. Keep filters. Empty content icon must be only a tiny 24dp outline cube, no illustration or shadow. Exact title 本月暂无待盘点任务, exact message 调整月份或状态筛选后再试。, followed by blue 新建盘点 button. Preserve the 3 zero metrics in FIRST THREE quarter columns with transparent empty fourth quarter. No mockup shell or collage. Do not insert the English instructions as UI text.",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-e528e9ab-ab49-4b2b-8baf-c601ba8d0228.png"
+  },
+  {
+    "task_id": "088",
+    "source": "lib/features/inventory/presentation/inventory_replenishments_page.dart",
+    "old": "03_列表与记录/088_库存_待采购待补充_查看_有数据_状态_首次空_390dp_fs1p0_p01_v01.png",
+    "screen": 1,
+    "path": "03_列表与记录/088_库存_待采购待补充_查看_有数据_状态_首次空_390dp_fs1p0_p01_v02.png",
+    "issues": [
+      "实际状态补图"
+    ],
+    "prompt": "Edit this single existing Chinese mobile UI locally. Preserve its blue-white light gradient style. DELETE all invented headings/actions in the empty content panel, and DELETE the lower 补充进度 panel entirely. Keep top 3 zero metrics first three quarter-columns, blank fourth. Tiny 24dp outline cube. Exact title 待补充清单为空, exact message 可以手动新建，或从库存预警中一键加入。, exactly ONE blue 新增清单项 button. NO second action. No mockup shell or collage. Do not insert the English instructions as UI text.",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-859807f6-e66d-4ee0-a68a-c0cd831fab36.png"
+  },
+  {
+    "task_id": "095",
+    "source": "lib/features/purchase/presentation/purchase_pending_receive_page.dart",
+    "old": "03_列表与记录/095_采购_待领取_查看_部分入库_状态_待领取空_390dp_fs1p0_p01_v01.png",
+    "screen": 1,
+    "path": "03_列表与记录/095_采购_待领取_查看_部分入库_状态_待领取空_390dp_fs1p0_p01_v02.png",
+    "issues": [
+      "实际状态补图"
+    ],
+    "prompt": "Edit this single existing Chinese mobile UI locally. Preserve its blue-white light gradient style. DELETE the whole remaining 劳保手套 record card, ALL quantity/progress/notice/location/reminder details, ALL record buttons. Keep header and search. Metrics 待领取 and 已设置提醒 both 0. Content tiny 24dp outline cube, EXACT title 暂无待领取物资 and EXACT message 收到入厂通知后，可将采购记录设为待领取。. NO action buttons. No mockup shell or collage. Do not insert the English instructions as UI text.",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-769394dc-278c-4920-bbaf-a17baae62d1b.png"
+  },
+  {
+    "task_id": "093",
+    "source": "lib/features/purchase/presentation/purchase_tracking_page.dart",
+    "old": "03_列表与记录/093_采购_全部待处理_查看_有数据_状态_读取失败_390dp_fs1p0_p01_v01.png",
+    "screen": 1,
+    "path": "03_列表与记录/093_采购_全部待处理_查看_有数据_状态_读取失败_390dp_fs1p0_p01_v02.png",
+    "issues": [
+      "实际状态补图"
+    ],
+    "prompt": "Edit this single existing Chinese mobile UI locally. Preserve its blue-white light gradient style. Replace the erroneous title 小图标加载失败、 with exact 加载失败. Small 24dp outline warning icon, no large hero. Exact message 请检查本地数据后重试。 and blue-outline 重新加载 button. Keep all filters. No mockup shell or collage. Do not insert the English instructions as UI text.",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-4a9fa23a-ca3a-464f-a27e-17ca01ebc4b5.png"
+  }
+]

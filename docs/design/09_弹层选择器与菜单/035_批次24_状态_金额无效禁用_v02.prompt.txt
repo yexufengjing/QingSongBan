@@ -1,0 +1,1 @@
+LOCAL EDIT only clearly failed UI elements. Title exact 周平 工资明细. Keep 日薪 abc and disabled Save. Change BOTH readonly 基础工资 value4000 and 最终工资3950 to exact 输入有效金额 (not money). Readonly attendance20, no editable border on readonly amounts. Preserve all other data and form labels. Single existing screenshot, all remaining blue-white style/data untouched.

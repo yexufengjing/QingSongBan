@@ -1,0 +1,1 @@
+LOCAL edit only central empty illustration: replace with a SMALL flat blue outline icon no taller than ONE subtitle body-text line (about 24dp). No background tile/circle, NO shadow, rays, gradient, 3D or decorations. Preserve all text, controls, zero quantities and empty-state layout.

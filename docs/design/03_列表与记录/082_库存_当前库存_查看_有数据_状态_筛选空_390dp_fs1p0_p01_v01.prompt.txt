@@ -1,0 +1,1 @@
+Preserve header 当前库存, search and 全部/常用/库存不足/缺货 filters, search value 不存在的物资. Replace ALL body metrics, records and summary with one empty state: tiny20x20px flat blue outline search icon, no shadow/rays. Title 没有匹配的物资, message 调整筛选条件后再试。. No add button or metrics.

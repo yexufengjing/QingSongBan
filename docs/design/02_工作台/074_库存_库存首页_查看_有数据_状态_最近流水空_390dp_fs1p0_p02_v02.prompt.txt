@@ -1,0 +1,1 @@
+LOCAL change only 本月出入库摘要 to four equal positions, first3 labels入库条数0 出库条数0 其他变动0 and fourthtransparent blank. Tiny flat icons inlineleftoflabel samebaseline, countbelow. Keep empty最近记录body unchanged. Shrink central empty icon to same height as subtitle line, no shadow.

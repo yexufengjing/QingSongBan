@@ -1,0 +1,1 @@
+Edit attached existing mobile UI. Preserve blue-white gradient, all source business fields. One standalone 390dp screenshot, no collage or shell. Set name,code,unit inputs empty. Show red border + exact small red 必填 beneath each of these3 inputs only. Preserve category劳保用品, model通用型, location一号仓. NO red required stars and no new validation dialog.

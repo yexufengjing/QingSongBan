@@ -1,0 +1,4753 @@
+{
+  "batch": 23,
+  "spec_stages": [
+    12,
+    13
+  ],
+  "date": "2026-10-07",
+  "task_ids": [
+    "074",
+    "075",
+    "076",
+    "077",
+    "078",
+    "079",
+    "080",
+    "081",
+    "082",
+    "083",
+    "084",
+    "085",
+    "086",
+    "087",
+    "088",
+    "089",
+    "090",
+    "091",
+    "092",
+    "093",
+    "094",
+    "095",
+    "096",
+    "097",
+    "098"
+  ],
+  "calls": 100,
+  "returned_image_count": 100,
+  "current_reference_image_count": 62,
+  "retained_old_image_count": 38,
+  "outputs": [
+    {
+      "task_id": "077",
+      "path": "04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p01_v04.png",
+      "prompt_path": "04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p01_v04.prompt.txt",
+      "screen": 1,
+      "version": 4,
+      "pixel_width": 853,
+      "pixel_height": 1843,
+      "sha256": "1eb5bbbe9d950619e3e1808fd6b42749f0a28fd0eb75d553267648d4e9f936c6",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/inventory/presentation/inventory_material_detail_page.dart",
+      "requested_corrections": [
+        "身份图标明显偏大；操作色与前阶段按钮规范待统一"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1843
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "077",
+      "path": "04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p02_v03.png",
+      "prompt_path": "04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p02_v03.prompt.txt",
+      "screen": 2,
+      "version": 3,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "63b74d600020b40aa23c4d83c505ce385da69b8f1125dd180fcba80d25998f6b",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p02_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_material_detail_page.dart",
+      "requested_corrections": [
+        "指标呈两列两行，须复核四位置规则及长日期布局"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "074",
+      "path": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p01_v05.png",
+      "prompt_path": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p01_v05.prompt.txt",
+      "screen": 1,
+      "version": 5,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "ccf0bd692d9ac0e213219ee29fcd22abaa75150dc68efbdab01c1592f528be9f",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/inventory/presentation/inventory_home_page.dart",
+      "requested_corrections": [
+        "快捷主操作与指标仍为三列铺满，未满足四位置末位透明留白"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "075",
+      "path": "03_列表与记录/075_库存_物资信息_查看_有数据_390dp_fs1p0_p01_v04.png",
+      "prompt_path": "03_列表与记录/075_库存_物资信息_查看_有数据_390dp_fs1p0_p01_v04.prompt.txt",
+      "screen": 1,
+      "version": 4,
+      "pixel_width": 853,
+      "pixel_height": 1843,
+      "sha256": "b7cfc69af9a298e7542f690193b34257ac8f9774c72bb4ba0db6764fc88d3619",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/075_库存_物资信息_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/inventory/presentation/inventory_materials_page.dart",
+      "requested_corrections": [
+        "物资图标仍偏大，须与前阶段小图标统一"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1843
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "078",
+      "path": "03_列表与记录/078_库存_月度入库_查看_有数据_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "03_列表与记录/078_库存_月度入库_查看_有数据_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "739b71964750876cf72bca114cf1c5ed180b23edde3e09a8c7c73918c46c6f40",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/078_库存_月度入库_查看_有数据_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/inventory/presentation/inventory_receipts_page.dart",
+      "requested_corrections": [
+        "三指标仍三列铺满，四位置透明留白未满足"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "082",
+      "path": "03_列表与记录/082_库存_当前库存_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "03_列表与记录/082_库存_当前库存_查看_有数据_390dp_fs1p0_p01_v03.prompt.txt",
+      "screen": 1,
+      "version": 3,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "5d8c3cbb9beab0a3437dee516cca8bd885f1fb59f82140547f69fa1ca4beba87",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/082_库存_当前库存_查看_有数据_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_stock_page.dart",
+      "requested_corrections": [
+        "三指标仍三列铺满，四位置透明留白未满足；底部摘要缺源码查看入口"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "084",
+      "path": "03_列表与记录/084_库存_盘点列表_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "03_列表与记录/084_库存_盘点列表_查看_有数据_390dp_fs1p0_p01_v03.prompt.txt",
+      "screen": 1,
+      "version": 3,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "afb56bc712657a95bedd3a74637ee77516f3ca5c4ecb20d933e3a727e126ec4d",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/084_库存_盘点列表_查看_有数据_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_stocktakes_page.dart",
+      "requested_corrections": [
+        "三指标仍三列铺满，四位置透明留白未满足"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "085",
+      "path": "05_表单与编辑/085_库存_新建盘点_新增_已填_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "05_表单与编辑/085_库存_新建盘点_新增_已填_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "96ceaea2a42b30cd6ee7b8e8ebf80c5679d663401f80dd0220e5c34b874ad1bb",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "05_表单与编辑/085_库存_新建盘点_新增_已填_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/inventory/presentation/inventory_stocktake_form_page.dart",
+      "requested_corrections": [
+        "物资图标风格与前阶段彩色小图标不完全一致"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "087",
+      "path": "03_列表与记录/087_库存_预警与补充_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "03_列表与记录/087_库存_预警与补充_查看_有数据_390dp_fs1p0_p01_v03.prompt.txt",
+      "screen": 1,
+      "version": 3,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "5b1d314f79a96f61c26f9a312316e40f9e5b63e8f0fc03ed0b15fb79f48edbe7",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/087_库存_预警与补充_查看_有数据_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_warnings_page.dart",
+      "requested_corrections": [
+        "指标图标在名称上方，未满足同层排列"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "088",
+      "path": "03_列表与记录/088_库存_待采购待补充_查看_有数据_390dp_fs1p0_p01_v04.png",
+      "prompt_path": "03_列表与记录/088_库存_待采购待补充_查看_有数据_390dp_fs1p0_p01_v04.prompt.txt",
+      "screen": 1,
+      "version": 4,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "585e17616662d5640f68cc2cfbfb16f56a3bbbefcefaeb84740c62959c9a0d2c",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/088_库存_待采购待补充_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/inventory/presentation/inventory_replenishments_page.dart",
+      "requested_corrections": [
+        "顶、底三指标仍三列铺满，四位置透明留白未满足"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "089",
+      "path": "03_列表与记录/089_库存_库存流水_查看_有数据_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "03_列表与记录/089_库存_库存流水_查看_有数据_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "3344bbfb59e66682539056461cb0b7a8b43086628eb41131d9994ea83751a174",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/089_库存_库存流水_查看_有数据_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/inventory/presentation/inventory_transactions_page.dart",
+      "requested_corrections": [
+        "指标图标在名称上方，未满足同层排列"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "090",
+      "path": "02_工作台/090_采购_采购工作台_查看_有数据_390dp_fs1p0_p01_v04.png",
+      "prompt_path": "02_工作台/090_采购_采购工作台_查看_有数据_390dp_fs1p0_p01_v04.prompt.txt",
+      "screen": 1,
+      "version": 4,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "7ddb8e62fe7326263a53d0f72f7754261e814fc36953f185172f48fb7da0d63c",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "02_工作台/090_采购_采购工作台_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/purchase/presentation/purchase_home_page.dart",
+      "requested_corrections": [
+        "只局部改图标：顶部四指标缩小图标并与待申报/已申报/采购中/待领取文字同行，数值另下一行。扫路车滤芯的绿色写实圆筒彻底替换为简单绿色扁平线性滤芯小图标，约24dp，在小浅绿底中，不画细密褶皱。其他数据和布局不动。"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "091",
+      "path": "05_表单与编辑/091_采购_新建待申报_新增_已填_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "05_表单与编辑/091_采购_新建待申报_新增_已填_390dp_fs1p0_p01_v03.prompt.txt",
+      "screen": 1,
+      "version": 3,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "36a983ca9ddae10483c9c5a45b9ec145dc2acf464b8d35ddb79f0d7f4ef8c6f6",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "05_表单与编辑/091_采购_新建待申报_新增_已填_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/purchase/presentation/purchase_create_page.dart",
+      "requested_corrections": [
+        "生成图加入必填红星及文本清除图标，原源码未定义，待修"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "093",
+      "path": "03_列表与记录/093_采购_全部待处理_查看_有数据_390dp_fs1p0_p01_v05.png",
+      "prompt_path": "03_列表与记录/093_采购_全部待处理_查看_有数据_390dp_fs1p0_p01_v05.prompt.txt",
+      "screen": 1,
+      "version": 5,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "5c10d8f3565f08277f77fda6d63dcda49470412459c5f15d7359289f818601a8",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/093_采购_全部待处理_查看_有数据_390dp_fs1p0_p01_v04.png",
+      "source": "lib/features/purchase/presentation/purchase_tracking_page.dart",
+      "requested_corrections": [
+        "只局部调整底部：第二条滤芯记录的最后一排动作按钮向上移约30像素，在画面最底端留至少32像素纯背景安全区，所有数据字段完整，可略减卡片内无意义间距但字号不减。保持第一卡100双、李明、9月26日，第二卡2个、10月1日等全字段。"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "094",
+      "path": "04_详情/094_采购_采购详情_查看_待领取_390dp_fs1p0_p01_v04.png",
+      "prompt_path": "04_详情/094_采购_采购详情_查看_待领取_390dp_fs1p0_p01_v04.prompt.txt",
+      "screen": 1,
+      "version": 4,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "42239a4ab51e1f2f52965d436a5eaf3ad29b5251da8c42fe92f0a305fe294a89",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/094_采购_采购详情_查看_待领取_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+      "requested_corrections": [
+        "底部留白不足目标；两屏次按钮样式与前阶段仍不一致"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "094",
+      "path": "04_详情/094_采购_采购详情_查看_待领取_390dp_fs1p0_p02_v02.png",
+      "prompt_path": "04_详情/094_采购_采购详情_查看_待领取_390dp_fs1p0_p02_v02.prompt.txt",
+      "screen": 2,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "56270dd9a7e16882dbc9e622c794fe918ce275f4c37bf8787489d2577d34374b",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/094_采购_采购详情_查看_待领取_390dp_fs1p0_p02_v01.png",
+      "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+      "requested_corrections": [
+        "两屏底部编辑信息的字色/边框/图标不一致，待统一"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "096",
+      "path": "03_列表与记录/096_采购_采购历史_按记录_有数据_390dp_fs1p0_p01_v04.png",
+      "prompt_path": "03_列表与记录/096_采购_采购历史_按记录_有数据_390dp_fs1p0_p01_v04.prompt.txt",
+      "screen": 1,
+      "version": 4,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "6da91bd43ccec6b0b264803a2103c8200c5d75794008e78d30589ed37a805a10",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/096_采购_采购历史_按记录_有数据_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/purchase/presentation/purchase_history_page.dart",
+      "requested_corrections": [
+        "明确视觉修正"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "097",
+      "path": "03_列表与记录/097_采购_采购历史_按物资_有数据_390dp_fs1p0_p01_v05.png",
+      "prompt_path": "03_列表与记录/097_采购_采购历史_按物资_有数据_390dp_fs1p0_p01_v05.prompt.txt",
+      "screen": 1,
+      "version": 5,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "1de0823a86629b6993ab368417513bd23531692d89dcb1619966d5c4119a1902",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/097_采购_采购历史_按物资_有数据_390dp_fs1p0_p01_v04.png",
+      "source": "lib/features/purchase/presentation/purchase_history_page.dart",
+      "requested_corrections": [
+        "接续明确视觉修正"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "098",
+      "path": "04_详情/098_采购_物资采购历史_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "04_详情/098_采购_物资采购历史_查看_有数据_390dp_fs1p0_p01_v03.prompt.txt",
+      "screen": 1,
+      "version": 3,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "555afc03fa405e9f483b2654426ec23e36ef2afc3be72061fd12938190af6239",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/098_采购_物资采购历史_查看_有数据_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/purchase/presentation/purchase_item_history_page.dart",
+      "requested_corrections": [
+        "两屏库存详情次按钮边框不一致，待统一"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "098",
+      "path": "04_详情/098_采购_物资采购历史_查看_有数据_390dp_fs1p0_p02_v02.png",
+      "prompt_path": "04_详情/098_采购_物资采购历史_查看_有数据_390dp_fs1p0_p02_v02.prompt.txt",
+      "screen": 2,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "2a0dad96be16cae8663e8321a0e65184bc62e5a2798d31f291bf9df69756534f",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/098_采购_物资采购历史_查看_有数据_390dp_fs1p0_p02_v01.png",
+      "source": "lib/features/purchase/presentation/purchase_item_history_page.dart",
+      "requested_corrections": [
+        "两屏库存详情次按钮边框不一致，待统一"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "075",
+      "path": "03_列表与记录/075_库存_物资信息_状态_加载中_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "03_列表与记录/075_库存_物资信息_状态_加载中_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "f100857edfa45967876afd3937bd20dadaf72f3f6b31486b1ee017e51aa14821",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/075_库存_物资信息_查看_有数据_390dp_fs1p0_p01_v04.png",
+      "source": "lib/features/inventory/presentation/inventory_materials_page.dart",
+      "requested_corrections": [
+        "真实源码状态补图：加载中"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "075",
+      "path": "03_列表与记录/075_库存_物资信息_状态_读取失败_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "03_列表与记录/075_库存_物资信息_状态_读取失败_390dp_fs1p0_p01_v03.prompt.txt",
+      "screen": 1,
+      "version": 3,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "5acf30b4da31aaa066d07777c37e71b6003193aab2c6a493ee5b9872864b24cd",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/075_库存_物资信息_状态_读取失败_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_materials_page.dart",
+      "requested_corrections": [
+        "接续明确视觉修正"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "075",
+      "path": "03_列表与记录/075_库存_物资信息_状态_首次空_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "03_列表与记录/075_库存_物资信息_状态_首次空_390dp_fs1p0_p01_v03.prompt.txt",
+      "screen": 1,
+      "version": 3,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "38aa148515d9be90492fb6d2825519ee05351bbee6d7e2e90da157bac6238c86",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/075_库存_物资信息_状态_首次空_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_materials_page.dart",
+      "requested_corrections": [
+        "接续明确视觉修正"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "075",
+      "path": "03_列表与记录/075_库存_物资信息_状态_筛选空_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "03_列表与记录/075_库存_物资信息_状态_筛选空_390dp_fs1p0_p01_v03.prompt.txt",
+      "screen": 1,
+      "version": 3,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "2f505874ef404563d5112da95608a7de355e92929f897fe54594d5407535d141",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/075_库存_物资信息_状态_筛选空_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_materials_page.dart",
+      "requested_corrections": [
+        "接续明确视觉修正"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "080",
+      "path": "04_详情/080_库存_入库详情_查看_有数据_状态_撤销确认_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "04_详情/080_库存_入库详情_查看_有数据_状态_撤销确认_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "5e1b67ad7bb748192412bf5f89c013e40d7fab4d2307976fb5eb77789409574f",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/080_库存_入库详情_查看_有数据_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/inventory/presentation/inventory_receipt_detail_page.dart",
+      "requested_corrections": [
+        "当前入库详情作为灰色半透明背景，上方白色居中圆角确认对话框：撤销这笔入库？；库存将按入库明细反向调整，并生成对应流水。；底部取消／撤销入库两动作。不得添加永久删除文案、成功或进度。"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "081",
+      "path": "04_详情/081_库存_出库详情_查看_有数据_状态_撤销确认_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "04_详情/081_库存_出库详情_查看_有数据_状态_撤销确认_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "0ceb5850efe1a8cb0c25a4b46f052ce3aaadf22c77a726e2f889c90323cf545f",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/081_库存_出库详情_查看_有数据_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/inventory/presentation/inventory_issue_detail_page.dart",
+      "requested_corrections": [
+        "当前出库详情作为灰色半透明背景，上方白色居中圆角确认对话框：撤销这笔出库？；库存会按出库明细返还，并生成对应流水。；底部取消／撤销出库两动作。不得添加永久删除文案、成功或进度。"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "086",
+      "path": "06_台账与表格/086_库存_盘点详情_办理_草稿_状态_盘点确认_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "06_台账与表格/086_库存_盘点详情_办理_草稿_状态_盘点确认_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "6edfbdafd33b39f08989ae6e6fbbafcb5fd1c2149af945a631e1b2c90bcec9b3",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "06_台账与表格/086_库存_盘点详情_办理_草稿_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/inventory/presentation/inventory_stocktake_detail_page.dart",
+      "requested_corrections": [
+        "当前未确认盘点详情作为灰色半透明背景，居中白色圆角确认对话框：确认盘点？；确认后将按实盘数量更新库存，并为盘盈盘亏生成库存流水。；继续核对／确认盘点。保留原账面20、实盘18、差异-2。不得提前表示已更新库存。"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "079",
+      "path": "05_表单与编辑/079_库存_新增入库_新增_已填_状态_无物资_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "05_表单与编辑/079_库存_新增入库_新增_已填_状态_无物资_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "adba27cc214189918eb5eaa4731d9ad502079fc195a92418527bce3ec573b7cc",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "05_表单与编辑/079_库存_新增入库_新增_已填_状态_无物资_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/inventory/presentation/inventory_receipt_form_page.dart",
+      "requested_corrections": [
+        "实际状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "085",
+      "path": "05_表单与编辑/085_库存_新建盘点_新增_已填_状态_无可盘点_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "05_表单与编辑/085_库存_新建盘点_新增_已填_状态_无可盘点_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "122a6f767592d8a0094fe6d84bec0c4b9408587f023b42d403b3e53e6c655d8e",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "05_表单与编辑/085_库存_新建盘点_新增_已填_状态_无可盘点_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/inventory/presentation/inventory_stocktake_form_page.dart",
+      "requested_corrections": [
+        "空态图标偏大/投影修正"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "078",
+      "path": "03_列表与记录/078_库存_月度入库_查看_有数据_状态_本月无记录_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "03_列表与记录/078_库存_月度入库_查看_有数据_状态_本月无记录_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "ae406ad92c36cf05cd4da268078d6aea387937d5e54568dfc7a99b2f7517d0eb",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/078_库存_月度入库_查看_有数据_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_receipts_page.dart",
+      "requested_corrections": [
+        "实际状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "084",
+      "path": "03_列表与记录/084_库存_盘点列表_查看_有数据_状态_筛选无盘点_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "03_列表与记录/084_库存_盘点列表_查看_有数据_状态_筛选无盘点_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "fbe1f2fc56ee1ad26174f84873d3cad64fb2f6820f35e4bf629b975850e581a2",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/084_库存_盘点列表_查看_有数据_状态_筛选无盘点_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/inventory/presentation/inventory_stocktakes_page.dart",
+      "requested_corrections": [
+        "实际状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "087",
+      "path": "03_列表与记录/087_库存_预警与补充_查看_有数据_状态_无预警无补充_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "03_列表与记录/087_库存_预警与补充_查看_有数据_状态_无预警无补充_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "572e461db72984dfcc79694a99c9132567be0abe4f7f76260e7e2581cd919b51",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/087_库存_预警与补充_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/inventory/presentation/inventory_warnings_page.dart",
+      "requested_corrections": [
+        "实际状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "088",
+      "path": "03_列表与记录/088_库存_待采购待补充_查看_有数据_状态_首次空_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "03_列表与记录/088_库存_待采购待补充_查看_有数据_状态_首次空_390dp_fs1p0_p01_v03.prompt.txt",
+      "screen": 1,
+      "version": 3,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "535be13fd6a130cf0b7ce9dd7106c7c20af154a384e008e995f42c0dd428eb65",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/088_库存_待采购待补充_查看_有数据_状态_首次空_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_replenishments_page.dart",
+      "requested_corrections": [
+        "空态图标偏大/投影修正"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "089",
+      "path": "03_列表与记录/089_库存_库存流水_查看_有数据_状态_筛选空_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "03_列表与记录/089_库存_库存流水_查看_有数据_状态_筛选空_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "b04734435330dbe2288d007151eff851e21f40851fd4ee0945b0b65dba747ece",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/089_库存_库存流水_查看_有数据_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_transactions_page.dart",
+      "requested_corrections": [
+        "实际状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "090",
+      "path": "02_工作台/090_采购_采购工作台_查看_有数据_状态_无需要处理_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "02_工作台/090_采购_采购工作台_查看_有数据_状态_无需要处理_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "a2086a3638a4edfed847c7d9a1291fae2aaa588117182763077a7e55ebca645d",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "02_工作台/090_采购_采购工作台_查看_有数据_390dp_fs1p0_p01_v04.png",
+      "source": "lib/features/purchase/presentation/purchase_home_page.dart",
+      "requested_corrections": [
+        "实际状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "092",
+      "path": "03_列表与记录/092_采购_待申报_查看_有数据_状态_首次空_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "03_列表与记录/092_采购_待申报_查看_有数据_状态_首次空_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "8bad5fa9f669aba65fdb0141293c30d79a36457c21c58fa57f00e37898b07e34",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/092_采购_待申报_查看_有数据_状态_首次空_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/purchase/presentation/purchase_pending_apply_page.dart",
+      "requested_corrections": [
+        "空态图标偏大/投影修正"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "093",
+      "path": "03_列表与记录/093_采购_全部待处理_查看_有数据_状态_筛选空_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "03_列表与记录/093_采购_全部待处理_查看_有数据_状态_筛选空_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "da935f9019d1c114b69846fce20c7520b112f87d1c2e9581b72823020cc88a55",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/093_采购_全部待处理_查看_有数据_390dp_fs1p0_p01_v05.png",
+      "source": "lib/features/purchase/presentation/purchase_tracking_page.dart",
+      "requested_corrections": [
+        "实际状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "095",
+      "path": "03_列表与记录/095_采购_待领取_查看_部分入库_状态_待领取空_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "03_列表与记录/095_采购_待领取_查看_部分入库_状态_待领取空_390dp_fs1p0_p01_v03.prompt.txt",
+      "screen": 1,
+      "version": 3,
+      "pixel_width": 852,
+      "pixel_height": 1846,
+      "sha256": "933bac79cb2a1b0e24e7f2b6739be042442920bd121c1d659a7266c5c0cc961e",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/095_采购_待领取_查看_部分入库_状态_待领取空_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/purchase/presentation/purchase_pending_receive_page.dart",
+      "requested_corrections": [
+        "空态图标偏大/投影修正"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        852,
+        1846
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "096",
+      "path": "03_列表与记录/096_采购_采购历史_按记录_有数据_状态_历史空_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "03_列表与记录/096_采购_采购历史_按记录_有数据_状态_历史空_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "f8bf7da0d3a49a1e0e590d7541ad74026d04256db4c0d5fa9f1e18d940b44eed",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/096_采购_采购历史_按记录_有数据_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/purchase/presentation/purchase_history_page.dart",
+      "requested_corrections": [
+        "实际状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "098",
+      "path": "04_详情/098_采购_物资采购历史_查看_有数据_状态_物资历史缺失_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "04_详情/098_采购_物资采购历史_查看_有数据_状态_物资历史缺失_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "bc3ac0d5ed4057f3bd14f3a020b76950aeb07a19897604a2b2d128f8ab484e98",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/098_采购_物资采购历史_查看_有数据_状态_物资历史缺失_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/purchase/presentation/purchase_material_history_page.dart",
+      "requested_corrections": [
+        "明确视觉修正"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "093",
+      "path": "03_列表与记录/093_采购_全部待处理_查看_有数据_状态_读取失败_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "03_列表与记录/093_采购_全部待处理_查看_有数据_状态_读取失败_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "85361c0b96b4ccb8a5442019035e93c4f8f130299c0b45a6bac18b3d423db892",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/093_采购_全部待处理_查看_有数据_状态_读取失败_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/purchase/presentation/purchase_tracking_page.dart",
+      "requested_corrections": [
+        "实际状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "091",
+      "path": "05_表单与编辑/091_采购_新建待申报_新增_已填_状态_手动新增物资_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "05_表单与编辑/091_采购_新建待申报_新增_已填_状态_手动新增物资_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "23c97f60fe42f7ba0ff8145e77d86792c156e3dbc0307405e1cecdbe81126947",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "05_表单与编辑/091_采购_新建待申报_新增_已填_状态_手动新增物资_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/purchase/presentation/purchase_create_page.dart",
+      "requested_corrections": [
+        "原生流程状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "091",
+      "path": "05_表单与编辑/091_采购_新建待申报_新增_已填_状态_重复采购提醒_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "05_表单与编辑/091_采购_新建待申报_新增_已填_状态_重复采购提醒_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "9969c58e4ae77c7c89fab66aa16a842efa266c6b177c8274b64390e28e8e0cf1",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "05_表单与编辑/091_采购_新建待申报_新增_已填_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/purchase/presentation/purchase_create_page.dart",
+      "requested_corrections": [
+        "原生流程状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "094",
+      "path": "04_详情/094_采购_采购详情_查看_待领取_状态_OA申报确认_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "04_详情/094_采购_采购详情_查看_待领取_状态_OA申报确认_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "e221d8688231001d2f985d2d39b82c72396e878aa98885cca2a21d15d51fb628",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/094_采购_采购详情_查看_待领取_状态_OA申报确认_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+      "requested_corrections": [
+        "原生流程状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "094",
+      "path": "04_详情/094_采购_采购详情_查看_待领取_状态_采购分配填写_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "04_详情/094_采购_采购详情_查看_待领取_状态_采购分配填写_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "1252c3cc05ba0110827a402e57d46d33bd84d7374cfab7c8ea663acd566bc3bd",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/094_采购_采购详情_查看_待领取_状态_采购分配填写_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+      "requested_corrections": [
+        "原生流程状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "094",
+      "path": "04_详情/094_采购_采购详情_查看_待领取_状态_入厂通知填写_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "04_详情/094_采购_采购详情_查看_待领取_状态_入厂通知填写_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "6ba8d3203762781d16e1294f90f4d1ed5aa9c82ee378f425a4d59dfef7ad77c6",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/094_采购_采购详情_查看_待领取_状态_入厂通知填写_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+      "requested_corrections": [
+        "原生流程状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "088",
+      "path": "03_列表与记录/088_库存_待采购待补充_查看_有数据_状态_新增清单项_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "03_列表与记录/088_库存_待采购待补充_查看_有数据_状态_新增清单项_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "e660cff00f45a4b9c065ce2aa7861cf817ddec8a3b600591b350fd9eaf0b35b9",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/088_库存_待采购待补充_查看_有数据_状态_新增清单项_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/inventory/presentation/inventory_replenishments_page.dart",
+      "requested_corrections": [
+        "源码实际流程补充"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "076",
+      "path": "05_表单与编辑/076_库存_新增物资_新增_已填_状态_编辑状态_390dp_fs1p0_p02_v01.png",
+      "prompt_path": "05_表单与编辑/076_库存_新增物资_新增_已填_状态_编辑状态_390dp_fs1p0_p02_v01.prompt.txt",
+      "screen": 2,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "0d62e576500f27b795d2843ef5aabec9f582c81950d70af37c2d835fb2823c86",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "05_表单与编辑/076_库存_新增物资_新增_已填_390dp_fs1p0_p02_v03.png",
+      "source": "lib/features/inventory/presentation/inventory_material_form_page.dart",
+      "requested_corrections": [
+        "实际表单状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "076",
+      "path": "05_表单与编辑/076_库存_新增物资_新增_已填_状态_校验失败_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "05_表单与编辑/076_库存_新增物资_新增_已填_状态_校验失败_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "6e24ced64539c6fb2c3df31d0c757c1bcd97ca43983aab20bcc30d9f581c9aab",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "05_表单与编辑/076_库存_新增物资_新增_已填_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_material_form_page.dart",
+      "requested_corrections": [
+        "实际表单状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "076",
+      "path": "05_表单与编辑/076_库存_新增物资_新增_已填_状态_保存中_390dp_fs1p0_p02_v01.png",
+      "prompt_path": "05_表单与编辑/076_库存_新增物资_新增_已填_状态_保存中_390dp_fs1p0_p02_v01.prompt.txt",
+      "screen": 2,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "ceab42d9849934c586a949b5af07a66c18da72483b52066ea492417bf70a6dc0",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "05_表单与编辑/076_库存_新增物资_新增_已填_390dp_fs1p0_p02_v03.png",
+      "source": "lib/features/inventory/presentation/inventory_material_form_page.dart",
+      "requested_corrections": [
+        "实际表单状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "083",
+      "path": "05_表单与编辑/083_库存_数量调整_办理_已填_状态_校验失败_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "05_表单与编辑/083_库存_数量调整_办理_已填_状态_校验失败_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "a3e34bf854b540279d71aa6592589e66fe3ad9cc7583133f409096aa5d3d38bf",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "05_表单与编辑/083_库存_数量调整_办理_已填_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/inventory/presentation/inventory_stock_adjustment_page.dart",
+      "requested_corrections": [
+        "实际表单状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "094",
+      "path": "04_详情/094_采购_采购详情_查看_待领取_状态_编辑采购信息首屏_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "04_详情/094_采购_采购详情_查看_待领取_状态_编辑采购信息首屏_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "8b191c7a057112ad4f34b8dfaf40d71fe8a8bc6be9627229e918729a33bc00da",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/094_采购_采购详情_查看_待领取_390dp_fs1p0_p01_v04.png",
+      "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+      "requested_corrections": [
+        "源码实际流程补充"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "094",
+      "path": "04_详情/094_采购_采购详情_查看_待领取_状态_编辑采购信息续屏_390dp_fs1p0_p02_v01.png",
+      "prompt_path": "04_详情/094_采购_采购详情_查看_待领取_状态_编辑采购信息续屏_390dp_fs1p0_p02_v01.prompt.txt",
+      "screen": 2,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "95e33e590be8a1268747315afaaa12e2231700435eaa3d9e9431a15ee9f0467c",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/094_采购_采购详情_查看_待领取_390dp_fs1p0_p02_v02.png",
+      "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+      "requested_corrections": [
+        "源码实际流程补充"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "094",
+      "path": "04_详情/094_采购_采购详情_查看_待领取_状态_跳过采购状态_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "04_详情/094_采购_采购详情_查看_待领取_状态_跳过采购状态_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "44adbe14794aafcb16cb8bb60db3cb950e4a3a82885b63db5961fff4614265cb",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/094_采购_采购详情_查看_待领取_状态_跳过采购状态_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+      "requested_corrections": [
+        "源码原生状态补充"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "082",
+      "path": "03_列表与记录/082_库存_当前库存_查看_有数据_状态_首次空_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "03_列表与记录/082_库存_当前库存_查看_有数据_状态_首次空_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "5c053490092deb35656611b19c2d42ef56ab72745d077be0dfbc8e96a55dee96",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/082_库存_当前库存_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/inventory/presentation/inventory_stock_page.dart",
+      "requested_corrections": [
+        "真实空态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "082",
+      "path": "03_列表与记录/082_库存_当前库存_查看_有数据_状态_筛选空_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "03_列表与记录/082_库存_当前库存_查看_有数据_状态_筛选空_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "6c85ec4bb8e218951499ab1b0b49b36cea5ec5f41bc94bb3a77ec99bfaaba326",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/082_库存_当前库存_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/inventory/presentation/inventory_stock_page.dart",
+      "requested_corrections": [
+        "真实空态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "074",
+      "path": "02_工作台/074_库存_库存首页_查看_有数据_状态_最近流水空_390dp_fs1p0_p02_v02.png",
+      "prompt_path": "02_工作台/074_库存_库存首页_查看_有数据_状态_最近流水空_390dp_fs1p0_p02_v02.prompt.txt",
+      "screen": 2,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "77fdcbafe7ee34c6ef126c992d49525333b5f16be42dfe0ba54725542a82f62b",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "02_工作台/074_库存_库存首页_查看_有数据_状态_最近流水空_390dp_fs1p0_p02_v01.png",
+      "source": "lib/features/inventory/presentation/inventory_home_page.dart",
+      "requested_corrections": [
+        "明确视觉修正"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "077",
+      "path": "04_详情/077_库存_物资详情_查看_有数据_状态_最近流水空_390dp_fs1p0_p02_v01.png",
+      "prompt_path": "04_详情/077_库存_物资详情_查看_有数据_状态_最近流水空_390dp_fs1p0_p02_v01.prompt.txt",
+      "screen": 2,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "ac101d367078c9b652b62b887d266ba1494816a15ef3a8657fcf3a7b4c485b85",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p02_v03.png",
+      "source": "lib/features/inventory/presentation/inventory_material_detail_page.dart",
+      "requested_corrections": [
+        "真实空态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "094",
+      "path": "04_详情/094_采购_采购详情_查看_待领取_状态_删除确认_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "04_详情/094_采购_采购详情_查看_待领取_状态_删除确认_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "d49681a5e69abe5d1ba951ebe58c3cac34d4118f6d665888783b35bec75cffee",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/094_采购_采购详情_查看_待领取_状态_跳过采购状态_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+      "requested_corrections": [
+        "源码原生状态补充"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "091",
+      "path": "05_表单与编辑/091_采购_新建待申报_新增_已填_状态_编辑待申报_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "05_表单与编辑/091_采购_新建待申报_新增_已填_状态_编辑待申报_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "605f10e628f42fbef17da27ff6bd14e4c7cb6b869ad501eb38e72c7df29c56a2",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "05_表单与编辑/091_采购_新建待申报_新增_已填_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/purchase/presentation/purchase_create_page.dart",
+      "requested_corrections": [
+        "源码原生状态补充"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "076",
+      "path": "05_表单与编辑/076_库存_新增物资_新增_已填_状态_新增分类_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "05_表单与编辑/076_库存_新增物资_新增_已填_状态_新增分类_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "6f13370328401413c9374c7057aa1cfea995f9e1f2f8a7fd0f24b7b732b3ffa7",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "05_表单与编辑/076_库存_新增物资_新增_已填_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_material_form_page.dart",
+      "requested_corrections": [
+        "源码原生状态补充"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "074",
+      "path": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p02_v03.png",
+      "prompt_path": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p02_v03.prompt.txt",
+      "screen": 2,
+      "version": 3,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "4413db6bc67c94249c10399ff04b8241cace049d7a9ccbc43bf2d5e93027be54",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p02_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_home_page.dart",
+      "requested_corrections": [
+        "明确视觉修正"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    }
+  ],
+  "pending": [],
+  "resolution_policy": "用户豁免像素尺寸及缩放补修",
+  "validation_boundary": "图片内容与视觉初检；代码交互、精确dp/sp及设备延期",
+  "current_outputs": [
+    {
+      "task_id": "077",
+      "path": "04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p01_v04.png",
+      "prompt_path": "04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p01_v04.prompt.txt",
+      "screen": 1,
+      "version": 4,
+      "pixel_width": 853,
+      "pixel_height": 1843,
+      "sha256": "1eb5bbbe9d950619e3e1808fd6b42749f0a28fd0eb75d553267648d4e9f936c6",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/inventory/presentation/inventory_material_detail_page.dart",
+      "requested_corrections": [
+        "身份图标明显偏大；操作色与前阶段按钮规范待统一"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1843
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "077",
+      "path": "04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p02_v03.png",
+      "prompt_path": "04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p02_v03.prompt.txt",
+      "screen": 2,
+      "version": 3,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "63b74d600020b40aa23c4d83c505ce385da69b8f1125dd180fcba80d25998f6b",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p02_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_material_detail_page.dart",
+      "requested_corrections": [
+        "指标呈两列两行，须复核四位置规则及长日期布局"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "074",
+      "path": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p01_v05.png",
+      "prompt_path": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p01_v05.prompt.txt",
+      "screen": 1,
+      "version": 5,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "ccf0bd692d9ac0e213219ee29fcd22abaa75150dc68efbdab01c1592f528be9f",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/inventory/presentation/inventory_home_page.dart",
+      "requested_corrections": [
+        "快捷主操作与指标仍为三列铺满，未满足四位置末位透明留白"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "075",
+      "path": "03_列表与记录/075_库存_物资信息_查看_有数据_390dp_fs1p0_p01_v04.png",
+      "prompt_path": "03_列表与记录/075_库存_物资信息_查看_有数据_390dp_fs1p0_p01_v04.prompt.txt",
+      "screen": 1,
+      "version": 4,
+      "pixel_width": 853,
+      "pixel_height": 1843,
+      "sha256": "b7cfc69af9a298e7542f690193b34257ac8f9774c72bb4ba0db6764fc88d3619",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/075_库存_物资信息_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/inventory/presentation/inventory_materials_page.dart",
+      "requested_corrections": [
+        "物资图标仍偏大，须与前阶段小图标统一"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1843
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "078",
+      "path": "03_列表与记录/078_库存_月度入库_查看_有数据_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "03_列表与记录/078_库存_月度入库_查看_有数据_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "739b71964750876cf72bca114cf1c5ed180b23edde3e09a8c7c73918c46c6f40",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/078_库存_月度入库_查看_有数据_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/inventory/presentation/inventory_receipts_page.dart",
+      "requested_corrections": [
+        "三指标仍三列铺满，四位置透明留白未满足"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "082",
+      "path": "03_列表与记录/082_库存_当前库存_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "03_列表与记录/082_库存_当前库存_查看_有数据_390dp_fs1p0_p01_v03.prompt.txt",
+      "screen": 1,
+      "version": 3,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "5d8c3cbb9beab0a3437dee516cca8bd885f1fb59f82140547f69fa1ca4beba87",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/082_库存_当前库存_查看_有数据_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_stock_page.dart",
+      "requested_corrections": [
+        "三指标仍三列铺满，四位置透明留白未满足；底部摘要缺源码查看入口"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "084",
+      "path": "03_列表与记录/084_库存_盘点列表_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "03_列表与记录/084_库存_盘点列表_查看_有数据_390dp_fs1p0_p01_v03.prompt.txt",
+      "screen": 1,
+      "version": 3,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "afb56bc712657a95bedd3a74637ee77516f3ca5c4ecb20d933e3a727e126ec4d",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/084_库存_盘点列表_查看_有数据_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_stocktakes_page.dart",
+      "requested_corrections": [
+        "三指标仍三列铺满，四位置透明留白未满足"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "085",
+      "path": "05_表单与编辑/085_库存_新建盘点_新增_已填_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "05_表单与编辑/085_库存_新建盘点_新增_已填_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "96ceaea2a42b30cd6ee7b8e8ebf80c5679d663401f80dd0220e5c34b874ad1bb",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "05_表单与编辑/085_库存_新建盘点_新增_已填_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/inventory/presentation/inventory_stocktake_form_page.dart",
+      "requested_corrections": [
+        "物资图标风格与前阶段彩色小图标不完全一致"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "087",
+      "path": "03_列表与记录/087_库存_预警与补充_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "03_列表与记录/087_库存_预警与补充_查看_有数据_390dp_fs1p0_p01_v03.prompt.txt",
+      "screen": 1,
+      "version": 3,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "5b1d314f79a96f61c26f9a312316e40f9e5b63e8f0fc03ed0b15fb79f48edbe7",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/087_库存_预警与补充_查看_有数据_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_warnings_page.dart",
+      "requested_corrections": [
+        "指标图标在名称上方，未满足同层排列"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "088",
+      "path": "03_列表与记录/088_库存_待采购待补充_查看_有数据_390dp_fs1p0_p01_v04.png",
+      "prompt_path": "03_列表与记录/088_库存_待采购待补充_查看_有数据_390dp_fs1p0_p01_v04.prompt.txt",
+      "screen": 1,
+      "version": 4,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "585e17616662d5640f68cc2cfbfb16f56a3bbbefcefaeb84740c62959c9a0d2c",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/088_库存_待采购待补充_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/inventory/presentation/inventory_replenishments_page.dart",
+      "requested_corrections": [
+        "顶、底三指标仍三列铺满，四位置透明留白未满足"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "089",
+      "path": "03_列表与记录/089_库存_库存流水_查看_有数据_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "03_列表与记录/089_库存_库存流水_查看_有数据_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "3344bbfb59e66682539056461cb0b7a8b43086628eb41131d9994ea83751a174",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/089_库存_库存流水_查看_有数据_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/inventory/presentation/inventory_transactions_page.dart",
+      "requested_corrections": [
+        "指标图标在名称上方，未满足同层排列"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "090",
+      "path": "02_工作台/090_采购_采购工作台_查看_有数据_390dp_fs1p0_p01_v04.png",
+      "prompt_path": "02_工作台/090_采购_采购工作台_查看_有数据_390dp_fs1p0_p01_v04.prompt.txt",
+      "screen": 1,
+      "version": 4,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "7ddb8e62fe7326263a53d0f72f7754261e814fc36953f185172f48fb7da0d63c",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "02_工作台/090_采购_采购工作台_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/purchase/presentation/purchase_home_page.dart",
+      "requested_corrections": [
+        "只局部改图标：顶部四指标缩小图标并与待申报/已申报/采购中/待领取文字同行，数值另下一行。扫路车滤芯的绿色写实圆筒彻底替换为简单绿色扁平线性滤芯小图标，约24dp，在小浅绿底中，不画细密褶皱。其他数据和布局不动。"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "091",
+      "path": "05_表单与编辑/091_采购_新建待申报_新增_已填_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "05_表单与编辑/091_采购_新建待申报_新增_已填_390dp_fs1p0_p01_v03.prompt.txt",
+      "screen": 1,
+      "version": 3,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "36a983ca9ddae10483c9c5a45b9ec145dc2acf464b8d35ddb79f0d7f4ef8c6f6",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "05_表单与编辑/091_采购_新建待申报_新增_已填_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/purchase/presentation/purchase_create_page.dart",
+      "requested_corrections": [
+        "生成图加入必填红星及文本清除图标，原源码未定义，待修"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "093",
+      "path": "03_列表与记录/093_采购_全部待处理_查看_有数据_390dp_fs1p0_p01_v05.png",
+      "prompt_path": "03_列表与记录/093_采购_全部待处理_查看_有数据_390dp_fs1p0_p01_v05.prompt.txt",
+      "screen": 1,
+      "version": 5,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "5c10d8f3565f08277f77fda6d63dcda49470412459c5f15d7359289f818601a8",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/093_采购_全部待处理_查看_有数据_390dp_fs1p0_p01_v04.png",
+      "source": "lib/features/purchase/presentation/purchase_tracking_page.dart",
+      "requested_corrections": [
+        "只局部调整底部：第二条滤芯记录的最后一排动作按钮向上移约30像素，在画面最底端留至少32像素纯背景安全区，所有数据字段完整，可略减卡片内无意义间距但字号不减。保持第一卡100双、李明、9月26日，第二卡2个、10月1日等全字段。"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "094",
+      "path": "04_详情/094_采购_采购详情_查看_待领取_390dp_fs1p0_p01_v04.png",
+      "prompt_path": "04_详情/094_采购_采购详情_查看_待领取_390dp_fs1p0_p01_v04.prompt.txt",
+      "screen": 1,
+      "version": 4,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "42239a4ab51e1f2f52965d436a5eaf3ad29b5251da8c42fe92f0a305fe294a89",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/094_采购_采购详情_查看_待领取_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+      "requested_corrections": [
+        "底部留白不足目标；两屏次按钮样式与前阶段仍不一致"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "094",
+      "path": "04_详情/094_采购_采购详情_查看_待领取_390dp_fs1p0_p02_v02.png",
+      "prompt_path": "04_详情/094_采购_采购详情_查看_待领取_390dp_fs1p0_p02_v02.prompt.txt",
+      "screen": 2,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "56270dd9a7e16882dbc9e622c794fe918ce275f4c37bf8787489d2577d34374b",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/094_采购_采购详情_查看_待领取_390dp_fs1p0_p02_v01.png",
+      "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+      "requested_corrections": [
+        "两屏底部编辑信息的字色/边框/图标不一致，待统一"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "096",
+      "path": "03_列表与记录/096_采购_采购历史_按记录_有数据_390dp_fs1p0_p01_v04.png",
+      "prompt_path": "03_列表与记录/096_采购_采购历史_按记录_有数据_390dp_fs1p0_p01_v04.prompt.txt",
+      "screen": 1,
+      "version": 4,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "6da91bd43ccec6b0b264803a2103c8200c5d75794008e78d30589ed37a805a10",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/096_采购_采购历史_按记录_有数据_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/purchase/presentation/purchase_history_page.dart",
+      "requested_corrections": [
+        "明确视觉修正"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "097",
+      "path": "03_列表与记录/097_采购_采购历史_按物资_有数据_390dp_fs1p0_p01_v05.png",
+      "prompt_path": "03_列表与记录/097_采购_采购历史_按物资_有数据_390dp_fs1p0_p01_v05.prompt.txt",
+      "screen": 1,
+      "version": 5,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "1de0823a86629b6993ab368417513bd23531692d89dcb1619966d5c4119a1902",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/097_采购_采购历史_按物资_有数据_390dp_fs1p0_p01_v04.png",
+      "source": "lib/features/purchase/presentation/purchase_history_page.dart",
+      "requested_corrections": [
+        "接续明确视觉修正"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "098",
+      "path": "04_详情/098_采购_物资采购历史_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "04_详情/098_采购_物资采购历史_查看_有数据_390dp_fs1p0_p01_v03.prompt.txt",
+      "screen": 1,
+      "version": 3,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "555afc03fa405e9f483b2654426ec23e36ef2afc3be72061fd12938190af6239",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/098_采购_物资采购历史_查看_有数据_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/purchase/presentation/purchase_item_history_page.dart",
+      "requested_corrections": [
+        "两屏库存详情次按钮边框不一致，待统一"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "098",
+      "path": "04_详情/098_采购_物资采购历史_查看_有数据_390dp_fs1p0_p02_v02.png",
+      "prompt_path": "04_详情/098_采购_物资采购历史_查看_有数据_390dp_fs1p0_p02_v02.prompt.txt",
+      "screen": 2,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "2a0dad96be16cae8663e8321a0e65184bc62e5a2798d31f291bf9df69756534f",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/098_采购_物资采购历史_查看_有数据_390dp_fs1p0_p02_v01.png",
+      "source": "lib/features/purchase/presentation/purchase_item_history_page.dart",
+      "requested_corrections": [
+        "两屏库存详情次按钮边框不一致，待统一"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "075",
+      "path": "03_列表与记录/075_库存_物资信息_状态_加载中_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "03_列表与记录/075_库存_物资信息_状态_加载中_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "f100857edfa45967876afd3937bd20dadaf72f3f6b31486b1ee017e51aa14821",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/075_库存_物资信息_查看_有数据_390dp_fs1p0_p01_v04.png",
+      "source": "lib/features/inventory/presentation/inventory_materials_page.dart",
+      "requested_corrections": [
+        "真实源码状态补图：加载中"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "075",
+      "path": "03_列表与记录/075_库存_物资信息_状态_读取失败_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "03_列表与记录/075_库存_物资信息_状态_读取失败_390dp_fs1p0_p01_v03.prompt.txt",
+      "screen": 1,
+      "version": 3,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "5acf30b4da31aaa066d07777c37e71b6003193aab2c6a493ee5b9872864b24cd",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/075_库存_物资信息_状态_读取失败_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_materials_page.dart",
+      "requested_corrections": [
+        "接续明确视觉修正"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "075",
+      "path": "03_列表与记录/075_库存_物资信息_状态_首次空_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "03_列表与记录/075_库存_物资信息_状态_首次空_390dp_fs1p0_p01_v03.prompt.txt",
+      "screen": 1,
+      "version": 3,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "38aa148515d9be90492fb6d2825519ee05351bbee6d7e2e90da157bac6238c86",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/075_库存_物资信息_状态_首次空_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_materials_page.dart",
+      "requested_corrections": [
+        "接续明确视觉修正"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "075",
+      "path": "03_列表与记录/075_库存_物资信息_状态_筛选空_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "03_列表与记录/075_库存_物资信息_状态_筛选空_390dp_fs1p0_p01_v03.prompt.txt",
+      "screen": 1,
+      "version": 3,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "2f505874ef404563d5112da95608a7de355e92929f897fe54594d5407535d141",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/075_库存_物资信息_状态_筛选空_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_materials_page.dart",
+      "requested_corrections": [
+        "接续明确视觉修正"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "080",
+      "path": "04_详情/080_库存_入库详情_查看_有数据_状态_撤销确认_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "04_详情/080_库存_入库详情_查看_有数据_状态_撤销确认_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "5e1b67ad7bb748192412bf5f89c013e40d7fab4d2307976fb5eb77789409574f",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/080_库存_入库详情_查看_有数据_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/inventory/presentation/inventory_receipt_detail_page.dart",
+      "requested_corrections": [
+        "当前入库详情作为灰色半透明背景，上方白色居中圆角确认对话框：撤销这笔入库？；库存将按入库明细反向调整，并生成对应流水。；底部取消／撤销入库两动作。不得添加永久删除文案、成功或进度。"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "081",
+      "path": "04_详情/081_库存_出库详情_查看_有数据_状态_撤销确认_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "04_详情/081_库存_出库详情_查看_有数据_状态_撤销确认_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "0ceb5850efe1a8cb0c25a4b46f052ce3aaadf22c77a726e2f889c90323cf545f",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/081_库存_出库详情_查看_有数据_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/inventory/presentation/inventory_issue_detail_page.dart",
+      "requested_corrections": [
+        "当前出库详情作为灰色半透明背景，上方白色居中圆角确认对话框：撤销这笔出库？；库存会按出库明细返还，并生成对应流水。；底部取消／撤销出库两动作。不得添加永久删除文案、成功或进度。"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "086",
+      "path": "06_台账与表格/086_库存_盘点详情_办理_草稿_状态_盘点确认_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "06_台账与表格/086_库存_盘点详情_办理_草稿_状态_盘点确认_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "6edfbdafd33b39f08989ae6e6fbbafcb5fd1c2149af945a631e1b2c90bcec9b3",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "06_台账与表格/086_库存_盘点详情_办理_草稿_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/inventory/presentation/inventory_stocktake_detail_page.dart",
+      "requested_corrections": [
+        "当前未确认盘点详情作为灰色半透明背景，居中白色圆角确认对话框：确认盘点？；确认后将按实盘数量更新库存，并为盘盈盘亏生成库存流水。；继续核对／确认盘点。保留原账面20、实盘18、差异-2。不得提前表示已更新库存。"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "079",
+      "path": "05_表单与编辑/079_库存_新增入库_新增_已填_状态_无物资_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "05_表单与编辑/079_库存_新增入库_新增_已填_状态_无物资_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "adba27cc214189918eb5eaa4731d9ad502079fc195a92418527bce3ec573b7cc",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "05_表单与编辑/079_库存_新增入库_新增_已填_状态_无物资_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/inventory/presentation/inventory_receipt_form_page.dart",
+      "requested_corrections": [
+        "实际状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "085",
+      "path": "05_表单与编辑/085_库存_新建盘点_新增_已填_状态_无可盘点_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "05_表单与编辑/085_库存_新建盘点_新增_已填_状态_无可盘点_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "122a6f767592d8a0094fe6d84bec0c4b9408587f023b42d403b3e53e6c655d8e",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "05_表单与编辑/085_库存_新建盘点_新增_已填_状态_无可盘点_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/inventory/presentation/inventory_stocktake_form_page.dart",
+      "requested_corrections": [
+        "空态图标偏大/投影修正"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "078",
+      "path": "03_列表与记录/078_库存_月度入库_查看_有数据_状态_本月无记录_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "03_列表与记录/078_库存_月度入库_查看_有数据_状态_本月无记录_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "ae406ad92c36cf05cd4da268078d6aea387937d5e54568dfc7a99b2f7517d0eb",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/078_库存_月度入库_查看_有数据_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_receipts_page.dart",
+      "requested_corrections": [
+        "实际状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "084",
+      "path": "03_列表与记录/084_库存_盘点列表_查看_有数据_状态_筛选无盘点_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "03_列表与记录/084_库存_盘点列表_查看_有数据_状态_筛选无盘点_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "fbe1f2fc56ee1ad26174f84873d3cad64fb2f6820f35e4bf629b975850e581a2",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/084_库存_盘点列表_查看_有数据_状态_筛选无盘点_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/inventory/presentation/inventory_stocktakes_page.dart",
+      "requested_corrections": [
+        "实际状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "087",
+      "path": "03_列表与记录/087_库存_预警与补充_查看_有数据_状态_无预警无补充_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "03_列表与记录/087_库存_预警与补充_查看_有数据_状态_无预警无补充_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "572e461db72984dfcc79694a99c9132567be0abe4f7f76260e7e2581cd919b51",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/087_库存_预警与补充_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/inventory/presentation/inventory_warnings_page.dart",
+      "requested_corrections": [
+        "实际状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "088",
+      "path": "03_列表与记录/088_库存_待采购待补充_查看_有数据_状态_首次空_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "03_列表与记录/088_库存_待采购待补充_查看_有数据_状态_首次空_390dp_fs1p0_p01_v03.prompt.txt",
+      "screen": 1,
+      "version": 3,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "535be13fd6a130cf0b7ce9dd7106c7c20af154a384e008e995f42c0dd428eb65",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/088_库存_待采购待补充_查看_有数据_状态_首次空_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_replenishments_page.dart",
+      "requested_corrections": [
+        "空态图标偏大/投影修正"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "089",
+      "path": "03_列表与记录/089_库存_库存流水_查看_有数据_状态_筛选空_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "03_列表与记录/089_库存_库存流水_查看_有数据_状态_筛选空_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "b04734435330dbe2288d007151eff851e21f40851fd4ee0945b0b65dba747ece",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/089_库存_库存流水_查看_有数据_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_transactions_page.dart",
+      "requested_corrections": [
+        "实际状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "090",
+      "path": "02_工作台/090_采购_采购工作台_查看_有数据_状态_无需要处理_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "02_工作台/090_采购_采购工作台_查看_有数据_状态_无需要处理_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "a2086a3638a4edfed847c7d9a1291fae2aaa588117182763077a7e55ebca645d",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "02_工作台/090_采购_采购工作台_查看_有数据_390dp_fs1p0_p01_v04.png",
+      "source": "lib/features/purchase/presentation/purchase_home_page.dart",
+      "requested_corrections": [
+        "实际状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "092",
+      "path": "03_列表与记录/092_采购_待申报_查看_有数据_状态_首次空_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "03_列表与记录/092_采购_待申报_查看_有数据_状态_首次空_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "8bad5fa9f669aba65fdb0141293c30d79a36457c21c58fa57f00e37898b07e34",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/092_采购_待申报_查看_有数据_状态_首次空_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/purchase/presentation/purchase_pending_apply_page.dart",
+      "requested_corrections": [
+        "空态图标偏大/投影修正"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "093",
+      "path": "03_列表与记录/093_采购_全部待处理_查看_有数据_状态_筛选空_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "03_列表与记录/093_采购_全部待处理_查看_有数据_状态_筛选空_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "da935f9019d1c114b69846fce20c7520b112f87d1c2e9581b72823020cc88a55",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/093_采购_全部待处理_查看_有数据_390dp_fs1p0_p01_v05.png",
+      "source": "lib/features/purchase/presentation/purchase_tracking_page.dart",
+      "requested_corrections": [
+        "实际状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "095",
+      "path": "03_列表与记录/095_采购_待领取_查看_部分入库_状态_待领取空_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "03_列表与记录/095_采购_待领取_查看_部分入库_状态_待领取空_390dp_fs1p0_p01_v03.prompt.txt",
+      "screen": 1,
+      "version": 3,
+      "pixel_width": 852,
+      "pixel_height": 1846,
+      "sha256": "933bac79cb2a1b0e24e7f2b6739be042442920bd121c1d659a7266c5c0cc961e",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/095_采购_待领取_查看_部分入库_状态_待领取空_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/purchase/presentation/purchase_pending_receive_page.dart",
+      "requested_corrections": [
+        "空态图标偏大/投影修正"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        852,
+        1846
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "096",
+      "path": "03_列表与记录/096_采购_采购历史_按记录_有数据_状态_历史空_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "03_列表与记录/096_采购_采购历史_按记录_有数据_状态_历史空_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "f8bf7da0d3a49a1e0e590d7541ad74026d04256db4c0d5fa9f1e18d940b44eed",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/096_采购_采购历史_按记录_有数据_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/purchase/presentation/purchase_history_page.dart",
+      "requested_corrections": [
+        "实际状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "098",
+      "path": "04_详情/098_采购_物资采购历史_查看_有数据_状态_物资历史缺失_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "04_详情/098_采购_物资采购历史_查看_有数据_状态_物资历史缺失_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "bc3ac0d5ed4057f3bd14f3a020b76950aeb07a19897604a2b2d128f8ab484e98",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/098_采购_物资采购历史_查看_有数据_状态_物资历史缺失_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/purchase/presentation/purchase_material_history_page.dart",
+      "requested_corrections": [
+        "明确视觉修正"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "093",
+      "path": "03_列表与记录/093_采购_全部待处理_查看_有数据_状态_读取失败_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "03_列表与记录/093_采购_全部待处理_查看_有数据_状态_读取失败_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "85361c0b96b4ccb8a5442019035e93c4f8f130299c0b45a6bac18b3d423db892",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/093_采购_全部待处理_查看_有数据_状态_读取失败_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/purchase/presentation/purchase_tracking_page.dart",
+      "requested_corrections": [
+        "实际状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "091",
+      "path": "05_表单与编辑/091_采购_新建待申报_新增_已填_状态_手动新增物资_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "05_表单与编辑/091_采购_新建待申报_新增_已填_状态_手动新增物资_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "23c97f60fe42f7ba0ff8145e77d86792c156e3dbc0307405e1cecdbe81126947",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "05_表单与编辑/091_采购_新建待申报_新增_已填_状态_手动新增物资_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/purchase/presentation/purchase_create_page.dart",
+      "requested_corrections": [
+        "原生流程状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "091",
+      "path": "05_表单与编辑/091_采购_新建待申报_新增_已填_状态_重复采购提醒_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "05_表单与编辑/091_采购_新建待申报_新增_已填_状态_重复采购提醒_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "9969c58e4ae77c7c89fab66aa16a842efa266c6b177c8274b64390e28e8e0cf1",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "05_表单与编辑/091_采购_新建待申报_新增_已填_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/purchase/presentation/purchase_create_page.dart",
+      "requested_corrections": [
+        "原生流程状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "094",
+      "path": "04_详情/094_采购_采购详情_查看_待领取_状态_OA申报确认_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "04_详情/094_采购_采购详情_查看_待领取_状态_OA申报确认_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "e221d8688231001d2f985d2d39b82c72396e878aa98885cca2a21d15d51fb628",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/094_采购_采购详情_查看_待领取_状态_OA申报确认_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+      "requested_corrections": [
+        "原生流程状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "094",
+      "path": "04_详情/094_采购_采购详情_查看_待领取_状态_采购分配填写_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "04_详情/094_采购_采购详情_查看_待领取_状态_采购分配填写_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "1252c3cc05ba0110827a402e57d46d33bd84d7374cfab7c8ea663acd566bc3bd",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/094_采购_采购详情_查看_待领取_状态_采购分配填写_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+      "requested_corrections": [
+        "原生流程状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "094",
+      "path": "04_详情/094_采购_采购详情_查看_待领取_状态_入厂通知填写_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "04_详情/094_采购_采购详情_查看_待领取_状态_入厂通知填写_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "6ba8d3203762781d16e1294f90f4d1ed5aa9c82ee378f425a4d59dfef7ad77c6",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/094_采购_采购详情_查看_待领取_状态_入厂通知填写_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+      "requested_corrections": [
+        "原生流程状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "088",
+      "path": "03_列表与记录/088_库存_待采购待补充_查看_有数据_状态_新增清单项_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "03_列表与记录/088_库存_待采购待补充_查看_有数据_状态_新增清单项_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "e660cff00f45a4b9c065ce2aa7861cf817ddec8a3b600591b350fd9eaf0b35b9",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/088_库存_待采购待补充_查看_有数据_状态_新增清单项_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/inventory/presentation/inventory_replenishments_page.dart",
+      "requested_corrections": [
+        "源码实际流程补充"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "076",
+      "path": "05_表单与编辑/076_库存_新增物资_新增_已填_状态_编辑状态_390dp_fs1p0_p02_v01.png",
+      "prompt_path": "05_表单与编辑/076_库存_新增物资_新增_已填_状态_编辑状态_390dp_fs1p0_p02_v01.prompt.txt",
+      "screen": 2,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "0d62e576500f27b795d2843ef5aabec9f582c81950d70af37c2d835fb2823c86",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "05_表单与编辑/076_库存_新增物资_新增_已填_390dp_fs1p0_p02_v03.png",
+      "source": "lib/features/inventory/presentation/inventory_material_form_page.dart",
+      "requested_corrections": [
+        "实际表单状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "076",
+      "path": "05_表单与编辑/076_库存_新增物资_新增_已填_状态_校验失败_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "05_表单与编辑/076_库存_新增物资_新增_已填_状态_校验失败_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "6e24ced64539c6fb2c3df31d0c757c1bcd97ca43983aab20bcc30d9f581c9aab",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "05_表单与编辑/076_库存_新增物资_新增_已填_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_material_form_page.dart",
+      "requested_corrections": [
+        "实际表单状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "076",
+      "path": "05_表单与编辑/076_库存_新增物资_新增_已填_状态_保存中_390dp_fs1p0_p02_v01.png",
+      "prompt_path": "05_表单与编辑/076_库存_新增物资_新增_已填_状态_保存中_390dp_fs1p0_p02_v01.prompt.txt",
+      "screen": 2,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "ceab42d9849934c586a949b5af07a66c18da72483b52066ea492417bf70a6dc0",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "05_表单与编辑/076_库存_新增物资_新增_已填_390dp_fs1p0_p02_v03.png",
+      "source": "lib/features/inventory/presentation/inventory_material_form_page.dart",
+      "requested_corrections": [
+        "实际表单状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "083",
+      "path": "05_表单与编辑/083_库存_数量调整_办理_已填_状态_校验失败_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "05_表单与编辑/083_库存_数量调整_办理_已填_状态_校验失败_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "a3e34bf854b540279d71aa6592589e66fe3ad9cc7583133f409096aa5d3d38bf",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "05_表单与编辑/083_库存_数量调整_办理_已填_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/inventory/presentation/inventory_stock_adjustment_page.dart",
+      "requested_corrections": [
+        "实际表单状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "094",
+      "path": "04_详情/094_采购_采购详情_查看_待领取_状态_编辑采购信息首屏_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "04_详情/094_采购_采购详情_查看_待领取_状态_编辑采购信息首屏_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "8b191c7a057112ad4f34b8dfaf40d71fe8a8bc6be9627229e918729a33bc00da",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/094_采购_采购详情_查看_待领取_390dp_fs1p0_p01_v04.png",
+      "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+      "requested_corrections": [
+        "源码实际流程补充"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "094",
+      "path": "04_详情/094_采购_采购详情_查看_待领取_状态_编辑采购信息续屏_390dp_fs1p0_p02_v01.png",
+      "prompt_path": "04_详情/094_采购_采购详情_查看_待领取_状态_编辑采购信息续屏_390dp_fs1p0_p02_v01.prompt.txt",
+      "screen": 2,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "95e33e590be8a1268747315afaaa12e2231700435eaa3d9e9431a15ee9f0467c",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/094_采购_采购详情_查看_待领取_390dp_fs1p0_p02_v02.png",
+      "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+      "requested_corrections": [
+        "源码实际流程补充"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "094",
+      "path": "04_详情/094_采购_采购详情_查看_待领取_状态_跳过采购状态_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "04_详情/094_采购_采购详情_查看_待领取_状态_跳过采购状态_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "44adbe14794aafcb16cb8bb60db3cb950e4a3a82885b63db5961fff4614265cb",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/094_采购_采购详情_查看_待领取_状态_跳过采购状态_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+      "requested_corrections": [
+        "源码原生状态补充"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "082",
+      "path": "03_列表与记录/082_库存_当前库存_查看_有数据_状态_首次空_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "03_列表与记录/082_库存_当前库存_查看_有数据_状态_首次空_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "5c053490092deb35656611b19c2d42ef56ab72745d077be0dfbc8e96a55dee96",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/082_库存_当前库存_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/inventory/presentation/inventory_stock_page.dart",
+      "requested_corrections": [
+        "真实空态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "082",
+      "path": "03_列表与记录/082_库存_当前库存_查看_有数据_状态_筛选空_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "03_列表与记录/082_库存_当前库存_查看_有数据_状态_筛选空_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "6c85ec4bb8e218951499ab1b0b49b36cea5ec5f41bc94bb3a77ec99bfaaba326",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/082_库存_当前库存_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/inventory/presentation/inventory_stock_page.dart",
+      "requested_corrections": [
+        "真实空态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "074",
+      "path": "02_工作台/074_库存_库存首页_查看_有数据_状态_最近流水空_390dp_fs1p0_p02_v02.png",
+      "prompt_path": "02_工作台/074_库存_库存首页_查看_有数据_状态_最近流水空_390dp_fs1p0_p02_v02.prompt.txt",
+      "screen": 2,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "77fdcbafe7ee34c6ef126c992d49525333b5f16be42dfe0ba54725542a82f62b",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "02_工作台/074_库存_库存首页_查看_有数据_状态_最近流水空_390dp_fs1p0_p02_v01.png",
+      "source": "lib/features/inventory/presentation/inventory_home_page.dart",
+      "requested_corrections": [
+        "明确视觉修正"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "077",
+      "path": "04_详情/077_库存_物资详情_查看_有数据_状态_最近流水空_390dp_fs1p0_p02_v01.png",
+      "prompt_path": "04_详情/077_库存_物资详情_查看_有数据_状态_最近流水空_390dp_fs1p0_p02_v01.prompt.txt",
+      "screen": 2,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "ac101d367078c9b652b62b887d266ba1494816a15ef3a8657fcf3a7b4c485b85",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p02_v03.png",
+      "source": "lib/features/inventory/presentation/inventory_material_detail_page.dart",
+      "requested_corrections": [
+        "真实空态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "094",
+      "path": "04_详情/094_采购_采购详情_查看_待领取_状态_删除确认_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "04_详情/094_采购_采购详情_查看_待领取_状态_删除确认_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "d49681a5e69abe5d1ba951ebe58c3cac34d4118f6d665888783b35bec75cffee",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/094_采购_采购详情_查看_待领取_状态_跳过采购状态_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+      "requested_corrections": [
+        "源码原生状态补充"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "091",
+      "path": "05_表单与编辑/091_采购_新建待申报_新增_已填_状态_编辑待申报_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "05_表单与编辑/091_采购_新建待申报_新增_已填_状态_编辑待申报_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "605f10e628f42fbef17da27ff6bd14e4c7cb6b869ad501eb38e72c7df29c56a2",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "05_表单与编辑/091_采购_新建待申报_新增_已填_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/purchase/presentation/purchase_create_page.dart",
+      "requested_corrections": [
+        "源码原生状态补充"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "076",
+      "path": "05_表单与编辑/076_库存_新增物资_新增_已填_状态_新增分类_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "05_表单与编辑/076_库存_新增物资_新增_已填_状态_新增分类_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "6f13370328401413c9374c7057aa1cfea995f9e1f2f8a7fd0f24b7b732b3ffa7",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "05_表单与编辑/076_库存_新增物资_新增_已填_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_material_form_page.dart",
+      "requested_corrections": [
+        "源码原生状态补充"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "074",
+      "path": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p02_v03.png",
+      "prompt_path": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p02_v03.prompt.txt",
+      "screen": 2,
+      "version": 3,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "4413db6bc67c94249c10399ff04b8241cace049d7a9ccbc43bf2d5e93027be54",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p02_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_home_page.dart",
+      "requested_corrections": [
+        "明确视觉修正"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    }
+  ],
+  "old_outputs": [
+    {
+      "task_id": "077",
+      "path": "04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p01_v03.prompt.txt",
+      "screen": 1,
+      "version": 3,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "34f3dc8a07f4f65949393366bea039395fbd5ae7f4fa238f31f95098cdbc9122",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_material_detail_page.dart",
+      "requested_corrections": [
+        "身份图标明显偏大；操作色与前阶段按钮规范待统一"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "077",
+      "path": "04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p02_v02.png",
+      "prompt_path": "04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p02_v02.prompt.txt",
+      "screen": 2,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "7521066f48413a9e263b2dfa81e3eaf0a4e0e2fe2185be36260306c0da2146f1",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p02_v01.png",
+      "source": "lib/features/inventory/presentation/inventory_material_detail_page.dart",
+      "requested_corrections": [
+        "指标呈两列两行，须复核四位置规则及长日期布局"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "074",
+      "path": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p01_v03.prompt.txt",
+      "screen": 1,
+      "version": 3,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "1a77b12e0267bcbfd62516e4bfc1a117ddf2b80460cbce3406645546ee1179dd",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_home_page.dart",
+      "requested_corrections": [
+        "快捷主操作与指标仍为三列铺满，未满足四位置末位透明留白"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "088",
+      "path": "03_列表与记录/088_库存_待采购待补充_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "03_列表与记录/088_库存_待采购待补充_查看_有数据_390dp_fs1p0_p01_v03.prompt.txt",
+      "screen": 1,
+      "version": 3,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "5619a8df3e6949393c7636f7677e6199e4d8a1a0c6dbb0238d0b73ec766fdb4b",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/088_库存_待采购待补充_查看_有数据_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_replenishments_page.dart",
+      "requested_corrections": [
+        "顶、底三指标仍三列铺满，四位置透明留白未满足"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "074",
+      "path": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p01_v04.png",
+      "prompt_path": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p01_v04.prompt.txt",
+      "screen": 1,
+      "version": 4,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "2e0cff3f4f72b9448ac247e56777f7a81d1fed303474b960608d9a15760765d3",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/inventory/presentation/inventory_home_page.dart",
+      "requested_corrections": [
+        "快捷主操作与指标仍为三列铺满，未满足四位置末位透明留白"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "090",
+      "path": "02_工作台/090_采购_采购工作台_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "02_工作台/090_采购_采购工作台_查看_有数据_390dp_fs1p0_p01_v03.prompt.txt",
+      "screen": 1,
+      "version": 3,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "381f57512f6362abfe37a01f21ea06c4182a46efaf93b60fe36ab0c53853c5bb",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "02_工作台/090_采购_采购工作台_查看_有数据_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/purchase/presentation/purchase_home_page.dart",
+      "requested_corrections": [
+        "图标部分拟物、卡片密度仍待视觉终验"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "093",
+      "path": "03_列表与记录/093_采购_全部待处理_查看_有数据_390dp_fs1p0_p01_v04.png",
+      "prompt_path": "03_列表与记录/093_采购_全部待处理_查看_有数据_390dp_fs1p0_p01_v04.prompt.txt",
+      "screen": 1,
+      "version": 4,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "d420593fd98dd92d5a2f00a5114a8a70c13e21fbfc419d8b8b10ba50b7a24c44",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/093_采购_全部待处理_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/purchase/presentation/purchase_tracking_page.dart",
+      "requested_corrections": [
+        "底部留白仍不足目标14dp；按钮完整但安全区仍待视觉验收"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "096",
+      "path": "03_列表与记录/096_采购_采购历史_按记录_有数据_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "03_列表与记录/096_采购_采购历史_按记录_有数据_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "fcbbc0fa13d72450e9405efa8d8b217e6b2f3c62f3f86ef420335531368acd17",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/096_采购_采购历史_按记录_有数据_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/purchase/presentation/purchase_history_page.dart",
+      "requested_corrections": [
+        "与097筛选和指标组件形态、选中色不一致，待统一"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "097",
+      "path": "03_列表与记录/097_采购_采购历史_按物资_有数据_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "03_列表与记录/097_采购_采购历史_按物资_有数据_390dp_fs1p0_p01_v03.prompt.txt",
+      "screen": 1,
+      "version": 3,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "843f1687c6457341e6a7840d2700243a73b16a4d186a29797da9b1805b1c3f5f",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/097_采购_采购历史_按物资_有数据_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/purchase/presentation/purchase_history_page.dart",
+      "requested_corrections": [
+        "与096筛选和指标组件形态、选中色不一致，待统一"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "074",
+      "path": "02_工作台/074_库存_库存首页_查看_有数据_360dp_fs1p0_p01_v01.png",
+      "prompt_path": "02_工作台/074_库存_库存首页_查看_有数据_360dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 820,
+      "pixel_height": 1919,
+      "sha256": "e06e9668f656fba6a5037398e9c75885796ca3a3e56290663ad7663ae2b09d0a",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 360,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p01_v05.png",
+      "source": "lib/features/inventory/presentation/inventory_home_page.dart",
+      "requested_corrections": [
+        "指定布局适配组合"
+      ],
+      "issues": [],
+      "visual_review": "用户取消适配；仅历史保留，不计任务欠项或当前参考",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        820,
+        1919
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "074",
+      "path": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p3_p01_v01.png",
+      "prompt_path": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p3_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "f917fceeac3dff2939988c2bc0419b5872826a9fae5b6fdd72d6bbe6ed0d0b17",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1.3,
+      "replaces": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p01_v05.png",
+      "source": "lib/features/inventory/presentation/inventory_home_page.dart",
+      "requested_corrections": [
+        "指定布局适配组合"
+      ],
+      "issues": [],
+      "visual_review": "用户取消适配；仅历史保留，不计任务欠项或当前参考",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "074",
+      "path": "02_工作台/074_库存_库存首页_查看_有数据_360dp_fs2p0_p01_v01.png",
+      "prompt_path": "02_工作台/074_库存_库存首页_查看_有数据_360dp_fs2p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 820,
+      "pixel_height": 1919,
+      "sha256": "00dd8bd08eb731abbb2fbb599c1cd551a367e9d4cdc3682ecff5ebf50ab80e87",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 360,
+      "logical_height_dp": 844,
+      "font_scale": 2,
+      "replaces": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p01_v05.png",
+      "source": "lib/features/inventory/presentation/inventory_home_page.dart",
+      "requested_corrections": [
+        "指定布局适配组合"
+      ],
+      "issues": [],
+      "visual_review": "用户取消适配；仅历史保留，不计任务欠项或当前参考",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        820,
+        1919
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "075",
+      "path": "03_列表与记录/075_库存_物资信息_查看_有数据_360dp_fs1p0_p01_v01.png",
+      "prompt_path": "03_列表与记录/075_库存_物资信息_查看_有数据_360dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 820,
+      "pixel_height": 1919,
+      "sha256": "2fc5f061c26a126dc03584fcaf557b5e91b0e15008534166e5bc6fbdc3e7dc8f",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 360,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/075_库存_物资信息_查看_有数据_390dp_fs1p0_p01_v04.png",
+      "source": "lib/features/inventory/presentation/inventory_materials_page.dart",
+      "requested_corrections": [
+        "指定布局适配组合"
+      ],
+      "issues": [],
+      "visual_review": "用户取消适配；仅历史保留，不计任务欠项或当前参考",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        820,
+        1919
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "075",
+      "path": "03_列表与记录/075_库存_物资信息_状态_读取失败_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "03_列表与记录/075_库存_物资信息_状态_读取失败_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "9885aa5bb2e485d636bc3fbedca61e9ab23c7e40dc693848e17467f1c54c51e0",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/075_库存_物资信息_查看_有数据_390dp_fs1p0_p01_v04.png",
+      "source": "lib/features/inventory/presentation/inventory_materials_page.dart",
+      "requested_corrections": [
+        "真实源码状态补图：读取失败"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "075",
+      "path": "03_列表与记录/075_库存_物资信息_状态_首次空_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "03_列表与记录/075_库存_物资信息_状态_首次空_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "e0d2d93b14a9028e947366b45ac23f90366d080db14f1753e3911b5b46130f5b",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/075_库存_物资信息_查看_有数据_390dp_fs1p0_p01_v04.png",
+      "source": "lib/features/inventory/presentation/inventory_materials_page.dart",
+      "requested_corrections": [
+        "真实源码状态补图：首次空"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "075",
+      "path": "03_列表与记录/075_库存_物资信息_状态_筛选空_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "03_列表与记录/075_库存_物资信息_状态_筛选空_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "f1a52784abedbcdd11e5f62f234cfb8c90df9ab96c071ed3380766b75bb4b896",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/075_库存_物资信息_查看_有数据_390dp_fs1p0_p01_v04.png",
+      "source": "lib/features/inventory/presentation/inventory_materials_page.dart",
+      "requested_corrections": [
+        "真实源码状态补图：筛选空"
+      ],
+      "issues": [],
+      "visual_review": "已逐张目检；当前/历史角色与具体遗留由阶段23索引界定",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "075",
+      "path": "03_列表与记录/075_库存_物资信息_状态_读取失败_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "03_列表与记录/075_库存_物资信息_状态_读取失败_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "14287b0917fdd255bfcd32ecb742306a7a61abe33752fd90f1260c0c4e4e9d7c",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/075_库存_物资信息_状态_读取失败_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/inventory/presentation/inventory_materials_page.dart",
+      "requested_corrections": [
+        "真实源码状态补图：读取失败"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "075",
+      "path": "03_列表与记录/075_库存_物资信息_状态_首次空_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "03_列表与记录/075_库存_物资信息_状态_首次空_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "41aa4aa19cd518a5ee3646fdd186a3ae1313fedb6b699b099866d33bc8af6c45",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/075_库存_物资信息_状态_首次空_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/inventory/presentation/inventory_materials_page.dart",
+      "requested_corrections": [
+        "真实源码状态补图：首次空"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "075",
+      "path": "03_列表与记录/075_库存_物资信息_状态_筛选空_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "03_列表与记录/075_库存_物资信息_状态_筛选空_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "65ef4fc75a7ff912380ded35006af037b801b9f62dd190c3b01854d2561d7997",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/075_库存_物资信息_状态_筛选空_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/inventory/presentation/inventory_materials_page.dart",
+      "requested_corrections": [
+        "真实源码状态补图：筛选空"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "096",
+      "path": "03_列表与记录/096_采购_采购历史_按记录_有数据_390dp_fs1p0_p01_v03.png",
+      "prompt_path": "03_列表与记录/096_采购_采购历史_按记录_有数据_390dp_fs1p0_p01_v03.prompt.txt",
+      "screen": 1,
+      "version": 3,
+      "pixel_width": 853,
+      "pixel_height": 1843,
+      "sha256": "8f9817fa2ff18a5d3db2e308d88aafc8c9c001f9a9b3a90d499c73d967410d8e",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/096_采购_采购历史_按记录_有数据_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/purchase/presentation/purchase_history_page.dart",
+      "requested_corrections": [
+        "统一实际筛选组件和指标容器"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1843
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "079",
+      "path": "05_表单与编辑/079_库存_新增入库_新增_已填_状态_无物资_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "05_表单与编辑/079_库存_新增入库_新增_已填_状态_无物资_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "bed07daa66c81eeb637e71fab05a585017fffb60f6a6e23b3cad59075fe4711b",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "05_表单与编辑/079_库存_新增入库_新增_已填_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_receipt_form_page.dart",
+      "requested_corrections": [
+        "实际状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "085",
+      "path": "05_表单与编辑/085_库存_新建盘点_新增_已填_状态_无可盘点_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "05_表单与编辑/085_库存_新建盘点_新增_已填_状态_无可盘点_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "617ce3a8364b34a2d6e9ceb3fcdbfb02895ce7fc11a15e1b62b11c6d808159a3",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "05_表单与编辑/085_库存_新建盘点_新增_已填_390dp_fs1p0_p01_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_stocktake_form_page.dart",
+      "requested_corrections": [
+        "实际状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "084",
+      "path": "03_列表与记录/084_库存_盘点列表_查看_有数据_状态_筛选无盘点_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "03_列表与记录/084_库存_盘点列表_查看_有数据_状态_筛选无盘点_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "2e5f712f81d9445b58e42aea81e56c40819a9c51d358745ecb201e7d43d931b2",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/084_库存_盘点列表_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/inventory/presentation/inventory_stocktakes_page.dart",
+      "requested_corrections": [
+        "实际状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "088",
+      "path": "03_列表与记录/088_库存_待采购待补充_查看_有数据_状态_首次空_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "03_列表与记录/088_库存_待采购待补充_查看_有数据_状态_首次空_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "07d6056258af4b937e8a829b0a08af878f0c92d2f893972422ba3b6800a15070",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/088_库存_待采购待补充_查看_有数据_390dp_fs1p0_p01_v04.png",
+      "source": "lib/features/inventory/presentation/inventory_replenishments_page.dart",
+      "requested_corrections": [
+        "实际状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "092",
+      "path": "03_列表与记录/092_采购_待申报_查看_有数据_状态_首次空_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "03_列表与记录/092_采购_待申报_查看_有数据_状态_首次空_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "b4f16716e3870b8fa545bed9e1a68a0da88122aa24c0d2e7048c7821f213a229",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/092_采购_待申报_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/purchase/presentation/purchase_pending_apply_page.dart",
+      "requested_corrections": [
+        "实际状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "095",
+      "path": "03_列表与记录/095_采购_待领取_查看_部分入库_状态_待领取空_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "03_列表与记录/095_采购_待领取_查看_部分入库_状态_待领取空_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 852,
+      "pixel_height": 1846,
+      "sha256": "2546eecf621453d09ce1b13d6cec839ee4f05492c880d273aac44010a1ae0b02",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/095_采购_待领取_查看_部分入库_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/purchase/presentation/purchase_pending_receive_page.dart",
+      "requested_corrections": [
+        "实际状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        852,
+        1846
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "098",
+      "path": "04_详情/098_采购_物资采购历史_查看_有数据_状态_物资历史缺失_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "04_详情/098_采购_物资采购历史_查看_有数据_状态_物资历史缺失_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "70d038d84243980ad051d1fc5cdc24cd9f483d9de0a5a493a93f8f60168973c5",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/098_采购_物资采购历史_查看_有数据_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/purchase/presentation/purchase_item_history_page.dart",
+      "requested_corrections": [
+        "实际状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "093",
+      "path": "03_列表与记录/093_采购_全部待处理_查看_有数据_状态_读取失败_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "03_列表与记录/093_采购_全部待处理_查看_有数据_状态_读取失败_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "195e56dfa509a00838b12e9de353c02b50b037ce6751993718cc6e3490e53b30",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/093_采购_全部待处理_查看_有数据_390dp_fs1p0_p01_v05.png",
+      "source": "lib/features/purchase/presentation/purchase_tracking_page.dart",
+      "requested_corrections": [
+        "实际状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "091",
+      "path": "05_表单与编辑/091_采购_新建待申报_新增_已填_状态_手动新增物资_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "05_表单与编辑/091_采购_新建待申报_新增_已填_状态_手动新增物资_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "b819574e25c77f9ec30867f10b55cc1fbaef790e4d33125aed931f3a167f04c3",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "05_表单与编辑/091_采购_新建待申报_新增_已填_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/purchase/presentation/purchase_create_page.dart",
+      "requested_corrections": [
+        "原生流程状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "094",
+      "path": "04_详情/094_采购_采购详情_查看_待领取_状态_OA申报确认_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "04_详情/094_采购_采购详情_查看_待领取_状态_OA申报确认_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "66d684d5b4ce9e255c59a111ffd050a3722e98f499aafd54f650a4a112f51453",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/094_采购_采购详情_查看_待领取_390dp_fs1p0_p01_v04.png",
+      "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+      "requested_corrections": [
+        "原生流程状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "094",
+      "path": "04_详情/094_采购_采购详情_查看_待领取_状态_采购分配填写_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "04_详情/094_采购_采购详情_查看_待领取_状态_采购分配填写_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "d6758b94e414b57e665bcc36510c3c7b13118df49ed52c2cc59e0ce43273b5a0",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/094_采购_采购详情_查看_待领取_390dp_fs1p0_p01_v04.png",
+      "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+      "requested_corrections": [
+        "原生流程状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "088",
+      "path": "03_列表与记录/088_库存_待采购待补充_查看_有数据_状态_首次空_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "03_列表与记录/088_库存_待采购待补充_查看_有数据_状态_首次空_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "bff320f5abbbabe309c78b9695a29ed3509f56065e948523f0252aad61308039",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/088_库存_待采购待补充_查看_有数据_状态_首次空_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/inventory/presentation/inventory_replenishments_page.dart",
+      "requested_corrections": [
+        "实际状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "095",
+      "path": "03_列表与记录/095_采购_待领取_查看_部分入库_状态_待领取空_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "03_列表与记录/095_采购_待领取_查看_部分入库_状态_待领取空_390dp_fs1p0_p01_v02.prompt.txt",
+      "screen": 1,
+      "version": 2,
+      "pixel_width": 852,
+      "pixel_height": 1846,
+      "sha256": "82093d6c69c5e9a4dac6572bea4e184f84dbe5b737bf88a0a9627cd1885c9765",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/095_采购_待领取_查看_部分入库_状态_待领取空_390dp_fs1p0_p01_v01.png",
+      "source": "lib/features/purchase/presentation/purchase_pending_receive_page.dart",
+      "requested_corrections": [
+        "实际状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        852,
+        1846
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "094",
+      "path": "04_详情/094_采购_采购详情_查看_待领取_状态_入厂通知填写_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "04_详情/094_采购_采购详情_查看_待领取_状态_入厂通知填写_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "5fc42a4d530a5d5958ec0e190baaf1c918591440c24ced053601c8e5d650762e",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/094_采购_采购详情_查看_待领取_390dp_fs1p0_p01_v04.png",
+      "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+      "requested_corrections": [
+        "原生流程状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "088",
+      "path": "03_列表与记录/088_库存_待采购待补充_查看_有数据_状态_新增清单项_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "03_列表与记录/088_库存_待采购待补充_查看_有数据_状态_新增清单项_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "6b53d0346d5cf1e120293b22e8acc222c0fcc885bd9a9a8746d391e7a9d79045",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/088_库存_待采购待补充_查看_有数据_390dp_fs1p0_p01_v04.png",
+      "source": "lib/features/inventory/presentation/inventory_replenishments_page.dart",
+      "requested_corrections": [
+        "原生流程状态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "097",
+      "path": "03_列表与记录/097_采购_采购历史_按物资_有数据_390dp_fs1p0_p01_v04.png",
+      "prompt_path": "03_列表与记录/097_采购_采购历史_按物资_有数据_390dp_fs1p0_p01_v04.prompt.txt",
+      "screen": 1,
+      "version": 4,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "bca397811157521d4d035db85bdf79543d3bcca2b2cdc37253111b6a772c9e15",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "03_列表与记录/097_采购_采购历史_按物资_有数据_390dp_fs1p0_p01_v03.png",
+      "source": "lib/features/purchase/presentation/purchase_history_page.dart",
+      "requested_corrections": [
+        "筛选统计容器与096统一"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "094",
+      "path": "04_详情/094_采购_采购详情_查看_待领取_状态_跳过采购状态_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "04_详情/094_采购_采购详情_查看_待领取_状态_跳过采购状态_390dp_fs1p0_p01_v01.prompt.txt",
+      "screen": 1,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "7fd0e3194b1bd01cef95445470751126210c2b76b4f12bc33c27d07e7172fc18",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "04_详情/094_采购_采购详情_查看_待领取_390dp_fs1p0_p01_v04.png",
+      "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+      "requested_corrections": [
+        "源码实际流程补充"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    },
+    {
+      "task_id": "074",
+      "path": "02_工作台/074_库存_库存首页_查看_有数据_状态_最近流水空_390dp_fs1p0_p02_v01.png",
+      "prompt_path": "02_工作台/074_库存_库存首页_查看_有数据_状态_最近流水空_390dp_fs1p0_p02_v01.prompt.txt",
+      "screen": 2,
+      "version": 1,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "a6f2f1acb4194f10b972c6a3578efd4b6e04e7e16b08cc6cbfcc3bde9e4ab998",
+      "batch": 23,
+      "tool": "built-in imagegen",
+      "logical_width_dp": 390,
+      "logical_height_dp": 844,
+      "font_scale": 1,
+      "replaces": "02_工作台/074_库存_库存首页_查看_有数据_390dp_fs1p0_p02_v02.png",
+      "source": "lib/features/inventory/presentation/inventory_home_page.dart",
+      "requested_corrections": [
+        "真实空态补图"
+      ],
+      "issues": [],
+      "visual_review": "生成后待主代理/本代理目检，未计通过",
+      "resolution_requirement_met": false,
+      "user_review": "待最终用户验收",
+      "dims": [
+        853,
+        1844
+      ],
+      "decoded_metadata_verified": true
+    }
+  ],
+  "image_content_delivery": "当前图片与源码状态合同交付；用户最终验收待定",
+  "cancelled_requirements": [
+    "像素尺寸",
+    "宽度适配",
+    "大字体图片"
+  ],
+  "device_acceptance": "用户延期"
+}

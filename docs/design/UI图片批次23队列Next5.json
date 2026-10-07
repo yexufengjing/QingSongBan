@@ -1,0 +1,58 @@
+[
+  {
+    "task_id": "094",
+    "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+    "old": "04_详情/094_采购_采购详情_查看_待领取_状态_跳过采购状态_390dp_fs1p0_p01_v01.png",
+    "label": "跳过采购状态",
+    "version": 2,
+    "prompt": "LOCAL edit only background so native skip confirmation is reachable: current status badge 采购中 (NOT待领取), 入厂通知日期 and 领取地点 display —, bottom right action 设为待领取. Keep dialog exact text and buttons unchanged. This is existing purchase with partial stock-in, manually returned to采购中; don't change quantities or make inventory updates.",
+    "screen": 1,
+    "path": "04_详情/094_采购_采购详情_查看_待领取_状态_跳过采购状态_390dp_fs1p0_p01_v02.png",
+    "issues": [
+      "源码原生状态补充"
+    ],
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-c551252a-ea6b-48bf-9d10-c0c3ea9073fa.png"
+  },
+  {
+    "task_id": "094",
+    "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+    "old": "04_详情/094_采购_采购详情_查看_待领取_状态_跳过采购状态_390dp_fs1p0_p01_v01.png",
+    "label": "删除确认",
+    "version": 1,
+    "prompt": "Use attached blue-white style. Simple centered dialog title 删除采购记录; exact body 确认将这条未入库采购记录移入回收状态？; buttons 取消 and 确认删除. Dim background must be pending application purchase with NO prior stock-in: status 待申报,申报100双,OA/分配/通知日期 and执行人/领取地点 all —, no stock-in quantity or partial progress. Bottom actions 编辑信息 and 确认已申报. Dialog no illustration.",
+    "screen": 1,
+    "path": "04_详情/094_采购_采购详情_查看_待领取_状态_删除确认_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "源码原生状态补充"
+    ],
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-407873a8-5bff-4f76-8500-09404cc8c8e1.png"
+  },
+  {
+    "task_id": "091",
+    "source": "lib/features/purchase/presentation/purchase_create_page.dart",
+    "old": "05_表单与编辑/091_采购_新建待申报_新增_已填_390dp_fs1p0_p01_v03.png",
+    "label": "编辑待申报",
+    "version": 1,
+    "prompt": "LOCAL edit only new-vs-edit state. Title 编辑待申报采购, remove 尚未保存 tag, bottom left 取消 and right 保存修改. Preserve all existing fields, selected reason 库存不足, creation date2026-09-24, note秋季补充,100双 existing material qty/currentstock20. No stars, no clear icons, no new fields. Existing awaiting application record in edit mode.",
+    "screen": 1,
+    "path": "05_表单与编辑/091_采购_新建待申报_新增_已填_状态_编辑待申报_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "源码原生状态补充"
+    ],
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-e21c09c7-66bb-4afe-a056-79d7c432a2e4.png"
+  },
+  {
+    "task_id": "076",
+    "source": "lib/features/inventory/presentation/inventory_material_form_page.dart",
+    "old": "05_表单与编辑/076_库存_新增物资_新增_已填_390dp_fs1p0_p01_v02.png",
+    "label": "新增分类",
+    "version": 1,
+    "prompt": "Use existing exact blue-white mobile style. Dim existing material form and show compact centered white dialog title 新增物资分类, ONE plain text input 分类名称 (empty), buttons 取消 and 新增. No large illustration, no X, no other fields, no dropdown, no stars. Preserve background data.",
+    "screen": 1,
+    "path": "05_表单与编辑/076_库存_新增物资_新增_已填_状态_新增分类_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "源码原生状态补充"
+    ],
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-1aeef33c-03d9-47ca-97d3-39037fe87ae1.png"
+  }
+]

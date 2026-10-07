@@ -1,0 +1,50 @@
+[
+  {
+    "task_id": "091",
+    "source": "lib/features/purchase/presentation/purchase_create_page.dart",
+    "old": "05_表单与编辑/091_采购_新建待申报_新增_已填_状态_手动新增物资_390dp_fs1p0_p01_v01.png",
+    "screen": 1,
+    "path": "05_表单与编辑/091_采购_新建待申报_新增_已填_状态_手动新增物资_390dp_fs1p0_p01_v02.png",
+    "issues": [
+      "原生流程状态补图"
+    ],
+    "prompt": "Make only these LOCAL corrections to attached blue-white mobile modal UI, do not add or change anything else. Remove all red stars, top-right X, unit dropdown arrow, quantity minus/plus buttons. Four plain text inputs only: 物资名称, 规格型号（选填）, 单位 current 件, 申报数量 current1. Keep 取消 and 添加 buttons. No invented dropdown/stepper/mandatory decoration. Output one screenshot, no collage/shell.",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-8d453b3d-7dae-4ebe-925d-4dced4a36ea9.png"
+  },
+  {
+    "task_id": "094",
+    "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+    "old": "04_详情/094_采购_采购详情_查看_待领取_状态_OA申报确认_390dp_fs1p0_p01_v01.png",
+    "screen": 1,
+    "path": "04_详情/094_采购_采购详情_查看_待领取_状态_OA申报确认_390dp_fs1p0_p01_v02.png",
+    "issues": [
+      "原生流程状态补图"
+    ],
+    "prompt": "Make only these LOCAL corrections to attached blue-white mobile modal UI, do not add or change anything else. Remove red star and all text-field clear X icons. Optional fields labels must include （可选） for OA流程编号, OA流程标题, OA流程链接. Bottom single action exactly 确认. No extra instructional description. Header icon small flat outline document. Preserve date, code, title andURL. Output one screenshot, no collage/shell.",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-0888c114-c8b6-4c5e-b5c7-128cab961f3a.png"
+  },
+  {
+    "task_id": "094",
+    "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+    "old": "04_详情/094_采购_采购详情_查看_待领取_状态_采购分配填写_390dp_fs1p0_p01_v01.png",
+    "screen": 1,
+    "path": "04_详情/094_采购_采购详情_查看_待领取_状态_采购分配填写_390dp_fs1p0_p01_v02.png",
+    "issues": [
+      "原生流程状态补图"
+    ],
+    "prompt": "Make only these LOCAL corrections to attached blue-white mobile modal UI, do not add or change anything else. Remove dropdown arrows from department and purchaser because these are plain TextField inputs. Remove 取消 button entirely; bottom ONE full-width blue 确认. Preserve date9/26, department资材分部, purchaser李明. Only date remains clickable calendar. Output one screenshot, no collage/shell.",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-388031ce-4606-4b5f-8a73-ccee74646d2e.png"
+  },
+  {
+    "task_id": "094",
+    "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+    "old": "04_详情/094_采购_采购详情_查看_待领取_状态_入厂通知填写_390dp_fs1p0_p01_v01.png",
+    "screen": 1,
+    "path": "04_详情/094_采购_采购详情_查看_待领取_状态_入厂通知填写_390dp_fs1p0_p01_v02.png",
+    "issues": [
+      "原生流程状态补图"
+    ],
+    "prompt": "Make only these LOCAL corrections to attached blue-white mobile modal UI, do not add or change anything else. Remove dropdown arrow from 领取地点, a plain text field. Remove 取消 button. Exactly ONE full-width blue 设为待领取. Title EXACT 收到物资入厂通知. Preserve通知日期2026-10-04,领取地点（选填）物资仓库. Header tiny flat outline icon without square background. Output one screenshot, no collage/shell.",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-c8fcf69f-273c-43dc-98a4-8e686f526a76.png"
+  }
+]

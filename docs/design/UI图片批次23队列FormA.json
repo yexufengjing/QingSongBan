@@ -1,0 +1,50 @@
+[
+  {
+    "task_id": "076",
+    "source": "lib/features/inventory/presentation/inventory_material_form_page.dart",
+    "old": "05_表单与编辑/076_库存_新增物资_新增_已填_390dp_fs1p0_p02_v03.png",
+    "screen": 2,
+    "path": "05_表单与编辑/076_库存_新增物资_新增_已填_状态_编辑状态_390dp_fs1p0_p02_v01.png",
+    "issues": [
+      "实际表单状态补图"
+    ],
+    "prompt": "Edit attached existing mobile UI. Preserve blue-white gradient, all source business fields. One standalone 390dp screenshot, no collage or shell. Change title to 编辑物资. Same stock rules and settings. Add exactly ONE row below 常用物资: label 物资状态, dropdown current 启用, supported choices 启用/停用/淘汰 (menu closed). Keep minimum10, maximum100, defaultsource总库, remark日常劳保领用, 2 switches and 保存物资 button. This is edit-only native field, not new functionality.",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-7f3d3be6-f1ae-47f9-9961-1e8527067a6d.png"
+  },
+  {
+    "task_id": "076",
+    "source": "lib/features/inventory/presentation/inventory_material_form_page.dart",
+    "old": "05_表单与编辑/076_库存_新增物资_新增_已填_390dp_fs1p0_p01_v02.png",
+    "screen": 1,
+    "path": "05_表单与编辑/076_库存_新增物资_新增_已填_状态_校验失败_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "实际表单状态补图"
+    ],
+    "prompt": "Edit attached existing mobile UI. Preserve blue-white gradient, all source business fields. One standalone 390dp screenshot, no collage or shell. Set name,code,unit inputs empty. Show red border + exact small red 必填 beneath each of these3 inputs only. Preserve category劳保用品, model通用型, location一号仓. NO red required stars and no new validation dialog.",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-9a0491cb-43ad-483e-affa-2203ec3486fd.png"
+  },
+  {
+    "task_id": "076",
+    "source": "lib/features/inventory/presentation/inventory_material_form_page.dart",
+    "old": "05_表单与编辑/076_库存_新增物资_新增_已填_390dp_fs1p0_p02_v03.png",
+    "screen": 2,
+    "path": "05_表单与编辑/076_库存_新增物资_新增_已填_状态_保存中_390dp_fs1p0_p02_v01.png",
+    "issues": [
+      "实际表单状态补图"
+    ],
+    "prompt": "Edit attached existing mobile UI. Preserve blue-white gradient, all source business fields. One standalone 390dp screenshot, no collage or shell. Only change bottom 保存物资 button to disabled pale-blue busy button with small spinner and EXACT 正在保存…. All entered fields/switch states preserved. No full-screen blocking spinner, no success notification, no percentage.",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-09723af4-49ef-49f1-871c-953cc90ddff8.png"
+  },
+  {
+    "task_id": "083",
+    "source": "lib/features/inventory/presentation/inventory_stock_adjustment_page.dart",
+    "old": "05_表单与编辑/083_库存_数量调整_办理_已填_390dp_fs1p0_p01_v01.png",
+    "screen": 1,
+    "path": "05_表单与编辑/083_库存_数量调整_办理_已填_状态_校验失败_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "实际表单状态补图"
+    ],
+    "prompt": "Edit attached existing mobile UI. Preserve blue-white gradient, all source business fields. One standalone 390dp screenshot, no collage or shell. Set adjusted quantity input to -1 with red border and EXACT red validation 请输入大于或等于 0 的数量. Current stock20双 unchanged, difference preview -21双 (unsaved invalid draft). Keep reason实物盘点后修正 and 保存调整 button. No dialog, no inventory update.",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-7955ca9e-120f-4349-919f-5278e1a60731.png"
+  }
+]

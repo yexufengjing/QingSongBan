@@ -1,0 +1,79 @@
+{
+  "batch": 27,
+  "date": "2026-10-07",
+  "calls": 5,
+  "returned_png": 5,
+  "current_outputs": [
+    {
+      "task_id": "015",
+      "path": "09_弹层选择器与菜单/015_月考勤表_编辑单日_内容状态_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/015_月考勤表_编辑单日_内容状态_v01.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "a4799e905fcaa774db55963033230d5ea6628412ffd113afe15e2151a51c7bf8",
+      "batch": 27,
+      "tool": "built-in imagegen",
+      "state": "月考勤表_编辑单日",
+      "visual_review": "逐图内容初检；运行时触达与设备验收延期",
+      "user_review": "未逐图用户验收",
+      "issues": []
+    },
+    {
+      "task_id": "016",
+      "path": "09_弹层选择器与菜单/016_月名单_复制上月确认_内容状态_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/016_月名单_复制上月确认_内容状态_v01.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "07a2e665c2d7fefeb5f8ced402b799cfc0d92c93f14459ffa7f3af6845f8b848",
+      "batch": 27,
+      "tool": "built-in imagegen",
+      "state": "月名单_复制上月确认",
+      "visual_review": "逐图内容初检；运行时触达与设备验收延期",
+      "user_review": "未逐图用户验收",
+      "issues": []
+    },
+    {
+      "task_id": "016",
+      "path": "09_弹层选择器与菜单/016_月名单_移除确认_内容状态_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/016_月名单_移除确认_内容状态_v01.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "611d6834cf6aff1b6535c801fe113bb8a1a3c9a8568b2d6d73a60bc7c5370c21",
+      "batch": 27,
+      "tool": "built-in imagegen",
+      "state": "月名单_移除确认",
+      "visual_review": "逐图内容初检；运行时触达与设备验收延期",
+      "user_review": "未逐图用户验收",
+      "issues": []
+    },
+    {
+      "task_id": "004",
+      "path": "09_弹层选择器与菜单/004_每日考勤_备注对话框_内容状态_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/004_每日考勤_备注对话框_内容状态_v01.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "aa5edd7658df7b036e6db3642c5fd9fea1fcde8b99369eadfadf2690d28aeeb5",
+      "batch": 27,
+      "tool": "built-in imagegen",
+      "state": "每日考勤_备注对话框",
+      "visual_review": "逐图内容初检；运行时触达与设备验收延期",
+      "user_review": "未逐图用户验收",
+      "issues": []
+    },
+    {
+      "task_id": "004",
+      "path": "09_弹层选择器与菜单/004_每日考勤_半日状态菜单_内容状态_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/004_每日考勤_半日状态菜单_内容状态_v01.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "9e404ec9f369eb6faac38a8c7aff0d99bcf0d497ba13a130651306d7bb1c35e3",
+      "batch": 27,
+      "tool": "built-in imagegen",
+      "state": "每日考勤_半日状态菜单",
+      "visual_review": "逐图内容初检；运行时触达与设备验收延期",
+      "user_review": "未逐图用户验收",
+      "issues": []
+    }
+  ],
+  "old_outputs": []
+}

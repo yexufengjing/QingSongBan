@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-07",
+  "status": "额度已实测恢复；按用户要求停止",
+  "imagegen_calls": 80,
+  "returned": 80,
+  "current_candidates": 50,
+  "content_checked": 48,
+  "remaining": 2
+}

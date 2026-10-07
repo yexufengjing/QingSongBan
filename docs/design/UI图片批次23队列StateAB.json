@@ -1,0 +1,90 @@
+[
+  {
+    "task_id": "075",
+    "name": "物资信息",
+    "source": "lib/features/inventory/presentation/inventory_materials_page.dart",
+    "old": "03_列表与记录/075_库存_物资信息_查看_有数据_390dp_fs1p0_p01_v04.png",
+    "screen": 1,
+    "path": "03_列表与记录/075_库存_物资信息_状态_加载中_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "真实源码状态补图：加载中"
+    ],
+    "prompt": "以附图为该页唯一蓝白视觉参考，生成单张390dp/844dp/fontScale1的同页真实流程状态。标题、导航、筛选保留，内容按以下源码状态替换，不增加虚构功能、不加解释注释，不拼贴无外壳，小彩色扁平图标。保留搜索、常用物资、分类，内容区仅蓝色小圆形加载指示。统计与物资记录暂不显示，不把未读取数值写为0，无空态文字、无重试。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-55f477a3-1574-4630-ad06-ca0fc671b047.png"
+  },
+  {
+    "task_id": "075",
+    "name": "物资信息",
+    "source": "lib/features/inventory/presentation/inventory_materials_page.dart",
+    "old": "03_列表与记录/075_库存_物资信息_查看_有数据_390dp_fs1p0_p01_v04.png",
+    "screen": 1,
+    "path": "03_列表与记录/075_库存_物资信息_状态_读取失败_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "真实源码状态补图：读取失败"
+    ],
+    "prompt": "以附图为该页唯一蓝白视觉参考，生成单张390dp/844dp/fontScale1的同页真实流程状态。标题、导航、筛选保留，内容按以下源码状态替换，不增加虚构功能、不加解释注释，不拼贴无外壳，小彩色扁平图标。保留搜索、常用物资、分类，内容区白卡小警示图标，加载失败；库存数据暂时无法读取，请重试。；蓝描边重试。统计与记录不显示。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-0c70d237-91fd-4e71-88e1-de3bacb1d636.png"
+  },
+  {
+    "task_id": "075",
+    "name": "物资信息",
+    "source": "lib/features/inventory/presentation/inventory_materials_page.dart",
+    "old": "03_列表与记录/075_库存_物资信息_查看_有数据_390dp_fs1p0_p01_v04.png",
+    "screen": 1,
+    "path": "03_列表与记录/075_库存_物资信息_状态_首次空_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "真实源码状态补图：首次空"
+    ],
+    "prompt": "以附图为该页唯一蓝白视觉参考，生成单张390dp/844dp/fontScale1的同页真实流程状态。标题、导航、筛选保留，内容按以下源码状态替换，不增加虚构功能、不加解释注释，不拼贴无外壳，小彩色扁平图标。没有任何物资，显示3种指标都是0，正文小扁平箱子图标、还没有物资、添加物资档案后即可办理入库和领用。、蓝色新增物资按钮。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-bf4693f4-fbcd-4213-852a-6781592f4395.png"
+  },
+  {
+    "task_id": "075",
+    "name": "物资信息",
+    "source": "lib/features/inventory/presentation/inventory_materials_page.dart",
+    "old": "03_列表与记录/075_库存_物资信息_查看_有数据_390dp_fs1p0_p01_v04.png",
+    "screen": 1,
+    "path": "03_列表与记录/075_库存_物资信息_状态_筛选空_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "真实源码状态补图：筛选空"
+    ],
+    "prompt": "以附图为该页唯一蓝白视觉参考，生成单张390dp/844dp/fontScale1的同页真实流程状态。标题、导航、筛选保留，内容按以下源码状态替换，不增加虚构功能、不加解释注释，不拼贴无外壳，小彩色扁平图标。搜索框已输入滤芯，无匹配，指标统计仍为总数3/常用2/停用0（来自所有物资）；正文小图标、没有匹配的物资、试试其他名称、型号或编码。；不增加清除筛选按钮。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-00d7bb1e-c2dd-458b-a529-674ddf660a6a.png"
+  },
+  {
+    "task_id": "080",
+    "source": "lib/features/inventory/presentation/inventory_receipt_detail_page.dart",
+    "old": "04_详情/080_库存_入库详情_查看_有数据_390dp_fs1p0_p01_v01.png",
+    "screen": 1,
+    "path": "04_详情/080_库存_入库详情_查看_有数据_状态_撤销确认_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "当前入库详情作为灰色半透明背景，上方白色居中圆角确认对话框：撤销这笔入库？；库存将按入库明细反向调整，并生成对应流水。；底部取消／撤销入库两动作。不得添加永久删除文案、成功或进度。"
+    ],
+    "prompt": "编辑所附单张UI，保持蓝白轻渐变、所有真实业务样例和字段。390dp/fontScale1，单页非拼贴无外壳。当前入库详情作为灰色半透明背景，上方白色居中圆角确认对话框：撤销这笔入库？；库存将按入库明细反向调整，并生成对应流水。；底部取消／撤销入库两动作。不得添加永久删除文案、成功或进度。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-58d9f54f-f068-4c92-b590-006546f2752b.png"
+  },
+  {
+    "task_id": "081",
+    "source": "lib/features/inventory/presentation/inventory_issue_detail_page.dart",
+    "old": "04_详情/081_库存_出库详情_查看_有数据_390dp_fs1p0_p01_v01.png",
+    "screen": 1,
+    "path": "04_详情/081_库存_出库详情_查看_有数据_状态_撤销确认_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "当前出库详情作为灰色半透明背景，上方白色居中圆角确认对话框：撤销这笔出库？；库存会按出库明细返还，并生成对应流水。；底部取消／撤销出库两动作。不得添加永久删除文案、成功或进度。"
+    ],
+    "prompt": "编辑所附单张UI，保持蓝白轻渐变、所有真实业务样例和字段。390dp/fontScale1，单页非拼贴无外壳。当前出库详情作为灰色半透明背景，上方白色居中圆角确认对话框：撤销这笔出库？；库存会按出库明细返还，并生成对应流水。；底部取消／撤销出库两动作。不得添加永久删除文案、成功或进度。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-0558645c-8705-42d0-915c-3ce614bd9089.png"
+  },
+  {
+    "task_id": "086",
+    "source": "lib/features/inventory/presentation/inventory_stocktake_detail_page.dart",
+    "old": "06_台账与表格/086_库存_盘点详情_办理_草稿_390dp_fs1p0_p01_v01.png",
+    "screen": 1,
+    "path": "06_台账与表格/086_库存_盘点详情_办理_草稿_状态_盘点确认_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "当前未确认盘点详情作为灰色半透明背景，居中白色圆角确认对话框：确认盘点？；确认后将按实盘数量更新库存，并为盘盈盘亏生成库存流水。；继续核对／确认盘点。保留原账面20、实盘18、差异-2。不得提前表示已更新库存。"
+    ],
+    "prompt": "编辑所附单张UI，保持蓝白轻渐变、所有真实业务样例和字段。390dp/fontScale1，单页非拼贴无外壳。当前未确认盘点详情作为灰色半透明背景，居中白色圆角确认对话框：确认盘点？；确认后将按实盘数量更新库存，并为盘盈盘亏生成库存流水。；继续核对／确认盘点。保留原账面20、实盘18、差异-2。不得提前表示已更新库存。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-8f061f24-b2b2-4cfb-92ed-4e06ad69451d.png"
+  }
+]

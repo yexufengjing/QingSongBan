@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-07",
+  "all_selected_png_count": 320,
+  "decoded_and_sha_verified_before_retirement": 334,
+  "retired_superseded": 14,
+  "invalid_png_or_sha_or_prompt": [],
+  "child_outputs_rechecked": 175,
+  "root_batch_26_to_33": 51,
+  "brand_png_svg_hashes_refreshed": 8,
+  "brand_xml_count": 5,
+  "main_current_doc_links": "已检查，无缺失",
+  "size_width_fontscale": "用户取消，不作为未办项",
+  "device_code": "用户延期",
+  "completion": "未完成，quota阻断；47条明确缺口及根代理52页映射待闭合"
+}

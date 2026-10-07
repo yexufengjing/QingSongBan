@@ -1,0 +1,371 @@
+{
+  "batch": 22,
+  "spec_stage": 9,
+  "date": "2026-10-07",
+  "task_ids": [
+    "061"
+  ],
+  "calls": 18,
+  "calls_count_basis": "18次内置imagegen均返回：原12次+三个菜单/预览背景和三个SnackBar末句号定点修正6次；当前11，旧7。",
+  "returned_image_count": 18,
+  "current_reference_image_count": 11,
+  "retained_old_image_count": 7,
+  "outputs": [
+    {
+      "task_id": "061",
+      "path": "03_列表与记录/061_车辆_车辆附件_查看_有数据_390dp_fs1p0_p01_v06.png",
+      "prompt_path": "03_列表与记录/061_车辆_车辆附件_查看_有数据_390dp_fs1p0_p01_v06.prompt.txt",
+      "state": "主态核心视觉修正",
+      "screen": 1,
+      "version": 6,
+      "batch": 22,
+      "pixel_height": 1846,
+      "pixel_width": 852,
+      "sha256": "ea875607ea5c015a47d0533d73bedf2cbcd9c3e2851731e96c3ec79a7fcf1b77",
+      "issues": [
+        "卡车图标已明显缩小且去浅底块；高度约24dp、宽约38dp，精确尺度待验收"
+      ],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen"
+    },
+    {
+      "task_id": "061",
+      "path": "09_弹层选择器与菜单/061_车辆_车辆附件_更多_有效附件_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "09_弹层选择器与菜单/061_车辆_车辆附件_更多_有效附件_390dp_fs1p0_p01_v02.prompt.txt",
+      "state": "有效菜单",
+      "screen": 1,
+      "version": 2,
+      "batch": 22,
+      "sha256": "8373def2516fb603a57cd4b263dd7f668fc0e9b0b2189d0210f7a29b7ed8f103",
+      "pixel_height": 1844,
+      "pixel_width": 853,
+      "issues": [],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen"
+    },
+    {
+      "task_id": "061",
+      "path": "09_弹层选择器与菜单/061_车辆_车辆附件_更多_已删除_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "09_弹层选择器与菜单/061_车辆_车辆附件_更多_已删除_390dp_fs1p0_p01_v02.prompt.txt",
+      "state": "删除菜单",
+      "screen": 1,
+      "version": 2,
+      "batch": 22,
+      "pixel_height": 1844,
+      "pixel_width": 853,
+      "sha256": "e6c8f5167674ae6b0813858f1aa65dd13e0b935eb351e9302910c0a34a028010",
+      "issues": [],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen"
+    },
+    {
+      "task_id": "061",
+      "path": "09_弹层选择器与菜单/061_车辆_车辆附件_预览_文档_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "09_弹层选择器与菜单/061_车辆_车辆附件_预览_文档_390dp_fs1p0_p01_v02.prompt.txt",
+      "state": "文档预览",
+      "screen": 1,
+      "version": 2,
+      "batch": 22,
+      "pixel_width": 852,
+      "pixel_height": 1846,
+      "sha256": "cafa9ecb050cd103ad2f93ab970b9c3bc46a4a9ede79ab5aeb77f6d2baaed168",
+      "issues": [
+        "背景添加按钮字色未随模态遮罩变暗；主要弹窗及内容保留"
+      ],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen"
+    },
+    {
+      "task_id": "061",
+      "path": "09_弹层选择器与菜单/061_车辆_车辆附件_添加_类别选择_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/061_车辆_车辆附件_添加_类别选择_390dp_fs1p0_p01_v01.prompt.txt",
+      "state": "类别选择",
+      "screen": 1,
+      "version": 1,
+      "batch": 22,
+      "pixel_width": 852,
+      "pixel_height": 1846,
+      "sha256": "69e6909a56b8b7ba13791029f090729f80b3bcaf008202a405fcd16dc075b6df",
+      "issues": [],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen"
+    },
+    {
+      "task_id": "061",
+      "path": "10_通用状态/061_车辆_车辆附件_添加_忙碌禁用_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "10_通用状态/061_车辆_车辆附件_添加_忙碌禁用_390dp_fs1p0_p01_v01.prompt.txt",
+      "state": "上传禁用",
+      "screen": 1,
+      "version": 1,
+      "batch": 22,
+      "sha256": "e3e557e54b252fad4a2da1e9e0bf4410c9c7afacd9638beadf85143a3bbe1ec8",
+      "pixel_height": 1846,
+      "pixel_width": 852,
+      "issues": [],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen"
+    },
+    {
+      "task_id": "061",
+      "path": "10_通用状态/061_车辆_车辆附件_添加_已保存_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "10_通用状态/061_车辆_车辆附件_添加_已保存_390dp_fs1p0_p01_v02.prompt.txt",
+      "state": "保存反馈",
+      "screen": 1,
+      "version": 2,
+      "batch": 22,
+      "sha256": "693ed32934219466a7f3fa55051c041e607d260d6950a5be4766e6505364a85f",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "issues": [],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen"
+    },
+    {
+      "task_id": "061",
+      "path": "10_通用状态/061_车辆_车辆附件_添加_失败_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "10_通用状态/061_车辆_车辆附件_添加_失败_390dp_fs1p0_p01_v02.prompt.txt",
+      "state": "添加失败",
+      "screen": 1,
+      "version": 2,
+      "batch": 22,
+      "pixel_height": 1846,
+      "pixel_width": 852,
+      "sha256": "1099aefb118dde357505dcd329e4b736135b46c9d2886d8d151f584302339a7a",
+      "issues": [],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen"
+    },
+    {
+      "task_id": "061",
+      "path": "10_通用状态/061_车辆_车辆附件_查看_文件缺失_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "10_通用状态/061_车辆_车辆附件_查看_文件缺失_390dp_fs1p0_p01_v02.prompt.txt",
+      "state": "缺文件",
+      "screen": 1,
+      "version": 2,
+      "batch": 22,
+      "sha256": "a6364bc839b732b4fe1d30a462c15fa688f89bc7e55b471257726ce73d9050b1",
+      "pixel_height": 1846,
+      "pixel_width": 852,
+      "issues": [],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen"
+    },
+    {
+      "task_id": "061",
+      "path": "03_列表与记录/061_车辆_车辆附件_恢复_已恢复_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "03_列表与记录/061_车辆_车辆附件_恢复_已恢复_390dp_fs1p0_p01_v01.prompt.txt",
+      "state": "恢复结果",
+      "screen": 1,
+      "version": 1,
+      "batch": 22,
+      "pixel_width": 852,
+      "pixel_height": 1846,
+      "sha256": "1e49d5533c78325f28aff27d5b332c6a2ada0d09acb23f09f0b93f3bad1211ed",
+      "issues": [],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen"
+    },
+    {
+      "task_id": "061",
+      "path": "09_弹层选择器与菜单/061_车辆_车辆附件_预览_图片_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/061_车辆_车辆附件_预览_图片_390dp_fs1p0_p01_v01.prompt.txt",
+      "state": "图片预览",
+      "screen": 1,
+      "version": 1,
+      "batch": 22,
+      "sha256": "8a019c4d208bf40fd4714b2519c71a9c331cfb64907d71803acd2b9d324c2c2f",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "issues": [
+        "图片弹窗下背景旧证照卡向下移动，未完全像素保持；主要身份/分类/卡数据保留"
+      ],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen"
+    }
+  ],
+  "retained_old_outputs": [
+    {
+      "task_id": "061",
+      "path": "03_列表与记录/061_车辆_车辆附件_查看_有数据_390dp_fs1p0_p01_v05.png",
+      "prompt_path": "03_列表与记录/061_车辆_车辆附件_查看_有数据_390dp_fs1p0_p01_v05.prompt.txt",
+      "state": "主态视觉修正",
+      "screen": 1,
+      "version": 5,
+      "batch": 22,
+      "sha256": "82835ed215ea5fee19634b5b1a638524d1c6455b343d655bb8a3c86b8fe2e4af",
+      "pixel_height": 1846,
+      "pixel_width": 852,
+      "issues": [
+        "卡车已去水滴并平面化，但身份图标和浅底仍大于24/32dp合同；按钮蓝色投影仍存在，已单次修订不循环"
+      ],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen"
+    },
+    {
+      "task_id": "061",
+      "path": "09_弹层选择器与菜单/061_车辆_车辆附件_更多_有效附件_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/061_车辆_车辆附件_更多_有效附件_390dp_fs1p0_p01_v01.prompt.txt",
+      "state": "有效菜单",
+      "screen": 1,
+      "version": 1,
+      "batch": 22,
+      "sha256": "56ac34e9a8a9ddcf862f6376748c105c7166151c7d69524437491e9e34ed7c58",
+      "pixel_height": 1846,
+      "pixel_width": 852,
+      "issues": [],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen"
+    },
+    {
+      "task_id": "061",
+      "path": "09_弹层选择器与菜单/061_车辆_车辆附件_更多_已删除_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/061_车辆_车辆附件_更多_已删除_390dp_fs1p0_p01_v01.prompt.txt",
+      "state": "删除菜单",
+      "screen": 1,
+      "version": 1,
+      "batch": 22,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "695fc6c0d780a1ac2ccfa758c943046b9b4368155845f54d745b480749895990",
+      "issues": [],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen"
+    },
+    {
+      "task_id": "061",
+      "path": "09_弹层选择器与菜单/061_车辆_车辆附件_预览_文档_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "09_弹层选择器与菜单/061_车辆_车辆附件_预览_文档_390dp_fs1p0_p01_v01.prompt.txt",
+      "state": "文档预览",
+      "screen": 1,
+      "version": 1,
+      "batch": 22,
+      "pixel_width": 852,
+      "sha256": "bf5d29bdf6cc64702e148c7f487d35b0de2f7c6010da6aa6a818358127941c65",
+      "pixel_height": 1846,
+      "issues": [],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen"
+    },
+    {
+      "task_id": "061",
+      "path": "10_通用状态/061_车辆_车辆附件_添加_已保存_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "10_通用状态/061_车辆_车辆附件_添加_已保存_390dp_fs1p0_p01_v01.prompt.txt",
+      "state": "保存反馈",
+      "screen": 1,
+      "version": 1,
+      "batch": 22,
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "23bff632e2c59f58a83410f415e07f707fa1fe76ec631ffe9f601f04d60f3f51",
+      "issues": [
+        "SnackBar文案末尾擅加句号，源码为附件已保存"
+      ],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen"
+    },
+    {
+      "task_id": "061",
+      "path": "10_通用状态/061_车辆_车辆附件_添加_失败_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "10_通用状态/061_车辆_车辆附件_添加_失败_390dp_fs1p0_p01_v01.prompt.txt",
+      "state": "添加失败",
+      "screen": 1,
+      "version": 1,
+      "batch": 22,
+      "sha256": "b3c21e8fbc23bc911f4d0b072037e7c5bd347ae5478c47e215563d5600b86932",
+      "pixel_height": 1846,
+      "pixel_width": 852,
+      "issues": [
+        "SnackBar末尾擅加句号；源码所选文件不存在无句号"
+      ],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen"
+    },
+    {
+      "task_id": "061",
+      "path": "10_通用状态/061_车辆_车辆附件_查看_文件缺失_390dp_fs1p0_p01_v01.png",
+      "prompt_path": "10_通用状态/061_车辆_车辆附件_查看_文件缺失_390dp_fs1p0_p01_v01.prompt.txt",
+      "state": "缺文件",
+      "screen": 1,
+      "version": 1,
+      "batch": 22,
+      "pixel_width": 852,
+      "sha256": "e8a382575067ea1da75643d93a69037e1463de5fce5b3a823b04ea335413ec96",
+      "pixel_height": 1846,
+      "issues": [
+        "SnackBar末尾擅加句号，源码文件缺失，无法查看无句号"
+      ],
+      "prompt_pair_verified": true,
+      "resolution_requirement_status": "用户豁免",
+      "tool": "built-in imagegen"
+    }
+  ],
+  "preserved_prior_references": [
+    "03_列表与记录/061_车辆_车辆附件_查看_有数据_390dp_fs1p0_p01_v04.png"
+  ],
+  "resolution_requirement_status": "用户豁免",
+  "source_evidence": [
+    {
+      "path": "lib/features/vehicles/presentation/vehicle_attachments_page.dart",
+      "lines": "35–79,92–157",
+      "contract": "身份/全部加五类别/显示已删除/附件列表，_busy仅添加入口禁用，无进度UI；依规范单一新增仅留FAB，源码仍有顶+"
+    },
+    {
+      "path": "lib/features/vehicles/presentation/vehicle_attachments_page.dart",
+      "lines": "163–218",
+      "contract": "类别选择SimpleDialog五项；系统FilePicker后本地导入；附件已保存/添加失败：$error SnackBar"
+    },
+    {
+      "path": "lib/features/vehicles/presentation/vehicle_attachments_page.dart",
+      "lines": "220–327,385–398",
+      "contract": "图片Dialog InteractiveViewer无按钮；非图片原文件名/类别/大小/说明及关闭/系统打开/导出副本；缺文件SnackBar；有效查看/导出副本/删除，删除仅恢复；删除恢复无确认或成功提示"
+    },
+    {
+      "path": "lib/features/vehicles/data/vehicle_attachment_repository.dart",
+      "lines": "73,179",
+      "contract": "所选文件不存在；附件文件已丢失，无法恢复；Dart StateError文本带Bad state前缀"
+    }
+  ],
+  "feedback_contracts": {
+    "export_success": "已导出：$path",
+    "export_failure": "导出失败：$error（缺文件样例：Bad state: 附件文件已丢失）",
+    "restore_failure": "恢复失败：$error（缺文件样例：Bad state: 附件文件已丢失，无法恢复）",
+    "system_open_failure": "系统打开失败：${result.message}",
+    "image_decode_failure": "图片读取失败：$error"
+  },
+  "not_generated_same_structure": [
+    "导出成功/导出失败/恢复失败/系统打开失败的同构SnackBar，依父代理收敛在合同明确，未宣称各文案已生成",
+    "图片读取失败Dialog内容为动态error，与正常图片Dialog框架相同，本轮未另画"
+  ],
+  "source_absent_states": [
+    "无上传进度条/百分比/spinner/取消上传UI",
+    "无删除确认、恢复确认或删除/恢复成功SnackBar"
+  ],
+  "visual_references": [
+    "03_列表与记录/029_人员_人员附件_查看_有数据_390dp_fs1p0_p01_v01.png",
+    "09_弹层选择器与菜单/111_附属_附件预览_查看_文档_390dp_fs1p0_p01_v01.png",
+    "assets/vehicles/water-truck.png"
+  ],
+  "pending": [
+    "v06小车高度已明显缩小，精确dp/sp仅后续复刻验收说明；不计当前图片缺口",
+    "文档预览背景添加按钮字色未随模态遮罩压暗，后续复刻统一遮罩",
+    "图片预览背景第三附件卡向下移动，未改文字数据，后续复刻布局还原"
+  ],
+  "unreturned_requests": []
+}

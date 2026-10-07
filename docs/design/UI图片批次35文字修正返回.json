@@ -1,0 +1,136 @@
+{
+  "items": [
+    {
+      "handoff_id": 12,
+      "batch": 35,
+      "task_id": "053",
+      "state": "删除工具领用",
+      "mode": "local_edit",
+      "input_path": "09_弹层选择器与菜单/053_批次35_状态_删除工具领用_v03.png",
+      "referenced_image_paths": [
+        "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-5989fc59-c04c-4977-b51e-414de8b63cd6.png"
+      ],
+      "input_sha256": "7d2303e5bef7e7cb19f1a68a784e5a293cc23e5a9a1425eaabf048e79368466c",
+      "input_dims": [
+        853,
+        1844
+      ],
+      "input_inspection": "已在批次24逐图view_image初检；047参考本次重新view_image；执行调用前必须再次view_image目标",
+      "supersedes_path": "09_弹层选择器与菜单/053_批次35_状态_删除工具领用_v03.png",
+      "output_path": "09_弹层选择器与菜单/053_批次35_状态_删除工具领用_v04.png",
+      "version": 4,
+      "prompt_path": "09_弹层选择器与菜单/053_批次35_状态_删除工具领用_v04.prompt.txt",
+      "prompt": "仅把弹窗标题「删除工具领取记录？」中的「取」替换成「用」，结果精确「删除工具领用记录？」。背景区块标题「工具领取记录」同样改成「工具领用记录」。不得重排布局，其余全部原样。",
+      "source": "lib/features/item_distribution/presentation/item_distribution_page.dart",
+      "source_sha256": "d1928aac0d164f200c565773d64f89a32adad3c16582352cffedae37e5caa409",
+      "status": "prepared_not_called_usage_limit",
+      "acceptance": [
+        "无额外字段/说明/操作",
+        "真实字段和条件不缺失",
+        "保留输入图字体布局间距和小平面图标",
+        "PNG解码、提示词、SHA",
+        "逐图内容初检；不等于运行时或设备验收"
+      ],
+      "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-8cd8bc4c-5b37-42a7-b5ca-40b4df0a61e6.png"
+    },
+    {
+      "handoff_id": 14,
+      "batch": 35,
+      "task_id": "052",
+      "state": "办公用品月空",
+      "mode": "local_edit",
+      "input_path": "09_弹层选择器与菜单/052_批次35_状态_办公用品月空_v03.png",
+      "referenced_image_paths": [
+        "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-6576963a-4ed5-417e-b794-9d0db2759c5d.png"
+      ],
+      "input_sha256": "20f1be2116aef8e06da0296464075d1e0b3147db89d3a8df29365bf42c090c53",
+      "input_dims": [
+        853,
+        1844
+      ],
+      "input_inspection": "已在批次24逐图view_image初检；047参考本次重新view_image；执行调用前必须再次view_image目标",
+      "supersedes_path": "09_弹层选择器与菜单/052_批次35_状态_办公用品月空_v03.png",
+      "output_path": "09_弹层选择器与菜单/052_批次35_状态_办公用品月空_v04.png",
+      "version": 4,
+      "prompt_path": "09_弹层选择器与菜单/052_批次35_状态_办公用品月空_v04.prompt.txt",
+      "prompt": "仅把正文「本月还没有办公用品领取记录」中的「取」替换成「用」；区块标题「办公用品领取记录」同样换为「办公用品领用记录」。结果正文精确「本月还没有办公用品领用记录，请点击右下角新增。」其它全部原样。",
+      "source": "lib/features/item_distribution/presentation/item_distribution_page.dart",
+      "source_sha256": "d1928aac0d164f200c565773d64f89a32adad3c16582352cffedae37e5caa409",
+      "status": "prepared_not_called_usage_limit",
+      "acceptance": [
+        "无额外字段/说明/操作",
+        "真实字段和条件不缺失",
+        "保留输入图字体布局间距和小平面图标",
+        "PNG解码、提示词、SHA",
+        "逐图内容初检；不等于运行时或设备验收"
+      ],
+      "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-bf38a1ec-5544-49b3-a37e-e52db6ebaad0.png"
+    },
+    {
+      "handoff_id": 16,
+      "batch": 35,
+      "task_id": "052",
+      "state": "办公用品来源",
+      "mode": "local_edit",
+      "input_path": "09_弹层选择器与菜单/052_批次35_状态_办公用品来源_v03.png",
+      "referenced_image_paths": [
+        "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-6acb8433-cb1c-452c-92df-516f3b1d8a46.png"
+      ],
+      "input_sha256": "3a0f7c7ca0ab20c59366efa95970a72ea920939e78cfdc2d67050a140859251a",
+      "input_dims": [
+        853,
+        1844
+      ],
+      "input_inspection": "已在批次24逐图view_image初检；047参考本次重新view_image；执行调用前必须再次view_image目标",
+      "supersedes_path": "09_弹层选择器与菜单/052_批次35_状态_办公用品来源_v03.png",
+      "output_path": "09_弹层选择器与菜单/052_批次35_状态_办公用品来源_v04.png",
+      "version": 4,
+      "prompt_path": "09_弹层选择器与菜单/052_批次35_状态_办公用品来源_v04.prompt.txt",
+      "prompt": "仅替换最底部左侧按钮：现有三个字「未领取」应替换成五个字「改为未领取」。必须写出「改为」前缀。不要改条目绿色「已领取」或右侧「补领」。其它全部原样。",
+      "source": "lib/features/item_distribution/presentation/item_distribution_page.dart",
+      "source_sha256": "d1928aac0d164f200c565773d64f89a32adad3c16582352cffedae37e5caa409",
+      "status": "prepared_not_called_usage_limit",
+      "acceptance": [
+        "无额外字段/说明/操作",
+        "真实字段和条件不缺失",
+        "保留输入图字体布局间距和小平面图标",
+        "PNG解码、提示词、SHA",
+        "逐图内容初检；不等于运行时或设备验收"
+      ],
+      "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-b43e63f3-3303-495d-9bf0-2f625c29d863.png"
+    },
+    {
+      "handoff_id": 17,
+      "batch": 35,
+      "task_id": "053",
+      "state": "工具来源",
+      "mode": "local_edit",
+      "input_path": "09_弹层选择器与菜单/053_批次35_状态_工具来源_v03.png",
+      "referenced_image_paths": [
+        "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-8e388de8-77ab-4f0d-b939-01be600b36c1.png"
+      ],
+      "input_sha256": "367c09f7889d9baf7a39110b48a55e66f345f65500f028a7069dbda06fe474b2",
+      "input_dims": [
+        853,
+        1844
+      ],
+      "input_inspection": "已在批次24逐图view_image初检；047参考本次重新view_image；执行调用前必须再次view_image目标",
+      "supersedes_path": "09_弹层选择器与菜单/053_批次35_状态_工具来源_v03.png",
+      "output_path": "09_弹层选择器与菜单/053_批次35_状态_工具来源_v04.png",
+      "version": 4,
+      "prompt_path": "09_弹层选择器与菜单/053_批次35_状态_工具来源_v04.prompt.txt",
+      "prompt": "仅替换最底部左侧按钮，现有「未领取」替换为完整五字「改为未领取」，必须新增改为两字前缀。Sheet标题「领取明细」替换为「领用明细」。绿色已领取、补领、陈林、所有时间和数据原样。",
+      "source": "lib/features/item_distribution/presentation/item_distribution_page.dart",
+      "source_sha256": "d1928aac0d164f200c565773d64f89a32adad3c16582352cffedae37e5caa409",
+      "status": "prepared_not_called_usage_limit",
+      "acceptance": [
+        "无额外字段/说明/操作",
+        "真实字段和条件不缺失",
+        "保留输入图字体布局间距和小平面图标",
+        "PNG解码、提示词、SHA",
+        "逐图内容初检；不等于运行时或设备验收"
+      ],
+      "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11346-efec-7181-b2ac-1c948447b18b\\exec-e6223a1b-2414-42f4-8ff2-c04da3f45790.png"
+    }
+  ]
+}

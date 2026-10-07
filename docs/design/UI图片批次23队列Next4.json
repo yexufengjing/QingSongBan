@@ -1,0 +1,50 @@
+[
+  {
+    "task_id": "088",
+    "source": "lib/features/inventory/presentation/inventory_replenishments_page.dart",
+    "old": "03_列表与记录/088_库存_待采购待补充_查看_有数据_状态_新增清单项_390dp_fs1p0_p01_v01.png",
+    "screen": 1,
+    "prompt": "LOCAL edit only the modal. Exact title 新增待补充事项. Field labels 名称, 单位, 计划补充数量, 补充方式, 需求原因（可选）. Unit 件 is a plain text input WITHOUT arrow. Quantity 1 is a plain text input WITHOUT minus/plus. Only 补充方式 总库领取 has a dropdown arrow. Remove close X and 0/200 counter. Keep 取消 保存. Preserve background and all other content.",
+    "path": "03_列表与记录/088_库存_待采购待补充_查看_有数据_状态_新增清单项_390dp_fs1p0_p01_v02.png",
+    "issues": [
+      "源码实际流程补充"
+    ],
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-8b46611a-6fe9-49a1-a3a7-dc4881f12521.png"
+  },
+  {
+    "task_id": "094",
+    "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+    "old": "04_详情/094_采购_采购详情_查看_待领取_390dp_fs1p0_p01_v04.png",
+    "screen": 1,
+    "prompt": "Use attached approved blue-white mobile style, one screenshot. Open a white tall scrollable bottom sheet titled 编辑采购信息, no illustration, no invented controls. FIRST viewport fields in order plain input 采购事项名称 示例劳保用品采购; 需求原因 库存不足; date row 创建日期 2026-09-24; optional date row OA申报日期 2026-09-25; plain input OA流程编号 OA-20260925-01; OA流程标题 劳保用品采购; OA流程链接 https://oa.example.com/20260925. Dates only have calendar icons. Show natural continuation scroll indicator. Fixed bottom sole blue 保存信息 button. Background existing detail dim. No cancel button, red stars, clear icons, dropdown arrows or text counters.",
+    "path": "04_详情/094_采购_采购详情_查看_待领取_状态_编辑采购信息首屏_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "源码实际流程补充"
+    ],
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-5d5a3f5d-e57f-472c-af77-dbb0650736c4.png"
+  },
+  {
+    "task_id": "094",
+    "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+    "old": "04_详情/094_采购_采购详情_查看_待领取_390dp_fs1p0_p02_v02.png",
+    "screen": 2,
+    "prompt": "Use attached approved blue-white mobile style, one screenshot. A white tall scrollable bottom sheet titled 编辑采购信息, second scrolled viewport continuing same form. Fields in exact order: date 分配日期 2026-09-26; plain input 采购分部 资材分部; plain input 采购执行人 李明; date 入厂通知日期 2026-10-04; plain input 领取地点 物资仓库; multiline plain input 备注 秋季补充. Fixed bottom sole blue 保存信息 button with safe space. Date rows calendar icon only. No invented cancel button, stars, dropdowns, stepper or counters. Dim existing background.",
+    "path": "04_详情/094_采购_采购详情_查看_待领取_状态_编辑采购信息续屏_390dp_fs1p0_p02_v01.png",
+    "issues": [
+      "源码实际流程补充"
+    ],
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-5a170804-70ef-4098-a7c1-bfc34d104545.png"
+  },
+  {
+    "task_id": "094",
+    "source": "lib/features/purchase/presentation/purchase_detail_page.dart",
+    "old": "04_详情/094_采购_采购详情_查看_待领取_390dp_fs1p0_p01_v04.png",
+    "screen": 1,
+    "prompt": "Use attached blue-white mobile screenshot as exact visual reference; dim background and show simple white centered confirmation dialog. Title 确认跳过采购状态. Exact body 这只会将采购状态改为已入库，不会增加库存或创建库存流水。确定继续吗？. Buttons 取消 and 继续. No progress or successful inventory change. Background retains original 待领取 status and partial stock-in40 of requested100 pending60, only manual status confirmation before action. No large illustration.",
+    "path": "04_详情/094_采购_采购详情_查看_待领取_状态_跳过采购状态_390dp_fs1p0_p01_v01.png",
+    "issues": [
+      "源码实际流程补充"
+    ],
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-c76a261c-2d32-4901-8030-6b992687361a.png"
+  }
+]

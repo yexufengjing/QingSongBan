@@ -1,0 +1,1 @@
+Only replace 最近记录 list with empty state tiny20x20px flat blue icon, no shadow/rays, title 暂无库存流水, message 入库、出库、盘点或调整后会在这里显示。. Retain all other header, shortcut and real controls in attached screenshot. No new actions. Set 本月出入库摘要 all three metrics 入库条数0 出库条数0 其他变动0; use first3 of four equal positions with transparent fourth.

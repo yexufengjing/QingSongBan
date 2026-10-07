@@ -1,0 +1,1 @@
+LOCAL change only 本月出入库摘要 layout: exactly FOUR equal width positions. 入库条数2 first;出库条数2 second;其他变动0 third; fourth100%transparent blank. Tiny colored flat icons INLINE LEFT of labels on same baseline, number below, no large left spanningtwo rows. Keep original ALL records/samplevalues/header/actions unchanged.

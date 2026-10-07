@@ -1,0 +1,65 @@
+{
+  "batch": 26,
+  "date": "2026-10-07",
+  "calls": 4,
+  "returned_png": 4,
+  "current_outputs": [
+    {
+      "task_id": "001",
+      "path": "01_组件规范/001_组件规范_全局组件规范板_规范_主态_390dp_fs1p0_p01_v02.png",
+      "prompt_path": "01_组件规范/001_组件规范_全局组件规范板_规范_主态_390dp_fs1p0_p01_v02.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "9a99f3d8165069ebeda58242b5b7dbc2ac46a57c25a03fa3f19992e01be7396b",
+      "batch": 26,
+      "tool": "built-in imagegen",
+      "state": "组件修正",
+      "visual_review": "内容与指定修正初检；运行时验收延期",
+      "user_review": "未逐图用户验收",
+      "issues": []
+    },
+    {
+      "task_id": "001",
+      "path": "01_组件规范/001_组件规范_全局组件规范板_规范_主态_390dp_fs1p0_p02_v02.png",
+      "prompt_path": "01_组件规范/001_组件规范_全局组件规范板_规范_主态_390dp_fs1p0_p02_v02.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "91e037b4ad90efc85ce8a18c2b5379f52b953924cf71877578478124a4a5717f",
+      "batch": 26,
+      "tool": "built-in imagegen",
+      "state": "组件修正",
+      "visual_review": "内容与指定修正初检；运行时验收延期",
+      "user_review": "未逐图用户验收",
+      "issues": []
+    },
+    {
+      "task_id": "001",
+      "path": "01_组件规范/001_组件规范_全局组件规范板_规范_主态_390dp_fs1p0_p04_v02.png",
+      "prompt_path": "01_组件规范/001_组件规范_全局组件规范板_规范_主态_390dp_fs1p0_p04_v02.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "6f57f0e63c73fed779ee805a9d193ac93d2b4e9c0ebf3a523fd17911683fdca2",
+      "batch": 26,
+      "tool": "built-in imagegen",
+      "state": "组件修正",
+      "visual_review": "内容与指定修正初检；运行时验收延期",
+      "user_review": "未逐图用户验收",
+      "issues": []
+    },
+    {
+      "task_id": "057",
+      "path": "05_表单与编辑/057_车辆_新建维修单_查看_有数据_390dp_fs1p0_p03_v02.png",
+      "prompt_path": "05_表单与编辑/057_车辆_新建维修单_查看_有数据_390dp_fs1p0_p03_v02.prompt.txt",
+      "pixel_width": 853,
+      "pixel_height": 1844,
+      "sha256": "28f25b6c7dc882aadc6c00a317fd3a74009a4a7b1123ac024636e51383c9cfe1",
+      "batch": 26,
+      "tool": "built-in imagegen",
+      "state": "维修单第三连续视窗",
+      "visual_review": "内容与指定修正初检；运行时验收延期",
+      "user_review": "未逐图用户验收",
+      "issues": []
+    }
+  ],
+  "old_outputs": []
+}

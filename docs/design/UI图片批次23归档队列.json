@@ -1,0 +1,28 @@
+[
+  {
+    "task_id": "077",
+    "name": "物资详情",
+    "source": "lib/features/inventory/presentation/inventory_material_detail_page.dart",
+    "old": "04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p01_v02.png",
+    "screen": 1,
+    "issues": [
+      "身份图标明显偏大；操作色与前阶段按钮规范待统一"
+    ],
+    "prompt": "Use case: ui-mockup. Image 1 edit target, image 2 approved style reference only. 局部修改物资详情；明确修正：身份图标明显偏大；操作色与前阶段按钮规范待统一。保留全部文字、数字、身份、日期、字段、操作、页面标题和390×844dp同一滚动页内容。蓝白底、既有卡片和字体，彩色扁平小图标，无装饰无重阴影。指标图标和名称同层，数字单位第二层；三个指标采用四个等宽位置，第4格透明留空无底无分隔。勿改动业务数据，不增说明。身份手套图标缩到约24dp，不放大背景盒；快速入库是蓝色主按钮，快速出库、申报采购、加入待采购/待补充均为蓝色细描边次按钮；现存操作一个都保留。底部留可见安全空白。仅一张PNG。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-c3c50a99-ae18-426c-b913-89623ef84a21.png",
+    "path": "04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p01_v03.png"
+  },
+  {
+    "task_id": "077",
+    "name": "物资详情",
+    "source": "lib/features/inventory/presentation/inventory_material_detail_page.dart",
+    "old": "04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p02_v01.png",
+    "screen": 2,
+    "issues": [
+      "指标呈两列两行，须复核四位置规则及长日期布局"
+    ],
+    "prompt": "Use case: ui-mockup. Image 1 edit target, image 2 approved style reference only. 局部修改物资详情；明确修正：指标呈两列两行，须复核四位置规则及长日期布局。保留全部文字、数字、身份、日期、字段、操作、页面标题和390×844dp同一滚动页内容。蓝白底、既有卡片和字体，彩色扁平小图标，无装饰无重阴影。指标图标和名称同层，数字单位第二层；三个指标采用四个等宽位置，第4格透明留空无底无分隔。勿改动业务数据，不增说明。四个指标排同一行四等宽格；最后入库/出库日期分别保留2026-10-01、2026-10-04，可分别分成2026-和10-01/10-04两行，不压缩字号；增加卡片高度，彩色图标缩小。底部留可见安全空白。仅一张PNG。",
+    "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a11264-a1df-71b2-b20d-60f7ed809175\\exec-a6d81dde-e545-4a5a-839b-18f1244394db.png",
+    "path": "04_详情/077_库存_物资详情_查看_有数据_390dp_fs1p0_p02_v02.png"
+  }
+]

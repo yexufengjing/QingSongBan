@@ -1,0 +1,1 @@
+LOCAL EDIT only clearly failed UI elements. Dialog title exact 确认说明（存在警告）. Remove the orange explanatory banner entirely, since no such instruction paragraph in source. Field label 原因, empty field. Cancel/Confirm unchanged. No extra subtitle or icon. Single existing screenshot, all remaining blue-white style/data untouched.
