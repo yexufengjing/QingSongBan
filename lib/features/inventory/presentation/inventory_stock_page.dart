@@ -60,7 +60,7 @@ class _InventoryStockPageState extends ConsumerState<InventoryStockPage> {
                     filled: true,
                     fillColor: const Color(0xFFF0F5F7),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide.none,
                     ),
                   ),
@@ -223,7 +223,7 @@ class _StockCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final material = row.material;
     final color = switch (row.status) {
-      InventoryStockStatus.normal => AppColors.primary,
+      InventoryStockStatus.normal => AppColors.success,
       InventoryStockStatus.low => const Color(0xFFE98500),
       InventoryStockStatus.outOfStock => AppColors.danger,
     };
@@ -234,7 +234,7 @@ class _StockCard extends StatelessWidget {
     };
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(14),
+        padding: const EdgeInsets.all(16),
         child: LayoutBuilder(
           builder: (context, constraints) {
             final narrow = constraints.maxWidth < 420;
@@ -262,8 +262,8 @@ class _StockCard extends StatelessWidget {
                 const Text('当前库存'),
                 Text(
                   '${material.currentStock} ${material.unitName}',
-                  style: Theme.of(context).textTheme.headlineSmall
-                      ?.copyWith(color: color, fontWeight: FontWeight.w800),
+                  style: Theme.of(context).textTheme.titleLarge
+                      ?.copyWith(color: color, fontWeight: FontWeight.w600),
                 ),
                 Text(
                   '最低库存：${material.minStock} ${material.unitName}',

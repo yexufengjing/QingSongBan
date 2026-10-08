@@ -23,8 +23,8 @@ class EmployeeStatusBadge extends StatelessWidget {
         : status) {
       EmployeeStatus.active => (
         AppColors.lightGreen,
-        AppColors.primary,
-        Icons.check_circle_outline,
+        AppColors.success,
+        Icons.circle,
       ),
       EmployeeStatus.paused => (
         AppColors.lightOrange,
@@ -46,12 +46,12 @@ class EmployeeStatusBadge extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         color: background,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, color: foreground, size: compact ? 12 : 16),
+          Icon(icon, color: foreground, size: compact ? 7 : 8),
           SizedBox(width: compact ? 3 : 5),
           Text(
             label,

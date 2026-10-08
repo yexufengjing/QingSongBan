@@ -26,10 +26,21 @@ class LeavePage extends ConsumerWidget {
           ),
         ],
       ),
+      floatingActionButton:
+          records.maybeWhen(
+            data: (items) => items.isNotEmpty,
+            orElse: () => false,
+          )
+          ? FloatingActionButton.extended(
+              onPressed: () => context.push('/attendance/leave/new'),
+              icon: const Icon(Icons.add),
+              label: const Text('新增请假'),
+            )
+          : null,
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 8, 20, 0),
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
             child: _LeaveMonthSelector(
               month: month,
               onChanged: (value) =>
@@ -51,7 +62,7 @@ class LeavePage extends ConsumerWidget {
                   );
                 }
                 return ListView(
-                  padding: const EdgeInsets.fromLTRB(20, 14, 20, 28),
+                  padding: const EdgeInsets.fromLTRB(16, 14, 16, 104),
                   children: [
                     _LeaveSummary(count: items.length),
                     const SizedBox(height: 14),
@@ -83,16 +94,25 @@ class LeavePage extends ConsumerWidget {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('删除请假记录？'),
+        title: const Text('删除请假记录？', textAlign: TextAlign.center),
         content: const Text('删除后对应考勤中仍为“请假”的半天会恢复为“未登记”；已经手动修改的考勤状态会保留。'),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('取消'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('确认删除'),
+          Row(
+            children: [
+              Expanded(
+                child: TextButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: const Text('取消'),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: FilledButton(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  child: const Text('确认删除'),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -210,72 +230,93 @@ class _LeaveCard extends StatelessWidget {
     final leave = item.leave;
     return Card(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 14, 8, 14),
-        child: Row(
+        padding: const EdgeInsets.all(16),
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: 44,
-              height: 44,
-              alignment: Alignment.center,
-              decoration: const BoxDecoration(
-                color: AppColors.lightBlue,
-                shape: BoxShape.circle,
-              ),
-              child: Text(
-                item.employee.name.characters.first,
-                style: Theme.of(context).textTheme.titleLarge
-                    ?.copyWith(color: AppColors.techBlue),
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
+            Row(
+              children: [
+                const CircleAvatar(
+                  radius: 24,
+                  backgroundColor: AppColors.lightBlue,
+                  child: Icon(
+                    Icons.person_outline,
+                    color: AppColors.techBlue,
+                    size: 24,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Flexible(
-                        child: Text(
-                          item.employee.name,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
+                      Text(
+                        item.employee.name,
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
-                      const SizedBox(width: 8),
-                      _LeaveTypeTag(type: leave.leaveType),
+                      const SizedBox(height: 4),
+                      Text(
+                        item.employee.employeeNo,
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
                     ],
                   ),
-                  const SizedBox(height: 5),
-                  Text(
-                    '${item.employee.employeeNo} · ${LeaveOptions.dateRangeLabel(leave)}',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    '共 ${_formatHalfDays(LeaveOptions.halfDays(leave))} 天${leave.remark == null ? '' : ' · ${leave.remark}'}',
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ],
-              ),
-            ),
-            PopupMenuButton<_LeaveAction>(
-              key: Key('leave-actions-${leave.id}'),
-              onSelected: (action) {
-                switch (action) {
-                  case _LeaveAction.edit:
-                    onEdit();
-                  case _LeaveAction.delete:
-                    onDelete();
-                }
-              },
-              itemBuilder: (context) => const [
-                PopupMenuItem(value: _LeaveAction.edit, child: Text('编辑')),
-                PopupMenuItem(value: _LeaveAction.delete, child: Text('删除')),
+                ),
+                IconButton(
+                  onPressed: onEdit,
+                  icon: const Icon(Icons.edit_outlined),
+                  color: AppColors.techBlue,
+                  tooltip: '编辑',
+                ),
+                PopupMenuButton<_LeaveAction>(
+                  key: Key('leave-actions-${leave.id}'),
+                  onSelected: (action) {
+                    switch (action) {
+                      case _LeaveAction.edit:
+                        onEdit();
+                      case _LeaveAction.delete:
+                        onDelete();
+                    }
+                  },
+                  itemBuilder: (context) => const [
+                    PopupMenuItem(value: _LeaveAction.edit, child: Text('编辑')),
+                    PopupMenuItem(
+                      value: _LeaveAction.delete,
+                      child: Text('删除'),
+                    ),
+                  ],
+                ),
               ],
             ),
+            const SizedBox(height: 8),
+            _LeaveTypeTag(type: leave.leaveType),
+            const Divider(height: 24),
+            for (final row in <(String, String)>[
+              ('请假时间', LeaveOptions.dateRangeLabel(leave)),
+              ('请假天数', '${_formatHalfDays(LeaveOptions.halfDays(leave))} 天'),
+              ('备注', leave.remark ?? '未填写'),
+            ])
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: 100,
+                      child: Text(
+                        row.$1,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        row.$2,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
           ],
         ),
       ),

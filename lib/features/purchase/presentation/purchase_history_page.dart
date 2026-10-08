@@ -173,7 +173,7 @@ class _PurchaseHistoryPageState extends ConsumerState<PurchaseHistoryPage> {
                           ChoiceChip(
                             label: Text(preset.$2),
                             selected: preset.$2 == _periodLabel,
-                            selectedColor: const Color(0xFF00A86B),
+                            selectedColor: const Color(0xFF2563EB),
                             labelStyle: TextStyle(
                               color: preset.$2 == _periodLabel
                                   ? Colors.white

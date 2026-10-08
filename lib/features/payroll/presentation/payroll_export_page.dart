@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../app/theme/app_theme.dart';
 import '../../../core/utils/date_utils.dart';
+import '../application/payroll_providers.dart';
 import '../application/payroll_excel_providers.dart';
 
 class PayrollExportPage extends ConsumerStatefulWidget {
@@ -33,9 +35,78 @@ class _PayrollExportPageState extends ConsumerState<PayrollExportPage> {
           icon: const Icon(Icons.arrow_back),
         ),
       ),
+      bottomNavigationBar: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton.icon(
+                  onPressed: exporting ? null : _export,
+                  icon: exporting
+                      ? const SizedBox(
+                          width: 18,
+                          height: 18,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : const Icon(Icons.file_download_outlined),
+                  label: Text(exporting ? '正在生成…' : '导出临时工工资表'),
+                ),
+              ),
+              const SizedBox(height: 10),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton.icon(
+                  key: const Key('payroll-preview-button'),
+                  onPressed: exporting || previewing ? null : _preview,
+                  icon: previewing
+                      ? const SizedBox(
+                          width: 18,
+                          height: 18,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : const Icon(Icons.table_view_outlined),
+                  label: Text(previewing ? '正在读取…' : '在应用内查看表格'),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 18, 20, 32),
+        padding: const EdgeInsets.fromLTRB(16, 18, 16, 32),
         children: [
+          ref
+              .watch(payrollBatchProvider(widget.batchId))
+              .when(
+                loading: () => const LinearProgressIndicator(),
+                error: (_, _) => const SizedBox.shrink(),
+                data: (batch) => batch == null
+                    ? const SizedBox.shrink()
+                    : Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                batch.name,
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                '${batch.employeeCount}人',
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+              ),
+          const SizedBox(height: 16),
           Card(
             child: Padding(
               padding: const EdgeInsets.all(18),
@@ -43,12 +114,12 @@ class _PayrollExportPageState extends ConsumerState<PayrollExportPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '模拟器未安装 Excel 时，也可以直接在轻松办内查看表格。',
+                    '文件保存到系统下载目录，导出包含完整数据。',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    '导出文件仍会保存到系统“下载”目录，方便后续传到电脑或用表格应用打开。',
+                    '可以在应用内查看工资表预览。',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
@@ -56,36 +127,6 @@ class _PayrollExportPageState extends ConsumerState<PayrollExportPage> {
             ),
           ),
           const SizedBox(height: 16),
-          SizedBox(
-            width: double.infinity,
-            child: FilledButton.icon(
-              onPressed: exporting ? null : _export,
-              icon: exporting
-                  ? const SizedBox(
-                      width: 18,
-                      height: 18,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  : const Icon(Icons.file_download_outlined),
-              label: Text(exporting ? '正在生成…' : '导出临时工工资表'),
-            ),
-          ),
-          const SizedBox(height: 10),
-          SizedBox(
-            width: double.infinity,
-            child: OutlinedButton.icon(
-              key: const Key('payroll-preview-button'),
-              onPressed: exporting || previewing ? null : _preview,
-              icon: previewing
-                  ? const SizedBox(
-                      width: 18,
-                      height: 18,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  : const Icon(Icons.table_view_outlined),
-              label: Text(previewing ? '正在读取…' : '在应用内查看表格'),
-            ),
-          ),
           if (exportedPath != null) ...[
             const SizedBox(height: 16),
             _ExportedFileCard(path: exportedPath!),
@@ -164,13 +205,13 @@ class _ExportedFileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: const Color(0xFFE8F8EF),
+      color: AppColors.lightGreen,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Icon(Icons.check_circle, color: Color(0xFF00C16B)),
+            const Icon(Icons.check_circle, color: AppColors.success),
             const SizedBox(width: 10),
             Expanded(
               child: Text(

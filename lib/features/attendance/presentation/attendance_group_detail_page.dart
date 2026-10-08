@@ -67,7 +67,7 @@ class _GroupDetailContent extends ConsumerWidget {
       data: (items) {
         final memberIds = items.map((item) => item.employee.id).toSet();
         return ListView(
-          padding: const EdgeInsets.fromLTRB(20, 8, 20, 28),
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 28),
           children: [
             _GroupHeader(group: group, memberCount: items.length),
             const SizedBox(height: 18),
@@ -145,17 +145,28 @@ class _GroupDetailContent extends ConsumerWidget {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('移出考勤组？'),
+        title: const Text('移出考勤组？', textAlign: TextAlign.center),
         content: Text('移出后，${member.employee.name} 将暂时没有默认考勤组，之后可以重新指定。'),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('取消'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            style: FilledButton.styleFrom(backgroundColor: AppColors.danger),
-            child: const Text('移出'),
+          Row(
+            children: [
+              Expanded(
+                child: TextButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: const Text('取消'),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: FilledButton(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: AppColors.danger,
+                  ),
+                  child: const Text('移出'),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -209,7 +220,7 @@ class _GroupHeader extends StatelessWidget {
             height: 58,
             decoration: BoxDecoration(
               color: group.isEnabled ? AppColors.primary : AppColors.helper,
-              borderRadius: BorderRadius.circular(18),
+              borderRadius: BorderRadius.circular(12),
             ),
             child: const Icon(
               Icons.groups_2_outlined,

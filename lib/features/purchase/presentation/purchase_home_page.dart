@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../app/theme/app_theme.dart';
+import '../../../core/widgets/design_widgets.dart';
 import '../application/purchase_providers.dart';
 import '../domain/purchase_models.dart';
 import '../domain/purchase_status.dart';
@@ -45,161 +47,153 @@ class _DashboardContent extends StatelessWidget {
   Widget build(BuildContext context) => ListView(
     padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
     children: [
-      PurchasePanel(
-        child: Column(
+      DesignSection(
+        child: DesignGrid(
           children: [
-            LayoutBuilder(
-              builder: (context, constraints) {
-                final metrics = [
-                  _MetricData(
-                    '待申报',
-                    data.pendingApplyCount,
-                    const Color(0xFFFF8A1F),
-                    Icons.description_outlined,
-                    PurchaseRoutes.pendingApply,
-                  ),
-                  _MetricData(
-                    '已申报',
-                    data.appliedCount,
-                    const Color(0xFF00A86B),
-                    Icons.task_alt_outlined,
-                    PurchaseRoutes.tracking,
-                  ),
-                  _MetricData(
-                    '采购中',
-                    data.purchasingCount,
-                    const Color(0xFF1677FF),
-                    Icons.shopping_cart_outlined,
-                    '${PurchaseRoutes.tracking}?status=purchasing',
-                  ),
-                  _MetricData(
-                    '待领取',
-                    data.pendingReceiveCount,
-                    const Color(0xFFFF8A1F),
-                    Icons.inventory_2_outlined,
-                    PurchaseRoutes.pendingReceive,
-                  ),
-                ];
-                final twoColumns =
-                    constraints.maxWidth < 280 ||
-                    MediaQuery.textScalerOf(context).scale(16) > 20;
-                final columns = twoColumns ? 2 : 4;
-                final spacing = 8.0;
-                final width =
-                    (constraints.maxWidth - spacing * (columns - 1)) / columns;
-                return Wrap(
-                  spacing: spacing,
-                  runSpacing: 8,
-                  children: [
-                    for (final metric in metrics)
-                      SizedBox(
-                        width: width,
-                        child: PurchaseMetricTile(
-                          label: metric.label,
-                          value: '${metric.value}',
-                          color: metric.color,
-                          icon: metric.icon,
-                          onTap: () => context.push(metric.route),
-                        ),
-                      ),
-                  ],
-                );
-              },
-            ),
-            const Divider(height: 24),
-            InkWell(
-              key: const Key('purchase-this-month-history'),
-              onTap: () => context.push('/purchase/history?preset=month'),
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.home_work_outlined,
-                    color: Color(0xFF00C16B),
-                  ),
-                  const SizedBox(width: 10),
-                  const Expanded(child: Text('本月已入库')),
-                  Text(
-                    '${data.stockedThisMonthCount} 项',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: const Color(0xFF00C16B),
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  const SizedBox(width: 6),
-                  const Icon(Icons.chevron_right),
-                ],
+            for (final metric in [
+              _MetricData(
+                '待申报',
+                data.pendingApplyCount,
+                AppColors.warning,
+                Icons.description_outlined,
+                PurchaseRoutes.pendingApply,
               ),
-            ),
+              _MetricData(
+                '已申报',
+                data.appliedCount,
+                AppColors.techBlue,
+                Icons.task_alt_outlined,
+                PurchaseRoutes.tracking,
+              ),
+              _MetricData(
+                '采购中',
+                data.purchasingCount,
+                AppColors.success,
+                Icons.shopping_cart_outlined,
+                '${PurchaseRoutes.tracking}?status=purchasing',
+              ),
+              _MetricData(
+                '待领取',
+                data.pendingReceiveCount,
+                AppColors.purple,
+                Icons.inventory_2_outlined,
+                PurchaseRoutes.pendingReceive,
+              ),
+            ])
+              PurchaseMetricTile(
+                label: metric.label,
+                value: '${metric.value}',
+                color: metric.color,
+                icon: metric.icon,
+                onTap: () => context.push(metric.route),
+              ),
           ],
         ),
       ),
-      const SizedBox(height: 20),
-      PurchaseSectionHeading(
-        '需要处理',
+      const SizedBox(height: 12),
+      PurchasePanel(
+        child: InkWell(
+          key: const Key('purchase-this-month-history'),
+          onTap: () => context.push('/purchase/history?preset=month'),
+          child: Row(
+            children: [
+              const DesignIcon(Icons.receipt_long_outlined),
+              const SizedBox(width: 12),
+              const Expanded(
+                child: Text(
+                  '本月已入库',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
+              ),
+              Text(
+                '${data.stockedThisMonthCount} 项',
+                style: const TextStyle(
+                  color: AppColors.primary,
+                  fontSize: 22,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(width: 8),
+              const Icon(Icons.chevron_right),
+            ],
+          ),
+        ),
+      ),
+      const SizedBox(height: 12),
+      DesignSection(
+        title: '需要处理',
         trailing: TextButton(
           onPressed: () => context.push('${PurchaseRoutes.tracking}?all=1'),
           child: const Text('查看全部'),
         ),
-      ),
-      const SizedBox(height: 10),
-      if (data.actionRequired.isEmpty)
-        const PurchasePanel(child: Text('暂无需要处理的采购记录。'))
-      else
-        for (final request in data.actionRequired.take(8)) ...[
-          _ActionCard(request: request),
-          const SizedBox(height: 10),
-        ],
-      const SizedBox(height: 10),
-      const PurchaseSectionHeading('常用功能'),
-      const SizedBox(height: 10),
-      LayoutBuilder(
-        builder: (context, constraints) {
-          final spacing = 8.0;
-          final columns = constraints.maxWidth >= 320 ? 4 : 2;
-          final width =
-              (constraints.maxWidth - spacing * (columns - 1)) / columns;
-          return Wrap(
-            spacing: spacing,
-            runSpacing: spacing,
-            children: [
-              for (final action in const [
-                _QuickActionData(
-                  '新建采购',
-                  Icons.add,
-                  Color(0xFF00A86B),
-                  PurchaseRoutes.create,
-                ),
-                _QuickActionData(
-                  '待申报',
-                  Icons.description_outlined,
-                  Color(0xFF1677FF),
-                  PurchaseRoutes.pendingApply,
-                ),
-                _QuickActionData(
-                  '采购跟踪',
-                  Icons.place_outlined,
-                  Color(0xFFFF8A1F),
-                  PurchaseRoutes.tracking,
-                ),
-                _QuickActionData(
-                  '采购历史',
-                  Icons.schedule,
-                  Color(0xFF7956D8),
-                  PurchaseRoutes.history,
-                ),
-              ])
-                SizedBox(
-                  width: width,
-                  child: _QuickAction(
-                    label: action.label,
-                    icon: action.icon,
-                    color: action.color,
-                    route: action.route,
+        child: data.actionRequired.isEmpty
+            ? const Padding(
+                padding: EdgeInsets.symmetric(vertical: 64),
+                child: Center(
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.assignment_outlined,
+                        color: AppColors.helper,
+                        size: 48,
+                      ),
+                      SizedBox(height: 16),
+                      Text(
+                        '暂无需要处理的采购记录。',
+                        style: TextStyle(color: AppColors.body, fontSize: 14),
+                      ),
+                    ],
                   ),
                 ),
-            ],
-          );
-        },
+              )
+            : Column(
+                children: [
+                  for (final request in data.actionRequired.take(3)) ...[
+                    _ActionCard(request: request),
+                    const SizedBox(height: 8),
+                  ],
+                ],
+              ),
+      ),
+      const SizedBox(height: 12),
+      DesignSection(
+        title: '常用功能',
+        child: DesignGrid(
+          children: [
+            for (final action in const [
+              _QuickActionData(
+                '新建采购',
+                Icons.note_add_outlined,
+                AppColors.techBlue,
+                PurchaseRoutes.create,
+              ),
+              _QuickActionData(
+                '待申报',
+                Icons.description_outlined,
+                AppColors.warning,
+                PurchaseRoutes.pendingApply,
+              ),
+              _QuickActionData(
+                '采购跟踪',
+                Icons.shopping_cart_outlined,
+                AppColors.success,
+                PurchaseRoutes.tracking,
+              ),
+              _QuickActionData(
+                '采购历史',
+                Icons.inventory_2_outlined,
+                AppColors.purple,
+                PurchaseRoutes.history,
+              ),
+            ])
+              _QuickAction(
+                label: action.label,
+                icon: action.icon,
+                color: action.color,
+                route: action.route,
+              ),
+          ],
+        ),
       ),
     ],
   );
@@ -240,7 +234,7 @@ class _ActionCard extends ConsumerWidget {
           InkWell(
             key: Key('purchase-action-${request.id}'),
             onTap: () => context.push(PurchaseRoutes.detail(request.id)),
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(12),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -530,31 +524,25 @@ class _QuickAction extends StatelessWidget {
   final String route;
 
   @override
-  Widget build(BuildContext context) => SizedBox(
-    height: 88,
-    child: OutlinedButton(
-      onPressed: () => context.push(route),
-      style: OutlinedButton.styleFrom(padding: const EdgeInsets.all(8)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .12),
-              borderRadius: BorderRadius.circular(12),
+  Widget build(BuildContext context) => Material(
+    color: Colors.transparent,
+    borderRadius: BorderRadius.circular(8),
+    child: InkWell(
+      borderRadius: BorderRadius.circular(8),
+      onTap: () => context.push(route),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 4),
+        child: Column(
+          children: [
+            DesignIcon(icon, color: color),
+            const SizedBox(height: 10),
+            Text(
+              label,
+              textAlign: TextAlign.center,
+              style: const TextStyle(color: AppColors.ink, fontSize: 14),
             ),
-            child: Icon(icon, color: color),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            label,
-            maxLines: 2,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.labelLarge,
-          ),
-        ],
+          ],
+        ),
       ),
     ),
   );

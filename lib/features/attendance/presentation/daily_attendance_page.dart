@@ -23,17 +23,7 @@ class DailyAttendancePage extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('每日考勤'),
         actions: [
-          const Chip(
-            avatar: Icon(
-              Icons.check_circle,
-              color: AppColors.primary,
-              size: 16,
-            ),
-            label: Text('自动保存'),
-            visualDensity: VisualDensity.compact,
-            side: BorderSide.none,
-            backgroundColor: AppColors.lightGreen,
-          ),
+          const Tooltip(message: '自动保存', child: Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: Icon(Icons.check_circle_outline, color: AppColors.success, size: 20))),
           IconButton(
             onPressed: () => context.push('/attendance/monthly-roster'),
             icon: const Icon(Icons.calendar_month_outlined),
@@ -96,7 +86,7 @@ class _DailyAttendanceContent extends ConsumerWidget {
         ref.watch(attendanceGroupSummariesProvider).valueOrNull ??
         const <AttendanceGroupSummary>[];
     return ListView(
-      padding: const EdgeInsets.fromLTRB(14, 8, 14, 24),
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
       children: [
         _DailyAttendanceSelectors(
           date: date,
@@ -119,7 +109,7 @@ class _DailyAttendanceContent extends ConsumerWidget {
           onAction: (action) => _runAction(context, ref, action),
         ),
         const SizedBox(height: 8),
-        const _DailyAttendanceTableHeader(),
+
         entries.when(
           loading: () => const Padding(
             padding: EdgeInsets.all(32),
@@ -134,6 +124,9 @@ class _DailyAttendanceContent extends ConsumerWidget {
             }
             return Column(
               children: [
+                _DailyAttendanceOverview(items: items),
+                const SizedBox(height: 16),
+                const _DailyAttendanceTableHeader(),
                 for (final entry in items) ...[
                   _DailyAttendanceEmployeeCard(
                     key: ValueKey(entry.employee.id),
@@ -265,8 +258,7 @@ class _DailyAttendanceSelectors extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')} ${_weekdayLabel(date.weekday)}',
-                      maxLines: 1,
-                      softWrap: false,
+                      softWrap: true,
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -378,18 +370,19 @@ class _DailyAttendanceActions extends StatelessWidget {
         AppColors.danger,
       ),
     ];
-    return Row(
-      children: [
+    return LayoutBuilder(builder: (context, constraints) {
+      final columns = constraints.maxWidth < 330 || MediaQuery.textScalerOf(context).scale(14) > 17 ? 2 : 4;
+      return Wrap(spacing: 6, runSpacing: 6, children: [
         for (var index = 0; index < actions.length; index++) ...[
-          if (index > 0) const SizedBox(width: 6),
-          Expanded(
+
+          SizedBox(width: (constraints.maxWidth - (columns - 1) * 6) / columns,
             child: Material(
               color: actions[index].$3.withValues(alpha: .1),
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(12),
               child: InkWell(
                 key: Key('daily-attendance-action-${actions[index].$1.name}'),
                 onTap: () => onAction(actions[index].$1),
-                borderRadius: BorderRadius.circular(14),
+                borderRadius: BorderRadius.circular(12),
                 child: SizedBox(
                   height: 78,
                   child: Column(
@@ -417,24 +410,96 @@ class _DailyAttendanceActions extends StatelessWidget {
             ),
           ),
         ],
-      ],
-    );
+      ]);
+    });
   }
+}
+
+class _DailyAttendanceOverview extends StatelessWidget {
+  const _DailyAttendanceOverview({required this.items});
+  final List<DailyAttendanceEntryView> items;
+  @override
+  Widget build(BuildContext context) => Card(
+    child: Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('考勤概况', style: Theme.of(context).textTheme.titleLarge),
+          const SizedBox(height: 12),
+          LayoutBuilder(builder: (context, constraints) {
+            final columns = constraints.maxWidth < 290 || MediaQuery.textScalerOf(context).scale(14) > 17 ? 2 : 3;
+            return Wrap(spacing: 8, runSpacing: 8, children: [
+              for (final metric in [
+                (
+                  '名单人数',
+                  '${items.length}人',
+                  Icons.groups_outlined,
+                  AppColors.success,
+                ),
+                (
+                  '上午已登记',
+                  '${items.where((item) => item.morningStatus != AttendanceHalfStatus.unregistered).length}/${items.length}',
+                  Icons.event_available_outlined,
+                  AppColors.techBlue,
+                ),
+                (
+                  '下午已登记',
+                  '${items.where((item) => item.afternoonStatus != AttendanceHalfStatus.unregistered).length}/${items.length}',
+                  Icons.event_available_outlined,
+                  const Color(0xFFE98500),
+                ),
+              ])
+                SizedBox(width: (constraints.maxWidth - (columns - 1) * 8) / columns,
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 3),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 6,
+                      vertical: 12,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.lightBlue.withValues(alpha: .45),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Column(
+                      children: [
+                        Icon(metric.$3, color: metric.$4, size: 20),
+                        const SizedBox(height: 8),
+                        Text(
+                          metric.$1,
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                        const SizedBox(height: 6),
+                        Text(
+                          metric.$2,
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+            ]); }),
+        ],
+      ),
+    ),
+  );
 }
 
 class _DailyAttendanceTableHeader extends StatelessWidget {
   const _DailyAttendanceTableHeader();
-
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.fromLTRB(8, 6, 8, 6),
-    child: Row(
+  Widget build(BuildContext context) => Container(
+    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+    decoration: BoxDecoration(
+      color: AppColors.lightBlue,
+      borderRadius: BorderRadius.circular(8),
+    ),
+    child: const Row(
       children: [
-        const SizedBox(width: 86, child: Text('姓名')),
-        const Expanded(child: Center(child: Text('上午'))),
-        const Expanded(child: Center(child: Text('下午'))),
-        const SizedBox(width: 64, child: Center(child: Text('加班时长'))),
-        const SizedBox(width: 38, child: Center(child: Text('备注'))),
+        SizedBox(width: 112, child: Text('姓名')),
+        Expanded(child: Center(child: Text('上午'))),
+        Expanded(child: Center(child: Text('下午'))),
       ],
     ),
   );
@@ -493,79 +558,122 @@ class _DailyAttendanceEmployeeCardState
             : _formatDuration(widget.overtimeMinutes));
     return Card(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 7),
-        child: Row(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        child: Column(
           children: [
-            SizedBox(
-              width: 78,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            if (MediaQuery.sizeOf(context).width < 350 || MediaQuery.textScalerOf(context).scale(14) > 17) ...[
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  employee.name,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  employee.employeeNo,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Row(
                 children: [
-                  Text(
-                    employee.name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.titleMedium,
+                  Expanded(
+                    child: _buildStatusField(
+                      context,
+                      widget.entry.morningStatus,
+                      'morning',
+                    ),
                   ),
-                  Text(
-                    '工号 ${employee.employeeNo}',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodySmall,
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: _buildStatusField(
+                      context,
+                      widget.entry.afternoonStatus,
+                      'afternoon',
+                    ),
                   ),
                 ],
               ),
-            ),
-            Expanded(
-              child: _buildStatusField(
-                context,
-                widget.entry.morningStatus,
-                'morning',
+            ] else
+              Row(
+                children: [
+                  SizedBox(
+                    width: 112,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          employee.name,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          employee.employeeNo,
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: _buildStatusField(
+                      context,
+                      widget.entry.morningStatus,
+                      'morning',
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: _buildStatusField(
+                      context,
+                      widget.entry.afternoonStatus,
+                      'afternoon',
+                    ),
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(width: 5),
-            Expanded(
-              child: _buildStatusField(
-                context,
-                widget.entry.afternoonStatus,
-                'afternoon',
-              ),
-            ),
-            SizedBox(
-              width: 59,
-              child: TextButton(
-                key: Key('daily-attendance-overtime-${employee.id}'),
-                onPressed: () => context.push('/attendance/overtime'),
-                style: TextButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 2),
+            const SizedBox(height: 4),
+            Row(
+              children: [
+                TextButton(
+                  key: Key('daily-attendance-overtime-${employee.id}'),
+                  onPressed: () => context.push('/attendance/overtime'),
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                  ),
+                  child: Text(
+                    '加班 $overtime',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
                 ),
-                child: Text(
-                  overtime,
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  style: Theme.of(context).textTheme.bodySmall
-                      ?.copyWith(color: AppColors.ink),
+                Flexible(
+                  child: TextButton.icon(
+                    key: Key('daily-attendance-remark-${employee.id}'),
+                    onPressed: widget.entry.isEditable ? _editRemark : null,
+                    icon: Icon(
+                      _remarkController.text.isEmpty
+                          ? Icons.notes_outlined
+                          : Icons.sticky_note_2_outlined,
+                      size: 16,
+                    ),
+                    label: Text(
+                      _remarkController.text.isEmpty
+                          ? '备注'
+                          : _remarkController.text,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ),
-              ),
+                if (!widget.entry.isEditable)
+                  const Icon(
+                    Icons.lock_outline,
+                    color: AppColors.helper,
+                    size: 16,
+                  ),
+              ],
             ),
-            IconButton(
-              key: Key('daily-attendance-remark-${employee.id}'),
-              tooltip: _remarkController.text.isEmpty
-                  ? '添加备注'
-                  : '备注：${_remarkController.text}',
-              onPressed: widget.entry.isEditable ? _editRemark : null,
-              icon: Icon(
-                _remarkController.text.isEmpty
-                    ? Icons.notes_outlined
-                    : Icons.sticky_note_2_outlined,
-                color: _remarkController.text.isEmpty
-                    ? AppColors.helper
-                    : AppColors.techBlue,
-                size: 20,
-              ),
-            ),
-            if (!widget.entry.isEditable)
-              const Icon(Icons.lock_outline, color: AppColors.helper, size: 16),
           ],
         ),
       ),
@@ -581,7 +689,7 @@ class _DailyAttendanceEmployeeCardState
     final key = Key('daily-attendance-$part-${widget.entry.employee.id}');
     if (!widget.entry.isEditable) {
       return Container(
-        height: 42,
+        height: 48,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: color.withValues(alpha: .13),
@@ -596,7 +704,7 @@ class _DailyAttendanceEmployeeCardState
       );
     }
     return Container(
-      height: 42,
+      height: 48,
       padding: const EdgeInsets.symmetric(horizontal: 4),
       decoration: BoxDecoration(
         color: color.withValues(alpha: .11),
@@ -639,7 +747,7 @@ class _DailyAttendanceEmployeeCardState
     final result = await showDialog<String>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('考勤备注'),
+        title: const Text('考勤备注', textAlign: TextAlign.center),
         content: TextField(
           controller: controller,
           autofocus: true,
@@ -648,13 +756,23 @@ class _DailyAttendanceEmployeeCardState
           decoration: const InputDecoration(hintText: '输入备注'),
         ),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('取消'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(context, controller.text.trim()),
-            child: const Text('保存备注'),
+          Row(
+            children: [
+              Expanded(
+                child: TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('取消'),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: FilledButton(
+                  onPressed: () =>
+                      Navigator.pop(context, controller.text.trim()),
+                  child: const Text('保存备注'),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -687,12 +805,12 @@ class _DailyAttendanceEmployeeCardState
   }
 
   Color _statusColor(AttendanceHalfStatus status) => switch (status) {
-    AttendanceHalfStatus.present => AppColors.primary,
+    AttendanceHalfStatus.present => AppColors.success,
     AttendanceHalfStatus.leave ||
     AttendanceHalfStatus.absent => AppColors.danger,
-    AttendanceHalfStatus.rest => AppColors.body,
+    AttendanceHalfStatus.rest => AppColors.purple,
     AttendanceHalfStatus.stopped => const Color(0xFFE98500),
-    AttendanceHalfStatus.unregistered => AppColors.techBlue,
+    AttendanceHalfStatus.unregistered => AppColors.helper,
     AttendanceHalfStatus.notEmployed ||
     AttendanceHalfStatus.terminated => AppColors.helper,
   };

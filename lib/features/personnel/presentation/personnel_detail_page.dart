@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/theme/app_theme.dart';
+import '../../../core/widgets/design_widgets.dart';
 import '../../../core/database/app_database.dart';
 import '../../../core/utils/date_utils.dart';
 import '../../../core/utils/privacy_utils.dart';
@@ -53,17 +54,28 @@ class PersonnelDetailPage extends ConsumerWidget {
       final confirmed = await showDialog<bool>(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('删除人员档案？'),
+          title: const Text('删除人员档案？', textAlign: TextAlign.center),
           content: const Text('档案会进入已删除列表，历史数据不会被清除。'),
           actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('取消'),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.of(context).pop(true),
-              style: FilledButton.styleFrom(backgroundColor: AppColors.danger),
-              child: const Text('删除'),
+            Row(
+              children: [
+                Expanded(
+                  child: TextButton(
+                    onPressed: () => Navigator.of(context).pop(false),
+                    child: const Text('取消'),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: FilledButton(
+                    onPressed: () => Navigator.of(context).pop(true),
+                    style: FilledButton.styleFrom(
+                      backgroundColor: AppColors.danger,
+                    ),
+                    child: const Text('删除'),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -407,7 +419,7 @@ class _EmployeeIdentityCard extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     color: AppColors.lightBlue,
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Row(
                     mainAxisSize: MainAxisSize.min,
@@ -449,6 +461,8 @@ class _DetailSection extends StatelessWidget {
       child: ExpansionTile(
         initiallyExpanded: initiallyExpanded,
         tilePadding: const EdgeInsets.symmetric(horizontal: 14),
+        dense: true,
+        minTileHeight: 56,
         childrenPadding: const EdgeInsets.fromLTRB(14, 0, 14, 8),
         leading: Container(
           width: 36,
@@ -461,49 +475,42 @@ class _DetailSection extends StatelessWidget {
         ),
         title: Text(title, style: Theme.of(context).textTheme.titleLarge),
         children: [
-          LayoutBuilder(
-            builder: (context, constraints) => Wrap(
-              spacing: 8,
-              runSpacing: 6,
-              children: [
-                for (final row in rows)
-                  SizedBox(
-                    width: (constraints.maxWidth - 8) / 2,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: 70,
-                          child: Text(
-                            row.$1,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: AppColors.body,
-                              height: 1.3,
-                            ),
-                          ),
+          Column(
+            children: [
+              for (var index = 0; index < rows.length; index++) ...[
+                if (index > 0) const Divider(height: 1),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: 88,
+                        child: Text(
+                          rows[index].$1,
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
-                        Expanded(
-                          child: Text(
-                            row.$2,
-                            style: TextStyle(
-                              fontSize: 14,
-                              height: 1.3,
-                              color: row.$1 == '是否参保' && row.$2.contains('已参保')
-                                  ? AppColors.primary
-                                  : AppColors.ink,
-                              fontWeight:
-                                  row.$1 == '是否参保' && row.$2.contains('已参保')
-                                  ? FontWeight.w600
-                                  : FontWeight.w400,
-                            ),
-                          ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          rows[index].$2,
+                          style: Theme.of(context).textTheme.bodyLarge
+                              ?.copyWith(
+                                color:
+                                    rows[index].$1 == '是否参保' &&
+                                        rows[index].$2.contains('已参保')
+                                    ? AppColors.success
+                                    : rows[index].$2 == '未填写'
+                                    ? AppColors.helper
+                                    : AppColors.ink,
+                              ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
+                ),
               ],
-            ),
+            ],
           ),
         ],
       ),
@@ -560,45 +567,39 @@ class _AttachmentCategories extends StatelessWidget {
               ),
               onTap: () => context.push('/personnel/$employeeId/attachments'),
             ),
-            Row(
+            DesignGrid(
               children: [
                 for (final category in categories)
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 3),
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(12),
-                        onTap: () =>
-                            context.push('/personnel/$employeeId/attachments'),
-                        child: Container(
-                          height: 86,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 4,
-                            vertical: 8,
-                          ),
-                          decoration: BoxDecoration(
-                            color: category.$4.withValues(alpha: .09),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(category.$3, color: category.$4, size: 21),
-                              const SizedBox(height: 4),
-                              Text(
-                                category.$1,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                              Text(
-                                loading || error
-                                    ? '—'
-                                    : '${items.where((item) => category.$2.contains(item.category)).length} 张',
-                                style: Theme.of(context).textTheme.bodySmall,
-                              ),
-                            ],
-                          ),
+                  Material(
+                    color: category.$4.withValues(alpha: .09),
+                    borderRadius: BorderRadius.circular(8),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(8),
+                      onTap: () =>
+                          context.push('/personnel/$employeeId/attachments'),
+                      child: Container(
+                        constraints: const BoxConstraints(minHeight: 86),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 4,
+                          vertical: 8,
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(category.$3, color: category.$4, size: 21),
+                            const SizedBox(height: 4),
+                            Text(
+                              category.$1,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                            Text(
+                              loading || error
+                                  ? '—'
+                                  : '${items.where((item) => category.$2.contains(item.category)).length} 张',
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                          ],
                         ),
                       ),
                     ),

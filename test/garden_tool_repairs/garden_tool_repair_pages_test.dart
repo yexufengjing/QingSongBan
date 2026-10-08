@@ -100,6 +100,11 @@ void main() {
       expect(find.text('李四'), findsOneWidget);
       expect(find.text('小计：¥170.00'), findsOneWidget);
       expect(find.text('小计：¥2.50'), findsOneWidget);
+      await tester.scrollUntilVisible(
+        find.text('合计金额'),
+        250,
+        scrollable: find.byType(Scrollable).first,
+      );
       expect(find.text('合计金额'), findsOneWidget);
       expect(tester.takeException(), isNull);
       expect(group.subtotalCents, 17000);
@@ -143,8 +148,20 @@ void main() {
       await tester.enterText(_field('数量'), '2.5');
       await tester.enterText(_field('单价'), '8.40');
       await tester.pumpAndSettle();
-      expect(find.text('¥21.00'), findsNWidgets(2));
+      expect(find.text('¥21.00'), findsOneWidget);
+      expect(
+        find.textContaining('当前合计 ¥21.00', findRichText: true),
+        findsOneWidget,
+      );
 
+      tester.testTextInput.hide();
+      await tester.pumpAndSettle();
+      await tester.ensureVisible(find.text('添加明细'));
+      await tester.drag(
+        find.byType(SingleChildScrollView).first,
+        const Offset(0, -300),
+      );
+      await tester.pumpAndSettle();
       await tester.tap(find.text('添加明细'));
       await tester.pumpAndSettle();
       final projects = _field('项目名称');
@@ -154,7 +171,11 @@ void main() {
       await tester.enterText(_field('单价').last, '4.50');
       await tester.pumpAndSettle();
       expect(find.text('小计：¥30.00'), findsOneWidget);
-      expect(find.text('¥30.00'), findsOneWidget);
+      await tester.ensureVisible(find.text('保存并继续'));
+      expect(
+        find.textContaining('当前合计 ¥30.00', findRichText: true),
+        findsOneWidget,
+      );
 
       tester.testTextInput.hide();
       await tester.pumpAndSettle();

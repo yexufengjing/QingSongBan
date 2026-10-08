@@ -166,15 +166,12 @@ class _PurchaseCreatePageState extends ConsumerState<PurchaseCreatePage> {
                                   labelPadding: const EdgeInsets.symmetric(
                                     horizontal: 3,
                                   ),
-                                  label: FittedBox(
-                                    fit: BoxFit.scaleDown,
-                                    child: Text(reason),
-                                  ),
+                                  label: Text(reason),
                                   selected: _reasonController.text == reason,
-                                  selectedColor: const Color(0xFFE5F8F0),
+                                  selectedColor: const Color(0xFF2563EB),
                                   labelStyle: TextStyle(
                                     color: _reasonController.text == reason
-                                        ? const Color(0xFF00A86B)
+                                        ? Colors.white
                                         : const Color(0xFF425D7F),
                                     fontWeight: _reasonController.text == reason
                                         ? FontWeight.w700
@@ -182,7 +179,7 @@ class _PurchaseCreatePageState extends ConsumerState<PurchaseCreatePage> {
                                   ),
                                   side: BorderSide(
                                     color: _reasonController.text == reason
-                                        ? const Color(0xFF00A86B)
+                                        ? Colors.white
                                         : const Color(0xFFE0EAF5),
                                   ),
                                   onSelected: (_) {

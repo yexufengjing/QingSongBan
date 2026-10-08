@@ -5,6 +5,8 @@ import '../../../app/theme/app_theme.dart';
 import '../../../core/database/database_enums.dart';
 import '../../../core/utils/date_utils.dart';
 import '../application/vehicle_providers.dart';
+import 'vehicle_field.dart';
+
 import '../domain/repair_options.dart';
 
 class VehicleRepairFormPage extends ConsumerStatefulWidget {
@@ -128,102 +130,162 @@ class _VehicleRepairFormPageState extends ConsumerState<VehicleRepairFormPage> {
       appBar: AppBar(
         title: Text(widget.repairOrderId == null ? '新建报修/维修单' : '编辑维修单'),
       ),
+      bottomNavigationBar: SafeArea(
+        top: false,
+        child: Material(
+          color: AppColors.card,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                Expanded(
+                  child: ValueListenableBuilder<TextEditingValue>(
+                    valueListenable: _reportedAmountController,
+                    builder: (context, value, _) => Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          '申报金额',
+                          style: TextStyle(color: AppColors.body, fontSize: 12),
+                        ),
+                        Text(
+                          '¥${(double.tryParse(value.text) ?? 0).toStringAsFixed(2)}',
+                          style: const TextStyle(
+                            color: AppColors.primary,
+                            fontSize: 22,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: FilledButton.icon(
+                    onPressed: _saving ? null : _save,
+                    icon: _saving
+                        ? const SizedBox.square(
+                            dimension: 18,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        : const Icon(Icons.save_outlined),
+                    label: Text(_saving ? '保存中...' : '保存维修单'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : Form(
               key: _formKey,
               child: ListView(
-                padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
+                padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
                 children: [
                   _section('故障信息', Icons.warning_amber_outlined, [
-                    TextFormField(
-                      controller: _symptomController,
-                      decoration: const InputDecoration(labelText: '故障现象 *'),
-                      maxLines: 2,
-                      validator: (value) =>
-                          value == null || value.trim().isEmpty
-                          ? '请填写故障现象'
-                          : null,
+                    VehicleField(
+                      label: '故障现象 *',
+                      child: TextFormField(
+                        controller: _symptomController,
+                        decoration: const InputDecoration(),
+                        maxLines: 2,
+                        validator: (value) =>
+                            value == null || value.trim().isEmpty
+                            ? '请填写故障现象'
+                            : null,
+                      ),
                     ),
-                    const SizedBox(height: 12),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _dateField(
-                            context,
-                            '报修日期',
-                            _reportDate,
-                            (value) => setState(() => _reportDate = value),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: _dateField(
-                            context,
-                            '发现日期',
-                            _faultFoundAt,
-                            (value) => setState(() => _faultFoundAt = value),
-                          ),
-                        ),
-                      ],
+                    const SizedBox(height: 20),
+                    _dateField(
+                      context,
+                      '报修日期',
+                      _reportDate,
+                      (value) => setState(() => _reportDate = value),
                     ),
-                    const SizedBox(height: 12),
-                    TextFormField(
-                      controller: _causeController,
-                      decoration: const InputDecoration(labelText: '故障原因'),
+                    const SizedBox(height: 16),
+                    _dateField(
+                      context,
+                      '发现日期',
+                      _faultFoundAt,
+                      (value) => setState(() => _faultFoundAt = value),
                     ),
-                    const SizedBox(height: 12),
-                    TextFormField(
-                      controller: _projectController,
-                      decoration: const InputDecoration(labelText: '维修项目'),
+                    const SizedBox(height: 16),
+                    VehicleField(
+                      label: '故障原因',
+                      child: TextFormField(
+                        controller: _causeController,
+                        decoration: const InputDecoration(),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    VehicleField(
+                      label: '维修项目',
+                      child: TextFormField(
+                        controller: _projectController,
+                        decoration: const InputDecoration(),
+                      ),
                     ),
                   ]),
-                  const SizedBox(height: 14),
+                  const SizedBox(height: 16),
                   _section('维修安排', Icons.handyman_outlined, [
-                    TextFormField(
-                      controller: _vendorController,
-                      decoration: const InputDecoration(
-                        labelText: '维修地点/供应商',
+                    VehicleField(
+                      label: '维修地点/供应商',
+                      child: TextFormField(
+                        controller: _vendorController,
+                        decoration: const InputDecoration(),
                       ),
                     ),
-                    const SizedBox(height: 12),
-                    TextFormField(
-                      controller: _managerController,
-                      decoration: const InputDecoration(
-                        labelText: '维修负责人',
+                    const SizedBox(height: 20),
+                    VehicleField(
+                      label: '维修负责人',
+                      child: TextFormField(
+                        controller: _managerController,
+                        decoration: const InputDecoration(),
                       ),
                     ),
-                    const SizedBox(height: 12),
-                    DropdownButtonFormField<VehicleRepairStatus>(
-                      initialValue: _status,
-                      decoration: const InputDecoration(labelText: '维修状态'),
-                      items: [
-                        for (final value in VehicleRepairStatus.values)
-                          DropdownMenuItem(
-                            value: value,
-                            child: Text(RepairOptions.statusLabel(value)),
-                          ),
-                      ],
-                      onChanged: (value) =>
-                          setState(() => _status = value ?? _status),
+                    const SizedBox(height: 20),
+                    VehicleField(
+                      label: '维修状态',
+                      child: DropdownButtonFormField<VehicleRepairStatus>(
+                        initialValue: _status,
+                        decoration: const InputDecoration(),
+                        items: [
+                          for (final value in VehicleRepairStatus.values)
+                            DropdownMenuItem(
+                              value: value,
+                              child: Text(RepairOptions.statusLabel(value)),
+                            ),
+                        ],
+                        onChanged: (value) =>
+                            setState(() => _status = value ?? _status),
+                      ),
                     ),
-                    const SizedBox(height: 12),
-                    DropdownButtonFormField<RepairTicketStatus>(
-                      initialValue: _ticketStatus,
-                      decoration: const InputDecoration(labelText: '三联票状态'),
-                      items: [
-                        for (final value in RepairTicketStatus.values)
-                          DropdownMenuItem(
-                            value: value,
-                            child: Text(RepairOptions.ticketStatusLabel(value)),
-                          ),
-                      ],
-                      onChanged: (value) => setState(
-                        () => _ticketStatus = value ?? _ticketStatus,
+                    const SizedBox(height: 20),
+                    VehicleField(
+                      label: '三联票状态',
+                      child: DropdownButtonFormField<RepairTicketStatus>(
+                        initialValue: _ticketStatus,
+                        decoration: const InputDecoration(),
+                        items: [
+                          for (final value in RepairTicketStatus.values)
+                            DropdownMenuItem(
+                              value: value,
+                              child: Text(
+                                RepairOptions.ticketStatusLabel(value),
+                              ),
+                            ),
+                        ],
+                        onChanged: (value) => setState(
+                          () => _ticketStatus = value ?? _ticketStatus,
+                        ),
                       ),
                     ),
                   ]),
-                  const SizedBox(height: 14),
+                  const SizedBox(height: 16),
                   _section('费用明细', Icons.receipt_long_outlined, [
                     for (var index = 0; index < _costLines.length; index++)
                       _CostLineEditor(
@@ -248,31 +310,27 @@ class _VehicleRepairFormPageState extends ConsumerState<VehicleRepairFormPage> {
                         label: const Text('添加费用明细'),
                       ),
                     ),
-                    TextFormField(
-                      controller: _reportedAmountController,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(labelText: '申报金额（元）'),
+                    VehicleField(
+                      label: '申报金额（元）',
+                      child: TextFormField(
+                        controller: _reportedAmountController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(),
+                      ),
                     ),
                   ]),
-                  const SizedBox(height: 14),
+                  const SizedBox(height: 16),
                   _section('补充信息', Icons.notes_outlined, [
-                    TextFormField(
-                      controller: _remarkController,
-                      maxLines: 3,
-                      decoration: const InputDecoration(labelText: '备注'),
+                    VehicleField(
+                      label: '备注',
+                      child: TextFormField(
+                        controller: _remarkController,
+                        maxLines: 3,
+                        decoration: const InputDecoration(),
+                      ),
                     ),
                   ]),
                   const SizedBox(height: 20),
-                  FilledButton.icon(
-                    onPressed: _saving ? null : _save,
-                    icon: _saving
-                        ? const SizedBox.square(
-                            dimension: 18,
-                            child: CircularProgressIndicator(strokeWidth: 2),
-                          )
-                        : const Icon(Icons.save_outlined),
-                    label: Text(_saving ? '保存中...' : '保存维修单'),
-                  ),
                 ],
               ),
             ),
@@ -281,7 +339,7 @@ class _VehicleRepairFormPageState extends ConsumerState<VehicleRepairFormPage> {
 
   Widget _section(String title, IconData icon, List<Widget> children) => Card(
     child: Padding(
-      padding: const EdgeInsets.all(18),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -304,21 +362,29 @@ class _VehicleRepairFormPageState extends ConsumerState<VehicleRepairFormPage> {
     String label,
     DateTime value,
     ValueChanged<DateTime> onChanged,
-  ) => ListTile(
-    contentPadding: EdgeInsets.zero,
-    title: Text(label),
-    subtitle: Text(AppDateUtils.formatDate(value)),
-    trailing: IconButton(
-      icon: const Icon(Icons.calendar_month_outlined),
-      onPressed: () async {
-        final picked = await showDatePicker(
-          context: context,
-          firstDate: DateTime(2000),
-          lastDate: DateTime(2100),
-          initialDate: value,
-        );
-        if (picked != null) onChanged(picked);
-      },
+  ) => VehicleField(
+    label: label,
+    child: InputDecorator(
+      decoration: InputDecoration(
+        contentPadding: const EdgeInsets.only(left: 12),
+      ),
+      child: Row(
+        children: [
+          Expanded(child: Text(AppDateUtils.formatDate(value))),
+          IconButton(
+            icon: const Icon(Icons.calendar_month_outlined),
+            onPressed: () async {
+              final picked = await showDatePicker(
+                context: context,
+                firstDate: DateTime(2000),
+                lastDate: DateTime(2100),
+                initialDate: value,
+              );
+              if (picked != null) onChanged(picked);
+            },
+          ),
+        ],
+      ),
     ),
   );
 
@@ -477,18 +543,21 @@ class _CostLineEditorState extends State<_CostLineEditor> {
           ],
         ),
         const SizedBox(height: 8),
-        DropdownButtonFormField<RepairCostType>(
-          initialValue: widget.line.costType,
-          decoration: const InputDecoration(labelText: '费用类型'),
-          items: [
-            for (final value in RepairCostType.values)
-              DropdownMenuItem(
-                value: value,
-                child: Text(RepairOptions.costTypeLabel(value)),
-              ),
-          ],
-          onChanged: (value) => setState(
-            () => widget.line.costType = value ?? widget.line.costType,
+        VehicleField(
+          label: '费用类型',
+          child: DropdownButtonFormField<RepairCostType>(
+            initialValue: widget.line.costType,
+            decoration: const InputDecoration(),
+            items: [
+              for (final value in RepairCostType.values)
+                DropdownMenuItem(
+                  value: value,
+                  child: Text(RepairOptions.costTypeLabel(value)),
+                ),
+            ],
+            onChanged: (value) => setState(
+              () => widget.line.costType = value ?? widget.line.costType,
+            ),
           ),
         ),
       ],

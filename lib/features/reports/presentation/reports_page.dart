@@ -3,9 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/theme/app_theme.dart';
+import '../../../core/widgets/design_widgets.dart';
+import 'report_module_panels.dart';
 import '../../../core/database/database_enums.dart';
 import '../../../core/utils/date_utils.dart';
 import '../../insurance/application/insurance_providers.dart';
+import '../../attendance/application/daily_attendance_providers.dart';
 import '../../insurance/domain/insurance_options.dart';
 import '../application/monthly_summary_providers.dart';
 import '../../excel/application/excel_providers.dart';
@@ -20,6 +23,7 @@ class ReportsPage extends ConsumerStatefulWidget {
 
 class _ReportsPageState extends ConsumerState<ReportsPage> {
   bool _exporting = false;
+  int _module = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -41,35 +45,11 @@ class _ReportsPageState extends ConsumerState<ReportsPage> {
                   tooltip: '返回考勤',
                 ),
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '月度汇总',
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                    ],
+                  child: Text(
+                    '汇总中心',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headlineMedium,
                   ),
-                ),
-                IconButton(
-                  key: const Key('summary-generate-button'),
-                  onPressed: () => _generate(context, ref, month),
-                  icon: const Icon(Icons.refresh_outlined),
-                  tooltip: '重新生成汇总',
-                ),
-                IconButton(
-                  key: const Key('summary-export-button'),
-                  onPressed: _exporting
-                      ? null
-                      : () => _export(context, ref, month),
-                  icon: _exporting
-                      ? const SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(strokeWidth: 2),
-                        )
-                      : const Icon(Icons.file_download_outlined),
-                  tooltip: '导出当前月份 Excel',
                 ),
                 IconButton(
                   key: const Key('summary-payroll-button'),
@@ -78,6 +58,24 @@ class _ReportsPageState extends ConsumerState<ReportsPage> {
                   tooltip: '临时工薪资',
                 ),
               ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: SizedBox(
+              width: double.infinity,
+              child: SegmentedButton<int>(
+                segments: const [
+                  ButtonSegment(value: 0, label: Text('考勤')),
+                  ButtonSegment(value: 1, label: Text('车辆')),
+                  ButtonSegment(value: 2, label: Text('库存')),
+                  ButtonSegment(value: 3, label: Text('工资')),
+                ],
+                selected: {_module},
+                showSelectedIcon: false,
+                onSelectionChanged: (value) =>
+                    setState(() => _module = value.first),
+              ),
             ),
           ),
           const SizedBox(height: 8),
@@ -91,24 +89,56 @@ class _ReportsPageState extends ConsumerState<ReportsPage> {
           ),
           const SizedBox(height: 12),
           Expanded(
-            child: summary.when(
-              loading: () => const Center(child: CircularProgressIndicator()),
-              error: (error, _) => _SummaryError(
-                message: error.toString(),
-                onRetry: () => ref.invalidate(monthlySummaryProvider),
-              ),
-              data: (value) => _SummaryContent(
-                value: value,
-                onGenerate: () => _generate(context, ref, month),
-                onStatus: (status, reason) =>
-                    _setStatus(context, ref, value, status, reason),
-              ),
-            ),
+            child: _module == 1
+                ? VehicleReportPanel(month: month)
+                : _module == 2
+                ? InventoryReportPanel(month: month)
+                : _module == 3
+                ? PayrollReportPanel(month: month)
+                : summary.when(
+                    loading: () =>
+                        const Center(child: CircularProgressIndicator()),
+                    error: (error, _) => _SummaryError(
+                      message: error.toString(),
+                      onRetry: () => ref.invalidate(monthlySummaryProvider),
+                    ),
+                    data: (value) => _SummaryContent(
+                      actions: _actions(context, month),
+                      value: value,
+                      onGenerate: () => _generate(context, ref, month),
+                      onStatus: (status, reason) =>
+                          _setStatus(context, ref, value, status, reason),
+                    ),
+                  ),
           ),
         ],
       ),
     );
   }
+
+  Widget _actions(BuildContext context, DateTime month) => Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      IconButton(
+        key: const Key('summary-generate-button'),
+        onPressed: () => _generate(context, ref, month),
+        icon: const Icon(Icons.refresh_outlined),
+        tooltip: '重新生成汇总',
+      ),
+      IconButton(
+        key: const Key('summary-export-button'),
+        onPressed: _exporting ? null : () => _export(context, ref, month),
+        icon: _exporting
+            ? const SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              )
+            : const Icon(Icons.file_download_outlined),
+        tooltip: '导出当前月份 Excel',
+      ),
+    ],
+  );
 
   void _backToAttendance(BuildContext context) {
     if (context.canPop()) {
@@ -210,34 +240,32 @@ class _SummaryMonthSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-        child: Row(
-          children: [
-            IconButton(
-              key: const Key('summary-previous-month'),
-              onPressed: () => onChanged(DateTime(month.year, month.month - 1)),
-              icon: const Icon(Icons.chevron_left),
-              tooltip: '上个月',
-            ),
-            Expanded(
-              child: Center(
-                child: Text(
-                  monthlySummaryMonthLabel(month),
-                  key: const Key('summary-month-label'),
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      child: Row(
+        children: [
+          IconButton(
+            key: const Key('summary-previous-month'),
+            onPressed: () => onChanged(DateTime(month.year, month.month - 1)),
+            icon: const Icon(Icons.chevron_left),
+            tooltip: '上个月',
+          ),
+          Expanded(
+            child: Center(
+              child: Text(
+                monthlySummaryMonthLabel(month),
+                key: const Key('summary-month-label'),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
-            IconButton(
-              key: const Key('summary-next-month'),
-              onPressed: () => onChanged(DateTime(month.year, month.month + 1)),
-              icon: const Icon(Icons.chevron_right),
-              tooltip: '下个月',
-            ),
-          ],
-        ),
+          ),
+          IconButton(
+            key: const Key('summary-next-month'),
+            onPressed: () => onChanged(DateTime(month.year, month.month + 1)),
+            icon: const Icon(Icons.chevron_right),
+            tooltip: '下个月',
+          ),
+        ],
       ),
     );
   }
@@ -246,39 +274,89 @@ class _SummaryMonthSelector extends StatelessWidget {
 class _SummaryContent extends ConsumerWidget {
   const _SummaryContent({
     required this.value,
+    required this.actions,
     required this.onGenerate,
     required this.onStatus,
   });
 
   final MonthlySummaryView value;
+  final Widget actions;
   final VoidCallback onGenerate;
   final Future<void> Function(MonthlySummaryStatus status, String? reason)
   onStatus;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (value.rows.isEmpty) return _SummaryEmpty(onGenerate: onGenerate);
+    if (value.rows.isEmpty) {
+      return ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          DesignSection(
+            title: '考勤汇总',
+            trailing: actions,
+            child: SizedBox(
+              height: 280,
+              child: _SummaryEmpty(onGenerate: onGenerate),
+            ),
+          ),
+        ],
+      );
+    }
     final month = AppDateUtils.parseYearMonth(value.yearMonth);
     final changes = ref.watch(insuranceChangesForMonthProvider(month));
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
       children: [
-        _SummaryStats(value: value),
-        const SizedBox(height: 8),
-        _SummaryTabs(value: value, insuranceChanges: changes),
+        DesignSection(
+          title: '考勤汇总',
+          trailing: actions,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: AppColors.lightOrange,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  '当前状态：${MonthlySummaryOptions.statusLabel(value.status)}',
+                  style: const TextStyle(color: AppColors.warning),
+                ),
+              ),
+              const SizedBox(height: 12),
+              _SummaryStats(value: value),
+              const SizedBox(height: 12),
+              const Text(
+                '按半天统计；加班按小时。',
+                style: TextStyle(color: AppColors.body, fontSize: 12),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 12),
+        DesignSection(
+          title: '待检查 ${value.anomalies.length} 项',
+          child: value.anomalies.isEmpty
+              ? const _NoAnomalies()
+              : Column(
+                  children: [
+                    for (final anomaly in value.anomalies)
+                      _AnomalyCard(anomaly: anomaly),
+                  ],
+                ),
+        ),
+        const SizedBox(height: 12),
+        DesignSection(
+          child: _SummaryTabs(value: value, insuranceChanges: changes),
+        ),
         const SizedBox(height: 12),
         _SummaryOperationMenu(
           value: value,
           onGenerate: onGenerate,
           onStatus: onStatus,
         ),
-        const SizedBox(height: 12),
-        Text('异常汇总', style: Theme.of(context).textTheme.titleLarge),
-        const SizedBox(height: 8),
-        if (value.anomalies.isEmpty)
-          const _NoAnomalies()
-        else
-          for (final anomaly in value.anomalies) _AnomalyCard(anomaly: anomaly),
       ],
     );
   }
@@ -349,41 +427,95 @@ class _AttendanceSummaryTable extends StatelessWidget {
   final List<MonthlySummaryRowView> rows;
 
   @override
-  Widget build(BuildContext context) => Card(
-    clipBehavior: Clip.antiAlias,
-    child: SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: DataTable(
-        headingRowHeight: 38,
-        dataRowMinHeight: 42,
-        dataRowMaxHeight: 48,
-        columns: const [
-          DataColumn(label: Text('姓名')),
-          DataColumn(label: Text('实际出勤天数')),
-          DataColumn(label: Text('请假天数')),
-          DataColumn(label: Text('缺勤天数')),
-          DataColumn(label: Text('加班小时')),
-          DataColumn(label: Text('月末状态')),
-          DataColumn(label: Text('数据完整')),
-        ],
-        rows: [
-          for (final row in rows)
-            DataRow(
-              cells: [
-                DataCell(Text(row.employee.name)),
-                DataCell(Text(_summaryDays(row.summary.attendanceDays))),
-                DataCell(Text(_summaryDays(row.summary.leaveDays))),
-                DataCell(Text(_summaryDays(row.summary.absentDays))),
-                DataCell(
-                  Text((row.summary.overtimeMinutes / 60).toStringAsFixed(1)),
-                ),
-                DataCell(Text(row.summary.monthEndStatus ?? '未知')),
-                DataCell(Text(row.summary.isComplete ? '完整' : '待补充')),
-              ],
-            ),
-        ],
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        child: Text(
+          '人员明细 · 共 ${rows.length} 人',
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
       ),
-    ),
+      for (final row in rows) ...[
+        Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            border: Border.all(color: AppColors.divider),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const DesignIcon(Icons.person_outline),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          row.employee.name,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        Text(
+                          '工号：${row.employee.employeeNo}',
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Text(
+                    row.summary.isComplete ? '数据完整' : '待补充',
+                    style: TextStyle(
+                      color: row.summary.isComplete
+                          ? AppColors.success
+                          : AppColors.warning,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+              const Divider(height: 24),
+              ReportGrid(
+                children: [
+                  ReportMetric(
+                    '出勤',
+                    _summaryDays(row.summary.attendanceDays),
+                    Icons.calendar_month_outlined,
+                  ),
+                  ReportMetric(
+                    '请假',
+                    _summaryDays(row.summary.leaveDays),
+                    Icons.event_busy_outlined,
+                    color: AppColors.warning,
+                  ),
+                  ReportMetric(
+                    '缺勤',
+                    _summaryDays(row.summary.absentDays),
+                    Icons.person_off_outlined,
+                    color: AppColors.danger,
+                  ),
+                  ReportMetric(
+                    '加班',
+                    '${(row.summary.overtimeMinutes / 60).toStringAsFixed(1)}小时',
+                    Icons.schedule,
+                    color: AppColors.purple,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Text(
+                '月末状态：${row.summary.monthEndStatus ?? '未知'}',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 8),
+      ],
+    ],
   );
 }
 
@@ -590,130 +722,70 @@ class _SummaryStats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final stats = [
-      _StatData(
-        label: '本月出勤人数',
-        value:
-            '${value.rows.where((row) => row.summary.attendanceDays > 0).length}人',
-        icon: Icons.fact_check_outlined,
-        color: AppColors.primary,
-      ),
-      _StatData(
-        label: '请假人数',
-        value:
-            '${value.rows.where((row) => row.summary.leaveDays > 0).length}人',
-        icon: Icons.event_busy_outlined,
-        color: AppColors.purple,
-      ),
-      _StatData(
-        label: '缺勤人数',
-        value:
-            '${value.rows.where((row) => row.summary.absentDays > 0).length}人',
-        icon: Icons.person_off_outlined,
-        color: AppColors.danger,
-      ),
-      _StatData(
-        label: '加班小时',
-        value: (value.overtimeMinutes / 60).toStringAsFixed(1),
-        icon: Icons.more_time_outlined,
-        color: const Color(0xFFE98500),
-      ),
-      _StatData(
-        label: '数据完整率',
-        value:
-            '${(value.rows.where((row) => row.summary.isComplete).length * 100 / value.rows.length).round()}%',
-        icon: Icons.verified_outlined,
-        color: AppColors.techBlue,
-      ),
-    ];
-    return Column(
+    final complete = value.rows.isEmpty
+        ? '暂无数据'
+        : '${(value.rows.where((row) => row.summary.isComplete).length * 100 / value.rows.length).round()}%';
+    return ReportGrid(
       children: [
-        Row(
-          children: [
-            for (var i = 0; i < 3; i++) ...[
-              if (i > 0) const SizedBox(width: 8),
-              Expanded(child: _Stat(data: stats[i])),
-            ],
-          ],
+        ReportMetric(
+          '出勤人日',
+          _summaryDays(value.attendanceDays).replaceAll('天', '人日'),
+          Icons.calendar_month_outlined,
         ),
-        const SizedBox(height: 8),
-        Row(
-          children: [
-            Expanded(child: _Stat(data: stats[3])),
-            const SizedBox(width: 8),
-            Expanded(child: _Stat(data: stats[4])),
-          ],
+        ReportMetric(
+          '请假天数',
+          _summaryDays(value.leaveDays),
+          Icons.event_busy_outlined,
+          color: AppColors.warning,
         ),
+        ReportMetric(
+          '缺勤天数',
+          _summaryDays(
+            value.rows.fold<double>(
+              0,
+              (sum, row) => sum + row.summary.absentDays,
+            ),
+          ),
+          Icons.person_off_outlined,
+          color: AppColors.danger,
+        ),
+        ReportMetric(
+          '加班时长',
+          '${(value.overtimeMinutes / 60).toStringAsFixed(1)}小时',
+          Icons.schedule,
+          color: AppColors.purple,
+        ),
+        ReportMetric(
+          '出勤人数',
+          '${value.rows.where((row) => row.summary.attendanceDays > 0).length}人',
+          Icons.people_outline,
+          color: AppColors.success,
+        ),
+        ReportMetric(
+          '请假人数',
+          '${value.rows.where((row) => row.summary.leaveDays > 0).length}人',
+          Icons.person_outline,
+          color: AppColors.warning,
+        ),
+        ReportMetric(
+          '缺勤人数',
+          '${value.rows.where((row) => row.summary.absentDays > 0).length}人',
+          Icons.person_off_outlined,
+          color: AppColors.danger,
+        ),
+        ReportMetric('完整率', complete, Icons.pie_chart_outline),
       ],
     );
   }
 }
 
-class _StatData {
-  const _StatData({
-    required this.label,
-    required this.value,
-    required this.icon,
-    required this.color,
-  });
-
-  final String label;
-  final String value;
-  final IconData icon;
-  final Color color;
-}
-
-class _Stat extends StatelessWidget {
-  const _Stat({required this.data});
-
-  final _StatData data;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 12, 10, 12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: 30,
-              height: 30,
-              decoration: BoxDecoration(
-                color: data.color.withValues(alpha: .12),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Icon(data.icon, color: data.color, size: 18),
-            ),
-            const SizedBox(height: 7),
-            Text(
-              data.label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-            const SizedBox(height: 2),
-            Text(
-              data.value,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.titleLarge
-                  ?.copyWith(color: AppColors.ink, fontWeight: FontWeight.w700),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _AnomalyCard extends StatelessWidget {
+class _AnomalyCard extends ConsumerWidget {
   const _AnomalyCard({required this.anomaly});
 
   final MonthlySummaryAnomaly anomaly;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Card(
       color: AppColors.lightOrange,
       child: ListTile(
@@ -721,7 +793,23 @@ class _AnomalyCard extends StatelessWidget {
           Icons.warning_amber_outlined,
           color: Color(0xFFE98500),
         ),
-        title: Text(MonthlySummaryOptions.anomalyLabel(anomaly.kind)),
+        title: Text(
+          '${anomaly.employee.name} · ${MonthlySummaryOptions.anomalyLabel(anomaly.kind)}',
+        ),
+        trailing: IconButton(
+          tooltip: '定位考勤',
+          onPressed: () {
+            if (anomaly.date != null) {
+              ref.read(dailyAttendanceDateProvider.notifier).state =
+                  anomaly.date!;
+            }
+            context.push('/attendance/daily');
+          },
+          icon: const Icon(
+            Icons.location_on_outlined,
+            color: AppColors.primary,
+          ),
+        ),
         subtitle: Text(
           '${anomaly.employee.name}${anomaly.dateLabel.isEmpty ? '' : ' · ${anomaly.dateLabel}'} · ${anomaly.message}',
         ),

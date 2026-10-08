@@ -176,7 +176,80 @@ class _VehicleRepairListPageState extends ConsumerState<VehicleRepairListPage> {
                           onChanged: (_) => setState(() {}),
                         ),
                       ),
-                      const SizedBox(width: 8),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 4,
+                  ),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        for (final status in <VehicleRepairStatus?>[
+                          null,
+                          VehicleRepairStatus.reported,
+                          VehicleRepairStatus.repairing,
+                          VehicleRepairStatus.completed,
+                        ])
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8),
+                            child: ChoiceChip(
+                              label: Text(
+                                '${status == null ? '全部' : RepairOptions.statusLabel(status)} ${status == null ? items.length : items.where((order) => order.status == status).length}单',
+                              ),
+                              selected: _status == status,
+                              showCheckmark: false,
+                              onSelected: (_) =>
+                                  setState(() => _status = status),
+                              selectedColor: AppColors.primary,
+                              backgroundColor: AppColors.lightBlue,
+                              labelStyle: TextStyle(
+                                color: _status == status
+                                    ? Colors.white
+                                    : AppColors.body,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              side: BorderSide.none,
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: DropdownButtonFormField<int>(
+                          key: ValueKey('repair-filter-vehicle-$_vehicleId'),
+                          initialValue: _vehicleId,
+                          isExpanded: true,
+                          decoration: const InputDecoration(labelText: '车辆'),
+                          items: [
+                            const DropdownMenuItem<int>(
+                              value: null,
+                              child: Text('全部'),
+                            ),
+                            for (final vehicle in vehicleItems)
+                              DropdownMenuItem(
+                                value: vehicle.id,
+                                child: Text(
+                                  vehicle.name,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                          ],
+                          onChanged: (value) =>
+                              setState(() => _vehicleId = value),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
                       _FilterButton(
                         count: _activeFilterCount,
                         onPressed: () => _openFilters(vehicleItems),
@@ -311,7 +384,7 @@ class _FilterButton extends StatelessWidget {
               '$count',
               style: const TextStyle(
                 color: Colors.white,
-                fontSize: 11,
+                fontSize: 13,
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -587,233 +660,152 @@ class _RepairOrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final description = (order.cause?.trim().isNotEmpty ?? false)
-        ? order.cause!.trim()
-        : order.symptom;
+    final statusColor = switch (order.status) {
+      VehicleRepairStatus.completed => AppColors.success,
+      VehicleRepairStatus.repairing => AppColors.primary,
+      VehicleRepairStatus.cancelled => AppColors.body,
+      _ => AppColors.warning,
+    };
     return Card(
-      margin: EdgeInsets.zero,
-      color: Colors.white,
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(14),
-        side: BorderSide(color: AppColors.divider.withValues(alpha: .75)),
-      ),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
+          padding: const EdgeInsets.all(14),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    width: 24,
-                    height: 24,
-                    alignment: Alignment.center,
+                    width: 36,
+                    height: 36,
                     decoration: BoxDecoration(
-                      color: AppColors.lightGreen,
-                      borderRadius: BorderRadius.circular(8),
+                      color: statusColor.withValues(alpha: .08),
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Text(
-                      '$number',
-                      style: theme.textTheme.labelSmall?.copyWith(
-                        color: AppColors.ink,
-                        fontWeight: FontWeight.w700,
-                      ),
+                    child: Icon(
+                      Icons.local_shipping,
+                      color: statusColor,
+                      size: 24,
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 12),
                   Expanded(
-                    child: Text(
-                      vehicle?.name ?? '车辆已删除',
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        color: AppColors.ink,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  SizedBox(
-                    width: 112,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        FittedBox(
-                          fit: BoxFit.scaleDown,
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                            _money(order.actualAmountCents),
-                            textAlign: TextAlign.right,
-                            maxLines: 1,
-                            style: theme.textTheme.titleMedium?.copyWith(
-                              color: AppColors.techBlue,
-                              fontWeight: FontWeight.w700,
-                            ),
+                        Text(
+                          order.repairNo,
+                          style: const TextStyle(
+                            color: AppColors.ink,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
+                        const SizedBox(height: 4),
                         Text(
-                          '实际金额',
-                          style: theme.textTheme.labelSmall?.copyWith(
+                          '${vehicle?.licensePlate ?? vehicle?.vehicleNo ?? ''} · ${vehicle?.name ?? '车辆已删除'}',
+                          style: const TextStyle(
                             color: AppColors.body,
+                            fontSize: 13,
                           ),
                         ),
                       ],
                     ),
                   ),
+                  const SizedBox(width: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 5,
+                    ),
+                    decoration: BoxDecoration(
+                      color: statusColor.withValues(alpha: .08),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      RepairOptions.statusLabel(order.status),
+                      style: TextStyle(
+                        color: statusColor,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  const Icon(
+                    Icons.chevron_right,
+                    size: 18,
+                    color: AppColors.helper,
+                  ),
                 ],
               ),
-              const SizedBox(height: 7),
-              Text(
-                '故障原因',
-                style: theme.textTheme.labelSmall?.copyWith(
-                  color: AppColors.body,
-                  fontWeight: FontWeight.w600,
-                ),
+              const Divider(height: 20),
+              _recordField('故障内容', order.symptom),
+              if (order.cause?.trim().isNotEmpty == true)
+                _recordField('故障原因', order.cause!),
+              _recordField('报修时间', AppDateUtils.formatDate(order.reportDate)),
+              _recordField(
+                '维修厂商',
+                order.vendor?.trim().isNotEmpty == true ? order.vendor! : '未填写',
               ),
-              Text(
-                description,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: AppColors.ink,
-                ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-              const SizedBox(height: 8),
+              _recordField('申报金额', _money(order.reportedAmountCents)),
+              _recordField('实际金额', _money(order.actualAmountCents)),
+              if (order.manager?.trim().isNotEmpty == true)
+                _recordField('维修负责人', order.manager!),
+              if (order.project?.trim().isNotEmpty == true)
+                _recordField('维修项目', order.project!),
+              const SizedBox(height: 10),
               Wrap(
                 spacing: 6,
                 runSpacing: 6,
                 children: [
                   _RepairTag(
-                    label: RepairOptions.statusLabel(order.status),
-                    icon: Icons.build_outlined,
-                    emphasized: true,
-                  ),
-                  _RepairTag(
                     label:
                         '三联票 ${RepairOptions.ticketStatusLabel(order.ticketStatus)}',
-                    icon: Icons.confirmation_number_outlined,
+                    icon: Icons.description_outlined,
+                    emphasized: order.ticketStatus == RepairTicketStatus.issued,
                   ),
                   _RepairTag(
                     label: order.isSettled ? '已结算' : '未结算',
-                    icon: Icons.task_alt_outlined,
+                    icon: Icons.payments_outlined,
                     emphasized: order.isSettled,
                   ),
                   _RepairTag(
                     label: order.isPaid ? '已结账' : '未结账',
-                    icon: Icons.payments_outlined,
+                    icon: Icons.receipt_long_outlined,
                     emphasized: order.isPaid,
                   ),
                 ],
               ),
-              const SizedBox(height: 7),
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  final date = Text(
-                    AppDateUtils.formatDate(order.reportDate),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: theme.textTheme.titleSmall?.copyWith(
-                      color: AppColors.ink,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  );
-                  final reported = Text(
-                    '申报 ${_money(order.reportedAmountCents)}',
-                    textAlign: TextAlign.right,
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: AppColors.body,
-                    ),
-                  );
-                  if (constraints.maxWidth < 220) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        date,
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: reported,
-                        ),
-                      ],
-                    );
-                  }
-                  return Row(
-                    children: [
-                      Expanded(child: date),
-                      const SizedBox(width: 12),
-                      reported,
-                    ],
-                  );
-                },
-              ),
-              const SizedBox(height: 7),
-              Row(
-                children: [
-                  Text(
-                    '维修供应商',
-                    style: theme.textTheme.labelSmall?.copyWith(
-                      color: AppColors.techBlue,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(width: 7),
-                  Expanded(
-                    child: Text(
-                      (order.vendor?.trim().isNotEmpty ?? false)
-                          ? order.vendor!.trim()
-                          : '未填写',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: AppColors.ink,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              if (order.manager?.trim().isNotEmpty == true) ...[
-                const SizedBox(height: 4),
-                Row(
-                  children: [
-                    Text(
-                      '维修负责人',
-                      style: theme.textTheme.labelSmall?.copyWith(
-                        color: AppColors.body,
-                      ),
-                    ),
-                    const SizedBox(width: 7),
-                    Expanded(
-                      child: Text(
-                        order.manager!.trim(),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.bodySmall,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-              if (order.project?.trim().isNotEmpty == true) ...[
-                const SizedBox(height: 4),
-                Text(
-                  '维修项目：${order.project!.trim()}',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.bodySmall,
-                ),
-              ],
             ],
           ),
         ),
       ),
     );
   }
+
+  Widget _recordField(String label, String value) => Padding(
+    padding: const EdgeInsets.symmetric(vertical: 3),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          width: 88,
+          child: Text(
+            label,
+            style: const TextStyle(color: AppColors.body, fontSize: 13),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            value,
+            style: const TextStyle(color: AppColors.ink, fontSize: 14),
+          ),
+        ),
+      ],
+    ),
+  );
 
   String _money(int cents) => '¥${(cents / 100).toStringAsFixed(2)}';
 }
@@ -831,22 +823,26 @@ class _RepairTag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = emphasized ? AppColors.ink : AppColors.body;
+    final color = emphasized
+        ? AppColors.success
+        : label.startsWith('三联票')
+        ? AppColors.danger
+        : label == '未结算'
+        ? Colors.orange
+        : AppColors.primary;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
       decoration: BoxDecoration(
-        color: emphasized ? AppColors.lightGreen : AppColors.background,
+        color: color.withValues(alpha: .08),
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(
-          color: emphasized ? AppColors.lightGreen : AppColors.divider,
-        ),
+        border: Border.all(color: color.withValues(alpha: .12)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, size: 13, color: color),
           const SizedBox(width: 3),
-          Text(label, style: TextStyle(fontSize: 11, color: color)),
+          Text(label, style: TextStyle(fontSize: 13, color: color)),
         ],
       ),
     );

@@ -239,13 +239,13 @@ class _MaintenanceCard extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     color: color.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(14),
+                    borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
                     MaintenanceOptions.statusLabel(status),
                     style: TextStyle(
                       color: color,
-                      fontSize: 11,
+                      fontSize: 13,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -293,14 +293,14 @@ class _MaintenanceDetail extends StatelessWidget {
   Widget build(BuildContext context) => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text(label, style: const TextStyle(color: AppColors.body, fontSize: 10)),
+      Text(label, style: const TextStyle(color: AppColors.body, fontSize: 12)),
       Text(
         value,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style: const TextStyle(
           color: AppColors.ink,
-          fontSize: 11,
+          fontSize: 13,
           fontWeight: FontWeight.w600,
         ),
       ),

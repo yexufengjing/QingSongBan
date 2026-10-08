@@ -326,7 +326,7 @@ const vehicleUnknownNodeColor = Color(0xff96a2ad);
 Color vehicleConditionNodeColor(VehicleConditionItem? item) =>
     switch (item?.status) {
       null => vehicleUnknownNodeColor,
-      VehicleConditionStatus.normal => AppColors.primary,
+      VehicleConditionStatus.normal => AppColors.success,
       VehicleConditionStatus.minorAbnormal ||
       VehicleConditionStatus.needsAttention => Colors.orange,
       VehicleConditionStatus.pendingRepair ||
@@ -339,7 +339,7 @@ Color vehicleTireNodeColor(TireInstallation? installation, Tire? tire) {
   if (tire.status == TireAssetStatus.scrapped) return AppColors.danger;
   if (tire.status != TireAssetStatus.inUse) return vehicleUnknownNodeColor;
   return switch (tire.wearLevel) {
-    TireWearLevel.good => AppColors.primary,
+    TireWearLevel.good => AppColors.success,
     TireWearLevel.light || TireWearLevel.medium => Colors.orange,
     TireWearLevel.severe ||
     TireWearLevel.replaceRecommended => AppColors.danger,
@@ -379,7 +379,7 @@ class _VehicleVisualViewState extends ConsumerState<VehicleVisualView> {
 
     return Card(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -389,7 +389,7 @@ class _VehicleVisualViewState extends ConsumerState<VehicleVisualView> {
               spacing: 10,
               runSpacing: 6,
               children: [
-                _LegendDot(color: AppColors.primary, label: '正常'),
+                _LegendDot(color: AppColors.success, label: '正常'),
                 _LegendDot(color: Colors.orange, label: '关注'),
                 _LegendDot(color: AppColors.danger, label: '待维修'),
                 _LegendDot(color: vehicleUnknownNodeColor, label: '未记录'),
@@ -546,7 +546,7 @@ class _VehicleVisualViewState extends ConsumerState<VehicleVisualView> {
     final labelPainter = TextPainter(
       text: TextSpan(
         text: node.label,
-        style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w600),
+        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
       ),
       textDirection: Directionality.of(context),
     )..layout();
@@ -630,51 +630,53 @@ class _VehicleVisualViewState extends ConsumerState<VehicleVisualView> {
       builder: (sheetContext) => SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 4, 20, 20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                node.label,
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                item == null
-                    ? '尚无该部件的检查记录'
-                    : '当前状态：${VehicleConditionOptions.statusLabel(item.status)}',
-              ),
-              if (item?.detail?.isNotEmpty == true) ...[
-                const SizedBox(height: 6),
-                Text(item!.detail!),
-              ],
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: () => Navigator.pop(sheetContext),
-                      child: const Text('关闭'),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: FilledButton(
-                      onPressed: () {
-                        Navigator.pop(sheetContext);
-                        context.push(
-                          '/vehicles/${widget.vehicle.id}/repair/new',
-                        );
-                      },
-                      style: FilledButton.styleFrom(
-                        backgroundColor: AppColors.techBlue,
-                      ),
-                      child: const Text('转为报修'),
-                    ),
-                  ),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  node.label,
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  item == null
+                      ? '尚无该部件的检查记录'
+                      : '当前状态：${VehicleConditionOptions.statusLabel(item.status)}',
+                ),
+                if (item?.detail?.isNotEmpty == true) ...[
+                  const SizedBox(height: 6),
+                  Text(item!.detail!),
                 ],
-              ),
-            ],
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton(
+                        onPressed: () => Navigator.pop(sheetContext),
+                        child: const Text('关闭'),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: FilledButton(
+                        onPressed: () {
+                          Navigator.pop(sheetContext);
+                          context.push(
+                            '/vehicles/${widget.vehicle.id}/repair/new',
+                          );
+                        },
+                        style: FilledButton.styleFrom(
+                          backgroundColor: AppColors.techBlue,
+                        ),
+                        child: const Text('转为报修'),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -693,41 +695,43 @@ class _VehicleVisualViewState extends ConsumerState<VehicleVisualView> {
       builder: (sheetContext) => SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 4, 20, 20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                TireOptions.positionLabel(position),
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              const SizedBox(height: 8),
-              if (installation == null)
-                Text('该轮位未安装轮胎', style: TextStyle(color: color))
-              else if (tire == null)
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 Text(
-                  '找不到轮胎档案（编号 ${installation.tireId}）',
-                  style: TextStyle(color: color),
-                )
-              else ...[
-                Text('轮胎编号：${tire.tireNo}'),
-                Text('磨损情况：${TireOptions.wearLabel(tire.wearLevel)}'),
-                Text('轮胎状态：${TireOptions.statusLabel(tire.status)}'),
-                Text('安装日期：${_dateLabel(installation.installDate)}'),
-                if (installation.note?.isNotEmpty == true)
-                  Text('安装备注：${installation.note}'),
-                if (tire.remark?.isNotEmpty == true)
-                  Text('轮胎备注：${tire.remark}'),
-              ],
-              const SizedBox(height: 14),
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () => Navigator.pop(sheetContext),
-                  child: const Text('关闭'),
+                  TireOptions.positionLabel(position),
+                  style: Theme.of(context).textTheme.headlineMedium,
                 ),
-              ),
-            ],
+                const SizedBox(height: 8),
+                if (installation == null)
+                  Text('该轮位未安装轮胎', style: TextStyle(color: color))
+                else if (tire == null)
+                  Text(
+                    '找不到轮胎档案（编号 ${installation.tireId}）',
+                    style: TextStyle(color: color),
+                  )
+                else ...[
+                  Text('轮胎编号：${tire.tireNo}'),
+                  Text('磨损情况：${TireOptions.wearLabel(tire.wearLevel)}'),
+                  Text('轮胎状态：${TireOptions.statusLabel(tire.status)}'),
+                  Text('安装日期：${_dateLabel(installation.installDate)}'),
+                  if (installation.note?.isNotEmpty == true)
+                    Text('安装备注：${installation.note}'),
+                  if (tire.remark?.isNotEmpty == true)
+                    Text('轮胎备注：${tire.remark}'),
+                ],
+                const SizedBox(height: 14),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () => Navigator.pop(sheetContext),
+                    child: const Text('关闭'),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -917,7 +921,7 @@ class _NodeMarker extends StatelessWidget {
                 style: const TextStyle(
                   color: AppColors.ink,
                   fontWeight: FontWeight.w600,
-                  fontSize: 10,
+                  fontSize: 12,
                 ),
               ),
             ],

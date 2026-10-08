@@ -235,7 +235,7 @@ class _StocktakeCard extends ConsumerWidget {
       child: InkWell(
         key: Key('inventory-stocktake-${stocktake.id}'),
         onTap: () => context.push('/inventory/stocktake/${stocktake.id}'),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(12),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(

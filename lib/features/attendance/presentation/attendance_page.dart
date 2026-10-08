@@ -5,437 +5,192 @@ import '../../../app/theme/app_theme.dart';
 
 class AttendancePage extends StatelessWidget {
   const AttendancePage({super.key});
-
   @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(20, 24, 20, 28),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('考勤', style: Theme.of(context).textTheme.headlineLarge),
-            const SizedBox(height: 6),
-            Text(
-              '每日考勤、月考勤表与考勤组',
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            const SizedBox(height: 24),
-            Card(
-              child: InkWell(
-                borderRadius: BorderRadius.circular(20),
-                onTap: () => context.push('/attendance/groups'),
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+  Widget build(BuildContext context) => SafeArea(
+    child: SingleChildScrollView(
+      padding: const EdgeInsets.fromLTRB(16, 20, 16, 28),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            '考勤',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.headlineLarge,
+          ),
+          const SizedBox(height: 8),
+          Text(
+            '每日考勤、月考勤表与考勤组',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          const SizedBox(height: 24),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text('每日考勤', style: Theme.of(context).textTheme.titleLarge),
+                  const SizedBox(height: 16),
+                  Row(
                     children: [
-                      Container(
-                        width: 52,
-                        height: 52,
-                        decoration: BoxDecoration(
-                          color: AppColors.lightGreen,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: const Icon(
-                          Icons.groups_outlined,
-                          color: AppColors.primary,
-                          size: 28,
-                        ),
+                      const _AttendanceIcon(
+                        Icons.calendar_month_outlined,
+                        AppColors.techBlue,
                       ),
-                      const SizedBox(width: 16),
+                      const SizedBox(width: 12),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '考勤组管理',
-                              style: Theme.of(context).textTheme.titleLarge,
+                              '按日期和考勤组登记上午、下午状态',
+                              style: Theme.of(context).textTheme.bodyLarge,
                             ),
-                            const SizedBox(height: 6),
+                            const SizedBox(height: 4),
                             Text(
-                              '新增、编辑考勤组，并为人员配置默认考勤范围。',
+                              '修改后自动保存',
                               style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                            const SizedBox(height: 10),
-                            Text(
-                              '管理考勤范围',
-                              style: Theme.of(context).textTheme.bodySmall
-                                  ?.copyWith(
-                                    color: AppColors.primary,
-                                    fontWeight: FontWeight.w600,
-                                  ),
                             ),
                           ],
                         ),
                       ),
-                      const SizedBox(width: 8),
-                      const Icon(Icons.chevron_right, color: AppColors.helper),
                     ],
                   ),
-                ),
+                  const SizedBox(height: 16),
+                  FilledButton(
+                    key: const Key('attendance-daily-entry'),
+                    onPressed: () => context.push('/attendance/daily'),
+                    child: const Text('开始登记'),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 14),
-            Card(
-              child: InkWell(
-                borderRadius: BorderRadius.circular(20),
-                onTap: () => context.push('/attendance/daily'),
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: 52,
-                        height: 52,
-                        decoration: BoxDecoration(
-                          color: AppColors.lightBlue,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: const Icon(
-                          Icons.fact_check_outlined,
-                          color: AppColors.techBlue,
-                          size: 28,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '每日考勤',
-                              style: Theme.of(context).textTheme.titleLarge,
-                            ),
-                            const SizedBox(height: 6),
-                            Text(
-                              '按日期和考勤组登记上午、下午状态，修改后自动保存。',
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                            const SizedBox(height: 10),
-                            Text(
-                              '按日期登记',
-                              style: Theme.of(context).textTheme.bodySmall
-                                  ?.copyWith(
-                                    color: AppColors.techBlue,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      const Icon(Icons.chevron_right, color: AppColors.helper),
-                    ],
-                  ),
-                ),
+          ),
+          const SizedBox(height: 12),
+          const _AttendanceSection(
+            title: '名单设置',
+            entries: [
+              (
+                '月度名单',
+                '维护本月考勤范围',
+                Icons.groups_outlined,
+                AppColors.techBlue,
+                '/attendance/monthly-roster',
               ),
-            ),
-            const SizedBox(height: 14),
-            Card(
-              child: InkWell(
-                borderRadius: BorderRadius.circular(20),
-                onTap: () => context.push('/attendance/monthly-roster'),
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: 52,
-                        height: 52,
-                        decoration: BoxDecoration(
-                          color: AppColors.lightBlue,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: const Icon(
-                          Icons.calendar_month_outlined,
-                          color: AppColors.techBlue,
-                          size: 28,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '月度考勤名单',
-                              style: Theme.of(context).textTheme.titleLarge,
-                            ),
-                            const SizedBox(height: 6),
-                            Text(
-                              '按月份和考勤组维护本月进入考勤范围的人员。',
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                            const SizedBox(height: 10),
-                            Text(
-                              '按月维护',
-                              style: Theme.of(context).textTheme.bodySmall
-                                  ?.copyWith(
-                                    color: AppColors.techBlue,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      const Icon(Icons.chevron_right, color: AppColors.helper),
-                    ],
-                  ),
-                ),
+              (
+                '考勤组',
+                '设置人员默认考勤组',
+                Icons.settings_outlined,
+                AppColors.success,
+                '/attendance/groups',
               ),
-            ),
-            const SizedBox(height: 14),
-            Card(
-              child: InkWell(
-                borderRadius: BorderRadius.circular(20),
-                onTap: () => context.push('/attendance/monthly-table'),
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: 52,
-                        height: 52,
-                        decoration: BoxDecoration(
-                          color: AppColors.lightGreen,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: const Icon(
-                          Icons.event_note_outlined,
-                          color: AppColors.primary,
-                          size: 28,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '月考勤表',
-                              style: Theme.of(context).textTheme.titleLarge,
-                            ),
-                            const SizedBox(height: 6),
-                            Text(
-                              '按月份查看每日符号和出勤、请假合计，点击单元格可修改考勤。',
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                            const SizedBox(height: 10),
-                            Text(
-                              '每日符号矩阵',
-                              style: Theme.of(context).textTheme.bodySmall
-                                  ?.copyWith(
-                                    color: AppColors.primary,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      const Icon(Icons.chevron_right, color: AppColors.helper),
-                    ],
-                  ),
-                ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          const _AttendanceSection(
+            title: '记录查询',
+            entries: [
+              (
+                '月考勤表',
+                '查看每日状态',
+                Icons.description_outlined,
+                AppColors.techBlue,
+                '/attendance/monthly-table',
               ),
-            ),
-            const SizedBox(height: 14),
-            Card(
-              child: InkWell(
-                borderRadius: BorderRadius.circular(20),
-                onTap: () => context.push('/attendance/leave'),
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: 52,
-                        height: 52,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFF0EAFF),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: const Icon(
-                          Icons.event_available_outlined,
-                          color: AppColors.purple,
-                          size: 28,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '请假记录',
-                              style: Theme.of(context).textTheme.titleLarge,
-                            ),
-                            const SizedBox(height: 6),
-                            Text(
-                              '登记全天、半天和跨天请假，并同步对应日期考勤状态。',
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                            const SizedBox(height: 10),
-                            Text(
-                              '独立记录',
-                              style: Theme.of(context).textTheme.bodySmall
-                                  ?.copyWith(
-                                    color: AppColors.purple,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      const Icon(Icons.chevron_right, color: AppColors.helper),
-                    ],
-                  ),
-                ),
+              (
+                '请假记录',
+                '查看与登记请假',
+                Icons.event_available_outlined,
+                Color(0xFFE98500),
+                '/attendance/leave',
               ),
-            ),
-            const SizedBox(height: 14),
-            Card(
-              child: InkWell(
-                borderRadius: BorderRadius.circular(20),
-                onTap: () => context.push('/attendance/overtime'),
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: 52,
-                        height: 52,
-                        decoration: BoxDecoration(
-                          color: AppColors.lightBlue,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: const Icon(
-                          Icons.schedule_outlined,
-                          color: AppColors.techBlue,
-                          size: 28,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '加班记录',
-                              style: Theme.of(context).textTheme.titleLarge,
-                            ),
-                            const SizedBox(height: 6),
-                            Text(
-                              '记录同日多段加班，自动计算分钟数并阻止时间重叠。',
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                            const SizedBox(height: 10),
-                            Text(
-                              '分钟级保存',
-                              style: Theme.of(context).textTheme.bodySmall
-                                  ?.copyWith(
-                                    color: AppColors.techBlue,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      const Icon(Icons.chevron_right, color: AppColors.helper),
-                    ],
-                  ),
-                ),
+              (
+                '加班记录',
+                '查看与登记加班',
+                Icons.schedule_outlined,
+                AppColors.purple,
+                '/attendance/overtime',
               ),
-            ),
-            const SizedBox(height: 14),
-            Card(
-              child: InkWell(
-                borderRadius: BorderRadius.circular(20),
-                onTap: () => context.push('/attendance/termination'),
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: 52,
-                        height: 52,
-                        decoration: BoxDecoration(
-                          color: AppColors.lightOrange,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: const Icon(
-                          Icons.person_off_outlined,
-                          color: Color(0xFFE98500),
-                          size: 28,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '离职管理',
-                              style: Theme.of(context).textTheme.titleLarge,
-                            ),
-                            const SizedBox(height: 6),
-                            Text(
-                              '登记离职、处理停保提示，并保留历史考勤数据。',
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                            const SizedBox(height: 10),
-                            Text(
-                              '保留历史',
-                              style: Theme.of(context).textTheme.bodySmall
-                                  ?.copyWith(
-                                    color: const Color(0xFFE98500),
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      const Icon(Icons.chevron_right, color: AppColors.helper),
-                    ],
-                  ),
-                ),
+              (
+                '离职管理',
+                '登记离职与交接',
+                Icons.person_remove_outlined,
+                AppColors.danger,
+                '/attendance/termination',
               ),
-            ),
-            const SizedBox(height: 14),
-            Card(
-              child: InkWell(
-                key: const Key('attendance-reports-entry'),
-                borderRadius: BorderRadius.circular(20),
-                onTap: () => context.push('/reports'),
-                child: const ListTile(
-                  contentPadding: EdgeInsets.all(18),
-                  leading: CircleAvatar(
-                    backgroundColor: AppColors.lightBlue,
-                    child: Icon(
-                      Icons.assessment_outlined,
-                      color: AppColors.techBlue,
-                    ),
-                  ),
-                  title: Text('月度汇总'),
-                  subtitle: Text('查看月度出勤、请假、加班和异常检查结果。'),
-                  trailing: Icon(Icons.chevron_right, color: AppColors.helper),
-                ),
+              (
+                '月度汇总',
+                '查看出勤、请假与加班汇总',
+                Icons.bar_chart_outlined,
+                AppColors.success,
+                '/reports',
               ),
+            ],
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+class _AttendanceSection extends StatelessWidget {
+  const _AttendanceSection({required this.title, required this.entries});
+  final String title;
+  final List<(String, String, IconData, Color, String)> entries;
+  @override
+  Widget build(BuildContext context) => Card(
+    child: Padding(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: Theme.of(context).textTheme.titleLarge),
+          const SizedBox(height: 8),
+          for (var i = 0; i < entries.length; i++) ...[
+            if (i > 0) const Divider(height: 1),
+            ListTile(
+              minTileHeight: 64,
+              dense: true,
+              visualDensity: const VisualDensity(vertical: -2),
+              key: Key(
+                entries[i].$5 == '/reports'
+                    ? 'attendance-reports-entry'
+                    : entries[i].$5 == '/attendance/groups'
+                    ? 'attendance-groups-entry'
+                    : entries[i].$5 == '/attendance/monthly-roster'
+                    ? 'attendance-monthly-roster-entry'
+                    : entries[i].$5,
+              ),
+              contentPadding: const EdgeInsets.symmetric(vertical: 8),
+              leading: _AttendanceIcon(entries[i].$3, entries[i].$4),
+              title: Text(
+                entries[i].$1,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              subtitle: Text(entries[i].$2),
+              trailing: const Icon(Icons.chevron_right, color: AppColors.body),
+              onTap: () => context.push(entries[i].$5),
             ),
           ],
-        ),
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
+
+class _AttendanceIcon extends StatelessWidget {
+  const _AttendanceIcon(this.icon, this.color);
+  final IconData icon;
+  final Color color;
+  @override
+  Widget build(BuildContext context) => Container(
+    width: 48,
+    height: 48,
+    decoration: BoxDecoration(
+      color: color.withValues(alpha: .09),
+      borderRadius: BorderRadius.circular(12),
+    ),
+    child: Icon(icon, color: color, size: 24),
+  );
 }

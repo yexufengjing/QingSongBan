@@ -51,203 +51,191 @@ class _PersonnelHomeContent extends StatelessWidget {
     }).length;
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 28),
+      padding: const EdgeInsets.fromLTRB(16, 20, 16, 28),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              IconButton(
+                onPressed: () =>
+                    context.canPop() ? context.pop() : context.go('/'),
+                icon: const Icon(Icons.chevron_left),
+                tooltip: '返回',
+              ),
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '人员管理',
-                      style: Theme.of(context).textTheme.headlineLarge,
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      '档案清晰，现场协作更轻松',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ],
+                child: Text(
+                  '人员管理',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headlineLarge,
                 ),
               ),
-              IconButton.filledTonal(
-                onPressed: () => context.push('/personnel/list'),
-                icon: const Icon(Icons.list_alt_outlined),
-                tooltip: '人员名单',
-              ),
+              const SizedBox(width: 48),
             ],
           ),
-          const SizedBox(height: 20),
-          const _PersonnelHero(),
-          const SizedBox(height: 22),
-          PersonnelSectionTitle(
-            title: '档案概览',
-            action: Text(
-              '${employees.length} 条记录',
-              style: Theme.of(context).textTheme.bodySmall,
+          const SizedBox(height: 8),
+          Text(
+            '${AppDateUtils.yearMonth(now)} · 人员档案',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          const SizedBox(height: 24),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text('档案概览', style: Theme.of(context).textTheme.titleLarge),
+                  const SizedBox(height: 6),
+                  Text(
+                    '共 ${employees.length} 条记录',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  const SizedBox(height: 16),
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      final columns =
+                          MediaQuery.textScalerOf(context).scale(14) > 19 ||
+                              constraints.maxWidth < 290
+                          ? 2
+                          : 4;
+                      final entries = [
+                        (
+                          '在岗',
+                          active,
+                          Icons.groups_outlined,
+                          AppColors.techBlue,
+                          '/personnel/list?status=${EmployeeStatus.active.name}',
+                        ),
+                        (
+                          '暂停工作',
+                          paused,
+                          Icons.pause_circle_outline,
+                          const Color(0xFFE98500),
+                          '/personnel/list?status=${EmployeeStatus.paused.name}',
+                        ),
+                        (
+                          '已离职',
+                          terminated,
+                          Icons.person_off_outlined,
+                          AppColors.danger,
+                          '/personnel/list?status=${EmployeeStatus.terminated.name}',
+                        ),
+                        (
+                          '本月新增',
+                          newThisMonth,
+                          Icons.person_add_alt_1_outlined,
+                          AppColors.success,
+                          '/personnel/list?hireMonth=${Uri.encodeComponent(AppDateUtils.yearMonth(now))}',
+                        ),
+                      ];
+                      return Wrap(
+                        spacing: 6,
+                        runSpacing: 6,
+                        children: [
+                          for (final entry in entries)
+                            SizedBox(
+                              width:
+                                  (constraints.maxWidth - (columns - 1) * 6) /
+                                  columns,
+                              child: _PersonnelStatCard(
+                                label: entry.$1,
+                                value: '${entry.$2}',
+                                icon: entry.$3,
+                                foreground: entry.$4,
+                                onTap: () => context.push(entry.$5),
+                              ),
+                            ),
+                        ],
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  FilledButton(
+                    onPressed: () => context.push('/personnel/list'),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('进入人员名单'),
+                        SizedBox(width: 4),
+                        Icon(Icons.chevron_right, size: 20),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    '搜索人员、查看和维护档案',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ],
+              ),
             ),
           ),
-          const SizedBox(height: 12),
-          GridView.count(
-            crossAxisCount: 2,
-            mainAxisSpacing: 12,
-            crossAxisSpacing: 12,
-            childAspectRatio: 1.55,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            children: [
-              _PersonnelStatCard(
-                label: '在岗',
-                value: '$active',
-                icon: Icons.verified_user_outlined,
-                background: AppColors.lightGreen,
-                foreground: AppColors.primary,
-                onTap: () => context.push(
-                  '/personnel/list?status=${EmployeeStatus.active.name}',
-                ),
+          const SizedBox(height: 16),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('档案维护', style: Theme.of(context).textTheme.titleLarge),
+                  const SizedBox(height: 12),
+                  _QuickActionCard(
+                    icon: Icons.badge_outlined,
+                    label: '人员名单',
+                    detail: '搜索与筛选',
+                    color: AppColors.techBlue,
+                    onTap: () => context.push('/personnel/list'),
+                  ),
+                  const Divider(height: 24),
+                  _QuickActionCard(
+                    icon: Icons.person_add_alt_1_outlined,
+                    label: '新增人员',
+                    detail: '建立人员档案',
+                    color: AppColors.purple,
+                    onTap: () => context.push('/personnel/new'),
+                  ),
+                ],
               ),
-              _PersonnelStatCard(
-                label: '暂停工作',
-                value: '$paused',
-                icon: Icons.pause_circle_outline,
-                background: AppColors.lightBlue,
-                foreground: AppColors.techBlue,
-                onTap: () => context.push(
-                  '/personnel/list?status=${EmployeeStatus.paused.name}',
-                ),
-              ),
-              _PersonnelStatCard(
-                label: '已离职',
-                value: '$terminated',
-                icon: Icons.person_off_outlined,
-                background: AppColors.lightDanger,
-                foreground: AppColors.danger,
-                onTap: () => context.push(
-                  '/personnel/list?status=${EmployeeStatus.terminated.name}',
-                ),
-              ),
-              _PersonnelStatCard(
-                label: '本月新增',
-                value: '$newThisMonth',
-                icon: Icons.person_add_alt_1_outlined,
-                background: AppColors.lightOrange,
-                foreground: const Color(0xFFE98500),
-                onTap: () => context.push(
-                  '/personnel/list?hireMonth=${Uri.encodeComponent(AppDateUtils.yearMonth(now))}',
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 22),
-          PersonnelSectionTitle(
-            title: '快速操作',
-            action: TextButton(
-              onPressed: () => context.push('/personnel/list'),
-              child: const Text('查看全部'),
             ),
           ),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              Expanded(
-                child: _QuickActionCard(
-                  icon: Icons.person_add_alt_1_outlined,
-                  label: '新增人员',
-                  detail: '建立人员档案',
-                  color: AppColors.primary,
-                  onTap: () => context.push('/personnel/new'),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: _QuickActionCard(
-                  icon: Icons.badge_outlined,
-                  label: '人员名单',
-                  detail: '搜索与筛选',
-                  color: AppColors.techBlue,
-                  onTap: () => context.push('/personnel/list'),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 22),
+          const SizedBox(height: 16),
           Card(
             color: AppColors.lightBlue,
             child: Padding(
-              padding: const EdgeInsets.all(18),
+              padding: const EdgeInsets.all(16),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(Icons.layers_outlined, color: AppColors.techBlue),
+                  const Icon(
+                    Icons.info_outline,
+                    color: AppColors.techBlue,
+                    size: 24,
+                  ),
                   const SizedBox(width: 12),
                   Expanded(
-                    child: Text(
-                      '人员档案、人员状态与考勤参与范围独立维护，人员状态不会替代月度考勤名单。',
-                      style: Theme.of(context).textTheme.bodyMedium
-                          ?.copyWith(color: AppColors.ink),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '资料提示',
+                          style: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(color: AppColors.techBlue),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          '人员档案、人员状态与考勤参与范围独立维护，人员状态不会替代月度考勤名单。',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
             ),
           ),
-        ],
-      ),
-    );
-  }
-}
-
-class _PersonnelHero extends StatelessWidget {
-  const _PersonnelHero();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(22),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24),
-        gradient: const LinearGradient(
-          colors: [Color(0xFFE8F7F0), Color(0xFFE8F1FF)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        border: Border.all(color: Colors.white, width: 2),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 56,
-            height: 56,
-            decoration: BoxDecoration(
-              color: AppColors.primary,
-              borderRadius: BorderRadius.circular(18),
-            ),
-            child: const Icon(
-              Icons.groups_2_outlined,
-              color: Colors.white,
-              size: 30,
-            ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('本地档案库', style: Theme.of(context).textTheme.titleLarge),
-                const SizedBox(height: 5),
-                Text(
-                  '所有修改自动保存到本地设备',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              ],
-            ),
-          ),
-          const Icon(Icons.cloud_off_outlined, color: AppColors.body),
         ],
       ),
     );
@@ -259,58 +247,65 @@ class _PersonnelStatCard extends StatelessWidget {
     required this.label,
     required this.value,
     required this.icon,
-    required this.background,
     required this.foreground,
     required this.onTap,
   });
-
   final String label;
   final String value;
   final IconData icon;
-  final Color background;
   final Color foreground;
   final VoidCallback onTap;
-
   @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: InkWell(
-        key: Key('personnel-stat-$label'),
-        borderRadius: BorderRadius.circular(20),
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget build(BuildContext context) => Material(
+    color: AppColors.lightBlue.withValues(alpha: .45),
+    borderRadius: BorderRadius.circular(10),
+    child: InkWell(
+      key: Key('personnel-stat-$label'),
+      borderRadius: BorderRadius.circular(10),
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 14),
+        child: Column(
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: foreground.withValues(alpha: .1),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(icon, color: foreground, size: 22),
+            ),
+            const SizedBox(height: 10),
+            Text.rich(
+              TextSpan(
                 children: [
-                  Text(label, style: Theme.of(context).textTheme.bodyMedium),
-                  Container(
-                    padding: const EdgeInsets.all(7),
-                    decoration: BoxDecoration(
-                      color: background,
-                      borderRadius: BorderRadius.circular(11),
+                  TextSpan(
+                    text: value,
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w700,
+                      color: foreground,
                     ),
-                    child: Icon(icon, color: foreground, size: 18),
+                  ),
+                  TextSpan(
+                    text: '人',
+                    style: TextStyle(fontSize: 12, color: foreground),
                   ),
                 ],
               ),
-              Text(
-                value,
-                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  color: AppColors.ink,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ],
         ),
       ),
-    );
-  }
+    ),
+  );
 }
 
 class _QuickActionCard extends StatelessWidget {
@@ -321,42 +316,28 @@ class _QuickActionCard extends StatelessWidget {
     required this.color,
     required this.onTap,
   });
-
   final IconData icon;
   final String label;
   final String detail;
   final Color color;
   final VoidCallback onTap;
-
   @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: InkWell(
-        borderRadius: BorderRadius.circular(20),
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(9),
-                decoration: BoxDecoration(
-                  color: color.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(icon, color: color),
-              ),
-              const SizedBox(height: 14),
-              Text(label, style: Theme.of(context).textTheme.titleLarge),
-              const SizedBox(height: 3),
-              Text(detail, style: Theme.of(context).textTheme.bodySmall),
-            ],
-          ),
-        ),
+  Widget build(BuildContext context) => ListTile(
+    contentPadding: EdgeInsets.zero,
+    leading: Container(
+      width: 48,
+      height: 48,
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: .09),
+        borderRadius: BorderRadius.circular(12),
       ),
-    );
-  }
+      child: Icon(icon, color: color, size: 24),
+    ),
+    title: Text(label, style: Theme.of(context).textTheme.titleMedium),
+    subtitle: Text(detail),
+    trailing: const Icon(Icons.chevron_right, color: AppColors.body),
+    onTap: onTap,
+  );
 }
 
 class _PersonnelHomeLoading extends StatelessWidget {

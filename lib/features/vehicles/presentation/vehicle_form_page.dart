@@ -7,6 +7,8 @@ import '../../../core/database/app_database.dart';
 import '../../../core/database/database_enums.dart';
 import '../../../core/utils/date_utils.dart';
 import '../application/vehicle_providers.dart';
+import 'vehicle_field.dart';
+
 import '../domain/vehicle_options.dart';
 
 class VehicleFormPage extends ConsumerStatefulWidget {
@@ -99,87 +101,95 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
     return Form(
       key: _formKey,
       child: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
+        padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
         children: [
           _section('基础信息', Icons.local_shipping_outlined, [
-            TextFormField(
-              controller: _nameController,
-              decoration: const InputDecoration(labelText: '车辆名称 *'),
-              validator: (value) =>
-                  value == null || value.trim().isEmpty ? '请输入车辆名称' : null,
-            ),
-            const SizedBox(height: 12),
-            TextFormField(
-              controller: _numberController,
-              decoration: const InputDecoration(
-                labelText: '车辆编号 *',
-                hintText: '例如：SW-001',
+            VehicleField(
+              label: '车辆名称 *',
+              child: TextFormField(
+                controller: _nameController,
+                decoration: const InputDecoration(),
+                validator: (value) =>
+                    value == null || value.trim().isEmpty ? '请输入车辆名称' : null,
               ),
-              validator: (value) =>
-                  value == null || value.trim().isEmpty ? '请输入车辆编号' : null,
             ),
-            const SizedBox(height: 12),
-            TextFormField(
-              controller: _plateController,
-              decoration: const InputDecoration(labelText: '车牌号'),
+            const SizedBox(height: 20),
+            VehicleField(
+              label: '车辆编号 *',
+              child: TextFormField(
+                controller: _numberController,
+                decoration: const InputDecoration(hintText: '例如：SW-001'),
+                validator: (value) =>
+                    value == null || value.trim().isEmpty ? '请输入车辆编号' : null,
+              ),
             ),
-            const SizedBox(height: 12),
-            DropdownButtonFormField<VehicleType>(
-              initialValue: _type,
-              decoration: const InputDecoration(labelText: '车辆类型'),
-              items: [
-                for (final type in VehicleType.values)
-                  DropdownMenuItem(
-                    value: type,
-                    child: Text(VehicleOptions.typeLabel(type)),
-                  ),
-              ],
-              onChanged: (value) => setState(() => _type = value ?? _type),
+            const SizedBox(height: 20),
+            VehicleField(
+              label: '车牌号',
+              child: TextFormField(
+                controller: _plateController,
+                decoration: const InputDecoration(),
+              ),
+            ),
+            const SizedBox(height: 20),
+            VehicleField(
+              label: '车辆类型',
+              child: DropdownButtonFormField<VehicleType>(
+                initialValue: _type,
+                decoration: const InputDecoration(),
+                items: [
+                  for (final type in VehicleType.values)
+                    DropdownMenuItem(
+                      value: type,
+                      child: Text(VehicleOptions.typeLabel(type)),
+                    ),
+                ],
+                onChanged: (value) => setState(() => _type = value ?? _type),
+              ),
             ),
           ]),
           const SizedBox(height: 14),
           _section('使用信息', Icons.badge_outlined, [
-            Row(
-              children: [
-                Expanded(
-                  child: TextFormField(
-                    controller: _brandController,
-                    decoration: const InputDecoration(labelText: '品牌'),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: TextFormField(
-                    controller: _modelController,
-                    decoration: const InputDecoration(labelText: '型号'),
-                  ),
-                ),
-              ],
+            VehicleField(
+              label: '品牌',
+              child: TextFormField(
+                controller: _brandController,
+                decoration: const InputDecoration(),
+              ),
             ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  child: TextFormField(
-                    controller: _departmentController,
-                    decoration: const InputDecoration(labelText: '使用部门'),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: TextFormField(
-                    controller: _areaController,
-                    decoration: const InputDecoration(labelText: '工作区域'),
-                  ),
-                ),
-              ],
+            const SizedBox(height: 20),
+            VehicleField(
+              label: '型号',
+              child: TextFormField(
+                controller: _modelController,
+                decoration: const InputDecoration(),
+              ),
             ),
-            const SizedBox(height: 12),
-            TextFormField(
-              controller: _personController,
-              decoration: const InputDecoration(labelText: '责任人'),
+            const SizedBox(height: 20),
+            VehicleField(
+              label: '使用部门',
+              child: TextFormField(
+                controller: _departmentController,
+                decoration: const InputDecoration(),
+              ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 20),
+            VehicleField(
+              label: '工作区域',
+              child: TextFormField(
+                controller: _areaController,
+                decoration: const InputDecoration(),
+              ),
+            ),
+            const SizedBox(height: 20),
+            VehicleField(
+              label: '责任人',
+              child: TextFormField(
+                controller: _personController,
+                decoration: const InputDecoration(),
+              ),
+            ),
+            const SizedBox(height: 20),
             ListTile(
               contentPadding: EdgeInsets.zero,
               title: const Text('购置日期'),
@@ -200,28 +210,35 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
           ]),
           const SizedBox(height: 14),
           _section('当前状态', Icons.info_outline, [
-            DropdownButtonFormField<VehicleStatus>(
-              initialValue: _status,
-              decoration: const InputDecoration(labelText: '车辆状态'),
-              items: [
-                for (final status in VehicleStatus.values)
-                  DropdownMenuItem(
-                    value: status,
-                    child: Text(VehicleOptions.statusLabel(status)),
-                  ),
-              ],
-              onChanged: (value) => setState(() => _status = value ?? _status),
+            VehicleField(
+              label: '车辆状态',
+              child: DropdownButtonFormField<VehicleStatus>(
+                initialValue: _status,
+                decoration: const InputDecoration(),
+                items: [
+                  for (final status in VehicleStatus.values)
+                    DropdownMenuItem(
+                      value: status,
+                      child: Text(VehicleOptions.statusLabel(status)),
+                    ),
+                ],
+                onChanged: (value) =>
+                    setState(() => _status = value ?? _status),
+              ),
             ),
             const SizedBox(height: 8),
             Text(
               VehicleOptions.statusDescription(_status),
               style: Theme.of(context).textTheme.bodySmall,
             ),
-            const SizedBox(height: 12),
-            TextFormField(
-              controller: _remarkController,
-              maxLines: 3,
-              decoration: const InputDecoration(labelText: '备注'),
+            const SizedBox(height: 20),
+            VehicleField(
+              label: '备注',
+              child: TextFormField(
+                controller: _remarkController,
+                maxLines: 3,
+                decoration: const InputDecoration(),
+              ),
             ),
           ]),
           const SizedBox(height: 20),
@@ -243,7 +260,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
   Widget _section(String title, IconData icon, List<Widget> children) {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(18),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

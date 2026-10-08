@@ -374,7 +374,7 @@ class _MonthlyAttendanceLegend extends StatelessWidget {
             spacing: 14,
             runSpacing: 6,
             children: const [
-              _LegendItem(symbol: '力', label: '全天出勤', color: AppColors.primary),
+              _LegendItem(symbol: '力', label: '全天出勤', color: AppColors.success),
               _LegendItem(
                 symbol: '半',
                 label: '半天出勤',
@@ -729,8 +729,8 @@ class _MonthlyCell extends StatelessWidget {
 
   Color _cellColor(MonthlyAttendanceCell cell) {
     if (!cell.isEditable) return AppColors.helper;
-    if (cell.attendanceDays == 1) return AppColors.primary;
-    if (cell.attendanceDays > 0) return AppColors.techBlue;
+    if (cell.attendanceDays == 1) return AppColors.success;
+    if (cell.attendanceDays > 0) return AppColors.warning;
     if (cell.leaveDays > 0) return AppColors.danger;
     if (cell.morningStatus == AttendanceHalfStatus.absent ||
         cell.afternoonStatus == AttendanceHalfStatus.absent) {
@@ -738,7 +738,7 @@ class _MonthlyCell extends StatelessWidget {
     }
     if (cell.morningStatus == AttendanceHalfStatus.rest &&
         cell.afternoonStatus == AttendanceHalfStatus.rest) {
-      return AppColors.body;
+      return AppColors.purple;
     }
     if (cell.morningStatus == AttendanceHalfStatus.stopped &&
         cell.afternoonStatus == AttendanceHalfStatus.stopped) {
@@ -866,22 +866,31 @@ class _MonthlyCellEditorState extends State<_MonthlyCellEditor> {
         ),
       ),
       actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: const Text('取消'),
-        ),
-        FilledButton(
-          key: const Key('monthly-attendance-save-cell'),
-          onPressed: () => Navigator.of(context).pop(
-            DailyAttendanceDraft(
-              employeeId: widget.employeeId,
-              attendanceDate: widget.cell.date,
-              morningStatus: _morning,
-              afternoonStatus: _afternoon,
-              remark: _remarkController.text,
+        Row(
+          children: [
+            Expanded(
+              child: TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('取消'),
+              ),
             ),
-          ),
-          child: const Text('保存'),
+            const SizedBox(width: 12),
+            Expanded(
+              child: FilledButton(
+                key: const Key('monthly-attendance-save-cell'),
+                onPressed: () => Navigator.of(context).pop(
+                  DailyAttendanceDraft(
+                    employeeId: widget.employeeId,
+                    attendanceDate: widget.cell.date,
+                    morningStatus: _morning,
+                    afternoonStatus: _afternoon,
+                    remark: _remarkController.text,
+                  ),
+                ),
+                child: const Text('保存'),
+              ),
+            ),
+          ],
         ),
       ],
     );

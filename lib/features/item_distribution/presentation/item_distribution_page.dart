@@ -114,6 +114,19 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
       child: SizedBox(
         width: double.infinity,
         child: SegmentedButton<String>(
+          showSelectedIcon: false,
+          style: ButtonStyle(
+            backgroundColor: WidgetStateProperty.resolveWith(
+              (states) => states.contains(WidgetState.selected)
+                  ? AppColors.lightBlue
+                  : Colors.white,
+            ),
+            foregroundColor: WidgetStateProperty.resolveWith(
+              (states) => states.contains(WidgetState.selected)
+                  ? AppColors.primary
+                  : AppColors.body,
+            ),
+          ),
           segments: const [
             ButtonSegment(
               value: 'welfare',
@@ -220,7 +233,7 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.card,
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppColors.divider),
       ),
       child: Column(
@@ -236,7 +249,7 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
               ),
               Expanded(
                 child: InkWell(
-                  borderRadius: BorderRadius.circular(14),
+                  borderRadius: BorderRadius.circular(12),
                   onTap: _pickMonth,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 12),
@@ -286,11 +299,11 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
   Widget _standardsPanel() {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.lightGreen,
-        borderRadius: BorderRadius.circular(16),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
       ),
       child: InkWell(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(12),
         onTap: () => setState(() => _standardsExpanded = !_standardsExpanded),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16, 13, 12, 13),
@@ -322,9 +335,8 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
               ),
               if (!_standardsExpanded) ...[
                 const SizedBox(height: 6),
-                const Text(
-                  '正式工 洗1 / 手1 / 毛1；临时工 洗1 / 手1 / 毛1；扫路车 洗1 / 车；公用 洗1',
-                ),
+                _ruleLine('正式工', '洗1 / 手1 / 毛1'),
+                _ruleLine('临时工', '洗1 / 手1 / 毛1；扫路车 洗1 / 车；公用 洗1'),
               ] else ...[
                 const SizedBox(height: 12),
                 _ruleLine('正式工', '洗衣膏 1袋/人 · 线手套 1副/人 · 1月、7月毛巾 1条/人'),
@@ -402,7 +414,7 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.card,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppColors.divider),
       ),
       clipBehavior: Clip.antiAlias,
@@ -544,7 +556,7 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
         .where((entry) => entry.itemCode == code)
         .fold(0, (sum, entry) => sum + entry.quantity);
     return Container(
-      color: AppColors.lightGreen,
+      color: AppColors.lightBlue,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
       child: Row(
         children: [
@@ -719,7 +731,7 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.card,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppColors.divider),
       ),
       padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
@@ -807,11 +819,14 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
           color: Colors.transparent,
           child: ListTile(
             onTap: () => _showSourceSheet(group),
-            leading: Icon(
-              _category == DistributionCategory.tool
-                  ? Icons.build_outlined
-                  : Icons.inventory_2_outlined,
-              color: AppColors.techBlue,
+            leading: CircleAvatar(
+              backgroundColor: AppColors.lightBlue,
+              child: Icon(
+                _category == DistributionCategory.tool
+                    ? Icons.build_outlined
+                    : Icons.inventory_2_outlined,
+                color: AppColors.techBlue,
+              ),
             ),
             title: Text(
               group.recipientName,
@@ -837,11 +852,24 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  received ? '已领取✓' : '未领取',
-                  style: TextStyle(
-                    color: received ? AppColors.primary : AppColors.ink,
-                    fontWeight: FontWeight.w700,
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: received
+                        ? AppColors.success.withValues(alpha: .08)
+                        : AppColors.background,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    received ? '已领取' : '未领取',
+                    style: TextStyle(
+                      color: received ? AppColors.success : AppColors.helper,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
                 IconButton(
@@ -952,7 +980,7 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
       isScrollControlled: true,
       builder: (sheetContext) => SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+          padding: const EdgeInsets.fromLTRB(16, 0, 20, 20),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -1072,13 +1100,22 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
           '删除后记录将从当前列表隐藏，但操作日志会保留。',
         ),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext, false),
-            child: const Text('取消'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(dialogContext, true),
-            child: const Text('确认删除'),
+          Row(
+            children: [
+              Expanded(
+                child: TextButton(
+                  onPressed: () => Navigator.pop(dialogContext, false),
+                  child: const Text('取消'),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: FilledButton(
+                  onPressed: () => Navigator.pop(dialogContext, true),
+                  child: const Text('确认删除'),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -1119,18 +1156,27 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('确认修改领取状态？'),
+        title: const Text('确认修改领取状态？', textAlign: TextAlign.center),
         content: Text(
           '${group.recipientName} 当前为“已领取”。\n修改后将恢复为“未领取”。\n原领取时间会保留在操作日志中。',
         ),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('取消'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text('确认改为未领取'),
+          Row(
+            children: [
+              Expanded(
+                child: TextButton(
+                  onPressed: () => Navigator.pop(context, false),
+                  child: const Text('取消'),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: FilledButton(
+                  onPressed: () => Navigator.pop(context, true),
+                  child: const Text('确认改为未领取'),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -1152,7 +1198,7 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
       showDragHandle: true,
       builder: (context) => SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+          padding: const EdgeInsets.fromLTRB(16, 0, 20, 20),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -1246,12 +1292,14 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
                     const SizedBox(height: 4),
                     const Text('推荐来源：对应福利月份的月度考勤名单'),
                     const SizedBox(height: 10),
-                    TextField(
-                      controller: search,
-                      onChanged: (_) => setSheetState(() {}),
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.search),
-                        labelText: '搜索姓名或工号',
+                    _referenceField(
+                      '搜索姓名或工号',
+                      TextField(
+                        controller: search,
+                        onChanged: (_) => setSheetState(() {}),
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.search),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -1397,20 +1445,32 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
                                 final keep = await showDialog<bool>(
                                   context: context,
                                   builder: (context) => AlertDialog(
-                                    title: const Text('还有福利未分配'),
+                                    title: const Text(
+                                      '还有福利未分配',
+                                      textAlign: TextAlign.center,
+                                    ),
                                     content: Text(
                                       '还有${count - selected.length}份福利未分配，仍要保存吗？',
                                     ),
                                     actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(context, false),
-                                        child: const Text('返回继续分配'),
-                                      ),
-                                      FilledButton(
-                                        onPressed: () =>
-                                            Navigator.pop(context, true),
-                                        child: const Text('仍然保存'),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: TextButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context, false),
+                                              child: const Text('返回继续分配'),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 12),
+                                          Expanded(
+                                            child: FilledButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context, true),
+                                              child: const Text('仍然保存'),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
@@ -1565,7 +1625,7 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => AlertDialog(
-          title: const Text('补领'),
+          title: const Text('补领', textAlign: TextAlign.center),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -1595,13 +1655,22 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
             ],
           ),
           actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context, false),
-              child: const Text('取消'),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.pop(context, true),
-              child: const Text('确认补领'),
+            Row(
+              children: [
+                Expanded(
+                  child: TextButton(
+                    onPressed: () => Navigator.pop(context, false),
+                    child: const Text('取消'),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: FilledButton(
+                    onPressed: () => Navigator.pop(context, true),
+                    child: const Text('确认补领'),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -1634,42 +1703,51 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
     await showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('福利发放设置'),
+        title: const Text('福利发放设置', textAlign: TextAlign.center),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TextField(
-              controller: sweeper,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: '扫路车数量',
-                helperText: '每辆对应1份洗衣膏福利',
+            _referenceField(
+              '扫路车数量',
+              TextField(
+                controller: sweeper,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(helperText: '每辆对应1份洗衣膏福利'),
               ),
             ),
             const SizedBox(height: 12),
-            TextField(
-              controller: public,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: '公用福利份数',
-                helperText: '按实际公用份数填写',
+            _referenceField(
+              '公用福利份数',
+              TextField(
+                controller: public,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(helperText: '按实际公用份数填写'),
               ),
             ),
           ],
         ),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('取消'),
-          ),
-          FilledButton(
-            onPressed: () async {
-              await repo.setSweeperCount(int.tryParse(sweeper.text) ?? 6);
-              await repo.setPublicCount(int.tryParse(public.text) ?? 1);
-              if (context.mounted) Navigator.pop(context);
-              _refresh();
-            },
-            child: const Text('保存设置'),
+          Row(
+            children: [
+              Expanded(
+                child: TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('取消'),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: FilledButton(
+                  onPressed: () async {
+                    await repo.setSweeperCount(int.tryParse(sweeper.text) ?? 6);
+                    await repo.setPublicCount(int.tryParse(public.text) ?? 1);
+                    if (context.mounted) Navigator.pop(context);
+                    _refresh();
+                  },
+                  child: const Text('保存设置'),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -1756,45 +1834,77 @@ class _ManualDistributionDialogState extends State<_ManualDistributionDialog> {
         ? '新增工具领用'
         : '新增办公用品领用';
     return AlertDialog(
-      title: Text(title),
+      title: Text(title, textAlign: TextAlign.center),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TextField(
-              controller: _recipient,
-              decoration: const InputDecoration(labelText: '领取人/领取对象'),
+            _referenceField(
+              '领取人/领取对象',
+              TextField(
+                controller: _recipient,
+                decoration: const InputDecoration(
+                  filled: true,
+                  fillColor: AppColors.background,
+                ),
+              ),
             ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _item,
-              decoration: const InputDecoration(labelText: '物品名称'),
+            const SizedBox(height: 20),
+            _referenceField(
+              '物品名称',
+              TextField(
+                controller: _item,
+                decoration: const InputDecoration(
+                  filled: true,
+                  fillColor: AppColors.background,
+                ),
+              ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 20),
             Row(
               children: [
                 Expanded(
-                  child: TextField(
-                    controller: _quantity,
-                    keyboardType: const TextInputType.numberWithOptions(
-                      decimal: true,
+                  child: _referenceField(
+                    '数量',
+                    TextField(
+                      controller: _quantity,
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                      decoration: const InputDecoration(
+                        filled: true,
+                        fillColor: AppColors.background,
+                      ),
                     ),
-                    decoration: const InputDecoration(labelText: '数量'),
                   ),
                 ),
                 const SizedBox(width: 10),
                 Expanded(
-                  child: TextField(
-                    controller: _unit,
-                    decoration: const InputDecoration(labelText: '单位'),
+                  child: _referenceField(
+                    '单位',
+                    TextField(
+                      controller: _unit,
+                      decoration: const InputDecoration(
+                        filled: true,
+                        fillColor: AppColors.background,
+                      ),
+                    ),
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _note,
-              decoration: const InputDecoration(labelText: '备注（可选）'),
+            const SizedBox(height: 20),
+            _referenceField(
+              '备注（可选）',
+              TextField(
+                controller: _note,
+                maxLines: 3,
+                decoration: const InputDecoration(
+                  filled: true,
+                  fillColor: AppColors.background,
+                ),
+              ),
             ),
             if (_validationMessage != null) ...[
               const SizedBox(height: 8),
@@ -1810,11 +1920,20 @@ class _ManualDistributionDialogState extends State<_ManualDistributionDialog> {
         ),
       ),
       actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text('取消'),
+        Row(
+          children: [
+            Expanded(
+              child: OutlinedButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('取消'),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: FilledButton(onPressed: _save, child: const Text('保存记录')),
+            ),
+          ],
         ),
-        FilledButton(onPressed: _save, child: const Text('保存记录')),
       ],
     );
   }
@@ -1843,18 +1962,27 @@ class _ManualDistributionDialogState extends State<_ManualDistributionDialog> {
       final proceed = await showDialog<bool>(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('重复领取提醒'),
+          title: const Text('重复领取提醒', textAlign: TextAlign.center),
           content: Text(
             '${draft.recipientName} 本月已有“${draft.itemName}”记录，是否仍要继续登记？',
           ),
           actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context, false),
-              child: const Text('返回检查'),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.pop(context, true),
-              child: const Text('仍然登记'),
+            Row(
+              children: [
+                Expanded(
+                  child: TextButton(
+                    onPressed: () => Navigator.pop(context, false),
+                    child: const Text('返回检查'),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: FilledButton(
+                    onPressed: () => Navigator.pop(context, true),
+                    child: const Text('仍然登记'),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -1866,3 +1994,15 @@ class _ManualDistributionDialogState extends State<_ManualDistributionDialog> {
     Navigator.pop(context, true);
   }
 }
+
+Widget _referenceField(String label, Widget field) => Column(
+  crossAxisAlignment: CrossAxisAlignment.stretch,
+  children: [
+    Text(
+      label,
+      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+    ),
+    const SizedBox(height: 8),
+    field,
+  ],
+);

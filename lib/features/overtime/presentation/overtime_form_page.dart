@@ -119,10 +119,34 @@ class _OvertimeFormPageState extends ConsumerState<OvertimeFormPage> {
           ),
         ],
       ),
+      bottomNavigationBar: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+          child: SizedBox(
+            width: double.infinity,
+            child: FilledButton.icon(
+              key: const Key('overtime-save-button'),
+              onPressed: _saving || employees.isEmpty ? null : _save,
+              icon: _saving
+                  ? const SizedBox(
+                      width: 18,
+                      height: 18,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.white,
+                      ),
+                    )
+                  : const Icon(Icons.save_outlined),
+              label: Text(_saving ? '保存中…' : '保存加班'),
+            ),
+          ),
+        ),
+      ),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -155,43 +179,48 @@ class _OvertimeFormPageState extends ConsumerState<OvertimeFormPage> {
                       ),
                       const SizedBox(height: 16),
                       if (employees.isEmpty)
-                        InputDecorator(
-                          decoration: const InputDecoration(
-                            labelText: '加班人员',
-                            prefixIcon: Icon(Icons.person_outline),
+                        _referenceField(
+                          '加班人员',
+                          InputDecorator(
+                            decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.person_outline),
+                            ),
+                            child: const Text('暂无可用人员，请先建立人员档案。'),
                           ),
-                          child: const Text('暂无可用人员，请先建立人员档案。'),
                         )
                       else
-                        DropdownButtonFormField<int>(
-                          key: const Key('overtime-employee-field'),
-                          initialValue:
-                              _employeeId != null &&
-                                  employees.any(
-                                    (item) => item.id == _employeeId,
-                                  )
-                              ? _employeeId
-                              : null,
-                          isExpanded: true,
-                          decoration: const InputDecoration(
-                            labelText: '加班人员',
-                            prefixIcon: Icon(Icons.person_outline),
-                          ),
-                          hint: const Text('请选择人员'),
-                          validator: (value) => value == null ? '请选择人员' : null,
-                          items: [
-                            for (final employee in employees)
-                              DropdownMenuItem(
-                                value: employee.id,
-                                child: Text(
-                                  '${employee.name} · ${employee.employeeNo}',
+                        _referenceField(
+                          '加班人员',
+                          DropdownButtonFormField<int>(
+                            key: const Key('overtime-employee-field'),
+                            initialValue:
+                                _employeeId != null &&
+                                    employees.any(
+                                      (item) => item.id == _employeeId,
+                                    )
+                                ? _employeeId
+                                : null,
+                            isExpanded: true,
+                            decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.person_outline),
+                            ),
+                            hint: const Text('请选择人员'),
+                            validator: (value) =>
+                                value == null ? '请选择人员' : null,
+                            items: [
+                              for (final employee in employees)
+                                DropdownMenuItem(
+                                  value: employee.id,
+                                  child: Text(
+                                    '${employee.name} · ${employee.employeeNo}',
+                                  ),
                                 ),
-                              ),
-                          ],
-                          onChanged: (value) =>
-                              setState(() => _employeeId = value),
+                            ],
+                            onChanged: (value) =>
+                                setState(() => _employeeId = value),
+                          ),
                         ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: 20),
                       _dateField(
                         context: context,
                         key: const Key('overtime-date-field'),
@@ -199,7 +228,7 @@ class _OvertimeFormPageState extends ConsumerState<OvertimeFormPage> {
                         value: _overtimeDate,
                         onTap: _pickDate,
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: 20),
                       Row(
                         children: [
                           Expanded(
@@ -234,25 +263,26 @@ class _OvertimeFormPageState extends ConsumerState<OvertimeFormPage> {
                         onSelected: (value) =>
                             setState(() => _overtimeType = value),
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: 20),
                       _textField(
                         controller: _contentController,
                         label: '工作内容',
+                        maxLines: 3,
                         hint: '例如：设备检修、现场清理',
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: 20),
                       _textField(
                         controller: _locationController,
                         label: '工作地点',
                         hint: '可填写区域或项目名称',
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: 20),
                       _textField(
                         controller: _registrantController,
                         label: '登记人',
                         hint: '可填写登记人员姓名',
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: 20),
                       _textField(
                         controller: _remarkController,
                         label: '备注',
@@ -263,25 +293,7 @@ class _OvertimeFormPageState extends ConsumerState<OvertimeFormPage> {
                   ),
                 ),
               ),
-              const SizedBox(height: 18),
-              SizedBox(
-                width: double.infinity,
-                child: FilledButton.icon(
-                  key: const Key('overtime-save-button'),
-                  onPressed: _saving || employees.isEmpty ? null : _save,
-                  icon: _saving
-                      ? const SizedBox(
-                          width: 18,
-                          height: 18,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: Colors.white,
-                          ),
-                        )
-                      : const Icon(Icons.save_outlined),
-                  label: Text(_saving ? '保存中…' : '保存加班'),
-                ),
-              ),
+              const SizedBox(height: 16),
             ],
           ),
         ),
@@ -301,23 +313,61 @@ class _OvertimeFormPageState extends ConsumerState<OvertimeFormPage> {
       children: [
         Text(label, style: Theme.of(context).textTheme.bodyMedium),
         const SizedBox(height: 8),
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          children: [
-            for (final option in options)
-              ChoiceChip(
-                label: Text(OvertimeOptions.typeLabel(option)),
-                selected: option == selected,
-                onSelected: (_) => onSelected(option),
-                selectedColor: AppColors.lightGreen,
-                side: BorderSide(
-                  color: option == selected
-                      ? AppColors.primary
-                      : AppColors.divider,
-                ),
-              ),
-          ],
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final columns =
+                constraints.maxWidth < 280 ||
+                    MediaQuery.textScalerOf(context).scale(14) > 19
+                ? 2
+                : 2;
+            return Wrap(
+              spacing: 6,
+              runSpacing: 8,
+              children: [
+                for (final option in options)
+                  SizedBox(
+                    width: (constraints.maxWidth - (columns - 1) * 6) / columns,
+                    child: ChoiceChip(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      
+                      label: SizedBox(
+                        width:
+                            (constraints.maxWidth - (columns - 1) * 6) /
+                                columns -
+                            24,
+                        child: Text(
+                          OvertimeOptions.typeLabel(option),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      selected: option == selected,
+                      onSelected: (_) => onSelected(option),
+                      showCheckmark: false,
+                      selectedColor: AppColors.lightBlue,
+                      backgroundColor: AppColors.lightBlue,
+                      labelStyle: Theme.of(context).textTheme.bodyMedium
+                          ?.copyWith(
+                            color: option == selected
+                                ? AppColors.primary
+                                : AppColors.ink,
+                            fontWeight: option == selected
+                                ? FontWeight.w600
+                                : FontWeight.w400,
+                          ),
+                      side: BorderSide(
+                        color: option == selected
+                            ? AppColors.primary
+                            : Colors.transparent,
+                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      labelPadding: const EdgeInsets.symmetric(horizontal: 4),
+                    ),
+                  ),
+              ],
+            );
+          },
         ),
       ],
     );
@@ -332,14 +382,16 @@ class _OvertimeFormPageState extends ConsumerState<OvertimeFormPage> {
   }) {
     return InkWell(
       key: key,
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: BorderRadius.circular(12),
       onTap: onTap,
-      child: InputDecorator(
-        decoration: InputDecoration(
-          labelText: label,
-          suffixIcon: const Icon(Icons.calendar_today_outlined, size: 19),
+      child: _referenceField(
+        label,
+        InputDecorator(
+          decoration: InputDecoration(
+            suffixIcon: const Icon(Icons.calendar_today_outlined, size: 19),
+          ),
+          child: Text(AppDateUtils.formatDate(value)),
         ),
-        child: Text(AppDateUtils.formatDate(value)),
       ),
     );
   }
@@ -353,30 +405,35 @@ class _OvertimeFormPageState extends ConsumerState<OvertimeFormPage> {
   }) {
     return InkWell(
       key: key,
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: BorderRadius.circular(12),
       onTap: onTap,
-      child: InputDecorator(
-        decoration: InputDecoration(
-          labelText: label,
-          suffixIcon: const Icon(Icons.schedule_outlined, size: 19),
-        ),
-        child: Text(
-          '${value.hour.toString().padLeft(2, '0')}:${value.minute.toString().padLeft(2, '0')}',
+      child: _referenceField(
+        label,
+        InputDecorator(
+          decoration: InputDecoration(
+            suffixIcon: const Icon(Icons.schedule_outlined, size: 19),
+          ),
+          child: Text(
+            '${value.hour.toString().padLeft(2, '0')}:${value.minute.toString().padLeft(2, '0')}',
+          ),
         ),
       ),
     );
   }
 
-  TextFormField _textField({
+  Widget _textField({
     required TextEditingController controller,
     required String label,
     required String hint,
     int maxLines = 1,
   }) {
-    return TextFormField(
-      controller: controller,
-      maxLines: maxLines,
-      decoration: InputDecoration(labelText: label, hintText: hint),
+    return _referenceField(
+      label,
+      TextFormField(
+        controller: controller,
+        maxLines: maxLines,
+        decoration: InputDecoration(hintText: hint),
+      ),
     );
   }
 
@@ -487,3 +544,15 @@ class _DurationHint extends StatelessWidget {
     );
   }
 }
+
+Widget _referenceField(String label, Widget field) => Column(
+  crossAxisAlignment: CrossAxisAlignment.stretch,
+  children: [
+    Text(
+      label,
+      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+    ),
+    const SizedBox(height: 8),
+    field,
+  ],
+);

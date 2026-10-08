@@ -111,10 +111,34 @@ class _LeaveFormPageState extends ConsumerState<LeaveFormPage> {
           ),
         ],
       ),
+      bottomNavigationBar: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+          child: SizedBox(
+            width: double.infinity,
+            child: FilledButton.icon(
+              key: const Key('leave-save-button'),
+              onPressed: _saving || employees.isEmpty ? null : _save,
+              icon: _saving
+                  ? const SizedBox(
+                      width: 18,
+                      height: 18,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.white,
+                      ),
+                    )
+                  : const Icon(Icons.save_outlined),
+              label: Text(_saving ? '保存中…' : '保存请假'),
+            ),
+          ),
+        ),
+      ),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -147,41 +171,46 @@ class _LeaveFormPageState extends ConsumerState<LeaveFormPage> {
                       ),
                       const SizedBox(height: 16),
                       if (employees.isEmpty)
-                        InputDecorator(
-                          decoration: const InputDecoration(
-                            labelText: '请假人员',
-                            prefixIcon: Icon(Icons.person_outline),
+                        _referenceField(
+                          '请假人员',
+                          InputDecorator(
+                            decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.person_outline),
+                            ),
+                            child: const Text('暂无可用人员，请先建立人员档案。'),
                           ),
-                          child: const Text('暂无可用人员，请先建立人员档案。'),
                         )
                       else
-                        DropdownButtonFormField<int>(
-                          key: const Key('leave-employee-field'),
-                          initialValue:
-                              _employeeId != null &&
-                                  employees.any(
-                                    (item) => item.id == _employeeId,
-                                  )
-                              ? _employeeId
-                              : null,
-                          isExpanded: true,
-                          decoration: const InputDecoration(
-                            labelText: '请假人员',
-                            prefixIcon: Icon(Icons.person_outline),
-                          ),
-                          hint: const Text('请选择人员'),
-                          validator: (value) => value == null ? '请选择人员' : null,
-                          items: [
-                            for (final employee in employees)
-                              DropdownMenuItem(
-                                value: employee.id,
-                                child: Text(
-                                  '${employee.name} · ${employee.employeeNo}',
+                        _referenceField(
+                          '请假人员',
+                          DropdownButtonFormField<int>(
+                            key: const Key('leave-employee-field'),
+                            initialValue:
+                                _employeeId != null &&
+                                    employees.any(
+                                      (item) => item.id == _employeeId,
+                                    )
+                                ? _employeeId
+                                : null,
+                            isExpanded: true,
+                            decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.person_outline),
+                            ),
+                            hint: const Text('请选择人员'),
+                            validator: (value) =>
+                                value == null ? '请选择人员' : null,
+                            items: [
+                              for (final employee in employees)
+                                DropdownMenuItem(
+                                  value: employee.id,
+                                  child: Text(
+                                    '${employee.name} · ${employee.employeeNo}',
+                                  ),
                                 ),
-                              ),
-                          ],
-                          onChanged: (value) =>
-                              setState(() => _employeeId = value),
+                            ],
+                            onChanged: (value) =>
+                                setState(() => _employeeId = value),
+                          ),
                         ),
                       const SizedBox(height: 16),
                       _choiceChips<LeaveType>(
@@ -213,7 +242,16 @@ class _LeaveFormPageState extends ConsumerState<LeaveFormPage> {
                         onTap: () => _pickDate(context, isStart: true),
                       ),
                       if (_duration == LeaveDurationType.multiDay) ...[
-                        const SizedBox(height: 12),
+                        const SizedBox(height: 20),
+                        _periodField(
+                          context: context,
+                          key: const Key('leave-start-period-field'),
+                          label: '开始时段',
+                          value: _startPeriod,
+                          onChanged: (value) =>
+                              setState(() => _startPeriod = value!),
+                        ),
+                        const SizedBox(height: 20),
                         _dateField(
                           context: context,
                           key: const Key('leave-end-date-field'),
@@ -221,67 +259,34 @@ class _LeaveFormPageState extends ConsumerState<LeaveFormPage> {
                           value: _endDate,
                           onTap: () => _pickDate(context, isStart: false),
                         ),
-                        const SizedBox(height: 12),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: _periodField(
-                                context: context,
-                                key: const Key('leave-start-period-field'),
-                                label: '开始时段',
-                                value: _startPeriod,
-                                onChanged: (value) =>
-                                    setState(() => _startPeriod = value!),
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: _periodField(
-                                context: context,
-                                key: const Key('leave-end-period-field'),
-                                label: '结束时段',
-                                value: _endPeriod,
-                                onChanged: (value) =>
-                                    setState(() => _endPeriod = value!),
-                              ),
-                            ),
-                          ],
+                        const SizedBox(height: 20),
+                        _periodField(
+                          context: context,
+                          key: const Key('leave-end-period-field'),
+                          label: '结束时段',
+                          value: _endPeriod,
+                          onChanged: (value) =>
+                              setState(() => _endPeriod = value!),
                         ),
                       ],
-                      const SizedBox(height: 12),
-                      TextFormField(
-                        key: const Key('leave-remark-field'),
-                        controller: _remarkController,
-                        maxLines: 3,
-                        decoration: const InputDecoration(
-                          labelText: '备注',
-                          hintText: '可填写请假说明',
-                          prefixIcon: Icon(Icons.notes_outlined),
+                      const SizedBox(height: 20),
+                      _referenceField(
+                        '备注',
+                        TextFormField(
+                          key: const Key('leave-remark-field'),
+                          controller: _remarkController,
+                          maxLines: 3,
+                          decoration: const InputDecoration(
+                            hintText: '可填写请假说明',
+                            prefixIcon: Icon(Icons.notes_outlined),
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-              const SizedBox(height: 18),
-              SizedBox(
-                width: double.infinity,
-                child: FilledButton.icon(
-                  key: const Key('leave-save-button'),
-                  onPressed: _saving || employees.isEmpty ? null : _save,
-                  icon: _saving
-                      ? const SizedBox(
-                          width: 18,
-                          height: 18,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: Colors.white,
-                          ),
-                        )
-                      : const Icon(Icons.save_outlined),
-                  label: Text(_saving ? '保存中…' : '保存请假'),
-                ),
-              ),
+              const SizedBox(height: 16),
             ],
           ),
         ),
@@ -302,31 +307,61 @@ class _LeaveFormPageState extends ConsumerState<LeaveFormPage> {
       children: [
         Text(label, style: Theme.of(context).textTheme.bodyMedium),
         const SizedBox(height: 8),
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          children: [
-            for (final option in options)
-              ChoiceChip(
-                label: Text(labelBuilder(option)),
-                selected: option == selected,
-                onSelected: (_) => onSelected(option),
-                selectedColor: AppColors.lightGreen,
-                side: BorderSide(
-                  color: option == selected
-                      ? AppColors.primary
-                      : AppColors.divider,
-                ),
-                labelStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: option == selected
-                      ? AppColors.primary
-                      : AppColors.body,
-                  fontWeight: option == selected
-                      ? FontWeight.w600
-                      : FontWeight.w400,
-                ),
-              ),
-          ],
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final columns =
+                constraints.maxWidth < 280 ||
+                    MediaQuery.textScalerOf(context).scale(14) > 19
+                ? 2
+                : 4;
+            return Wrap(
+              spacing: 6,
+              runSpacing: 8,
+              children: [
+                for (final option in options)
+                  SizedBox(
+                    width: (constraints.maxWidth - (columns - 1) * 6) / columns,
+                    child: ChoiceChip(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      
+                      label: SizedBox(
+                        width:
+                            (constraints.maxWidth - (columns - 1) * 6) /
+                                columns -
+                            24,
+                        child: Text(
+                          labelBuilder(option),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      selected: option == selected,
+                      onSelected: (_) => onSelected(option),
+                      showCheckmark: false,
+                      selectedColor: AppColors.primary,
+                      backgroundColor: AppColors.lightBlue,
+                      labelStyle: Theme.of(context).textTheme.bodyMedium
+                          ?.copyWith(
+                            color: option == selected
+                                ? Colors.white
+                                : AppColors.ink,
+                            fontWeight: option == selected
+                                ? FontWeight.w600
+                                : FontWeight.w400,
+                          ),
+                      side: BorderSide(
+                        color: option == selected
+                            ? AppColors.primary
+                            : Colors.transparent,
+                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      labelPadding: const EdgeInsets.symmetric(horizontal: 4),
+                    ),
+                  ),
+              ],
+            );
+          },
         ),
       ],
     );
@@ -367,16 +402,18 @@ class _LeaveFormPageState extends ConsumerState<LeaveFormPage> {
   }) {
     return InkWell(
       key: key,
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: BorderRadius.circular(12),
       onTap: onTap,
-      child: InputDecorator(
-        decoration: InputDecoration(
-          labelText: label,
-          suffixIcon: const Icon(Icons.calendar_today_outlined, size: 19),
-        ),
-        child: Text(
-          AppDateUtils.formatDate(value),
-          style: Theme.of(context).textTheme.bodyLarge,
+      child: _referenceField(
+        label,
+        InputDecorator(
+          decoration: InputDecoration(
+            suffixIcon: const Icon(Icons.calendar_today_outlined, size: 19),
+          ),
+          child: Text(
+            AppDateUtils.formatDate(value),
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
         ),
       ),
     );
@@ -389,19 +426,24 @@ class _LeaveFormPageState extends ConsumerState<LeaveFormPage> {
     required LeaveHalfPeriod value,
     required ValueChanged<LeaveHalfPeriod?> onChanged,
   }) {
-    return DropdownButtonFormField<LeaveHalfPeriod>(
-      key: key,
-      initialValue: value,
-      isExpanded: true,
-      decoration: InputDecoration(labelText: label),
-      items: [
-        for (final period in LeaveHalfPeriod.values)
-          DropdownMenuItem(
-            value: period,
-            child: Text(LeaveOptions.periodLabel(period)),
-          ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(label, style: Theme.of(context).textTheme.bodyMedium),
+        const SizedBox(height: 8),
+        SegmentedButton<LeaveHalfPeriod>(
+          key: key,
+          segments: [
+            for (final period in LeaveHalfPeriod.values)
+              ButtonSegment(
+                value: period,
+                label: Text(LeaveOptions.periodLabel(period)),
+              ),
+          ],
+          selected: {value},
+          onSelectionChanged: (values) => onChanged(values.first),
+        ),
       ],
-      onChanged: onChanged,
     );
   }
 
@@ -468,3 +510,15 @@ class _LeaveFormPageState extends ConsumerState<LeaveFormPage> {
     );
   }
 }
+
+Widget _referenceField(String label, Widget field) => Column(
+  crossAxisAlignment: CrossAxisAlignment.stretch,
+  children: [
+    Text(
+      label,
+      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+    ),
+    const SizedBox(height: 8),
+    field,
+  ],
+);

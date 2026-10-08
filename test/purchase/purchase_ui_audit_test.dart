@@ -160,21 +160,10 @@ void main() {
       '/purchase',
       closeDatabase: closeDatabase,
     );
-    final homeConfirm = find.descendant(
-      of: find.byType(PurchaseHomePage),
-      matching: find.text('确认已申报'),
-    );
-    await _ensureVisibleAndHitTestable(
-      tester,
-      homeConfirm,
-      scrollable: find
-          .descendant(
-            of: find.byType(PurchaseHomePage),
-            matching: find.byType(Scrollable),
-          )
-          .first,
-    );
-    await tester.tap(homeConfirm);
+    // The reference home shows the first three urgent records. Pending apply
+    // remains reachable from the stage summary for requests outside that subset.
+    await tester.ensureVisible(find.text('待申报').first);
+    await tester.tap(find.text('待申报').first);
     await tester.pumpAndSettle();
     expect(find.byType(PurchasePendingApplyPage), findsOneWidget);
     await tester.tap(find.byKey(Key('purchase-confirm-applied-${pending.id}')));

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/database/app_database.dart';
+import '../../../app/theme/app_theme.dart';
 import '../../personnel/application/personnel_providers.dart';
 import '../application/payroll_providers.dart';
 import '../data/wage_settings_repository.dart';
@@ -40,8 +41,25 @@ class EmployeePayrollPage extends ConsumerWidget {
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (error, _) => Center(child: Text('工种加载失败：$error')),
               data: (jobTypes) => ListView(
-                padding: const EdgeInsets.fromLTRB(20, 16, 20, 28),
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 28),
                 children: [
+                  Card(
+                    child: ListTile(
+                      leading: const CircleAvatar(
+                        backgroundColor: AppColors.lightBlue,
+                        child: Icon(
+                          Icons.person_outline,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                      title: Text(
+                        item.name,
+                        style: const TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                      subtitle: Text(item.employeeNo),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
                   _ProfileEditor(
                     employee: item,
                     profile: value,
@@ -68,6 +86,10 @@ class EmployeePayrollPage extends ConsumerWidget {
                                     ),
                                     trailing: Text(
                                       '${entry.item.finalWage.toStringAsFixed(2)}元',
+                                      style: const TextStyle(
+                                        color: AppColors.success,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
                                     onTap: () => context.push(
                                       '/reports/payroll/item/${entry.item.id}',
@@ -141,10 +163,7 @@ class _ProfileEditorState extends State<_ProfileEditor> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              '${widget.employee.name} 工资资料',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
+            Text('工资资料', style: Theme.of(context).textTheme.titleLarge),
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
               title: const Text('参与临时工工资核算'),
@@ -171,20 +190,26 @@ class _ProfileEditorState extends State<_ProfileEditor> {
               onChanged: (value) => setState(() => useDefault = value),
             ),
             if (!useDefault)
-              TextField(
-                controller: personalWage,
-                keyboardType: const TextInputType.numberWithOptions(
-                  decimal: true,
+              _referenceField(
+                '个人特殊日薪',
+                TextField(
+                  controller: personalWage,
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
+                  decoration: const InputDecoration(suffixText: '元'),
                 ),
-                decoration: const InputDecoration(labelText: '个人特殊日薪（元）'),
               ),
+            const SizedBox(height: 20),
             TextField(
               controller: remark,
+              maxLines: 3,
               decoration: const InputDecoration(labelText: '工资备注'),
             ),
             const SizedBox(height: 12),
-            Align(
-              alignment: Alignment.centerRight,
+            SizedBox(
+              width: double.infinity,
+              height: 48,
               child: FilledButton(
                 onPressed: _save,
                 child: const Text('保存工资资料'),
@@ -223,3 +248,15 @@ class _ProfileEditorState extends State<_ProfileEditor> {
     }
   }
 }
+
+Widget _referenceField(String label, Widget field) => Column(
+  crossAxisAlignment: CrossAxisAlignment.stretch,
+  children: [
+    Text(
+      label,
+      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+    ),
+    const SizedBox(height: 8),
+    field,
+  ],
+);

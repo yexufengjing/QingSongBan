@@ -579,7 +579,7 @@ class _DetailBody extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const PurchaseMaterialIcon(size: 82),
+            const PurchaseMaterialIcon(size: 40),
             const SizedBox(width: 12),
             Expanded(
               child: Column(

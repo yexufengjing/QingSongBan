@@ -56,7 +56,7 @@ class _VehicleFuelSummaryPageState
   Widget _content(BuildContext context, FuelYearSummary summary) {
     final current = summary.currentMonth;
     return SingleChildScrollView(
-      padding: const EdgeInsets.fromLTRB(20, 12, 20, 32),
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 32),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -199,7 +199,7 @@ class _FuelTrendCard extends StatelessWidget {
                   child: Text(
                     '$month',
                     textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 10, color: AppColors.body),
+                    style: const TextStyle(fontSize: 12, color: AppColors.body),
                   ),
                 ),
             ],
@@ -389,8 +389,14 @@ class _PivotTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scale = MediaQuery.textScalerOf(context).scale(14) / 14;
+    final headerHeight = _PivotTable.headerHeight * scale + (scale > 1 ? 8 : 0);
+    final monthRowHeight =
+        _PivotTable.monthRowHeight * scale + (scale > 1 ? 4 : 0);
+    final summaryRowHeight =
+        _PivotTable.summaryRowHeight * scale + (scale > 1 ? 8 : 0);
     final rowCount = 12 + 2;
-    final leftWidth = 72.0;
+    final leftWidth = 56.0;
     final rightWidth = 156.0;
     return Card(
       clipBehavior: Clip.antiAlias,
@@ -412,21 +418,26 @@ class _PivotTable extends StatelessWidget {
               Expanded(
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  child: _VehicleTable(
-                    summary: summary,
-                    headerHeight: headerHeight,
-                    monthRowHeight: monthRowHeight,
-                    summaryRowHeight: summaryRowHeight,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _VehicleTable(
+                        summary: summary,
+                        headerHeight: headerHeight,
+                        monthRowHeight: monthRowHeight,
+                        summaryRowHeight: summaryRowHeight,
+                      ),
+                      SizedBox(
+                        width: rightWidth,
+                        child: _RightTable(
+                          summary: summary,
+                          headerHeight: headerHeight,
+                          monthRowHeight: monthRowHeight,
+                          summaryRowHeight: summaryRowHeight,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ),
-              SizedBox(
-                width: rightWidth,
-                child: _RightTable(
-                  summary: summary,
-                  headerHeight: headerHeight,
-                  monthRowHeight: monthRowHeight,
-                  summaryRowHeight: summaryRowHeight,
                 ),
               ),
             ],
@@ -753,6 +764,7 @@ class _TableCell extends StatelessWidget {
         children: [
           Text(
             text,
+            style: Theme.of(context).textTheme.bodyMedium,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,

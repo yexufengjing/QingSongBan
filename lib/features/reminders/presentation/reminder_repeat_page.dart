@@ -208,7 +208,7 @@ class _CustomRepeatPageState extends State<CustomRepeatPage> {
                           children: [
                             for (var day = 1; day <= 31; day++)
                               InkWell(
-                                borderRadius: BorderRadius.circular(24),
+                                borderRadius: BorderRadius.circular(12),
                                 onTap: () => _toggleMonthDay(day),
                                 child: Container(
                                   margin: const EdgeInsets.all(3),

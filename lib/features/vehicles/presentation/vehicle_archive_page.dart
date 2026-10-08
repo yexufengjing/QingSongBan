@@ -41,7 +41,7 @@ class _VehicleArchivePageState extends ConsumerState<VehicleArchivePage> {
       ),
       bottomNavigationBar: const VehicleNavigationBar(),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 30),
+        padding: const EdgeInsets.fromLTRB(16, 12, 16, 30),
         children: [
           TextField(
             onChanged: (value) =>
@@ -133,7 +133,7 @@ class _VehicleArchivePageState extends ConsumerState<VehicleArchivePage> {
                 children: [
                   Expanded(
                     child: _ArchiveFilter(
-                      label: '车辆类型',
+                      label: '车型',
                       value: selectedType,
                       items: [
                         (null, '全部'),
@@ -148,7 +148,7 @@ class _VehicleArchivePageState extends ConsumerState<VehicleArchivePage> {
                   const SizedBox(width: 6),
                   Expanded(
                     child: _ArchiveFilter(
-                      label: '车辆状态',
+                      label: '状态',
                       value: selectedStatus,
                       items: [
                         (null, '全部'),
@@ -163,7 +163,7 @@ class _VehicleArchivePageState extends ConsumerState<VehicleArchivePage> {
                   const SizedBox(width: 6),
                   Expanded(
                     child: _ArchiveFilter<String>(
-                      label: '所属区域',
+                      label: '区域',
                       value: _selectedArea,
                       items: [
                         (null, '全部'),
@@ -389,7 +389,7 @@ class _ArchiveCard extends StatelessWidget {
                         Expanded(
                           child: _ArchiveInfoCell(
                             icon: Icons.location_on,
-                            label: '所属区域',
+                            label: '区域',
                             value: vehicle.workArea ?? '—',
                           ),
                         ),
@@ -435,11 +435,11 @@ class _ArchiveFilter<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-    height: 42,
+    constraints: const BoxConstraints(minHeight: 48),
     padding: const EdgeInsets.symmetric(horizontal: 9),
     decoration: BoxDecoration(
       color: Colors.white,
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: BorderRadius.circular(12),
       border: Border.all(color: AppColors.divider.withValues(alpha: .65)),
     ),
     child: Row(
@@ -449,7 +449,7 @@ class _ArchiveFilter<T> extends StatelessWidget {
             label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(color: AppColors.body, fontSize: 11),
+            style: const TextStyle(color: AppColors.body, fontSize: 13),
           ),
         ),
         const SizedBox(width: 4),
@@ -459,7 +459,8 @@ class _ArchiveFilter<T> extends StatelessWidget {
             value: value,
             underline: const SizedBox.shrink(),
             icon: const Icon(Icons.keyboard_arrow_down, size: 18),
-            style: const TextStyle(color: AppColors.ink, fontSize: 12),
+            style: Theme.of(context).textTheme.bodyMedium
+                ?.copyWith(color: AppColors.ink, fontSize: 13),
             items: [
               for (final item in items)
                 DropdownMenuItem<T?>(
@@ -500,14 +501,12 @@ class _ArchiveInfoCell extends StatelessWidget {
               label,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontSize: 10, color: AppColors.body),
+              style: const TextStyle(fontSize: 12, color: AppColors.body),
             ),
             Text(
               value.isEmpty ? '—' : value,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
               style: const TextStyle(
-                fontSize: 11,
+                fontSize: 13,
                 color: AppColors.ink,
                 fontWeight: FontWeight.w600,
               ),
@@ -530,11 +529,11 @@ class _ArchiveStatus extends StatelessWidget {
     padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
     decoration: BoxDecoration(
       color: color.withValues(alpha: 0.1),
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(12),
     ),
     child: Text(
       label,
-      style: TextStyle(fontSize: 11, color: color, fontWeight: FontWeight.w700),
+      style: TextStyle(fontSize: 13, color: color, fontWeight: FontWeight.w700),
     ),
   );
 }

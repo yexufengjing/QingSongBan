@@ -68,7 +68,7 @@ class _ReminderSchedulePageState extends State<ReminderSchedulePage> {
                       ),
                       decoration: BoxDecoration(
                         color: Theme.of(context).colorScheme.primary,
-                        borderRadius: BorderRadius.circular(24),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
                         _dateLabel(_date),

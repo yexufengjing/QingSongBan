@@ -85,7 +85,7 @@ class _PurchasePendingApplyPageState
                             child: ChoiceChip(
                               label: Text(reason ?? '全部'),
                               selected: _filter.demandReason == reason,
-                              selectedColor: const Color(0xFF00A86B),
+                              selectedColor: const Color(0xFF2563EB),
                               labelStyle: TextStyle(
                                 color: _filter.demandReason == reason
                                     ? Colors.white
@@ -94,7 +94,7 @@ class _PurchasePendingApplyPageState
                               ),
                               side: BorderSide(
                                 color: _filter.demandReason == reason
-                                    ? const Color(0xFF00A86B)
+                                    ? const Color(0xFF2563EB)
                                     : const Color(0xFFE0EAF5),
                               ),
                               onSelected: (_) => setState(

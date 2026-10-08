@@ -171,6 +171,41 @@ class _InventoryMaterialFormPageState
     final categories = ref.watch(inventoryCategoriesProvider);
     return Scaffold(
       appBar: AppBar(title: Text(widget.materialId == null ? '新增物资' : '编辑物资')),
+      bottomNavigationBar: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+          child: Row(
+            children: [
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: _saving ? null : () => context.pop(),
+                  child: const Text('取消'),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: FilledButton.icon(
+                  key: const Key('inventory-material-submit'),
+                  onPressed:
+                      _saving ||
+                          !categories.hasValue ||
+                          (widget.materialId != null && !_initialized)
+                      ? null
+                      : _save,
+                  icon: _saving
+                      ? const SizedBox.square(
+                          dimension: 18,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : const Icon(Icons.save_outlined),
+                  label: Text(_saving ? '正在保存…' : '保存物资'),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
       body: categories.when(
         loading: () => const InventoryLoadingState(),
         error: (_, _) => InventoryErrorState(
@@ -197,8 +232,9 @@ class _InventoryMaterialFormPageState
           children: [
             Card(
               child: Padding(
-                padding: const EdgeInsets.all(18),
+                padding: const EdgeInsets.all(16),
                 child: Column(
+                  spacing: 12,
                   children: [
                     TextFormField(
                       controller: _name,
@@ -321,17 +357,6 @@ class _InventoryMaterialFormPageState
               ),
             ),
             const SizedBox(height: 18),
-            FilledButton.icon(
-              key: const Key('inventory-material-submit'),
-              onPressed: _saving ? null : _save,
-              icon: _saving
-                  ? const SizedBox.square(
-                      dimension: 18,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  : const Icon(Icons.save_outlined),
-              label: Text(_saving ? '正在保存…' : '保存物资'),
-            ),
           ],
         ),
       );

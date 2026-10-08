@@ -217,7 +217,7 @@ class _MonthlyExpenseChart extends StatelessWidget {
                 const Spacer(),
                 const Text(
                   '单位：元',
-                  style: TextStyle(fontSize: 11, color: AppColors.body),
+                  style: TextStyle(fontSize: 13, color: AppColors.body),
                 ),
               ],
             ),
@@ -294,7 +294,7 @@ class _MonthlyExpenseChart extends StatelessWidget {
                             Text(
                               '${month + 1}',
                               style: const TextStyle(
-                                fontSize: 10,
+                                fontSize: 12,
                                 color: AppColors.body,
                               ),
                             ),
@@ -327,17 +327,59 @@ class _ExpenseComposition extends StatelessWidget {
     const labels = ['油耗', '维修', '保养', '其他'];
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(14),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('费用构成', style: Theme.of(context).textTheme.titleLarge),
-            const SizedBox(height: 10),
-            Row(
+            const SizedBox(height: 12),
+            for (var index = 0; index < labels.length; index++) ...[
+              if (index > 0) const Divider(height: 1),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 32,
+                      height: 32,
+                      decoration: BoxDecoration(
+                        color: _expenseColors[index].withValues(alpha: .1),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Icon(
+                        [
+                          Icons.local_gas_station,
+                          Icons.build,
+                          Icons.settings,
+                          Icons.more_horiz,
+                        ][index],
+                        color: _expenseColors[index],
+                        size: 20,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(child: Text('${labels[index]}费用')),
+                    Text(
+                      '¥${(amounts[index] / 100).toStringAsFixed(2)}',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+            ExpansionTile(
+              tilePadding: EdgeInsets.zero,
+              title: Text(
+                '费用构成图',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
               children: [
                 SizedBox(
-                  width: 126,
-                  height: 126,
+                  width: 156,
+                  height: 156,
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
@@ -348,46 +390,24 @@ class _ExpenseComposition extends StatelessWidget {
                       Text(
                         '¥${(total / 100).toStringAsFixed(0)}',
                         style: const TextStyle(
-                          color: AppColors.ink,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w800,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(width: 14),
-                Expanded(
-                  child: Column(
-                    children: [
-                      for (var index = 0; index < labels.length; index++)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: Row(
-                            children: [
-                              CircleAvatar(
-                                radius: 4,
-                                backgroundColor: _expenseColors[index],
-                              ),
-                              const SizedBox(width: 6),
-                              Text(
-                                labels[index],
-                                style: const TextStyle(fontSize: 12),
-                              ),
-                              const Spacer(),
-                              Text(
-                                '¥${(amounts[index] / 100).toStringAsFixed(0)}  ${total == 0 ? 0 : (amounts[index] * 100 / total).round()}%',
-                                style: const TextStyle(
-                                  fontSize: 11,
-                                  color: AppColors.body,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                    ],
-                  ),
+                Wrap(
+                  spacing: 16,
+                  children: [
+                    for (var index = 0; index < labels.length; index++)
+                      Text(
+                        '${labels[index]} ${total == 0 ? 0 : (amounts[index] * 100 / total).round()}%',
+                        style: TextStyle(color: _expenseColors[index]),
+                      ),
+                  ],
                 ),
+                const SizedBox(height: 12),
               ],
             ),
           ],
@@ -469,7 +489,7 @@ class _LegendItem extends StatelessWidget {
     children: [
       CircleAvatar(radius: 4, backgroundColor: color),
       const SizedBox(width: 4),
-      Text(label, style: const TextStyle(fontSize: 11, color: AppColors.body)),
+      Text(label, style: const TextStyle(fontSize: 13, color: AppColors.body)),
     ],
   );
 }

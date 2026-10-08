@@ -2,7 +2,45 @@ import 'package:flutter/material.dart';
 
 import '../../../../app/theme/app_theme.dart';
 
-/// Shared white-and-mint building blocks for the inventory screens.
+class InventoryFormFooter extends StatelessWidget {
+  const InventoryFormFooter({
+    required this.label,
+    required this.icon,
+    required this.onSave,
+    this.saving = false,
+    this.buttonKey,
+    super.key,
+  });
+  final String label;
+  final IconData icon;
+  final VoidCallback? onSave;
+  final bool saving;
+  final Key? buttonKey;
+
+  @override
+  Widget build(BuildContext context) => ColoredBox(
+    color: Colors.white,
+    child: SafeArea(
+      top: false,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+        child: FilledButton.icon(
+          key: buttonKey,
+          onPressed: saving ? null : onSave,
+          icon: saving
+              ? const SizedBox.square(
+                  dimension: 18,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                )
+              : Icon(icon),
+          label: Text(saving ? '正在保存…' : label),
+        ),
+      ),
+    ),
+  );
+}
+
+/// Shared blue-and-white sections for the inventory reference pages.
 class InventorySection extends StatelessWidget {
   const InventorySection({
     required this.title,
@@ -22,15 +60,8 @@ class InventorySection extends StatelessWidget {
     padding: const EdgeInsets.all(16),
     decoration: BoxDecoration(
       color: Colors.white,
-      borderRadius: BorderRadius.circular(18),
-      border: Border.all(color: const Color(0xFFEAF2EF)),
-      boxShadow: const [
-        BoxShadow(
-          color: Color(0x080B5B43),
-          blurRadius: 16,
-          offset: Offset(0, 5),
-        ),
-      ],
+      borderRadius: BorderRadius.circular(12),
+      border: Border.all(color: AppColors.divider),
     ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,10 +71,7 @@ class InventorySection extends StatelessWidget {
             Icon(icon, color: AppColors.primary, size: 21),
             const SizedBox(width: 8),
             Expanded(
-              child: Text(
-                title,
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
+              child: Text(title, style: Theme.of(context).textTheme.titleLarge),
             ),
             ?trailing,
           ],
@@ -77,17 +105,17 @@ class InventoryMetricCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Material(
-    color: Colors.white,
-    borderRadius: BorderRadius.circular(16),
+    color: const Color(0xFFF6FAFE),
+    borderRadius: BorderRadius.circular(12),
     child: InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(12),
       child: Container(
-        constraints: BoxConstraints(minHeight: compact ? 112 : 94),
+        constraints: BoxConstraints(minHeight: compact ? 108 : 94),
         padding: EdgeInsets.all(compact ? 10 : 13),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: const Color(0xFFEAF2EF)),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: AppColors.divider),
         ),
         child: compact
             ? Column(
@@ -100,13 +128,16 @@ class InventoryMetricCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: SizedBox(
-                      width: 34,
-                      height: 34,
+                      width: 28,
+                      height: 28,
                       child: Icon(icon, color: color, size: 19),
                     ),
                   ),
                   const SizedBox(height: 7),
-                  Text(label, maxLines: 1, overflow: TextOverflow.ellipsis),
+                  Text(
+                    label,
+                    style: const TextStyle(fontSize: 12, color: AppColors.body),
+                  ),
                   const SizedBox(height: 2),
                   valueMaxLines > 1
                       ? Tooltip(
@@ -143,9 +174,9 @@ class InventoryMetricCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: SizedBox(
-                      width: 42,
-                      height: 42,
-                      child: Icon(icon, color: color, size: 22),
+                      width: 32,
+                      height: 32,
+                      child: Icon(icon, color: color, size: 24),
                     ),
                   ),
                   const SizedBox(width: 11),
@@ -198,28 +229,23 @@ class InventoryQuickAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Material(
-    color: const Color(0xFFF4F8FA),
-    borderRadius: BorderRadius.circular(14),
+    color: color.withValues(alpha: .05),
+    borderRadius: BorderRadius.circular(12),
     child: InkWell(
       key: Key('inventory-shortcut-$title'),
       onTap: onTap,
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: BorderRadius.circular(12),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 6),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: color, size: 26),
+            Icon(icon, color: color, size: 24),
             const SizedBox(height: 7),
-            Text(title, maxLines: 1, overflow: TextOverflow.ellipsis),
-            const SizedBox(height: 2),
             Text(
-              subtitle,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
+              title,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodySmall
-                  ?.copyWith(fontSize: 10),
+              style: const TextStyle(fontSize: 14, color: AppColors.ink),
             ),
           ],
         ),
@@ -249,9 +275,9 @@ class InventorySummaryPanel extends StatelessWidget {
     builder: (context, constraints) => Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: const Color(0xFFF0FAF6),
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: const Color(0xFFDCEFE8)),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.divider),
       ),
       child: constraints.maxWidth < 520
           ? Column(
@@ -376,7 +402,7 @@ class InventoryMonthPicker extends StatelessWidget {
     label: Text('${month.year}年${month.month}月'),
     style: OutlinedButton.styleFrom(
       foregroundColor: AppColors.primary,
-      backgroundColor: AppColors.lightGreen,
+      backgroundColor: AppColors.lightBlue,
       side: BorderSide.none,
       padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 8),
       shape: const StadiumBorder(),
@@ -460,7 +486,7 @@ class InventoryStatusChip extends StatelessWidget {
     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
     decoration: BoxDecoration(
       color: color.withValues(alpha: 0.12),
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(12),
     ),
     child: Text(
       label,

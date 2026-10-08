@@ -24,6 +24,17 @@ class TerminationPage extends ConsumerWidget {
           ),
         ],
       ),
+      floatingActionButton:
+          records.maybeWhen(
+            data: (items) => items.isNotEmpty,
+            orElse: () => false,
+          )
+          ? FloatingActionButton.extended(
+              onPressed: () => context.push('/attendance/termination/new'),
+              icon: const Icon(Icons.add),
+              label: const Text('登记离职'),
+            )
+          : null,
       body: records.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, _) => _TerminationError(
@@ -37,7 +48,7 @@ class TerminationPage extends ConsumerWidget {
             );
           }
           return ListView(
-            padding: const EdgeInsets.fromLTRB(20, 14, 20, 28),
+            padding: const EdgeInsets.fromLTRB(16, 14, 16, 104),
             children: [
               Card(
                 color: AppColors.lightOrange,
@@ -81,18 +92,27 @@ class TerminationPage extends ConsumerWidget {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('撤销离职？'),
+        title: const Text('撤销离职？', textAlign: TextAlign.center),
         content: Text(
           '撤销 ${item.employee.name} 的离职记录后，人员状态将恢复为“在岗”，已有考勤数据不会被修改。',
         ),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('取消'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('确认撤销'),
+          Row(
+            children: [
+              Expanded(
+                child: TextButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: const Text('取消'),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: FilledButton(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  child: const Text('确认撤销'),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -135,77 +155,105 @@ class _TerminationCard extends StatelessWidget {
     final record = item.termination;
     return Card(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 14, 8, 14),
-        child: Row(
+        padding: const EdgeInsets.all(16),
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: 44,
-              height: 44,
-              alignment: Alignment.center,
-              decoration: const BoxDecoration(
-                color: AppColors.lightOrange,
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                Icons.person_off_outlined,
-                color: Color(0xFFE98500),
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
+            Row(
+              children: [
+                const CircleAvatar(
+                  radius: 24,
+                  backgroundColor: AppColors.lightBlue,
+                  child: Icon(
+                    Icons.person_outline,
+                    color: AppColors.techBlue,
+                    size: 24,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Flexible(
-                        child: Text(
-                          item.employee.name,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
+                      Text(
+                        item.employee.name,
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
-                      const SizedBox(width: 8),
-                      _TerminationTag(type: record.terminationType),
+                      const SizedBox(height: 4),
+                      Text(
+                        item.employee.employeeNo,
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
                     ],
                   ),
-                  const SizedBox(height: 5),
-                  Text(
-                    '${item.employee.employeeNo} · 离职日期 ${terminationDateLabel(record)}',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    '${record.isInsuranceStopped ? '已停保' : '待停保'} · ${record.hasUnsettledItems ? '有未结事项' : '无未结事项'}${record.remark == null ? '' : ' · ${record.remark}'}',
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ],
-              ),
-            ),
-            PopupMenuButton<_TerminationAction>(
-              key: Key('termination-actions-${record.id}'),
-              onSelected: (action) {
-                switch (action) {
-                  case _TerminationAction.edit:
-                    onEdit();
-                  case _TerminationAction.revoke:
-                    onRevoke();
-                }
-              },
-              itemBuilder: (context) => const [
-                PopupMenuItem(
-                  value: _TerminationAction.edit,
-                  child: Text('编辑'),
                 ),
-                PopupMenuItem(
-                  value: _TerminationAction.revoke,
-                  child: Text('撤销离职'),
+                IconButton(
+                  onPressed: onEdit,
+                  icon: const Icon(Icons.edit_outlined),
+                  color: AppColors.techBlue,
+                  tooltip: '编辑',
+                ),
+                PopupMenuButton<_TerminationAction>(
+                  key: Key('termination-actions-${record.id}'),
+                  onSelected: (action) {
+                    switch (action) {
+                      case _TerminationAction.edit:
+                        onEdit();
+                      case _TerminationAction.revoke:
+                        onRevoke();
+                    }
+                  },
+                  itemBuilder: (context) => const [
+                    PopupMenuItem(
+                      value: _TerminationAction.edit,
+                      child: Text('编辑'),
+                    ),
+                    PopupMenuItem(
+                      value: _TerminationAction.revoke,
+                      child: Text('撤销离职'),
+                    ),
+                  ],
                 ),
               ],
             ),
+            const SizedBox(height: 8),
+            _TerminationTag(type: record.terminationType),
+            const Divider(height: 24),
+            for (final row in <(String, String)>[
+              ('正式离职日期', terminationDateLabel(record)),
+              ('离职原因', TerminationOptions.typeLabel(record.terminationType)),
+              (
+                '社保停保状态',
+                record.isInsuranceStopped
+                    ? '已停保${record.stopInsuranceMonth == null ? '' : ' ${record.stopInsuranceMonth}'}'
+                    : '待停保',
+              ),
+              ('工具归还情况', record.toolsReturned ? '已归还' : '待归还'),
+              ('物资交接情况', record.materialsTransferred ? '已交接' : '待交接'),
+              ('未结事项', record.hasUnsettledItems ? '存在未结事项' : '无未结事项'),
+              ('说明', record.remark ?? '未填写'),
+            ])
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: 100,
+                      child: Text(
+                        row.$1,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        row.$2,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
           ],
         ),
       ),

@@ -1,150 +1,15 @@
 import 'package:flutter/material.dart';
 
 import '../../../../app/theme/app_theme.dart';
+import '../../../../core/widgets/design_widgets.dart';
 import '../../domain/purchase_status.dart';
 
-/// Keeps the reference palette and control shapes local to purchase routes.
+/// Purchase routes share the app reference theme, including modal controls.
 class PurchasePageTheme extends StatelessWidget {
   const PurchasePageTheme({required this.child, super.key});
-
   final Widget child;
-
   @override
-  Widget build(BuildContext context) {
-    final base = Theme.of(context);
-    final titleStyle =
-        base.appBarTheme.titleTextStyle ??
-        base.textTheme.titleLarge ??
-        const TextStyle();
-    final rounded = RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(12),
-    );
-    return Theme(
-      data: base.copyWith(
-        appBarTheme: base.appBarTheme.copyWith(
-          centerTitle: true,
-          titleTextStyle: titleStyle.copyWith(
-            color: const Color(0xFF102A50),
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        chipTheme: base.chipTheme.copyWith(
-          shape: rounded,
-          side: const BorderSide(color: Color(0xFFE0EAF5)),
-          backgroundColor: const Color(0xFFF1F6FC),
-          selectedColor: const Color(0xFFE5F8F0),
-          labelStyle:
-              (base.chipTheme.labelStyle ??
-                      base.textTheme.labelLarge ??
-                      const TextStyle())
-                  .copyWith(color: const Color(0xFF425D7F)),
-          secondaryLabelStyle:
-              (base.chipTheme.secondaryLabelStyle ??
-                      base.textTheme.labelLarge ??
-                      const TextStyle())
-                  .copyWith(
-                    color: const Color(0xFF00A86B),
-                    fontWeight: FontWeight.w700,
-                  ),
-          showCheckmark: false,
-        ),
-        segmentedButtonTheme: base.segmentedButtonTheme.copyWith(
-          style:
-              base.segmentedButtonTheme.style?.copyWith(
-                backgroundColor: WidgetStateProperty.resolveWith(
-                  (states) => states.contains(WidgetState.selected)
-                      ? const Color(0xFF00A86B)
-                      : const Color(0xFFF0F5FB),
-                ),
-                foregroundColor: WidgetStateProperty.resolveWith(
-                  (states) => states.contains(WidgetState.selected)
-                      ? Colors.white
-                      : const Color(0xFF425D7F),
-                ),
-                shape: WidgetStatePropertyAll(rounded),
-                side: WidgetStatePropertyAll(
-                  const BorderSide(color: Color(0xFFDCE7F3)),
-                ),
-              ) ??
-              ButtonStyle(
-                backgroundColor: WidgetStateProperty.resolveWith(
-                  (states) => states.contains(WidgetState.selected)
-                      ? const Color(0xFF00A86B)
-                      : const Color(0xFFF0F5FB),
-                ),
-                foregroundColor: WidgetStateProperty.resolveWith(
-                  (states) => states.contains(WidgetState.selected)
-                      ? Colors.white
-                      : const Color(0xFF425D7F),
-                ),
-                shape: WidgetStatePropertyAll(rounded),
-                side: WidgetStatePropertyAll(
-                  const BorderSide(color: Color(0xFFDCE7F3)),
-                ),
-              ),
-        ),
-        filledButtonTheme: FilledButtonThemeData(
-          style:
-              base.filledButtonTheme.style?.copyWith(
-                shape: WidgetStatePropertyAll(rounded),
-              ) ??
-              ButtonStyle(shape: WidgetStatePropertyAll(rounded)),
-        ),
-        outlinedButtonTheme: OutlinedButtonThemeData(
-          style:
-              base.outlinedButtonTheme.style?.copyWith(
-                shape: WidgetStatePropertyAll(rounded),
-                foregroundColor: const WidgetStatePropertyAll(
-                  Color(0xFF425D7F),
-                ),
-                side: const WidgetStatePropertyAll(
-                  BorderSide(color: Color(0xFFB7C7DA)),
-                ),
-              ) ??
-              ButtonStyle(
-                shape: WidgetStatePropertyAll(rounded),
-                foregroundColor: const WidgetStatePropertyAll(
-                  Color(0xFF425D7F),
-                ),
-                side: const WidgetStatePropertyAll(
-                  BorderSide(color: Color(0xFFB7C7DA)),
-                ),
-              ),
-        ),
-        floatingActionButtonTheme: base.floatingActionButtonTheme.copyWith(
-          backgroundColor: const Color(0xFF00A86B),
-          foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18),
-          ),
-        ),
-        bottomSheetTheme: base.bottomSheetTheme.copyWith(
-          backgroundColor: Colors.white,
-          surfaceTintColor: Colors.transparent,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-          ),
-        ),
-        dialogTheme: base.dialogTheme.copyWith(
-          backgroundColor: Colors.white,
-          surfaceTintColor: Colors.white,
-          shape: rounded,
-        ),
-        inputDecorationTheme: base.inputDecorationTheme.copyWith(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: Color(0xFFD9E4F0)),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: Color(0xFF00A86B), width: 1.5),
-          ),
-        ),
-      ),
-      child: child,
-    );
-  }
+  Widget build(BuildContext context) => child;
 }
 
 /// Owns resources created specifically for a modal route. The route future
@@ -205,7 +70,7 @@ class PurchaseStatusChip extends StatelessWidget {
     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
     decoration: BoxDecoration(
       color: _background,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: BorderRadius.circular(12),
     ),
     child: Text(
       status.label,
@@ -224,10 +89,10 @@ class PurchasePanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Material(
     color: AppColors.card,
-    elevation: 1,
+    elevation: 0,
     clipBehavior: Clip.antiAlias,
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: BorderRadius.circular(12),
       side: const BorderSide(color: Color(0xFFEAF0F7)),
     ),
     child: Padding(padding: padding ?? const EdgeInsets.all(16), child: child),
@@ -276,7 +141,7 @@ class PurchaseSectionHeading extends StatelessWidget {
 }
 
 class PurchaseMaterialIcon extends StatelessWidget {
-  const PurchaseMaterialIcon({this.size = 76, super.key});
+  const PurchaseMaterialIcon({this.size = 40, super.key});
 
   final double size;
 
@@ -286,7 +151,7 @@ class PurchaseMaterialIcon extends StatelessWidget {
     height: size,
     decoration: BoxDecoration(
       color: AppColors.lightBlue,
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: BorderRadius.circular(12),
     ),
     child: Icon(
       Icons.inventory_2_outlined,
@@ -372,75 +237,35 @@ class PurchaseMetricTile extends StatelessWidget {
   final VoidCallback? onTap;
 
   @override
-  Widget build(BuildContext context) => LayoutBuilder(
-    builder: (context, constraints) {
-      final compact = constraints.maxWidth < 118;
-      return Material(
-        color: color.withValues(alpha: .08),
-        borderRadius: BorderRadius.circular(15),
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(15),
-          child: Padding(
-            padding: EdgeInsets.all(compact ? 7 : 12),
-            child: compact
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (icon != null) ...[
-                        Icon(icon, color: color, size: 18),
-                        const SizedBox(height: 2),
-                      ],
-                      Text(
-                        label,
-                        maxLines: 1,
-                        softWrap: false,
-                        style: Theme.of(context).textTheme.labelMedium,
-                      ),
-                      Text(
-                        value,
-                        maxLines: 1,
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          color: color,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
-                  )
-                : Row(
-                    children: [
-                      if (icon != null) ...[
-                        Icon(icon, color: color, size: 23),
-                        const SizedBox(width: 8),
-                      ],
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              label,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            const SizedBox(height: 3),
-                            Text(
-                              value,
-                              style: Theme.of(context).textTheme.headlineMedium
-                                  ?.copyWith(
-                                    color: color,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-          ),
+  Widget build(BuildContext context) => Material(
+    color: color.withValues(alpha: .04),
+    borderRadius: BorderRadius.circular(8),
+    child: InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(8),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (icon != null) ...[
+              DesignIcon(icon!, color: color, size: 28),
+              const SizedBox(height: 8),
+            ],
+            Text(label, style: Theme.of(context).textTheme.bodySmall),
+            const SizedBox(height: 4),
+            Text(
+              value,
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w600,
+                color: AppColors.ink,
+              ),
+            ),
+          ],
         ),
-      );
-    },
+      ),
+    ),
   );
 }
 

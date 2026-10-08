@@ -628,9 +628,9 @@ class _TrackingStatusSegment extends StatelessWidget {
         color: selected
             ? color.withValues(alpha: .08)
             : const Color(0xFFF0F5FB),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(12),
         child: InkWell(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(12),
           onTap: onTap,
           child: Padding(
             padding: EdgeInsets.symmetric(

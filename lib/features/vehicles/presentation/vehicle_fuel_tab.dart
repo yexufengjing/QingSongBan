@@ -64,7 +64,7 @@ class _VehicleFuelTabState extends ConsumerState<VehicleFuelTab> {
               onPressed: () => setState(() => _year--),
               visualDensity: VisualDensity.compact,
               padding: EdgeInsets.zero,
-              constraints: const BoxConstraints.tightFor(width: 32, height: 32),
+              constraints: const BoxConstraints.tightFor(width: 48, height: 48),
               icon: const Icon(Icons.chevron_left),
             ),
             Text('$_year 年', style: Theme.of(context).textTheme.titleLarge),
@@ -73,7 +73,7 @@ class _VehicleFuelTabState extends ConsumerState<VehicleFuelTab> {
               onPressed: () => setState(() => _year++),
               visualDensity: VisualDensity.compact,
               padding: EdgeInsets.zero,
-              constraints: const BoxConstraints.tightFor(width: 32, height: 32),
+              constraints: const BoxConstraints.tightFor(width: 48, height: 48),
               icon: const Icon(Icons.chevron_right),
             ),
             const Spacer(),
@@ -193,7 +193,7 @@ class _VehicleFuelTabState extends ConsumerState<VehicleFuelTab> {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
-                        fontSize: 11,
+                        fontSize: 13,
                         color: AppColors.body,
                       ),
                     ),
@@ -429,6 +429,7 @@ class _FuelEntryDialogState extends State<_FuelEntryDialog> {
   @override
   Widget build(BuildContext context) => AlertDialog(
     title: Text(widget.existing ? '编辑月度油耗' : '录入月度油耗'),
+    scrollable: true,
     content: Form(
       key: _formKey,
       child: Column(
@@ -440,12 +441,14 @@ class _FuelEntryDialogState extends State<_FuelEntryDialog> {
             keyboardType: TextInputType.number,
             validator: (v) => _positiveNumber(v, '月份'),
           ),
+          const SizedBox(height: 16),
           TextFormField(
             controller: _liters,
             decoration: const InputDecoration(labelText: '加油量（升）'),
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             validator: (v) => _positiveNumber(v, '油量'),
           ),
+          const SizedBox(height: 16),
           TextFormField(
             controller: _amount,
             decoration: const InputDecoration(labelText: '油费金额（元）'),

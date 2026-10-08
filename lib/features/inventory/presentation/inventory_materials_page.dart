@@ -89,7 +89,7 @@ class _InventoryMaterialsPageState
                     filled: true,
                     fillColor: const Color(0xFFF0F5F7),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide.none,
                     ),
                   ),
@@ -241,27 +241,27 @@ class _MaterialCard extends StatelessWidget {
         label: '库存不足',
         color: const Color(0xFFE98500),
       ),
-      InventoryStockStatus.normal => (label: '正常', color: AppColors.primary),
+      InventoryStockStatus.normal => (label: '正常', color: AppColors.success),
     };
     return Card(
       child: InkWell(
         key: Key('inventory-material-${material.id}'),
         onTap: () => context.push('/inventory/materials/${material.id}'),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(12),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(15, 14, 8, 14),
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               Row(
                 children: [
                   DecoratedBox(
                     decoration: BoxDecoration(
-                      color: AppColors.lightGreen,
+                      color: AppColors.lightBlue,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: const SizedBox(
-                      width: 50,
-                      height: 50,
+                      width: 40,
+                      height: 40,
                       child: Icon(
                         Icons.inventory_2_outlined,
                         color: AppColors.primary,

@@ -33,63 +33,84 @@ class _ExcelPageState extends ConsumerState<ExcelPage> {
   Widget build(BuildContext context) {
     final yearMonth = AppDateUtils.yearMonth(_month);
     return Scaffold(
-      appBar: AppBar(title: const Text('Excel 导入导出')),
+      appBar: AppBar(title: const Text('Excel 导入导出'), centerTitle: true),
+      bottomNavigationBar: SafeArea(
+        top: false,
+        minimum: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+        child: OutlinedButton.icon(
+          onPressed: () => context.pop(),
+          icon: const Icon(Icons.arrow_back),
+          label: const Text('返回我的'),
+        ),
+      ),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 14, 20, 28),
+        padding: const EdgeInsets.fromLTRB(16, 14, 16, 28),
         children: [
           Card(
             color: AppColors.lightBlue,
             child: const Padding(
               padding: EdgeInsets.all(16),
-              child: Text(
-                '导出文件包含人员名单、月考勤表、月度汇总、请假、加班、离职和保险变更工作表。导入人员前会先完成必填项、重复值和考勤组校验。',
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(Icons.info_outline, color: AppColors.primary, size: 24),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      '导出文件包含人员名单、月考勤表、月度汇总、请假、加班、离职和保险变更工作表。导入人员前会先完成必填项、重复值和考勤组校验。',
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
           const SizedBox(height: 16),
           Card(
             child: Padding(
-              padding: const EdgeInsets.all(18),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('月度导出', style: Theme.of(context).textTheme.titleLarge),
                   const SizedBox(height: 8),
-                  Text(
-                    '当前选择：$yearMonth',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
+                  Text('月份', style: Theme.of(context).textTheme.bodyMedium),
                   const SizedBox(height: 12),
-                  Row(
-                    children: [
-                      IconButton(
-                        key: const Key('excel-previous-month'),
-                        onPressed: _busy
-                            ? null
-                            : () => setState(
-                                () => _month = DateTime(
-                                  _month.year,
-                                  _month.month - 1,
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: AppColors.divider),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          key: const Key('excel-previous-month'),
+                          onPressed: _busy
+                              ? null
+                              : () => setState(
+                                  () => _month = DateTime(
+                                    _month.year,
+                                    _month.month - 1,
+                                  ),
                                 ),
-                              ),
-                        icon: const Icon(Icons.chevron_left),
-                        tooltip: '上个月',
-                      ),
-                      Expanded(child: Center(child: Text(yearMonth))),
-                      IconButton(
-                        key: const Key('excel-next-month'),
-                        onPressed: _busy
-                            ? null
-                            : () => setState(
-                                () => _month = DateTime(
-                                  _month.year,
-                                  _month.month + 1,
+                          icon: const Icon(Icons.chevron_left),
+                          tooltip: '上个月',
+                        ),
+                        Expanded(child: Center(child: Text(yearMonth))),
+                        IconButton(
+                          key: const Key('excel-next-month'),
+                          onPressed: _busy
+                              ? null
+                              : () => setState(
+                                  () => _month = DateTime(
+                                    _month.year,
+                                    _month.month + 1,
+                                  ),
                                 ),
-                              ),
-                        icon: const Icon(Icons.chevron_right),
-                        tooltip: '下个月',
-                      ),
-                    ],
+                          icon: const Icon(Icons.chevron_right),
+                          tooltip: '下个月',
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 8),
                   SizedBox(
@@ -108,15 +129,60 @@ class _ExcelPageState extends ConsumerState<ExcelPage> {
           const SizedBox(height: 14),
           Card(
             child: Padding(
-              padding: const EdgeInsets.all(18),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('人员名单导入', style: Theme.of(context).textTheme.titleLarge),
                   const SizedBox(height: 8),
-                  Text(
-                    '支持列：工号、姓名、性别、身份证号、出生日期、手机号、入职日期、岗位、班组、工作区域、负责人、用工类型、默认考勤组、备注。',
-                    style: Theme.of(context).textTheme.bodyMedium,
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      for (final entry in const [
+                        (0, '选文件'),
+                        (1, '核验'),
+                        (2, '导入'),
+                      ])
+                        Expanded(
+                          child: Column(
+                            children: [
+                              CircleAvatar(
+                                radius: 14,
+                                backgroundColor:
+                                    entry.$1 == (_preview == null ? 0 : 1)
+                                    ? AppColors.primary
+                                    : AppColors.lightBlue,
+                                child: Text(
+                                  '${entry.$1 + 1}',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color:
+                                        entry.$1 == (_preview == null ? 0 : 1)
+                                        ? Colors.white
+                                        : AppColors.body,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                entry.$2,
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                            ],
+                          ),
+                        ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  ExpansionTile(
+                    tilePadding: EdgeInsets.zero,
+                    title: const Text('支持字段（14项）'),
+                    children: [
+                      Text(
+                        '支持列：工号、姓名、性别、身份证号、出生日期、手机号、入职日期、岗位、班组、工作区域、负责人、用工类型、默认考勤组、备注。',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 14),
                   SizedBox(
@@ -148,11 +214,6 @@ class _ExcelPageState extends ConsumerState<ExcelPage> {
             ),
           ),
           const SizedBox(height: 14),
-          TextButton.icon(
-            onPressed: () => context.pop(),
-            icon: const Icon(Icons.arrow_back),
-            label: const Text('返回我的'),
-          ),
         ],
       ),
     );
@@ -239,7 +300,7 @@ class _PreviewCard extends StatelessWidget {
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(12),
         border: Border.all(color: color.withValues(alpha: 0.22)),
       ),
       child: Column(

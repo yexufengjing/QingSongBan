@@ -20,7 +20,7 @@ class PayrollHomePage extends ConsumerWidget {
     final batches = ref.watch(payrollBatchesProvider);
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 24, 20, 28),
+        padding: const EdgeInsets.fromLTRB(16, 24, 16, 28),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -193,48 +193,152 @@ class _BatchContent extends StatelessWidget {
     return ListView(
       children: [
         Card(
-          color: _statusColor(batch.status).withValues(alpha: 0.1),
-          child: ListTile(
-            leading: Icon(
-              Icons.payments_outlined,
-              color: _statusColor(batch.status),
-            ),
-            title: Text(PayrollOptions.statusLabel(batch.status)),
-            subtitle: Text(
-              '${batch.employeeCount} 人 · ${_days(batch.attendanceHalfDaysTotal)} · 工资 ${_money(batch.finalWageTotal)}',
-            ),
-            trailing: FilledButton(
-              onPressed: () =>
-                  GoRouter.of(context)
-                      .push('/reports/payroll/edit/${batch.id}'),
-              child: const Text('打开'),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        '${batch.payrollMonth}临时工工资',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 5,
+                      ),
+                      decoration: BoxDecoration(
+                        color: _statusColor(batch.status).withValues(alpha: .1),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        PayrollOptions.statusLabel(batch.status),
+                        style: TextStyle(color: _statusColor(batch.status)),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Text('最终工资', style: Theme.of(context).textTheme.bodyMedium),
+                const SizedBox(height: 4),
+                Text(
+                  '${_money(batch.finalWageTotal)}元',
+                  style: Theme.of(context).textTheme.headlineMedium
+                      ?.copyWith(color: AppColors.techBlue),
+                ),
+                const SizedBox(height: 16),
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    final columns =
+                        constraints.maxWidth < 290 ||
+                            MediaQuery.textScalerOf(context).scale(14) > 19
+                        ? 2
+                        : 4;
+                    final stats = [
+                      (
+                        '人数',
+                        '${batch.employeeCount}人',
+                        Icons.groups_outlined,
+                        AppColors.techBlue,
+                      ),
+                      (
+                        '出勤',
+                        _days(batch.attendanceHalfDaysTotal),
+                        Icons.calendar_month_outlined,
+                        const Color(0xFFE98500),
+                      ),
+                      (
+                        '基础工资',
+                        _money(batch.baseWageTotal),
+                        Icons.payments_outlined,
+                        AppColors.danger,
+                      ),
+                      (
+                        '补助',
+                        _money(batch.subsidyTotal),
+                        Icons.savings_outlined,
+                        AppColors.success,
+                      ),
+                    ];
+                    return Wrap(
+                      spacing: 6,
+                      runSpacing: 6,
+                      children: [
+                        for (final stat in stats)
+                          SizedBox(
+                            width:
+                                (constraints.maxWidth - (columns - 1) * 6) /
+                                columns,
+                            child: _Stat(
+                              label: stat.$1,
+                              value: stat.$2,
+                              icon: stat.$3,
+                              color: stat.$4,
+                            ),
+                          ),
+                      ],
+                    );
+                  },
+                ),
+                const Divider(height: 24),
+                Row(
+                  children: [
+                    Text('保险扣除', style: Theme.of(context).textTheme.bodyMedium),
+                    const Spacer(),
+                    Text('${_money(batch.insuranceDeductionTotal)}元'),
+                  ],
+                ),
+                const Divider(height: 24),
+                Row(
+                  children: [
+                    Text('异常', style: Theme.of(context).textTheme.bodyMedium),
+                    const Spacer(),
+                    Text(
+                      validation.when(
+                        loading: () => '检查中',
+                        error: (_, _) => '未知',
+                        data: (result) =>
+                            '${result.errors.length + result.warnings.length}项',
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
         const SizedBox(height: 12),
-        PayrollGroupFilter(batchId: batch.id),
-        const SizedBox(height: 4),
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          children: [
-            _Stat(label: '人数', value: '${batch.employeeCount}人'),
-            _Stat(label: '出勤', value: _days(batch.attendanceHalfDaysTotal)),
-            _Stat(label: '基础工资', value: _money(batch.baseWageTotal)),
-            _Stat(label: '补助', value: _money(batch.subsidyTotal)),
-            _Stat(label: '保险扣除', value: _money(batch.insuranceDeductionTotal)),
-            _Stat(label: '最终工资', value: _money(batch.finalWageTotal)),
-            _Stat(
-              label: '异常',
-              value: validation.when(
-                loading: () => '检查中',
-                error: (_, _) => '未知',
-                data: (result) =>
-                    '${result.errors.length + result.warnings.length}项',
-              ),
-            ),
-          ],
+        validation.when(
+          loading: () => const LinearProgressIndicator(minHeight: 2),
+          error: (_, _) => const SizedBox.shrink(),
+          data: (result) => result.errors.isEmpty && result.warnings.isEmpty
+              ? const SizedBox.shrink()
+              : Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Column(
+                      children: [
+                        for (final issue in result.errors)
+                          _IssueBanner(
+                            message: issue.message,
+                            color: AppColors.danger,
+                          ),
+                        for (final issue in result.warnings)
+                          _IssueBanner(
+                            message: issue.message,
+                            color: const Color(0xFFE98500),
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
         ),
+        const SizedBox(height: 12),
+        PayrollGroupFilter(batchId: batch.id),
         const SizedBox(height: 12),
         _BatchRosterPreview(batchId: batch.id),
         const SizedBox(height: 20),
@@ -257,7 +361,7 @@ class _BatchContent extends StatelessWidget {
   Color _statusColor(PayrollStatus status) => switch (status) {
     PayrollStatus.draft => AppColors.helper,
     PayrollStatus.pendingReview => AppColors.techBlue,
-    PayrollStatus.confirmed => AppColors.primary,
+    PayrollStatus.confirmed => AppColors.success,
     PayrollStatus.locked => AppColors.purple,
   };
 
@@ -313,7 +417,13 @@ class _BatchRosterPreview extends ConsumerWidget {
               ),
               for (final value in visible)
                 ListTile(
-                  dense: true,
+                  leading: const CircleAvatar(
+                    backgroundColor: AppColors.lightBlue,
+                    child: Icon(
+                      Icons.person_outline,
+                      color: AppColors.techBlue,
+                    ),
+                  ),
                   title: Text(value.item.employeeNameSnapshot),
                   subtitle: Text(
                     '${value.item.employeeNoSnapshot} · ${_days(value.item.attendanceHalfDaysSnapshot)}',
@@ -333,25 +443,79 @@ class _BatchRosterPreview extends ConsumerWidget {
 }
 
 class _Stat extends StatelessWidget {
-  const _Stat({required this.label, required this.value});
-
+  const _Stat({
+    required this.label,
+    required this.value,
+    required this.icon,
+    required this.color,
+  });
   final String label;
   final String value;
-
+  final IconData icon;
+  final Color color;
   @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(label, style: Theme.of(context).textTheme.bodySmall),
-            const SizedBox(height: 3),
-            Text(value, style: Theme.of(context).textTheme.titleMedium),
-          ],
+  Widget build(BuildContext context) => Container(
+    padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 12),
+    decoration: BoxDecoration(
+      color: AppColors.lightBlue.withValues(alpha: .45),
+      borderRadius: BorderRadius.circular(8),
+    ),
+    child: Column(
+      children: [
+        Container(
+          width: 36,
+          height: 36,
+          decoration: BoxDecoration(
+            color: color.withValues(alpha: .1),
+            shape: BoxShape.circle,
+          ),
+          child: Icon(icon, color: color, size: 20),
         ),
-      ),
-    );
-  }
+        const SizedBox(height: 10),
+        Text(
+          value,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: color,
+            fontSize: label == '基础工资' || label == '补助' ? 16 : 20,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          label,
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
+      ],
+    ),
+  );
+}
+
+class _IssueBanner extends StatelessWidget {
+  const _IssueBanner({required this.message, required this.color});
+  final String message;
+  final Color color;
+  @override
+  Widget build(BuildContext context) => Container(
+    margin: const EdgeInsets.symmetric(vertical: 4),
+    padding: const EdgeInsets.all(12),
+    decoration: BoxDecoration(
+      color: color.withValues(alpha: .06),
+      borderRadius: BorderRadius.circular(8),
+    ),
+    child: Row(
+      children: [
+        Icon(Icons.error_outline, color: color, size: 20),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(
+            message,
+            style: Theme.of(context).textTheme.bodyMedium
+                ?.copyWith(color: color),
+          ),
+        ),
+      ],
+    ),
+  );
 }

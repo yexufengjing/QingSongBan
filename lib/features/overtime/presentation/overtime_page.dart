@@ -25,10 +25,21 @@ class OvertimePage extends ConsumerWidget {
           ),
         ],
       ),
+      floatingActionButton:
+          records.maybeWhen(
+            data: (items) => items.isNotEmpty,
+            orElse: () => false,
+          )
+          ? FloatingActionButton.extended(
+              onPressed: () => context.push('/attendance/overtime/new'),
+              icon: const Icon(Icons.add),
+              label: const Text('新增加班'),
+            )
+          : null,
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 8, 20, 0),
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
             child: _OvertimeMonthSelector(
               month: month,
               onChanged: (value) =>
@@ -54,7 +65,7 @@ class OvertimePage extends ConsumerWidget {
                   (total, item) => total + item.overtime.durationMinutes,
                 );
                 return ListView(
-                  padding: const EdgeInsets.fromLTRB(20, 14, 20, 28),
+                  padding: const EdgeInsets.fromLTRB(16, 14, 16, 104),
                   children: [
                     _OvertimeSummary(
                       count: items.length,
@@ -89,18 +100,27 @@ class OvertimePage extends ConsumerWidget {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('删除加班记录？'),
+        title: const Text('删除加班记录？', textAlign: TextAlign.center),
         content: Text(
           '${item.employee.name} 的 ${OvertimeOptions.timeRangeLabel(item.overtime)} 将被移除。',
         ),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('取消'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('确认删除'),
+          Row(
+            children: [
+              Expanded(
+                child: TextButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: const Text('取消'),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: FilledButton(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  child: const Text('确认删除'),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -179,7 +199,7 @@ class _OvertimeSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: AppColors.lightGreen,
+      color: AppColors.lightBlue,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
         child: Row(
@@ -216,71 +236,96 @@ class _OvertimeCard extends StatelessWidget {
     final record = item.overtime;
     return Card(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 14, 8, 14),
-        child: Row(
+        padding: const EdgeInsets.all(16),
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: 44,
-              height: 44,
-              alignment: Alignment.center,
-              decoration: const BoxDecoration(
-                color: AppColors.lightGreen,
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                Icons.schedule_outlined,
-                color: AppColors.primary,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
+            Row(
+              children: [
+                const CircleAvatar(
+                  radius: 24,
+                  backgroundColor: AppColors.lightBlue,
+                  child: Icon(
+                    Icons.person_outline,
+                    color: AppColors.techBlue,
+                    size: 24,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Flexible(
-                        child: Text(
-                          item.employee.name,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
+                      Text(
+                        item.employee.name,
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
-                      const SizedBox(width: 8),
-                      _OvertimeTypeTag(type: record.overtimeType),
+                      const SizedBox(height: 4),
+                      Text(
+                        item.employee.employeeNo,
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
                     ],
                   ),
-                  const SizedBox(height: 5),
-                  Text(
-                    '${item.employee.employeeNo} · ${OvertimeOptions.timeRangeLabel(record)}',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    '${OvertimeOptions.formatDuration(record.durationMinutes)}${record.workContent == null ? '' : ' · ${record.workContent}'}',
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ],
-              ),
-            ),
-            PopupMenuButton<_OvertimeAction>(
-              key: Key('overtime-actions-${record.id}'),
-              onSelected: (action) {
-                switch (action) {
-                  case _OvertimeAction.edit:
-                    onEdit();
-                  case _OvertimeAction.delete:
-                    onDelete();
-                }
-              },
-              itemBuilder: (context) => const [
-                PopupMenuItem(value: _OvertimeAction.edit, child: Text('编辑')),
-                PopupMenuItem(value: _OvertimeAction.delete, child: Text('删除')),
+                ),
+                IconButton(
+                  onPressed: onEdit,
+                  icon: const Icon(Icons.edit_outlined),
+                  color: AppColors.techBlue,
+                  tooltip: '编辑',
+                ),
+                PopupMenuButton<_OvertimeAction>(
+                  key: Key('overtime-actions-${record.id}'),
+                  onSelected: (action) {
+                    switch (action) {
+                      case _OvertimeAction.edit:
+                        onEdit();
+                      case _OvertimeAction.delete:
+                        onDelete();
+                    }
+                  },
+                  itemBuilder: (context) => const [
+                    PopupMenuItem(
+                      value: _OvertimeAction.edit,
+                      child: Text('编辑'),
+                    ),
+                    PopupMenuItem(
+                      value: _OvertimeAction.delete,
+                      child: Text('删除'),
+                    ),
+                  ],
+                ),
               ],
             ),
+            const SizedBox(height: 8),
+            _OvertimeTypeTag(type: record.overtimeType),
+            const Divider(height: 24),
+            for (final row in <(String, String)>[
+              ('加班时间', OvertimeOptions.timeRangeLabel(record)),
+              ('加班时长', OvertimeOptions.formatDuration(record.durationMinutes)),
+              ('工作内容', record.workContent ?? '未填写'),
+            ])
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: 100,
+                      child: Text(
+                        row.$1,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        row.$2,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
           ],
         ),
       ),

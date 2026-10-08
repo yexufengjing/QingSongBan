@@ -9,6 +9,7 @@ import '../application/garden_tool_repair_providers.dart';
 import '../domain/repair_formatters.dart';
 import '../domain/repair_models.dart';
 import 'garden_tool_repair_design.dart';
+import '../../vehicles/presentation/vehicle_metric_grid.dart';
 
 class GardenToolRepairPricePage extends ConsumerStatefulWidget {
   const GardenToolRepairPricePage({super.key});
@@ -36,7 +37,7 @@ class _GardenToolRepairPricePageState
         appBar: AppBar(title: const Text('价格比对')),
         body: SafeArea(
           child: ListView(
-            padding: const EdgeInsets.fromLTRB(12, 8, 12, 16),
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
             children: [
               optionsAsync.when(
                 loading: () => const Card(
@@ -106,7 +107,7 @@ class _GardenToolRepairPricePageState
           countUnit: countUnit,
           unitsAsync: unitsAsync,
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 16),
         pointsAsync.when(
           loading: () => const Padding(
             padding: EdgeInsets.only(top: 80),
@@ -136,7 +137,7 @@ class _GardenToolRepairPricePageState
     required AsyncValue<List<GardenToolRepairUnit>> unitsAsync,
   }) => Card(
     child: Padding(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(16),
       child: Column(
         children: [
           Row(
@@ -150,7 +151,7 @@ class _GardenToolRepairPricePageState
                     labelText: '项目名称',
                     contentPadding: EdgeInsets.symmetric(
                       horizontal: 10,
-                      vertical: 8,
+                      vertical: 14,
                     ),
                   ),
                   items: [
@@ -174,7 +175,7 @@ class _GardenToolRepairPricePageState
                     labelText: '规格型号',
                     contentPadding: EdgeInsets.symmetric(
                       horizontal: 10,
-                      vertical: 8,
+                      vertical: 14,
                     ),
                   ),
                   items: [
@@ -192,7 +193,7 @@ class _GardenToolRepairPricePageState
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 16),
           Row(
             children: [
               SizedBox(
@@ -205,7 +206,7 @@ class _GardenToolRepairPricePageState
                     labelText: '计数单位',
                     contentPadding: EdgeInsets.symmetric(
                       horizontal: 10,
-                      vertical: 8,
+                      vertical: 14,
                     ),
                   ),
                   items: [
@@ -226,7 +227,7 @@ class _GardenToolRepairPricePageState
                     labelText: '时间范围',
                     contentPadding: EdgeInsets.symmetric(
                       horizontal: 10,
-                      vertical: 8,
+                      vertical: 14,
                     ),
                   ),
                   items: const [
@@ -288,51 +289,45 @@ class _GardenToolRepairPricePageState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
-          children: [
-            Expanded(
-              child: _PriceMetric(
-                label: '当前价格',
-                value: formatRepairMoney(summary.currentPriceCents!),
-                color: AppColors.primary,
-                icon: Icons.sell_outlined,
-              ),
-            ),
-            const SizedBox(width: 6),
-            Expanded(
-              child: _PriceMetric(
-                label: '上次价格',
-                value: summary.previousPriceCents == null
-                    ? '暂无对比'
-                    : formatRepairMoney(summary.previousPriceCents!),
-                color: AppColors.techBlue,
-                icon: Icons.receipt_long_outlined,
-              ),
-            ),
-            const SizedBox(width: 6),
-            Expanded(
-              child: _PriceMetric(
-                label: '涨跌幅',
-                value: changeLabel,
-                color: changeColor,
-                icon: Icons.trending_up,
-              ),
-            ),
-            const SizedBox(width: 6),
-            Expanded(
-              child: _PriceMetric(
-                label: '平均价格',
-                value: formatRepairMoney(summary.averagePriceCents!),
-                color: const Color(0xFFEF8B27),
-                icon: Icons.bar_chart,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 10),
         Card(
           child: Padding(
             padding: const EdgeInsets.all(12),
+            child: VehicleMetricGrid(
+              items: [
+                VehicleMetricData(
+                  label: '当前价格',
+                  value: formatRepairMoney(summary.currentPriceCents!),
+                  color: AppColors.primary,
+                  icon: Icons.sell_outlined,
+                ),
+                VehicleMetricData(
+                  label: '上次价格',
+                  value: summary.previousPriceCents == null
+                      ? '暂无对比'
+                      : formatRepairMoney(summary.previousPriceCents!),
+                  color: AppColors.success,
+                  icon: Icons.schedule,
+                ),
+                VehicleMetricData(
+                  label: '涨跌幅',
+                  value: changeLabel,
+                  color: changeColor,
+                  icon: Icons.trending_up,
+                ),
+                VehicleMetricData(
+                  label: '平均价格',
+                  value: formatRepairMoney(summary.averagePriceCents!),
+                  color: const Color(0xFFEF8B27),
+                  icon: Icons.bar_chart,
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -349,7 +344,7 @@ class _GardenToolRepairPricePageState
                 ),
                 const SizedBox(height: 8),
                 SizedBox(
-                  height: 160,
+                  height: 200,
                   width: double.infinity,
                   child: _PriceTrendChart(
                     points: chronological,
@@ -360,10 +355,10 @@ class _GardenToolRepairPricePageState
             ),
           ),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 16),
         Card(
           child: Padding(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -398,7 +393,7 @@ class _GardenToolRepairPricePageState
             ),
           ),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 16),
         Row(
           children: [
             Expanded(
@@ -458,6 +453,31 @@ class _GardenToolRepairPricePageState
   }
 }
 
+class _UnitChoiceChip extends StatelessWidget {
+  const _UnitChoiceChip({
+    required this.label,
+    required this.selected,
+    required this.onSelected,
+  });
+  final String label;
+  final bool selected;
+  final VoidCallback onSelected;
+  @override
+  Widget build(BuildContext context) => ChoiceChip(
+    label: Text(label),
+    selected: selected,
+    showCheckmark: false,
+    onSelected: (_) => onSelected(),
+    selectedColor: AppColors.primary,
+    backgroundColor: AppColors.lightBlue,
+    labelStyle: TextStyle(
+      fontSize: 13,
+      color: selected ? Colors.white : AppColors.body,
+    ),
+    side: BorderSide.none,
+  );
+}
+
 class _PriceMetric extends StatelessWidget {
   const _PriceMetric({
     required this.label,
@@ -465,74 +485,37 @@ class _PriceMetric extends StatelessWidget {
     required this.color,
     required this.icon,
   });
-
   final String label;
   final String value;
   final Color color;
   final IconData icon;
-
   @override
-  Widget build(BuildContext context) => Card(
-    child: Padding(
-      padding: const EdgeInsets.all(8),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 26,
-            height: 26,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: 0.12),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Icon(icon, color: color, size: 15),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodySmall
-                ?.copyWith(fontSize: 10),
-          ),
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            alignment: Alignment.centerLeft,
-            child: Text(
-              value,
-              style: Theme.of(context).textTheme.titleMedium
-                  ?.copyWith(fontWeight: FontWeight.w700),
-            ),
-          ),
-        ],
-      ),
+  Widget build(BuildContext context) => Container(
+    padding: const EdgeInsets.all(10),
+    decoration: BoxDecoration(
+      color: color.withValues(alpha: .07),
+      borderRadius: BorderRadius.circular(10),
     ),
-  );
-}
-
-class _UnitChoiceChip extends StatelessWidget {
-  const _UnitChoiceChip({
-    required this.label,
-    required this.selected,
-    required this.onSelected,
-  });
-
-  final String label;
-  final bool selected;
-  final VoidCallback onSelected;
-
-  @override
-  Widget build(BuildContext context) => ChoiceChip(
-    label: Text(label),
-    selected: selected,
-    onSelected: (_) => onSelected(),
-    visualDensity: VisualDensity.compact,
-    labelStyle: TextStyle(
-      fontSize: 11,
-      color: selected ? AppColors.primary : AppColors.body,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(icon, size: 20, color: color),
+        const SizedBox(height: 8),
+        Text(
+          label,
+          style: const TextStyle(fontSize: 13, color: AppColors.body),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 18,
+            color: color,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ],
     ),
-    side: BorderSide(color: selected ? AppColors.primary : AppColors.divider),
   );
 }
 
@@ -595,7 +578,7 @@ class _PriceTrendPainter extends CustomPainter {
       labels
         ..text = TextSpan(
           text: (value / 100).toStringAsFixed(2),
-          style: const TextStyle(fontSize: 9, color: AppColors.body),
+          style: const TextStyle(fontSize: 12, color: AppColors.body),
         )
         ..layout();
       labels.paint(canvas, Offset(0, y - labels.height / 2));
@@ -613,7 +596,7 @@ class _PriceTrendPainter extends CustomPainter {
         final label = TextPainter(
           text: TextSpan(
             text: _dateLabel(points[index].repairDate),
-            style: const TextStyle(fontSize: 9, color: AppColors.body),
+            style: const TextStyle(fontSize: 12, color: AppColors.body),
           ),
           textDirection: TextDirection.ltr,
         )..layout();
@@ -639,7 +622,7 @@ class _PriceTrendPainter extends CustomPainter {
         text: TextSpan(
           text: (points[index].unitPriceCents / 100).toStringAsFixed(2),
           style: const TextStyle(
-            fontSize: 9,
+            fontSize: 12,
             color: AppColors.ink,
             fontWeight: FontWeight.w600,
           ),

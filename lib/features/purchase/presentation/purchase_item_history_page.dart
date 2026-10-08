@@ -359,10 +359,10 @@ class _HistoryPeriodSegment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Material(
-    color: selected ? const Color(0xFF00A86B) : const Color(0xFFF0F5FB),
-    borderRadius: BorderRadius.circular(16),
+    color: selected ? const Color(0xFF2563EB) : const Color(0xFFF0F5FB),
+    borderRadius: BorderRadius.circular(12),
     child: InkWell(
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(12),
       onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),

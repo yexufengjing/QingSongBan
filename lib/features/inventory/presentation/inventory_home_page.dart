@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/theme/app_theme.dart';
 import '../../../core/database/app_database.dart';
+import '../../../core/widgets/design_widgets.dart';
 import '../application/inventory_providers.dart';
 import 'widgets/inventory_export_button.dart';
 import 'widgets/inventory_widgets.dart';
@@ -36,20 +37,24 @@ class _InventoryHomePageState extends ConsumerState<InventoryHomePage> {
   Widget build(BuildContext context) {
     final ref = this.ref;
     final overview = ref.watch(inventoryOverviewProvider);
+    final warnings = ref.watch(inventoryWarningsProvider);
     final transactions = ref.watch(inventoryTransactionsProvider);
     final receipts = ref.watch(inventoryReceiptsProvider);
     final issues = ref.watch(inventoryIssuesProvider);
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: MediaQuery.textScalerOf(context).scale(12) > 14
+            ? 64
+            : 56,
         title: const Text('库存管理'),
         actions: [
           _HeaderAction(
-            icon: Icons.add_circle,
+            icon: Icons.add,
             label: '新增',
             onPressed: () => context.push('/inventory/materials/new'),
           ),
           _HeaderAction(
-            icon: Icons.bar_chart_rounded,
+            icon: Icons.fact_check_outlined,
             label: '盘点',
             onPressed: () => context.push('/inventory/stocktake'),
           ),
@@ -59,6 +64,7 @@ class _InventoryHomePageState extends ConsumerState<InventoryHomePage> {
       body: RefreshIndicator(
         onRefresh: () async {
           ref.invalidate(inventoryOverviewProvider);
+          ref.invalidate(inventoryWarningsProvider);
           ref.invalidate(inventoryTransactionsProvider);
           ref.invalidate(inventoryReceiptsProvider);
           ref.invalidate(inventoryIssuesProvider);
@@ -75,7 +81,7 @@ class _InventoryHomePageState extends ConsumerState<InventoryHomePage> {
                 label: Text('${_selectedMonth.year}年${_selectedMonth.month}月'),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.primary,
-                  backgroundColor: AppColors.lightGreen,
+                  backgroundColor: AppColors.lightBlue,
                   side: BorderSide.none,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 13,
@@ -85,69 +91,145 @@ class _InventoryHomePageState extends ConsumerState<InventoryHomePage> {
                 ),
               ),
             ),
-            const SizedBox(height: 10),
-            overview.when(
-              loading: () => const InventoryLoadingState(),
-              error: (_, _) => InventoryErrorState(
-                onRetry: () => ref.invalidate(inventoryOverviewProvider),
+            const SizedBox(height: 12),
+            DesignSection(
+              title: '库存预警',
+              trailing: TextButton(
+                onPressed: () => context.push('/inventory/warnings'),
+                child: const Text('查看预警'),
               ),
-              data: (data) => Row(
+              child: warnings.when(
+                loading: () => const InventoryLoadingState(),
+                error: (_, _) => InventoryErrorState(
+                  onRetry: () => ref.invalidate(inventoryWarningsProvider),
+                ),
+                data: (rows) => rows.isEmpty
+                    ? const Text(
+                        '当前没有需要补充的物资',
+                        style: TextStyle(color: AppColors.body),
+                      )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${rows.length} 项需要补充',
+                            style: const TextStyle(
+                              color: AppColors.danger,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          for (final row in rows.take(3))
+                            ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              leading: const DesignIcon(
+                                Icons.inventory_2_outlined,
+                              ),
+                              title: Text(row.material.materialName),
+                              subtitle: Text(
+                                '当前 ${row.material.currentStock} ${row.material.unitName} · 最低 ${row.material.minStock} ${row.material.unitName}',
+                              ),
+                              onTap: () => context.push(
+                                '/inventory/materials/${row.material.id}',
+                              ),
+                            ),
+                        ],
+                      ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            const DesignSection(
+              child: DesignGrid(
+                columns: 3,
                 children: [
-                  Expanded(
-                    child: InventoryMetricCard(
-                      compact: true,
-                      label: '当前物资',
-                      value: '${data.totalMaterialCount}种',
-                      icon: Icons.inventory_2_outlined,
-                    ),
+                  _TaskAction(
+                    '新增入库',
+                    Icons.note_add_outlined,
+                    '/inventory/receipts/new',
+                    AppColors.techBlue,
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: InventoryMetricCard(
-                      compact: true,
-                      label: '库存预警',
-                      value: '${data.lowStockCount}',
-                      icon: Icons.warning_amber_rounded,
-                      color: const Color(0xFFE98500),
-                      onTap: () => context.push('/inventory/warnings'),
-                    ),
+                  _TaskAction(
+                    '登记领用',
+                    Icons.outbox_outlined,
+                    '/inventory/issues/new',
+                    AppColors.success,
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: InventoryMetricCard(
-                      compact: true,
-                      label: '待补充',
-                      value: '${data.pendingReplenishmentCount}',
-                      icon: Icons.shopping_cart_outlined,
-                      color: AppColors.techBlue,
-                      onTap: () => context.push('/inventory/replenishment'),
-                    ),
+                  _TaskAction(
+                    '盘点',
+                    Icons.assignment_outlined,
+                    '/inventory/stocktake',
+                    AppColors.warning,
                   ),
                 ],
+              ),
+            ),
+            const SizedBox(height: 12),
+            DesignSection(
+              title: '库存概览',
+              child: overview.when(
+                loading: () => const InventoryLoadingState(),
+                error: (_, _) => InventoryErrorState(
+                  onRetry: () => ref.invalidate(inventoryOverviewProvider),
+                ),
+                data: (data) => Row(
+                  children: [
+                    Expanded(
+                      child: InventoryMetricCard(
+                        compact: true,
+                        label: '当前物资',
+                        value: '${data.totalMaterialCount}种',
+                        icon: Icons.inventory_2_outlined,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: InventoryMetricCard(
+                        key: const Key('inventory-home-warning-count'),
+                        compact: true,
+                        label: '库存预警',
+                        value: warnings.when(
+                          data: (rows) => '${rows.length}',
+                          loading: () => '加载中',
+                          error: (_, _) => '加载失败',
+                        ),
+                        icon: Icons.warning_amber_rounded,
+                        color: const Color(0xFFE98500),
+                        onTap: () => context.push('/inventory/warnings'),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: InventoryMetricCard(
+                        compact: true,
+                        label: '待补充',
+                        value: '${data.pendingReplenishmentCount}',
+                        icon: Icons.shopping_cart_outlined,
+                        color: AppColors.techBlue,
+                        onTap: () => context.push('/inventory/replenishment'),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 14),
             InventorySection(
               title: '快捷入口',
               icon: Icons.grid_view_rounded,
-              child: GridView.count(
-                crossAxisCount: 4,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                mainAxisSpacing: 8,
-                crossAxisSpacing: 8,
-                childAspectRatio: 0.72,
+              child: DesignGrid(
                 children: [
                   InventoryQuickAction(
                     title: '物资信息',
                     subtitle: '查看物资档案',
-                    icon: Icons.article_outlined,
+                    icon: Icons.inventory_2_outlined,
                     onTap: () => context.push('/inventory/materials'),
                   ),
                   InventoryQuickAction(
                     title: '入库管理',
                     subtitle: '物资入库登记',
                     icon: Icons.move_to_inbox_outlined,
+                    color: AppColors.success,
                     onTap: () => context.push('/inventory/receipts'),
                   ),
                   InventoryQuickAction(
@@ -161,6 +243,7 @@ class _InventoryHomePageState extends ConsumerState<InventoryHomePage> {
                     title: '当前库存',
                     subtitle: '实时库存查询',
                     icon: Icons.warehouse_outlined,
+                    color: AppColors.purple,
                     onTap: () => context.push('/inventory/stock'),
                   ),
                   InventoryQuickAction(
@@ -240,7 +323,7 @@ class _InventoryHomePageState extends ConsumerState<InventoryHomePage> {
                 error: (_, _) => const SizedBox.shrink(),
                 data: (issueRows) => InventorySummaryPanel(
                   title: '本月出入库摘要',
-                  icon: Icons.bar_chart_rounded,
+                  icon: Icons.fact_check_outlined,
                   metrics: [
                     (
                       '入库',
@@ -280,6 +363,7 @@ class _HeaderAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) => TextButton(
     onPressed: onPressed,
+    style: TextButton.styleFrom(minimumSize: const Size(48, 64)),
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -303,8 +387,8 @@ class _RecentTransactionCard extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(12, 10, 12, 8),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFEAF2EF)),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.divider),
       ),
       child: Column(
         children: [
@@ -369,3 +453,33 @@ String _transactionLabel(String value) => switch (value) {
 };
 
 String _dateLabel(DateTime value) => '${value.month}月${value.day}日';
+
+class _TaskAction extends StatelessWidget {
+  const _TaskAction(this.title, this.icon, this.route, this.color);
+  final String title, route;
+  final IconData icon;
+  final Color color;
+  @override
+  Widget build(BuildContext context) => Material(
+    color: color.withValues(alpha: .06),
+    borderRadius: BorderRadius.circular(8),
+    child: InkWell(
+      borderRadius: BorderRadius.circular(8),
+      onTap: () => context.push(route),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 16),
+        child: Column(
+          children: [
+            Icon(icon, color: color, size: 24),
+            const SizedBox(height: 10),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: const TextStyle(color: AppColors.ink, fontSize: 16),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}

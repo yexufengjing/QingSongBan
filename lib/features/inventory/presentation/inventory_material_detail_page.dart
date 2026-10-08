@@ -92,7 +92,7 @@ class _InventoryMaterialDetailPageState
           }
           final row = InventoryStockRow(material: material);
           final status = switch (row.status) {
-            InventoryStockStatus.normal => ('正常', AppColors.primary),
+            InventoryStockStatus.normal => ('正常', AppColors.success),
             InventoryStockStatus.low => ('库存不足', const Color(0xFFE98500)),
             InventoryStockStatus.outOfStock => ('缺货', AppColors.danger),
           };
@@ -101,14 +101,14 @@ class _InventoryMaterialDetailPageState
             children: [
               Card(
                 child: Padding(
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
                           const CircleAvatar(
-                            radius: 28,
+                            radius: 20,
                             child: Icon(Icons.inventory_2_outlined),
                           ),
                           const SizedBox(width: 14),
@@ -118,9 +118,7 @@ class _InventoryMaterialDetailPageState
                               children: [
                                 Text(
                                   material.materialName,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineSmall,
+                                  style: Theme.of(context).textTheme.titleLarge,
                                 ),
                                 Text(
                                   '${material.materialCode} · ${material.modelSpec ?? '未填写型号'}',
@@ -142,8 +140,8 @@ class _InventoryMaterialDetailPageState
                       Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: AppColors.lightGreen,
-                          borderRadius: BorderRadius.circular(16),
+                          color: AppColors.lightBlue,
+                          borderRadius: BorderRadius.circular(12),
                         ),
                         child: Row(
                           children: [
@@ -158,7 +156,7 @@ class _InventoryMaterialDetailPageState
                               style: Theme.of(context).textTheme.headlineMedium
                                   ?.copyWith(
                                     color: AppColors.primary,
-                                    fontWeight: FontWeight.w800,
+                                    fontWeight: FontWeight.w600,
                                   ),
                             ),
                           ],
@@ -386,14 +384,29 @@ class _DetailValue extends StatelessWidget {
   final String label;
   final String value;
   @override
-  Widget build(BuildContext context) => SizedBox(
-    width: 130,
-    child: Column(
+  Widget build(BuildContext context) => Container(
+    width: double.infinity,
+    padding: const EdgeInsets.only(bottom: 12),
+    decoration: const BoxDecoration(
+      border: Border(bottom: BorderSide(color: AppColors.divider)),
+    ),
+    child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: Theme.of(context).textTheme.bodySmall),
-        const SizedBox(height: 4),
-        Text(value, maxLines: 2, overflow: TextOverflow.ellipsis),
+        SizedBox(
+          width: 92,
+          child: Text(
+            label,
+            style: const TextStyle(color: AppColors.body, fontSize: 14),
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Text(
+            value,
+            style: const TextStyle(color: AppColors.ink, fontSize: 16),
+          ),
+        ),
       ],
     ),
   );

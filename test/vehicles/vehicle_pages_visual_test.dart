@@ -185,8 +185,19 @@ void main() {
     expect(find.text('月度费用趋势'), findsOneWidget);
     expect(find.text('费用构成'), findsOneWidget);
     expect(find.text('单位：元'), findsOneWidget);
-    expect(find.text('¥240'), findsNWidgets(2));
-    expect(find.text('¥240  100%'), findsOneWidget);
+    expect(find.text('¥240'), findsOneWidget);
+    expect(find.text('¥240.00'), findsOneWidget);
+    await tester.ensureVisible(find.text('费用构成图'));
+    await tester.tap(find.text('费用构成图'));
+    await tester.pumpAndSettle();
+    expect(find.text('其他 100%'), findsOneWidget);
+    await tester.scrollUntilVisible(
+      find.byType(DropdownButton<int>),
+      -300,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.ensureVisible(find.byType(DropdownButton<int>));
+    await tester.pumpAndSettle();
     await tester.tap(find.byType(DropdownButton<int>));
     await tester.pumpAndSettle();
     await tester.tap(find.text('${DateTime.now().year - 1} 年').last);

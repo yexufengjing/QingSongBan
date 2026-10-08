@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/theme/app_theme.dart';
+import '../../../core/widgets/design_widgets.dart';
 import '../../../core/database/app_database.dart';
 import '../application/reminder_providers.dart';
 import '../domain/reminder_options.dart';
@@ -126,7 +127,7 @@ class _ReminderPageState extends ConsumerState<ReminderPage> {
     }).toList();
 
     return ListView(
-      padding: const EdgeInsets.fromLTRB(20, 8, 20, 104),
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 104),
       children: [
         TextField(
           controller: _searchController,
@@ -246,7 +247,6 @@ class _OverviewPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: AppColors.lightBlue,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -259,47 +259,42 @@ class _OverviewPanel extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             const SizedBox(height: 14),
-            Row(
+            DesignGrid(
               children: [
-                Expanded(
-                  child: _MetricButton(
-                    label: '今天',
-                    value: todayCount,
-                    selected: selected == _TimeFilter.today,
-                    onTap: () => onSelected(
-                      selected == _TimeFilter.today
-                          ? _TimeFilter.all
-                          : _TimeFilter.today,
-                    ),
+                _MetricButton(
+                  label: '今天',
+                  value: todayCount,
+                  selected: selected == _TimeFilter.today,
+                  onTap: () => onSelected(
+                    selected == _TimeFilter.today
+                        ? _TimeFilter.all
+                        : _TimeFilter.today,
                   ),
                 ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: _MetricButton(
-                    label: '逾期',
-                    value: overdueCount,
-                    warning: overdueCount > 0,
-                    selected: selected == _TimeFilter.overdue,
-                    onTap: () => onSelected(
-                      selected == _TimeFilter.overdue
-                          ? _TimeFilter.all
-                          : _TimeFilter.overdue,
-                    ),
+
+                _MetricButton(
+                  label: '逾期',
+                  value: overdueCount,
+                  warning: overdueCount > 0,
+                  selected: selected == _TimeFilter.overdue,
+                  onTap: () => onSelected(
+                    selected == _TimeFilter.overdue
+                        ? _TimeFilter.all
+                        : _TimeFilter.overdue,
                   ),
                 ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: _MetricButton(
-                    label: '7 天内',
-                    value: weekCount,
-                    selected: selected == _TimeFilter.week,
-                    onTap: () => onSelected(
-                      selected == _TimeFilter.week
-                          ? _TimeFilter.all
-                          : _TimeFilter.week,
-                    ),
+
+                _MetricButton(
+                  label: '7 天内',
+                  value: weekCount,
+                  selected: selected == _TimeFilter.week,
+                  onTap: () => onSelected(
+                    selected == _TimeFilter.week
+                        ? _TimeFilter.all
+                        : _TimeFilter.week,
                   ),
                 ),
+                const SizedBox.shrink(),
               ],
             ),
           ],
@@ -328,24 +323,34 @@ class _MetricButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = warning ? AppColors.danger : AppColors.techBlue;
     return Material(
-      color: selected ? color : Colors.white,
-      borderRadius: BorderRadius.circular(14),
+      color: selected ? color.withValues(alpha: .14) : AppColors.lightBlue,
+      borderRadius: BorderRadius.circular(12),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(12),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: Column(
             children: [
+              DesignIcon(
+                label == '逾期'
+                    ? Icons.schedule
+                    : label == '今天'
+                    ? Icons.today_outlined
+                    : Icons.event_outlined,
+                color: color,
+                size: 28,
+              ),
+              const SizedBox(height: 6),
               Text(
                 '$value',
                 style: Theme.of(context).textTheme.titleLarge
-                    ?.copyWith(color: selected ? Colors.white : color),
+                    ?.copyWith(color: color, fontSize: 20),
               ),
               Text(
                 label,
                 style: Theme.of(context).textTheme.bodySmall
-                    ?.copyWith(color: selected ? Colors.white : AppColors.body),
+                    ?.copyWith(color: AppColors.body),
               ),
             ],
           ),
@@ -417,7 +422,7 @@ class _ReminderTile extends StatelessWidget {
     );
     return Card(
       child: InkWell(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(12),
         onTap: () => context.push('/settings/reminders/${reminder.id}/edit'),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(6, 8, 4, 8),

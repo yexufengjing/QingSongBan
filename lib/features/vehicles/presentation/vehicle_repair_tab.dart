@@ -141,7 +141,7 @@ class _RepairContent extends StatelessWidget {
             VehicleMetricData(
               label: '已完成',
               value: '$completed',
-              color: AppColors.primary,
+              color: AppColors.success,
               icon: Icons.check_circle_outline,
             ),
             VehicleMetricData(
@@ -274,7 +274,7 @@ class _RepairCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = switch (order.status) {
-      VehicleRepairStatus.completed => AppColors.primary,
+      VehicleRepairStatus.completed => AppColors.success,
       VehicleRepairStatus.cancelled => AppColors.body,
       VehicleRepairStatus.repairing => AppColors.techBlue,
       _ => Colors.orange,
@@ -282,7 +282,7 @@ class _RepairCard extends StatelessWidget {
     return Card(
       child: InkWell(
         onTap: () => context.push('/vehicles/repairs/${order.id}'),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(12),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(14, 14, 14, 12),
           child: Column(
@@ -318,7 +318,7 @@ class _RepairCard extends StatelessWidget {
                           vehicle.licensePlate ?? vehicle.vehicleNo,
                           style: const TextStyle(
                             color: AppColors.techBlue,
-                            fontSize: 11,
+                            fontSize: 13,
                           ),
                         ),
                         const SizedBox(height: 4),

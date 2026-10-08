@@ -41,6 +41,35 @@ class _InsuranceProfileFormPageState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('维护参保信息')),
+      bottomNavigationBar: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+          child: SizedBox(
+            width: double.infinity,
+            child: FilledButton.icon(
+              key: const Key('insurance-profile-save-button'),
+              onPressed:
+                  _saving ||
+                      ref.watch(allPersonnelProvider).valueOrNull?.isEmpty !=
+                          false
+                  ? null
+                  : _save,
+              icon: _saving
+                  ? const SizedBox(
+                      width: 18,
+                      height: 18,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.white,
+                      ),
+                    )
+                  : const Icon(Icons.save_outlined),
+              label: Text(_saving ? '保存中…' : '保存参保信息'),
+            ),
+          ),
+        ),
+      ),
       body: ref
           .watch(allPersonnelProvider)
           .when(
@@ -60,7 +89,7 @@ class _InsuranceProfileFormPageState
               return Form(
                 key: _formKey,
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
                   child: Column(
                     children: [
                       Card(
@@ -96,30 +125,31 @@ class _InsuranceProfileFormPageState
                                 style: Theme.of(context).textTheme.titleLarge,
                               ),
                               const SizedBox(height: 16),
-                              DropdownButtonFormField<int>(
-                                key: const Key(
-                                  'insurance-profile-employee-field',
-                                ),
-                                initialValue: _employeeId,
-                                isExpanded: true,
-                                decoration: const InputDecoration(
-                                  labelText: '人员',
-                                ),
-                                hint: const Text('请选择人员'),
-                                validator: (value) =>
-                                    value == null ? '请选择人员' : null,
-                                items: [
-                                  for (final employee in employees)
-                                    DropdownMenuItem(
-                                      value: employee.id,
-                                      child: Text(
-                                        '${employee.name} · ${employee.employeeNo}',
+                              _referenceField(
+                                '人员',
+                                DropdownButtonFormField<int>(
+                                  key: const Key(
+                                    'insurance-profile-employee-field',
+                                  ),
+                                  initialValue: _employeeId,
+                                  isExpanded: true,
+                                  decoration: const InputDecoration(),
+                                  hint: const Text('请选择人员'),
+                                  validator: (value) =>
+                                      value == null ? '请选择人员' : null,
+                                  items: [
+                                    for (final employee in employees)
+                                      DropdownMenuItem(
+                                        value: employee.id,
+                                        child: Text(
+                                          '${employee.name} · ${employee.employeeNo}',
+                                        ),
                                       ),
-                                    ),
-                                ],
-                                onChanged: (value) => _selectEmployee(value),
+                                  ],
+                                  onChanged: (value) => _selectEmployee(value),
+                                ),
                               ),
-                              const SizedBox(height: 12),
+                              const SizedBox(height: 20),
                               SwitchListTile(
                                 contentPadding: EdgeInsets.zero,
                                 title: const Text('当前已参保'),
@@ -129,91 +159,82 @@ class _InsuranceProfileFormPageState
                               ),
                               if (_isInsured) ...[
                                 const SizedBox(height: 8),
-                                DropdownButtonFormField<String>(
-                                  key: const Key(
-                                    'insurance-profile-type-field',
-                                  ),
-                                  initialValue: _insuranceType,
-                                  isExpanded: true,
-                                  decoration: const InputDecoration(
-                                    labelText: '保险类型',
-                                  ),
-                                  hint: const Text('请选择保险类型'),
-                                  validator: (value) =>
-                                      _isInsured && value == null
-                                      ? '请选择保险类型'
-                                      : null,
-                                  items: [
-                                    for (final type in InsuranceOptions.types)
-                                      DropdownMenuItem(
-                                        value: type,
-                                        child: Text(
-                                          InsuranceOptions.typeLabel(type),
+                                _referenceField(
+                                  '保险类型',
+                                  DropdownButtonFormField<String>(
+                                    key: const Key(
+                                      'insurance-profile-type-field',
+                                    ),
+                                    initialValue: _insuranceType,
+                                    isExpanded: true,
+                                    decoration: const InputDecoration(),
+                                    hint: const Text('请选择保险类型'),
+                                    validator: (value) =>
+                                        _isInsured && value == null
+                                        ? '请选择保险类型'
+                                        : null,
+                                    items: [
+                                      for (final type in InsuranceOptions.types)
+                                        DropdownMenuItem(
+                                          value: type,
+                                          child: Text(
+                                            InsuranceOptions.typeLabel(type),
+                                          ),
                                         ),
-                                      ),
-                                  ],
-                                  onChanged: (value) =>
-                                      setState(() => _insuranceType = value),
-                                ),
-                                const SizedBox(height: 12),
-                                TextFormField(
-                                  key: const Key(
-                                    'insurance-profile-base-field',
+                                    ],
+                                    onChanged: (value) =>
+                                        setState(() => _insuranceType = value),
                                   ),
-                                  controller: _baseController,
-                                  keyboardType:
-                                      const TextInputType.numberWithOptions(
-                                        decimal: true,
-                                      ),
-                                  decoration: const InputDecoration(
-                                    labelText: '缴费基数',
-                                    hintText: '可留空',
+                                ),
+                                const SizedBox(height: 20),
+                                _referenceField(
+                                  '缴费基数',
+                                  TextFormField(
+                                    key: const Key(
+                                      'insurance-profile-base-field',
+                                    ),
+                                    controller: _baseController,
+                                    keyboardType:
+                                        const TextInputType.numberWithOptions(
+                                          decimal: true,
+                                        ),
+                                    decoration: const InputDecoration(
+                                      suffixText: '元',
+                                      hintText: '可留空',
+                                    ),
                                   ),
                                 ),
                               ],
-                              const SizedBox(height: 12),
-                              TextFormField(
-                                key: const Key('insurance-profile-month-field'),
-                                controller: _monthController,
-                                decoration: const InputDecoration(
-                                  labelText: '生效月份',
-                                  hintText: 'YYYY-MM，例如 2026-09',
+                              const SizedBox(height: 20),
+                              _referenceField(
+                                '生效月份',
+                                TextFormField(
+                                  key: const Key(
+                                    'insurance-profile-month-field',
+                                  ),
+                                  controller: _monthController,
+                                  decoration: const InputDecoration(
+                                    hintText: 'YYYY-MM，例如 2026-09',
+                                  ),
                                 ),
                               ),
-                              const SizedBox(height: 12),
-                              TextFormField(
-                                key: const Key(
-                                  'insurance-profile-remark-field',
-                                ),
-                                controller: _remarkController,
-                                maxLines: 3,
-                                decoration: const InputDecoration(
-                                  labelText: '备注',
+                              const SizedBox(height: 20),
+                              _referenceField(
+                                '备注',
+                                TextFormField(
+                                  key: const Key(
+                                    'insurance-profile-remark-field',
+                                  ),
+                                  controller: _remarkController,
+                                  maxLines: 3,
+                                  decoration: const InputDecoration(),
                                 ),
                               ),
                             ],
                           ),
                         ),
                       ),
-                      const SizedBox(height: 18),
-                      SizedBox(
-                        width: double.infinity,
-                        child: FilledButton.icon(
-                          key: const Key('insurance-profile-save-button'),
-                          onPressed: _saving ? null : _save,
-                          icon: _saving
-                              ? const SizedBox(
-                                  width: 18,
-                                  height: 18,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: Colors.white,
-                                  ),
-                                )
-                              : const Icon(Icons.save_outlined),
-                          label: Text(_saving ? '保存中…' : '保存参保信息'),
-                        ),
-                      ),
+                      const SizedBox(height: 16),
                     ],
                   ),
                 ),
@@ -284,3 +305,15 @@ class _InsuranceProfileFormPageState
     }
   }
 }
+
+Widget _referenceField(String label, Widget field) => Column(
+  crossAxisAlignment: CrossAxisAlignment.stretch,
+  children: [
+    Text(
+      label,
+      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+    ),
+    const SizedBox(height: 8),
+    field,
+  ],
+);

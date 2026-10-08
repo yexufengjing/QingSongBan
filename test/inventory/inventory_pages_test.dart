@@ -66,15 +66,17 @@ void main() {
           inventoryOverviewProvider.overrideWith(
             (ref) async => const InventoryOverview(
               totalMaterialCount: 1,
-              lowStockCount: 1,
-              outOfStockCount: 0,
+              lowStockCount: 0,
+              outOfStockCount: 1,
               pendingReplenishmentCount: 0,
               monthlyReceiptCount: 1,
               monthlyIssueCount: 0,
             ),
           ),
           inventoryWarningsProvider.overrideWith(
-            (ref) async => [InventoryStockRow(material: material)],
+            (ref) async => [
+              InventoryStockRow(material: material.copyWith(currentStock: 0)),
+            ],
           ),
           inventoryTransactionsProvider.overrideWith((ref) async => []),
           inventoryReceiptsProvider.overrideWith((ref) async => []),
@@ -84,11 +86,23 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
+    await tester.tap(find.text('处理'));
+    await tester.pumpAndSettle();
     final entry = find.byKey(const Key('home-action-库存管理'));
     expect(entry, findsOneWidget);
     await tester.ensureVisible(entry);
     await tester.tap(entry);
     await tester.pumpAndSettle();
+    final warnings = find.byKey(const Key('inventory-home-warning-count'));
+    await tester.scrollUntilVisible(
+      warnings,
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    expect(
+      find.descendant(of: warnings, matching: find.text('1')),
+      findsOneWidget,
+    );
     for (final label in [
       '物资信息',
       '入库管理',
@@ -99,6 +113,11 @@ void main() {
       '待采购',
       '库存流水',
     ]) {
+      await tester.scrollUntilVisible(
+        find.byKey(Key('inventory-shortcut-$label')),
+        150,
+        scrollable: find.byType(Scrollable).last,
+      );
       expect(find.byKey(Key('inventory-shortcut-$label')), findsOneWidget);
     }
   });
@@ -446,6 +465,8 @@ void main() {
       }
       final submit = find.byKey(const Key('inventory-issue-submit'));
       await tester.tap(submit);
+      await tester.pumpAndSettle();
+      await tester.drag(find.byType(ListView).first, const Offset(0, 2000));
       await tester.pumpAndSettle();
       expect(find.text('请选择领取人'), findsOneWidget);
     },

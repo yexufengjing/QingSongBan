@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/database/app_database.dart';
+import '../../../app/theme/app_theme.dart';
 import '../application/payroll_providers.dart';
 import '../data/wage_settings_repository.dart';
 
@@ -37,6 +38,7 @@ class WageJobSettingsPage extends ConsumerWidget {
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
             children: [
               const Card(
+                color: AppColors.lightBlue,
                 child: Padding(
                   padding: EdgeInsets.all(14),
                   child: Text('日薪按元保存。修改日薪时请使用“生效月份”，已生成或已确认的工资不会被重算。'),
@@ -48,7 +50,19 @@ class WageJobSettingsPage extends ConsumerWidget {
                   child: Column(
                     children: [
                       ListTile(
-                        title: Text(type.name),
+                        leading: CircleAvatar(
+                          backgroundColor: AppColors.lightBlue,
+                          child: Icon(
+                            Icons.work_outline,
+                            color: type.isActive
+                                ? AppColors.primary
+                                : AppColors.helper,
+                          ),
+                        ),
+                        title: Text(
+                          type.name,
+                          style: const TextStyle(fontWeight: FontWeight.w600),
+                        ),
                         subtitle: Text(
                           '默认日薪：${type.defaultDailyWage.toStringAsFixed(2)} 元 · ${type.isActive ? '启用' : '已停用'}',
                         ),
@@ -101,13 +115,33 @@ class WageJobSettingsPage extends ConsumerWidget {
                           final rates = snapshot.data ?? const [];
                           if (rates.isEmpty) return const SizedBox.shrink();
                           return Padding(
-                            padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                '生效历史：${rates.map((rate) => '${rate.effectiveMonth}=${rate.dailyWage.toStringAsFixed(2)}元').join(' · ')}',
-                                style: Theme.of(context).textTheme.bodySmall,
-                              ),
+                            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                            child: Column(
+                              children: [
+                                const Divider(height: 1),
+                                for (final rate in rates)
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 12),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            '${rate.effectiveMonth} 生效',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${rate.dailyWage.toStringAsFixed(2)} 元/天',
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                              ],
                             ),
                           );
                         },
@@ -173,26 +207,30 @@ class WageJobSettingsPage extends ConsumerWidget {
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                     const SizedBox(height: 18),
-                    TextField(
-                      controller: name,
-                      textInputAction: TextInputAction.next,
-                      decoration: const InputDecoration(
-                        labelText: '工种名称',
-                        hintText: '例如：夜班保洁',
-                        prefixIcon: Icon(Icons.badge_outlined),
+                    _referenceField(
+                      '工种名称',
+                      TextField(
+                        controller: name,
+                        textInputAction: TextInputAction.next,
+                        decoration: const InputDecoration(
+                          hintText: '例如：夜班保洁',
+                          prefixIcon: Icon(Icons.badge_outlined),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 14),
-                    TextField(
-                      controller: wage,
-                      keyboardType: const TextInputType.numberWithOptions(
-                        decimal: true,
-                      ),
-                      textInputAction: TextInputAction.next,
-                      decoration: const InputDecoration(
-                        labelText: '默认日薪（元）',
-                        hintText: '请输入大于等于 0 的金额',
-                        prefixIcon: Icon(Icons.payments_outlined),
+                    _referenceField(
+                      '默认日薪（元）',
+                      TextField(
+                        controller: wage,
+                        keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true,
+                        ),
+                        textInputAction: TextInputAction.next,
+                        decoration: const InputDecoration(
+                          hintText: '请输入大于等于 0 的金额',
+                          prefixIcon: Icon(Icons.payments_outlined),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 14),
@@ -202,17 +240,20 @@ class WageJobSettingsPage extends ConsumerWidget {
                             .colorScheme
                             .surfaceContainerHighest
                             .withValues(alpha: 0.45),
-                        borderRadius: BorderRadius.circular(14),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       child: Material(
                         color: Colors.transparent,
-                        borderRadius: BorderRadius.circular(14),
+                        borderRadius: BorderRadius.circular(12),
                         child: SwitchListTile(
                           contentPadding: const EdgeInsets.symmetric(
                             horizontal: 14,
                             vertical: 2,
                           ),
-                          title: const Text('启用工种'),
+                          title: const Text(
+                            '启用工种',
+                            textAlign: TextAlign.center,
+                          ),
                           subtitle: Text(
                             isActive ? '可用于新工资资料和造资' : '停用后不再用于新的工资资料',
                           ),
@@ -223,15 +264,17 @@ class WageJobSettingsPage extends ConsumerWidget {
                       ),
                     ),
                     const SizedBox(height: 14),
-                    TextField(
-                      controller: remark,
-                      textInputAction: TextInputAction.done,
-                      maxLines: 2,
-                      decoration: const InputDecoration(
-                        labelText: '备注（可选）',
-                        hintText: '补充适用范围或说明',
-                        prefixIcon: Icon(Icons.notes_outlined),
-                        alignLabelWithHint: true,
+                    _referenceField(
+                      '备注（可选）',
+                      TextField(
+                        controller: remark,
+                        textInputAction: TextInputAction.done,
+                        maxLines: 2,
+                        decoration: const InputDecoration(
+                          hintText: '补充适用范围或说明',
+                          prefixIcon: Icon(Icons.notes_outlined),
+                          alignLabelWithHint: true,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -241,14 +284,23 @@ class WageJobSettingsPage extends ConsumerWidget {
             ),
             actionsPadding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
             actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text('取消'),
-              ),
-              FilledButton.icon(
-                onPressed: () => Navigator.of(context).pop(isActive),
-                icon: const Icon(Icons.check),
-                label: const Text('保存工种'),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: const Text('取消'),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: FilledButton.icon(
+                      onPressed: () => Navigator.of(context).pop(isActive),
+                      icon: const Icon(Icons.check),
+                      label: const Text('保存工种'),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -314,33 +366,37 @@ class WageJobSettingsPage extends ConsumerWidget {
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 const SizedBox(height: 18),
-                TextField(
-                  controller: month,
-                  readOnly: true,
-                  onTap: () => _pickEffectiveMonth(context, month),
-                  decoration: InputDecoration(
-                    labelText: '生效月份',
-                    hintText: '点击选择月份',
-                    helperText: '按月生效，不区分具体日期',
-                    prefixIcon: const Icon(Icons.calendar_month_outlined),
-                    suffixIcon: IconButton(
-                      onPressed: () => _pickEffectiveMonth(context, month),
-                      icon: const Icon(Icons.edit_calendar_outlined),
-                      tooltip: '选择月份',
+                _referenceField(
+                  '生效月份',
+                  TextField(
+                    controller: month,
+                    readOnly: true,
+                    onTap: () => _pickEffectiveMonth(context, month),
+                    decoration: InputDecoration(
+                      hintText: '点击选择月份',
+                      helperText: '按月生效，不区分具体日期',
+                      prefixIcon: const Icon(Icons.calendar_month_outlined),
+                      suffixIcon: IconButton(
+                        onPressed: () => _pickEffectiveMonth(context, month),
+                        icon: const Icon(Icons.edit_calendar_outlined),
+                        tooltip: '选择月份',
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(height: 14),
-                TextField(
-                  controller: wage,
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
-                  ),
-                  textInputAction: TextInputAction.done,
-                  decoration: const InputDecoration(
-                    labelText: '日薪（元）',
-                    hintText: '请输入大于等于 0 的金额',
-                    prefixIcon: Icon(Icons.payments_outlined),
+                _referenceField(
+                  '日薪（元）',
+                  TextField(
+                    controller: wage,
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
+                    textInputAction: TextInputAction.done,
+                    decoration: const InputDecoration(
+                      hintText: '请输入大于等于 0 的金额',
+                      prefixIcon: Icon(Icons.payments_outlined),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -350,14 +406,23 @@ class WageJobSettingsPage extends ConsumerWidget {
         ),
         actionsPadding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('取消'),
-          ),
-          FilledButton.icon(
-            onPressed: () => Navigator.of(context).pop(true),
-            icon: const Icon(Icons.check),
-            label: const Text('保存日薪'),
+          Row(
+            children: [
+              Expanded(
+                child: TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('取消'),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: FilledButton.icon(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  icon: const Icon(Icons.check),
+                  label: const Text('保存日薪'),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -471,15 +536,24 @@ class WageJobSettingsPage extends ConsumerWidget {
               ),
             ),
             actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text('取消'),
-              ),
-              FilledButton.icon(
-                onPressed: () =>
-                    Navigator.of(context).pop(DateTime(year, month)),
-                icon: const Icon(Icons.check),
-                label: const Text('确定月份'),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: const Text('取消'),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: FilledButton.icon(
+                      onPressed: () =>
+                          Navigator.of(context).pop(DateTime(year, month)),
+                      icon: const Icon(Icons.check),
+                      label: const Text('确定月份'),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -489,3 +563,15 @@ class WageJobSettingsPage extends ConsumerWidget {
     if (picked != null) controller.text = payrollYearMonth(picked);
   }
 }
+
+Widget _referenceField(String label, Widget field) => Column(
+  crossAxisAlignment: CrossAxisAlignment.stretch,
+  children: [
+    Text(
+      label,
+      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+    ),
+    const SizedBox(height: 8),
+    field,
+  ],
+);

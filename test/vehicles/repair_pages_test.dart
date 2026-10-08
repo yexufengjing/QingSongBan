@@ -60,10 +60,16 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    expect(find.text(order.repairNo), findsNothing);
-    expect(find.text('维修测试车'), findsOneWidget);
+    expect(find.text(order.repairNo), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byType(Card),
+        matching: find.textContaining('维修测试车'),
+      ),
+      findsOneWidget,
+    );
     expect(find.text('未填写'), findsOneWidget);
-    await tester.tap(find.text('维修测试车'));
+    await tester.tap(find.textContaining('维修测试车'));
     await tester.pumpAndSettle();
     expect(find.text('水泵异响'), findsOneWidget);
     expect(find.text('更新业务状态'), findsOneWidget);
@@ -158,14 +164,20 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('1'), findsOneWidget);
-    expect(find.text('洒水车甲'), findsOneWidget);
-    expect(find.text('京A00001'), findsNothing);
+    expect(find.textContaining('共 '), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byType(Card),
+        matching: find.textContaining('洒水车甲'),
+      ),
+      findsOneWidget,
+    );
+    expect(find.textContaining('京A00001'), findsOneWidget);
     expect(find.text('故障原因'), findsAtLeastNWidgets(1));
     expect(find.text('叶轮磨损导致持续异响，检查后需要更换'), findsOneWidget);
     expect(find.text('广源汽车维修站'), findsOneWidget);
     expect(find.text('¥0.00'), findsAtLeastNWidgets(1));
-    expect(find.textContaining(firstOrder.repairNo), findsNothing);
+    expect(find.text(firstOrder.repairNo), findsOneWidget);
 
     expect(find.text('筛选'), findsOneWidget);
     await tester.tap(find.text('筛选'));
@@ -191,8 +203,14 @@ void main() {
     await tester.tap(find.text('应用筛选'));
     await tester.pumpAndSettle();
     expect(find.text('5'), findsOneWidget);
-    expect(find.text('洒水车甲'), findsOneWidget);
-    expect(find.text('清扫车乙'), findsNothing);
+    expect(
+      find.descendant(
+        of: find.byType(Card),
+        matching: find.textContaining('洒水车甲'),
+      ),
+      findsOneWidget,
+    );
+    expect(find.textContaining('清扫车乙'), findsNothing);
 
     // A staged edit is discarded when the filter page is closed with back.
     await tester.tap(find.text('筛选'));
@@ -203,8 +221,14 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('返回'));
     await tester.pumpAndSettle();
-    expect(find.text('洒水车甲'), findsOneWidget);
-    expect(find.text('清扫车乙'), findsNothing);
+    expect(
+      find.descendant(
+        of: find.byType(Card),
+        matching: find.textContaining('洒水车甲'),
+      ),
+      findsOneWidget,
+    );
+    expect(find.textContaining('清扫车乙'), findsNothing);
     expect(find.text('5'), findsOneWidget);
 
     await tester.tap(find.text('筛选'));
@@ -213,14 +237,32 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('应用筛选'));
     await tester.pumpAndSettle();
-    expect(find.text('洒水车甲'), findsOneWidget);
-    expect(find.text('清扫车乙'), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byType(Card),
+        matching: find.textContaining('洒水车甲'),
+      ),
+      findsOneWidget,
+    );
+    expect(
+      find.descendant(
+        of: find.byType(Card),
+        matching: find.textContaining('清扫车乙'),
+      ),
+      findsOneWidget,
+    );
 
     await tester.enterText(find.byType(TextField), '扫盘');
     await tester.pumpAndSettle();
-    expect(find.text('1'), findsOneWidget);
-    expect(find.text('清扫车乙'), findsOneWidget);
-    expect(find.text('洒水车甲'), findsNothing);
+    expect(find.text('共 1 单'), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byType(Card),
+        matching: find.textContaining('清扫车乙'),
+      ),
+      findsOneWidget,
+    );
+    expect(find.textContaining('洒水车甲'), findsNothing);
     expect(tester.takeException(), isNull);
     await tester.pumpWidget(const SizedBox.shrink());
     await tester.pump(const Duration(milliseconds: 1));
@@ -273,11 +315,11 @@ void main() {
     final cardRect = tester.getRect(find.byType(Card).first);
     final actualAmountRect = tester.getRect(find.text('¥0.00').first);
     final dateRect = tester.getRect(find.text('2026-09-01'));
-    final reportedAmountRect = tester.getRect(find.text('申报 ¥9876543.21'));
-    expect(cardRect.right - actualAmountRect.right, closeTo(12, 3));
-    expect(reportedAmountRect.left - dateRect.right, greaterThanOrEqualTo(12));
-    expect(cardRect.right - reportedAmountRect.right, closeTo(12, 3));
-    expect(find.text('维修供应商'), findsOneWidget);
+    final reportedAmountRect = tester.getRect(find.text('¥9876543.21'));
+    expect(cardRect.right - actualAmountRect.right, closeTo(16, 3));
+    expect(reportedAmountRect.top, greaterThan(dateRect.top));
+    expect(reportedAmountRect.right, lessThanOrEqualTo(cardRect.right));
+    expect(find.text('维修厂商'), findsOneWidget);
     expect(find.byIcon(Icons.storefront_outlined), findsNothing);
     expect(find.textContaining('这是一个特别长的维修供应商名称'), findsOneWidget);
     await tester.pumpWidget(const SizedBox.shrink());

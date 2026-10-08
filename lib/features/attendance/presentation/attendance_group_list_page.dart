@@ -38,7 +38,7 @@ class AttendanceGroupListPage extends ConsumerWidget {
               );
             }
             return ListView.separated(
-              padding: const EdgeInsets.fromLTRB(20, 8, 20, 28),
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 28),
               itemCount: items.length + 1,
               separatorBuilder: (_, _) => const SizedBox(height: 12),
               itemBuilder: (context, index) {
@@ -97,7 +97,7 @@ class _AttendanceGroupCard extends ConsumerWidget {
     final group = summary.group;
     return Card(
       child: InkWell(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(12),
         onTap: () => context.push('/attendance/groups/${group.id}'),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(17, 16, 10, 16),
@@ -110,7 +110,7 @@ class _AttendanceGroupCard extends ConsumerWidget {
                   color: group.isEnabled
                       ? AppColors.lightGreen
                       : AppColors.background,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
                   Icons.groups_outlined,

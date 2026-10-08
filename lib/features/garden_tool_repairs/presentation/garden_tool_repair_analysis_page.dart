@@ -10,6 +10,7 @@ import '../application/garden_tool_repair_providers.dart';
 import '../domain/repair_analytics_models.dart';
 import '../domain/repair_formatters.dart';
 import 'garden_tool_repair_design.dart';
+import '../../vehicles/presentation/vehicle_metric_grid.dart';
 
 class GardenToolRepairAnalysisPage extends ConsumerStatefulWidget {
   const GardenToolRepairAnalysisPage({
@@ -59,10 +60,10 @@ class _GardenToolRepairAnalysisPageState
         appBar: AppBar(title: const Text('数据分析')),
         body: SafeArea(
           child: ListView(
-            padding: const EdgeInsets.fromLTRB(12, 8, 12, 16),
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
             children: [
               _buildFilters(unitsAsync),
-              const SizedBox(height: 10),
+              const SizedBox(height: 16),
               groupsAsync.when(
                 loading: () => const Padding(
                   padding: EdgeInsets.only(top: 80),
@@ -96,7 +97,7 @@ class _GardenToolRepairAnalysisPageState
     AsyncValue<List<GardenToolRepairUnit>> unitsAsync,
   ) => Card(
     child: Padding(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -114,7 +115,7 @@ class _GardenToolRepairAnalysisPageState
                     labelText: '年份',
                     contentPadding: EdgeInsets.symmetric(
                       horizontal: 10,
-                      vertical: 8,
+                      vertical: 14,
                     ),
                   ),
                   items: [
@@ -136,7 +137,7 @@ class _GardenToolRepairAnalysisPageState
                     labelText: '周期',
                     contentPadding: EdgeInsets.symmetric(
                       horizontal: 10,
-                      vertical: 8,
+                      vertical: 14,
                     ),
                   ),
                   items: const [
@@ -165,7 +166,7 @@ class _GardenToolRepairAnalysisPageState
                       labelText: '月份',
                       contentPadding: EdgeInsets.symmetric(
                         horizontal: 10,
-                        vertical: 8,
+                        vertical: 14,
                       ),
                     ),
                     items: [
@@ -220,74 +221,64 @@ class _GardenToolRepairAnalysisPageState
         .toList();
     return Column(
       children: [
-        GridView.count(
-          crossAxisCount: 2,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          childAspectRatio: 2.65,
-          children: [
-            _MetricCard(
-              label: '$periodLabel维修金额',
-              value: formatRepairMoney(report.totalCents),
-              icon: Icons.account_balance_wallet_outlined,
-              color: AppColors.primary,
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: VehicleMetricGrid(
+              items: [
+                VehicleMetricData(
+                  label: '$periodLabel维修金额',
+                  value: formatRepairMoney(report.totalCents),
+                  icon: Icons.build_outlined,
+                  color: AppColors.primary,
+                ),
+                VehicleMetricData(
+                  label: '项目总数',
+                  value: '${report.itemCount}',
+                  icon: Icons.receipt_long_outlined,
+                  color: AppColors.success,
+                ),
+                VehicleMetricData(
+                  label: _cycle == _AnalysisCycle.year ? '月均金额' : '本月金额',
+                  value: formatRepairMoney(report.averageMonthCents),
+                  icon: Icons.bar_chart,
+                  color: const Color(0xFFEF8B27),
+                ),
+                VehicleMetricData(
+                  label: '维修人数',
+                  value: '${report.repairerCount}',
+                  icon: Icons.people_alt_outlined,
+                  color: AppColors.purple,
+                ),
+              ],
             ),
-            _MetricCard(
-              label: '项目总数',
-              value: '${report.itemCount}',
-              icon: Icons.receipt_long_outlined,
-              color: AppColors.techBlue,
-            ),
-            _MetricCard(
-              label: _cycle == _AnalysisCycle.year ? '月均金额' : '本月金额',
-              value: formatRepairMoney(report.averageMonthCents),
-              icon: Icons.bar_chart,
-              color: const Color(0xFFEF8B27),
-            ),
-            _MetricCard(
-              label: '维修人数',
-              value: '${report.repairerCount}',
-              icon: Icons.people_alt_outlined,
-              color: AppColors.primary,
-            ),
-          ],
+          ),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 16),
         _MonthlyTrendCard(
           title: '月度维修费用趋势',
           amounts: report.monthlyTotalsCents,
           onTapMonth: _openMonth,
         ),
-        const SizedBox(height: 10),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: _UnitShareCard(
-                totalCents: report.totalCents,
-                units: report.unitAmounts,
-                selectedUnitId: _unitId,
-                onSelect: (id) => setState(() => _unitId = id),
-              ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: _ProjectAmountCard(
-                entries: visibleProjects,
-                maximum: maxAmount,
-                canExpand: report.projectAmounts.length > 5,
-                expanded: _showTopTen,
-                onToggle: () => setState(() => _showTopTen = !_showTopTen),
-              ),
-            ),
-          ],
+        const SizedBox(height: 16),
+        _UnitShareCard(
+          totalCents: report.totalCents,
+          units: report.unitAmounts,
+          selectedUnitId: _unitId,
+          onSelect: (id) => setState(() => _unitId = id),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 16),
+        _ProjectAmountCard(
+          entries: visibleProjects,
+          maximum: maxAmount,
+          canExpand: report.projectAmounts.length > 5,
+          expanded: _showTopTen,
+          onToggle: () => setState(() => _showTopTen = !_showTopTen),
+        ),
+        const SizedBox(height: 16),
         _RepairerTable(entries: report.repairers),
         if (visibleCounts.isNotEmpty) ...[
-          const SizedBox(height: 10),
+          const SizedBox(height: 16),
           _ProjectCountCard(
             entries: visibleCounts,
             canExpand: report.projectCounts.length > 10,
@@ -338,64 +329,6 @@ class _UnitFilterChip extends StatelessWidget {
   );
 }
 
-class _MetricCard extends StatelessWidget {
-  const _MetricCard({
-    required this.label,
-    required this.value,
-    required this.icon,
-    required this.color,
-  });
-
-  final String label;
-  final String value;
-  final IconData icon;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) => Card(
-    child: Padding(
-      padding: const EdgeInsets.all(10),
-      child: Row(
-        children: [
-          Container(
-            width: 34,
-            height: 34,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .12),
-              borderRadius: BorderRadius.circular(9),
-            ),
-            child: Icon(icon, color: color, size: 20),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                const SizedBox(height: 4),
-                FittedBox(
-                  alignment: Alignment.centerLeft,
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    value,
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
-}
-
 class _MonthlyTrendCard extends StatelessWidget {
   const _MonthlyTrendCard({
     required this.title,
@@ -410,7 +343,7 @@ class _MonthlyTrendCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Card(
     child: Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -439,7 +372,7 @@ class _MonthlyTrendCard extends StatelessWidget {
                 onTapMonth(index + 1);
               },
               child: SizedBox(
-                height: 150,
+                height: 190,
                 width: double.infinity,
                 child: CustomPaint(painter: _TrendPainter(amounts)),
               ),
@@ -479,7 +412,7 @@ class _TrendPainter extends CustomPainter {
       axisText
         ..text = TextSpan(
           text: value.toString(),
-          style: const TextStyle(fontSize: 10, color: AppColors.body),
+          style: const TextStyle(fontSize: 12, color: AppColors.body),
         )
         ..layout();
       axisText.paint(canvas, Offset(0, y - axisText.height / 2));
@@ -492,7 +425,7 @@ class _TrendPainter extends CustomPainter {
       final label = TextPainter(
         text: TextSpan(
           text: '${index + 1}月',
-          style: const TextStyle(fontSize: 10, color: AppColors.body),
+          style: const TextStyle(fontSize: 12, color: AppColors.body),
         ),
         textDirection: TextDirection.ltr,
       )..layout();
@@ -509,7 +442,7 @@ class _TrendPainter extends CustomPainter {
     canvas.drawPath(
       fill,
       Paint()
-        ..color = AppColors.lightGreen
+        ..color = AppColors.lightBlue
         ..style = PaintingStyle.fill,
     );
     final line = Path()..moveTo(points.first.dx, points.first.dy);
@@ -537,7 +470,7 @@ class _TrendPainter extends CustomPainter {
         text: TextSpan(
           text: (amounts[index] / 100).round().toString(),
           style: const TextStyle(
-            fontSize: 9,
+            fontSize: 12,
             color: AppColors.ink,
             fontWeight: FontWeight.w500,
           ),
@@ -575,7 +508,7 @@ class _UnitShareCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Card(
     child: Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -641,7 +574,7 @@ class _UnitShareCard extends StatelessWidget {
                                       units[index].unitName,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(fontSize: 10),
+                                      style: const TextStyle(fontSize: 12),
                                     ),
                                   ),
                                 ],
@@ -650,7 +583,7 @@ class _UnitShareCard extends StatelessWidget {
                                 '${(units[index].share * 100).toStringAsFixed(1)}%',
                                 style: const TextStyle(
                                   color: AppColors.body,
-                                  fontSize: 9,
+                                  fontSize: 12,
                                 ),
                               ),
                             ],
@@ -733,7 +666,7 @@ class _ProjectAmountCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Card(
     child: Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -750,7 +683,7 @@ class _ProjectAmountCard extends StatelessWidget {
               ),
               const Text(
                 '元',
-                style: TextStyle(color: AppColors.body, fontSize: 10),
+                style: TextStyle(color: AppColors.body, fontSize: 12),
               ),
             ],
           ),
@@ -768,13 +701,13 @@ class _ProjectAmountCard extends StatelessWidget {
                           entry.projectName,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontSize: 10),
+                          style: const TextStyle(fontSize: 12),
                         ),
                       ),
                       const SizedBox(width: 4),
                       Text(
                         formatRepairMoney(entry.totalCents),
-                        style: const TextStyle(fontSize: 9),
+                        style: const TextStyle(fontSize: 12),
                       ),
                     ],
                   ),
@@ -819,7 +752,7 @@ class _ProjectCountCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Card(
     child: Padding(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -854,7 +787,7 @@ class _RepairerTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Card(
     child: Padding(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -876,23 +809,23 @@ class _RepairerTable extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 1,
-                  child: Text('排名', style: TextStyle(fontSize: 10)),
+                  child: Text('排名', style: TextStyle(fontSize: 12)),
                 ),
                 Expanded(
                   flex: 2,
-                  child: Text('姓名', style: TextStyle(fontSize: 10)),
+                  child: Text('姓名', style: TextStyle(fontSize: 12)),
                 ),
                 Expanded(
                   flex: 1,
-                  child: Text('项目数', style: TextStyle(fontSize: 10)),
+                  child: Text('项目数', style: TextStyle(fontSize: 12)),
                 ),
                 Expanded(
                   flex: 2,
-                  child: Text('维修金额', style: TextStyle(fontSize: 10)),
+                  child: Text('维修金额', style: TextStyle(fontSize: 12)),
                 ),
                 Expanded(
                   flex: 3,
-                  child: Text('占比', style: TextStyle(fontSize: 10)),
+                  child: Text('占比', style: TextStyle(fontSize: 12)),
                 ),
               ],
             ),
@@ -934,7 +867,7 @@ class _RepairerRankRow extends StatelessWidget {
                   : AppColors.background,
               child: Text(
                 '${index + 1}',
-                style: const TextStyle(fontSize: 10, color: AppColors.ink),
+                style: const TextStyle(fontSize: 12, color: AppColors.ink),
               ),
             ),
           ),
@@ -961,7 +894,7 @@ class _RepairerRankRow extends StatelessWidget {
               children: [
                 Text(
                   '${(entry.share * 100).toStringAsFixed(1)}%',
-                  style: const TextStyle(fontSize: 10),
+                  style: const TextStyle(fontSize: 12),
                 ),
                 const SizedBox(width: 5),
                 Expanded(

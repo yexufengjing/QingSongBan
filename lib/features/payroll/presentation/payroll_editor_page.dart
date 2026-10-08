@@ -67,14 +67,7 @@ class _EditorContent extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      batch.name,
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    Text(
-                      '${PayrollOptions.statusLabel(batch.status)} · ${batch.employeeCount}人 · 最终 ${batch.finalWageTotal.toStringAsFixed(2)}元',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
+                    Text('工资编辑', style: Theme.of(context).textTheme.titleLarge),
                   ],
                 ),
               ),
@@ -113,7 +106,28 @@ class _EditorContent extends StatelessWidget {
             ],
           ),
         ),
-        const Divider(height: 18),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+          child: Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    batch.name,
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    '${PayrollOptions.statusLabel(batch.status)} · ${batch.employeeCount}人 · 出勤 ${(batch.attendanceHalfDaysTotal / 2).toStringAsFixed(1)}天 · 最终${batch.finalWageTotal.toStringAsFixed(2)}元',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
         PayrollGroupFilter(batchId: batch.id),
         Expanded(
           child: items.when(
@@ -147,22 +161,25 @@ class _EditorContent extends StatelessWidget {
           ),
         ),
         if (editable)
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 6, 16, 16),
+          Container(
+            color: Colors.white,
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
             child: Row(
               children: [
                 Expanded(
-                  child: FilledButton.icon(
-                    onPressed: () => _addEmployee(context),
-                    icon: const Icon(Icons.person_add_alt_1_outlined),
-                    label: const Text('人工增加人员'),
+                  child: OutlinedButton.icon(
+                    onPressed: () => _handleAction(context, 'check'),
+                    icon: const Icon(Icons.fact_check_outlined, size: 20),
+                    label: const Text('异常检查'),
                   ),
                 ),
                 const SizedBox(width: 10),
-                IconButton.filledTonal(
-                  onPressed: () => _handleAction(context, 'check'),
-                  icon: const Icon(Icons.fact_check_outlined),
-                  tooltip: '异常检查',
+                Expanded(
+                  child: FilledButton.icon(
+                    onPressed: () => _addEmployee(context),
+                    icon: const Icon(Icons.add, size: 20),
+                    label: const Text('人工增加人员'),
+                  ),
                 ),
               ],
             ),
@@ -251,16 +268,25 @@ class _EditorContent extends StatelessWidget {
     final result = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('删除工资草稿？'),
+        title: const Text('删除工资草稿？', textAlign: TextAlign.center),
         content: const Text('工资草稿会被软删除，之后重新进入该月份时可以恢复原批次。'),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('取消'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('确认删除'),
+          Row(
+            children: [
+              Expanded(
+                child: TextButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: const Text('取消'),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: FilledButton(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  child: const Text('确认删除'),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -305,16 +331,25 @@ class _EditorContent extends StatelessWidget {
     final result = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('确认加入工资名单？'),
+        title: const Text('确认加入工资名单？', textAlign: TextAlign.center),
         content: Text('${employee.name} 本月实际出勤为 0 天，请确认是否仍加入工资造资。'),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('取消'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('确认加入'),
+          Row(
+            children: [
+              Expanded(
+                child: TextButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: const Text('取消'),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: FilledButton(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  child: const Text('确认加入'),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -401,13 +436,22 @@ class _EditorContent extends StatelessWidget {
           decoration: const InputDecoration(labelText: '原因'),
         ),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('取消'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(context).pop(reasonText.trim()),
-            child: const Text('确认'),
+          Row(
+            children: [
+              Expanded(
+                child: TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('取消'),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: FilledButton(
+                  onPressed: () => Navigator.of(context).pop(reasonText.trim()),
+                  child: const Text('确认'),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -442,51 +486,110 @@ class _ItemList extends StatelessWidget {
       return Card(
         key: ValueKey(item.id),
         color: removed ? Colors.grey.shade100 : null,
-        child: ListTile(
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
           onTap: () => _edit(context, value, jobTypes),
-          leading: CircleAvatar(child: Text('${index + 1}')),
-          title: Text(
-            '${item.employeeNameSnapshot} · ${item.employeeNoSnapshot}',
-          ),
-          subtitle: Text(
-            '${item.jobTypeNameSnapshot ?? '未配置工种'} · ${_days(item.attendanceHalfDaysSnapshot)} · 日薪 ${item.dailyWage.toStringAsFixed(2)} · 实发 ${item.finalWage.toStringAsFixed(2)}',
-          ),
-          isThreeLine: true,
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                onPressed: () => context.push(
-                  '/attendance/monthly-table?month=${batch.payrollMonth}',
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      '${index + 1}',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    const SizedBox(width: 10),
+                    const CircleAvatar(
+                      radius: 24,
+                      backgroundColor: AppColors.lightBlue,
+                      child: Icon(
+                        Icons.person_outline,
+                        color: AppColors.techBlue,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            item.employeeNameSnapshot,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            '${item.employeeNoSnapshot} · ${item.jobTypeNameSnapshot ?? '未配置工种'}',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          onPressed: () => context.push(
+                            '/attendance/monthly-table?month=${batch.payrollMonth}',
+                          ),
+                          icon: const Icon(Icons.calendar_month_outlined),
+                          tooltip: '查看本月考勤',
+                        ),
+                        PopupMenuButton<String>(
+                          onSelected: (action) async {
+                            if (action == 'detail') {
+                              if (context.mounted)
+                                context.push(
+                                  '/reports/payroll/item/${item.id}',
+                                );
+                            } else {
+                              await ref
+                                  .read(payrollRepositoryProvider)
+                                  .setItemRemoved(
+                                    itemId: item.id,
+                                    removed: action == 'remove',
+                                  );
+                              ref.invalidate(payrollItemsProvider(batch.id));
+                              ref.invalidate(payrollBatchProvider(batch.id));
+                            }
+                          },
+                          itemBuilder: (context) => [
+                            const PopupMenuItem(
+                              value: 'detail',
+                              child: Text('查看明细'),
+                            ),
+                            PopupMenuItem(
+                              value: removed ? 'restore' : 'remove',
+                              child: Text(removed ? '恢复到工资名单' : '移出工资名单'),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                icon: const Icon(Icons.calendar_month_outlined),
-                tooltip: '查看本月考勤',
-              ),
-              PopupMenuButton<String>(
-                onSelected: (action) async {
-                  if (action == 'detail') {
-                    if (context.mounted)
-                      context.push('/reports/payroll/item/${item.id}');
-                  } else {
-                    await ref
-                        .read(payrollRepositoryProvider)
-                        .setItemRemoved(
-                          itemId: item.id,
-                          removed: action == 'remove',
-                        );
-                    ref.invalidate(payrollItemsProvider(batch.id));
-                    ref.invalidate(payrollBatchProvider(batch.id));
-                  }
-                },
-                itemBuilder: (context) => [
-                  const PopupMenuItem(value: 'detail', child: Text('查看明细')),
-                  PopupMenuItem(
-                    value: removed ? 'restore' : 'remove',
-                    child: Text(removed ? '恢复到工资名单' : '移出工资名单'),
-                  ),
-                ],
-              ),
-            ],
+                const Divider(height: 24),
+                Wrap(
+                  spacing: 12,
+                  runSpacing: 8,
+                  children: [
+                    Text(
+                      '出勤${_days(item.attendanceHalfDaysSnapshot)}',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    Text(
+                      '日薪${item.dailyWage.toStringAsFixed(2)}元',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    Text(
+                      '实发${item.finalWage.toStringAsFixed(2)}元',
+                      style: Theme.of(context).textTheme.titleMedium
+                          ?.copyWith(color: AppColors.success),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       );
@@ -535,7 +638,9 @@ class _ItemList extends StatelessWidget {
       text: item.insuranceDeduction.toStringAsFixed(2),
     );
     final remark = TextEditingController(text: item.remark ?? '');
-    final saved = await showDialog<bool>(
+    final saved = await showModalBottomSheet<bool>(
+      isScrollControlled: true,
+      showDragHandle: true,
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) {
@@ -545,61 +650,117 @@ class _ItemList extends StatelessWidget {
             subsidy.text,
             insurance.text,
           );
-          return AlertDialog(
-            title: Text('${item.employeeNameSnapshot} 工资明细'),
-            content: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  _readOnly('出勤天数', _days(item.attendanceHalfDaysSnapshot)),
-                  DropdownButtonFormField<int>(
-                    initialValue:
-                        jobTypes.any((type) => type.id == selectedJobTypeId)
-                        ? selectedJobTypeId
-                        : null,
-                    decoration: const InputDecoration(labelText: '工种'),
-                    items: [
-                      for (final type in jobTypes.where(
-                        (type) => type.isActive,
-                      ))
-                        DropdownMenuItem(
-                          value: type.id,
-                          child: Text(type.name),
+          return FractionallySizedBox(
+            heightFactor: .9,
+            child: SafeArea(
+              top: false,
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(
+                  16,
+                  0,
+                  16,
+                  16 + MediaQuery.viewInsetsOf(context).bottom,
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      '${item.employeeNameSnapshot} 工资明细',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      item.employeeNoSnapshot,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                    const SizedBox(height: 16),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            _readOnly(
+                              '出勤天数',
+                              _days(item.attendanceHalfDaysSnapshot),
+                            ),
+                            _referenceField(
+                              '工种',
+                              DropdownButtonFormField<int>(
+                                initialValue:
+                                    jobTypes.any(
+                                      (type) => type.id == selectedJobTypeId,
+                                    )
+                                    ? selectedJobTypeId
+                                    : null,
+                                decoration: const InputDecoration(),
+                                items: [
+                                  for (final type in jobTypes.where(
+                                    (type) => type.isActive,
+                                  ))
+                                    DropdownMenuItem(
+                                      value: type.id,
+                                      child: Text(type.name),
+                                    ),
+                                ],
+                                onChanged: (value) =>
+                                    setState(() => selectedJobTypeId = value),
+                              ),
+                            ),
+                            _field(
+                              daily,
+                              '日薪',
+                              onChanged: () => setState(() {}),
+                            ),
+                            _readOnly(
+                              '基础工资',
+                              calculation?.baseWage.toStringAsFixed(2) ??
+                                  '输入有效金额',
+                            ),
+                            _field(
+                              subsidy,
+                              '补助',
+                              onChanged: () => setState(() {}),
+                            ),
+                            _field(
+                              insurance,
+                              '保险扣除',
+                              onChanged: () => setState(() {}),
+                            ),
+                            _readOnly(
+                              '最终工资',
+                              calculation?.finalWage.toStringAsFixed(2) ??
+                                  '输入有效金额',
+                            ),
+                            _referenceField(
+                              '备注',
+                              TextField(
+                                controller: remark,
+                                decoration: const InputDecoration(),
+                              ),
+                            ),
+                          ],
                         ),
-                    ],
-                    onChanged: (value) =>
-                        setState(() => selectedJobTypeId = value),
-                  ),
-                  _field(daily, '日薪', onChanged: () => setState(() {})),
-                  _readOnly(
-                    '基础工资',
-                    calculation?.baseWage.toStringAsFixed(2) ?? '输入有效金额',
-                  ),
-                  _field(subsidy, '补助', onChanged: () => setState(() {})),
-                  _field(insurance, '保险扣除', onChanged: () => setState(() {})),
-                  _readOnly(
-                    '最终工资',
-                    calculation?.finalWage.toStringAsFixed(2) ?? '输入有效金额',
-                  ),
-                  TextField(
-                    controller: remark,
-                    decoration: const InputDecoration(labelText: '备注'),
-                  ),
-                ],
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          onPressed: () => Navigator.of(context).pop(false),
+                          child: const Text('取消'),
+                        ),
+                        FilledButton(
+                          onPressed: calculation == null
+                              ? null
+                              : () => Navigator.of(context).pop(true),
+                          child: const Text('保存'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(false),
-                child: const Text('取消'),
-              ),
-              FilledButton(
-                onPressed: calculation == null
-                    ? null
-                    : () => Navigator.of(context).pop(true),
-                child: const Text('保存'),
-              ),
-            ],
           );
         },
       ),
@@ -636,15 +797,40 @@ class _ItemList extends StatelessWidget {
     TextEditingController controller,
     String label, {
     VoidCallback? onChanged,
-  }) => TextField(
-    controller: controller,
-    keyboardType: const TextInputType.numberWithOptions(decimal: true),
-    onChanged: onChanged == null ? null : (_) => onChanged(),
-    decoration: InputDecoration(labelText: label),
+  }) => _referenceField(
+    label,
+    TextField(
+      controller: controller,
+      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+      onChanged: onChanged == null ? null : (_) => onChanged(),
+      decoration: InputDecoration(suffixText: '元'),
+    ),
   );
 
-  Widget _readOnly(String label, String value) =>
-      ListTile(dense: true, title: Text(label), trailing: Text(value));
+  Widget _readOnly(String label, String value) => Container(
+    margin: const EdgeInsets.symmetric(vertical: 12),
+    padding: const EdgeInsets.all(12),
+    decoration: BoxDecoration(
+      color: AppColors.lightBlue,
+      borderRadius: BorderRadius.circular(8),
+    ),
+    child: Row(
+      children: [
+        Text(label),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Text(
+            value,
+            textAlign: TextAlign.right,
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: label == '最终工资' ? AppColors.success : AppColors.ink,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
 
   double _parseMoney(String value) =>
       double.tryParse(value.trim()) ?? double.nan;
@@ -717,3 +903,15 @@ class _EmployeePicker extends StatelessWidget {
     );
   }
 }
+
+Widget _referenceField(String label, Widget field) => Column(
+  crossAxisAlignment: CrossAxisAlignment.stretch,
+  children: [
+    Text(
+      label,
+      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+    ),
+    const SizedBox(height: 8),
+    field,
+  ],
+);

@@ -23,7 +23,7 @@ class VehicleConditionTab extends ConsumerWidget {
       vehicleTireInstallationsProvider(vehicle.id),
     );
     return ListView(
-      padding: const EdgeInsets.fromLTRB(12, 6, 12, 24),
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
       children: [
         _ConditionIntro(
           issueCount:
@@ -206,7 +206,7 @@ class _ConditionIssues extends StatelessWidget {
           ..sort((a, b) => _severity(b.status).compareTo(_severity(a.status)));
     return Card(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 8, 10, 6),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -215,11 +215,30 @@ class _ConditionIssues extends StatelessWidget {
               style: Theme.of(context).textTheme.titleLarge,
             ),
             if (issues.isEmpty)
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 12),
-                child: Text(
-                  '暂无需要处理的部件问题',
-                  style: TextStyle(color: AppColors.body, fontSize: 13),
+              Container(
+                width: double.infinity,
+                margin: const EdgeInsets.only(top: 12),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 28,
+                  horizontal: 16,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.lightBlue,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Column(
+                  children: [
+                    Icon(
+                      Icons.description_outlined,
+                      color: AppColors.helper,
+                      size: 32,
+                    ),
+                    SizedBox(height: 12),
+                    Text(
+                      '暂无需要处理的部件问题',
+                      style: TextStyle(color: AppColors.body, fontSize: 14),
+                    ),
+                  ],
                 ),
               ),
             for (final issue in issues) ...[
@@ -261,7 +280,7 @@ class _ConditionIssues extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
                             color: AppColors.body,
-                            fontSize: 11,
+                            fontSize: 13,
                           ),
                         ),
                       ],
@@ -523,7 +542,7 @@ class _TirePositionCard extends StatelessWidget {
 }
 
 Color _conditionColor(VehicleConditionStatus status) => switch (status) {
-  VehicleConditionStatus.normal => AppColors.primary,
+  VehicleConditionStatus.normal => AppColors.success,
   VehicleConditionStatus.minorAbnormal ||
   VehicleConditionStatus.needsAttention => Colors.orange,
   VehicleConditionStatus.pendingRepair ||

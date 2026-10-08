@@ -49,8 +49,6 @@ class _VehiclePageState extends ConsumerState<VehiclePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _VehicleSearchAndFilters(ref: ref),
-              const SizedBox(height: 12),
               allVehicles.when(
                 loading: () => const _StatsLoading(),
                 error: (error, _) => _ErrorCard(message: error.toString()),
@@ -66,6 +64,13 @@ class _VehiclePageState extends ConsumerState<VehiclePage> {
                 ),
               ),
               const SizedBox(height: 16),
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: _VehicleSearchAndFilters(ref: ref),
+                ),
+              ),
+              const SizedBox(height: 12),
               _SectionTitle(
                 title: '车辆列表',
                 trailing: Row(
@@ -163,7 +168,7 @@ class _VehicleSearchAndFilters extends ConsumerWidget {
           height: 46,
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(28),
+            borderRadius: BorderRadius.circular(10),
             boxShadow: [
               BoxShadow(
                 color: AppColors.ink.withValues(alpha: 0.04),
@@ -208,7 +213,7 @@ class _VehicleSearchAndFilters extends ConsumerWidget {
         ),
         const SizedBox(height: 12),
         SizedBox(
-          height: 36,
+          height: 48,
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: [
@@ -333,65 +338,221 @@ class _VehicleStats extends ConsumerWidget {
       final state = ref.watch(vehicleCurrentFuelAnomalyProvider(vehicle.id));
       return state.valueOrNull?.hasWarning ?? false;
     }).length;
+    final now = DateTime.now();
+    var expenseCents = 0;
+    var repairCents = 0;
+    var expensesLoaded = true;
+    for (final vehicle in items) {
+      final rows = ref
+          .watch(vehicleExpenseItemsProvider(vehicle.id))
+          .valueOrNull;
+      if (rows == null) {
+        expensesLoaded = false;
+        continue;
+      }
+      for (final row in rows) {
+        if (row.date.year != now.year || row.date.month != now.month) continue;
+        expenseCents += row.amountCents;
+        if (row.category == '维修费用') repairCents += row.amountCents;
+      }
+    }
     final values = [
       ('车辆总数', items.length, AppColors.techBlue, Icons.local_shipping_outlined),
       (
         '正常',
         count(VehicleStatus.normal),
-        AppColors.primary,
+        AppColors.success,
         Icons.check_circle,
       ),
       ('待维修', count(VehicleStatus.pendingRepair), Colors.orange, Icons.build),
       ('保养到期', maintenanceDue, const Color(0xfff59e0b), Icons.event_available),
       ('油耗异常', fuelAnomalies, const Color(0xffef476f), Icons.water_drop),
     ];
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final compact = constraints.maxWidth < 370;
-        return Row(
-          children: [
-            for (var index = 0; index < values.length; index++) ...[
-              if (index > 0) const SizedBox(width: 5),
-              Expanded(
-                child: _StatTile(value: values[index], compact: compact),
-              ),
-            ],
-          ],
-        );
-      },
+    return Column(
+      children: [
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final compact =
+                    constraints.maxWidth < 330 ||
+                    MediaQuery.textScalerOf(context).scale(14) > 18;
+                final costs = [
+                  _TopCost(
+                    label: '本月维修费',
+                    value: expensesLoaded
+                        ? (repairCents / 100).toStringAsFixed(2)
+                        : '—',
+                    icon: Icons.build,
+                    color: AppColors.primary,
+                  ),
+                  _TopCost(
+                    label: '本月费用',
+                    value: expensesLoaded
+                        ? (expenseCents / 100).toStringAsFixed(2)
+                        : '—',
+                    icon: Icons.account_balance_wallet,
+                    color: Colors.orange,
+                  ),
+                ];
+                return compact
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          costs[0],
+                          const SizedBox(height: 8),
+                          costs[1],
+                        ],
+                      )
+                    : Row(
+                        children: [
+                          Expanded(child: costs[0]),
+                          const SizedBox(width: 8),
+                          Expanded(child: costs[1]),
+                        ],
+                      );
+              },
+            ),
+          ),
+        ),
+        const SizedBox(height: 12),
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('车辆统计', style: Theme.of(context).textTheme.titleLarge),
+                const SizedBox(height: 12),
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    final columns =
+                        constraints.maxWidth >= 320 &&
+                            MediaQuery.textScalerOf(context).scale(14) <= 18
+                        ? 4
+                        : 2;
+                    return Column(
+                      children: [
+                        for (
+                          var start = 0;
+                          start < values.length;
+                          start += columns
+                        ) ...[
+                          if (start > 0) const SizedBox(height: 8),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              for (
+                                var index = start;
+                                index < values.length &&
+                                    index < start + columns;
+                                index++
+                              ) ...[
+                                if (index > start) const SizedBox(width: 6),
+                                Expanded(
+                                  child: _StatTile(value: values[index]),
+                                ),
+                              ],
+                            ],
+                          ),
+                        ],
+                      ],
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
 
-class _StatTile extends StatelessWidget {
-  const _StatTile({required this.value, required this.compact});
-
-  final (String, int, Color, IconData) value;
-  final bool compact;
-
+class _TopCost extends StatelessWidget {
+  const _TopCost({
+    required this.label,
+    required this.value,
+    required this.icon,
+    required this.color,
+  });
+  final String label;
+  final String value;
+  final IconData icon;
+  final Color color;
   @override
   Widget build(BuildContext context) => Container(
-    height: compact ? 68 : 74,
+    padding: const EdgeInsets.all(12),
     decoration: BoxDecoration(
-      color: value.$3.withValues(alpha: 0.08),
-      borderRadius: BorderRadius.circular(13),
+      color: color.withValues(alpha: .06),
+      borderRadius: BorderRadius.circular(10),
     ),
-    padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 3),
     child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(value.$4, color: value.$3, size: compact ? 18 : 21),
-        const SizedBox(height: 2),
-        Text(
-          '${value.$2}',
-          style: Theme.of(context).textTheme.titleLarge
-              ?.copyWith(color: AppColors.ink, fontWeight: FontWeight.w800),
+        Row(
+          children: [
+            Icon(icon, color: color, size: 20),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                label,
+                style: const TextStyle(color: AppColors.body, fontSize: 13),
+              ),
+            ),
+          ],
         ),
+        const SizedBox(height: 8),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '$value 元',
+              softWrap: false,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+}
+
+class _StatTile extends StatelessWidget {
+  const _StatTile({required this.value});
+  final (String, int, Color, IconData) value;
+  @override
+  Widget build(BuildContext context) => Container(
+    constraints: const BoxConstraints(minHeight: 72),
+    decoration: BoxDecoration(
+      color: value.$3.withValues(alpha: .07),
+      borderRadius: BorderRadius.circular(10),
+    ),
+    padding: const EdgeInsets.all(8),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(value.$4, color: value.$3, size: 18),
+            const SizedBox(width: 4),
+            Expanded(
+              child: Text(
+                value.$1,
+                style: const TextStyle(color: AppColors.body, fontSize: 12),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
         Text(
-          value.$1,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(color: AppColors.body, fontSize: compact ? 10 : 11),
+          '${value.$2} ${value.$1 == '保养到期' ? '项' : '辆'}',
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+            color: AppColors.ink,
+          ),
         ),
       ],
     ),
@@ -410,12 +571,12 @@ class _BusinessEntryPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final entries = [
-      ('车辆档案', '车辆信息管理', Icons.description, null),
-      ('车况检查', '日常检查上报', Icons.verified, 'condition'),
+      ('车辆档案', '车辆信息管理', Icons.local_shipping, null),
       ('维修管理', '报修/维修记录', Icons.build, 'repair'),
+      ('费用分析', '用车成本统计', Icons.account_balance_wallet, 'expense'),
+      ('车况检查', '日常检查上报', Icons.directions_car, 'condition'),
       ('保养/备件', '保养计划与备件', Icons.settings, 'maintenance'),
-      ('油耗管理', '加油记录与分析', Icons.water_drop, 'fuel'),
-      ('费用分析', '用车成本统计', Icons.bar_chart, 'expense'),
+      ('油耗管理', '加油记录与分析', Icons.local_gas_station, 'fuel'),
       ('提醒中心', '保养/年检/保险', Icons.notifications, null),
     ];
     return Card(
@@ -425,18 +586,22 @@ class _BusinessEntryPanel extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text('业务入口', style: Theme.of(context).textTheme.titleLarge),
-                const Spacer(),
-                Text(
-                  '高效管理 · 保障车辆运行',
-                  style: Theme.of(context).textTheme.bodySmall,
+                Expanded(
+                  child: Text(
+                    '业务入口',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
                 ),
               ],
             ),
             const SizedBox(height: 8),
             LayoutBuilder(
               builder: (context, constraints) {
-                final columns = constraints.maxWidth >= 340 ? 4 : 3;
+                final columns =
+                    constraints.maxWidth >= 320 &&
+                        MediaQuery.textScalerOf(context).scale(14) <= 18
+                    ? 4
+                    : 2;
                 return Column(
                   children: [
                     for (
@@ -475,9 +640,9 @@ class _BusinessEntryPanel extends StatelessWidget {
     (String, String, IconData, String?) entry,
     int index,
   ) => SizedBox(
-    height: 72,
+    height: 76 * (MediaQuery.textScalerOf(context).scale(14) / 14),
     child: InkWell(
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(10),
       onTap: () {
         if (entry.$1 == '油耗管理') {
           onOpenSummary();
@@ -495,7 +660,7 @@ class _BusinessEntryPanel extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 5),
         decoration: BoxDecoration(
           color: AppColors.background,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(10),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -508,27 +673,15 @@ class _BusinessEntryPanel extends StatelessWidget {
                 Flexible(
                   child: Text(
                     entry.$1,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
                     style: const TextStyle(
                       color: AppColors.ink,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
-                const Icon(
-                  Icons.chevron_right,
-                  size: 15,
-                  color: AppColors.helper,
-                ),
               ],
-            ),
-            Text(
-              entry.$2,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(color: AppColors.body, fontSize: 9),
             ),
           ],
         ),
@@ -626,15 +779,15 @@ class _VehicleCard extends ConsumerWidget {
       child: InkWell(
         onTap: () => context.push('/vehicles/${vehicle.id}'),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(8, 6, 8, 5),
+          padding: const EdgeInsets.all(12),
           child: Column(
             children: [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width: 98,
-                    height: 58,
+                    width: 64,
+                    height: 64,
                     child: Image.asset(
                       _vehicleAsset(vehicle.vehicleType),
                       fit: BoxFit.contain,
@@ -664,7 +817,9 @@ class _VehicleCard extends ConsumerWidget {
                           ],
                         ),
                         const SizedBox(height: 4),
-                        Row(
+                        Wrap(
+                          spacing: 6,
+                          runSpacing: 4,
                           children: [
                             _VehicleTag(
                               text: VehicleOptions.typeShortLabel(
@@ -673,7 +828,6 @@ class _VehicleCard extends ConsumerWidget {
                               color: AppColors.techBlue,
                             ),
                             if (vehicle.licensePlate?.isNotEmpty == true) ...[
-                              const SizedBox(width: 6),
                               _VehicleTag(text: vehicle.licensePlate!),
                             ],
                           ],
@@ -800,7 +954,15 @@ class _Metric extends StatelessWidget {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(icon, size: 18, color: AppColors.body),
+        Icon(
+          icon,
+          size: 18,
+          color: label == '本月油耗'
+              ? AppColors.success
+              : label == '本月费用'
+              ? Colors.orange
+              : AppColors.danger,
+        ),
         const SizedBox(width: 5),
         Flexible(
           child: Column(
@@ -911,19 +1073,19 @@ class _ErrorCard extends StatelessWidget {
 }
 
 Color _statusColor(VehicleStatus status) => switch (status) {
-  VehicleStatus.normal => AppColors.primary,
+  VehicleStatus.normal => AppColors.success,
   VehicleStatus.pendingRepair => Colors.orange,
   VehicleStatus.repairing => AppColors.techBlue,
   VehicleStatus.stopped || VehicleStatus.scrapped => AppColors.body,
 };
 
 Color _businessColor(int index) => [
-  AppColors.techBlue,
+  AppColors.success,
   AppColors.primary,
   Colors.orange,
   AppColors.purple,
-  AppColors.techBlue,
-  AppColors.purple,
+  const Color(0xfff59e0b),
+  AppColors.success,
   const Color(0xffef476f),
 ][index];
 

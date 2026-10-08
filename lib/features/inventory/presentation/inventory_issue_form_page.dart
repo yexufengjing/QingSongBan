@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../app/theme/app_theme.dart';
+
 import '../../../core/database/app_database.dart';
 import '../../personnel/application/personnel_providers.dart';
 import '../application/inventory_providers.dart';
@@ -146,6 +148,17 @@ class _InventoryIssueFormPageState
     final personnel = ref.watch(allPersonnelProvider);
     return Scaffold(
       appBar: AppBar(title: const Text('领用出库')),
+      bottomNavigationBar:
+          materials.valueOrNull?.isNotEmpty == true && personnel.hasValue
+          ? InventoryFormFooter(
+              label: '确认出库',
+              icon: Icons.outbox_outlined,
+              saving: _saving,
+              buttonKey: const Key('inventory-issue-submit'),
+              onSave: () =>
+                  _save(materials.valueOrNull!, personnel.valueOrNull!),
+            )
+          : null,
       body: materials.when(
         loading: () => const InventoryLoadingState(),
         error: (_, _) => InventoryErrorState(
@@ -333,19 +346,6 @@ class _InventoryIssueFormPageState
                         ),
                       ),
                       const SizedBox(height: 16),
-                      FilledButton.icon(
-                        key: const Key('inventory-issue-submit'),
-                        onPressed: _saving ? null : () => _save(items, people),
-                        icon: _saving
-                            ? const SizedBox.square(
-                                dimension: 18,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                ),
-                              )
-                            : const Icon(Icons.outbox_outlined),
-                        label: Text(_saving ? '正在保存…' : '确认出库'),
-                      ),
                     ],
                   ),
                 ),
@@ -382,61 +382,81 @@ class _IssueLineEditor extends StatefulWidget {
 
 class _IssueLineEditorState extends State<_IssueLineEditor> {
   @override
-  Widget build(BuildContext context) => Card(
-    margin: const EdgeInsets.only(bottom: 10),
-    child: Padding(
-      padding: const EdgeInsets.all(12),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: DropdownButtonFormField<int>(
-                  initialValue: widget.state.materialId,
-                  decoration: const InputDecoration(labelText: '物资'),
-                  items: [
-                    for (final material in widget.materials)
-                      DropdownMenuItem(
-                        value: material.id,
-                        child: Text(
-                          '${material.materialName} · ${material.unitName}',
-                          overflow: TextOverflow.ellipsis,
+  Widget build(BuildContext context) {
+    final material = widget.materials
+        .where((item) => item.id == widget.state.materialId)
+        .firstOrNull;
+    return Card(
+      margin: const EdgeInsets.only(bottom: 10),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: DropdownButtonFormField<int>(
+                    isExpanded: true,
+                    initialValue: widget.state.materialId,
+                    decoration: const InputDecoration(labelText: '物资'),
+                    items: [
+                      for (final material in widget.materials)
+                        DropdownMenuItem(
+                          value: material.id,
+                          child: Text(
+                            material.materialName,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
-                      ),
-                  ],
-                  onChanged: (value) =>
-                      setState(() => widget.state.materialId = value),
+                    ],
+                    onChanged: (value) =>
+                        setState(() => widget.state.materialId = value),
+                  ),
                 ),
-              ),
-              if (widget.onRemove != null)
-                IconButton(
-                  tooltip: '移除明细',
-                  onPressed: widget.onRemove,
-                  icon: const Icon(Icons.remove_circle_outline),
-                ),
-            ],
-          ),
-          TextFormField(
-            key: const Key('inventory-issue-quantity'),
-            controller: widget.state.quantity,
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            decoration: const InputDecoration(
-              labelText: '领取数量',
-              hintText: '大于 0',
+                if (widget.onRemove != null)
+                  IconButton(
+                    tooltip: '移除明细',
+                    onPressed: widget.onRemove,
+                    icon: const Icon(Icons.remove_circle_outline),
+                  ),
+              ],
             ),
-            validator: (value) {
-              final quantity = double.tryParse(value ?? '');
-              return quantity == null || quantity <= 0 ? '请输入大于 0 的数量' : null;
-            },
-          ),
-          TextField(
-            controller: widget.state.remark,
-            decoration: const InputDecoration(labelText: '明细备注（可选）'),
-          ),
-        ],
+            const SizedBox(height: 12),
+            InputDecorator(
+              decoration: const InputDecoration(
+                labelText: '规格',
+                fillColor: AppColors.lightBlue,
+              ),
+              child: Text(material?.modelSpec ?? '选择物资后显示规格'),
+            ),
+            const SizedBox(height: 12),
+            TextFormField(
+              key: const Key('inventory-issue-quantity'),
+              controller: widget.state.quantity,
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
+              ),
+              decoration: InputDecoration(
+                suffixText: material?.unitName,
+                labelText: '领取数量',
+                hintText: '大于 0',
+              ),
+              validator: (value) {
+                final quantity = double.tryParse(value ?? '');
+                return quantity == null || quantity <= 0 ? '请输入大于 0 的数量' : null;
+              },
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              controller: widget.state.remark,
+              maxLines: 3,
+              decoration: const InputDecoration(labelText: '明细备注（可选）'),
+            ),
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 String _dateLabel(DateTime value) =>

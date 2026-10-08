@@ -266,7 +266,7 @@ class _IssueCard extends ConsumerWidget {
       child: InkWell(
         key: Key('inventory-issue-${issue.id}'),
         onTap: () => context.push('/inventory/issues/${issue.id}'),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(12),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(12, 12, 12, 10),
           child: Column(

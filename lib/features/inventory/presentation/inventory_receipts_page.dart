@@ -264,7 +264,7 @@ class _ReceiptCard extends ConsumerWidget {
       child: InkWell(
         key: Key('inventory-receipt-${receipt.id}'),
         onTap: () => context.push('/inventory/receipts/${receipt.id}'),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(12),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(12, 12, 12, 10),
           child: Column(

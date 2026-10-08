@@ -25,20 +25,47 @@ class VehicleMetricGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, constraints) {
-      final columns = constraints.maxWidth >= 340 ? 4 : 2;
+      final largeText = MediaQuery.textScalerOf(context).scale(14) > 18;
+      var columns = constraints.maxWidth >= 320 && !largeText ? 4 : 2;
+      double valueWidth(VehicleMetricData item) {
+        final painter = TextPainter(
+          text: TextSpan(
+            text: item.value,
+            style: TextStyle(
+              fontSize: item.value.contains('¥') || item.value.contains('元')
+                  ? 16
+                  : 20,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          textDirection: Directionality.of(context),
+          textScaler: MediaQuery.textScalerOf(context),
+        )..layout();
+        return painter.width;
+      }
+
+      while (columns > 1 &&
+          items.any(
+            (item) =>
+                valueWidth(item) >
+                (constraints.maxWidth - (columns - 1) * 8) / columns - 16,
+          )) {
+        columns = columns ~/ 2;
+      }
       return Column(
         children: [
           for (var start = 0; start < items.length; start += columns) ...[
-            if (start > 0) const SizedBox(height: 7),
+            if (start > 0) const SizedBox(height: 8),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                for (
-                  var index = start;
-                  index < items.length && index < start + columns;
-                  index++
-                ) ...[
-                  if (index > start) const SizedBox(width: 7),
-                  Expanded(child: _MetricTile(item: items[index])),
+                for (var index = start; index < start + columns; index++) ...[
+                  if (index > start) const SizedBox(width: 8),
+                  Expanded(
+                    child: index < items.length
+                        ? _MetricTile(item: items[index])
+                        : const SizedBox.shrink(),
+                  ),
                 ],
               ],
             ),
@@ -51,42 +78,47 @@ class VehicleMetricGrid extends StatelessWidget {
 
 class _MetricTile extends StatelessWidget {
   const _MetricTile({required this.item});
-
   final VehicleMetricData item;
-
   @override
   Widget build(BuildContext context) => Container(
-    height: 92,
-    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 7),
+    constraints: const BoxConstraints(minHeight: 76),
+    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
     decoration: BoxDecoration(
-      color: item.color.withValues(alpha: 0.09),
-      borderRadius: BorderRadius.circular(14),
+      color: item.color.withValues(alpha: .07),
+      borderRadius: BorderRadius.circular(10),
     ),
     child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(item.icon, color: item.color, size: 20),
-        const SizedBox(height: 3),
-        SizedBox(
-          height: 23,
-          child: FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              item.value,
-              maxLines: 1,
-              style: const TextStyle(
-                color: AppColors.ink,
-                fontSize: 19,
-                fontWeight: FontWeight.w800,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(item.icon, color: item.color, size: 18),
+            const SizedBox(width: 4),
+            Expanded(
+              child: Text(
+                item.label,
+                style: const TextStyle(
+                  color: AppColors.body,
+                  fontSize: 12,
+                  height: 1.4,
+                ),
               ),
             ),
-          ),
+          ],
         ),
+        const SizedBox(height: 10),
         Text(
-          item.label,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: const TextStyle(color: AppColors.body, fontSize: 11),
+          item.value,
+          softWrap: false,
+          style: TextStyle(
+            color: AppColors.ink,
+            fontSize: item.value.contains('¥') || item.value.contains('元')
+                ? 16
+                : 20,
+            height: 1.2,
+            fontWeight: FontWeight.w700,
+          ),
         ),
       ],
     ),

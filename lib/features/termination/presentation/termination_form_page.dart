@@ -130,10 +130,34 @@ class _TerminationFormPageState extends ConsumerState<TerminationFormPage> {
           ),
         ],
       ),
+      bottomNavigationBar: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+          child: SizedBox(
+            width: double.infinity,
+            child: FilledButton.icon(
+              key: const Key('termination-save-button'),
+              onPressed: _saving || employees.isEmpty ? null : _save,
+              icon: _saving
+                  ? const SizedBox(
+                      width: 18,
+                      height: 18,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.white,
+                      ),
+                    )
+                  : const Icon(Icons.save_outlined),
+              label: Text(_saving ? '保存中…' : '保存离职'),
+            ),
+          ),
+        ),
+      ),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -168,44 +192,50 @@ class _TerminationFormPageState extends ConsumerState<TerminationFormPage> {
                       ),
                       const SizedBox(height: 16),
                       if (employees.isEmpty)
-                        InputDecorator(
-                          decoration: const InputDecoration(
-                            labelText: '离职人员',
-                            prefixIcon: Icon(Icons.person_outline),
+                        _referenceField(
+                          '离职人员',
+                          InputDecorator(
+                            decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.person_outline),
+                            ),
+                            child: const Text('暂无可登记离职的在岗人员。'),
                           ),
-                          child: const Text('暂无可登记离职的在岗人员。'),
                         )
                       else
-                        DropdownButtonFormField<int>(
-                          key: const Key('termination-employee-field'),
-                          initialValue:
-                              _employeeId != null &&
-                                  employees.any(
-                                    (item) => item.id == _employeeId,
-                                  )
-                              ? _employeeId
-                              : null,
-                          isExpanded: true,
-                          decoration: const InputDecoration(
-                            labelText: '离职人员',
-                            prefixIcon: Icon(Icons.person_outline),
-                          ),
-                          hint: const Text('请选择人员'),
-                          validator: (value) => value == null ? '请选择人员' : null,
-                          items: [
-                            for (final employee in employees)
-                              DropdownMenuItem(
-                                value: employee.id,
-                                child: Text(
-                                  '${employee.name} · ${employee.employeeNo}',
+                        _referenceField(
+                          '离职人员',
+                          DropdownButtonFormField<int>(
+                            key: const Key('termination-employee-field'),
+                            initialValue:
+                                _employeeId != null &&
+                                    employees.any(
+                                      (item) => item.id == _employeeId,
+                                    )
+                                ? _employeeId
+                                : null,
+                            isExpanded: true,
+                            decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.person_outline),
+                            ),
+                            hint: const Text('请选择人员'),
+                            validator: (value) =>
+                                value == null ? '请选择人员' : null,
+                            items: [
+                              for (final employee in employees)
+                                DropdownMenuItem(
+                                  value: employee.id,
+                                  child: Text(
+                                    '${employee.name} · ${employee.employeeNo}',
+                                  ),
                                 ),
-                              ),
-                          ],
-                          onChanged: widget.isEditing
-                              ? null
-                              : (value) => setState(() => _employeeId = value),
+                            ],
+                            onChanged: widget.isEditing
+                                ? null
+                                : (value) =>
+                                      setState(() => _employeeId = value),
+                          ),
                         ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: 20),
                       _dateField(
                         context: context,
                         key: const Key('termination-date-field'),
@@ -232,12 +262,14 @@ class _TerminationFormPageState extends ConsumerState<TerminationFormPage> {
                       ),
                       if (_isInsuranceStopped) ...[
                         const SizedBox(height: 4),
-                        TextFormField(
-                          key: const Key('termination-stop-month-field'),
-                          controller: _stopMonthController,
-                          decoration: const InputDecoration(
-                            labelText: '停保月份',
-                            hintText: 'YYYY-MM，例如 2026-09',
+                        _referenceField(
+                          '停保月份',
+                          TextFormField(
+                            key: const Key('termination-stop-month-field'),
+                            controller: _stopMonthController,
+                            decoration: const InputDecoration(
+                              hintText: 'YYYY-MM，例如 2026-09',
+                            ),
                           ),
                         ),
                       ],
@@ -261,46 +293,30 @@ class _TerminationFormPageState extends ConsumerState<TerminationFormPage> {
                             setState(() => _hasUnsettledItems = value),
                       ),
                       const SizedBox(height: 8),
-                      TextFormField(
-                        key: const Key('termination-remark-field'),
-                        controller: _remarkController,
-                        maxLines: 3,
-                        decoration: const InputDecoration(
-                          labelText: '离职说明',
-                          hintText: '可填写交接、未结事项等说明',
-                          prefixIcon: Icon(Icons.notes_outlined),
+                      _referenceField(
+                        '离职说明',
+                        TextFormField(
+                          key: const Key('termination-remark-field'),
+                          controller: _remarkController,
+                          maxLines: 3,
+                          decoration: const InputDecoration(
+                            hintText: '可填写交接、未结事项等说明',
+                            prefixIcon: Icon(Icons.notes_outlined),
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-              const SizedBox(height: 18),
+              const SizedBox(height: 16),
               AttachmentPickerCard(
                 title: '离职材料',
                 files: _pendingAttachments,
                 onChanged: (value) =>
                     setState(() => _pendingAttachments = value),
               ),
-              const SizedBox(height: 18),
-              SizedBox(
-                width: double.infinity,
-                child: FilledButton.icon(
-                  key: const Key('termination-save-button'),
-                  onPressed: _saving || employees.isEmpty ? null : _save,
-                  icon: _saving
-                      ? const SizedBox(
-                          width: 18,
-                          height: 18,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: Colors.white,
-                          ),
-                        )
-                      : const Icon(Icons.save_outlined),
-                  label: Text(_saving ? '保存中…' : '保存离职'),
-                ),
-              ),
+              const SizedBox(height: 16),
             ],
           ),
         ),
@@ -320,18 +336,61 @@ class _TerminationFormPageState extends ConsumerState<TerminationFormPage> {
       children: [
         Text(label, style: Theme.of(context).textTheme.bodyMedium),
         const SizedBox(height: 8),
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          children: [
-            for (final option in options)
-              ChoiceChip(
-                label: Text(TerminationOptions.typeLabel(option)),
-                selected: option == selected,
-                onSelected: (_) => onSelected(option),
-                selectedColor: AppColors.lightGreen,
-              ),
-          ],
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final columns =
+                constraints.maxWidth < 280 ||
+                    MediaQuery.textScalerOf(context).scale(14) > 19
+                ? 2
+                : 4;
+            return Wrap(
+              spacing: 6,
+              runSpacing: 8,
+              children: [
+                for (final option in options)
+                  SizedBox(
+                    width: (constraints.maxWidth - (columns - 1) * 6) / columns,
+                    child: ChoiceChip(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      
+                      label: SizedBox(
+                        width:
+                            (constraints.maxWidth - (columns - 1) * 6) /
+                                columns -
+                            24,
+                        child: Text(
+                          TerminationOptions.typeLabel(option),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      selected: option == selected,
+                      onSelected: (_) => onSelected(option),
+                      showCheckmark: false,
+                      selectedColor: AppColors.primary,
+                      backgroundColor: AppColors.lightBlue,
+                      labelStyle: Theme.of(context).textTheme.bodyMedium
+                          ?.copyWith(
+                            color: option == selected
+                                ? Colors.white
+                                : AppColors.ink,
+                            fontWeight: option == selected
+                                ? FontWeight.w600
+                                : FontWeight.w400,
+                          ),
+                      side: BorderSide(
+                        color: option == selected
+                            ? AppColors.primary
+                            : Colors.transparent,
+                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      labelPadding: const EdgeInsets.symmetric(horizontal: 4),
+                    ),
+                  ),
+              ],
+            );
+          },
         ),
       ],
     );
@@ -343,13 +402,20 @@ class _TerminationFormPageState extends ConsumerState<TerminationFormPage> {
     required ValueChanged<bool> onChanged,
     String? subtitle,
   }) {
-    return CheckboxListTile(
-      contentPadding: EdgeInsets.zero,
-      title: Text(title),
-      subtitle: subtitle == null ? null : Text(subtitle),
-      value: value,
-      onChanged: (value) => onChanged(value ?? false),
-      controlAffinity: ListTileControlAffinity.leading,
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 4),
+      decoration: BoxDecoration(
+        border: Border.all(color: AppColors.divider),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: CheckboxListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+        title: Text(title),
+        subtitle: subtitle == null ? null : Text(subtitle),
+        value: value,
+        onChanged: (value) => onChanged(value ?? false),
+        controlAffinity: ListTileControlAffinity.leading,
+      ),
     );
   }
 
@@ -362,14 +428,16 @@ class _TerminationFormPageState extends ConsumerState<TerminationFormPage> {
   }) {
     return InkWell(
       key: key,
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: BorderRadius.circular(12),
       onTap: onTap,
-      child: InputDecorator(
-        decoration: InputDecoration(
-          labelText: label,
-          suffixIcon: const Icon(Icons.calendar_today_outlined, size: 19),
+      child: _referenceField(
+        label,
+        InputDecorator(
+          decoration: InputDecoration(
+            suffixIcon: const Icon(Icons.calendar_today_outlined, size: 19),
+          ),
+          child: Text(AppDateUtils.formatDate(value)),
         ),
-        child: Text(AppDateUtils.formatDate(value)),
       ),
     );
   }
@@ -443,3 +511,15 @@ class _TerminationFormPageState extends ConsumerState<TerminationFormPage> {
     );
   }
 }
+
+Widget _referenceField(String label, Widget field) => Column(
+  crossAxisAlignment: CrossAxisAlignment.stretch,
+  children: [
+    Text(
+      label,
+      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+    ),
+    const SizedBox(height: 8),
+    field,
+  ],
+);

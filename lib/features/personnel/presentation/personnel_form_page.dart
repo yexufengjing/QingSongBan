@@ -158,15 +158,38 @@ class _PersonnelFormPageState extends ConsumerState<PersonnelFormPage> {
             ),
         ],
       ),
+      bottomNavigationBar: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+          child: SizedBox(
+            width: double.infinity,
+            child: FilledButton.icon(
+              onPressed: _saving ? null : _save,
+              icon: _saving
+                  ? const SizedBox(
+                      width: 18,
+                      height: 18,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.white,
+                      ),
+                    )
+                  : const Icon(Icons.save_outlined),
+              label: Text(_saving ? '保存中…' : '保存档案'),
+            ),
+          ),
+        ),
+      ),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _FormHint(editing: widget.isEditing),
-              const SizedBox(height: 18),
+              const SizedBox(height: 16),
               _FormSection(
                 title: '基本信息',
                 icon: Icons.badge_outlined,
@@ -179,59 +202,58 @@ class _PersonnelFormPageState extends ConsumerState<PersonnelFormPage> {
                     validator: (value) =>
                         value == null || value.trim().isEmpty ? '请填写姓名' : null,
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 20),
                   _textField(
                     controller: _employeeNoController,
                     label: '人员编号',
                     hint: '留空将自动生成，如 EMP-0001',
                     key: const Key('personnel-number-field'),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 20),
                   _choiceChips(
                     label: '性别',
                     options: PersonnelOptions.genders,
                     selected: _gender,
                     onSelected: (value) => setState(() => _gender = value),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 20),
                   _textField(
                     controller: _idCardController,
                     label: '身份证号',
                     hint: '默认脱敏显示',
                     keyboardType: TextInputType.number,
                   ),
-                  const SizedBox(height: 12),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _dateField(
-                          label: '出生日期',
-                          value: _birthDate,
-                          onTap: () => _pickBirthDate(context),
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: InputDecorator(
-                          decoration: const InputDecoration(labelText: '自动年龄'),
-                          child: Text(
-                            _birthDate == null
-                                ? '未填写'
-                                : '${AppDateUtils.ageAt(_birthDate!)} 岁',
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          ),
-                        ),
-                      ),
-                    ],
+                  const SizedBox(height: 20),
+                  _dateField(
+                    label: '出生日期',
+                    value: _birthDate,
+                    onTap: () => _pickBirthDate(context),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 20),
+                  _referenceField(
+                    '自动年龄',
+                    InputDecorator(
+                      decoration: const InputDecoration(
+                        filled: true,
+                        fillColor: AppColors.background,
+                        helperText: '只读 · 根据出生日期计算',
+                      ),
+                      child: Text(
+                        _birthDate == null
+                            ? '未填写'
+                            : '${AppDateUtils.ageAt(_birthDate!)} 岁',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
                   _textField(
                     controller: _phoneController,
                     label: '联系电话',
                     hint: '默认脱敏显示',
                     keyboardType: TextInputType.phone,
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 20),
                   _textField(
                     controller: _addressController,
                     label: '家庭住址',
@@ -250,7 +272,7 @@ class _PersonnelFormPageState extends ConsumerState<PersonnelFormPage> {
                     value: _hireDate,
                     onTap: () => _pickHireDate(context),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 20),
                   _choiceChips(
                     label: '当前状态',
                     options: EmployeeStatus.values,
@@ -258,80 +280,84 @@ class _PersonnelFormPageState extends ConsumerState<PersonnelFormPage> {
                     labelBuilder: PersonnelOptions.statusLabel,
                     onSelected: (value) => setState(() => _status = value),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 20),
                   _textField(
                     controller: _positionController,
                     label: '岗位',
                     hint: '例如：操作工、司机',
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 20),
                   _textField(
                     controller: _teamController,
                     label: '所属班组',
                     hint: '请输入班组名称',
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 20),
                   _textField(
                     controller: _workAreaController,
                     label: '工作区域',
                     hint: '例如：特钢、重科、管业',
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 20),
                   _textField(
                     controller: _managerController,
                     label: '负责人',
                     hint: '请输入负责人',
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 20),
                   _textField(
                     controller: _employmentTypeController,
                     label: '用工类型',
                     hint: '临时工 / 正式工 / 其他',
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 20),
                   if (groups.isEmpty)
-                    InputDecorator(
-                      decoration: const InputDecoration(
-                        labelText: '默认考勤组',
-                        prefixIcon: Icon(Icons.groups_outlined),
-                      ),
-                      child: Text(
-                        '暂无可用考勤组，请先在考勤页建立',
-                        style: Theme.of(context).textTheme.bodyMedium,
+                    _referenceField(
+                      '默认考勤组',
+                      InputDecorator(
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.groups_outlined),
+                        ),
+                        child: Text(
+                          '暂无可用考勤组，请先在考勤页建立',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
                       ),
                     )
                   else
-                    DropdownButtonFormField<int>(
-                      initialValue:
-                          _attendanceGroupId != null &&
-                              groups.any(
-                                (group) => group.id == _attendanceGroupId,
-                              )
-                          ? _attendanceGroupId
-                          : 0,
-                      isExpanded: true,
-                      decoration: const InputDecoration(
-                        labelText: '默认考勤组',
-                        prefixIcon: Icon(Icons.groups_outlined),
-                      ),
-                      hint: const Text('请选择考勤组'),
-                      items: [
-                        const DropdownMenuItem(value: 0, child: Text('暂不指定')),
-                        for (final group in groups)
-                          DropdownMenuItem(
-                            value: group.id,
-                            child: Text(
-                              group.isEnabled
-                                  ? group.name
-                                  : '${group.name}（已停用，保留当前配置）',
+                    _referenceField(
+                      '默认考勤组',
+                      DropdownButtonFormField<int>(
+                        initialValue:
+                            _attendanceGroupId != null &&
+                                groups.any(
+                                  (group) => group.id == _attendanceGroupId,
+                                )
+                            ? _attendanceGroupId
+                            : 0,
+                        isExpanded: true,
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.groups_outlined),
+                        ),
+                        hint: const Text('请选择考勤组'),
+                        items: [
+                          const DropdownMenuItem(value: 0, child: Text('暂不指定')),
+                          for (final group in groups)
+                            DropdownMenuItem(
+                              value: group.id,
+                              child: Text(
+                                group.isEnabled
+                                    ? group.name
+                                    : '${group.name}（已停用，保留当前配置）',
+                              ),
                             ),
-                          ),
-                      ],
-                      onChanged: (value) => setState(
-                        () => _attendanceGroupId = value == 0 ? null : value,
+                        ],
+                        onChanged: (value) => setState(
+                          () => _attendanceGroupId = value == 0 ? null : value,
+                        ),
                       ),
                     ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 20),
                   _textField(
                     controller: _remarkController,
                     label: '备注',
@@ -340,24 +366,8 @@ class _PersonnelFormPageState extends ConsumerState<PersonnelFormPage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 18),
-              SizedBox(
-                width: double.infinity,
-                child: FilledButton.icon(
-                  onPressed: _saving ? null : _save,
-                  icon: _saving
-                      ? const SizedBox(
-                          width: 18,
-                          height: 18,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: Colors.white,
-                          ),
-                        )
-                      : const Icon(Icons.save_outlined),
-                  label: Text(_saving ? '保存中…' : '保存档案'),
-                ),
-              ),
+              const SizedBox(height: 16),
+
               const SizedBox(height: 10),
               Center(
                 child: Text(
@@ -372,7 +382,7 @@ class _PersonnelFormPageState extends ConsumerState<PersonnelFormPage> {
     );
   }
 
-  TextFormField _textField({
+  Widget _textField({
     required TextEditingController controller,
     required String label,
     required String hint,
@@ -381,13 +391,16 @@ class _PersonnelFormPageState extends ConsumerState<PersonnelFormPage> {
     TextInputType? keyboardType,
     int maxLines = 1,
   }) {
-    return TextFormField(
-      key: key,
-      controller: controller,
-      validator: validator,
-      keyboardType: keyboardType,
-      maxLines: maxLines,
-      decoration: InputDecoration(labelText: label, hintText: hint),
+    return _referenceField(
+      label,
+      TextFormField(
+        key: key,
+        controller: controller,
+        validator: validator,
+        keyboardType: keyboardType,
+        maxLines: maxLines,
+        decoration: InputDecoration(hintText: hint),
+      ),
     );
   }
 
@@ -412,7 +425,7 @@ class _PersonnelFormPageState extends ConsumerState<PersonnelFormPage> {
                 label: Text(labelBuilder?.call(option) ?? option.toString()),
                 selected: selected == option,
                 onSelected: (_) => onSelected(option),
-                selectedColor: AppColors.lightGreen,
+                selectedColor: AppColors.lightBlue,
                 side: BorderSide(
                   color: selected == option
                       ? AppColors.primary
@@ -439,17 +452,19 @@ class _PersonnelFormPageState extends ConsumerState<PersonnelFormPage> {
     required VoidCallback onTap,
   }) {
     return InkWell(
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: BorderRadius.circular(12),
       onTap: onTap,
-      child: InputDecorator(
-        decoration: InputDecoration(
-          labelText: label,
-          suffixIcon: const Icon(Icons.calendar_today_outlined, size: 19),
-        ),
-        child: Text(
-          AppDateUtils.formatDate(value),
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            color: value == null ? AppColors.helper : AppColors.ink,
+      child: _referenceField(
+        label,
+        InputDecorator(
+          decoration: InputDecoration(
+            suffixIcon: const Icon(Icons.calendar_today_outlined, size: 19),
+          ),
+          child: Text(
+            AppDateUtils.formatDate(value),
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              color: value == null ? AppColors.helper : AppColors.ink,
+            ),
           ),
         ),
       ),
@@ -534,7 +549,7 @@ class _FormHint extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: AppColors.lightGreen,
+      color: AppColors.lightBlue,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
@@ -573,7 +588,7 @@ class _FormSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(18),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -592,3 +607,15 @@ class _FormSection extends StatelessWidget {
     );
   }
 }
+
+Widget _referenceField(String label, Widget field) => Column(
+  crossAxisAlignment: CrossAxisAlignment.stretch,
+  children: [
+    Text(
+      label,
+      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+    ),
+    const SizedBox(height: 8),
+    field,
+  ],
+);

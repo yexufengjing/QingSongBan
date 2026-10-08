@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../app/theme/app_theme.dart';
+import '../../../core/database/database_enums.dart';
 import '../application/payroll_providers.dart';
 import '../domain/payroll_options.dart';
 
@@ -26,20 +28,92 @@ class PayrollHistoryPage extends ConsumerWidget {
           data: (values) => ListView(
             padding: const EdgeInsets.all(16),
             children: [
-              for (final batch in values)
+              for (var index = 0; index < values.length; index++) ...[
+                if (index == 0 ||
+                    values[index].payrollMonth !=
+                        values[index - 1].payrollMonth)
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 16, 0, 12),
+                    child: Text(
+                      values[index].payrollMonth,
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                  ),
                 Card(
-                  child: ListTile(
-                    title: Text(batch.name),
-                    subtitle: Text(
-                      '${PayrollOptions.statusLabel(batch.status)} · ${batch.employeeCount}人 · 出勤 ${(batch.attendanceHalfDaysTotal / 2).toStringAsFixed(1)}天',
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(12),
+                    onTap: () => context.push(
+                      '/reports/payroll/edit/${values[index].id}',
                     ),
-                    trailing: Text(
-                      '${batch.finalWageTotal.toStringAsFixed(2)}元',
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Row(
+                        children: [
+                          const CircleAvatar(
+                            backgroundColor: AppColors.lightGreen,
+                            child: Icon(
+                              Icons.account_balance_wallet_outlined,
+                              color: AppColors.success,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  values[index].name,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium,
+                                ),
+                                const SizedBox(height: 6),
+                                Text(
+                                  '${values[index].employeeCount}人 · 出勤 ${(values[index].attendanceHalfDaysTotal / 2).toStringAsFixed(1)}天',
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
+                                const SizedBox(height: 6),
+                                Text(
+                                  PayrollOptions.statusLabel(
+                                    values[index].status,
+                                  ),
+                                  style: Theme.of(context).textTheme.labelMedium
+                                      ?.copyWith(
+                                        color:
+                                            values[index].status ==
+                                                PayrollStatus.locked
+                                            ? AppColors.purple
+                                            : values[index].status ==
+                                                  PayrollStatus.confirmed
+                                            ? AppColors.success
+                                            : AppColors.warning,
+                                      ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                '${values[index].finalWageTotal.toStringAsFixed(2)}元',
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              const SizedBox(height: 4),
+                              const Icon(
+                                Icons.chevron_right,
+                                color: AppColors.body,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                    onTap: () =>
-                        context.push('/reports/payroll/edit/${batch.id}'),
                   ),
                 ),
+                const SizedBox(height: 8),
+              ],
               if (values.isEmpty)
                 const Padding(
                   padding: EdgeInsets.all(32),

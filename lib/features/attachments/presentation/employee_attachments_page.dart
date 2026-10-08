@@ -34,7 +34,7 @@ class _EmployeeAttachmentsPageState
     );
     return Scaffold(
       appBar: AppBar(
-        title: const Text('附件资料'),
+        title: const Text('人员附件'),
         actions: [
           IconButton(
             key: const Key('attachment-add-button'),
@@ -80,10 +80,9 @@ class _EmployeeAttachmentsPageState
               item,
         ];
         return ListView(
-          padding: const EdgeInsets.fromLTRB(20, 12, 20, 90),
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 104),
           children: [
             Card(
-              color: AppColors.lightBlue,
               child: ListTile(
                 leading: const CircleAvatar(child: Icon(Icons.person_outline)),
                 title: Text(employee.name),
@@ -93,42 +92,95 @@ class _EmployeeAttachmentsPageState
               ),
             ),
             const SizedBox(height: 12),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                ChoiceChip(
-                  label: const Text('全部'),
-                  selected: _category == null,
-                  onSelected: (_) => setState(() => _category = null),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      '附件分类',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    const SizedBox(height: 12),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        ChoiceChip(
+                          label: const Text('全部'),
+                          selected: _category == null,
+                          onSelected: (_) => setState(() => _category = null),
+                        ),
+                        for (final value in AttachmentOptions.categories)
+                          ChoiceChip(
+                            label: Text(AttachmentOptions.categoryLabel(value)),
+                            selected: _category == value,
+                            onSelected: (_) =>
+                                setState(() => _category = value),
+                          ),
+                      ],
+                    ),
+                    SwitchListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: const Text('显示已删除附件'),
+                      value: _showDeleted,
+                      onChanged: (value) =>
+                          setState(() => _showDeleted = value),
+                    ),
+                  ],
                 ),
-                for (final value in AttachmentOptions.categories)
-                  ChoiceChip(
-                    label: Text(AttachmentOptions.categoryLabel(value)),
-                    selected: _category == value,
-                    onSelected: (_) => setState(() => _category = value),
-                  ),
-              ],
+              ),
             ),
-            SwitchListTile(
-              contentPadding: EdgeInsets.zero,
-              title: const Text('显示已删除附件'),
-              value: _showDeleted,
-              onChanged: (value) => setState(() => _showDeleted = value),
-            ),
+            const SizedBox(height: 12),
             if (items.isEmpty)
               const _AttachmentEmpty()
             else
-              for (final item in items) ...[
-                _AttachmentCard(
-                  attachment: item,
-                  onView: () => _view(item),
-                  onExport: () => _export(item),
-                  onDelete: () => _delete(item),
-                  onRestore: () => _restore(item),
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '附件列表',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      const SizedBox(height: 12),
+                      LayoutBuilder(
+                        builder: (context, constraints) {
+                          final columns =
+                              constraints.maxWidth < 290 ||
+                                  MediaQuery.textScalerOf(context).scale(14) >
+                                      19
+                              ? 2
+                              : 3;
+                          return Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
+                            children: [
+                              for (final item in items)
+                                SizedBox(
+                                  width:
+                                      (constraints.maxWidth -
+                                          (columns - 1) * 8) /
+                                      columns,
+                                  child: _AttachmentCard(
+                                    attachment: item,
+                                    onView: () => _view(item),
+                                    onExport: () => _export(item),
+                                    onDelete: () => _delete(item),
+                                    onRestore: () => _restore(item),
+                                  ),
+                                ),
+                            ],
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 10),
-              ],
+              ),
           ],
         );
       },
@@ -211,16 +263,25 @@ class _EmployeeAttachmentsPageState
       final reveal = await showDialog<bool>(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('查看敏感附件'),
+          title: const Text('查看敏感附件', textAlign: TextAlign.center),
           content: const Text('该图片可能包含身份证或银行卡信息，是否显示原图？'),
           actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context, false),
-              child: const Text('取消'),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.pop(context, true),
-              child: const Text('显示原图'),
+            Row(
+              children: [
+                Expanded(
+                  child: TextButton(
+                    onPressed: () => Navigator.pop(context, false),
+                    child: const Text('取消'),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: FilledButton(
+                    onPressed: () => Navigator.pop(context, true),
+                    child: const Text('显示原图'),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -309,42 +370,84 @@ class _AttachmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: attachment.isDeleted ? Colors.grey.shade100 : null,
-      child: ListTile(
+    return Material(
+      color: attachment.isDeleted ? const Color(0xFFF2F4F7) : Colors.white,
+      borderRadius: BorderRadius.circular(8),
+      child: InkWell(
         key: Key('attachment-${attachment.id}'),
-        leading: CircleAvatar(
-          backgroundColor: AppColors.lightGreen,
-          child: Icon(
-            AttachmentOptions.isSensitive(attachment.category)
-                ? Icons.shield_outlined
-                : Icons.description_outlined,
-            color: AppColors.primary,
-          ),
-        ),
-        title: Text(
-          attachment.originalFileName,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-        subtitle: Text(
-          '${AttachmentOptions.categoryLabel(attachment.category)}${attachment.isDeleted ? ' · 已删除' : ''}',
-        ),
         onTap: attachment.isDeleted ? null : onView,
-        trailing: PopupMenuButton<String>(
-          onSelected: (value) {
-            if (value == 'view') onView();
-            if (value == 'export') onExport();
-            if (value == 'delete') onDelete();
-            if (value == 'restore') onRestore();
-          },
-          itemBuilder: (_) => attachment.isDeleted
-              ? const [PopupMenuItem(value: 'restore', child: Text('恢复'))]
-              : const [
-                  PopupMenuItem(value: 'view', child: Text('查看')),
-                  PopupMenuItem(value: 'export', child: Text('导出副本')),
-                  PopupMenuItem(value: 'delete', child: Text('删除')),
-                ],
+        borderRadius: BorderRadius.circular(8),
+        child: Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            border: Border.all(color: AppColors.divider),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Column(
+            children: [
+              Align(
+                alignment: Alignment.centerRight,
+                child: PopupMenuButton<String>(
+                  onSelected: (value) {
+                    if (value == 'view') onView();
+                    if (value == 'export') onExport();
+                    if (value == 'delete') onDelete();
+                    if (value == 'restore') onRestore();
+                  },
+                  itemBuilder: (_) => attachment.isDeleted
+                      ? const [
+                          PopupMenuItem(value: 'restore', child: Text('恢复')),
+                        ]
+                      : const [
+                          PopupMenuItem(value: 'view', child: Text('查看')),
+                          PopupMenuItem(value: 'export', child: Text('导出副本')),
+                          PopupMenuItem(value: 'delete', child: Text('删除')),
+                        ],
+                ),
+              ),
+              Container(
+                height: 64,
+                alignment: Alignment.center,
+                child: Icon(
+                  AttachmentOptions.isSensitive(attachment.category)
+                      ? Icons.shield_outlined
+                      : attachment.extension.toLowerCase() == 'pdf'
+                      ? Icons.picture_as_pdf_outlined
+                      : Icons.image_outlined,
+                  color: attachment.isDeleted
+                      ? AppColors.helper
+                      : attachment.extension.toLowerCase() == 'pdf'
+                      ? AppColors.danger
+                      : AppColors.techBlue,
+                  size: 40,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                attachment.originalFileName,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodySmall
+                    ?.copyWith(color: AppColors.ink),
+              ),
+              const SizedBox(height: 8),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                decoration: BoxDecoration(
+                  color: AppColors.lightBlue,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  attachment.isDeleted
+                      ? '已删除'
+                      : AttachmentOptions.categoryLabel(attachment.category),
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.labelSmall,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -43,9 +43,8 @@ class VehicleDetailPage extends ConsumerWidget {
             appBar: AppBar(
               title: AnimatedBuilder(
                 animation: tabController,
-                builder: (context, _) => Text(
-                  _titleForTabIndex(tabController.index),
-                ),
+                builder: (context, _) =>
+                    Text(_titleForTabIndex(tabController.index)),
               ),
               actions: [
                 IconButton(
@@ -73,14 +72,21 @@ class VehicleDetailPage extends ConsumerWidget {
                 return Column(
                   children: [
                     _VehicleHeader(vehicle: item),
-                    const TabBar(
+                    TabBar(
                       isScrollable: true,
                       tabAlignment: TabAlignment.start,
-                      labelColor: AppColors.techBlue,
+                      labelColor: AppColors.primary,
+                      labelStyle: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      unselectedLabelStyle: const TextStyle(fontSize: 15),
+                      indicatorWeight: 3,
+                      dividerColor: Colors.transparent,
                       unselectedLabelColor: AppColors.body,
                       indicatorColor: AppColors.techBlue,
                       tabs: [
-                        Tab(text: '概览'),
+                        Tab(text: '档案'),
                         Tab(text: '车况'),
                         Tab(text: '维修'),
                         Tab(text: '保养/备件'),
@@ -94,8 +100,9 @@ class VehicleDetailPage extends ConsumerWidget {
                           _OverviewTab(
                             vehicle: item,
                             onStop: () => _stop(context, ref, item.id),
-                            onAttachments: () =>
-                                context.push('/vehicles/${item.id}/attachments'),
+                            onAttachments: () => context.push(
+                              '/vehicles/${item.id}/attachments',
+                            ),
                           ),
                           VehicleConditionTab(vehicle: item),
                           VehicleRepairTab(vehicle: item),
@@ -172,16 +179,16 @@ class _VehicleHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _vehicleStatusColor(vehicle.status);
     return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 4, 12, 4),
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
       child: Card(
         color: Colors.white,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(8, 6, 10, 6),
+          padding: const EdgeInsets.all(12),
           child: Row(
             children: [
               SizedBox(
-                width: 66,
-                height: 42,
+                width: 88,
+                height: 80,
                 child: Image.asset(
                   vehicle.vehicleType == VehicleType.sweeper
                       ? 'assets/vehicles/sweeper-truck.png'
@@ -198,25 +205,24 @@ class _VehicleHeader extends StatelessWidget {
                       vehicle.name,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
-                    const SizedBox(height: 2),
-                    Row(
+                    const SizedBox(height: 6),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 6,
                       children: [
                         Text(
                           vehicle.licensePlate ?? vehicle.vehicleNo,
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
-                        const SizedBox(width: 8),
                         _DetailStatusChip(
                           label: VehicleOptions.statusLabel(vehicle.status),
                           color: color,
                         ),
                       ],
                     ),
-                    const SizedBox(height: 2),
+                    const SizedBox(height: 6),
                     Text(
                       '${VehicleOptions.typeShortLabel(vehicle.vehicleType)} · ${vehicle.workArea ?? '未设置工作区域'} · ${vehicle.responsiblePerson ?? '未设置责任人'}',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ],
@@ -470,7 +476,7 @@ class _DetailStatusChip extends StatelessWidget {
 }
 
 Color _vehicleStatusColor(VehicleStatus status) => switch (status) {
-  VehicleStatus.normal => AppColors.primary,
+  VehicleStatus.normal => AppColors.success,
   VehicleStatus.pendingRepair => Colors.orange,
   VehicleStatus.repairing => AppColors.techBlue,
   VehicleStatus.stopped || VehicleStatus.scrapped => AppColors.body,

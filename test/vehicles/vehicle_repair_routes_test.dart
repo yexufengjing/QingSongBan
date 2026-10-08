@@ -45,9 +45,9 @@ void main() {
       appRouter.go('/vehicles/repairs');
       await tester.pumpAndSettle();
       expect(find.text('全车维修单'), findsOneWidget);
-      expect(find.text('路由测试车辆'), findsOneWidget);
+      expect(find.text(order.repairNo), findsOneWidget);
 
-      await tester.tap(find.text('路由测试车辆'));
+      await tester.tap(find.text(order.repairNo));
       await tester.pumpAndSettle();
       expect(find.text('维修单详情'), findsOneWidget);
       expect(find.text('路由回归故障现象'), findsOneWidget);

@@ -156,7 +156,7 @@ class _PurchaseStockInPageState extends ConsumerState<PurchaseStockInPage> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const PurchaseMaterialIcon(size: 72),
+                  const PurchaseMaterialIcon(size: 40),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Column(

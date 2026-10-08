@@ -77,6 +77,15 @@ class _InventoryStocktakeFormPageState
     final stock = ref.watch(inventoryStockProvider);
     return Scaffold(
       appBar: AppBar(title: const Text('新建库存盘点')),
+      bottomNavigationBar: stock.valueOrNull?.isNotEmpty == true
+          ? InventoryFormFooter(
+              label: '创建盘点任务',
+              icon: Icons.add_task,
+              saving: _saving,
+              buttonKey: const Key('inventory-stocktake-create'),
+              onSave: () => _create(stock.valueOrNull!),
+            )
+          : null,
       body: stock.when(
         loading: () => const InventoryLoadingState(),
         error: (_, _) => InventoryErrorState(
@@ -100,12 +109,14 @@ class _InventoryStocktakeFormPageState
                             trailing: const Icon(Icons.edit_calendar_outlined),
                             onTap: _pickDate,
                           ),
+                          const SizedBox(height: 12),
                           TextField(
                             controller: _operator,
                             decoration: const InputDecoration(
                               labelText: '盘点人（可选）',
                             ),
                           ),
+                          const SizedBox(height: 12),
                           TextField(
                             controller: _remark,
                             decoration: const InputDecoration(
@@ -135,17 +146,7 @@ class _InventoryStocktakeFormPageState
                     ),
                   ),
                   const SizedBox(height: 16),
-                  FilledButton.icon(
-                    key: const Key('inventory-stocktake-create'),
-                    onPressed: _saving ? null : () => _create(rows),
-                    icon: _saving
-                        ? const SizedBox.square(
-                            dimension: 18,
-                            child: CircularProgressIndicator(strokeWidth: 2),
-                          )
-                        : const Icon(Icons.add_task),
-                    label: Text(_saving ? '正在创建…' : '创建盘点任务'),
-                  ),
+
                   const SizedBox(height: 8),
                   Text(
                     '创建后可逐项录入实盘数量，确认时由库存服务统一登记盘盈或盘亏。',

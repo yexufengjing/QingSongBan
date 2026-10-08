@@ -27,7 +27,7 @@ class InsurancePage extends ConsumerWidget {
         ],
       ),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 14, 20, 28),
+        padding: const EdgeInsets.fromLTRB(16, 14, 16, 28),
         children: [
           _InsuranceHeader(
             onAddProfile: () => context.push('/settings/insurance/profile'),
@@ -153,7 +153,7 @@ class _InsuranceHeader extends StatelessWidget {
               children: [
                 Icon(Icons.shield_outlined, color: AppColors.techBlue),
                 SizedBox(width: 10),
-                Text('保险信息独立保存，变更由人工确认办理。'),
+                Expanded(child: Text('保险信息独立保存，变更由人工确认办理。')),
               ],
             ),
             const SizedBox(height: 12),
@@ -194,25 +194,100 @@ class _InsuranceProfileCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final profile = item.profile;
     return Card(
-      child: ListTile(
-        leading: Icon(
-          profile.isInsured
-              ? Icons.verified_user_outlined
-              : Icons.person_off_outlined,
-          color: profile.isInsured ? AppColors.primary : AppColors.helper,
-        ),
-        title: Text('${item.employee.name} · ${item.employee.employeeNo}'),
-        subtitle: Text(
-          profile.isInsured
-              ? '${InsuranceOptions.typeLabel(profile.insuranceType ?? 'other')} · 基数 ${profile.contributionBase?.toStringAsFixed(2) ?? '未填写'}${profile.effectiveMonth == null ? '' : ' · ${profile.effectiveMonth}生效'}'
-              : '未参保${profile.effectiveMonth == null ? '' : ' · ${profile.effectiveMonth}起生效'}',
-        ),
-        trailing: IconButton(
-          onPressed: () => context.push(
-            '/settings/insurance/profile?employeeId=${profile.employeeId}',
-          ),
-          icon: const Icon(Icons.edit_outlined),
-          tooltip: '编辑参保信息',
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            LayoutBuilder(builder: (context, constraints) {
+              final narrow = constraints.maxWidth < 300 || MediaQuery.textScalerOf(context).scale(14) > 17;
+              return Flex(direction: narrow ? Axis.vertical : Axis.horizontal, mainAxisSize: MainAxisSize.min, children: [
+                const CircleAvatar(
+                  radius: 24,
+                  backgroundColor: AppColors.lightBlue,
+                  child: Icon(Icons.person_outline, color: AppColors.techBlue),
+                ),
+                const SizedBox(width: 12),
+                Flexible(flex: narrow ? 0 : 1,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        item.employee.name,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        item.employee.employeeNo,
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ],
+                  ),
+                ),
+                OutlinedButton.icon(
+                  onPressed: () => context.push(
+                    '/settings/insurance/profile?employeeId=${profile.employeeId}',
+                  ),
+                  icon: const Icon(Icons.edit_outlined, size: 18),
+                  label: const Text('编辑'),
+                ),
+              ]); }),
+            const Divider(height: 24),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final columns =
+                    constraints.maxWidth < 290 ||
+                        MediaQuery.textScalerOf(context).scale(14) > 19
+                    ? 2
+                    : 4;
+                final entries = [
+                  ('参保状态', profile.isInsured ? '已参保' : '未参保'),
+                  (
+                    '参保险种',
+                    profile.insuranceType == null
+                        ? '未填写'
+                        : InsuranceOptions.typeLabel(profile.insuranceType!),
+                  ),
+                  (
+                    '缴费基数',
+                    profile.contributionBase == null ? '未填写' : '${profile.contributionBase!.toStringAsFixed(2)} 元',
+                  ),
+                  ('生效时间', profile.effectiveMonth ?? '未填写'),
+                ];
+                return Wrap(
+                  spacing: 8,
+                  runSpacing: 12,
+                  children: [
+                    for (final entry in entries)
+                      SizedBox(
+                        width:
+                            (constraints.maxWidth - (columns - 1) * 8) /
+                            columns,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              entry.$1,
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              entry.$2,
+                              style: Theme.of(context).textTheme.bodyMedium
+                                  ?.copyWith(
+                                    color:
+                                        entry.$1 == '参保状态' && profile.isInsured
+                                        ? AppColors.success
+                                        : AppColors.ink,
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ),
+                  ],
+                );
+              },
+            ),
+          ],
         ),
       ),
     );

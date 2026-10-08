@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/theme/app_theme.dart';
+import '../../../core/widgets/design_widgets.dart';
 import '../../../core/database/app_database.dart';
 import '../../personnel/application/personnel_providers.dart';
 import '../../personnel/domain/personnel_options.dart';
@@ -131,37 +132,66 @@ class _ReminderFormPageState extends ConsumerState<ReminderFormPage> {
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : ListView(
-              padding: const EdgeInsets.fromLTRB(20, 12, 20, 112),
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
               children: [
-                _buildMainInput(context),
-                const SizedBox(height: 18),
-                Text('事项类型', style: Theme.of(context).textTheme.titleLarge),
-                const SizedBox(height: 10),
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: [
-                    for (final category in ReminderCategories.values)
-                      ChoiceChip(
-                        label: Text(ReminderCategories.label(category)),
-                        selected: _category == category,
-                        onSelected: (_) => _selectCategory(category),
+                DesignSection(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildMainInput(context),
+                      const SizedBox(height: 20),
+                      Text(
+                        '事项类型',
+                        style: Theme.of(context).textTheme.bodyLarge,
                       ),
-                  ],
-                ),
-                const SizedBox(height: 18),
-                Card(
-                  child: ListTile(
-                    key: const Key('reminder-custom-time'),
-                    leading: const Icon(Icons.schedule_outlined),
-                    title: const Text('时间与提醒'),
-                    subtitle: Text(
-                      '${_fullDateLabel(_dueDate)} · ${_schedule.repeatLabel(_dueDate)} · ${_schedule.alertLabel}',
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    trailing: const Icon(Icons.chevron_right),
-                    onTap: _editSchedule,
+                      const SizedBox(height: 10),
+                      DesignGrid(
+                        children: [
+                          for (final category in ReminderCategories.values)
+                            OutlinedButton(
+                              onPressed: () => _selectCategory(category),
+                              style: OutlinedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 4,
+                                  vertical: 10,
+                                ),
+                                backgroundColor: _category == category
+                                    ? AppColors.primary
+                                    : AppColors.lightBlue,
+                                foregroundColor: _category == category
+                                    ? Colors.white
+                                    : AppColors.body,
+                              ),
+                              child: Text(
+                                ReminderCategories.label(category),
+                                style: const TextStyle(fontSize: 14),
+                              ),
+                            ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        '时间与提醒',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      const SizedBox(height: 8),
+                      DecoratedBox(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: AppColors.divider),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: ListTile(
+                          key: const Key('reminder-custom-time'),
+                          leading: const DesignIcon(Icons.event_note_outlined),
+                          title: Text(_fullDateLabel(_dueDate)),
+                          subtitle: Text(
+                            '${_schedule.repeatLabel(_dueDate)} · ${_schedule.alertLabel}',
+                          ),
+                          trailing: const Icon(Icons.chevron_right),
+                          onTap: _editSchedule,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 14),
@@ -233,7 +263,7 @@ class _ReminderFormPageState extends ConsumerState<ReminderFormPage> {
               ],
             ),
       bottomNavigationBar: SafeArea(
-        minimum: const EdgeInsets.fromLTRB(20, 10, 20, 16),
+        minimum: const EdgeInsets.fromLTRB(16, 10, 16, 16),
         child: FilledButton.icon(
           key: const Key('reminder-save-button'),
           onPressed: _saving || _loading ? null : () => _save(employees),
@@ -249,53 +279,23 @@ class _ReminderFormPageState extends ConsumerState<ReminderFormPage> {
     );
   }
 
-  Widget _buildMainInput(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(20, 14, 20, 16),
-      decoration: BoxDecoration(
-        color: AppColors.lightOrange,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFFFDDB8)),
+  Widget _buildMainInput(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text('提醒事项', style: Theme.of(context).textTheme.bodyLarge),
+      const SizedBox(height: 8),
+      TextField(
+        key: const Key('reminder-title-field'),
+        controller: _titleController,
+        autofocus: !_isEditing,
+        minLines: 1,
+        maxLines: 5,
+        textInputAction: TextInputAction.done,
+        style: Theme.of(context).textTheme.bodyLarge,
+        decoration: const InputDecoration(hintText: '要提醒什么？'),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TextField(
-            key: const Key('reminder-title-field'),
-            controller: _titleController,
-            autofocus: !_isEditing,
-            minLines: 2,
-            maxLines: 5,
-            textInputAction: TextInputAction.done,
-            style: Theme.of(context).textTheme.headlineMedium,
-            decoration: const InputDecoration(
-              hintText: '要提醒什么？',
-              filled: false,
-              border: InputBorder.none,
-              enabledBorder: InputBorder.none,
-              focusedBorder: InputBorder.none,
-              contentPadding: EdgeInsets.zero,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: [
-              Chip(
-                avatar: const Icon(Icons.calendar_today_outlined, size: 18),
-                label: Text(_scheduleChipLabel()),
-              ),
-              Chip(
-                avatar: Icon(_priorityIcon(_priority), size: 18),
-                label: Text(ReminderPriorities.label(_priority)),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+    ],
+  );
 
   void _selectCategory(String category) {
     setState(() {
@@ -494,16 +494,6 @@ class _ReminderFormPageState extends ConsumerState<ReminderFormPage> {
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text(message)));
   }
-
-  String _scheduleChipLabel() {
-    final now = DateTime.now();
-    final date = _sameDay(_dueDate, now)
-        ? '今天'
-        : _sameDay(_dueDate, now.add(const Duration(days: 1)))
-        ? '明天'
-        : '${_dueDate.month}月${_dueDate.day}日';
-    return '$date ${_dueDate.hour.toString().padLeft(2, '0')}:${_dueDate.minute.toString().padLeft(2, '0')}';
-  }
 }
 
 IconData _priorityIcon(String priority) => switch (priority) {
@@ -516,9 +506,6 @@ DateTime _defaultDueDate() {
   final value = DateTime.now().add(const Duration(hours: 1));
   return DateTime(value.year, value.month, value.day, value.hour, 0);
 }
-
-bool _sameDay(DateTime a, DateTime b) =>
-    a.year == b.year && a.month == b.month && a.day == b.day;
 
 String _fullDateLabel(DateTime value) =>
     '${value.year}年${value.month}月${value.day}日 '

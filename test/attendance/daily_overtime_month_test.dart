@@ -22,9 +22,8 @@ void main() {
       await tester.binding.setSurfaceSize(const Size(390, 844));
       final database = AppDatabase.forTesting();
       try {
-        final group = await AttendanceGroupRepository(database).save(
-          draft: const AttendanceGroupDraft(name: '跨月加班组'),
-        );
+        final group = await AttendanceGroupRepository(database)
+            .save(draft: const AttendanceGroupDraft(name: '跨月加班组'));
         final employee = await PersonnelRepository(database).save(
           draft: EmployeeDraft(
             employeeNo: 'EMP-OT-MONTH',
@@ -80,9 +79,8 @@ void main() {
                 requestedMonths.add(
                   '${month.year}-${month.month.toString().padLeft(2, '0')}',
                 );
-                return OvertimeRepository(
-                  ref.watch(appDatabaseProvider),
-                ).watchOvertime(month: month);
+                return OvertimeRepository(ref.watch(appDatabaseProvider))
+                    .watchOvertime(month: month);
               }),
             ],
             child: const MaterialApp(home: DailyAttendancePage()),
@@ -96,13 +94,10 @@ void main() {
         expect(find.textContaining('2026-01-31'), findsOneWidget);
         expect(requestedMonths, contains('2026-01'));
         expect(
-          find.descendant(
-            of: overtimeButton,
-            matching: find.text('1小时30分'),
-          ),
+          find.descendant(of: overtimeButton, matching: find.text('加班 1小时30分')),
           findsOneWidget,
         );
-        expect(find.text('4小时'), findsNothing);
+        expect(find.text('加班 4小时'), findsNothing);
 
         await tester.tap(find.byKey(const Key('daily-attendance-next-day')));
         await tester.pumpAndSettle();
@@ -110,20 +105,14 @@ void main() {
         expect(find.textContaining('2026-02-01'), findsOneWidget);
         expect(requestedMonths, contains('2026-02'));
         expect(
-          find.descendant(
-            of: overtimeButton,
-            matching: find.text('3小时15分'),
-          ),
+          find.descendant(of: overtimeButton, matching: find.text('加班 3小时15分')),
           findsOneWidget,
         );
         expect(
-          find.descendant(
-            of: overtimeButton,
-            matching: find.text('1小时30分'),
-          ),
+          find.descendant(of: overtimeButton, matching: find.text('加班 1小时30分')),
           findsNothing,
         );
-        expect(find.text('4小时'), findsNothing);
+        expect(find.text('加班 4小时'), findsNothing);
         expect(tester.takeException(), isNull);
       } finally {
         await tester.pumpWidget(const SizedBox.shrink());

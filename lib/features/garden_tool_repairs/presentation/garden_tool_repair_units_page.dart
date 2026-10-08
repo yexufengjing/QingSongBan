@@ -26,11 +26,16 @@ class GardenToolRepairUnitsPage extends ConsumerWidget {
             : ListView.separated(
                 padding: const EdgeInsets.fromLTRB(16, 12, 16, 96),
                 itemCount: items.length,
-                separatorBuilder: (context, index) => const SizedBox(height: 8),
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: 12),
                 itemBuilder: (context, index) {
                   final unit = items[index];
                   return Card(
                     child: ListTile(
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
                       leading: CircleAvatar(
                         backgroundColor: unit.isActive
                             ? AppColors.lightBlue
@@ -38,12 +43,29 @@ class GardenToolRepairUnitsPage extends ConsumerWidget {
                         child: Icon(
                           Icons.apartment,
                           color: unit.isActive
-                              ? AppColors.techBlue
+                              ? [
+                                  AppColors.techBlue,
+                                  Colors.orange,
+                                  AppColors.purple,
+                                ][index % 3]
                               : AppColors.helper,
                         ),
                       ),
-                      title: Text(unit.name),
-                      subtitle: Text(unit.isActive ? '启用中' : '已停用'),
+                      title: Text(
+                        unit.name,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      subtitle: Text(
+                        unit.isActive ? '● 启用中' : '● 已停用',
+                        style: TextStyle(
+                          color: unit.isActive
+                              ? AppColors.success
+                              : AppColors.danger,
+                        ),
+                      ),
                       trailing: PopupMenuButton<_UnitAction>(
                         onSelected: (action) async {
                           if (action == _UnitAction.edit) {

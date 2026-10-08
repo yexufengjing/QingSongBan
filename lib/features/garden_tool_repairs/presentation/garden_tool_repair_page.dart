@@ -41,52 +41,7 @@ class _GardenToolRepairPageState extends ConsumerState<GardenToolRepairPage> {
     return Theme(
       data: gardenToolRepairTheme(context),
       child: Scaffold(
-        appBar: AppBar(
-          title: FittedBox(
-            fit: BoxFit.scaleDown,
-            alignment: Alignment.centerLeft,
-            child: Text(
-              '${_month.month}月器械维修信息',
-              style: Theme.of(context).textTheme.titleLarge
-                  ?.copyWith(fontSize: 18, fontWeight: FontWeight.w700),
-            ),
-          ),
-          titleSpacing: 0,
-          actionsPadding: EdgeInsets.zero,
-          actions: [
-            _RepairHeaderAction(
-              icon: Icons.add_circle,
-              label: '新增',
-              color: AppColors.primary,
-              onPressed: _addGroup,
-            ),
-            _RepairHeaderAction(
-              icon: Icons.bar_chart,
-              label: '分析',
-              color: AppColors.primary,
-              onPressed: () => context.push(
-                '/garden-tool-repairs/analysis?year=${_month.year}&month=${_month.month}',
-              ),
-            ),
-            _RepairHeaderAction(
-              icon: Icons.price_change_outlined,
-              label: '比价',
-              color: AppColors.primary,
-              onPressed: () => context.push('/garden-tool-repairs/prices'),
-            ),
-            PopupMenuButton<String>(
-              tooltip: '更多功能',
-              onSelected: (value) {
-                if (value == 'units') {
-                  context.push('/garden-tool-repairs/units');
-                }
-              },
-              itemBuilder: (context) => const [
-                PopupMenuItem(value: 'units', child: Text('维修单位管理')),
-              ],
-            ),
-          ],
-        ),
+        appBar: AppBar(title: Text('${_month.month}月器械维修信息')),
         body: SafeArea(
           child: groupsAsync.when(
             loading: () => const Center(child: CircularProgressIndicator()),
@@ -101,41 +56,102 @@ class _GardenToolRepairPageState extends ConsumerState<GardenToolRepairPage> {
   Widget _buildLedger(List<GardenToolRepairLedgerGroup> groups) {
     final summary = GardenToolRepairMonthSummary.fromGroups(groups);
     return ListView(
-      padding: const EdgeInsets.fromLTRB(12, 8, 12, 16),
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
       children: [
-        _MonthSelector(month: _month, onPick: _pickMonth),
-        const SizedBox(height: 10),
         Row(
           children: [
             Expanded(
-              child: _SummaryCard(
-                label: '本月合计',
-                value: formatRepairMoney(summary.totalCents),
-                color: AppColors.primary,
-                icon: Icons.account_balance_wallet,
+              child: _MonthSelector(month: _month, onPick: _pickMonth),
+            ),
+            _RepairHeaderAction(
+              icon: Icons.add,
+              label: '新增',
+              color: AppColors.primary,
+              onPressed: _addGroup,
+            ),
+            _RepairHeaderAction(
+              icon: Icons.bar_chart,
+              label: '分析',
+              color: AppColors.primary,
+              onPressed: () => context.push(
+                '/garden-tool-repairs/analysis?year=${_month.year}&month=${_month.month}',
               ),
             ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: _SummaryCard(
-                label: '记录组数',
-                value: '${summary.groupCount}',
-                color: AppColors.techBlue,
-                icon: Icons.receipt_long,
-              ),
+            _RepairHeaderAction(
+              icon: Icons.show_chart,
+              label: '比价',
+              color: AppColors.primary,
+              onPressed: () => context.push('/garden-tool-repairs/prices'),
             ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: _SummaryCard(
-                label: '项目条数',
-                value: '${summary.itemCount}',
-                color: const Color(0xFFEF8B27),
-                icon: Icons.format_list_bulleted,
+            PopupMenuButton<String>(
+              tooltip: '更多功能',
+              child: Container(
+                constraints: const BoxConstraints(minWidth: 48, minHeight: 56),
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: AppColors.background,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.more_horiz, color: AppColors.body),
+                    SizedBox(height: 4),
+                    Text(
+                      '更多',
+                      style: TextStyle(color: AppColors.body, fontSize: 14),
+                    ),
+                  ],
+                ),
               ),
+              onSelected: (value) {
+                if (value == 'units') {
+                  context.push('/garden-tool-repairs/units');
+                }
+              },
+              itemBuilder: (context) => const [
+                PopupMenuItem(value: 'units', child: Text('维修单位管理')),
+              ],
             ),
           ],
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 16),
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: _SummaryCard(
+                    label: '本月合计',
+                    value: formatRepairMoney(summary.totalCents),
+                    color: AppColors.primary,
+                    icon: Icons.account_balance_wallet,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: _SummaryCard(
+                    label: '记录组数',
+                    value: '${summary.groupCount}',
+                    color: AppColors.success,
+                    icon: Icons.receipt_long,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: _SummaryCard(
+                    label: '项目条数',
+                    value: '${summary.itemCount}',
+                    color: const Color(0xFFEF8B27),
+                    icon: Icons.format_list_bulleted,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
         if (groups.isEmpty)
           _EmptyLedger(onAdd: _addGroup)
         else
@@ -151,7 +167,7 @@ class _GardenToolRepairPageState extends ConsumerState<GardenToolRepairPage> {
                 '/garden-tool-repairs/groups/${entry.group.id}/attachments',
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 16),
           ],
         const SizedBox(height: 4),
         _MonthTotal(totalCents: summary.totalCents),
@@ -234,15 +250,17 @@ class _MonthSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SizedBox(
-    height: 40,
+    height: 56,
     child: Center(
       child: TextButton.icon(
         onPressed: onPick,
         style: TextButton.styleFrom(
           foregroundColor: AppColors.primary,
-          backgroundColor: AppColors.lightGreen,
+          backgroundColor: AppColors.lightBlue,
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-          shape: const StadiumBorder(),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
         ),
         icon: const Icon(Icons.calendar_month, size: 18),
         label: Text('${month.year}年${month.month}月'),
@@ -266,19 +284,29 @@ class _RepairHeaderAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SizedBox(
-    width: 44,
-    child: InkWell(
-      onTap: onPressed,
+    width: 48,
+    child: Material(
+      color: label == '新增' ? AppColors.primary : AppColors.lightBlue,
       borderRadius: BorderRadius.circular(10),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, color: color, size: 21),
-            const SizedBox(height: 1),
-            Text(label, style: Theme.of(context).textTheme.bodySmall),
-          ],
+      child: InkWell(
+        onTap: onPressed,
+        borderRadius: BorderRadius.circular(10),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, color: label == '新增' ? Colors.white : color, size: 21),
+              const SizedBox(height: 4),
+              Text(
+                label,
+                style: TextStyle(
+                  color: label == '新增' ? Colors.white : color,
+                  fontSize: 12,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     ),
@@ -299,50 +327,38 @@ class _SummaryCard extends StatelessWidget {
   final IconData icon;
 
   @override
-  Widget build(BuildContext context) => Card(
-    child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-      child: Row(
-        children: [
-          Container(
-            width: 30,
-            height: 30,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .12),
-              borderRadius: BorderRadius.circular(8),
+  Widget build(BuildContext context) => Container(
+    constraints: const BoxConstraints(minHeight: 88),
+    padding: const EdgeInsets.all(10),
+    decoration: BoxDecoration(
+      color: color.withValues(alpha: .08),
+      borderRadius: BorderRadius.circular(10),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(icon, color: color, size: 20),
+            const SizedBox(width: 6),
+            Expanded(
+              child: Text(
+                label,
+                style: const TextStyle(color: AppColors.body, fontSize: 13),
+              ),
             ),
-            child: Icon(icon, color: color, size: 18),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Text(
+          value,
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+            color: AppColors.ink,
           ),
-          const SizedBox(width: 7),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                const SizedBox(height: 3),
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    value,
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: color,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     ),
   );
 }
@@ -367,7 +383,7 @@ class _RepairGroupCard extends StatelessWidget {
     final group = entry.group;
     return Card(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 6, 10, 10),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -450,18 +466,18 @@ class _RepairGroupCard extends StatelessWidget {
                 ),
                 headingTextStyle: const TextStyle(
                   color: AppColors.body,
-                  fontSize: 12,
+                  fontSize: 14,
                   fontWeight: FontWeight.w600,
                 ),
                 dataTextStyle: const TextStyle(
                   color: AppColors.ink,
-                  fontSize: 12,
+                  fontSize: 14,
                 ),
-                horizontalMargin: 8,
-                columnSpacing: 10,
-                headingRowHeight: 34,
-                dataRowMinHeight: 36,
-                dataRowMaxHeight: 42,
+                horizontalMargin: 14,
+                columnSpacing: 24,
+                headingRowHeight: 44,
+                dataRowMinHeight: 44,
+                dataRowMaxHeight: 68,
                 columns: const [
                   DataColumn(label: Text('项目名称')),
                   DataColumn(label: Text('规格')),
@@ -499,7 +515,7 @@ class _RepairGroupCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.fromLTRB(10, 6, 10, 6),
               decoration: BoxDecoration(
-                color: AppColors.lightGreen,
+                color: AppColors.lightBlue,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Align(
@@ -507,7 +523,7 @@ class _RepairGroupCard extends StatelessWidget {
                 child: Text(
                   '小计：${formatRepairMoney(entry.subtotalCents)}',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: const Color(0xFF087F58),
+                    color: AppColors.primary,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -537,55 +553,45 @@ class _MonthTotal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Card(
-    color: AppColors.lightGreen,
     child: Padding(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(16),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: .72),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: const Icon(
-              Icons.account_balance_wallet,
-              color: AppColors.primary,
-            ),
-          ),
-          const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('合计金额', style: Theme.of(context).textTheme.titleLarge),
-                const SizedBox(height: 3),
+                const Text(
+                  '合计金额',
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(height: 8),
                 Text(
                   formatRepairMoney(totalCents),
-                  style: Theme.of(context).textTheme.headlineMedium
-                      ?.copyWith(color: AppColors.primary),
-                ),
-                Text(
-                  '金额大写：${rmbUppercase(totalCents)}',
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ],
             ),
           ),
-          const SizedBox(width: 8),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-            decoration: BoxDecoration(
-              color: AppColors.primary,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: const Column(
-              mainAxisSize: MainAxisSize.min,
+          const SizedBox(height: 56, child: VerticalDivider(width: 24)),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.summarize_outlined, color: Colors.white, size: 24),
-                SizedBox(height: 2),
-                Text('总计', style: TextStyle(color: Colors.white, fontSize: 11)),
+                const Text('金额大写', style: TextStyle(color: AppColors.body)),
+                const SizedBox(height: 8),
+                Text(
+                  rmbUppercase(totalCents),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ],
             ),
           ),
@@ -638,10 +644,10 @@ class _LoadError extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const Icon(Icons.error_outline, color: AppColors.danger, size: 44),
-          const SizedBox(height: 10),
+          const SizedBox(height: 16),
           const Text('维修台账加载失败'),
           Text(message, textAlign: TextAlign.center),
-          const SizedBox(height: 10),
+          const SizedBox(height: 16),
           FilledButton(
             onPressed: () => Navigator.of(context).maybePop(),
             child: const Text('返回'),

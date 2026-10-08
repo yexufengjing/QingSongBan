@@ -11,13 +11,13 @@ class AttendanceGroupStatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = enabled ? AppColors.primary : AppColors.helper;
+    final color = enabled ? AppColors.success : AppColors.helper;
     final background = enabled ? AppColors.lightGreen : AppColors.background;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
         color: background,
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,

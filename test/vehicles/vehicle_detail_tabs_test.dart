@@ -40,8 +40,9 @@ void main() {
       ('保养/备件', '车辆保养/备件'),
       ('油耗', '车辆油耗记录'),
       ('费用分析', '车辆费用分析'),
-      ('概览', '车辆详情'),
+      ('档案', '车辆详情'),
     ]) {
+      await tester.ensureVisible(find.text(tab).first);
       await tester.tap(find.text(tab).first);
       await tester.pumpAndSettle();
       expect(find.text(title), findsOneWidget, reason: 'tab $tab');

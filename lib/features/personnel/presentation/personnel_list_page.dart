@@ -84,31 +84,13 @@ class _PersonnelListPageState extends ConsumerState<PersonnelListPage> {
           ],
         ),
       ),
-      floatingActionButton: SizedBox(
-        width: 64,
-        height: 64,
-        child: FloatingActionButton(
-          key: const Key('personnel-add-fab'),
-          onPressed: () => context.push('/personnel/new'),
-          tooltip: '新增人员',
-          backgroundColor: AppColors.primary,
-          foregroundColor: Colors.white,
-          shape: const CircleBorder(),
-          child: const Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.person_add_alt_1_outlined, size: 18),
-              SizedBox(height: 2),
-              Text(
-                '新增人员',
-                textAlign: TextAlign.center,
-                maxLines: 1,
-                softWrap: false,
-                style: TextStyle(fontSize: 11, height: 1),
-              ),
-            ],
-          ),
-        ),
+      floatingActionButton: FloatingActionButton.extended(
+        key: const Key('personnel-add-fab'),
+        onPressed: () => context.push('/personnel/new'),
+        tooltip: '新增人员',
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        icon: const Icon(Icons.person_add_alt_1_outlined),
+        label: const Text('新增人员'),
       ),
     );
   }
@@ -343,17 +325,14 @@ class _StatusChip extends StatelessWidget {
     child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 2),
       child: ChoiceChip(
-        label: FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Text('$label ($count)', maxLines: 1, softWrap: false),
-        ),
+        label: Text(label, textAlign: TextAlign.center),
         selected: selected,
         onSelected: (_) => onSelected(),
         showCheckmark: false,
         selectedColor: AppColors.primary,
         backgroundColor: AppColors.lightBlue,
         labelStyle: TextStyle(
-          fontSize: 12,
+          fontSize: 13,
           color: selected ? Colors.white : AppColors.ink,
           fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
         ),
@@ -385,7 +364,7 @@ class _AttendanceGroupChip extends StatelessWidget {
       selected: selected,
       onSelected: (_) => onSelected(),
       showCheckmark: false,
-      selectedColor: AppColors.lightGreen,
+      selectedColor: AppColors.lightBlue,
       backgroundColor: AppColors.lightBlue,
       labelStyle: TextStyle(
         color: selected ? AppColors.primary : AppColors.ink,
@@ -578,10 +557,10 @@ class _EmployeeListTile extends ConsumerWidget {
 
     return Card(
       child: InkWell(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(12),
         onTap: () => context.push('/personnel/${employee.id}'),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(8, 6, 6, 6),
+          padding: const EdgeInsets.all(12),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -609,16 +588,15 @@ class _EmployeeListTile extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 6,
+                      crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
-                        Flexible(
-                          child: Text(
-                            employee.name,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
+                        Text(
+                          employee.name,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
-                        const SizedBox(width: 5),
                         if (employee.gender == '女')
                           const Icon(
                             Icons.female,
@@ -630,14 +608,7 @@ class _EmployeeListTile extends ConsumerWidget {
                             Icons.male,
                             size: 16,
                             color: AppColors.techBlue,
-                          )
-                        else
-                          const Icon(
-                            Icons.person_outline,
-                            size: 16,
-                            color: AppColors.helper,
                           ),
-                        const Spacer(),
                         EmployeeStatusBadge(
                           status: employee.status,
                           deleted: employee.isDeleted,
@@ -648,60 +619,31 @@ class _EmployeeListTile extends ConsumerWidget {
                     const SizedBox(height: 2),
                     Text(
                       '人员编号  ${employee.employeeNo}',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                     const SizedBox(height: 2),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _EmployeeField(
-                            label: '岗位',
-                            value: employee.position,
+                    _EmployeeField(label: '岗位', value: employee.position),
+                    _EmployeeField(label: '所属班组', value: employee.team),
+                    _EmployeeField(label: '工作区域', value: employee.workArea),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2),
+                      child: Wrap(
+                        spacing: 8,
+                        children: [
+                          Text(
+                            '是否参保',
+                            style: Theme.of(context).textTheme.bodySmall,
                           ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: _EmployeeField(
-                            label: '所属班组',
-                            value: employee.team,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 1),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _EmployeeField(
-                            label: '工作区域',
-                            value: employee.workArea,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Row(
-                            children: [
-                              Text(
-                                '是否参保  ',
-                                style: Theme.of(context).textTheme.bodySmall,
-                              ),
-                              Flexible(
-                                child: Text(
-                                  insuredLabel,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: Theme.of(context).textTheme.bodySmall
-                                      ?.copyWith(
-                                        color: insuredColor,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                          Text(
+                            insuredLabel,
+                            style: Theme.of(context).textTheme.bodySmall
+                                ?.copyWith(
+                                  color: insuredColor,
+                                  fontWeight: FontWeight.w600,
                                 ),
-                              ),
-                            ],
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -735,8 +677,6 @@ class _EmployeeField extends StatelessWidget {
       Expanded(
         child: Text(
           value?.isNotEmpty == true ? value! : '未填写',
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
           style: const TextStyle(
             fontSize: 12,
             height: 1.25,

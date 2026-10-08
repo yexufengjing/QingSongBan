@@ -77,10 +77,8 @@ class _RosterContent extends ConsumerWidget {
     final activeIds = activeEntries.map((item) => item.employee.id).toSet();
 
     return ListView(
-      padding: const EdgeInsets.fromLTRB(20, 8, 20, 28),
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 28),
       children: [
-        _RosterHero(month: month, group: selectedGroup),
-        const SizedBox(height: 14),
         _RosterSelectors(
           month: month,
           groups: groups,
@@ -112,17 +110,15 @@ class _RosterContent extends ConsumerWidget {
         if (!canEdit) const SizedBox(height: 14),
         _RosterStats(counts: counts),
         const SizedBox(height: 14),
-        _RosterActions(
-          enabled: canEdit,
-          onAdd: () => _showAddSheet(context, ref, activeIds),
-          onBatch: () => _addDefaultEmployees(context, ref, selectedGroup),
-          onCopy: () => _copyPreviousMonth(context, ref, selectedGroup),
-        ),
-        const SizedBox(height: 18),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('名单人员', style: Theme.of(context).textTheme.titleLarge),
+            Expanded(
+              child: Text(
+                '名单人员',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+            ),
             FilterChip(
               selected: showRemoved,
               onSelected: (value) =>
@@ -173,6 +169,14 @@ class _RosterContent extends ConsumerWidget {
             );
           },
         ),
+        const SizedBox(height: 16),
+        _RosterActions(
+          enabled: canEdit,
+          onAdd: () => _showAddSheet(context, ref, activeIds),
+          onBatch: () => _addDefaultEmployees(context, ref, selectedGroup),
+          onCopy: () => _copyPreviousMonth(context, ref, selectedGroup),
+        ),
+        const SizedBox(height: 18),
       ],
     );
   }
@@ -198,16 +202,25 @@ class _RosterContent extends ConsumerWidget {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('按默认组加入？'),
+        title: const Text('按默认组加入？', textAlign: TextAlign.center),
         content: Text('将把当前仍符合月份规则、默认考勤组为“${group.name}”的人员加入名单。已有人员不会重复添加。'),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('取消'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('确认加入'),
+          Row(
+            children: [
+              Expanded(
+                child: TextButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: const Text('取消'),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: FilledButton(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  child: const Text('确认加入'),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -243,18 +256,27 @@ class _RosterContent extends ConsumerWidget {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('复制上月名单？'),
+        title: const Text('复制上月名单？', textAlign: TextAlign.center),
         content: Text(
           '将把 ${AppDateUtils.yearMonth(previous)} 的有效名单加入本月，并保留本月已有的手动调整。',
         ),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('取消'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('复制'),
+          Row(
+            children: [
+              Expanded(
+                child: TextButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: const Text('取消'),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: FilledButton(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  child: const Text('复制'),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -288,17 +310,28 @@ class _RosterContent extends ConsumerWidget {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('移除本月名单？'),
+        title: const Text('移除本月名单？', textAlign: TextAlign.center),
         content: Text('只会移除 ${item.employee.name} 在当前月份的考勤范围，不会修改人员档案或默认考勤组。'),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('取消'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            style: FilledButton.styleFrom(backgroundColor: AppColors.danger),
-            child: const Text('移除'),
+          Row(
+            children: [
+              Expanded(
+                child: TextButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: const Text('取消'),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: FilledButton(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: AppColors.danger,
+                  ),
+                  child: const Text('移除'),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -343,79 +376,6 @@ class _RosterContent extends ConsumerWidget {
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(SnackBar(content: Text(message)));
-  }
-}
-
-class _RosterHero extends StatelessWidget {
-  const _RosterHero({required this.month, required this.group});
-
-  final DateTime month;
-  final AttendanceGroup group;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(23),
-        gradient: LinearGradient(
-          colors: group.isEnabled
-              ? const [Color(0xFFE8F7F0), Color(0xFFE8F1FF)]
-              : const [Color(0xFFF3F5F7), Color(0xFFECEFF2)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        border: Border.all(color: Colors.white, width: 2),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 56,
-            height: 56,
-            decoration: BoxDecoration(
-              color: group.isEnabled ? AppColors.primary : AppColors.helper,
-              borderRadius: BorderRadius.circular(18),
-            ),
-            child: const Icon(
-              Icons.calendar_month_outlined,
-              color: Colors.white,
-              size: 29,
-            ),
-          ),
-          const SizedBox(width: 15),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('月度名单', style: Theme.of(context).textTheme.headlineMedium),
-                const SizedBox(height: 5),
-                Text(
-                  '${month.year}年${month.month.toString().padLeft(2, '0')}月 · ${group.name}',
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                const SizedBox(height: 9),
-                Row(
-                  children: [
-                    _RosterStatusChip(
-                      label: group.isEnabled ? '可维护' : '历史查看',
-                      color: group.isEnabled
-                          ? AppColors.primary
-                          : AppColors.helper,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      '独立于人员默认组',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }
 
@@ -732,7 +692,7 @@ class _RosterStatusChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(12),
       ),
       child: Text(
         label,

@@ -107,13 +107,36 @@ class _AttendanceGroupFormPageState
           ),
         ],
       ),
+      bottomNavigationBar: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+          child: SizedBox(
+            width: double.infinity,
+            child: FilledButton.icon(
+              onPressed: _saving ? null : _save,
+              icon: _saving
+                  ? const SizedBox(
+                      width: 18,
+                      height: 18,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.white,
+                      ),
+                    )
+                  : const Icon(Icons.save_outlined),
+              label: Text(_saving ? '保存中…' : '保存考勤组'),
+            ),
+          ),
+        ),
+      ),
       body: Form(
         key: _formKey,
         child: ListView(
-          padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
           children: [
             Card(
-              color: AppColors.lightGreen,
+              color: AppColors.lightBlue,
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Row(
@@ -135,51 +158,60 @@ class _AttendanceGroupFormPageState
             const SizedBox(height: 16),
             Card(
               child: Padding(
-                padding: const EdgeInsets.all(18),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('基本设置', style: Theme.of(context).textTheme.titleLarge),
                     const SizedBox(height: 16),
-                    TextFormField(
-                      key: const Key('attendance-group-name-field'),
-                      controller: _nameController,
-                      validator: (value) =>
-                          value == null || value.trim().isEmpty
-                          ? '请填写考勤组名称'
-                          : null,
-                      decoration: const InputDecoration(
-                        labelText: '考勤组名称',
-                        hintText: '例如：特钢临时工组、司机组',
-                        prefixIcon: Icon(Icons.edit_outlined),
+                    _referenceField(
+                      '考勤组名称',
+                      TextFormField(
+                        key: const Key('attendance-group-name-field'),
+                        controller: _nameController,
+                        validator: (value) =>
+                            value == null || value.trim().isEmpty
+                            ? '请填写考勤组名称'
+                            : null,
+                        decoration: const InputDecoration(
+                          hintText: '例如：特钢临时工组、司机组',
+                          prefixIcon: Icon(Icons.edit_outlined),
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 12),
-                    InputDecorator(
-                      decoration: const InputDecoration(
-                        labelText: '考勤组类型',
-                        prefixIcon: Icon(Icons.category_outlined),
-                      ),
-                      child: Text(
-                        '手动分组',
-                        style: Theme.of(context).textTheme.bodyLarge,
+                    const SizedBox(height: 20),
+                    _referenceField(
+                      '考勤组类型',
+                      InputDecorator(
+                        decoration: const InputDecoration(
+                          filled: true,
+                          fillColor: AppColors.background,
+                          helperText: '只读',
+                          prefixIcon: Icon(Icons.category_outlined),
+                        ),
+                        child: Text(
+                          '手动分组',
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 12),
-                    TextFormField(
-                      key: const Key('attendance-group-sort-field'),
-                      controller: _sortOrderController,
-                      keyboardType: TextInputType.number,
-                      validator: (value) {
-                        final number = int.tryParse(value?.trim() ?? '');
-                        return number == null || number < 0
-                            ? '请输入不小于 0 的整数'
-                            : null;
-                      },
-                      decoration: const InputDecoration(
-                        labelText: '排序值',
-                        hintText: '数值越小越靠前',
-                        prefixIcon: Icon(Icons.sort_outlined),
+                    const SizedBox(height: 20),
+                    _referenceField(
+                      '排序值',
+                      TextFormField(
+                        key: const Key('attendance-group-sort-field'),
+                        controller: _sortOrderController,
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          final number = int.tryParse(value?.trim() ?? '');
+                          return number == null || number < 0
+                              ? '请输入不小于 0 的整数'
+                              : null;
+                        },
+                        decoration: const InputDecoration(
+                          hintText: '数值越小越靠前',
+                          prefixIcon: Icon(Icons.sort_outlined),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 6),
@@ -191,39 +223,24 @@ class _AttendanceGroupFormPageState
                       onChanged: (value) => setState(() => _enabled = value),
                     ),
                     const SizedBox(height: 8),
-                    TextFormField(
-                      key: const Key('attendance-group-remark-field'),
-                      controller: _remarkController,
-                      maxLines: 3,
-                      decoration: const InputDecoration(
-                        labelText: '备注',
-                        hintText: '可填写适用区域、负责人等补充说明',
-                        prefixIcon: Icon(Icons.notes_outlined),
-                        alignLabelWithHint: true,
+                    _referenceField(
+                      '备注',
+                      TextFormField(
+                        key: const Key('attendance-group-remark-field'),
+                        controller: _remarkController,
+                        maxLines: 3,
+                        decoration: const InputDecoration(
+                          hintText: '可填写适用区域、负责人等补充说明',
+                          prefixIcon: Icon(Icons.notes_outlined),
+                          alignLabelWithHint: true,
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 18),
-            SizedBox(
-              width: double.infinity,
-              child: FilledButton.icon(
-                onPressed: _saving ? null : _save,
-                icon: _saving
-                    ? const SizedBox(
-                        width: 18,
-                        height: 18,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: Colors.white,
-                        ),
-                      )
-                    : const Icon(Icons.save_outlined),
-                label: Text(_saving ? '保存中…' : '保存考勤组'),
-              ),
-            ),
+            const SizedBox(height: 16),
           ],
         ),
       ),
@@ -260,3 +277,15 @@ class _AttendanceGroupFormPageState
     }
   }
 }
+
+Widget _referenceField(String label, Widget field) => Column(
+  crossAxisAlignment: CrossAxisAlignment.stretch,
+  children: [
+    Text(
+      label,
+      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+    ),
+    const SizedBox(height: 8),
+    field,
+  ],
+);

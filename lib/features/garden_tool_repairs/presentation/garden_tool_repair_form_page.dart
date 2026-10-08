@@ -95,12 +95,12 @@ class _GardenToolRepairFormPageState
         body: _loading
             ? const Center(child: CircularProgressIndicator())
             : ListView(
-                padding: const EdgeInsets.fromLTRB(12, 8, 12, 14),
+                padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
                 children: [
                   _buildBasicInfo(unitsAsync),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 16),
                   _buildItemsCard(),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 16),
                   _buildAttachmentCard(attachmentsAsync),
                 ],
               ),
@@ -113,254 +113,130 @@ class _GardenToolRepairFormPageState
     AsyncValue<List<GardenToolRepairUnit>> unitsAsync,
   ) => Card(
     child: Padding(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              const _SectionIcon(
-                icon: Icons.description_outlined,
-                color: AppColors.primary,
-                background: AppColors.lightGreen,
-              ),
-              const SizedBox(width: 8),
-              Text('基础信息', style: Theme.of(context).textTheme.titleLarge),
-            ],
+          Text('基础信息', style: Theme.of(context).textTheme.titleLarge),
+          const SizedBox(height: 20),
+          _ChoiceField(
+            label: '维修月份',
+            value: '${_repairMonth.year}年${_repairMonth.month}月',
+            icon: Icons.calendar_month,
+            onTap: _pickMonth,
           ),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              Expanded(
-                child: _ChoiceField(
-                  label: '维修月份',
-                  value: '${_repairMonth.year}年${_repairMonth.month}月',
-                  icon: Icons.calendar_month,
-                  onTap: _pickMonth,
-                ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: _ChoiceField(
-                  label: '维修日期',
-                  value: '${_repairDate.month}月${_repairDate.day}日',
-                  icon: Icons.event,
-                  onTap: _pickDate,
-                ),
-              ),
-            ],
+          const SizedBox(height: 20),
+          _ChoiceField(
+            label: '维修日期',
+            value: '${_repairDate.month}月${_repairDate.day}日',
+            icon: Icons.event,
+            onTap: _pickDate,
           ),
+          const SizedBox(height: 20),
+          const _FieldLabel('维修单位'),
           const SizedBox(height: 8),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const _FieldLabel('维修单位'),
-                    const SizedBox(height: 4),
-                    SizedBox(
-                      height: 36,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: AppColors.background,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Row(
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.only(left: 10, right: 7),
-                              child: Icon(
-                                Icons.apartment,
-                                color: AppColors.primary,
-                                size: 18,
-                              ),
-                            ),
-                            const _CompactFieldDivider(),
-                            Expanded(
-                              child: unitsAsync.when(
-                                loading: () => const LinearProgressIndicator(),
-                                error: (error, _) => Text('维修单位加载失败：$error'),
-                                data: (units) {
-                                  final selectable = units
-                                      .where(
-                                        (unit) =>
-                                            unit.isActive ||
-                                            (widget.groupId != null &&
-                                                unit.id == _unitId),
-                                      )
-                                      .toList();
-                                  final selectedId =
-                                      selectable.any(
-                                        (unit) => unit.id == _unitId,
-                                      )
-                                      ? _unitId
-                                      : null;
-                                  return DropdownButtonFormField<int>(
-                                    key: ValueKey('repair-unit-$selectedId'),
-                                    initialValue: selectedId,
-                                    isExpanded: true,
-                                    decoration: const InputDecoration(
-                                      filled: false,
-                                      isDense: true,
-                                      contentPadding: EdgeInsets.zero,
-                                      border: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      disabledBorder: InputBorder.none,
-                                      errorBorder: InputBorder.none,
-                                      focusedErrorBorder: InputBorder.none,
-                                    ),
-                                    iconSize: 18,
-                                    items: [
-                                      for (final unit in selectable)
-                                        DropdownMenuItem(
-                                          value: unit.id,
-                                          child: Text(
-                                            unit.isActive
-                                                ? unit.name
-                                                : '${unit.name}（已停用）',
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                    ],
-                                    onChanged: (value) {
-                                      if (value == _unitId) return;
-                                      setState(() {
-                                        _unitId = value;
-                                        _repairerId = null;
-                                        _repairerController.clear();
-                                      });
-                                    },
-                                    validator: (value) =>
-                                        value == null ? '请选择维修单位' : null,
-                                  );
-                                },
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                          ],
-                        ),
+          unitsAsync.when(
+            loading: () => const LinearProgressIndicator(),
+            error: (error, _) => Text('维修单位加载失败：$error'),
+            data: (units) {
+              final selectable = units
+                  .where(
+                    (unit) =>
+                        unit.isActive ||
+                        (widget.groupId != null && unit.id == _unitId),
+                  )
+                  .toList();
+              final selectedId = selectable.any((unit) => unit.id == _unitId)
+                  ? _unitId
+                  : null;
+              return DropdownButtonFormField<int>(
+                key: ValueKey('repair-unit-$selectedId'),
+                initialValue: selectedId,
+                isExpanded: true,
+                decoration: const InputDecoration(hintText: '请选择维修单位'),
+                items: [
+                  for (final unit in selectable)
+                    DropdownMenuItem(
+                      value: unit.id,
+                      child: Text(
+                        unit.isActive ? unit.name : '${unit.name}（已停用）',
                       ),
                     ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const _FieldLabel('维修人'),
-                    const SizedBox(height: 4),
-                    SizedBox(
-                      height: 36,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: AppColors.background,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Row(
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.only(left: 10, right: 7),
-                              child: Icon(
-                                Icons.person_outline,
-                                color: AppColors.primary,
-                                size: 18,
-                              ),
-                            ),
-                            const _CompactFieldDivider(),
-                            Expanded(
-                              child: TextField(
-                                controller: _repairerController,
-                                style: const TextStyle(fontSize: 10),
-                                decoration: const InputDecoration(
-                                  hintText: '选择人员或临时输入姓名',
-                                  filled: false,
-                                  isDense: true,
-                                  contentPadding: EdgeInsets.zero,
-                                  border: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                  disabledBorder: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  focusedErrorBorder: InputBorder.none,
-                                ),
-                                onChanged: (_) =>
-                                    setState(() => _repairerId = null),
-                              ),
-                            ),
-                            if (_unitId != null)
-                              IconButton(
-                                tooltip: '新增本单位维修人',
-                                visualDensity: VisualDensity.compact,
-                                onPressed: _addPerson,
-                                icon: const Icon(Icons.person_add_alt_1),
-                              ),
-                            const SizedBox(width: 4),
-                          ],
-                        ),
+                ],
+                onChanged: (value) {
+                  if (value == _unitId) return;
+                  setState(() {
+                    _unitId = value;
+                    _repairerId = null;
+                    _repairerController.clear();
+                  });
+                },
+                validator: (value) => value == null ? '请选择维修单位' : null,
+              );
+            },
+          ),
+          const SizedBox(height: 20),
+          const _FieldLabel('维修人'),
+          const SizedBox(height: 8),
+          TextField(
+            controller: _repairerController,
+            decoration: InputDecoration(
+              hintText: '选择人员或临时输入姓名',
+              suffixIcon: _unitId == null
+                  ? null
+                  : IconButton(
+                      tooltip: '新增本单位维修人',
+                      onPressed: _addPerson,
+                      icon: const Icon(
+                        Icons.person_add_alt_1,
+                        color: AppColors.primary,
                       ),
                     ),
-                  ],
-                ),
-              ),
-            ],
+            ),
+            onChanged: (_) => setState(() => _repairerId = null),
           ),
           if (_unitId != null) ...[
-            const SizedBox(height: 6),
+            const SizedBox(height: 8),
             ref
                 .watch(gardenToolRepairPersonsProvider(_unitId!))
                 .when(
                   loading: () => const SizedBox(height: 2),
                   error: (error, _) => Text('维修人员加载失败：$error'),
-                  data: (people) => people.isEmpty
-                      ? const SizedBox.shrink()
-                      : Wrap(
-                          spacing: 6,
-                          runSpacing: 0,
-                          children: [
-                            for (final person in people)
-                              ActionChip(
-                                label: Text(person.name),
-                                visualDensity: VisualDensity.compact,
-                                backgroundColor: _repairerId == person.id
-                                    ? AppColors.lightGreen
-                                    : null,
-                                onPressed: () {
-                                  setState(() {
-                                    _repairerId = person.id;
-                                    _repairerController.text = person.name;
-                                  });
-                                },
-                              ),
-                          ],
+                  data: (people) => Wrap(
+                    spacing: 8,
+                    runSpacing: 4,
+                    children: [
+                      for (final person in people)
+                        ActionChip(
+                          label: Text(person.name),
+                          backgroundColor: _repairerId == person.id
+                              ? AppColors.lightBlue
+                              : null,
+                          labelStyle: TextStyle(
+                            color: _repairerId == person.id
+                                ? AppColors.primary
+                                : AppColors.ink,
+                          ),
+                          onPressed: () => setState(() {
+                            _repairerId = person.id;
+                            _repairerController.text = person.name;
+                          }),
                         ),
+                    ],
+                  ),
                 ),
           ],
           if (unitsAsync.valueOrNull?.where((unit) => unit.isActive).isEmpty ??
-              true) ...[
-            const SizedBox(height: 6),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: TextButton.icon(
-                onPressed: () => context.push('/garden-tool-repairs/units'),
-                icon: const Icon(Icons.add_business_outlined),
-                label: const Text('先新增维修单位'),
-              ),
+              true)
+            TextButton.icon(
+              onPressed: () => context.push('/garden-tool-repairs/units'),
+              icon: const Icon(Icons.add_business_outlined),
+              label: const Text('先新增维修单位'),
             ),
-          ],
-          const SizedBox(height: 6),
-          TextField(
-            controller: _remarkController,
-            decoration: const InputDecoration(
-              labelText: '组备注（可选）',
-              isDense: true,
-            ),
-            maxLines: 1,
-          ),
+          const SizedBox(height: 20),
+          const _FieldLabel('组备注（可选）'),
+          const SizedBox(height: 8),
+          TextField(controller: _remarkController, minLines: 3, maxLines: 5),
         ],
       ),
     ),
@@ -368,7 +244,7 @@ class _GardenToolRepairFormPageState
 
   Widget _buildItemsCard() => Card(
     child: Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -410,7 +286,7 @@ class _GardenToolRepairFormPageState
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
             decoration: BoxDecoration(
-              color: AppColors.lightGreen,
+              color: AppColors.lightBlue,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Row(
@@ -431,7 +307,7 @@ class _GardenToolRepairFormPageState
                 Text(
                   '小计：${formatRepairMoney(_currentSubtotal)}',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: const Color(0xFF087F58),
+                    color: AppColors.primary,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -447,15 +323,15 @@ class _GardenToolRepairFormPageState
     padding: const EdgeInsets.only(top: 4),
     child: Row(
       children: [
-        _itemField(row.project, width: 62, hint: '项目名称'),
+        _itemField(row.project, width: 128, hint: '项目名称'),
         const SizedBox(width: 2),
-        _itemField(row.spec, width: 44, hint: '规格'),
+        _itemField(row.spec, width: 96, hint: '规格'),
         const SizedBox(width: 2),
-        _itemField(row.unit, width: 32, hint: '单位'),
+        _itemField(row.unit, width: 64, hint: '单位'),
         const SizedBox(width: 2),
         _itemField(
           row.quantity,
-          width: 36,
+          width: 72,
           hint: '数量',
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           inputFormatters: [
@@ -465,7 +341,7 @@ class _GardenToolRepairFormPageState
         const SizedBox(width: 2),
         _itemField(
           row.unitPrice,
-          width: 44,
+          width: 96,
           hint: '单价',
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           inputFormatters: [
@@ -474,24 +350,24 @@ class _GardenToolRepairFormPageState
         ),
         const SizedBox(width: 2),
         Container(
-          width: 50,
-          height: 38,
+          width: 100,
+          height: 48 * (MediaQuery.textScalerOf(context).scale(14) / 14),
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(horizontal: 2),
           decoration: BoxDecoration(
             color: AppColors.background,
             borderRadius: BorderRadius.circular(12),
           ),
-          child: FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(formatRepairMoney(_rowAmount(row))),
+          child: Text(
+            formatRepairMoney(_rowAmount(row)),
+            textAlign: TextAlign.center,
           ),
         ),
         const SizedBox(width: 2),
-        _itemField(row.remark, width: 48, hint: '备注'),
+        _itemField(row.remark, width: 140, hint: '备注'),
         SizedBox(
-          width: 28,
-          height: 40,
+          width: 48,
+          height: 48 * (MediaQuery.textScalerOf(context).scale(14) / 14),
           child: IconButton(
             tooltip: '删除明细',
             onPressed: () {
@@ -517,17 +393,17 @@ class _GardenToolRepairFormPageState
     List<TextInputFormatter>? inputFormatters,
   }) => SizedBox(
     width: width,
-    height: 38,
+    height: 48 * (MediaQuery.textScalerOf(context).scale(14) / 14),
     child: TextField(
       controller: controller,
       keyboardType: keyboardType,
       inputFormatters: inputFormatters,
       onChanged: (_) => setState(() {}),
-      style: const TextStyle(fontSize: 12),
+      style: const TextStyle(fontSize: 14),
       decoration: InputDecoration(
         isDense: true,
         hintText: hint,
-        hintStyle: const TextStyle(fontSize: 10, color: AppColors.helper),
+        hintStyle: const TextStyle(fontSize: 12, color: AppColors.helper),
         contentPadding: const EdgeInsets.symmetric(horizontal: 3, vertical: 8),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
       ),
@@ -541,7 +417,7 @@ class _GardenToolRepairFormPageState
     final total = existing.length + _pendingPhotos.length;
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -598,63 +474,60 @@ class _GardenToolRepairFormPageState
   Widget _buildBottomActions() => SafeArea(
     top: false,
     child: Material(
-      color: const Color(0xFFEAF8EF),
-      elevation: 4,
+      color: AppColors.card,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
-        child: Row(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              flex: 5,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
+            Text.rich(
+              TextSpan(
                 children: [
-                  const Text('当前合计', style: TextStyle(fontSize: 11)),
-                  Text(
-                    formatRepairMoney(_currentSubtotal),
+                  const TextSpan(
+                    text: '当前合计 ',
+                    style: TextStyle(color: AppColors.body, fontSize: 14),
+                  ),
+                  TextSpan(
+                    text: formatRepairMoney(_currentSubtotal),
                     style: const TextStyle(
                       color: AppColors.primary,
+                      fontSize: 22,
                       fontWeight: FontWeight.w700,
-                      fontSize: 17,
                     ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(
-              height: 34,
-              child: VerticalDivider(width: 14, color: AppColors.divider),
-            ),
-            Expanded(
-              flex: 3,
-              child: OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  minimumSize: const Size(0, 38),
-                  visualDensity: VisualDensity.compact,
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      side: const BorderSide(color: AppColors.primary),
+                    ),
+                    onPressed: _saving
+                        ? null
+                        : () => _save(continueEntry: false),
+                    child: const Text('保存'),
+                  ),
                 ),
-                onPressed: _saving ? null : () => _save(continueEntry: false),
-                child: const Text('保存'),
-              ),
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              flex: 5,
-              child: FilledButton(
-                style: FilledButton.styleFrom(
-                  minimumSize: const Size(0, 38),
-                  visualDensity: VisualDensity.compact,
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: FilledButton(
+                    onPressed: _saving
+                        ? null
+                        : () => _save(continueEntry: true),
+                    child: _saving
+                        ? const SizedBox.square(
+                            dimension: 18,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        : const Text('保存并继续'),
+                  ),
                 ),
-                onPressed: _saving ? null : () => _save(continueEntry: true),
-                child: _saving
-                    ? const SizedBox.square(
-                        dimension: 18,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
-                    : const Text('保存并继续'),
-              ),
+              ],
             ),
           ],
         ),
@@ -954,47 +827,37 @@ class _ChoiceField extends StatelessWidget {
     required this.icon,
     required this.onTap,
   });
-
   final String label;
   final String value;
   final IconData icon;
   final VoidCallback onTap;
-
   @override
   Widget build(BuildContext context) => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       _FieldLabel(label),
-      const SizedBox(height: 4),
+      const SizedBox(height: 8),
       Material(
-        color: AppColors.background,
-        borderRadius: BorderRadius.circular(10),
+        color: AppColors.card,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+          side: const BorderSide(color: AppColors.divider),
+        ),
         child: InkWell(
           onTap: onTap,
           borderRadius: BorderRadius.circular(10),
-          child: SizedBox(
-            height: 36,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
             child: Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 7),
-                  child: Icon(icon, color: AppColors.primary, size: 18),
-                ),
-                const _CompactFieldDivider(),
-                const SizedBox(width: 8),
                 Expanded(
                   child: Text(
                     value,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: AppColors.ink,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: const TextStyle(fontSize: 16, color: AppColors.ink),
                   ),
                 ),
-                const Icon(Icons.arrow_drop_down, color: AppColors.body),
-                const SizedBox(width: 4),
+                const SizedBox(width: 12),
+                Icon(icon, size: 20, color: AppColors.body),
               ],
             ),
           ),
@@ -1017,35 +880,27 @@ class _FieldLabel extends StatelessWidget {
   );
 }
 
-class _CompactFieldDivider extends StatelessWidget {
-  const _CompactFieldDivider();
-
-  @override
-  Widget build(BuildContext context) =>
-      Container(width: 1, height: 24, color: AppColors.divider);
-}
-
 class _ItemHeader extends StatelessWidget {
   const _ItemHeader();
 
   @override
   Widget build(BuildContext context) => const Row(
     children: [
-      _HeaderCell('项目', 62),
+      _HeaderCell('项目', 128),
       SizedBox(width: 2),
-      _HeaderCell('规格', 44),
+      _HeaderCell('规格', 96),
       SizedBox(width: 2),
-      _HeaderCell('单位', 32),
+      _HeaderCell('单位', 64),
       SizedBox(width: 2),
-      _HeaderCell('数量', 36),
+      _HeaderCell('数量', 72),
       SizedBox(width: 2),
-      _HeaderCell('单价', 44),
+      _HeaderCell('单价', 96),
       SizedBox(width: 2),
-      _HeaderCell('金额', 50),
+      _HeaderCell('金额', 100),
       SizedBox(width: 2),
-      _HeaderCell('备注', 48),
+      _HeaderCell('备注', 140),
       SizedBox(width: 2),
-      _HeaderCell('操作', 28),
+      _HeaderCell('操作', 48),
     ],
   );
 }
@@ -1059,15 +914,15 @@ class _HeaderCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
     width: width,
-    height: 30,
+    height: 48 * (MediaQuery.textScalerOf(context).scale(14) / 14),
     alignment: Alignment.center,
     decoration: const BoxDecoration(
-      color: AppColors.background,
+      color: AppColors.card,
       borderRadius: BorderRadius.all(Radius.circular(8)),
     ),
     child: Text(
       label,
-      style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 11),
+      style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 13),
     ),
   );
 }
@@ -1086,7 +941,7 @@ class _SectionIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
     width: 30,
-    height: 30,
+    height: 48 * (MediaQuery.textScalerOf(context).scale(14) / 14),
     decoration: BoxDecoration(
       color: background ?? color.withValues(alpha: 0.12),
       borderRadius: BorderRadius.circular(10),
@@ -1110,7 +965,7 @@ class _UploadPhotoTile extends StatelessWidget {
         width: 72,
         height: 72,
         decoration: BoxDecoration(
-          color: AppColors.background,
+          color: AppColors.card,
           borderRadius: BorderRadius.circular(12),
         ),
         child: const Column(
@@ -1118,7 +973,7 @@ class _UploadPhotoTile extends StatelessWidget {
           children: [
             Icon(Icons.add_a_photo_outlined, color: AppColors.techBlue),
             SizedBox(height: 5),
-            Text('上传照片', style: TextStyle(fontSize: 11)),
+            Text('上传照片', style: TextStyle(fontSize: 13)),
           ],
         ),
       ),
@@ -1220,7 +1075,7 @@ class _ExistingPhotoTile extends ConsumerWidget {
           width: 72,
           height: 72,
           decoration: BoxDecoration(
-            color: AppColors.background,
+            color: AppColors.card,
             borderRadius: BorderRadius.circular(12),
           ),
           clipBehavior: Clip.antiAlias,
@@ -1270,7 +1125,7 @@ class _PendingPhotoTile extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
             child: Text(
               photo.type.label,
-              style: const TextStyle(color: Colors.white, fontSize: 10),
+              style: const TextStyle(color: Colors.white, fontSize: 14),
             ),
           ),
         ),

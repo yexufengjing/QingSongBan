@@ -105,7 +105,7 @@ class _VehicleReminderPageState extends ConsumerState<VehicleReminderPage> {
           : second.compareTo(first);
     });
     return ListView(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 30),
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 30),
       children: [
         SizedBox(
           height: 40,
@@ -334,20 +334,20 @@ class _ReminderMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Material(
     color: color.withValues(alpha: selected ? 0.16 : 0.09),
-    borderRadius: BorderRadius.circular(14),
+    borderRadius: BorderRadius.circular(12),
     child: InkWell(
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: BorderRadius.circular(12),
       onTap: onTap,
-      child: SizedBox(
-        height: 72,
-        child: Row(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 12),
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(icon, color: color, size: 26),
-            const SizedBox(width: 7),
+            const SizedBox(height: 4),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   '$value',
@@ -359,12 +359,10 @@ class _ReminderMetric extends StatelessWidget {
                 ),
                 Text(
                   label,
-                  style: const TextStyle(fontSize: 11, color: AppColors.body),
+                  style: const TextStyle(fontSize: 13, color: AppColors.body),
                 ),
               ],
             ),
-            const SizedBox(width: 4),
-            const Icon(Icons.chevron_right, size: 18, color: AppColors.helper),
           ],
         ),
       ),
@@ -446,7 +444,7 @@ class _VehicleReminderCard extends StatelessWidget {
                             child: Text(
                               category,
                               style: TextStyle(
-                                fontSize: 11,
+                                fontSize: 13,
                                 color: categoryColor,
                                 fontWeight: FontWeight.w700,
                               ),
@@ -473,7 +471,7 @@ class _VehicleReminderCard extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     color: color.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(14),
+                    borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
                     overdue
@@ -484,7 +482,7 @@ class _VehicleReminderCard extends StatelessWidget {
                         ? '今日'
                         : '$daysUntil天后',
                     style: TextStyle(
-                      fontSize: 11,
+                      fontSize: 13,
                       color: color,
                       fontWeight: FontWeight.w700,
                     ),
@@ -531,7 +529,9 @@ class _VehicleReminderCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 8),
-            Row(
+            Wrap(
+              spacing: 7,
+              runSpacing: 8,
               children: [
                 TextButton(
                   onPressed: () => showModalBottomSheet<void>(
@@ -540,30 +540,30 @@ class _VehicleReminderCard extends StatelessWidget {
                     builder: (sheet) => SafeArea(
                       child: Padding(
                         padding: const EdgeInsets.all(20),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              item.reminder.title,
-                              style: Theme.of(context).textTheme.titleLarge,
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              item.reminder.remark ??
-                                  '关联车辆：${vehicle?.name ?? '未知'}',
-                            ),
-                            const SizedBox(height: 10),
-                          ],
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                item.reminder.title,
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                item.reminder.remark ??
+                                    '关联车辆：${vehicle?.name ?? '未知'}',
+                              ),
+                              const SizedBox(height: 10),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
                   child: const Text('查看详情'),
                 ),
-                const Spacer(),
                 OutlinedButton(onPressed: onSkip, child: const Text('忽略')),
-                const SizedBox(width: 7),
                 FilledButton(
                   onPressed: vehicleId == null
                       ? null

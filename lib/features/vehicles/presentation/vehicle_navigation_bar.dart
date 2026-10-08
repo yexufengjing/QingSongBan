@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/theme/app_theme.dart';
 import '../../../core/database/database_enums.dart';
 
-/// Keeps vehicle pages visually consistent with the product's five-tab shell.
+/// Keeps vehicle pages visually consistent with the product's four-tab shell.
 /// The vehicle module is opened as a business sub-flow from 首页, so 首页 stays
 /// selected while the user is inside the module.
 class VehicleNavigationBar extends StatelessWidget {
@@ -14,7 +14,6 @@ class VehicleNavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final destinations = [
       (Icons.home_outlined, Icons.home, '首页', '/home'),
-      (Icons.groups_outlined, Icons.groups, '人员', '/personnel'),
       (
         Icons.calendar_month_outlined,
         Icons.calendar_month,
@@ -26,7 +25,7 @@ class VehicleNavigationBar extends StatelessWidget {
     ];
     return NavigationBarTheme(
       data: NavigationBarThemeData(
-        indicatorColor: AppColors.lightBlue,
+        indicatorColor: Colors.transparent,
         iconTheme: WidgetStateProperty.resolveWith(
           (states) => IconThemeData(
             color: states.contains(WidgetState.selected)
@@ -64,7 +63,7 @@ class VehicleNavigationBar extends StatelessWidget {
 }
 
 Color vehicleStatusColor(VehicleStatus status) => switch (status) {
-  VehicleStatus.normal => AppColors.primary,
+  VehicleStatus.normal => AppColors.success,
   VehicleStatus.pendingRepair => Colors.orange,
   VehicleStatus.repairing => AppColors.techBlue,
   VehicleStatus.stopped || VehicleStatus.scrapped => AppColors.body,

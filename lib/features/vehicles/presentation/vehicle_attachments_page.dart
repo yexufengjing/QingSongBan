@@ -94,10 +94,10 @@ class _VehicleAttachmentsPageState
     }).toList();
     final validCount = allItems.where((item) => !item.isDeleted).length;
     return ListView(
-      padding: const EdgeInsets.fromLTRB(20, 12, 20, 96),
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 96),
       children: [
         Card(
-          color: AppColors.lightBlue,
+          color: Colors.white,
           child: ListTile(
             leading: const CircleAvatar(
               child: Icon(Icons.local_shipping_outlined),
@@ -113,22 +113,34 @@ class _VehicleAttachmentsPageState
           children: [
             ChoiceChip(
               label: const Text('全部'),
+              showCheckmark: false,
+              selectedColor: AppColors.primary,
+              labelStyle: TextStyle(
+                color: _category == null ? Colors.white : AppColors.body,
+              ),
               selected: _category == null,
               onSelected: (_) => setState(() => _category = null),
             ),
             for (final category in VehicleAttachmentOptions.categories)
               ChoiceChip(
                 label: Text(VehicleAttachmentOptions.categoryLabel(category)),
+                showCheckmark: false,
+                selectedColor: AppColors.primary,
+                labelStyle: TextStyle(
+                  color: _category == category ? Colors.white : AppColors.body,
+                ),
                 selected: _category == category,
                 onSelected: (_) => setState(() => _category = category),
               ),
           ],
         ),
-        SwitchListTile(
-          contentPadding: EdgeInsets.zero,
-          title: const Text('显示已删除附件'),
-          value: _showDeleted,
-          onChanged: (value) => setState(() => _showDeleted = value),
+        Card(
+          child: SwitchListTile(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+            title: const Text('显示已删除附件'),
+            value: _showDeleted,
+            onChanged: (value) => setState(() => _showDeleted = value),
+          ),
         ),
         if (items.isEmpty)
           const Padding(
@@ -364,13 +376,23 @@ class _AttachmentCard extends StatelessWidget {
   Widget build(BuildContext context) => Card(
     color: attachment.isDeleted ? Colors.grey.shade100 : null,
     child: ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       leading: CircleAvatar(
-        backgroundColor: AppColors.lightGreen,
+        radius: 24,
+        backgroundColor: attachment.isDeleted
+            ? AppColors.background
+            : VehicleAttachmentOptions.isImage(attachment.extension)
+            ? AppColors.lightGreen
+            : AppColors.lightBlue,
         child: Icon(
           VehicleAttachmentOptions.isImage(attachment.extension)
               ? Icons.image_outlined
               : Icons.description_outlined,
-          color: AppColors.primary,
+          color: attachment.isDeleted
+              ? AppColors.helper
+              : VehicleAttachmentOptions.isImage(attachment.extension)
+              ? AppColors.success
+              : AppColors.primary,
         ),
       ),
       title: Text(

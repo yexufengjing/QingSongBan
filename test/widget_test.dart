@@ -7,6 +7,7 @@ import 'package:qingsongban/core/database/app_database.dart';
 import 'package:qingsongban/core/database/database_enums.dart';
 import 'package:qingsongban/core/database/database_provider.dart';
 import 'package:qingsongban/app/app.dart';
+import 'package:qingsongban/core/widgets/design_canvas.dart';
 import 'package:qingsongban/app/router/app_router.dart';
 import 'package:qingsongban/features/attendance/application/attendance_group_providers.dart';
 import 'package:qingsongban/features/attendance/application/daily_attendance_providers.dart';
@@ -185,22 +186,22 @@ void main() {
         child: const QingSongBanApp(),
       ),
     );
+    appRouter.go('/home');
     await tester.pumpAndSettle();
   }
 
-  widgetTest('starts on the home tab with five destinations', (tester) async {
+  widgetTest('starts on the overview with four primary destinations', (
+    tester,
+  ) async {
     await pumpApp(tester);
     final semantics = tester.ensureSemantics();
     try {
       await tester.pump();
-      expect(
-        find.bySemanticsLabel(
-          RegExp(r'^轻松办人员管理首页，清洁人员与车辆背景，标语：让城市更清洁，让工作更轻松。'),
-        ),
-        findsOneWidget,
-      );
+      expect(find.bySemanticsLabel(RegExp(r'^轻松办$')), findsOneWidget);
       expect(find.text('首页'), findsOneWidget);
-      expect(find.text('人员'), findsOneWidget);
+      expect(find.byType(NavigationDestination), findsNWidgets(4));
+      expect(find.text('人员'), findsNothing);
+      expect(find.text('关键指标'), findsOneWidget);
       expect(find.text('考勤'), findsOneWidget);
       expect(find.text('汇总'), findsOneWidget);
       expect(find.text('我的'), findsOneWidget);
@@ -339,6 +340,8 @@ void main() {
 
   widgetTest('shows the home shortcuts', (tester) async {
     await pumpApp(tester);
+    await tester.tap(find.text('处理'));
+    await tester.pumpAndSettle();
 
     for (final label in [
       '新增人员',
@@ -361,6 +364,8 @@ void main() {
     tester.view.physicalSize = const Size(411, 840);
     try {
       await pumpApp(tester);
+      await tester.tap(find.text('处理'));
+      await tester.pumpAndSettle();
       final viewport = tester.getRect(find.byType(SingleChildScrollView).first);
       final reminderHeading = tester.getRect(find.text('待办提醒'));
       expect(viewport.contains(reminderHeading.topLeft), isTrue);
@@ -374,6 +379,8 @@ void main() {
     tester,
   ) async {
     await pumpApp(tester);
+    await tester.tap(find.text('处理'));
+    await tester.pumpAndSettle();
 
     final vehicleAction = find.byKey(const Key('home-action-车辆管理'));
     await tester.ensureVisible(vehicleAction);
@@ -454,6 +461,10 @@ void main() {
     for (final entry in markers.entries) {
       appRouter.go('/home');
       await tester.pumpAndSettle();
+      final mode = const {'本月离职', '即将到期'}.contains(entry.key) ? '处理' : '概览';
+      await tester.ensureVisible(find.text(mode));
+      await tester.tap(find.text(mode));
+      await tester.pumpAndSettle();
       final metric = find.byKey(Key('home-metric-${entry.key}'));
       expect(metric, findsOneWidget);
       await tester.ensureVisible(metric);
@@ -489,16 +500,10 @@ void main() {
     await tester.pumpAndSettle();
   });
 
-  widgetTest('switches between all five tabs', (tester) async {
+  widgetTest('switches between all four primary tabs', (tester) async {
     await pumpApp(tester);
 
-    const markers = {
-      '人员': '档案概览',
-      '考勤': '考勤组管理',
-      '汇总': '本月尚未生成汇总',
-      '我的': '社保保险',
-      '首页': '快捷操作',
-    };
+    const markers = {'考勤': '名单设置', '汇总': '汇总中心', '我的': '社保保险', '首页': '关键指标'};
 
     for (final entry in markers.entries) {
       final destination = find.descendant(
@@ -516,7 +521,7 @@ void main() {
     tester,
   ) async {
     await pumpApp(tester);
-    await tester.tap(find.text('人员'));
+    appRouter.go('/personnel');
     await tester.pumpAndSettle();
 
     const statusCards = {
@@ -532,10 +537,7 @@ void main() {
       await tester.tap(card);
       await tester.pumpAndSettle();
       expect(find.text('人员名单'), findsOneWidget);
-      final statusLabel = find.textContaining(
-        RegExp('^${RegExp.escape(entry.key)} \\(\\d+\\)\$'),
-      );
-      expect(statusLabel, findsOneWidget);
+      final statusLabel = find.text(entry.key);
       final statusChip = find.ancestor(
         of: statusLabel,
         matching: find.byType(ChoiceChip),
@@ -659,12 +661,20 @@ void main() {
     },
   );
 
-  widgetTest('uses the stage zero visual baseline', (tester) async {
+  widgetTest('uses the selected reference component baseline', (tester) async {
     await pumpApp(tester);
 
     final materialApp = tester.widget<MaterialApp>(find.byType(MaterialApp));
-    expect(materialApp.theme?.colorScheme.primary, const Color(0xFF00C16B));
-    expect(materialApp.theme?.scaffoldBackgroundColor, const Color(0xFFF6F9FC));
+    expect(materialApp.theme?.colorScheme.primary, const Color(0xFF2563EB));
+    expect(materialApp.theme?.scaffoldBackgroundColor, Colors.transparent);
+    expect(find.byType(DesignCanvas), findsOneWidget);
+    final cardShape =
+        materialApp.theme?.cardTheme.shape as RoundedRectangleBorder;
+    expect(cardShape.borderRadius, BorderRadius.circular(12));
+    final buttonShape =
+        materialApp.theme?.filledButtonTheme.style?.shape?.resolve({})
+            as RoundedRectangleBorder;
+    expect(buttonShape.borderRadius, BorderRadius.circular(8));
     expect(materialApp.locale, const Locale('zh', 'CN'));
     expect(materialApp.supportedLocales, const [Locale('zh', 'CN')]);
   });
@@ -672,7 +682,7 @@ void main() {
   widgetTest('creates and edits a personnel record', (tester) async {
     await pumpApp(tester);
 
-    await tester.tap(find.text('人员'));
+    appRouter.go('/personnel');
     await tester.pumpAndSettle();
     final createAction = find.text('新增人员');
     await tester.ensureVisible(createAction);
@@ -709,9 +719,9 @@ void main() {
   ) async {
     await pumpApp(tester);
 
-    await tester.tap(find.text('考勤'));
+    appRouter.go('/attendance');
     await tester.pumpAndSettle();
-    await tester.tap(find.text('考勤组管理'));
+    await tester.tap(find.byKey(const Key('attendance-groups-entry')));
     await tester.pumpAndSettle();
     expect(find.text('还没有考勤组'), findsOneWidget);
 
@@ -736,9 +746,11 @@ void main() {
   ) async {
     await pumpApp(tester);
 
-    await tester.tap(find.text('考勤'));
+    appRouter.go('/attendance');
     await tester.pumpAndSettle();
-    final monthlyEntry = find.text('月度考勤名单');
+    final monthlyEntry = find.byKey(
+      const Key('attendance-monthly-roster-entry'),
+    );
     await tester.ensureVisible(monthlyEntry);
     await tester.tap(monthlyEntry);
     await tester.pumpAndSettle();
@@ -753,7 +765,7 @@ void main() {
   ) async {
     await pumpApp(tester);
 
-    await tester.tap(find.text('考勤'));
+    appRouter.go('/attendance');
     await tester.pumpAndSettle();
     final reportsEntry = find.byKey(const Key('attendance-reports-entry'));
     await tester.ensureVisible(reportsEntry);
@@ -765,7 +777,7 @@ void main() {
 
     await tester.tap(find.byKey(const Key('summary-back-to-attendance')));
     await tester.pumpAndSettle();
-    expect(find.text('考勤组管理'), findsOneWidget);
+    expect(find.byKey(const Key('attendance-groups-entry')), findsOneWidget);
   });
 
   widgetTest('opens the employee attachment center from personnel detail', (
@@ -790,7 +802,7 @@ void main() {
     await tester.tap(attachmentsEntry);
     await tester.pumpAndSettle();
 
-    expect(find.text('附件资料'), findsOneWidget);
+    expect(find.text('人员附件'), findsOneWidget);
     expect(find.text('暂无附件资料'), findsOneWidget);
   });
 
@@ -801,9 +813,9 @@ void main() {
         .save(draft: const AttendanceGroupDraft(name: '每日登记组'));
     await pumpApp(tester, attendanceGroupOverride: [group]);
 
-    await tester.tap(find.text('考勤'));
+    appRouter.go('/attendance');
     await tester.pumpAndSettle();
-    final dailyEntry = find.text('每日考勤');
+    final dailyEntry = find.byKey(const Key('attendance-daily-entry'));
     await tester.ensureVisible(dailyEntry);
     await tester.tap(dailyEntry);
     await tester.pumpAndSettle();
@@ -847,7 +859,7 @@ void main() {
       scrollable: find.byType(Scrollable).last,
     );
     expect(emptyDailyRoster, findsOneWidget);
-    expect(find.text('考勤'), findsWidgets);
+    expect(find.text('每日考勤'), findsOneWidget);
   });
 
   widgetTest('opens the monthly attendance table with an empty roster', (
@@ -857,7 +869,7 @@ void main() {
         .save(draft: const AttendanceGroupDraft(name: '月表入口组'));
     await pumpApp(tester, attendanceGroupOverride: [group]);
 
-    await tester.tap(find.text('考勤'));
+    appRouter.go('/attendance');
     await tester.pumpAndSettle();
     final monthlyTableEntry = find.text('月考勤表');
     await tester.ensureVisible(monthlyTableEntry);
@@ -879,7 +891,7 @@ void main() {
   widgetTest('opens the leave page with an empty state', (tester) async {
     await pumpApp(tester);
 
-    await tester.tap(find.text('考勤'));
+    appRouter.go('/attendance');
     await tester.pumpAndSettle();
     final leaveEntry = find.text('请假记录');
     await tester.ensureVisible(leaveEntry);
@@ -903,7 +915,7 @@ void main() {
     final employee = (await database.findEmployeeById(employeeId))!;
     await pumpApp(tester, personnelOverride: [employee]);
 
-    await tester.tap(find.text('考勤'));
+    appRouter.go('/attendance');
     await tester.pumpAndSettle();
     final leaveEntry = find.text('请假记录');
     await tester.ensureVisible(leaveEntry);
@@ -934,7 +946,7 @@ void main() {
   widgetTest('opens the overtime page with an empty state', (tester) async {
     await pumpApp(tester);
 
-    await tester.tap(find.text('考勤'));
+    appRouter.go('/attendance');
     await tester.pumpAndSettle();
     final overtimeEntry = find.text('加班记录');
     await tester.ensureVisible(overtimeEntry);
@@ -950,10 +962,15 @@ void main() {
   widgetTest('opens the insurance page from settings', (tester) async {
     await pumpApp(tester);
 
-    await tester.tap(find.text('我的'));
+    appRouter.go('/settings');
     await tester.pumpAndSettle();
     final insuranceEntry = find.text('社保保险');
-    await tester.ensureVisible(insuranceEntry);
+    await tester.scrollUntilVisible(
+      insuranceEntry,
+      250,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.pumpAndSettle();
     await tester.tap(insuranceEntry);
     await tester.pumpAndSettle();
 
@@ -965,7 +982,7 @@ void main() {
   widgetTest('opens Excel import and export from settings', (tester) async {
     await pumpApp(tester);
 
-    await tester.tap(find.text('我的'));
+    appRouter.go('/settings');
     await tester.pumpAndSettle();
     final excelEntry = find.text('Excel 导入导出');
     await tester.ensureVisible(excelEntry);
@@ -980,7 +997,7 @@ void main() {
   widgetTest('opens local reminders from settings', (tester) async {
     await pumpApp(tester);
 
-    await tester.tap(find.text('我的'));
+    appRouter.go('/settings');
     await tester.pumpAndSettle();
     final reminderEntry = find.text('备忘提醒');
     await tester.ensureVisible(reminderEntry);
@@ -1005,7 +1022,7 @@ void main() {
   widgetTest('opens backup and restore from settings', (tester) async {
     await pumpApp(tester);
 
-    await tester.tap(find.text('我的'));
+    appRouter.go('/settings');
     await tester.pumpAndSettle();
     final backupEntry = find.text('备份与恢复');
     await tester.ensureVisible(backupEntry);
@@ -1020,7 +1037,7 @@ void main() {
   widgetTest('opens operation logs from settings', (tester) async {
     await pumpApp(tester);
 
-    await tester.tap(find.text('我的'));
+    appRouter.go('/settings');
     await tester.pumpAndSettle();
     final logEntry = find.text('操作日志');
     await tester.ensureVisible(logEntry);
@@ -1067,7 +1084,7 @@ void main() {
       monthlyTableOverride: table,
     );
 
-    await tester.tap(find.text('考勤'));
+    appRouter.go('/attendance');
     await tester.pumpAndSettle();
     appRouter.go('/attendance/monthly-table?month=2026-09');
     await tester.pumpAndSettle();
@@ -1094,9 +1111,11 @@ void main() {
         .save(draft: const AttendanceGroupDraft(name: '月度名单组'));
     await pumpApp(tester, attendanceGroupOverride: [group]);
 
-    await tester.tap(find.text('考勤'));
+    appRouter.go('/attendance');
     await tester.pumpAndSettle();
-    final monthlyEntry = find.text('月度考勤名单');
+    final monthlyEntry = find.byKey(
+      const Key('attendance-monthly-roster-entry'),
+    );
     await tester.ensureVisible(monthlyEntry);
     await tester.tap(monthlyEntry);
     await tester.pumpAndSettle();
@@ -1127,7 +1146,7 @@ void main() {
         .save(draft: const AttendanceGroupDraft(name: '管业临时工组'));
     await pumpApp(tester, attendanceGroupOverride: [group]);
 
-    await tester.tap(find.text('人员'));
+    appRouter.go('/personnel');
     await tester.pumpAndSettle();
     final createPersonnel = find.text('新增人员');
     await tester.ensureVisible(createPersonnel);

@@ -24,21 +24,24 @@ class _BackupPageState extends ConsumerState<BackupPage> {
     return Scaffold(
       appBar: AppBar(title: const Text('备份与恢复')),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 14, 20, 28),
+        padding: const EdgeInsets.fromLTRB(16, 14, 16, 28),
         children: [
           Card(
             color: AppColors.lightBlue,
             child: const Padding(
               padding: EdgeInsets.all(16),
-              child: Text(
-                '备份包包含本地 SQLite 数据库、应用配置和附件资料。恢复前会自动生成一份安全备份，恢复完成后请重启应用。',
-              ),
+              child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Icon(Icons.info_outline, color: AppColors.primary),
+                SizedBox(width: 12),
+                Expanded(child: Text('备份包包含本地 SQLite 数据库、应用配置和附件资料。恢复前会自动生成一份安全备份，恢复完成后请重启应用。',
+                  style: TextStyle(fontSize: 14, height: 1.6))),
+              ]),
             ),
           ),
           const SizedBox(height: 18),
           Card(
             child: Padding(
-              padding: const EdgeInsets.all(18),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
                   SizedBox(
@@ -50,7 +53,7 @@ class _BackupPageState extends ConsumerState<BackupPage> {
                       label: const Text('创建备份'),
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 16),
                   SizedBox(
                     width: double.infinity,
                     child: OutlinedButton.icon(
@@ -60,16 +63,17 @@ class _BackupPageState extends ConsumerState<BackupPage> {
                       label: const Text('选择备份并恢复'),
                     ),
                   ),
+                  const SizedBox(height: 16),
+                  const Card(color: AppColors.lightOrange, child: Padding(
+                    padding: EdgeInsets.all(12), child: Row(crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [Icon(Icons.warning_amber_outlined, color: AppColors.warning),
+                        SizedBox(width: 10), Expanded(child: Text('恢复会覆盖当前本地数据，确认前请检查备份日期。',
+                          style: TextStyle(color: AppColors.warning, fontSize: 14, height: 1.5)))]))),
                 ],
               ),
             ),
           ),
           const SizedBox(height: 12),
-          Text(
-            '恢复会覆盖当前本地数据，确认前请检查备份日期。',
-            style: Theme.of(context).textTheme.bodySmall
-                ?.copyWith(color: Colors.orange.shade800),
-          ),
           const SizedBox(height: 18),
           TextButton.icon(
             onPressed: () => context.pop(),
