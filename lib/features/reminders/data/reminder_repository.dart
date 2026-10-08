@@ -161,6 +161,8 @@ class ReminderRepository {
         final existing =
             draft.sourceEntityType != null && draft.sourceEntityId != null
             ? await findBySource(draft.sourceEntityType!, draft.sourceEntityId!)
+            : draft.reminderType == 'custom'
+            ? null
             : await findByType(draft.reminderType);
         final hasSource =
             draft.sourceEntityType != null && draft.sourceEntityId != null;

@@ -184,9 +184,15 @@ void main() {
     expect(find.text('本年累计总费用'), findsOneWidget);
     expect(find.text('月度费用趋势'), findsOneWidget);
     expect(find.text('费用构成'), findsOneWidget);
+    expect(find.text('单位：元'), findsNothing);
+    expect(find.text('240.00'), findsOneWidget);
+    expect(find.text('240.00 元'), findsNWidgets(2));
+    expect(find.text('费用构成图'), findsOneWidget);
+    await tester.ensureVisible(find.text('月度费用趋势'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('月度费用趋势'));
+    await tester.pumpAndSettle();
     expect(find.text('单位：元'), findsOneWidget);
-    expect(find.text('¥240'), findsOneWidget);
-    expect(find.text('¥240.00'), findsOneWidget);
     await tester.ensureVisible(find.text('费用构成图'));
     await tester.tap(find.text('费用构成图'));
     await tester.pumpAndSettle();

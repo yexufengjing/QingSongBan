@@ -73,6 +73,90 @@ class _PersonnelListPageState extends ConsumerState<PersonnelListPage> {
                 ),
                 data: (items) {
                   if (items.isEmpty) {
+                    final filtered =
+                        ref
+                            .watch(personnelSearchQueryProvider)
+                            .trim()
+                            .isNotEmpty ||
+                        ref.watch(personnelStatusFilterProvider) != null ||
+                        ref.watch(personnelAttendanceGroupFilterProvider) !=
+                            null ||
+                        ref.watch(personnelEmploymentTypeFilterProvider) !=
+                            null ||
+                        ref.watch(personnelHireMonthFilterProvider) != null ||
+                        ref.watch(personnelShowDeletedProvider);
+                    if (filtered) {
+                      return Center(
+                        child: SingleChildScrollView(
+                          padding: const EdgeInsets.all(24),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(
+                                Icons.search_off,
+                                size: 40,
+                                color: AppColors.body,
+                              ),
+                              const SizedBox(height: 12),
+                              Text(
+                                '没有匹配的人员',
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
+                              const SizedBox(height: 8),
+                              const Text('请调整关键词或清除筛选条件。'),
+                              const SizedBox(height: 16),
+                              OutlinedButton(
+                                onPressed: () {
+                                  ref
+                                          .read(
+                                            personnelSearchQueryProvider
+                                                .notifier,
+                                          )
+                                          .state =
+                                      '';
+                                  ref
+                                          .read(
+                                            personnelStatusFilterProvider
+                                                .notifier,
+                                          )
+                                          .state =
+                                      null;
+                                  ref
+                                          .read(
+                                            personnelAttendanceGroupFilterProvider
+                                                .notifier,
+                                          )
+                                          .state =
+                                      null;
+                                  ref
+                                          .read(
+                                            personnelEmploymentTypeFilterProvider
+                                                .notifier,
+                                          )
+                                          .state =
+                                      null;
+                                  ref
+                                          .read(
+                                            personnelHireMonthFilterProvider
+                                                .notifier,
+                                          )
+                                          .state =
+                                      null;
+                                  ref
+                                          .read(
+                                            personnelShowDeletedProvider
+                                                .notifier,
+                                          )
+                                          .state =
+                                      false;
+                                },
+                                child: const Text('清除搜索与筛选'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    }
                     return PersonnelEmptyState(
                       onCreate: () => context.push('/personnel/new'),
                     );
@@ -96,11 +180,35 @@ class _PersonnelListPageState extends ConsumerState<PersonnelListPage> {
   }
 }
 
-class _PersonnelFilters extends ConsumerWidget {
+class _PersonnelFilters extends ConsumerStatefulWidget {
   const _PersonnelFilters();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_PersonnelFilters> createState() => _PersonnelFiltersState();
+}
+
+class _PersonnelFiltersState extends ConsumerState<_PersonnelFilters> {
+  late final TextEditingController _searchController;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController = TextEditingController(
+      text: ref.read(personnelSearchQueryProvider),
+    );
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    ref.listen(personnelSearchQueryProvider, (_, value) {
+      if (_searchController.text != value) _searchController.text = value;
+    });
     final search = ref.watch(personnelSearchQueryProvider);
     final status = ref.watch(personnelStatusFilterProvider);
     final allEmployees = ref
@@ -127,6 +235,7 @@ class _PersonnelFilters extends ConsumerWidget {
             children: [
               Expanded(
                 child: TextField(
+                  controller: _searchController,
                   onChanged: (value) =>
                       ref.read(personnelSearchQueryProvider.notifier).state =
                           value,

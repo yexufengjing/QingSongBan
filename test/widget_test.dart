@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:drift/drift.dart';
+import 'package:drift/drift.dart' hide isNull;
 
 import 'package:qingsongban/core/database/app_database.dart';
 import 'package:qingsongban/core/database/database_enums.dart';
@@ -367,7 +367,7 @@ void main() {
       await tester.tap(find.text('处理'));
       await tester.pumpAndSettle();
       final viewport = tester.getRect(find.byType(SingleChildScrollView).first);
-      final reminderHeading = tester.getRect(find.text('待办提醒'));
+      final reminderHeading = tester.getRect(find.text('考勤登记'));
       expect(viewport.contains(reminderHeading.topLeft), isTrue);
     } finally {
       tester.view.resetPhysicalSize();
@@ -452,16 +452,14 @@ void main() {
     const markers = {
       '当前在岗': '人员名单',
       '本月新增': '人员名单',
-      '本月离职': '离职管理',
       '今日出勤': '每日考勤',
       '今日请假': '请假记录',
-      '即将到期': '备忘提醒',
     };
 
     for (final entry in markers.entries) {
       appRouter.go('/home');
       await tester.pumpAndSettle();
-      final mode = const {'本月离职', '即将到期'}.contains(entry.key) ? '处理' : '概览';
+      const mode = '概览';
       await tester.ensureVisible(find.text(mode));
       await tester.tap(find.text(mode));
       await tester.pumpAndSettle();
@@ -500,10 +498,47 @@ void main() {
     await tester.pumpAndSettle();
   });
 
+  widgetTest('opens each processing task at its actual business destination', (
+    tester,
+  ) async {
+    await pumpApp(tester);
+    const destinations = {
+      'home-pending-attendance': '每日考勤',
+      'home-pending-reminders': '提醒中心',
+      'home-pending-inventory': '库存预警',
+      'home-pending-purchase': '待领取',
+    };
+    for (final entry in destinations.entries) {
+      appRouter.go('/home');
+      await tester.pumpAndSettle();
+      final processingTab = find.text('处理');
+      await tester.ensureVisible(processingTab);
+      await tester.pumpAndSettle();
+      await tester.tap(processingTab);
+      await tester.pumpAndSettle();
+      final row = find.byKey(Key(entry.key));
+      await tester.ensureVisible(row);
+      await tester.pumpAndSettle();
+      await tester.tap(
+        find
+            .descendant(
+              of: row,
+              matching: find.byWidgetPredicate(
+                (widget) => widget is ButtonStyleButton,
+              ),
+            )
+            .first,
+      );
+      await tester.pumpAndSettle();
+      expect(find.text(entry.value), findsWidgets);
+      expect(tester.takeException(), isNull);
+    }
+  });
+
   widgetTest('switches between all four primary tabs', (tester) async {
     await pumpApp(tester);
 
-    const markers = {'考勤': '名单设置', '汇总': '汇总中心', '我的': '社保保险', '首页': '关键指标'};
+    const markers = {'考勤': '名单设置', '汇总': '汇总中心', '我的': '备忘提醒', '首页': '关键指标'};
 
     for (final entry in markers.entries) {
       final destination = find.descendant(
@@ -647,7 +682,7 @@ void main() {
       final fab = tester.widget<FloatingActionButton>(
         find.byKey(const Key('personnel-add-fab')),
       );
-      expect(fab.shape, isA<CircleBorder>());
+      expect(fab.shape, isA<RoundedRectangleBorder>());
       expect(find.text('东区人员'), findsOneWidget);
       expect(find.text('西区人员'), findsOneWidget);
 
@@ -837,17 +872,17 @@ void main() {
     ]) {
       expect(
         find.byKey(Key('daily-attendance-action-${action.name}')),
-        findsOneWidget,
+        findsNothing,
       );
       expect(
         find.text(DailyAttendanceOptions.actionLabel(action)),
-        findsOneWidget,
+        findsNothing,
       );
     }
 
     await tester.tap(find.byKey(const Key('daily-attendance-date-button')));
     await tester.pumpAndSettle();
-    expect(find.text('今天'), findsOneWidget);
+    expect(find.byType(DatePickerDialog), findsOneWidget);
     expect(find.text('取消'), findsOneWidget);
     await tester.tap(find.text('取消'));
     await tester.pumpAndSettle();
@@ -959,10 +994,12 @@ void main() {
     expect(find.text('新增加班'), findsOneWidget);
   });
 
-  widgetTest('opens the insurance page from settings', (tester) async {
+  widgetTest('opens the insurance page from home processing', (tester) async {
     await pumpApp(tester);
 
-    appRouter.go('/settings');
+    appRouter.go('/home');
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('处理'));
     await tester.pumpAndSettle();
     final insuranceEntry = find.text('社保保险');
     await tester.scrollUntilVisible(
@@ -984,7 +1021,7 @@ void main() {
 
     appRouter.go('/settings');
     await tester.pumpAndSettle();
-    final excelEntry = find.text('Excel 导入导出');
+    final excelEntry = find.text('导入导出');
     await tester.ensureVisible(excelEntry);
     await tester.tap(excelEntry);
     await tester.pumpAndSettle();

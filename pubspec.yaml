@@ -81,6 +81,7 @@ flutter:
   assets:
     - assets/ui/brand_wordmark.png
     - assets/ui/home_header.png
+    - assets/ui/home_reference.png
     - assets/vehicles/sweeper-truck.png
     - assets/vehicles/water-truck.png
     - assets/vehicles/sweeper-angles.png

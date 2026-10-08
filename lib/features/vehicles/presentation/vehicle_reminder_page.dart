@@ -7,10 +7,12 @@ import '../../../core/database/app_database.dart';
 import '../../reminders/application/reminder_providers.dart';
 import '../../reminders/domain/reminder_options.dart';
 import '../application/vehicle_providers.dart';
-import 'vehicle_navigation_bar.dart';
 
 class VehicleReminderPage extends ConsumerStatefulWidget {
-  const VehicleReminderPage({super.key});
+  const VehicleReminderPage({this.vehicleId, super.key});
+
+  /// Null shows the all-vehicle center; an ID embeds only that vehicle's panel.
+  final int? vehicleId;
 
   @override
   ConsumerState<VehicleReminderPage> createState() =>
@@ -26,9 +28,29 @@ class _VehicleReminderPageState extends ConsumerState<VehicleReminderPage> {
   Widget build(BuildContext context) {
     final reminders = ref.watch(reminderItemsProvider);
     final vehicles = ref.watch(allVehiclesProvider);
+    final body = reminders.when(
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (error, _) => Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('提醒加载失败'),
+            TextButton(
+              onPressed: () => ref.invalidate(reminderItemsProvider),
+              child: const Text('重试'),
+            ),
+          ],
+        ),
+      ),
+      data: (items) => _content(items, vehicles.valueOrNull ?? const []),
+    );
+    if (widget.vehicleId != null) return body;
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        leading: BackButton(
+          onPressed: () =>
+              context.canPop() ? context.pop() : context.go('/home'),
+        ),
         title: const Text('提醒中心'),
         actions: [
           TextButton.icon(
@@ -39,12 +61,7 @@ class _VehicleReminderPageState extends ConsumerState<VehicleReminderPage> {
           ),
         ],
       ),
-      bottomNavigationBar: const VehicleNavigationBar(),
-      body: reminders.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, _) => Center(child: Text('提醒加载失败：$error')),
-        data: (items) => _content(items, vehicles.valueOrNull ?? const []),
-      ),
+      body: body,
     );
   }
 
@@ -52,8 +69,14 @@ class _VehicleReminderPageState extends ConsumerState<VehicleReminderPage> {
     final vehicleItems = items
         .where(
           (item) =>
-              item.links.any((link) => link.entityType == 'vehicle') &&
-              item.isPending,
+              item.links.any(
+                (link) =>
+                    link.entityType == 'vehicle' &&
+                    (widget.vehicleId == null ||
+                        link.entityId == widget.vehicleId),
+              ) &&
+              item.isPending &&
+              item.reminder.isEnabled,
         )
         .toList();
     final now = DateTime.now();
@@ -75,8 +98,8 @@ class _VehicleReminderPageState extends ConsumerState<VehicleReminderPage> {
         .where(
           (item) =>
               item.scheduledAt != null &&
-              !item.scheduledAt!.isBefore(today) &&
-              !item.scheduledAt!.isAfter(soon),
+              !_dateOnly(item.scheduledAt!).isBefore(today) &&
+              !_dateOnly(item.scheduledAt!).isAfter(soon),
         )
         .length;
     final visible = vehicleItems.where((item) {
@@ -107,136 +130,204 @@ class _VehicleReminderPageState extends ConsumerState<VehicleReminderPage> {
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 30),
       children: [
-        SizedBox(
-          height: 40,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: [
-              for (final category in ['全部', '保养', '年检', '保险', '异常']) ...[
-                if (category != '全部') const SizedBox(width: 7),
-                ChoiceChip(
-                  label: Text(category),
-                  selected: _filter == category,
-                  showCheckmark: false,
-                  selectedColor: AppColors.techBlue,
-                  side: BorderSide.none,
-                  labelStyle: TextStyle(
-                    color: _filter == category ? Colors.white : AppColors.body,
-                  ),
-                  onSelected: (_) => setState(() => _filter = category),
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        '车辆提醒',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                    ),
+                    if (widget.vehicleId != null)
+                      TextButton(
+                        onPressed: () => context.push('/vehicles/reminders'),
+                        child: const Text('全车提醒 ›'),
+                      ),
+                  ],
                 ),
+                Text(
+                  widget.vehicleId == null ? '全部车辆' : '仅当前车辆',
+                  style: Theme.of(context).textTheme.bodyMedium
+                      ?.copyWith(color: AppColors.body),
+                ),
+                const SizedBox(height: 12),
+                SizedBox(
+                  height: MediaQuery.textScalerOf(context).scale(14) + 36,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      for (final category in [
+                        '全部',
+                        '保养',
+                        '年检',
+                        '保险',
+                        '异常',
+                      ]) ...[
+                        if (category != '全部') const SizedBox(width: 4),
+                        ChoiceChip(
+                          label: Text(category == '全部' ? '全部提醒' : category),
+                          selected: _filter == category,
+                          showCheckmark: false,
+                          selectedColor: AppColors.techBlue,
+                          side: BorderSide.none,
+                          labelStyle: TextStyle(
+                            fontSize: 12,
+                            color: _filter == category
+                                ? Colors.white
+                                : AppColors.body,
+                          ),
+                          onSelected: (_) => setState(() => _filter = category),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _ReminderMetric(
+                        label: '今日提醒',
+                        value: todayCount,
+                        icon: Icons.notifications_none,
+                        color: AppColors.techBlue,
+                        selected: _timeFilter == _ReminderTimeFilter.today,
+                        onTap: () => setState(
+                          () => _timeFilter =
+                              _timeFilter == _ReminderTimeFilter.today
+                              ? _ReminderTimeFilter.all
+                              : _ReminderTimeFilter.today,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 7),
+                    Expanded(
+                      child: _ReminderMetric(
+                        label: '即将到期',
+                        value: soonCount,
+                        icon: Icons.schedule,
+                        color: Colors.orange,
+                        selected: _timeFilter == _ReminderTimeFilter.soon,
+                        onTap: () => setState(
+                          () => _timeFilter =
+                              _timeFilter == _ReminderTimeFilter.soon
+                              ? _ReminderTimeFilter.all
+                              : _ReminderTimeFilter.soon,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 7),
+                    Expanded(
+                      child: _ReminderMetric(
+                        label: '已逾期',
+                        value: overdueCount,
+                        icon: Icons.error_outline,
+                        color: AppColors.danger,
+                        selected: _timeFilter == _ReminderTimeFilter.overdue,
+                        onTap: () => setState(
+                          () => _timeFilter =
+                              _timeFilter == _ReminderTimeFilter.overdue
+                              ? _ReminderTimeFilter.all
+                              : _ReminderTimeFilter.overdue,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 18),
+                Row(
+                  children: [
+                    Text('提醒列表', style: Theme.of(context).textTheme.titleLarge),
+                    const Spacer(),
+                    PopupMenuButton<_ReminderSort>(
+                      tooltip: '排序提醒',
+                      onSelected: (value) => setState(() => _sort = value),
+                      itemBuilder: (context) => [
+                        for (final value in _ReminderSort.values)
+                          CheckedPopupMenuItem(
+                            value: value,
+                            checked: _sort == value,
+                            child: Text(value.label),
+                          ),
+                      ],
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            _sort.label,
+                            style: const TextStyle(
+                              color: AppColors.body,
+                              fontSize: 12,
+                            ),
+                          ),
+                          const Icon(
+                            Icons.keyboard_arrow_down,
+                            color: AppColors.body,
+                            size: 18,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                if (visible.isEmpty)
+                  const Card(
+                    child: Padding(
+                      padding: EdgeInsets.all(20),
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 136,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.notifications,
+                              color: AppColors.techBlue,
+                              size: 36,
+                            ),
+                            SizedBox(height: 12),
+                            Text(
+                              '当前没有车辆提醒',
+                              style: TextStyle(color: AppColors.body),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                else
+                  for (final item in visible) ...[
+                    _VehicleReminderCard(
+                      item: item,
+                      vehicle: _linkedVehicle(item, vehicles),
+                      onSkip: () async {
+                        await ref
+                            .read(reminderRepositoryProvider)
+                            .skip(
+                              item.reminder.id,
+                              occurrenceId: item.occurrence?.id,
+                            );
+                        ref.invalidate(reminderItemsProvider);
+                      },
+                    ),
+                    const SizedBox(height: 9),
+                  ],
               ],
-            ],
+            ),
           ),
         ),
         const SizedBox(height: 12),
-        Row(
-          children: [
-            Expanded(
-              child: _ReminderMetric(
-                label: '今日提醒',
-                value: todayCount,
-                icon: Icons.notifications_none,
-                color: AppColors.techBlue,
-                selected: _timeFilter == _ReminderTimeFilter.today,
-                onTap: () => setState(
-                  () => _timeFilter = _timeFilter == _ReminderTimeFilter.today
-                      ? _ReminderTimeFilter.all
-                      : _ReminderTimeFilter.today,
-                ),
-              ),
-            ),
-            const SizedBox(width: 7),
-            Expanded(
-              child: _ReminderMetric(
-                label: '即将到期',
-                value: soonCount,
-                icon: Icons.schedule,
-                color: Colors.orange,
-                selected: _timeFilter == _ReminderTimeFilter.soon,
-                onTap: () => setState(
-                  () => _timeFilter = _timeFilter == _ReminderTimeFilter.soon
-                      ? _ReminderTimeFilter.all
-                      : _ReminderTimeFilter.soon,
-                ),
-              ),
-            ),
-            const SizedBox(width: 7),
-            Expanded(
-              child: _ReminderMetric(
-                label: '已逾期',
-                value: overdueCount,
-                icon: Icons.error_outline,
-                color: AppColors.danger,
-                selected: _timeFilter == _ReminderTimeFilter.overdue,
-                onTap: () => setState(
-                  () => _timeFilter = _timeFilter == _ReminderTimeFilter.overdue
-                      ? _ReminderTimeFilter.all
-                      : _ReminderTimeFilter.overdue,
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 18),
-        Row(
-          children: [
-            Text('提醒列表', style: Theme.of(context).textTheme.titleLarge),
-            const Spacer(),
-            PopupMenuButton<_ReminderSort>(
-              tooltip: '排序提醒',
-              onSelected: (value) => setState(() => _sort = value),
-              itemBuilder: (context) => [
-                for (final value in _ReminderSort.values)
-                  CheckedPopupMenuItem(
-                    value: value,
-                    checked: _sort == value,
-                    child: Text(value.label),
-                  ),
-              ],
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    _sort.label,
-                    style: const TextStyle(color: AppColors.body, fontSize: 12),
-                  ),
-                  const Icon(
-                    Icons.keyboard_arrow_down,
-                    color: AppColors.body,
-                    size: 18,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 8),
-        if (visible.isEmpty)
-          const Card(
-            child: Padding(
-              padding: EdgeInsets.all(20),
-              child: Text('当前没有车辆提醒', style: TextStyle(color: AppColors.body)),
-            ),
-          )
-        else
-          for (final item in visible) ...[
-            _VehicleReminderCard(
-              item: item,
-              vehicle: _linkedVehicle(item, vehicles),
-              onSkip: () async {
-                await ref
-                    .read(reminderRepositoryProvider)
-                    .skip(item.reminder.id, occurrenceId: item.occurrence?.id);
-                ref.invalidate(reminderItemsProvider);
-              },
-            ),
-            const SizedBox(height: 9),
-          ],
         Card(
           clipBehavior: Clip.antiAlias,
           child: InkWell(
-            onTap: () => context.go('/settings/reminders'),
+            onTap: () => context.push('/settings/reminders'),
             child: Padding(
               padding: const EdgeInsets.all(12),
               child: Row(
@@ -279,7 +370,11 @@ class _VehicleReminderPageState extends ConsumerState<VehicleReminderPage> {
 
   Vehicle? _linkedVehicle(ReminderItem item, List<Vehicle> vehicles) {
     final id = item.links
-        .where((link) => link.entityType == 'vehicle')
+        .where(
+          (link) =>
+              link.entityType == 'vehicle' &&
+              (widget.vehicleId == null || link.entityId == widget.vehicleId),
+        )
         .firstOrNull
         ?.entityId;
     return vehicles.where((vehicle) => vehicle.id == id).firstOrNull;
@@ -307,7 +402,7 @@ String _reminderCategory(ReminderItem item) {
 enum _ReminderTimeFilter { all, today, soon, overdue }
 
 enum _ReminderSort {
-  nearest('按提醒时间'),
+  nearest('最近到期'),
   farthest('按提醒时间（由远到近）');
 
   const _ReminderSort(this.label);

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:convert';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ import 'package:qingsongban/core/database/vehicle_demo_data_seeder.dart';
 import 'package:qingsongban/features/reports/data/monthly_summary_repository.dart';
 
 const _capture = bool.fromEnvironment('UI_REFACTOR_CAPTURE');
+const _captureNames = String.fromEnvironment('UI_CAPTURE_NAMES');
 const _captureDirectory = String.fromEnvironment(
   'UI_CAPTURE_DIR',
   defaultValue: 'docs/acceptance/ui-refactor-20261008/screenshots',
@@ -43,8 +45,18 @@ void main() {
       await fallback.load();
       _font = 'ReferenceChinese';
     }
-    final icons = File(
-      r'D:\Flutter\bin\cache\artifacts\material_fonts\MaterialIcons-Regular.otf',
+    final config = jsonDecode(
+      File('.dart_tool/package_config.json').readAsStringSync(),
+    ) as Map<String, dynamic>;
+    final flutterPackage = (config['packages'] as List)
+        .cast<Map<String, dynamic>>()
+        .firstWhere((package) => package['name'] == 'flutter');
+    final flutterDirectory = File('.dart_tool/package_config.json').absolute.uri
+        .resolve('${flutterPackage['rootUri']}/');
+    final icons = File.fromUri(
+      flutterDirectory.resolve(
+        '../../bin/cache/artifacts/material_fonts/MaterialIcons-Regular.otf',
+      ),
     );
     if (icons.existsSync()) {
       final loader = FontLoader(
@@ -223,6 +235,16 @@ void main() {
               findsNothing,
               reason: route.$2,
             );
+            if (route.$1 == 'issue_form') {
+              expect(
+                find.text('员工领取'),
+                findsNWidgets(2),
+                reason: 'Both issue and receiver types show their real value.',
+              );
+            }
+            if (route.$1 == 'issue_form' && _capture && size.$1 == 390.0) {
+              await _fillIssueFormCapture(tester, db, employeeId);
+            }
             await _snapshot(
               tester,
               '${route.$1}_${size.$1.toInt()}_${size.$2}',
@@ -235,6 +257,20 @@ void main() {
                 await _snapshot(
                   tester,
                   'reports_${tab}_${size.$1.toInt()}_${size.$2}',
+                );
+              }
+            }
+            if (route.$1 == 'vehicle_detail' && _capture) {
+              for (final tab in ['费用', '提醒']) {
+                final target = find.widgetWithText(Tab, tab);
+                await tester.ensureVisible(target);
+                await tester.pumpAndSettle();
+                await tester.tap(target);
+                await _settle(tester);
+                recordException('车辆详情/$tab');
+                await _snapshot(
+                  tester,
+                  'vehicle_${tab}_${size.$1.toInt()}_${size.$2}',
                 );
               }
             }
@@ -271,8 +307,95 @@ Future<void> _settle(WidgetTester tester) async {
   await tester.pumpAndSettle();
 }
 
+Future<void> _fillIssueFormCapture(
+  WidgetTester tester,
+  AppDatabase database,
+  int employeeId,
+) async {
+  late String employeeName;
+  late List<InventoryMaterial> materials;
+  await tester.runAsync(() async {
+    employeeName = (await database.findEmployeeById(employeeId))!.name;
+    materials = await database.select(database.inventoryMaterials).get();
+  });
+  if (materials.length < 2) {
+    throw StateError(
+      'The inventory fixture needs two materials for the form capture.',
+    );
+  }
+
+  Future<void> choose(
+    String key,
+    String query,
+    String result, {
+    int index = 0,
+  }) async {
+    final field = find.byKey(Key(key)).at(index);
+    await tester.ensureVisible(field);
+    await tester.tap(field);
+    await _settle(tester);
+    final sheet = find.byType(BottomSheet).last;
+    final search = find
+        .descendant(of: sheet, matching: find.byType(TextField))
+        .first;
+    await tester.enterText(search, query);
+    await tester.pumpAndSettle();
+    await tester.tap(
+      find.descendant(of: sheet, matching: find.textContaining(result)).last,
+    );
+    await _settle(tester);
+  }
+
+  await choose(
+    'inventory-employee-select',
+    _searchPrefix(employeeName),
+    employeeName,
+  );
+  await tester.ensureVisible(find.byTooltip('添加明细'));
+  await tester.tap(find.byTooltip('添加明细'));
+  await _settle(tester);
+  await choose(
+    'inventory-issue-material-select',
+    _searchPrefix(materials.first.materialName),
+    materials.first.materialName,
+  );
+  await choose(
+    'inventory-issue-material-select',
+    _searchPrefix(materials[1].materialName),
+    materials[1].materialName,
+    index: 1,
+  );
+  final quantities = find.byKey(const Key('inventory-issue-quantity'));
+  for (var index = 0; index < quantities.evaluate().length; index++) {
+    await tester.ensureVisible(quantities.at(index));
+    await tester.enterText(quantities.at(index), '${index + 1}');
+  }
+  await _snapshot(tester, 'issue_form_items_390_1.0');
+  final scrollable = tester.state<ScrollableState>(
+    find
+        .descendant(
+          of: find.byKey(const Key('inventory-issue-form-scroll')),
+          matching: find.byType(Scrollable),
+        )
+        .first,
+  );
+  FocusManager.instance.primaryFocus?.unfocus();
+  await tester.pumpAndSettle();
+  scrollable.position.jumpTo(scrollable.position.minScrollExtent);
+  await tester.pumpAndSettle();
+}
+
+String _searchPrefix(String value) =>
+    value.substring(0, value.length < 2 ? value.length : 2);
+
 Future<void> _snapshot(WidgetTester tester, String name) async {
   if (!_capture) return;
+  if (_captureNames.isNotEmpty &&
+      !_captureNames
+          .split(',')
+          .any((prefix) => name.startsWith('${prefix}_390_'))) {
+    return;
+  }
   await tester.runAsync(() async {
     final boundary = tester.renderObject<RenderRepaintBoundary>(
       find.byKey(_boundary),

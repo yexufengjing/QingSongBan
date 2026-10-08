@@ -8,12 +8,14 @@ class VehicleMetricData {
     required this.value,
     required this.icon,
     required this.color,
+    this.unit,
   });
 
   final String label;
   final String value;
   final IconData icon;
   final Color color;
+  final String? unit;
 }
 
 /// Compact, non-scrolling metric rows used by the vehicle detail pages.
@@ -26,32 +28,7 @@ class VehicleMetricGrid extends StatelessWidget {
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, constraints) {
       final largeText = MediaQuery.textScalerOf(context).scale(14) > 18;
-      var columns = constraints.maxWidth >= 320 && !largeText ? 4 : 2;
-      double valueWidth(VehicleMetricData item) {
-        final painter = TextPainter(
-          text: TextSpan(
-            text: item.value,
-            style: TextStyle(
-              fontSize: item.value.contains('¥') || item.value.contains('元')
-                  ? 16
-                  : 20,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          textDirection: Directionality.of(context),
-          textScaler: MediaQuery.textScalerOf(context),
-        )..layout();
-        return painter.width;
-      }
-
-      while (columns > 1 &&
-          items.any(
-            (item) =>
-                valueWidth(item) >
-                (constraints.maxWidth - (columns - 1) * 8) / columns - 16,
-          )) {
-        columns = columns ~/ 2;
-      }
+      final columns = constraints.maxWidth >= 320 && !largeText ? 4 : 2;
       return Column(
         children: [
           for (var start = 0; start < items.length; start += columns) ...[
@@ -81,45 +58,80 @@ class _MetricTile extends StatelessWidget {
   final VehicleMetricData item;
   @override
   Widget build(BuildContext context) => Container(
-    constraints: const BoxConstraints(minHeight: 76),
-    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+    constraints: BoxConstraints(minHeight: item.unit != null ? 94 : 76),
+    padding: EdgeInsets.symmetric(
+      horizontal: item.unit != null ? 4 : 8,
+      vertical: 12,
+    ),
     decoration: BoxDecoration(
       color: item.color.withValues(alpha: .07),
       borderRadius: BorderRadius.circular(10),
     ),
     child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: item.unit != null
+          ? CrossAxisAlignment.center
+          : CrossAxisAlignment.start,
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(item.icon, color: item.color, size: 18),
-            const SizedBox(width: 4),
-            Expanded(
-              child: Text(
-                item.label,
-                style: const TextStyle(
-                  color: AppColors.body,
-                  fontSize: 12,
-                  height: 1.4,
+        if (item.unit != null)
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(
+              children: [
+                Icon(item.icon, color: item.color, size: 16),
+                const SizedBox(width: 4),
+                Text(
+                  item.label,
+                  style: const TextStyle(color: AppColors.body, fontSize: 11),
+                ),
+              ],
+            ),
+          )
+        else
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(item.icon, color: item.color, size: 18),
+              const SizedBox(width: 4),
+              Expanded(
+                child: Text(
+                  item.label,
+                  style: const TextStyle(
+                    color: AppColors.body,
+                    fontSize: 12,
+                    height: 1.4,
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
         const SizedBox(height: 10),
-        Text(
-          item.value,
-          softWrap: false,
-          style: TextStyle(
-            color: AppColors.ink,
-            fontSize: item.value.contains('¥') || item.value.contains('元')
-                ? 16
-                : 20,
-            height: 1.2,
-            fontWeight: FontWeight.w700,
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: item.unit != null
+              ? Alignment.center
+              : Alignment.centerLeft,
+          child: Text(
+            item.value,
+            softWrap: false,
+            style: TextStyle(
+              color: AppColors.ink,
+              fontSize: item.unit != null
+                  ? 22
+                  : (item.value.contains('¥') || item.value.contains('元')
+                        ? 16
+                        : 20),
+              height: 1.2,
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ),
+        if (item.unit != null) ...[
+          const SizedBox(height: 6),
+          Text(
+            item.unit!,
+            style: const TextStyle(color: AppColors.body, fontSize: 13),
+          ),
+        ],
       ],
     ),
   );

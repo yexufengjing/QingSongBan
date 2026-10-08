@@ -7,6 +7,111 @@ import '../../../core/database/database_provider.dart';
 import '../../../core/utils/date_utils.dart';
 import '../../reminders/domain/reminder_options.dart';
 
+class HomeAttendanceProgress {
+  const HomeAttendanceProgress({
+    required this.rosterCount,
+    required this.morningRegistered,
+    required this.afternoonRegistered,
+  });
+
+  final int rosterCount;
+  final int morningRegistered;
+  final int afternoonRegistered;
+}
+
+final homeAttendanceProgressProvider =
+    StreamProvider.autoDispose<HomeAttendanceProgress>((ref) {
+      final database = ref.watch(appDatabaseProvider);
+      final today = AppDateUtils.dateOnly(DateTime.now());
+      final rosters = database.monthlyAttendanceRosters;
+      final employees = database.employees;
+      final groups = database.attendanceGroups;
+      final records = database.attendanceRecords;
+      final terminations = database.terminationRecords;
+      final query =
+          database.select(rosters).join([
+            innerJoin(employees, employees.id.equalsExp(rosters.employeeId)),
+            innerJoin(groups, groups.id.equalsExp(rosters.attendanceGroupId)),
+            leftOuterJoin(
+              records,
+              records.employeeId.equalsExp(rosters.employeeId) &
+                  records.attendanceDate.equals(today) &
+                  records.isDeleted.equals(false),
+            ),
+            leftOuterJoin(
+              terminations,
+              terminations.employeeId.equalsExp(rosters.employeeId) &
+                  terminations.isDeleted.equals(false),
+            ),
+          ])..where(
+            rosters.yearMonth.equals(AppDateUtils.yearMonth(today)) &
+                rosters.isActive.equals(true) &
+                rosters.isDeleted.equals(false) &
+                employees.isDeleted.equals(false) &
+                groups.isEnabled.equals(true) &
+                groups.isDeleted.equals(false),
+          );
+      return query.watch().map((rows) {
+        final uniqueEmployees =
+            <
+              int,
+              ({
+                Employee employee,
+                AttendanceRecord? record,
+                TerminationRecord? termination,
+              })
+            >{};
+        for (final row in rows) {
+          final employee = row.readTable(employees);
+          uniqueEmployees.putIfAbsent(
+            employee.id,
+            () => (
+              employee: employee,
+              record: row.readTableOrNull(records),
+              termination: row.readTableOrNull(terminations),
+            ),
+          );
+        }
+
+        var rosterCount = 0;
+        var morningRegistered = 0;
+        var afternoonRegistered = 0;
+        for (final entry in uniqueEmployees.values) {
+          final employee = entry.employee;
+          if (AppDateUtils.dateOnly(employee.hireDate).isAfter(today)) {
+            continue;
+          }
+          // Match DailyAttendanceRepository: termination locks only terminated
+          // employees after their effective date; a former record on an active
+          // employee does not change that employee's editability.
+          if (employee.status == EmployeeStatus.terminated &&
+              (entry.termination == null ||
+                  AppDateUtils.dateOnly(entry.termination!.terminationDate)
+                      .isBefore(today))) {
+            continue;
+          }
+          rosterCount++;
+          final record = entry.record;
+          if (record != null && _isRegisteredHalf(record.morningStatus)) {
+            morningRegistered++;
+          }
+          if (record != null && _isRegisteredHalf(record.afternoonStatus)) {
+            afternoonRegistered++;
+          }
+        }
+        return HomeAttendanceProgress(
+          rosterCount: rosterCount,
+          morningRegistered: morningRegistered,
+          afternoonRegistered: afternoonRegistered,
+        );
+      });
+    });
+
+bool _isRegisteredHalf(AttendanceHalfStatus status) =>
+    status != AttendanceHalfStatus.unregistered &&
+    status != AttendanceHalfStatus.notEmployed &&
+    status != AttendanceHalfStatus.terminated;
+
 class HomeDashboardStats {
   const HomeDashboardStats({
     required this.activeEmployees,

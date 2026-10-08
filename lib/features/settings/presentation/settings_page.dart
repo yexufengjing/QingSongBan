@@ -18,10 +18,18 @@ class SettingsPage extends StatelessWidget {
         Card(
           child: ListTile(
             contentPadding: const EdgeInsets.all(16),
-            leading: const DesignIcon(
-              Icons.notifications_none_outlined,
-              color: AppColors.warning,
-              size: 48,
+            leading: Container(
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                color: AppColors.warning.withValues(alpha: .14),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.notifications,
+                color: AppColors.warning,
+                size: 30,
+              ),
             ),
             title: const Text(
               '备忘提醒',
@@ -35,7 +43,7 @@ class SettingsPage extends StatelessWidget {
         const SizedBox(height: 16),
         Card(
           child: ExpansionTile(
-            key: const Key('settings-data-tools'),
+            key: const PageStorageKey('settings-data-tools'),
             initiallyExpanded: true,
             shape: const Border(),
             collapsedShape: const Border(),
@@ -44,34 +52,37 @@ class SettingsPage extends StatelessWidget {
               vertical: 8,
             ),
             childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-            leading: const DesignIcon(Icons.grid_view_rounded),
+            leading: const DesignIcon(Icons.grid_view_rounded, size: 44),
             title: const Text(
               '数据工具 · 3项',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
             ),
             children: [
-              const DesignGrid(
-                columns: 3,
-                children: [
-                  _Tool(
-                    '导入导出',
-                    Icons.table_view_outlined,
-                    AppColors.techBlue,
-                    '/settings/excel',
-                  ),
-                  _Tool(
-                    '备份与恢复',
-                    Icons.backup_outlined,
-                    AppColors.purple,
-                    '/settings/backup',
-                  ),
-                  _Tool(
-                    '操作日志',
-                    Icons.history,
-                    AppColors.body,
-                    '/settings/operation-logs',
-                  ),
-                ],
+              SizedBox(
+                width: double.infinity,
+                child: const DesignGrid(
+                  columns: 4,
+                  children: [
+                    _Tool(
+                      '导入导出',
+                      Icons.table_view_outlined,
+                      AppColors.techBlue,
+                      '/settings/excel',
+                    ),
+                    _Tool(
+                      '备份与恢复',
+                      Icons.backup_outlined,
+                      AppColors.purple,
+                      '/settings/backup',
+                    ),
+                    _Tool(
+                      '操作日志',
+                      Icons.history,
+                      AppColors.body,
+                      '/settings/operation-logs',
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 16),
               const _Description('导入导出', '月度导出与人员名单导入'),
@@ -79,27 +90,6 @@ class SettingsPage extends StatelessWidget {
               const _Description('备份与恢复', '备份本地数据，恢复覆盖当前数据'),
               const SizedBox(height: 8),
               const _Description('操作日志', '查看操作记录'),
-            ],
-          ),
-        ),
-        const SizedBox(height: 16),
-        const DesignSection(
-          title: '业务设置',
-          child: DesignGrid(
-            columns: 2,
-            children: [
-              _Tool(
-                '社保保险',
-                Icons.shield_outlined,
-                AppColors.techBlue,
-                '/settings/insurance',
-              ),
-              _Tool(
-                '临时工薪资',
-                Icons.payments_outlined,
-                AppColors.success,
-                '/reports/payroll',
-              ),
             ],
           ),
         ),
@@ -124,12 +114,12 @@ class _Tool extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 20),
         child: Column(
           children: [
-            DesignIcon(icon, color: color),
+            Icon(icon, color: color, size: 26),
             const SizedBox(height: 12),
             Text(
               title,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 14, color: AppColors.ink),
+              style: const TextStyle(fontSize: 12, color: AppColors.ink),
             ),
           ],
         ),

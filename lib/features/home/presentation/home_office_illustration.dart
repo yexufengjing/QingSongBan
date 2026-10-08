@@ -1,125 +1,97 @@
-import 'package:flutter/material.dart';
+import 'dart:ui' as ui;
 
-/// A code-native version of the small office illustration in the home reference.
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+/// Renders the artwork directly from the approved 002 reference without
+/// approximating its buildings, trees, shading, or brand mark.
 class HomeOfficeIllustration extends StatelessWidget {
   const HomeOfficeIllustration({super.key});
-
   @override
-  Widget build(BuildContext context) => const SizedBox(
-    width: 116,
-    height: 78,
-    child: CustomPaint(painter: _OfficePainter()),
+  Widget build(BuildContext context) => const _ReferenceSprite(
+    source: Rect.fromLTRB(420, 285, 824, 473),
+    width: 184,
+    height: 86,
   );
 }
 
-class _OfficePainter extends CustomPainter {
-  const _OfficePainter();
-
+class HomeReferenceBrand extends StatelessWidget {
+  const HomeReferenceBrand({super.key});
   @override
-  void paint(Canvas canvas, Size size) {
-    canvas.scale(size.width / 116, size.height / 78);
-    final white = Paint()..color = Colors.white.withValues(alpha: .9);
-    for (final cloud in const [
-      (25.0, 28.0, 15.0),
-      (41.0, 18.0, 17.0),
-      (92.0, 29.0, 19.0),
-      (109.0, 35.0, 15.0),
-    ]) {
-      canvas.drawCircle(Offset(cloud.$1, cloud.$2), cloud.$3, white);
-    }
-    canvas.drawOval(
-      const Rect.fromLTWH(0, 68, 116, 10),
-      Paint()..color = const Color(0xFFAFD5FA),
-    );
-    void building(
-      double x,
-      double y,
-      double w,
-      double h, {
-      bool large = false,
-    }) {
-      final front = Rect.fromLTWH(x, y, w, h);
-      canvas.drawRect(
-        front,
-        Paint()
-          ..shader = const LinearGradient(
-            colors: [Color(0xFFF4FAFF), Color(0xFFB6DEFF)],
-          ).createShader(front),
-      );
-      final side = Path()
-        ..moveTo(x + w, y)
-        ..lineTo(x + w + 9, y + 6)
-        ..lineTo(x + w + 9, y + h)
-        ..lineTo(x + w, y + h)
-        ..close();
-      canvas.drawPath(
-        side,
-        Paint()
-          ..shader = const LinearGradient(
-            colors: [Color(0xFF60ABF8), Color(0xFF1C6BDC)],
-          ).createShader(side.getBounds()),
-      );
-      final roof = Path()
-        ..moveTo(x, y)
-        ..lineTo(x + 9, y - 4)
-        ..lineTo(x + w + 9, y + 2)
-        ..lineTo(x + w, y + 6)
-        ..close();
-      canvas.drawPath(roof, white);
-      final cols = large ? 4 : 3;
-      final rows = large ? 7 : 4;
-      for (var row = 0; row < rows; row++) {
-        for (var col = 0; col < cols; col++) {
-          canvas.drawRect(
-            Rect.fromLTWH(
-              x + 3 + col * ((w - 4) / cols),
-              y + 8 + row * ((h - 12) / rows),
-              3,
-              large ? 5 : 4,
-            ),
-            Paint()..color = const Color(0xFF2385EF),
-          );
-        }
-      }
-    }
+  Widget build(BuildContext context) => Semantics(
+    label: '轻松办',
+    hint: '有序办理，高效管理',
+    image: true,
+    child: const _ReferenceSprite(
+      source: Rect.fromLTRB(29, 84, 359, 166),
+      width: 151,
+      height: 38,
+    ),
+  );
+}
 
-    building(15, 40, 22, 33);
-    building(82, 35, 19, 38);
-    building(52, 10, 28, 63, large: true);
-    canvas.drawRect(
-      const Rect.fromLTWH(32, 56, 23, 17),
-      Paint()..color = const Color(0xFFC7E6FF),
-    );
-    canvas.drawRect(
-      const Rect.fromLTWH(37, 59, 14, 14),
-      Paint()..color = const Color(0xFF318CED),
-    );
-    void tree(double x, double y, double scale) {
-      canvas.drawOval(
-        Rect.fromCenter(
-          center: Offset(x, y - 8 * scale),
-          width: 13 * scale,
-          height: 25 * scale,
-        ),
-        Paint()
-          ..shader = const LinearGradient(
-            colors: [Color(0xFF97D77D), Color(0xFF25AD6C)],
-          ).createShader(Rect.fromLTWH(x - 8, y - 24, 16, 26)),
-      );
-      canvas.drawLine(
-        Offset(x, y - 10),
-        Offset(x, y + 7),
-        Paint()
-          ..color = const Color(0xFF80664C)
-          ..strokeWidth = 1.3,
-      );
-    }
+class _ReferenceSprite extends StatefulWidget {
+  const _ReferenceSprite({
+    required this.source,
+    required this.width,
+    required this.height,
+  });
+  final Rect source;
+  final double width, height;
+  @override
+  State<_ReferenceSprite> createState() => _ReferenceSpriteState();
+}
 
-    tree(8, 66, .8);
-    tree(47, 69, .65);
-    tree(109, 63, 1);
+class _ReferenceSpriteState extends State<_ReferenceSprite> {
+  ui.Image? _image;
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    final bytes = await rootBundle.load('assets/ui/home_reference.png');
+    final codec = await ui.instantiateImageCodec(
+      bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes),
+    );
+    final frame = await codec.getNextFrame();
+    codec.dispose();
+    if (!mounted) {
+      frame.image.dispose();
+      return;
+    }
+    setState(() => _image = frame.image);
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  void dispose() {
+    _image?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => SizedBox(
+    width: widget.width,
+    height: widget.height,
+    child: _image == null
+        ? null
+        : CustomPaint(painter: _SpritePainter(_image!, widget.source)),
+  );
+}
+
+class _SpritePainter extends CustomPainter {
+  const _SpritePainter(this.image, this.source);
+  final ui.Image image;
+  final Rect source;
+  @override
+  void paint(Canvas canvas, Size size) => canvas.drawImageRect(
+    image,
+    source,
+    Offset.zero & size,
+    Paint()..filterQuality = FilterQuality.high,
+  );
+  @override
+  bool shouldRepaint(_SpritePainter oldDelegate) =>
+      image != oldDelegate.image || source != oldDelegate.source;
 }
