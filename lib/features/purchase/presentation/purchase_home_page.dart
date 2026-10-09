@@ -263,26 +263,32 @@ class _ActionCard extends ConsumerWidget {
                               ? Theme.of(context).textTheme.titleLarge
                               : Theme.of(context).textTheme.titleMedium,
                         ),
-                        if (item.specification?.isNotEmpty == true)
-                          Text(
-                            '规格：${item.specification}',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        Text(
-                          '申报数量：${purchaseQuantityLabel(item.requestQuantity)} ${item.unit}',
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 2,
+                          children: [
+                            if (item.specification?.isNotEmpty == true)
+                              Text('规格：${item.specification}'),
+                            Text(
+                              '申报 ${purchaseQuantityLabel(item.requestQuantity)} ${item.unit}',
+                            ),
+                            if (request.status ==
+                                PurchaseStatus.pendingReceive) ...[
+                              Text(
+                                '已入库 ${purchaseQuantityLabel(item.receivedQuantity)} ${item.unit}',
+                                style: const TextStyle(
+                                  color: Color(0xFF00A86B),
+                                ),
+                              ),
+                              Text(
+                                '剩余 ${purchaseQuantityLabel(item.remainingQuantity)} ${item.unit}',
+                                style: const TextStyle(
+                                  color: Color(0xFFFF8A1F),
+                                ),
+                              ),
+                            ],
+                          ],
                         ),
-                        if (request.status ==
-                            PurchaseStatus.pendingReceive) ...[
-                          Text(
-                            '已入库：${purchaseQuantityLabel(item.receivedQuantity)} ${item.unit}',
-                            style: const TextStyle(color: Color(0xFF00A86B)),
-                          ),
-                          Text(
-                            '剩余数量：${purchaseQuantityLabel(item.remainingQuantity)} ${item.unit}',
-                            style: const TextStyle(color: Color(0xFFFF8A1F)),
-                          ),
-                        ],
                       ],
                       if (request.status == PurchaseStatus.pendingReceive) ...[
                         Text(
@@ -324,7 +330,7 @@ class _ActionCard extends ConsumerWidget {
               ],
             ),
           ),
-          const SizedBox(height: 12),
+          const Divider(height: 20),
           Wrap(
             alignment: WrapAlignment.end,
             spacing: 8,
@@ -432,40 +438,42 @@ class _ActionCard extends ConsumerWidget {
               20 + MediaQuery.viewInsetsOf(context).bottom,
             ),
             child: StatefulBuilder(
-              builder: (context, setSheetState) => Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    '收到物资入厂通知',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    title: const Text('通知日期'),
-                    subtitle: Text(purchaseDateLabel(date.value)),
-                    onTap: () async {
-                      final result = await pickPurchaseDate(
-                        context,
-                        initialDate: date.value,
-                      );
-                      if (result != null) {
-                        setSheetState(() => date.value = result);
-                      }
-                    },
-                  ),
-                  TextField(
-                    controller: location,
-                    decoration: const InputDecoration(labelText: '领取地点（选填）'),
-                  ),
-                  const SizedBox(height: 14),
-                  SizedBox(
-                    width: double.infinity,
-                    child: FilledButton(
-                      onPressed: () => Navigator.pop(context, true),
-                      child: const Text('设为待领取'),
+              builder: (context, setSheetState) => SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      '收到物资入厂通知',
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
-                  ),
-                ],
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: const Text('通知日期'),
+                      subtitle: Text(purchaseDateLabel(date.value)),
+                      onTap: () async {
+                        final result = await pickPurchaseDate(
+                          context,
+                          initialDate: date.value,
+                        );
+                        if (result != null) {
+                          setSheetState(() => date.value = result);
+                        }
+                      },
+                    ),
+                    PurchaseLabeledField(
+                      label: '领取地点（选填）',
+                      child: TextField(controller: location),
+                    ),
+                    const SizedBox(height: 14),
+                    SizedBox(
+                      width: double.infinity,
+                      child: FilledButton(
+                        onPressed: () => Navigator.pop(context, true),
+                        child: const Text('设为待领取'),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

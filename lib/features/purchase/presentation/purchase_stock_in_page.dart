@@ -271,17 +271,17 @@ class _PurchaseStockInPageState extends ConsumerState<PurchaseStockInPage> {
                     }
                   }),
                 ),
-                TextField(
-                  key: Key('purchase-stock-quantity-${item.id}'),
-                  controller: _quantities[item.id],
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
+                PurchaseLabeledField(
+                  label: '本次入库数量',
+                  child: TextField(
+                    key: Key('purchase-stock-quantity-${item.id}'),
+                    controller: _quantities[item.id],
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
+                    decoration: InputDecoration(suffixText: item.unit),
+                    enabled: _includedLines.contains(item.id),
                   ),
-                  decoration: InputDecoration(
-                    labelText: '本次入库数量',
-                    suffixText: item.unit,
-                  ),
-                  enabled: _includedLines.contains(item.id),
                 ),
                 if (itemIndex == 0)
                   ListTile(
@@ -301,22 +301,26 @@ class _PurchaseStockInPageState extends ConsumerState<PurchaseStockInPage> {
                 const SizedBox(height: 10),
                 _materialSelection(context, item, materials, activeMaterials),
                 const SizedBox(height: 8),
-                TextField(
-                  controller: _locations[item.id],
-                  decoration: const InputDecoration(labelText: '存放位置（选填）'),
-                  onChanged: (_) => _locationTouched.add(item.id),
+                PurchaseLabeledField(
+                  label: '存放位置（选填）',
+                  child: TextField(
+                    controller: _locations[item.id],
+                    onChanged: (_) => _locationTouched.add(item.id),
+                  ),
                 ),
               ],
             ),
           ),
           const SizedBox(height: 10),
         ],
-        TextField(
-          controller: _remark,
-          minLines: 2,
-          maxLines: 4,
-          maxLength: 200,
-          decoration: const InputDecoration(labelText: '备注（选填）'),
+        PurchaseLabeledField(
+          label: '备注（选填）',
+          child: TextField(
+            controller: _remark,
+            minLines: 2,
+            maxLines: 4,
+            maxLength: 200,
+          ),
         ),
         PurchasePanel(
           child: const Text(
@@ -388,45 +392,48 @@ class _PurchaseStockInPageState extends ConsumerState<PurchaseStockInPage> {
           Text('将恢复原物资：${linked?.materialName ?? item.itemName}'),
         if (mode == 'select') ...[
           const SizedBox(height: 6),
-          DropdownButtonFormField<int?>(
-            key: ValueKey(
-              'purchase-material-select-${item.id}-${_materialIds[item.id]}',
-            ),
-            initialValue:
-                _materialIds[item.id] != null &&
-                    activeMaterials.any((m) => m.id == _materialIds[item.id])
-                ? _materialIds[item.id]
-                : null,
-            decoration: const InputDecoration(labelText: '选择库存物资'),
-            items: [
-              for (final material in activeMaterials)
-                DropdownMenuItem(
-                  value: material.id,
-                  child: Text(
-                    '${material.materialName} · ${material.modelSpec ?? '无规格'}',
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
+          PurchaseLabeledField(
+            label: '选择库存物资',
+            child: DropdownButtonFormField<int?>(
+              key: ValueKey(
+                'purchase-material-select-${item.id}-${_materialIds[item.id]}',
+              ),
+              initialValue:
+                  _materialIds[item.id] != null &&
+                      activeMaterials.any((m) => m.id == _materialIds[item.id])
+                  ? _materialIds[item.id]
+                  : null,
+              decoration: const InputDecoration(),
+              items: [
+                for (final material in activeMaterials)
+                  DropdownMenuItem(
+                    value: material.id,
+                    child: Text(
+                      '${material.materialName} · ${material.modelSpec ?? '无规格'}',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                ),
-            ],
-            isExpanded: true,
-            onChanged: (value) => setState(() {
-              _materialIds[item.id] = value;
-              final material = activeMaterials
-                  .where((entry) => entry.id == value)
-                  .firstOrNull;
-              if (!_locationTouched.contains(item.id)) {
-                _locations[item.id]!.text = material?.storageLocation ?? '';
-                _locationDefaults.remove(item.id);
-              }
-            }),
+              ],
+              isExpanded: true,
+              onChanged: (value) => setState(() {
+                _materialIds[item.id] = value;
+                final material = activeMaterials
+                    .where((entry) => entry.id == value)
+                    .firstOrNull;
+                if (!_locationTouched.contains(item.id)) {
+                  _locations[item.id]!.text = material?.storageLocation ?? '';
+                  _locationDefaults.remove(item.id);
+                }
+              }),
+            ),
           ),
         ],
         if (mode == 'new') ...[
           const SizedBox(height: 6),
-          TextField(
-            controller: _codes[item.id],
-            decoration: const InputDecoration(labelText: '新库存物资编号（选填，自动生成）'),
+          PurchaseLabeledField(
+            label: '新库存物资编号（选填，自动生成）',
+            child: TextField(controller: _codes[item.id]),
           ),
         ],
         if (mode == 'select' && activeMaterials.isEmpty)

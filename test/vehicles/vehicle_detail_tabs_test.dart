@@ -9,7 +9,7 @@ import 'package:qingsongban/features/vehicles/domain/vehicle_options.dart';
 import 'package:qingsongban/features/vehicles/presentation/vehicle_detail_page.dart';
 
 void main() {
-  testWidgets('vehicle detail preserves reference tab order and title', (
+  testWidgets('vehicle detail app bar title follows the selected tab', (
     tester,
   ) async {
     await tester.binding.setSurfaceSize(const Size(411, 915));
@@ -33,22 +33,13 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.text('车辆详情'), findsOneWidget);
-    expect(find.byType(NavigationBar), findsNothing);
-    expect(
-      tester
-          .widget<TabBar>(find.byType(TabBar))
-          .tabs
-          .map((tab) => (tab as Tab).text),
-      ['档案', '维修', '费用', '车况', '保养备件', '油耗', '提醒'],
-    );
 
     for (final (tab, title) in [
-      ('车况', '车辆详情'),
-      ('维修', '车辆详情'),
-      ('保养备件', '车辆详情'),
-      ('油耗', '车辆详情'),
-      ('费用', '车辆详情'),
-      ('提醒', '车辆详情'),
+      ('车况', '车辆车况检查'),
+      ('维修', '车辆维修管理'),
+      ('保养/备件', '车辆保养/备件'),
+      ('油耗', '车辆油耗记录'),
+      ('费用分析', '车辆费用分析'),
       ('档案', '车辆详情'),
     ]) {
       await tester.ensureVisible(find.text(tab).first);

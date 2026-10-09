@@ -39,6 +39,7 @@ class _VehicleArchivePageState extends ConsumerState<VehicleArchivePage> {
           ),
         ],
       ),
+      bottomNavigationBar: const VehicleNavigationBar(),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 12, 16, 30),
         children: [

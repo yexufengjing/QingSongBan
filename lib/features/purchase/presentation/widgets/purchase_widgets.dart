@@ -244,28 +244,68 @@ class PurchaseMetricTile extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(8),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            if (icon != null) ...[
-              DesignIcon(icon!, color: color, size: 28),
-              const SizedBox(height: 8),
-            ],
-            Text(label, style: Theme.of(context).textTheme.bodySmall),
-            const SizedBox(height: 4),
+            Row(
+              children: [
+                if (icon != null) ...[
+                  DesignIcon(icon!, color: color, size: 20),
+                  const SizedBox(width: 6),
+                ],
+                Expanded(
+                  child: Text(
+                    label,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: AppColors.ink,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 5),
             Text(
               value,
-              style: const TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.w600,
-                color: AppColors.ink,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+                color: color,
               ),
             ),
           ],
         ),
       ),
     ),
+  );
+}
+
+class PurchaseLabeledField extends StatelessWidget {
+  const PurchaseLabeledField({
+    required this.label,
+    required this.child,
+    super.key,
+  });
+
+  final String label;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Padding(
+        padding: const EdgeInsets.only(bottom: 6),
+        child: Text(
+          label,
+          style: Theme.of(context).textTheme.bodyMedium
+              ?.copyWith(color: AppColors.ink, fontWeight: FontWeight.w600),
+        ),
+      ),
+      child,
+    ],
   );
 }
 

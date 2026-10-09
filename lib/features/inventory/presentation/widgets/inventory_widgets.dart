@@ -7,7 +7,6 @@ class InventoryFormFooter extends StatelessWidget {
     required this.label,
     required this.icon,
     required this.onSave,
-    this.subtitle,
     this.saving = false,
     this.buttonKey,
     super.key,
@@ -15,7 +14,6 @@ class InventoryFormFooter extends StatelessWidget {
   final String label;
   final IconData icon;
   final VoidCallback? onSave;
-  final String? subtitle;
   final bool saving;
   final Key? buttonKey;
 
@@ -26,60 +24,16 @@ class InventoryFormFooter extends StatelessWidget {
       top: false,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            FilledButton(
-              key: buttonKey,
-              onPressed: saving ? null : onSave,
-              child: subtitle == null
-                  ? Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        saving
-                            ? const SizedBox.square(
-                                dimension: 18,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                ),
-                              )
-                            : Icon(icon),
-                        const SizedBox(width: 8),
-                        Text(saving ? '正在保存…' : label),
-                      ],
-                    )
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        if (saving) ...[
-                          const SizedBox.square(
-                            dimension: 18,
-                            child: CircularProgressIndicator(strokeWidth: 2),
-                          ),
-                          const SizedBox(width: 10),
-                        ],
-                        Flexible(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(saving ? '正在保存…' : label),
-                              Text(
-                                subtitle!,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.labelSmall
-                                    ?.copyWith(color: Colors.white70),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-            ),
-          ],
+        child: FilledButton.icon(
+          key: buttonKey,
+          onPressed: saving ? null : onSave,
+          icon: saving
+              ? const SizedBox.square(
+                  dimension: 18,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                )
+              : Icon(icon),
+          label: Text(saving ? '正在保存…' : label),
         ),
       ),
     ),

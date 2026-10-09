@@ -36,6 +36,28 @@ class _VehicleExpenseTabState extends ConsumerState<VehicleExpenseTab> {
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 32),
       children: [
+        Row(
+          children: [
+            Text('费用分析', style: Theme.of(context).textTheme.titleLarge),
+            const Spacer(),
+            DropdownButton<int>(
+              value: _year,
+              underline: const SizedBox.shrink(),
+              items: [
+                for (
+                  var year = DateTime.now().year - 10;
+                  year <= DateTime.now().year + 1;
+                  year++
+                )
+                  DropdownMenuItem(value: year, child: Text('$year 年')),
+              ],
+              onChanged: (year) {
+                if (year != null) setState(() => _year = year);
+              },
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
         items.when(
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (error, _) => Text('费用加载失败：$error'),
@@ -47,63 +69,18 @@ class _VehicleExpenseTabState extends ConsumerState<VehicleExpenseTab> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              '费用分析',
-                              style: Theme.of(context).textTheme.titleLarge,
-                            ),
-                            const Spacer(),
-                            DropdownButton<int>(
-                              value: _year,
-                              underline: const SizedBox.shrink(),
-                              items: [
-                                for (
-                                  var year = DateTime.now().year - 10;
-                                  year <= DateTime.now().year + 1;
-                                  year++
-                                )
-                                  DropdownMenuItem(
-                                    value: year,
-                                    child: Text('$year 年'),
-                                  ),
-                              ],
-                              onChanged: (year) {
-                                if (year != null) setState(() => _year = year);
-                              },
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 12),
-                        _ExpenseOverview(
-                          rows: rows,
-                          total: total,
-                          repairCount: repairs.valueOrNull
-                              ?.where((order) => order.reportDate.year == _year)
-                              .length,
-                        ),
-                      ],
-                    ),
-                  ),
+                _ExpenseOverview(
+                  rows: rows,
+                  total: total,
+                  repairCount: repairs.valueOrNull
+                      ?.where((order) => order.reportDate.year == _year)
+                      .length,
                 ),
                 const SizedBox(height: 14),
                 if (rows.isNotEmpty) ...[
-                  _ExpenseComposition(rows: rows),
+                  _MonthlyExpenseChart(rows: rows),
                   const SizedBox(height: 14),
-                  Card(
-                    child: ExpansionTile(
-                      key: const PageStorageKey('vehicle-expense-charts'),
-                      title: const Text('月度费用趋势'),
-                      children: [_MonthlyExpenseChart(rows: rows)],
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  _ExpenseCompositionChart(rows: rows, total: total),
+                  _ExpenseComposition(rows: rows, total: total),
                   const SizedBox(height: 14),
                 ],
                 if (rows.isEmpty)
@@ -171,31 +148,27 @@ class _ExpenseOverview extends StatelessWidget {
       items: [
         VehicleMetricData(
           label: '本年累计总费用',
-          value: (total / 100).toStringAsFixed(2),
-          unit: '元',
-          color: Colors.orange,
-          icon: Icons.savings_outlined,
+          value: '¥${(total / 100).toStringAsFixed(0)}',
+          color: AppColors.techBlue,
+          icon: Icons.account_balance_wallet_outlined,
         ),
         VehicleMetricData(
           label: '本月费用',
-          value: (monthTotal / 100).toStringAsFixed(2),
-          unit: '元',
-          color: AppColors.success,
-          icon: Icons.calendar_month_outlined,
+          value: '¥${(monthTotal / 100).toStringAsFixed(0)}',
+          color: Colors.orange,
+          icon: Icons.water_drop_outlined,
         ),
         VehicleMetricData(
           label: '油费占比',
           value: '$fuelShare%',
-          unit: '',
-          color: const Color(0xffff6838),
-          icon: Icons.pie_chart_outline,
+          color: AppColors.purple,
+          icon: Icons.build_outlined,
         ),
         VehicleMetricData(
           label: '维修次数',
           value: repairCount?.toString() ?? '—',
-          unit: '次',
           color: AppColors.primary,
-          icon: Icons.build_outlined,
+          icon: Icons.receipt_long_outlined,
         ),
       ],
     );
@@ -203,9 +176,9 @@ class _ExpenseOverview extends StatelessWidget {
 }
 
 const _expenseColors = [
-  Color(0xff00bf63),
   AppColors.techBlue,
   Color(0xffff8a3d),
+  Color(0xff32ba84),
   AppColors.purple,
 ];
 
@@ -340,9 +313,10 @@ class _MonthlyExpenseChart extends StatelessWidget {
 }
 
 class _ExpenseComposition extends StatelessWidget {
-  const _ExpenseComposition({required this.rows});
+  const _ExpenseComposition({required this.rows, required this.total});
 
   final List<VehicleExpenseItem> rows;
+  final int total;
 
   @override
   Widget build(BuildContext context) {
@@ -386,7 +360,7 @@ class _ExpenseComposition extends StatelessWidget {
                     const SizedBox(width: 12),
                     Expanded(child: Text('${labels[index]}费用')),
                     Text(
-                      '${(amounts[index] / 100).toStringAsFixed(2)} 元',
+                      '¥${(amounts[index] / 100).toStringAsFixed(2)}',
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
@@ -396,61 +370,48 @@ class _ExpenseComposition extends StatelessWidget {
                 ),
               ),
             ],
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _ExpenseCompositionChart extends StatelessWidget {
-  const _ExpenseCompositionChart({required this.rows, required this.total});
-  final List<VehicleExpenseItem> rows;
-  final int total;
-  @override
-  Widget build(BuildContext context) {
-    final amounts = List.filled(4, 0);
-    for (final row in rows) {
-      amounts[_expenseCategoryIndex(row.category)] += row.amountCents;
-    }
-    const labels = ['油耗', '维修', '保养', '其他'];
-    return Card(
-      child: ExpansionTile(
-        key: const PageStorageKey('vehicle-expense-composition-chart'),
-        title: Text('费用构成图', style: Theme.of(context).textTheme.titleMedium),
-        children: [
-          SizedBox(
-            width: 156,
-            height: 156,
-            child: Stack(
-              alignment: Alignment.center,
+            ExpansionTile(
+              tilePadding: EdgeInsets.zero,
+              title: Text(
+                '费用构成图',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
               children: [
-                CustomPaint(
-                  size: const Size(126, 126),
-                  painter: _DonutPainter(amounts),
-                ),
-                Text(
-                  '¥${(total / 100).toStringAsFixed(0)}',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
+                SizedBox(
+                  width: 156,
+                  height: 156,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      CustomPaint(
+                        size: const Size(126, 126),
+                        painter: _DonutPainter(amounts),
+                      ),
+                      Text(
+                        '¥${(total / 100).toStringAsFixed(0)}',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
+                Wrap(
+                  spacing: 16,
+                  children: [
+                    for (var index = 0; index < labels.length; index++)
+                      Text(
+                        '${labels[index]} ${total == 0 ? 0 : (amounts[index] * 100 / total).round()}%',
+                        style: TextStyle(color: _expenseColors[index]),
+                      ),
+                  ],
+                ),
+                const SizedBox(height: 12),
               ],
             ),
-          ),
-          Wrap(
-            spacing: 16,
-            children: [
-              for (var index = 0; index < labels.length; index++)
-                Text(
-                  '${labels[index]} ${total == 0 ? 0 : (amounts[index] * 100 / total).round()}%',
-                  style: TextStyle(color: _expenseColors[index]),
-                ),
-            ],
-          ),
-          const SizedBox(height: 12),
-        ],
+          ],
+        ),
       ),
     );
   }

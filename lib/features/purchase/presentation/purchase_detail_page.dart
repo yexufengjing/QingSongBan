@@ -101,19 +101,19 @@ class PurchaseDetailPage extends ConsumerWidget {
           dateLabel: 'OA申报日期',
           initialDate: appliedDate,
           fields: [
-            TextField(
-              controller: oaNo,
-              decoration: const InputDecoration(labelText: 'OA流程编号（可选）'),
+            PurchaseLabeledField(
+              label: 'OA流程编号（可选）',
+              child: TextField(controller: oaNo),
             ),
             const SizedBox(height: 10),
-            TextField(
-              controller: oaTitle,
-              decoration: const InputDecoration(labelText: 'OA流程标题（可选）'),
+            PurchaseLabeledField(
+              label: 'OA流程标题（可选）',
+              child: TextField(controller: oaTitle),
             ),
             const SizedBox(height: 10),
-            TextField(
-              controller: oaUrl,
-              decoration: const InputDecoration(labelText: 'OA流程链接（可选）'),
+            PurchaseLabeledField(
+              label: 'OA流程链接（可选）',
+              child: TextField(controller: oaUrl),
             ),
           ],
           onDate: (value) => appliedDate = value,
@@ -164,14 +164,14 @@ class PurchaseDetailPage extends ConsumerWidget {
           dateLabel: '分配日期',
           initialDate: date,
           fields: [
-            TextField(
-              controller: department,
-              decoration: const InputDecoration(labelText: '采购分部（选填）'),
+            PurchaseLabeledField(
+              label: '采购分部（选填）',
+              child: TextField(controller: department),
             ),
             const SizedBox(height: 10),
-            TextField(
-              controller: purchaser,
-              decoration: const InputDecoration(labelText: '采购执行人（选填）'),
+            PurchaseLabeledField(
+              label: '采购执行人（选填）',
+              child: TextField(controller: purchaser),
             ),
           ],
           onDate: (value) => date = value,
@@ -218,9 +218,9 @@ class PurchaseDetailPage extends ConsumerWidget {
           dateLabel: '通知日期',
           initialDate: date,
           fields: [
-            TextField(
-              controller: location,
-              decoration: const InputDecoration(labelText: '领取地点（选填）'),
+            PurchaseLabeledField(
+              label: '领取地点（选填）',
+              child: TextField(controller: location),
             ),
           ],
           onDate: (value) => date = value,
@@ -315,18 +315,14 @@ class PurchaseDetailPage extends ConsumerWidget {
                       child: ListView(
                         padding: const EdgeInsets.only(top: 8),
                         children: [
-                          TextField(
-                            controller: title,
-                            decoration: const InputDecoration(
-                              labelText: '采购事项名称',
-                            ),
+                          PurchaseLabeledField(
+                            label: '采购事项名称',
+                            child: TextField(controller: title),
                           ),
                           const SizedBox(height: 8),
-                          TextField(
-                            controller: reason,
-                            decoration: const InputDecoration(
-                              labelText: '需求原因',
-                            ),
+                          PurchaseLabeledField(
+                            label: '需求原因',
+                            child: TextField(controller: reason),
                           ),
                           _MetadataDateRow(
                             label: '创建日期',
@@ -354,25 +350,19 @@ class PurchaseDetailPage extends ConsumerWidget {
                               }
                             },
                           ),
-                          TextField(
-                            controller: oaNo,
-                            decoration: const InputDecoration(
-                              labelText: 'OA流程编号',
-                            ),
+                          PurchaseLabeledField(
+                            label: 'OA流程编号',
+                            child: TextField(controller: oaNo),
                           ),
                           const SizedBox(height: 8),
-                          TextField(
-                            controller: oaTitle,
-                            decoration: const InputDecoration(
-                              labelText: 'OA流程标题',
-                            ),
+                          PurchaseLabeledField(
+                            label: 'OA流程标题',
+                            child: TextField(controller: oaTitle),
                           ),
                           const SizedBox(height: 8),
-                          TextField(
-                            controller: oaUrl,
-                            decoration: const InputDecoration(
-                              labelText: 'OA流程链接',
-                            ),
+                          PurchaseLabeledField(
+                            label: 'OA流程链接',
+                            child: TextField(controller: oaUrl),
                           ),
                           _MetadataDateRow(
                             label: '分配日期',
@@ -387,18 +377,14 @@ class PurchaseDetailPage extends ConsumerWidget {
                               }
                             },
                           ),
-                          TextField(
-                            controller: department,
-                            decoration: const InputDecoration(
-                              labelText: '采购分部',
-                            ),
+                          PurchaseLabeledField(
+                            label: '采购分部',
+                            child: TextField(controller: department),
                           ),
                           const SizedBox(height: 8),
-                          TextField(
-                            controller: purchaser,
-                            decoration: const InputDecoration(
-                              labelText: '采购执行人',
-                            ),
+                          PurchaseLabeledField(
+                            label: '采购执行人',
+                            child: TextField(controller: purchaser),
                           ),
                           _MetadataDateRow(
                             label: '入厂通知日期',
@@ -413,18 +399,18 @@ class PurchaseDetailPage extends ConsumerWidget {
                               }
                             },
                           ),
-                          TextField(
-                            controller: location,
-                            decoration: const InputDecoration(
-                              labelText: '领取地点',
-                            ),
+                          PurchaseLabeledField(
+                            label: '领取地点',
+                            child: TextField(controller: location),
                           ),
                           const SizedBox(height: 8),
-                          TextField(
-                            controller: remark,
-                            minLines: 2,
-                            maxLines: 4,
-                            decoration: const InputDecoration(labelText: '备注'),
+                          PurchaseLabeledField(
+                            label: '备注',
+                            child: TextField(
+                              controller: remark,
+                              minLines: 2,
+                              maxLines: 4,
+                            ),
                           ),
                         ],
                       ),

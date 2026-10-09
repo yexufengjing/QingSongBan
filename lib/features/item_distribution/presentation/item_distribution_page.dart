@@ -109,6 +109,15 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
   }
 
   Widget _topTabs() {
+    final stacked =
+        MediaQuery.sizeOf(context).width < 400 ||
+        MediaQuery.textScalerOf(context).scale(16) > 18;
+    Widget label(String text, IconData icon) => stacked
+        ? Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [Icon(icon), const SizedBox(height: 4), Text(text)],
+          )
+        : Text(text);
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 2, 16, 10),
       child: SizedBox(
@@ -116,6 +125,11 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
         child: SegmentedButton<String>(
           showSelectedIcon: false,
           style: ButtonStyle(
+            padding: stacked
+                ? const WidgetStatePropertyAll(
+                    EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+                  )
+                : null,
             backgroundColor: WidgetStateProperty.resolveWith(
               (states) => states.contains(WidgetState.selected)
                   ? AppColors.lightBlue
@@ -127,21 +141,21 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
                   : AppColors.body,
             ),
           ),
-          segments: const [
+          segments: [
             ButtonSegment(
               value: 'welfare',
-              label: Text('福利劳保'),
-              icon: Icon(Icons.card_giftcard_outlined),
+              label: label('福利劳保', Icons.card_giftcard_outlined),
+              icon: stacked ? null : const Icon(Icons.card_giftcard_outlined),
             ),
             ButtonSegment(
               value: 'office',
-              label: Text('办公用品'),
-              icon: Icon(Icons.inventory_2_outlined),
+              label: label('办公用品', Icons.inventory_2_outlined),
+              icon: stacked ? null : const Icon(Icons.inventory_2_outlined),
             ),
             ButtonSegment(
               value: 'tool',
-              label: Text('工具'),
-              icon: Icon(Icons.build_outlined),
+              label: label('工具', Icons.build_outlined),
+              icon: stacked ? null : const Icon(Icons.build_outlined),
             ),
           ],
           selected: {_tab},
@@ -1626,6 +1640,7 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => AlertDialog(
           title: const Text('补领', textAlign: TextAlign.center),
+          scrollable: true,
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -1636,21 +1651,30 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
                 '物品：${source.itemName} ${_formatQuantity(source.quantity)}${source.unit}',
               ),
               const SizedBox(height: 12),
-              DropdownButtonFormField<String>(
-                initialValue: reason,
-                decoration: const InputDecoration(labelText: '补领原因'),
-                items: const [
-                  DropdownMenuItem(value: '破损', child: Text('破损')),
-                  DropdownMenuItem(value: '遗失', child: Text('遗失')),
-                  DropdownMenuItem(value: '补发', child: Text('补发')),
-                  DropdownMenuItem(value: '其他', child: Text('其他')),
-                ],
-                onChanged: (value) => setState(() => reason = value ?? reason),
+              _referenceField(
+                '补领原因',
+                DropdownButtonFormField<String>(
+                  initialValue: reason,
+                  decoration: const InputDecoration(),
+                  items: const [
+                    DropdownMenuItem(value: '破损', child: Text('破损')),
+                    DropdownMenuItem(value: '遗失', child: Text('遗失')),
+                    DropdownMenuItem(value: '补发', child: Text('补发')),
+                    DropdownMenuItem(value: '其他', child: Text('其他')),
+                  ],
+                  onChanged: (value) =>
+                      setState(() => reason = value ?? reason),
+                ),
               ),
               const SizedBox(height: 10),
-              TextField(
-                controller: note,
-                decoration: const InputDecoration(labelText: '备注（可选）'),
+              _referenceField(
+                '备注（可选）',
+                TextField(
+                  controller: note,
+                  minLines: 2,
+                  maxLines: 4,
+                  decoration: const InputDecoration(hintText: '请输入备注'),
+                ),
               ),
             ],
           ),

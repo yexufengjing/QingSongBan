@@ -24,18 +24,11 @@ class ReportsPage extends ConsumerStatefulWidget {
 class _ReportsPageState extends ConsumerState<ReportsPage> {
   bool _exporting = false;
   int _module = 0;
-  final Map<int, DateTime> _moduleMonths = {};
 
   @override
   Widget build(BuildContext context) {
     final ref = this.ref;
-    final attendanceMonth = ref.watch(monthlySummaryMonthProvider);
-    final month = _module == 0
-        ? attendanceMonth
-        : _moduleMonths.putIfAbsent(_module, () {
-            final now = DateTime.now();
-            return DateTime(now.year, now.month);
-          });
+    final month = ref.watch(monthlySummaryMonthProvider);
     final summary = ref.watch(monthlySummaryProvider);
     return SafeArea(
       child: Column(
@@ -90,13 +83,8 @@ class _ReportsPageState extends ConsumerState<ReportsPage> {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: _SummaryMonthSelector(
               month: month,
-              onChanged: (value) {
-                if (_module == 0) {
-                  ref.read(monthlySummaryMonthProvider.notifier).state = value;
-                } else {
-                  setState(() => _moduleMonths[_module] = value);
-                }
-              },
+              onChanged: (value) =>
+                  ref.read(monthlySummaryMonthProvider.notifier).state = value,
             ),
           ),
           const SizedBox(height: 12),

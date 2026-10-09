@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -87,8 +85,7 @@ void main() {
         child: MaterialApp.router(routerConfig: router),
       ),
     );
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 50));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('处理'));
     await tester.pumpAndSettle();
     final entry = find.byKey(const Key('home-action-库存管理'));
@@ -324,82 +321,36 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      expect(find.text('领用记录'), findsOneWidget);
-      expect(
-        find.byKey(const Key('inventory-issue-add-fixed')),
-        findsOneWidget,
-      );
-      expect(find.byKey(const Key('inventory-issue-search')), findsOneWidget);
-      expect(find.textContaining('防护手套 · 均码 · 2副'), findsOneWidget);
-      expect(find.text('共2项'), findsOneWidget);
+      expect(find.text('副'), findsOneWidget);
+      expect(find.text('瓶'), findsOneWidget);
+      expect(find.text('共 2 条明细'), findsOneWidget);
+      expect(find.text('本月出库'), findsOneWidget);
       expect(find.text('领取人次'), findsWidgets);
-      expect(find.text('记录条目'), findsWidgets);
-      expect(find.textContaining('2副\n3瓶'), findsOneWidget);
+      expect(find.text('条目条数'), findsWidgets);
       expect(
-        find.byKey(
-          Key('inventory-issue-day-${now.year}-${now.month}-${now.day}'),
+        find.descendant(
+          of: find.byKey(const Key('inventory-issue-quantity')),
+          matching: find.text('2副\n3瓶'),
         ),
         findsOneWidget,
       );
-      await tester.enterText(
-        find.byKey(const Key('inventory-issue-search')),
-        '消毒液',
+      expect(
+        find.descendant(
+          of: find.byKey(const Key('inventory-issue-receiver-count')),
+          matching: find.text('4'),
+        ),
+        findsOneWidget,
       );
-      await tester.pumpAndSettle();
-      expect(find.text('测试领用人'), findsOneWidget);
-      expect(find.text('手填领取对象'), findsNothing);
+      expect(
+        find.descendant(
+          of: find.byKey(const Key('inventory-issue-detail-count')),
+          matching: find.text('2'),
+        ),
+        findsOneWidget,
+      );
       expect(tester.takeException(), isNull);
     },
   );
-
-  testWidgets('issue material search waits for detail results and can retry', (
-    tester,
-  ) async {
-    final now = DateTime.now();
-    final issue = InventoryIssue(
-      id: 61,
-      issueNo: 'CK-61',
-      issueDate: now,
-      issueType: 'employee_claim',
-      receiverType: 'employee',
-      employeeNameSnapshot: '待查询人员',
-      createdAt: now,
-      updatedAt: now,
-      isDeleted: false,
-    );
-    final firstLoad = Completer<List<InventoryIssueItem>>();
-    var loadCount = 0;
-    await tester.pumpWidget(
-      ProviderScope(
-        overrides: [
-          inventoryIssuesProvider.overrideWith((ref) async => [issue]),
-          inventoryIssueItemsProvider(61).overrideWith((ref) {
-            loadCount++;
-            return loadCount == 1
-                ? firstLoad.future
-                : Future.value(<InventoryIssueItem>[]);
-          }),
-        ],
-        child: const MaterialApp(home: InventoryIssuesPage()),
-      ),
-    );
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 50));
-    await tester.enterText(
-      find.byKey(const Key('inventory-issue-search')),
-      '不存在的物资',
-    );
-    await tester.pump();
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
-
-    firstLoad.completeError(StateError('material details unavailable'));
-    await tester.pumpAndSettle();
-    expect(find.text('加载失败'), findsOneWidget);
-    await tester.tap(find.text('重试'));
-    await tester.pumpAndSettle();
-    expect(find.text('没有匹配记录'), findsOneWidget);
-    expect(tester.takeException(), isNull);
-  });
 
   testWidgets('draft stocktake shows real differences on a narrow screen', (
     tester,
@@ -501,7 +452,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      expect(find.text('搜索并选择领取人'), findsOneWidget);
+      expect(find.text('领取人（可搜索人员档案）'), findsOneWidget);
       await tester.tap(find.byKey(const Key('inventory-issue-type')));
       await tester.pumpAndSettle();
       expect(find.text('调拨出库'), findsOneWidget);

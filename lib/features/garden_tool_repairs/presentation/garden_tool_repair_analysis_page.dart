@@ -374,7 +374,13 @@ class _MonthlyTrendCard extends StatelessWidget {
               child: SizedBox(
                 height: 190,
                 width: double.infinity,
-                child: CustomPaint(painter: _TrendPainter(amounts)),
+                child: CustomPaint(
+                  painter: _TrendPainter(
+                    amounts,
+                    axisStyle: Theme.of(context).textTheme.bodySmall!,
+                    pointStyle: Theme.of(context).textTheme.bodySmall!,
+                  ),
+                ),
               ),
             ),
           ),
@@ -385,9 +391,15 @@ class _MonthlyTrendCard extends StatelessWidget {
 }
 
 class _TrendPainter extends CustomPainter {
-  const _TrendPainter(this.amounts);
+  const _TrendPainter(
+    this.amounts, {
+    required this.axisStyle,
+    required this.pointStyle,
+  });
 
   final List<int> amounts;
+  final TextStyle axisStyle;
+  final TextStyle pointStyle;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -412,7 +424,7 @@ class _TrendPainter extends CustomPainter {
       axisText
         ..text = TextSpan(
           text: value.toString(),
-          style: const TextStyle(fontSize: 12, color: AppColors.body),
+          style: axisStyle.copyWith(fontSize: 12, color: AppColors.body),
         )
         ..layout();
       axisText.paint(canvas, Offset(0, y - axisText.height / 2));
@@ -425,7 +437,7 @@ class _TrendPainter extends CustomPainter {
       final label = TextPainter(
         text: TextSpan(
           text: '${index + 1}月',
-          style: const TextStyle(fontSize: 12, color: AppColors.body),
+          style: axisStyle.copyWith(fontSize: 12, color: AppColors.body),
         ),
         textDirection: TextDirection.ltr,
       )..layout();
@@ -469,7 +481,7 @@ class _TrendPainter extends CustomPainter {
       final label = TextPainter(
         text: TextSpan(
           text: (amounts[index] / 100).round().toString(),
-          style: const TextStyle(
+          style: pointStyle.copyWith(
             fontSize: 12,
             color: AppColors.ink,
             fontWeight: FontWeight.w500,
@@ -785,131 +797,125 @@ class _RepairerTable extends StatelessWidget {
   final List<GardenToolRepairPersonSummary> entries;
 
   @override
-  Widget build(BuildContext context) => Card(
-    child: Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const Icon(Icons.people_alt, color: AppColors.primary, size: 20),
-              const SizedBox(width: 8),
-              Text('维修人项目数排行', style: Theme.of(context).textTheme.titleLarge),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
-            decoration: BoxDecoration(
-              color: AppColors.background,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: const Row(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: Text('排名', style: TextStyle(fontSize: 12)),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Text('姓名', style: TextStyle(fontSize: 12)),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Text('项目数', style: TextStyle(fontSize: 12)),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Text('维修金额', style: TextStyle(fontSize: 12)),
-                ),
-                Expanded(
-                  flex: 3,
-                  child: Text('占比', style: TextStyle(fontSize: 12)),
-                ),
-              ],
-            ),
-          ),
-          for (var index = 0; index < entries.length; index++)
-            _RepairerRankRow(index: index, entry: entries[index]),
-        ],
-      ),
-    ),
-  );
-}
-
-class _RepairerRankRow extends StatelessWidget {
-  const _RepairerRankRow({required this.index, required this.entry});
-
-  final int index;
-  final GardenToolRepairPersonSummary entry;
-
-  @override
   Widget build(BuildContext context) {
-    final medalColors = [
-      const Color(0xFFFFBE2E),
-      const Color(0xFFB7C3CE),
-      const Color(0xFFEF9B58),
+    const medalColors = [
+      Color(0xFFFFBE2E),
+      Color(0xFFB7C3CE),
+      Color(0xFFEF9B58),
     ];
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 1,
-            child: CircleAvatar(
-              radius: 10,
-              backgroundColor: index < medalColors.length
-                  ? medalColors[index]
-                  : AppColors.background,
-              child: Text(
-                '${index + 1}',
-                style: const TextStyle(fontSize: 12, color: AppColors.ink),
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Text(
-              entry.personName,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          Expanded(flex: 1, child: Text('${entry.itemCount}')),
-          Expanded(
-            flex: 2,
-            child: FittedBox(
-              alignment: Alignment.centerLeft,
-              fit: BoxFit.scaleDown,
-              child: Text(formatRepairMoney(entry.totalCents)),
-            ),
-          ),
-          Expanded(
-            flex: 3,
-            child: Row(
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
               children: [
-                Text(
-                  '${(entry.share * 100).toStringAsFixed(1)}%',
-                  style: const TextStyle(fontSize: 12),
+                const Icon(
+                  Icons.people_alt,
+                  color: AppColors.primary,
+                  size: 20,
                 ),
-                const SizedBox(width: 5),
+                const SizedBox(width: 8),
                 Expanded(
-                  child: LinearProgressIndicator(
-                    value: entry.share.clamp(0, 1),
-                    minHeight: 7,
-                    borderRadius: BorderRadius.circular(6),
-                    color: AppColors.primary,
-                    backgroundColor: AppColors.background,
+                  child: Text(
+                    '维修人项目数排行',
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
               ],
             ),
-          ),
-        ],
+            const SizedBox(height: 8),
+            LayoutBuilder(
+              builder: (context, constraints) => SingleChildScrollView(
+                key: const ValueKey('repairer-table-scroll'),
+                scrollDirection: Axis.horizontal,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minWidth: constraints.maxWidth),
+                  child: DataTable(
+                    horizontalMargin: 6,
+                    columnSpacing: 16,
+                    headingRowHeight: 40,
+                    headingRowColor: const WidgetStatePropertyAll(
+                      AppColors.background,
+                    ),
+                    headingTextStyle: Theme.of(context).textTheme.bodySmall
+                        ?.copyWith(color: AppColors.ink),
+                    dataTextStyle: Theme.of(context).textTheme.bodyMedium,
+                    columns: const [
+                      DataColumn(label: Text('排名')),
+                      DataColumn(label: Text('姓名')),
+                      DataColumn(label: Text('项目数')),
+                      DataColumn(label: Text('维修金额')),
+                      DataColumn(label: Text('占比')),
+                    ],
+                    rows: [
+                      for (var index = 0; index < entries.length; index++)
+                        DataRow(
+                          cells: [
+                            DataCell(
+                              CircleAvatar(
+                                radius: 10,
+                                backgroundColor: index < medalColors.length
+                                    ? medalColors[index]
+                                    : AppColors.background,
+                                child: Text(
+                                  '${index + 1}',
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: AppColors.ink,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            DataCell(
+                              Text(entries[index].personName, softWrap: false),
+                            ),
+                            DataCell(
+                              Text(
+                                '${entries[index].itemCount}',
+                                softWrap: false,
+                              ),
+                            ),
+                            DataCell(
+                              Text(
+                                formatRepairMoney(entries[index].totalCents),
+                                softWrap: false,
+                              ),
+                            ),
+                            DataCell(
+                              SizedBox(
+                                width: 56,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    Text(
+                                      '${(entries[index].share * 100).toStringAsFixed(1)}%',
+                                      style: const TextStyle(fontSize: 12),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    LinearProgressIndicator(
+                                      value: entries[index].share.clamp(0, 1),
+                                      minHeight: 5,
+                                      borderRadius: BorderRadius.circular(6),
+                                      color: AppColors.primary,
+                                      backgroundColor: AppColors.background,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

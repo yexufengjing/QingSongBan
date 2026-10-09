@@ -13,8 +13,8 @@ import 'vehicle_expense_tab.dart';
 import 'vehicle_fuel_tab.dart';
 import 'vehicle_maintenance_tab.dart';
 import 'vehicle_metric_grid.dart';
+import 'vehicle_navigation_bar.dart';
 import 'vehicle_repair_tab.dart';
-import 'vehicle_reminder_page.dart';
 
 class VehicleDetailPage extends ConsumerWidget {
   const VehicleDetailPage({
@@ -34,32 +34,36 @@ class VehicleDetailPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final vehicle = ref.watch(vehicleProvider(vehicleId));
     return DefaultTabController(
-      length: 7,
+      length: 6,
       initialIndex: _tabIndex(initialTab),
       child: Builder(
         builder: (context) {
+          final tabController = DefaultTabController.of(context);
           return Scaffold(
             appBar: AppBar(
-              title: const Text('车辆详情'),
+              title: AnimatedBuilder(
+                animation: tabController,
+                builder: (context, _) =>
+                    Text(_titleForTabIndex(tabController.index)),
+              ),
               actions: [
-                PopupMenuButton<String>(
-                  tooltip: '车辆操作',
-                  icon: const Icon(Icons.more_horiz),
-                  onSelected: (action) async {
-                    if (action == 'attachments') {
-                      context.push('/vehicles/$vehicleId/attachments');
-                    } else {
-                      await context.push('/vehicles/$vehicleId/edit');
-                      ref.invalidate(vehicleProvider(vehicleId));
-                    }
+                IconButton(
+                  tooltip: '附件资料',
+                  onPressed: () =>
+                      context.push('/vehicles/$vehicleId/attachments'),
+                  icon: const Icon(Icons.attach_file),
+                ),
+                IconButton(
+                  tooltip: '编辑车辆',
+                  onPressed: () async {
+                    await context.push('/vehicles/$vehicleId/edit');
+                    ref.invalidate(vehicleProvider(vehicleId));
                   },
-                  itemBuilder: (context) => const [
-                    PopupMenuItem(value: 'attachments', child: Text('附件资料')),
-                    PopupMenuItem(value: 'edit', child: Text('编辑车辆')),
-                  ],
+                  icon: const Icon(Icons.edit_outlined),
                 ),
               ],
             ),
+            bottomNavigationBar: const VehicleNavigationBar(),
             body: vehicle.when(
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (error, _) => Center(child: Text(error.toString())),
@@ -68,34 +72,27 @@ class VehicleDetailPage extends ConsumerWidget {
                 return Column(
                   children: [
                     _VehicleHeader(vehicle: item),
-                    Card(
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 4,
+                    TabBar(
+                      isScrollable: true,
+                      tabAlignment: TabAlignment.start,
+                      labelColor: AppColors.primary,
+                      labelStyle: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
                       ),
-                      child: TabBar(
-                        isScrollable: true,
-                        tabAlignment: TabAlignment.start,
-                        labelColor: AppColors.primary,
-                        labelStyle: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w700,
-                        ),
-                        unselectedLabelStyle: const TextStyle(fontSize: 15),
-                        indicatorWeight: 3,
-                        dividerColor: Colors.transparent,
-                        unselectedLabelColor: AppColors.body,
-                        indicatorColor: AppColors.techBlue,
-                        tabs: [
-                          Tab(text: '档案'),
-                          Tab(text: '维修'),
-                          Tab(text: '费用'),
-                          Tab(text: '车况'),
-                          Tab(text: '保养备件'),
-                          Tab(text: '油耗'),
-                          Tab(text: '提醒'),
-                        ],
-                      ),
+                      unselectedLabelStyle: const TextStyle(fontSize: 15),
+                      indicatorWeight: 3,
+                      dividerColor: Colors.transparent,
+                      unselectedLabelColor: AppColors.body,
+                      indicatorColor: AppColors.techBlue,
+                      tabs: [
+                        Tab(text: '档案'),
+                        Tab(text: '车况'),
+                        Tab(text: '维修'),
+                        Tab(text: '保养/备件'),
+                        Tab(text: '油耗'),
+                        Tab(text: '费用分析'),
+                      ],
                     ),
                     Expanded(
                       child: TabBarView(
@@ -107,16 +104,15 @@ class VehicleDetailPage extends ConsumerWidget {
                               '/vehicles/${item.id}/attachments',
                             ),
                           ),
-                          VehicleRepairTab(vehicle: item),
-                          VehicleExpenseTab(vehicle: item),
                           VehicleConditionTab(vehicle: item),
+                          VehicleRepairTab(vehicle: item),
                           VehicleMaintenanceTab(vehicle: item),
                           VehicleFuelTab(
                             vehicle: item,
                             initialYear: initialFuelYear,
                             initialMonth: initialFuelMonth,
                           ),
-                          VehicleReminderPage(vehicleId: item.id),
+                          VehicleExpenseTab(vehicle: item),
                         ],
                       ),
                     ),
@@ -131,13 +127,21 @@ class VehicleDetailPage extends ConsumerWidget {
   }
 
   int _tabIndex(String? tab) => switch (tab) {
-    'repair' => 1,
-    'expense' => 2,
-    'condition' => 3,
-    'maintenance' => 4,
-    'fuel' => 5,
-    'reminder' => 6,
+    'condition' => 1,
+    'repair' => 2,
+    'maintenance' => 3,
+    'fuel' => 4,
+    'expense' => 5,
     _ => 0,
+  };
+
+  String _titleForTabIndex(int index) => switch (index) {
+    1 => '车辆车况检查',
+    2 => '车辆维修管理',
+    3 => '车辆保养/备件',
+    4 => '车辆油耗记录',
+    5 => '车辆费用分析',
+    _ => '车辆详情',
   };
 
   Future<void> _stop(BuildContext context, WidgetRef ref, int id) async {
@@ -173,6 +177,7 @@ class _VehicleHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = _vehicleStatusColor(vehicle.status);
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
       child: Card(
@@ -201,28 +206,24 @@ class _VehicleHeader extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     const SizedBox(height: 6),
-                    _headerRow(
-                      context,
-                      '车牌号',
-                      vehicle.licensePlate ?? '未登记',
-                      '编号',
-                      vehicle.vehicleNo,
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 6,
+                      children: [
+                        Text(
+                          vehicle.licensePlate ?? vehicle.vehicleNo,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                        _DetailStatusChip(
+                          label: VehicleOptions.statusLabel(vehicle.status),
+                          color: color,
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 6),
-                    _headerRow(
-                      context,
-                      '车型',
-                      VehicleOptions.typeShortLabel(vehicle.vehicleType),
-                      '状态',
-                      VehicleOptions.statusLabel(vehicle.status),
-                    ),
-                    const SizedBox(height: 6),
-                    _headerRow(
-                      context,
-                      '工作区域',
-                      vehicle.workArea ?? '未登记',
-                      '责任人',
-                      vehicle.responsiblePerson ?? '未登记',
+                    Text(
+                      '${VehicleOptions.typeShortLabel(vehicle.vehicleType)} · ${vehicle.workArea ?? '未设置工作区域'} · ${vehicle.responsiblePerson ?? '未设置责任人'}',
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ],
                 ),
@@ -233,49 +234,6 @@ class _VehicleHeader extends StatelessWidget {
       ),
     );
   }
-
-  Widget _headerRow(
-    BuildContext context,
-    String leftLabel,
-    String leftValue,
-    String rightLabel,
-    String rightValue,
-  ) => Row(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Expanded(child: _headerField(context, leftLabel, leftValue)),
-      const SizedBox(width: 8),
-      Expanded(child: _headerField(context, rightLabel, rightValue)),
-    ],
-  );
-
-  Widget _headerField(BuildContext context, String label, String value) =>
-      label == '状态'
-      ? Wrap(
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
-            Text('状态：', style: Theme.of(context).textTheme.bodySmall),
-            _DetailStatusChip(
-              label: value,
-              color: _vehicleStatusColor(vehicle.status),
-            ),
-          ],
-        )
-      : Text.rich(
-          TextSpan(
-            children: [
-              TextSpan(
-                text: '$label：',
-                style: const TextStyle(color: AppColors.body),
-              ),
-              TextSpan(
-                text: value,
-                style: const TextStyle(color: AppColors.ink),
-              ),
-            ],
-          ),
-          style: Theme.of(context).textTheme.bodySmall,
-        );
 }
 
 class _OverviewTab extends StatelessWidget {

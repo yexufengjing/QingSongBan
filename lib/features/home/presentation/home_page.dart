@@ -9,10 +9,6 @@ import '../../../core/widgets/design_widgets.dart';
 import '../application/home_providers.dart';
 import '../../vehicles/application/vehicle_providers.dart';
 import '../../vehicles/domain/expense_options.dart';
-import '../../attendance/application/daily_attendance_providers.dart';
-import '../../inventory/application/inventory_providers.dart';
-import '../../purchase/application/purchase_providers.dart';
-import '../../reminders/application/reminder_providers.dart';
 
 final homeProcessingProvider = StateProvider<bool>((ref) => false);
 
@@ -42,7 +38,22 @@ class HomePage extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const HomeReferenceBrand(),
+            Semantics(
+              label: '轻松办',
+              image: true,
+              child: Image.asset(
+                'assets/ui/brand_wordmark.png',
+                width: 128,
+                height: 36,
+                fit: BoxFit.contain,
+                alignment: Alignment.centerLeft,
+                excludeFromSemantics: true,
+              ),
+            ),
+            const Text(
+              '有序办理 · 高效管理',
+              style: TextStyle(color: AppColors.body, fontSize: 14),
+            ),
             const SizedBox(height: 12),
             Wrap(
               spacing: 12,
@@ -79,7 +90,7 @@ class HomePage extends ConsumerWidget {
             const _WelcomeBanner(),
             const SizedBox(height: 16),
             if (processing) ...[
-              const _HomeSection(
+              const DesignSection(
                 title: '常用操作',
                 child: DesignGrid(
                   children: [
@@ -92,28 +103,34 @@ class HomePage extends ConsumerWidget {
                     ),
                     _Action(
                       '车辆管理',
-                      Icons.directions_car,
+                      Icons.local_shipping_outlined,
                       '/vehicles',
-                      AppColors.primary,
+                      AppColors.success,
                       actionKey: 'home-action-车辆管理',
                     ),
                     _Action(
                       '库存出库',
-                      Icons.inventory_2_outlined,
+                      Icons.outbox_outlined,
                       '/inventory/issues/new',
-                      AppColors.purple,
+                      AppColors.warning,
                     ),
                     _Action(
                       '采购管理',
-                      Icons.shopping_cart,
+                      Icons.shopping_cart_outlined,
                       '/purchase',
-                      Color(0xffff8a00),
+                      AppColors.purple,
                     ),
                   ],
                 ),
               ),
               const SizedBox(height: 12),
-              const _PendingTasks(),
+              dashboard.when(
+                loading: () => const _Loading(),
+                error: (_, _) => _LoadError(
+                  onRetry: () => ref.invalidate(homeDashboardProvider),
+                ),
+                data: (stats) => _PendingTasks(stats: stats),
+              ),
               const SizedBox(height: 12),
               const _BusinessActions(),
               const SizedBox(height: 12),
@@ -127,7 +144,7 @@ class HomePage extends ConsumerWidget {
                 data: (stats) => _Dashboard(stats: stats),
               ),
               const SizedBox(height: 12),
-              _HomeSection(
+              DesignSection(
                 title: '统计口径',
                 child: Column(
                   children: [
@@ -170,72 +187,38 @@ class HomePage extends ConsumerWidget {
   }
 }
 
-class _HomeSection extends StatelessWidget {
-  const _HomeSection({
-    this.title,
-    required this.child,
-    this.padding = const EdgeInsets.all(12),
-  });
-  final String? title;
-  final Widget child;
-  final EdgeInsetsGeometry padding;
-  @override
-  Widget build(BuildContext context) => Card(
-    child: Padding(
-      padding: padding,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (title != null) ...[
-            Text(
-              title!,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 8),
-          ],
-          child,
-        ],
-      ),
-    ),
-  );
-}
-
 class _WelcomeBanner extends StatelessWidget {
   const _WelcomeBanner();
   @override
   Widget build(BuildContext context) => Container(
     width: double.infinity,
-    constraints: BoxConstraints(
-      minHeight: 92 + (MediaQuery.textScalerOf(context).scale(18) - 18) * 2,
-    ),
+    padding: const EdgeInsets.all(16),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(12),
       gradient: const LinearGradient(
         colors: [Color(0xFFD8EDFF), Color(0xFFEEF8FF)],
       ),
     ),
-    clipBehavior: Clip.antiAlias,
-    child: Stack(
+    child: Row(
       children: [
-        const Positioned(
-          right: 0,
-          bottom: 0,
-          child: ExcludeSemantics(child: HomeOfficeIllustration()),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+        Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('轻松管理每一天', style: Theme.of(context).textTheme.titleLarge),
+              Text(
+                '轻松管理每一天',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
               const SizedBox(height: 6),
               const Text(
                 '本地数据 · 有序办理',
-                style: TextStyle(color: AppColors.body, fontSize: 12),
+                style: TextStyle(color: AppColors.body, fontSize: 14),
               ),
             ],
           ),
         ),
+        const SizedBox(width: 12),
+        const HomeOfficeIllustration(),
       ],
     ),
   );
@@ -307,9 +290,9 @@ class _Dashboard extends ConsumerWidget {
       }
       painter.dispose();
     }
-    return _HomeSection(
-      padding: const EdgeInsets.all(12),
+    return DesignSection(
       title: '关键指标',
+      padding: const EdgeInsets.all(12),
       child: Column(
         children: [
           DesignGrid(
@@ -456,7 +439,7 @@ class _Metric extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    DesignIcon(icon, color: color, size: 22),
+                    DesignIcon(icon, color: color, size: 26),
                     const SizedBox(width: 2),
                     Expanded(
                       child: Text(
@@ -521,230 +504,65 @@ class _Metric extends StatelessWidget {
   );
 }
 
-class _PendingTasks extends ConsumerWidget {
-  const _PendingTasks();
-
+class _PendingTasks extends StatelessWidget {
+  const _PendingTasks({required this.stats});
+  final HomeDashboardStats stats;
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final groups = ref.watch(dailyAttendanceGroupsProvider);
-    final attendanceProgress = ref.watch(homeAttendanceProgressProvider);
-    final reminders = ref.watch(reminderItemsProvider);
-    final warnings = ref.watch(inventoryWarningsProvider);
-    final purchases = ref.watch(purchaseDashboardProvider);
-    final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
-    final nextWeek = today.add(const Duration(days: 8));
-    final date =
-        '${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}';
-
-    final attendanceText = attendanceProgress.when(
-      loading: () => '正在读取今日登记进度 · $date',
-      error: (_, _) => '今日登记进度加载失败 · $date',
-      data: (progress) =>
-          '名单 ${progress.rosterCount} 人 · 上午已登记 ${progress.morningRegistered} · 下午已登记 ${progress.afternoonRegistered}',
-    );
-    final vehicleText = reminders.when(
-      loading: () => '正在读取车辆提醒',
-      error: (_, _) => '车辆提醒加载失败',
-      data: (items) {
-        final pending = items
-            .where(
-              (item) =>
-                  item.isPending &&
-                  item.reminder.isEnabled &&
-                  item.links.any((link) => link.entityType == 'vehicle'),
-            )
-            .toList();
-        final overdue = pending
-            .where((item) => item.scheduledAt?.isBefore(today) == true)
-            .length;
-        // Include all of today and the following seven calendar days.
-        final upcoming = pending
-            .where(
-              (item) =>
-                  item.scheduledAt != null &&
-                  !item.scheduledAt!.isBefore(today) &&
-                  item.scheduledAt!.isBefore(nextWeek),
-            )
-            .length;
-        return pending.isEmpty
-            ? '当前没有车辆提醒'
-            : '已逾期 $overdue 项 · 7天内 $upcoming 项';
-      },
-    );
-    final inventoryText = warnings.when(
-      loading: () => '正在读取库存预警',
-      error: (_, _) => '库存预警加载失败',
-      data: (items) => items.isEmpty ? '当前没有库存不足物资' : '${items.length} 种物资库存不足',
-    );
-    final purchaseText = purchases.when(
-      loading: () => '正在读取待领取采购',
-      error: (_, _) => '待领取采购加载失败',
-      data: (value) => value.pendingReceiveCount == 0
-          ? '当前没有待领取采购单'
-          : '${value.pendingReceiveCount} 单采购待领取',
-    );
-
-    return _HomeSection(
-      title: '待办事项',
-      child: Column(
-        children: [
-          _PendingTaskRow(
-            taskKey: 'home-pending-attendance',
-            title: '考勤登记',
-            subtitle: attendanceText,
-            icon: Icons.calendar_month_outlined,
-            color: AppColors.primary,
-            action: groups.hasError || attendanceProgress.hasError
-                ? '重试'
-                : '去登记',
-            primary: true,
-            onTap: groups.hasError || attendanceProgress.hasError
-                ? () {
-                    ref.invalidate(dailyAttendanceGroupsProvider);
-                    ref.invalidate(homeAttendanceProgressProvider);
-                  }
-                : () async {
-                    await context.push('/attendance/daily');
-                    ref.invalidate(homeAttendanceProgressProvider);
-                  },
-          ),
-          const Divider(height: 1),
-          _PendingTaskRow(
-            taskKey: 'home-pending-reminders',
-            title: '车辆提醒',
-            subtitle: vehicleText,
-            icon: Icons.directions_car_outlined,
-            color: AppColors.primary,
-            action: reminders.hasError ? '重试' : '查看',
-            onTap: reminders.hasError
-                ? () => ref.invalidate(reminderItemsProvider)
-                : () => context.push('/vehicles/reminders'),
-          ),
-          const Divider(height: 1),
-          _PendingTaskRow(
-            taskKey: 'home-pending-inventory',
-            title: '库存补充',
-            subtitle: inventoryText,
-            icon: Icons.inventory_2_outlined,
-            color: AppColors.purple,
-            action: warnings.hasError ? '重试' : '查看',
-            onTap: warnings.hasError
-                ? () => ref.invalidate(inventoryWarningsProvider)
-                : () => context.push('/inventory/warnings'),
-          ),
-          const Divider(height: 1),
-          _PendingTaskRow(
-            taskKey: 'home-pending-purchase',
-            title: '采购入库',
-            subtitle: purchaseText,
-            icon: Icons.shopping_cart_outlined,
+  Widget build(BuildContext context) => DesignSection(
+    title: '待办事项',
+    child: Column(
+      children: [
+        ListTile(
+          key: const Key('home-pending-reminders'),
+          contentPadding: EdgeInsets.zero,
+          leading: const DesignIcon(
+            Icons.notifications_none_outlined,
             color: AppColors.warning,
-            action: purchases.hasError ? '重试' : '去入库',
-            outlined: true,
-            onTap: purchases.hasError
-                ? () => ref.invalidate(purchaseDashboardProvider)
-                : () => context.push('/purchase/pending-receive'),
           ),
-        ],
-      ),
-    );
-  }
-}
-
-class _PendingTaskRow extends StatelessWidget {
-  const _PendingTaskRow({
-    required this.taskKey,
-    required this.title,
-    required this.subtitle,
-    required this.icon,
-    required this.color,
-    required this.action,
-    required this.onTap,
-    this.primary = false,
-    this.outlined = false,
-  });
-
-  final String taskKey, title, subtitle, action;
-  final IconData icon;
-  final Color color;
-  final VoidCallback onTap;
-  final bool primary, outlined;
-
-  @override
-  Widget build(BuildContext context) {
-    final style = ButtonStyle(
-      minimumSize: const WidgetStatePropertyAll(Size(64, 40)),
-      padding: const WidgetStatePropertyAll(
-        EdgeInsets.symmetric(horizontal: 14),
-      ),
-      shape: const WidgetStatePropertyAll(StadiumBorder()),
-      textStyle: WidgetStatePropertyAll(
-        Theme.of(context).textTheme.labelLarge?.copyWith(fontSize: 14),
-      ),
-    );
-    final button = primary
-        ? FilledButton(onPressed: onTap, style: style, child: Text(action))
-        : outlined
-        ? OutlinedButton(onPressed: onTap, style: style, child: Text(action))
-        : FilledButton.tonal(
-            onPressed: onTap,
-            style: style.copyWith(
-              foregroundColor: const WidgetStatePropertyAll(AppColors.primary),
-              backgroundColor: const WidgetStatePropertyAll(
-                AppColors.lightBlue,
-              ),
-            ),
-            child: Text(action),
-          );
-    return Padding(
-      key: Key(taskKey),
-      padding: EdgeInsets.zero,
-      child: Row(
-        children: [
-          Container(
-            width: 36,
-            height: 36,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .09),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Icon(icon, color: color, size: 25),
+          title: const Text('待办提醒'),
+          subtitle: Text(
+            stats.pendingReminders == 0
+                ? '当前没有待处理提醒'
+                : '${stats.pendingReminders} 项待处理',
           ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  subtitle,
-                  style: const TextStyle(fontSize: 12, color: AppColors.body),
-                ),
-              ],
-            ),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => context.push('/settings/reminders'),
+        ),
+        const Divider(),
+        ListTile(
+          key: const Key('home-metric-即将到期'),
+          contentPadding: EdgeInsets.zero,
+          leading: const DesignIcon(
+            Icons.schedule_outlined,
+            color: AppColors.purple,
           ),
-          const SizedBox(width: 8),
-          button,
-          const SizedBox(width: 4),
-          const Icon(Icons.chevron_right, color: AppColors.body, size: 20),
-        ],
-      ),
-    );
-  }
+          title: const Text('即将到期'),
+          subtitle: Text('${stats.upcomingReminders} 项 · 未来30天'),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => context.push('/settings/reminders'),
+        ),
+        const Divider(),
+        ListTile(
+          key: const Key('home-metric-本月离职'),
+          contentPadding: EdgeInsets.zero,
+          leading: const DesignIcon(
+            Icons.person_remove_outlined,
+            color: AppColors.danger,
+          ),
+          title: const Text('本月离职'),
+          subtitle: Text('${stats.terminatedEmployees} 人'),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => context.push('/attendance/termination'),
+        ),
+      ],
+    ),
+  );
 }
 
 class _BusinessActions extends StatelessWidget {
   const _BusinessActions();
   @override
-  Widget build(BuildContext context) => const _HomeSection(
+  Widget build(BuildContext context) => const DesignSection(
     title: '全部业务',
     child: DesignGrid(
       children: [
@@ -756,10 +574,10 @@ class _BusinessActions extends StatelessWidget {
           AppColors.techBlue,
         ),
         _Action(
-          '车辆管理',
-          Icons.directions_car_outlined,
+          '车辆档案',
+          Icons.local_shipping_outlined,
           '/vehicles/archive',
-          AppColors.techBlue,
+          AppColors.warning,
         ),
         _Action(
           '库存管理',
@@ -776,7 +594,7 @@ class _BusinessActions extends StatelessWidget {
           actionKey: 'home-action-物品领取',
         ),
         _Action(
-          '采购管理',
+          '采购跟踪',
           Icons.shopping_cart_outlined,
           '/purchase',
           AppColors.techBlue,
@@ -804,7 +622,7 @@ class _BusinessActions extends StatelessWidget {
 class _RegistrationActions extends StatelessWidget {
   const _RegistrationActions();
   @override
-  Widget build(BuildContext context) => const _HomeSection(
+  Widget build(BuildContext context) => const DesignSection(
     title: '快捷操作',
     child: DesignGrid(
       children: [
@@ -835,13 +653,6 @@ class _RegistrationActions extends StatelessWidget {
           '/attendance/termination/new',
           AppColors.danger,
           actionKey: 'home-action-离职登记',
-        ),
-        _Action(
-          '社保保险',
-          Icons.shield_outlined,
-          '/settings/insurance',
-          AppColors.success,
-          actionKey: 'home-action-社保保险',
         ),
         _Action(
           '保险变更',
@@ -883,30 +694,22 @@ class _Action extends StatelessWidget {
   final String? actionKey;
   @override
   Widget build(BuildContext context) => Material(
-    color: AppColors.lightBlue.withValues(alpha: .45),
+    color: color.withValues(alpha: .045),
     borderRadius: BorderRadius.circular(8),
     child: InkWell(
       key: actionKey == null ? null : Key(actionKey!),
       borderRadius: BorderRadius.circular(8),
       onTap: () => context.push(route),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 12),
         child: Column(
           children: [
-            Container(
-              width: 38,
-              height: 38,
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: .09),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(icon, color: color, size: 26),
-            ),
+            DesignIcon(icon, color: color),
             const SizedBox(height: 8),
             Text(
               title,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 12, color: AppColors.ink),
+              style: const TextStyle(fontSize: 14, color: AppColors.ink),
             ),
           ],
         ),
@@ -951,7 +754,7 @@ class _ScopeRow extends StatelessWidget {
 class _Loading extends StatelessWidget {
   const _Loading();
   @override
-  Widget build(BuildContext context) => const _HomeSection(
+  Widget build(BuildContext context) => const DesignSection(
     child: SizedBox(
       height: 160,
       child: Center(child: CircularProgressIndicator()),
@@ -963,7 +766,7 @@ class _LoadError extends StatelessWidget {
   const _LoadError({required this.onRetry});
   final VoidCallback onRetry;
   @override
-  Widget build(BuildContext context) => _HomeSection(
+  Widget build(BuildContext context) => DesignSection(
     child: ListTile(
       leading: const Icon(Icons.error_outline, color: AppColors.danger),
       title: const Text('概览暂时无法加载'),

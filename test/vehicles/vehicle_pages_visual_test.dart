@@ -19,7 +19,9 @@ import 'package:qingsongban/features/reminders/data/reminder_repository.dart';
 import 'package:qingsongban/features/reminders/domain/reminder_options.dart';
 
 void main() {
-  testWidgets('vehicle metrics stay in one row at phone width', (tester) async {
+  testWidgets('vehicle metrics preserve complete values at phone width', (
+    tester,
+  ) async {
     await tester.binding.setSurfaceSize(const Size(411, 850));
     addTearDown(() => tester.binding.setSurfaceSize(null));
     await tester.pumpWidget(
@@ -59,10 +61,21 @@ void main() {
         ),
       ),
     );
+    // A long amount can use two columns instead of truncating or shrinking.
     expect(
       tester.getTopLeft(find.text('待维修')).dy,
+      tester.getTopLeft(find.text('维修中')).dy,
+    );
+    expect(
+      tester.getTopLeft(find.text('已完成')).dy,
       tester.getTopLeft(find.text('本月费用')).dy,
     );
+    for (final value in ['3', '4', '5', '¥24860']) {
+      expect(find.text(value), findsOneWidget);
+      final rect = tester.getRect(find.text(value));
+      expect(rect.left, greaterThanOrEqualTo(16));
+      expect(rect.right, lessThanOrEqualTo(395));
+    }
     expect(tester.takeException(), isNull);
   });
 
@@ -184,15 +197,9 @@ void main() {
     expect(find.text('本年累计总费用'), findsOneWidget);
     expect(find.text('月度费用趋势'), findsOneWidget);
     expect(find.text('费用构成'), findsOneWidget);
-    expect(find.text('单位：元'), findsNothing);
-    expect(find.text('240.00'), findsOneWidget);
-    expect(find.text('240.00 元'), findsNWidgets(2));
-    expect(find.text('费用构成图'), findsOneWidget);
-    await tester.ensureVisible(find.text('月度费用趋势'));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('月度费用趋势'));
-    await tester.pumpAndSettle();
     expect(find.text('单位：元'), findsOneWidget);
+    expect(find.text('¥240'), findsOneWidget);
+    expect(find.text('¥240.00'), findsOneWidget);
     await tester.ensureVisible(find.text('费用构成图'));
     await tester.tap(find.text('费用构成图'));
     await tester.pumpAndSettle();

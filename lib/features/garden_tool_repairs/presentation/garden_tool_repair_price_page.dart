@@ -196,8 +196,7 @@ class _GardenToolRepairPricePageState
           const SizedBox(height: 16),
           Row(
             children: [
-              SizedBox(
-                width: 130,
+              Expanded(
                 child: DropdownButtonFormField<String>(
                   isExpanded: true,
                   isDense: true,
@@ -217,8 +216,7 @@ class _GardenToolRepairPricePageState
                 ),
               ),
               const SizedBox(width: 8),
-              SizedBox(
-                width: 150,
+              Expanded(
                 child: DropdownButtonFormField<int>(
                   isExpanded: true,
                   isDense: true,
@@ -283,7 +281,7 @@ class _GardenToolRepairPricePageState
         : '${changeCents >= 0 ? '+' : ''}${formatRepairMoney(changeCents)}';
     final changeLabel = changeCents == null
         ? '暂无对比'
-        : '$changeAmount · '
+        : '$changeAmount\n'
               '${change == null ? '暂无涨跌幅' : '${change >= 0 ? '+' : ''}${change.toStringAsFixed(1)}%'}';
     final chronological = points.reversed.toList();
     return Column(
@@ -348,6 +346,8 @@ class _GardenToolRepairPricePageState
                   width: double.infinity,
                   child: _PriceTrendChart(
                     points: chronological,
+                    axisStyle: Theme.of(context).textTheme.bodySmall!,
+                    pointStyle: Theme.of(context).textTheme.bodySmall!,
                     onTapPoint: (point) => _showPoint(point),
                   ),
                 ),
@@ -520,9 +520,16 @@ class _PriceMetric extends StatelessWidget {
 }
 
 class _PriceTrendChart extends StatelessWidget {
-  const _PriceTrendChart({required this.points, required this.onTapPoint});
+  const _PriceTrendChart({
+    required this.points,
+    required this.axisStyle,
+    required this.pointStyle,
+    required this.onTapPoint,
+  });
 
   final List<GardenToolRepairPricePoint> points;
+  final TextStyle axisStyle;
+  final TextStyle pointStyle;
   final ValueChanged<GardenToolRepairPricePoint> onTapPoint;
 
   @override
@@ -539,7 +546,11 @@ class _PriceTrendChart extends StatelessWidget {
         onTapPoint(points[index]);
       },
       child: CustomPaint(
-        painter: _PriceTrendPainter(points),
+        painter: _PriceTrendPainter(
+          points,
+          axisStyle: axisStyle,
+          pointStyle: pointStyle,
+        ),
         size: Size(constraints.maxWidth, constraints.maxHeight),
       ),
     ),
@@ -547,9 +558,15 @@ class _PriceTrendChart extends StatelessWidget {
 }
 
 class _PriceTrendPainter extends CustomPainter {
-  const _PriceTrendPainter(this.points);
+  const _PriceTrendPainter(
+    this.points, {
+    required this.axisStyle,
+    required this.pointStyle,
+  });
 
   final List<GardenToolRepairPricePoint> points;
+  final TextStyle axisStyle;
+  final TextStyle pointStyle;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -578,7 +595,7 @@ class _PriceTrendPainter extends CustomPainter {
       labels
         ..text = TextSpan(
           text: (value / 100).toStringAsFixed(2),
-          style: const TextStyle(fontSize: 12, color: AppColors.body),
+          style: axisStyle.copyWith(fontSize: 12, color: AppColors.body),
         )
         ..layout();
       labels.paint(canvas, Offset(0, y - labels.height / 2));
@@ -596,7 +613,7 @@ class _PriceTrendPainter extends CustomPainter {
         final label = TextPainter(
           text: TextSpan(
             text: _dateLabel(points[index].repairDate),
-            style: const TextStyle(fontSize: 12, color: AppColors.body),
+            style: axisStyle.copyWith(fontSize: 12, color: AppColors.body),
           ),
           textDirection: TextDirection.ltr,
         )..layout();
@@ -621,7 +638,7 @@ class _PriceTrendPainter extends CustomPainter {
       final label = TextPainter(
         text: TextSpan(
           text: (points[index].unitPriceCents / 100).toStringAsFixed(2),
-          style: const TextStyle(
+          style: pointStyle.copyWith(
             fontSize: 12,
             color: AppColors.ink,
             fontWeight: FontWeight.w600,

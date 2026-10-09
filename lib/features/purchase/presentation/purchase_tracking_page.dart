@@ -455,14 +455,14 @@ class _TrackingCard extends ConsumerWidget {
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     const SizedBox(height: 12),
-                    TextField(
-                      controller: department,
-                      decoration: const InputDecoration(labelText: '采购分部（选填）'),
+                    PurchaseLabeledField(
+                      label: '采购分部（选填）',
+                      child: TextField(controller: department),
                     ),
                     const SizedBox(height: 10),
-                    TextField(
-                      controller: purchaser,
-                      decoration: const InputDecoration(labelText: '采购执行人（选填）'),
+                    PurchaseLabeledField(
+                      label: '采购执行人（选填）',
+                      child: TextField(controller: purchaser),
                     ),
                     ListTile(
                       contentPadding: EdgeInsets.zero,
@@ -559,9 +559,9 @@ class _TrackingCard extends ConsumerWidget {
                       }
                     },
                   ),
-                  TextField(
-                    controller: location,
-                    decoration: const InputDecoration(labelText: '领取地点（选填）'),
+                  PurchaseLabeledField(
+                    label: '领取地点（选填）',
+                    child: TextField(controller: location),
                   ),
                   const SizedBox(height: 12),
                   SizedBox(

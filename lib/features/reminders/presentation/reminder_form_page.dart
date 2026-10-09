@@ -155,6 +155,11 @@ class _ReminderFormPageState extends ConsumerState<ReminderFormPage> {
                                   horizontal: 4,
                                   vertical: 10,
                                 ),
+                                side: BorderSide(
+                                  color: _category == category
+                                      ? AppColors.primary
+                                      : AppColors.divider,
+                                ),
                                 backgroundColor: _category == category
                                     ? AppColors.primary
                                     : AppColors.lightBlue,
@@ -197,6 +202,8 @@ class _ReminderFormPageState extends ConsumerState<ReminderFormPage> {
                 const SizedBox(height: 14),
                 Card(
                   child: ExpansionTile(
+                    shape: const RoundedRectangleBorder(),
+                    collapsedShape: const RoundedRectangleBorder(),
                     initiallyExpanded: _advancedExpanded,
                     leading: const Icon(Icons.tune_outlined),
                     title: const Text('更多设置'),
@@ -214,6 +221,7 @@ class _ReminderFormPageState extends ConsumerState<ReminderFormPage> {
                       ),
                       const SizedBox(height: 8),
                       SegmentedButton<String>(
+                        expandedInsets: EdgeInsets.zero,
                         segments: [
                           for (final priority in ReminderPriorities.values)
                             ButtonSegment(
@@ -227,19 +235,28 @@ class _ReminderFormPageState extends ConsumerState<ReminderFormPage> {
                             setState(() => _priority = value.single),
                       ),
                       const SizedBox(height: 16),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          '详细内容（选填）',
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
                       TextField(
+                        key: const Key('reminder-detail-field'),
                         controller: _remarkController,
                         minLines: 2,
                         maxLines: 5,
                         decoration: const InputDecoration(
-                          labelText: '详细内容（选填）',
                           hintText: '地点、联系人或需要准备的材料',
                         ),
                       ),
                       const SizedBox(height: 12),
                       ListTile(
+                        key: const Key('reminder-employees'),
                         contentPadding: EdgeInsets.zero,
-                        leading: const Icon(Icons.group_outlined),
+                        leading: const DesignIcon(Icons.group_outlined),
                         title: const Text('关联人员'),
                         subtitle: Text(
                           _employeeIds.isEmpty

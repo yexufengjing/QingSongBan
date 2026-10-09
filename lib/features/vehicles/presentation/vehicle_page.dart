@@ -8,6 +8,7 @@ import '../../../core/database/database_enums.dart';
 import '../application/vehicle_providers.dart';
 import '../data/maintenance_repository.dart';
 import '../domain/vehicle_options.dart';
+import 'vehicle_navigation_bar.dart';
 
 class VehiclePage extends ConsumerStatefulWidget {
   const VehiclePage({super.key});
@@ -28,10 +29,7 @@ class _VehiclePageState extends ConsumerState<VehiclePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('车辆管理'),
-        leading: BackButton(
-          onPressed: () =>
-              context.canPop() ? context.pop() : context.go('/home'),
-        ),
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
             tooltip: '年度油耗汇总',
@@ -134,6 +132,7 @@ class _VehiclePageState extends ConsumerState<VehiclePage> {
           ),
         ),
       ),
+      bottomNavigationBar: const VehicleNavigationBar(),
     );
   }
 

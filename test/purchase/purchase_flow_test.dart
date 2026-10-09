@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:qingsongban/features/purchase/presentation/widgets/purchase_widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qingsongban/core/database/app_database.dart';
 import 'package:qingsongban/core/database/database_provider.dart';
@@ -64,7 +65,7 @@ void main() {
       await tester.tap(find.byKey(Key('purchase-confirm-applied-$requestId')));
       await tester.pumpAndSettle();
       await tester.enterText(
-        find.widgetWithText(TextField, 'OA流程链接（可选）'),
+        _purchaseTextField('OA流程链接（可选）'),
         'not a valid OA URL',
       );
       await tester.tap(find.widgetWithText(FilledButton, '确认'));
@@ -100,10 +101,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(Key('purchase-assign-$requestId')));
       await tester.pumpAndSettle();
-      await tester.enterText(
-        find.widgetWithText(TextField, '采购执行人（选填）'),
-        '林采购',
-      );
+      await tester.enterText(_purchaseTextField('采购执行人（选填）'), '林采购');
       await tester.tap(find.widgetWithText(FilledButton, '确认'));
       await tester.pumpAndSettle();
       request = await database.select(database.purchaseRequests).getSingle();
@@ -112,10 +110,7 @@ void main() {
 
       await tester.tap(find.byKey(Key('purchase-mark-receive-$requestId')));
       await tester.pumpAndSettle();
-      await tester.enterText(
-        find.widgetWithText(TextField, '领取地点（选填）'),
-        '西门仓库',
-      );
+      await tester.enterText(_purchaseTextField('领取地点（选填）'), '西门仓库');
       await _tapSheetButton(tester, '设为待领取');
       await tester.pumpAndSettle();
       expect(
@@ -195,13 +190,10 @@ void main() {
       );
       await tester.tap(manualAdd);
       await tester.pumpAndSettle();
-      await tester.enterText(find.widgetWithText(TextField, '物资名称'), '定制拉手');
-      await tester.enterText(
-        find.widgetWithText(TextField, '规格型号（选填）'),
-        'M12×30',
-      );
-      await tester.enterText(find.widgetWithText(TextField, '单位'), '个');
-      await tester.enterText(find.widgetWithText(TextField, '申报数量'), '7.5');
+      await tester.enterText(_purchaseTextField('物资名称'), '定制拉手');
+      await tester.enterText(_purchaseTextField('规格型号（选填）'), 'M12×30');
+      await tester.enterText(_purchaseTextField('单位'), '个');
+      await tester.enterText(_purchaseTextField('申报数量'), '7.5');
       await tester.tap(find.widgetWithText(FilledButton, '添加'));
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
@@ -622,3 +614,11 @@ class _FakeNotificationService implements NotificationService {
   @override
   Future<void> showTestNotification() async {}
 }
+
+// Labels are now outside their inputs; keep driving the same business fields.
+Finder _purchaseTextField(String label) => find.descendant(
+  of: find.byWidgetPredicate(
+    (widget) => widget is PurchaseLabeledField && widget.label == label,
+  ),
+  matching: find.byType(TextField),
+);

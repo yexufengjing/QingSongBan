@@ -142,7 +142,7 @@ class _ReceiveCard extends ConsumerWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const PurchaseMaterialIcon(size: 82),
+                const PurchaseMaterialIcon(size: 56),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
@@ -151,7 +151,7 @@ class _ReceiveCard extends ConsumerWidget {
                       const PurchaseStatusChip(
                         status: PurchaseStatus.pendingReceive,
                       ),
-                      const SizedBox(height: 5),
+                      const SizedBox(height: 3),
                       if (request.items.isEmpty)
                         Text(
                           request.title,
@@ -160,7 +160,7 @@ class _ReceiveCard extends ConsumerWidget {
                       const SizedBox(height: 5),
                       for (final item in request.items)
                         _ItemReceiveInfo(item: item),
-                      const SizedBox(height: 6),
+                      const SizedBox(height: 4),
                       Text(
                         '收到通知：${purchaseShortDateLabel(request.arrivalNoticeDate)}',
                       ),
@@ -176,7 +176,7 @@ class _ReceiveCard extends ConsumerWidget {
               ],
             ),
           ),
-          const Divider(height: 24),
+          const Divider(height: 18),
           Wrap(
             alignment: WrapAlignment.end,
             spacing: 8,
@@ -226,22 +226,34 @@ class _ItemReceiveInfo extends StatelessWidget {
         ? 0.0
         : (item.receivedQuantity / item.requestQuantity).clamp(0.0, 1.0);
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.only(bottom: 5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(item.itemName, style: Theme.of(context).textTheme.titleMedium),
-          Text('型号：${item.specification ?? '无规格'}'),
           Text(
-            '申报数量：${purchaseQuantityLabel(item.requestQuantity)} ${item.unit}',
+            item.itemName,
+            style: Theme.of(context).textTheme.titleSmall
+                ?.copyWith(fontWeight: FontWeight.w700),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
-          Text(
-            '已入库：${purchaseQuantityLabel(item.receivedQuantity)} ${item.unit}',
-            style: const TextStyle(color: Color(0xFF00A86B)),
-          ),
-          Text(
-            '剩余数量：${purchaseQuantityLabel(item.remainingQuantity)} ${item.unit}',
-            style: const TextStyle(color: Color(0xFFFF8A1F)),
+          Text('型号：${item.specification ?? '无规格'} · 单位：${item.unit}'),
+          Wrap(
+            spacing: 10,
+            runSpacing: 2,
+            children: [
+              Text(
+                '申报 ${purchaseQuantityLabel(item.requestQuantity)} ${item.unit}',
+              ),
+              Text(
+                '已入库 ${purchaseQuantityLabel(item.receivedQuantity)} ${item.unit}',
+                style: const TextStyle(color: Color(0xFF00A86B)),
+              ),
+              Text(
+                '剩余 ${purchaseQuantityLabel(item.remainingQuantity)} ${item.unit}',
+                style: const TextStyle(color: Color(0xFFFF8A1F)),
+              ),
+            ],
           ),
           if (item.receivedQuantity > 0) ...[
             const SizedBox(height: 5),

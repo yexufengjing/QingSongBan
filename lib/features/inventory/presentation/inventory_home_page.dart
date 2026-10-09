@@ -93,49 +93,71 @@ class _InventoryHomePageState extends ConsumerState<InventoryHomePage> {
             ),
             const SizedBox(height: 12),
             DesignSection(
-              title: '库存预警',
-              trailing: TextButton(
-                onPressed: () => context.push('/inventory/warnings'),
-                child: const Text('查看预警'),
-              ),
+              padding: const EdgeInsets.all(12),
               child: warnings.when(
                 loading: () => const InventoryLoadingState(),
                 error: (_, _) => InventoryErrorState(
                   onRetry: () => ref.invalidate(inventoryWarningsProvider),
                 ),
-                data: (rows) => rows.isEmpty
-                    ? const Text(
-                        '当前没有需要补充的物资',
-                        style: TextStyle(color: AppColors.body),
-                      )
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '${rows.length} 项需要补充',
-                            style: const TextStyle(
-                              color: AppColors.danger,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
+                data: (rows) => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const DesignIcon(
+                          Icons.warning_amber_rounded,
+                          color: AppColors.warning,
+                          size: 36,
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '库存预警',
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                rows.isEmpty
+                                    ? '当前没有需要补充的物资'
+                                    : '${rows.length} 项需要补充',
+                                style: TextStyle(
+                                  color: rows.isEmpty
+                                      ? AppColors.body
+                                      : AppColors.danger,
+                                ),
+                              ),
+                            ],
                           ),
-                          const SizedBox(height: 8),
-                          for (final row in rows.take(3))
-                            ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              leading: const DesignIcon(
-                                Icons.inventory_2_outlined,
-                              ),
-                              title: Text(row.material.materialName),
-                              subtitle: Text(
-                                '当前 ${row.material.currentStock} ${row.material.unitName} · 最低 ${row.material.minStock} ${row.material.unitName}',
-                              ),
-                              onTap: () => context.push(
-                                '/inventory/materials/${row.material.id}',
-                              ),
-                            ),
-                        ],
+                        ),
+                        TextButton(
+                          onPressed: () => context.push('/inventory/warnings'),
+                          child: const Text('查看预警'),
+                        ),
+                      ],
+                    ),
+                    for (final row in rows.take(3)) ...[
+                      const Divider(height: 16),
+                      ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        dense: true,
+                        leading: const DesignIcon(
+                          Icons.inventory_2_outlined,
+                          size: 36,
+                        ),
+                        title: Text(row.material.materialName),
+                        subtitle: Text(
+                          '当前 ${row.material.currentStock} ${row.material.unitName} · 最低 ${row.material.minStock} ${row.material.unitName}',
+                        ),
+                        onTap: () => context.push(
+                          '/inventory/materials/${row.material.id}',
+                        ),
                       ),
+                    ],
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 12),
@@ -172,42 +194,33 @@ class _InventoryHomePageState extends ConsumerState<InventoryHomePage> {
                 error: (_, _) => InventoryErrorState(
                   onRetry: () => ref.invalidate(inventoryOverviewProvider),
                 ),
-                data: (data) => Row(
+                data: (data) => DesignGrid(
+                  columns: 3,
+                  minimumCellWidth: 96,
                   children: [
-                    Expanded(
-                      child: InventoryMetricCard(
-                        compact: true,
-                        label: '当前物资',
-                        value: '${data.totalMaterialCount}种',
-                        icon: Icons.inventory_2_outlined,
-                      ),
+                    _OverviewMetric(
+                      label: '当前物资',
+                      value: '${data.totalMaterialCount}种',
+                      icon: Icons.inventory_2_outlined,
                     ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: InventoryMetricCard(
-                        key: const Key('inventory-home-warning-count'),
-                        compact: true,
-                        label: '库存预警',
-                        value: warnings.when(
-                          data: (rows) => '${rows.length}',
-                          loading: () => '加载中',
-                          error: (_, _) => '加载失败',
-                        ),
-                        icon: Icons.warning_amber_rounded,
-                        color: const Color(0xFFE98500),
-                        onTap: () => context.push('/inventory/warnings'),
+                    _OverviewMetric(
+                      key: const Key('inventory-home-warning-count'),
+                      label: '库存预警',
+                      value: warnings.when(
+                        data: (rows) => '${rows.length}',
+                        loading: () => '加载中',
+                        error: (_, _) => '加载失败',
                       ),
+                      icon: Icons.warning_amber_rounded,
+                      color: AppColors.warning,
+                      onTap: () => context.push('/inventory/warnings'),
                     ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: InventoryMetricCard(
-                        compact: true,
-                        label: '待补充',
-                        value: '${data.pendingReplenishmentCount}',
-                        icon: Icons.shopping_cart_outlined,
-                        color: AppColors.techBlue,
-                        onTap: () => context.push('/inventory/replenishment'),
-                      ),
+                    _OverviewMetric(
+                      label: '待补充',
+                      value: '${data.pendingReplenishmentCount}',
+                      icon: Icons.shopping_cart_outlined,
+                      color: AppColors.success,
+                      onTap: () => context.push('/inventory/replenishment'),
                     ),
                   ],
                 ),
@@ -476,6 +489,58 @@ class _TaskAction extends StatelessWidget {
               title,
               textAlign: TextAlign.center,
               style: const TextStyle(color: AppColors.ink, fontSize: 16),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+class _OverviewMetric extends StatelessWidget {
+  const _OverviewMetric({
+    required this.label,
+    required this.value,
+    required this.icon,
+    this.color = AppColors.primary,
+    this.onTap,
+    super.key,
+  });
+  final String label;
+  final String value;
+  final IconData icon;
+  final Color color;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) => Material(
+    color: Colors.transparent,
+    borderRadius: BorderRadius.circular(8),
+    child: InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(8),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 6),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                DesignIcon(icon, color: color, size: 26),
+                const SizedBox(width: 4),
+                Expanded(
+                  child: Text(
+                    label,
+                    style: const TextStyle(fontSize: 12, color: AppColors.body),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 6),
+            Text(
+              value,
+              style: Theme.of(context).textTheme.titleLarge
+                  ?.copyWith(fontSize: 22),
             ),
           ],
         ),

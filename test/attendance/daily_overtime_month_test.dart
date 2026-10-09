@@ -99,14 +99,7 @@ void main() {
         );
         expect(find.text('加班 4小时'), findsNothing);
 
-        ProviderScope.containerOf(
-          tester.element(find.byType(DailyAttendancePage)),
-          listen: false,
-        ).read(dailyAttendanceDateProvider.notifier).state = DateTime(
-          2026,
-          2,
-          1,
-        );
+        await tester.tap(find.byKey(const Key('daily-attendance-next-day')));
         await tester.pumpAndSettle();
 
         expect(find.textContaining('2026-02-01'), findsOneWidget);

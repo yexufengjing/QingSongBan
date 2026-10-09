@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/theme/app_theme.dart';
 import '../application/vehicle_providers.dart';
 import '../domain/fuel_year_summary_options.dart';
+import 'vehicle_navigation_bar.dart';
 import 'vehicle_metric_grid.dart';
 
 class VehicleFuelSummaryPage extends ConsumerStatefulWidget {
@@ -43,6 +44,7 @@ class _VehicleFuelSummaryPageState
           ),
         ],
       ),
+      bottomNavigationBar: const VehicleNavigationBar(),
       body: summary.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, _) => Center(child: Text('年度油耗加载失败：$error')),

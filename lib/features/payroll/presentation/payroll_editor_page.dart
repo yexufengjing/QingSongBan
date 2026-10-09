@@ -54,6 +54,7 @@ class _EditorContent extends StatelessWidget {
         batch.status != PayrollStatus.confirmed &&
         batch.status != PayrollStatus.locked;
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(12, 16, 12, 0),
@@ -65,7 +66,7 @@ class _EditorContent extends StatelessWidget {
               ),
               Expanded(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text('工资编辑', style: Theme.of(context).textTheme.titleLarge),
                   ],
@@ -429,11 +430,22 @@ class _EditorContent extends StatelessWidget {
     final result = await showDialog<String>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(title),
-        content: TextField(
-          autofocus: true,
-          onChanged: (value) => reasonText = value,
-          decoration: const InputDecoration(labelText: '原因'),
+        title: Text(title, textAlign: TextAlign.center),
+        scrollable: true,
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('原因'),
+            const SizedBox(height: 6),
+            TextField(
+              autofocus: true,
+              minLines: 2,
+              maxLines: 4,
+              onChanged: (value) => reasonText = value,
+              decoration: const InputDecoration(),
+            ),
+          ],
         ),
         actions: [
           Row(
@@ -477,6 +489,9 @@ class _ItemList extends StatelessWidget {
   Widget build(BuildContext context) {
     if (items.isEmpty)
       return const Center(child: Text('当前工资名单为空，请重新生成或人工增加人员'));
+    final editable =
+        batch.status != PayrollStatus.confirmed &&
+        batch.status != PayrollStatus.locked;
     final jobTypes =
         ref.watch(wageJobTypesProvider).valueOrNull ?? const <WageJobType>[];
     Widget itemBuilder(BuildContext context, int index) {
@@ -485,10 +500,13 @@ class _ItemList extends StatelessWidget {
       final removed = item.isManuallyRemoved;
       return Card(
         key: ValueKey(item.id),
+        margin: const EdgeInsets.only(bottom: 12),
         color: removed ? Colors.grey.shade100 : null,
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
-          onTap: () => _edit(context, value, jobTypes),
+          onTap: editable
+              ? () => _edit(context, value, jobTypes)
+              : () => context.push('/reports/payroll/item/${item.id}'),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -558,10 +576,11 @@ class _ItemList extends StatelessWidget {
                               value: 'detail',
                               child: Text('查看明细'),
                             ),
-                            PopupMenuItem(
-                              value: removed ? 'restore' : 'remove',
-                              child: Text(removed ? '恢复到工资名单' : '移出工资名单'),
-                            ),
+                            if (editable)
+                              PopupMenuItem(
+                                value: removed ? 'restore' : 'remove',
+                                child: Text(removed ? '恢复到工资名单' : '移出工资名单'),
+                              ),
                           ],
                         ),
                       ],
@@ -595,7 +614,7 @@ class _ItemList extends StatelessWidget {
       );
     }
 
-    if (!reorderable) {
+    if (!reorderable || !editable) {
       return ListView.builder(
         padding: const EdgeInsets.fromLTRB(16, 4, 16, 12),
         itemCount: items.length,
@@ -743,17 +762,21 @@ class _ItemList extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        TextButton(
-                          onPressed: () => Navigator.of(context).pop(false),
-                          child: const Text('取消'),
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: () => Navigator.of(context).pop(false),
+                            child: const Text('取消'),
+                          ),
                         ),
-                        FilledButton(
-                          onPressed: calculation == null
-                              ? null
-                              : () => Navigator.of(context).pop(true),
-                          child: const Text('保存'),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: FilledButton(
+                            onPressed: calculation == null
+                                ? null
+                                : () => Navigator.of(context).pop(true),
+                            child: const Text('保存'),
+                          ),
                         ),
                       ],
                     ),

@@ -396,6 +396,7 @@ class _RequestHistoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final first = rows.first;
     return PurchasePanel(
+      padding: const EdgeInsets.all(12),
       child: InkWell(
         key: Key('purchase-history-request-${first.requestId}'),
         onTap: () => context.push(PurchaseRoutes.detail(first.requestId)),
@@ -404,8 +405,8 @@ class _RequestHistoryCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                const PurchaseMaterialIcon(size: 62),
-                const SizedBox(width: 10),
+                const PurchaseMaterialIcon(size: 48),
+                const SizedBox(width: 8),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -425,13 +426,13 @@ class _RequestHistoryCard extends StatelessWidget {
                 const Icon(Icons.chevron_right),
               ],
             ),
-            const Divider(height: 20),
+            const Divider(height: 14),
             for (final row in rows)
               Padding(
-                padding: const EdgeInsets.only(bottom: 6),
+                padding: const EdgeInsets.only(bottom: 4),
                 child: Wrap(
-                  spacing: 12,
-                  runSpacing: 4,
+                  spacing: 10,
+                  runSpacing: 2,
                   children: [
                     Text(
                       '${row.itemName}：申报 ${purchaseQuantityLabel(row.requestQuantity)} ${row.unit}',

@@ -396,32 +396,7 @@ class _RepairGroupCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 7),
                 Text('${group.repairDate.month}月${group.repairDate.day}日'),
-                const SizedBox(width: 8),
-                const _HeaderDivider(),
-                const SizedBox(width: 8),
-                const Icon(Icons.apartment, color: AppColors.primary, size: 18),
-                const SizedBox(width: 5),
-                Flexible(
-                  child: Text(
-                    group.unitNameSnapshot,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                const _HeaderDivider(),
-                const SizedBox(width: 8),
-                const Icon(
-                  Icons.person_outline,
-                  color: AppColors.primary,
-                  size: 18,
-                ),
-                const SizedBox(width: 5),
-                Flexible(
-                  child: Text(
-                    group.repairerNameSnapshot,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
+                const Spacer(),
                 PopupMenuButton<_GroupAction>(
                   tooltip: '更多操作',
                   onSelected: (action) {
@@ -454,6 +429,43 @@ class _RepairGroupCard extends StatelessWidget {
                       child: Text('删除本组'),
                     ),
                   ],
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(
+                        Icons.apartment,
+                        color: AppColors.primary,
+                        size: 18,
+                      ),
+                      const SizedBox(width: 5),
+                      Expanded(child: Text(group.unitNameSnapshot)),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 8),
+                const _HeaderDivider(),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(
+                        Icons.person_outline,
+                        color: AppColors.primary,
+                        size: 18,
+                      ),
+                      const SizedBox(width: 5),
+                      Expanded(child: Text(group.repairerNameSnapshot)),
+                    ],
+                  ),
                 ),
               ],
             ),

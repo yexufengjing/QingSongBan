@@ -288,25 +288,21 @@ class _PendingApplyCard extends ConsumerWidget {
                         }
                       },
                     ),
-                    TextField(
-                      controller: oaNo,
-                      decoration: const InputDecoration(
-                        labelText: 'OA流程编号（可选）',
-                      ),
+                    PurchaseLabeledField(
+                      label: 'OA流程编号（可选）',
+                      child: TextField(controller: oaNo),
                     ),
                     const SizedBox(height: 10),
-                    TextField(
-                      controller: oaTitle,
-                      decoration: const InputDecoration(
-                        labelText: 'OA流程标题（可选）',
-                      ),
+                    PurchaseLabeledField(
+                      label: 'OA流程标题（可选）',
+                      child: TextField(controller: oaTitle),
                     ),
                     const SizedBox(height: 10),
-                    TextField(
-                      controller: oaUrl,
-                      keyboardType: TextInputType.url,
-                      decoration: const InputDecoration(
-                        labelText: 'OA流程链接（可选）',
+                    PurchaseLabeledField(
+                      label: 'OA流程链接（可选）',
+                      child: TextField(
+                        controller: oaUrl,
+                        keyboardType: TextInputType.url,
                       ),
                     ),
                     const SizedBox(height: 16),

@@ -134,13 +134,15 @@ class _PurchaseCreatePageState extends ConsumerState<PurchaseCreatePage> {
                       children: [
                         const PurchaseSectionHeading('基本信息'),
                         const SizedBox(height: 12),
-                        TextField(
-                          key: const Key('purchase-title-field'),
-                          controller: _titleController,
-                          onChanged: form.setTitle,
-                          decoration: const InputDecoration(
-                            labelText: '采购事项名称',
-                            hintText: '例如：扫路车备件采购',
+                        PurchaseLabeledField(
+                          label: '采购事项名称',
+                          child: TextField(
+                            key: const Key('purchase-title-field'),
+                            controller: _titleController,
+                            onChanged: form.setTitle,
+                            decoration: const InputDecoration(
+                              hintText: '例如：扫路车备件采购',
+                            ),
                           ),
                         ),
                         const SizedBox(height: 14),
@@ -205,13 +207,15 @@ class _PurchaseCreatePageState extends ConsumerState<PurchaseCreatePage> {
                             );
                           },
                         ),
-                        TextField(
-                          key: const Key('purchase-reason-field'),
-                          controller: _reasonController,
-                          onChanged: form.setDemandReason,
-                          decoration: const InputDecoration(
-                            labelText: '原因补充（选填）',
-                            hintText: '可填写需求原因',
+                        PurchaseLabeledField(
+                          label: '原因补充（选填）',
+                          child: TextField(
+                            key: const Key('purchase-reason-field'),
+                            controller: _reasonController,
+                            onChanged: form.setDemandReason,
+                            decoration: const InputDecoration(
+                              hintText: '可填写需求原因',
+                            ),
                           ),
                         ),
                         const SizedBox(height: 10),
@@ -229,16 +233,16 @@ class _PurchaseCreatePageState extends ConsumerState<PurchaseCreatePage> {
                             if (date != null) form.setRequestDate(date);
                           },
                         ),
-                        TextField(
-                          key: const Key('purchase-remark-field'),
-                          controller: _remarkController,
-                          minLines: 2,
-                          maxLines: 4,
-                          maxLength: 200,
-                          onChanged: form.setRemark,
-                          decoration: const InputDecoration(
-                            labelText: '备注（选填）',
-                            hintText: '补充说明',
+                        PurchaseLabeledField(
+                          label: '备注（选填）',
+                          child: TextField(
+                            key: const Key('purchase-remark-field'),
+                            controller: _remarkController,
+                            minLines: 2,
+                            maxLines: 4,
+                            maxLength: 200,
+                            onChanged: form.setRemark,
+                            decoration: const InputDecoration(hintText: '补充说明'),
                           ),
                         ),
                       ],
@@ -512,23 +516,25 @@ class _PurchaseCreatePageState extends ConsumerState<PurchaseCreatePage> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  TextField(
-                    controller: name,
-                    decoration: const InputDecoration(labelText: '物资名称'),
+                  PurchaseLabeledField(
+                    label: '物资名称',
+                    child: TextField(controller: name),
                   ),
-                  TextField(
-                    controller: specification,
-                    decoration: const InputDecoration(labelText: '规格型号（选填）'),
+                  PurchaseLabeledField(
+                    label: '规格型号（选填）',
+                    child: TextField(controller: specification),
                   ),
-                  TextField(
-                    controller: unit,
-                    decoration: const InputDecoration(labelText: '单位'),
+                  PurchaseLabeledField(
+                    label: '单位',
+                    child: TextField(controller: unit),
                   ),
-                  TextField(
-                    controller: quantity,
-                    decoration: const InputDecoration(labelText: '申报数量'),
-                    keyboardType: const TextInputType.numberWithOptions(
-                      decimal: true,
+                  PurchaseLabeledField(
+                    label: '申报数量',
+                    child: TextField(
+                      controller: quantity,
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
                     ),
                   ),
                 ],

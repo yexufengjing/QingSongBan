@@ -98,9 +98,29 @@ class _EmployeeAttachmentsPageState
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
-                      '附件分类',
-                      style: Theme.of(context).textTheme.titleMedium,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            '附件分类',
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                        ),
+                        const Flexible(
+                          child: Text(
+                            '显示已删除附件',
+                            style: TextStyle(fontSize: 12),
+                          ),
+                        ),
+                        Semantics(
+                          label: '显示已删除附件',
+                          child: Switch(
+                            value: _showDeleted,
+                            onChanged: (value) =>
+                                setState(() => _showDeleted = value),
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 12),
                     Wrap(
@@ -110,23 +130,30 @@ class _EmployeeAttachmentsPageState
                         ChoiceChip(
                           label: const Text('全部'),
                           selected: _category == null,
+                          selectedColor: AppColors.primary,
+                          showCheckmark: false,
+                          labelStyle: TextStyle(
+                            color: _category == null
+                                ? Colors.white
+                                : AppColors.ink,
+                          ),
                           onSelected: (_) => setState(() => _category = null),
                         ),
                         for (final value in AttachmentOptions.categories)
                           ChoiceChip(
                             label: Text(AttachmentOptions.categoryLabel(value)),
                             selected: _category == value,
+                            selectedColor: AppColors.primary,
+                            showCheckmark: false,
+                            labelStyle: TextStyle(
+                              color: _category == value
+                                  ? Colors.white
+                                  : AppColors.ink,
+                            ),
                             onSelected: (_) =>
                                 setState(() => _category = value),
                           ),
                       ],
-                    ),
-                    SwitchListTile(
-                      contentPadding: EdgeInsets.zero,
-                      title: const Text('显示已删除附件'),
-                      value: _showDeleted,
-                      onChanged: (value) =>
-                          setState(() => _showDeleted = value),
                     ),
                   ],
                 ),

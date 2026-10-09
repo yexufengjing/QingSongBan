@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:qingsongban/features/purchase/presentation/widgets/purchase_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qingsongban/app/router/app_router.dart' show appRouter;
@@ -132,12 +133,12 @@ void main() {
     await tester.pumpAndSettle();
     await _captureIfEnabled(tester, '03_manual_item_dialog');
     expect(find.widgetWithText(AlertDialog, '手动新增物资'), findsOneWidget);
-    expect(find.widgetWithText(TextField, '物资名称'), findsOneWidget);
-    expect(find.widgetWithText(TextField, '规格型号（选填）'), findsOneWidget);
-    expect(find.widgetWithText(TextField, '单位'), findsOneWidget);
-    expect(find.widgetWithText(TextField, '申报数量'), findsOneWidget);
-    await tester.enterText(find.widgetWithText(TextField, '物资名称'), '中文演示手套');
-    await tester.enterText(find.widgetWithText(TextField, '单位'), '双');
+    expect(_purchaseTextField('物资名称'), findsOneWidget);
+    expect(_purchaseTextField('规格型号（选填）'), findsOneWidget);
+    expect(_purchaseTextField('单位'), findsOneWidget);
+    expect(_purchaseTextField('申报数量'), findsOneWidget);
+    await tester.enterText(_purchaseTextField('物资名称'), '中文演示手套');
+    await tester.enterText(_purchaseTextField('单位'), '双');
     await tester.tap(find.widgetWithText(FilledButton, '添加'));
     await tester.pumpAndSettle();
     expect(find.text('中文演示手套'), findsOneWidget);
@@ -171,18 +172,15 @@ void main() {
     await _captureIfEnabled(tester, '04_pending_apply_oa_sheet');
     expect(find.widgetWithText(BottomSheet, '确认已完成 OA 申报'), findsOneWidget);
     expect(find.widgetWithText(BottomSheet, 'OA申报日期'), findsOneWidget);
-    expect(find.widgetWithText(TextField, 'OA流程编号（可选）'), findsOneWidget);
-    expect(find.widgetWithText(TextField, 'OA流程标题（可选）'), findsOneWidget);
-    expect(find.widgetWithText(TextField, 'OA流程链接（可选）'), findsOneWidget);
+    expect(_purchaseTextField('OA流程编号（可选）'), findsOneWidget);
+    expect(_purchaseTextField('OA流程标题（可选）'), findsOneWidget);
+    expect(_purchaseTextField('OA流程链接（可选）'), findsOneWidget);
     await tester.tap(find.text('OA申报日期'));
     await tester.pumpAndSettle();
     await _captureIfEnabled(tester, '05_oa_date_picker');
     await tester.tap(find.text('取消').last);
     await tester.pumpAndSettle();
-    await tester.enterText(
-      find.widgetWithText(TextField, 'OA流程编号（可选）'),
-      '演示OA-测试-01',
-    );
+    await tester.enterText(_purchaseTextField('OA流程编号（可选）'), '演示OA-测试-01');
     await tester.tap(find.widgetWithText(FilledButton, '确认'));
     await tester.pumpAndSettle();
     expect(
@@ -226,7 +224,10 @@ void main() {
     await tester.pumpAndSettle();
     await _captureIfEnabled(tester, '07_tracking_people_menu');
     expect(find.widgetWithText(PopupMenuItem<String>, '所有执行人'), findsOneWidget);
-    expect(find.widgetWithText(PopupMenuItem<String>, '演示采购员甲'), findsOneWidget);
+    expect(
+      find.widgetWithText(PopupMenuItem<String>, '演示采购员甲'),
+      findsOneWidget,
+    );
     await tester.tap(find.widgetWithText(PopupMenuItem<String>, '所有执行人'));
     await tester.pumpAndSettle();
     final assignButton = find.byKey(Key('purchase-assign-${applied.id}'));
@@ -239,13 +240,10 @@ void main() {
     await tester.pumpAndSettle();
     await _captureIfEnabled(tester, '08_assign_sheet');
     expect(find.widgetWithText(BottomSheet, '填写采购执行信息'), findsOneWidget);
-    expect(find.widgetWithText(TextField, '采购分部（选填）'), findsOneWidget);
-    expect(find.widgetWithText(TextField, '采购执行人（选填）'), findsOneWidget);
-    await tester.enterText(find.widgetWithText(TextField, '采购分部（选填）'), '演示采购部');
-    await tester.enterText(
-      find.widgetWithText(TextField, '采购执行人（选填）'),
-      '演示执行人',
-    );
+    expect(_purchaseTextField('采购分部（选填）'), findsOneWidget);
+    expect(_purchaseTextField('采购执行人（选填）'), findsOneWidget);
+    await tester.enterText(_purchaseTextField('采购分部（选填）'), '演示采购部');
+    await tester.enterText(_purchaseTextField('采购执行人（选填）'), '演示执行人');
     await tester.tap(find.text('分配日期'));
     await tester.pumpAndSettle();
     await _captureIfEnabled(tester, '09_assign_date_picker');
@@ -262,9 +260,7 @@ void main() {
     final markReceiveButton = find.byKey(
       Key('purchase-mark-receive-${purchasing.id}'),
     );
-    final trackingList = _mainListScrollable(
-      find.byType(PurchaseTrackingPage),
-    );
+    final trackingList = _mainListScrollable(find.byType(PurchaseTrackingPage));
     final trackingListState = tester.state<ScrollableState>(trackingList);
     trackingListState.position.jumpTo(
       trackingListState.position.minScrollExtent,
@@ -280,13 +276,13 @@ void main() {
     await _captureIfEnabled(tester, '10_arrival_notice_sheet');
     expect(find.widgetWithText(BottomSheet, '收到物资入厂通知'), findsOneWidget);
     expect(find.widgetWithText(BottomSheet, '通知日期'), findsOneWidget);
-    expect(find.widgetWithText(TextField, '领取地点（选填）'), findsOneWidget);
+    expect(_purchaseTextField('领取地点（选填）'), findsOneWidget);
     await tester.tap(find.text('通知日期'));
     await tester.pumpAndSettle();
     await _captureIfEnabled(tester, '11_arrival_date_picker');
     await tester.tap(find.text('取消').last);
     await tester.pumpAndSettle();
-    await tester.enterText(find.widgetWithText(TextField, '领取地点（选填）'), '测试收货区');
+    await tester.enterText(_purchaseTextField('领取地点（选填）'), '测试收货区');
     await _tapSheet(tester, '设为待领取');
     expect(
       (await _request(database, purchasing.id)).status,
@@ -344,10 +340,11 @@ void main() {
       return find.descendant(
         of: metadataSheet,
         matching: textFieldLabels.contains(label)
-            ? find.widgetWithText(TextField, label)
+            ? _purchaseTextField(label)
             : find.text(label),
       );
     }
+
     final requestDateField = metadataField('创建日期');
     await _scrollSheetUntilVisible(tester, requestDateField);
     await tester.tap(requestDateField);
@@ -570,7 +567,10 @@ void main() {
     await tester.pumpAndSettle();
     await _captureIfEnabled(tester, '20_history_people_menu');
     expect(find.widgetWithText(PopupMenuItem<String>, '所有执行人'), findsOneWidget);
-    expect(find.widgetWithText(PopupMenuItem<String>, '演示采购员丙'), findsOneWidget);
+    expect(
+      find.widgetWithText(PopupMenuItem<String>, '演示采购员丙'),
+      findsOneWidget,
+    );
     await tester.tap(find.widgetWithText(PopupMenuItem<String>, '所有执行人'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('状态筛选'));
@@ -599,7 +599,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('purchase-repeat-request')));
     await tester.pumpAndSettle();
-    expect(find.widgetWithText(TextField, '采购事项名称'), findsOneWidget);
+    expect(_purchaseTextField('采购事项名称'), findsOneWidget);
     expect(tester.takeException(), isNull);
     await cleanup();
   });
@@ -666,10 +666,7 @@ void main() {
 
     router.push('/purchase/stock-in/$newRequestId');
     await tester.pumpAndSettle();
-    final newMaterialOption = find.widgetWithText(
-      ChoiceChip,
-      '新建库存物资',
-    );
+    final newMaterialOption = find.widgetWithText(ChoiceChip, '新建库存物资');
     await _ensureVisibleAndHitTestable(
       tester,
       newMaterialOption,
@@ -682,7 +679,7 @@ void main() {
       '1',
     );
     await tester.enterText(
-      find.widgetWithText(TextField, '新库存物资编号（选填，自动生成）'),
+      _purchaseTextField('新库存物资编号（选填，自动生成）'),
       'TEST-NEW-PURCHASE-ITEM',
     );
     await _captureIfEnabled(tester, '26_stockin_new_branch');
@@ -737,15 +734,15 @@ void main() {
     tester.view.viewInsets = const FakeViewPadding(bottom: 260);
     await tester.pumpAndSettle();
     await tester.enterText(
-      find.widgetWithText(TextField, '物资名称'),
+      _purchaseTextField('物资名称'),
       '中文长文本演示物资名称用于验证窄屏输入弹窗的自动换行与键盘遮挡行为',
     );
     await tester.enterText(
-      find.widgetWithText(TextField, '规格型号（选填）'),
+      _purchaseTextField('规格型号（选填）'),
       '中文长规格型号：加厚耐磨复合材料、适用于多种作业环境的标准可替换组件',
     );
-    await tester.enterText(find.widgetWithText(TextField, '单位'), '件');
-    await tester.enterText(find.widgetWithText(TextField, '申报数量'), '12');
+    await tester.enterText(_purchaseTextField('单位'), '件');
+    await tester.enterText(_purchaseTextField('申报数量'), '12');
     await _captureIfEnabled(
       tester,
       '27_narrow_large_text_keyboard_long_content',
@@ -771,16 +768,13 @@ void main() {
     final metadataSheet = find.byType(BottomSheet).last;
     final remarkField = find.descendant(
       of: metadataSheet,
-      matching: find.widgetWithText(TextField, '备注'),
+      matching: _purchaseTextField('备注'),
     );
     await _scrollSheetUntilVisible(
       tester,
       remarkField,
       scrollable: find
-          .descendant(
-            of: metadataSheet,
-            matching: find.byType(Scrollable),
-          )
+          .descendant(of: metadataSheet, matching: find.byType(Scrollable))
           .first,
     );
     await tester.enterText(
@@ -960,6 +954,7 @@ Future<Future<void> Function()> _mount(
     tester.view.resetPhysicalSize();
     tester.view.resetDevicePixelRatio();
   }
+
   addTearDown(cleanup);
   tester.view.devicePixelRatio = 1;
   tester.view.physicalSize = Size(width, height);
@@ -1047,6 +1042,7 @@ Future<void> Function() _closeDatabaseOnExit(
     closed = true;
     await tester.runAsync(database.close);
   }
+
   addTearDown(closeDatabase);
   return closeDatabase;
 }
@@ -1107,11 +1103,7 @@ Future<void> _scrollSheetUntilVisible(
   state.position.jumpTo(state.position.minScrollExtent);
   await tester.pumpAndSettle();
   if (finder.evaluate().isEmpty) {
-    await tester.scrollUntilVisible(
-      finder,
-      220,
-      scrollable: targetScrollable,
-    );
+    await tester.scrollUntilVisible(finder, 220, scrollable: targetScrollable);
   }
   await Scrollable.ensureVisible(tester.element(finder), alignment: 0.5);
   await tester.pumpAndSettle();
@@ -1204,3 +1196,11 @@ Future<int> _createPendingApplyRequest(AppDatabase database) async {
   );
   return id;
 }
+
+// Labels are now outside their inputs; keep driving the same business fields.
+Finder _purchaseTextField(String label) => find.descendant(
+  of: find.byWidgetPredicate(
+    (widget) => widget is PurchaseLabeledField && widget.label == label,
+  ),
+  matching: find.byType(TextField),
+);

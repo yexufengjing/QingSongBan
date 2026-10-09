@@ -377,13 +377,17 @@ class _AttachmentCard extends StatelessWidget {
     color: attachment.isDeleted ? Colors.grey.shade100 : null,
     child: ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      leading: CircleAvatar(
-        radius: 24,
-        backgroundColor: attachment.isDeleted
-            ? AppColors.background
-            : VehicleAttachmentOptions.isImage(attachment.extension)
-            ? AppColors.lightGreen
-            : AppColors.lightBlue,
+      leading: Container(
+        width: 48,
+        height: 48,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: attachment.isDeleted
+              ? AppColors.background
+              : VehicleAttachmentOptions.isImage(attachment.extension)
+              ? AppColors.lightGreen
+              : AppColors.lightBlue,
+        ),
         child: Icon(
           VehicleAttachmentOptions.isImage(attachment.extension)
               ? Icons.image_outlined
@@ -397,8 +401,12 @@ class _AttachmentCard extends StatelessWidget {
       ),
       title: Text(
         attachment.originalFileName,
-        maxLines: 1,
+        maxLines: 2,
         overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+          fontWeight: FontWeight.w600,
+          color: attachment.isDeleted ? AppColors.helper : AppColors.ink,
+        ),
       ),
       subtitle: Text(
         '${_vehicleAttachmentCategoryLabel(attachment.category)}${attachment.isDeleted ? ' · 已删除' : ''}',
