@@ -282,7 +282,7 @@ class _IssueCard extends ConsumerWidget {
                     _dateLabel(issue.issueDate),
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 8),
                   const Icon(
                     Icons.person_outline,
                     color: AppColors.primary,

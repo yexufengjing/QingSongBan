@@ -643,6 +643,17 @@ class _NullInventoryDetailService implements InventoryService {
   Future<InventoryStocktake?> getStocktake(int id) async => null;
 
   @override
+  Future<List<InventoryReceiptItem>> getReceiptItems(int receiptId) async => [];
+
+  @override
+  Future<List<InventoryIssueItem>> getIssueItems(int issueId) async => [];
+
+  @override
+  Future<List<InventoryStocktakeItem>> getStocktakeItems(
+    int stocktakeId,
+  ) async => [];
+
+  @override
   Future<List<InventoryCategory>> getCategories() async => [];
 
   @override

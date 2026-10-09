@@ -805,6 +805,10 @@ void main() {
               );
               expect(preset.value, isTrue);
             }
+            await tester.tap(find.text('完成').last);
+            await _settle(tester);
+            await tester.tap(find.byKey(const Key('reminder-schedule-done')));
+            await _settle(tester);
           }
           if (route.$1 == 'reports') {
             for (final tab in ['车辆', '库存', '工资']) {
