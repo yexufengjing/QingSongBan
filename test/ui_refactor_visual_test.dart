@@ -2,7 +2,12 @@ import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:drift/drift.dart' show Value;
-import 'package:flutter/cupertino.dart' show CupertinoPicker;
+import 'package:flutter/cupertino.dart'
+    show
+        CupertinoPicker,
+        CupertinoTextThemeData,
+        CupertinoTheme,
+        CupertinoThemeData;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -36,6 +41,29 @@ const _captureDirectory = String.fromEnvironment(
 const _boundary = Key('ui-refactor-capture');
 String? _font;
 
+Directory _findMaterialFontsDirectory() {
+  var current = File(Platform.resolvedExecutable).absolute.parent;
+  final suffixes = [
+    ['bin', 'cache', 'artifacts', 'material_fonts'],
+    ['cache', 'artifacts', 'material_fonts'],
+    ['artifacts', 'material_fonts'],
+  ];
+  while (true) {
+    for (final suffix in suffixes) {
+      final candidate = Directory(
+        [current.path, ...suffix].join(Platform.pathSeparator),
+      );
+      if (candidate.existsSync()) return candidate;
+    }
+    final parent = current.parent;
+    if (parent.path == current.path) break;
+    current = parent;
+  }
+  throw StateError(
+    'Could not locate Flutter material_fonts from ${Platform.resolvedExecutable}',
+  );
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   setUpAll(() async {
@@ -52,16 +80,28 @@ void main() {
         );
       await fallback.load();
       _font = 'ReferenceChinese';
+    } else if (_capture) {
+      throw StateError(
+        'Reference Chinese font was not found at ${chinese.path}',
+      );
     }
-    final icons = File(
-      r'D:\Flutter\bin\cache\artifacts\material_fonts\MaterialIcons-Regular.otf',
-    );
-    if (icons.existsSync()) {
-      final loader = FontLoader(
-        'MaterialIcons',
-      )..addFont(Future.value(ByteData.sublistView(await icons.readAsBytes())));
-      await loader.load();
+    final iconFonts = _findMaterialFontsDirectory()
+        .listSync()
+        .whereType<File>()
+        .where(
+          (file) =>
+              file.path.split(Platform.pathSeparator).last.toLowerCase() ==
+              'materialicons-regular.otf',
+        )
+        .toList();
+    if (iconFonts.isEmpty) {
+      throw StateError('Flutter MaterialIcons-Regular.otf was not found');
     }
+    final loader = FontLoader('MaterialIcons')
+      ..addFont(
+        Future.value(ByteData.sublistView(await iconFonts.first.readAsBytes())),
+      );
+    await loader.load();
   });
 
   // GT7 panel ratio at a simulated 480dpi; actual device density is not yet measured.
@@ -245,11 +285,25 @@ void main() {
                 locale: const Locale('zh', 'CN'),
                 supportedLocales: const [Locale('zh', 'CN')],
                 localizationsDelegates: GlobalMaterialLocalizations.delegates,
-                builder: (context, child) => MediaQuery(
-                  data: MediaQuery.of(context)
-                      .copyWith(textScaler: TextScaler.linear(size.$2)),
-                  child: DesignCanvas(child: child!),
-                ),
+                builder: (context, child) {
+                  final pickerStyle = CupertinoThemeData()
+                      .textTheme
+                      .pickerTextStyle
+                      .copyWith(fontFamily: _font);
+                  return MediaQuery(
+                    data: MediaQuery.of(context)
+                        .copyWith(textScaler: TextScaler.linear(size.$2)),
+                    child: CupertinoTheme(
+                      data: CupertinoThemeData(
+                        primaryColor: theme.colorScheme.primary,
+                        textTheme: CupertinoTextThemeData(
+                          pickerTextStyle: pickerStyle,
+                        ),
+                      ),
+                      child: DesignCanvas(child: child!),
+                    ),
+                  );
+                },
                 routerConfig: appRouter,
               ),
             ),
@@ -681,6 +735,17 @@ void main() {
             await openReminderSetting('reminder-schedule-repeat');
             await captureReminderSetting('repeat_presets');
             await openReminderSetting('reminder-repeat-custom');
+            final selectedWeekday = DateTime.now().weekday;
+            for (var day = 1; day <= 7; day++) {
+              final shouldSelect =
+                  day == DateTime.monday || day == DateTime.wednesday;
+              if ((day == selectedWeekday) != shouldSelect) {
+                await tester.tap(find.text('周${'一二三四五六日'[day - 1]}'));
+              }
+            }
+            await _settle(tester);
+            expect(find.text('每1周'), findsOneWidget);
+            expect(find.text('每周周一、周三'), findsOneWidget);
             await captureReminderSetting('repeat_weekly');
             await openReminderSetting('reminder-repeat-frequency');
             await captureReminderSetting('frequency_picker');
@@ -715,20 +780,31 @@ void main() {
             await tester.tap(find.text('完成').last);
             await _settle(tester);
             await openReminderSetting('reminder-schedule-alerts');
+            expect(find.text('提前提醒'), findsOneWidget);
+            expect(find.byType(CheckboxListTile), findsNWidgets(9));
             await captureReminderSetting('alerts');
             await openReminderSetting('reminder-alert-custom');
             await captureReminderSetting('custom_alert_picker');
             await tester.tap(find.text('确定').last);
             await _settle(tester);
-            expect(find.text('1 分钟前'), findsOneWidget);
+            expect(find.text('1分钟前'), findsOneWidget);
             await captureReminderSetting('custom_alert_selected');
             await tester.tap(find.text('完成').last);
             await _settle(tester);
+            expect(find.text('已设置 2 个提醒'), findsOneWidget);
             await tester.tap(find.byKey(const Key('reminder-schedule-done')));
             await _settle(tester);
             expect(find.textContaining('每月'), findsWidgets);
-            expect(find.textContaining('1 分钟前'), findsWidgets);
+            expect(find.textContaining('已设置 2 个提醒'), findsOneWidget);
             await captureReminderSetting('configured_form');
+            await openReminderSetting('reminder-custom-time');
+            await openReminderSetting('reminder-schedule-alerts');
+            for (final minutes in [0, 1]) {
+              final preset = tester.widget<CheckboxListTile>(
+                find.byKey(Key('reminder-alert-$minutes')),
+              );
+              expect(preset.value, isTrue);
+            }
           }
           if (route.$1 == 'reports') {
             for (final tab in ['车辆', '库存', '工资']) {

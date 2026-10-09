@@ -34,22 +34,11 @@ class _InventoryReceiptDetailPageState
   }
 
   Future<void> _delete() async {
-    final confirmed = await showDialog<bool>(
+    final confirmed = await showInventoryConfirmation(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('撤销这笔入库？'),
-        content: const Text('库存将按入库明细反向调整，并生成对应流水。'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('取消'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text('撤销入库'),
-          ),
-        ],
-      ),
+      title: '撤销这笔入库？',
+      message: '库存将按入库明细反向调整，并生成对应流水。',
+      confirmLabel: '撤销入库',
     );
     if (confirmed != true || !mounted) return;
     setState(() => _deleting = true);
@@ -95,7 +84,9 @@ class _InventoryReceiptDetailPageState
         if (snapshot.hasError) {
           return InventoryErrorState(onRetry: () => setState(_load));
         }
-        if (!snapshot.hasData) return const InventoryLoadingState();
+        if (snapshot.connectionState != ConnectionState.done) {
+          return const InventoryLoadingState();
+        }
         final receipt = snapshot.data;
         if (receipt == null) return const InventoryEmptyState(title: '入库单不存在');
         return FutureBuilder<List<InventoryReceiptItem>>(

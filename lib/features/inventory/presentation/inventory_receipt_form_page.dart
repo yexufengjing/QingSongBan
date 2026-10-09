@@ -298,21 +298,10 @@ class _ReceiptLineEditorState extends State<_ReceiptLineEditor> {
             Row(
               children: [
                 Expanded(
-                  child: DropdownButtonFormField<int>(
-                    isExpanded: true,
+                  child: InventoryMaterialPickerField(
                     key: Key('receipt-material-${widget.key}'),
-                    initialValue: widget.state.materialId,
-                    decoration: const InputDecoration(labelText: '物资'),
-                    items: [
-                      for (final material in widget.materials)
-                        DropdownMenuItem(
-                          value: material.id,
-                          child: Text(
-                            material.materialName,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                    ],
+                    materials: widget.materials,
+                    selectedId: widget.state.materialId,
                     onChanged: (value) =>
                         setState(() => widget.state.materialId = value),
                   ),

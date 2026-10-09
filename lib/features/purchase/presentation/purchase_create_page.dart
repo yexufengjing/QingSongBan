@@ -511,6 +511,10 @@ class _PurchaseCreatePageState extends ConsumerState<PurchaseCreatePage> {
         resources: [name, specification, unit, quantity],
         child: PurchasePageTheme(
           child: AlertDialog(
+            insetPadding: const EdgeInsets.symmetric(
+              horizontal: 52,
+              vertical: 24,
+            ),
             title: const Text('手动新增物资'),
             content: SingleChildScrollView(
               child: Column(

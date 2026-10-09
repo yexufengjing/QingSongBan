@@ -142,37 +142,47 @@ class _ReceiveCard extends ConsumerWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const PurchaseMaterialIcon(size: 56),
+                const PurchaseMaterialIcon(size: 48),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const PurchaseStatusChip(
-                        status: PurchaseStatus.pendingReceive,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              request.items.isEmpty
+                                  ? request.title
+                                  : request.items.first.itemName,
+                              style: Theme.of(context).textTheme.titleLarge,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          const SizedBox(width: 6),
+                          const PurchaseStatusChip(
+                            status: PurchaseStatus.pendingReceive,
+                          ),
+                          const Icon(Icons.chevron_right),
+                        ],
                       ),
-                      const SizedBox(height: 3),
-                      if (request.items.isEmpty)
-                        Text(
-                          request.title,
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
                       const SizedBox(height: 5),
-                      for (final item in request.items)
-                        _ItemReceiveInfo(item: item),
-                      const SizedBox(height: 4),
                       Text(
                         '收到通知：${purchaseShortDateLabel(request.arrivalNoticeDate)}',
                       ),
                       Text(
                         '领取地点：${request.receiveLocation?.isNotEmpty == true ? request.receiveLocation : '未填写'}',
                       ),
+                      const SizedBox(height: 5),
+                      for (final (index, item) in request.items.indexed)
+                        _ItemReceiveInfo(item: item, showItemName: index > 0),
                       const SizedBox(height: 4),
                       PurchaseReminderInfo(requestId: request.id),
                     ],
                   ),
                 ),
-                const Icon(Icons.chevron_right),
               ],
             ),
           ),
@@ -217,8 +227,9 @@ class _ReceiveCard extends ConsumerWidget {
 }
 
 class _ItemReceiveInfo extends StatelessWidget {
-  const _ItemReceiveInfo({required this.item});
+  const _ItemReceiveInfo({required this.item, this.showItemName = true});
   final PurchaseRequestItemView item;
+  final bool showItemName;
 
   @override
   Widget build(BuildContext context) {
@@ -230,13 +241,14 @@ class _ItemReceiveInfo extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            item.itemName,
-            style: Theme.of(context).textTheme.titleSmall
-                ?.copyWith(fontWeight: FontWeight.w700),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
+          if (showItemName)
+            Text(
+              item.itemName,
+              style: Theme.of(context).textTheme.titleSmall
+                  ?.copyWith(fontWeight: FontWeight.w700),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
           Text('型号：${item.specification ?? '无规格'} · 单位：${item.unit}'),
           Wrap(
             spacing: 10,
@@ -259,20 +271,69 @@ class _ItemReceiveInfo extends StatelessWidget {
             const SizedBox(height: 5),
             Row(
               children: [
+                Text(
+                  '入库进度',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: const Color(0xFF526B91),
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const Spacer(),
+                Text(
+                  '${(ratio * 100).round()}%',
+                  style: const TextStyle(
+                    color: Color(0xFF1677FF),
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 5),
+            Row(
+              children: [
                 Expanded(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
-                    child: LinearProgressIndicator(value: ratio, minHeight: 7),
+                    child: LinearProgressIndicator(value: ratio, minHeight: 9),
                   ),
                 ),
-                const SizedBox(width: 8),
-                Text('${(ratio * 100).round()}%'),
               ],
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 6),
             Text(
-              '部分入库，仍有${purchaseQuantityLabel(item.remainingQuantity)}${item.unit}待领取',
-              style: const TextStyle(color: Color(0xFF00A86B)),
+              '已入 ${purchaseQuantityLabel(item.receivedQuantity)} ${item.unit} / '
+              '计划 ${purchaseQuantityLabel(item.requestQuantity)} ${item.unit}',
+              style: Theme.of(context).textTheme.bodyMedium
+                  ?.copyWith(color: const Color(0xFF526B91)),
+            ),
+            const SizedBox(height: 9),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
+              decoration: BoxDecoration(
+                color: const Color(0xFFFFF3E8),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.error_outline,
+                    size: 20,
+                    color: Color(0xFFE87812),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      '部分入库，仍有${purchaseQuantityLabel(item.remainingQuantity)} '
+                      '${item.unit}待领取',
+                      style: const TextStyle(
+                        color: Color(0xFFB95B00),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ],

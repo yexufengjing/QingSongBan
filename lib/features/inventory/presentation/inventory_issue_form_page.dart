@@ -395,20 +395,9 @@ class _IssueLineEditorState extends State<_IssueLineEditor> {
             Row(
               children: [
                 Expanded(
-                  child: DropdownButtonFormField<int>(
-                    isExpanded: true,
-                    initialValue: widget.state.materialId,
-                    decoration: const InputDecoration(labelText: '物资'),
-                    items: [
-                      for (final material in widget.materials)
-                        DropdownMenuItem(
-                          value: material.id,
-                          child: Text(
-                            material.materialName,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                    ],
+                  child: InventoryMaterialPickerField(
+                    materials: widget.materials,
+                    selectedId: widget.state.materialId,
                     onChanged: (value) =>
                         setState(() => widget.state.materialId = value),
                   ),

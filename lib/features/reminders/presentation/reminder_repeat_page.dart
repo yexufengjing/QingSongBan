@@ -29,7 +29,7 @@ class ReminderRepeatPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('重复')),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 12, 20, 28),
+        padding: const EdgeInsets.fromLTRB(16, 12, 16, 28),
         children: [
           Card(
             child: Column(
@@ -138,6 +138,9 @@ class _CustomRepeatPageState extends State<CustomRepeatPage> {
 
   @override
   Widget build(BuildContext context) {
+    final compactWeekdayGrid =
+        MediaQuery.sizeOf(context).width <= 320 &&
+        MediaQuery.textScalerOf(context).scale(14) > 14;
     return Scaffold(
       appBar: AppBar(
         leading: TextButton(
@@ -145,7 +148,7 @@ class _CustomRepeatPageState extends State<CustomRepeatPage> {
           child: const Text('取消'),
         ),
         leadingWidth: 72,
-        title: const Text('自定义'),
+        title: const Text('自定义重复'),
         centerTitle: true,
         actions: [
           TextButton(
@@ -155,36 +158,59 @@ class _CustomRepeatPageState extends State<CustomRepeatPage> {
         ],
       ),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 12, 20, 28),
+        padding: const EdgeInsets.fromLTRB(16, 12, 16, 28),
         children: [
           Card(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                ListTile(
-                  key: const Key('reminder-repeat-frequency'),
-                  title: const Text('重复频率'),
-                  subtitle: Text(_value.repeatLabel(widget.startDate)),
-                  trailing: const Icon(Icons.unfold_more),
-                  onTap: _pickFrequency,
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        '重复频率',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      const SizedBox(height: 8),
+                      _SelectionRow(
+                        key: const Key('reminder-repeat-frequency'),
+                        value: _frequencyLabel(),
+                        onTap: _pickFrequency,
+                      ),
+                      if (_value.repeatUnit == ReminderRepeatUnit.week) ...[
+                        const SizedBox(height: 8),
+                        Text(
+                          _weekdaySummary(),
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ],
+                    ],
+                  ),
                 ),
                 if (_value.repeatUnit == ReminderRepeatUnit.week) ...[
-                  const Divider(),
+                  const SizedBox(height: 16),
                   Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         const Text('选择提醒星期'),
                         const SizedBox(height: 12),
-                        Wrap(
-                          spacing: 8,
-                          runSpacing: 8,
+                        GridView.count(
+                          crossAxisCount: compactWeekdayGrid ? 3 : 4,
+                          mainAxisExtent: 56,
+                          crossAxisSpacing: 8,
+                          mainAxisSpacing: 8,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
                           children: [
                             for (var day = 1; day <= 7; day++)
-                              FilterChip(
-                                label: Text('周${'一二三四五六日'[day - 1]}'),
+                              _WeekdayButton(
+                                label: '周${'一二三四五六日'[day - 1]}',
                                 selected: _value.weekdays.contains(day),
-                                onSelected: (_) => _toggleWeekday(day),
+                                onTap: () => _toggleWeekday(day),
                               ),
                           ],
                         ),
@@ -240,12 +266,20 @@ class _CustomRepeatPageState extends State<CustomRepeatPage> {
           ),
           const SizedBox(height: 16),
           Card(
-            child: ListTile(
-              key: const Key('reminder-repeat-end'),
-              title: const Text('结束重复'),
-              subtitle: Text(_endLabel()),
-              trailing: const Icon(Icons.unfold_more),
-              onTap: _pickEnd,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text('结束重复', style: Theme.of(context).textTheme.bodyLarge),
+                  const SizedBox(height: 8),
+                  _SelectionRow(
+                    key: const Key('reminder-repeat-end'),
+                    value: _endLabel(),
+                    onTap: _pickEnd,
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -452,6 +486,23 @@ class _CustomRepeatPageState extends State<CustomRepeatPage> {
     }
   }
 
+  String _frequencyLabel() {
+    final unit = switch (_value.repeatUnit) {
+      ReminderRepeatUnit.day => '天',
+      ReminderRepeatUnit.week => '周',
+      ReminderRepeatUnit.month => '月',
+      ReminderRepeatUnit.year => '年',
+      null => '周',
+    };
+    return '每${_value.interval}$unit';
+  }
+
+  String _weekdaySummary() {
+    final days = _value.weekdays.toList()..sort();
+    if (days.isEmpty) return '每周';
+    return '每周${days.map((day) => '周${'一二三四五六日'[day - 1]}').join('、')}';
+  }
+
   void _toggleMonthDay(int day) {
     final values = {..._value.monthDays};
     values.contains(day) ? values.remove(day) : values.add(day);
@@ -468,6 +519,94 @@ class _CustomRepeatPageState extends State<CustomRepeatPage> {
           : '${_value.endDate!.year}年${_value.endDate!.month}月${_value.endDate!.day}日',
     ReminderRepeatEnd.count => '重复 ${_value.endCount ?? 1} 次',
   };
+}
+
+class _SelectionRow extends StatelessWidget {
+  const _SelectionRow({super.key, required this.value, required this.onTap});
+
+  final String value;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(8),
+        child: Container(
+          constraints: const BoxConstraints(minHeight: 56),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          decoration: BoxDecoration(
+            border: Border.all(color: Theme.of(context).colorScheme.outline),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Row(
+            children: [
+              Expanded(child: Text(value)),
+              const Icon(Icons.chevron_right),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _WeekdayButton extends StatelessWidget {
+  const _WeekdayButton({
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme.primary;
+    return Semantics(
+      container: true,
+      button: true,
+      selected: selected,
+      label: label,
+      onTap: onTap,
+      child: ExcludeSemantics(
+        child: Material(
+          color: selected ? color : Theme.of(context).colorScheme.surface,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              color: selected ? color : Theme.of(context).colorScheme.outline,
+            ),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: InkWell(
+            onTap: onTap,
+            borderRadius: BorderRadius.circular(8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (selected) ...[
+                  const Icon(Icons.check, color: Colors.white, size: 18),
+                  const SizedBox(width: 4),
+                ],
+                Text(
+                  label,
+                  style: TextStyle(
+                    color: selected
+                        ? Colors.white
+                        : Theme.of(context).colorScheme.onSurface,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class _SheetHeader extends StatelessWidget {

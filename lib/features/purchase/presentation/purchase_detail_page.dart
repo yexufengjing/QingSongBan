@@ -98,21 +98,27 @@ class PurchaseDetailPage extends ConsumerWidget {
         resources: [oaNo, oaTitle, oaUrl],
         child: _DateTextSheet(
           title: '确认已完成 OA 申报',
+          subtitle: '请填写 OA 申报信息，用于记录本次采购。',
+          headerIcon: Icons.description_outlined,
           dateLabel: 'OA申报日期',
           initialDate: appliedDate,
+          inlineDateLabel: true,
           fields: [
             PurchaseLabeledField(
               label: 'OA流程编号（可选）',
+              inline: true,
               child: TextField(controller: oaNo),
             ),
             const SizedBox(height: 10),
             PurchaseLabeledField(
               label: 'OA流程标题（可选）',
+              inline: true,
               child: TextField(controller: oaTitle),
             ),
             const SizedBox(height: 10),
             PurchaseLabeledField(
               label: 'OA流程链接（可选）',
+              inline: true,
               child: TextField(controller: oaUrl),
             ),
           ],
@@ -951,13 +957,19 @@ class _DateTextSheet extends StatefulWidget {
     required this.initialDate,
     required this.fields,
     required this.onDate,
+    this.subtitle,
+    this.headerIcon,
+    this.inlineDateLabel = false,
     this.actionLabel = '确认',
   });
   final String title;
+  final String? subtitle;
+  final IconData? headerIcon;
   final String dateLabel;
   final DateTime initialDate;
   final List<Widget> fields;
   final ValueChanged<DateTime> onDate;
+  final bool inlineDateLabel;
   final String actionLabel;
 
   @override
@@ -968,51 +980,117 @@ class _DateTextSheetState extends State<_DateTextSheet> {
   late DateTime _date = widget.initialDate;
 
   @override
-  Widget build(BuildContext context) => SafeArea(
-    child: Padding(
-      padding: EdgeInsets.fromLTRB(
-        20,
-        8,
-        20,
-        20 + MediaQuery.viewInsetsOf(context).bottom,
-      ),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(widget.title, style: Theme.of(context).textTheme.titleLarge),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              title: Text(widget.dateLabel),
-              subtitle: Text(purchaseDateLabel(_date)),
-              onTap: () async {
-                final value = await pickPurchaseDate(
-                  context,
-                  initialDate: _date,
-                );
-                if (value != null) {
-                  setState(() {
-                    _date = value;
-                    widget.onDate(value);
-                  });
-                }
-              },
-            ),
-            ...widget.fields,
-            const SizedBox(height: 14),
-            SizedBox(
-              width: double.infinity,
-              child: FilledButton(
-                onPressed: () => Navigator.pop(context, true),
-                child: Text(widget.actionLabel),
-              ),
-            ),
-          ],
+  Widget build(BuildContext context) {
+    Future<void> selectDate() async {
+      final value = await pickPurchaseDate(context, initialDate: _date);
+      if (value != null) {
+        setState(() {
+          _date = value;
+          widget.onDate(value);
+        });
+      }
+    }
+
+    final dateValue = Semantics(
+      button: true,
+      label: '${widget.dateLabel} ${purchaseDateLabel(_date)}',
+      child: InkWell(
+        onTap: selectDate,
+        borderRadius: BorderRadius.circular(10),
+        child: InputDecorator(
+          decoration: const InputDecoration(
+            suffixIcon: Icon(Icons.calendar_month_outlined),
+          ),
+          child: Text(purchaseDateLabel(_date)),
         ),
       ),
-    ),
-  );
+    );
+    final dateControl = widget.inlineDateLabel
+        ? PurchaseLabeledField(
+            label: widget.dateLabel,
+            inline: true,
+            child: dateValue,
+          )
+        : ListTile(
+            contentPadding: EdgeInsets.zero,
+            title: Text(widget.dateLabel),
+            subtitle: Text(purchaseDateLabel(_date)),
+            onTap: selectDate,
+          );
+
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(
+          20,
+          8,
+          20,
+          20 + MediaQuery.viewInsetsOf(context).bottom,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (widget.headerIcon == null)
+                Text(
+                  widget.title,
+                  style: Theme.of(context).textTheme.titleLarge,
+                )
+              else
+                Row(
+                  children: [
+                    Container(
+                      width: 64,
+                      height: 64,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFE5F3FF),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Icon(
+                        widget.headerIcon,
+                        size: 32,
+                        color: const Color(0xFF1677FF),
+                      ),
+                    ),
+                    const SizedBox(width: 14),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.title,
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                          if (widget.subtitle != null) ...[
+                            const SizedBox(height: 4),
+                            Text(
+                              widget.subtitle!,
+                              style: Theme.of(context).textTheme.bodyMedium
+                                  ?.copyWith(color: const Color(0xFF526B91)),
+                            ),
+                          ],
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              const SizedBox(height: 18),
+              dateControl,
+              ...widget.fields,
+              const SizedBox(height: 14),
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton(
+                  onPressed: () => Navigator.pop(context, true),
+                  child: Text(widget.actionLabel),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 String? _nullable(String value) => value.trim().isEmpty ? null : value.trim();

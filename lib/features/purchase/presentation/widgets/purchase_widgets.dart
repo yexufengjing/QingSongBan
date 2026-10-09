@@ -286,27 +286,60 @@ class PurchaseLabeledField extends StatelessWidget {
   const PurchaseLabeledField({
     required this.label,
     required this.child,
+    this.inline = false,
+    this.labelWidth = 132,
     super.key,
   });
 
   final String label;
   final Widget child;
+  final bool inline;
+  final double labelWidth;
 
   @override
-  Widget build(BuildContext context) => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Padding(
-        padding: const EdgeInsets.only(bottom: 6),
-        child: Text(
-          label,
-          style: Theme.of(context).textTheme.bodyMedium
-              ?.copyWith(color: AppColors.ink, fontWeight: FontWeight.w600),
-        ),
-      ),
-      child,
-    ],
-  );
+  Widget build(BuildContext context) {
+    final labelWidget = Text(
+      label,
+      style: Theme.of(context).textTheme.bodyMedium
+          ?.copyWith(color: AppColors.ink, fontWeight: FontWeight.w600),
+    );
+    if (inline) {
+      return LayoutBuilder(
+        builder: (context, constraints) {
+          final stacked =
+              constraints.maxWidth < 340 ||
+              MediaQuery.textScalerOf(context).scale(14) > 17;
+          if (stacked) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 6),
+                  child: labelWidget,
+                ),
+                child,
+              ],
+            );
+          }
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(width: labelWidth, child: labelWidget),
+              const SizedBox(width: 10),
+              Expanded(child: child),
+            ],
+          );
+        },
+      );
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(padding: const EdgeInsets.only(bottom: 6), child: labelWidget),
+        child,
+      ],
+    );
+  }
 }
 
 String purchaseDateLabel(DateTime? date) {

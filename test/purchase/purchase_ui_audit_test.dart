@@ -14,6 +14,7 @@ import 'package:qingsongban/app/theme/app_theme.dart';
 import 'package:qingsongban/core/database/app_database.dart';
 import 'package:qingsongban/core/database/database_provider.dart';
 import 'package:qingsongban/core/database/purchase_demo_data_seeder.dart';
+import 'package:qingsongban/core/widgets/design_canvas.dart';
 import 'package:qingsongban/features/inventory/data/inventory_repository.dart';
 import 'package:qingsongban/features/inventory/domain/inventory_models.dart';
 import 'package:qingsongban/features/purchase/domain/purchase_status.dart';
@@ -31,29 +32,17 @@ import 'package:qingsongban/features/purchase/presentation/purchase_stock_in_pag
 import 'package:qingsongban/features/purchase/presentation/purchase_tracking_page.dart';
 import 'package:qingsongban/features/reminders/presentation/reminder_form_page.dart';
 
+import 'purchase_test_fonts.dart';
+
 const _capturePurchaseUi = bool.fromEnvironment('PURCHASE_CAPTURE_UI');
-const _materialIconsFamily = 'MaterialIcons';
 String? _auditFontFamily;
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   setUpAll(() async {
-    final font = File(r'C:\Windows\Fonts\simhei.ttf');
-    if (font.existsSync()) {
-      final loader = FontLoader('PurchaseAuditChinese')
-        ..addFont(Future.value(ByteData.sublistView(await font.readAsBytes())));
-      await loader.load();
-      _auditFontFamily = 'PurchaseAuditChinese';
-    }
-    final icons = File(
-      r'D:\Flutter\bin\cache\artifacts\material_fonts\MaterialIcons-Regular.otf',
+    _auditFontFamily = await loadPurchaseTestFonts(
+      requiredForCapture: _capturePurchaseUi,
     );
-    if (icons.existsSync()) {
-      final loader = FontLoader(
-        _materialIconsFamily,
-      )..addFont(Future.value(ByteData.sublistView(await icons.readAsBytes())));
-      await loader.load();
-    }
   });
 
   testWidgets('库存选择、手动新增和重复采购弹窗保留真实操作', (tester) async {
@@ -196,6 +185,7 @@ void main() {
     await tester.pumpAndSettle();
     await _captureIfEnabled(tester, '05_detail_oa_sheet');
     expect(find.widgetWithText(BottomSheet, '确认已完成 OA 申报'), findsOneWidget);
+    expect(find.text('请填写 OA 申报信息，用于记录本次采购。'), findsOneWidget);
     await tester.tap(find.widgetWithText(FilledButton, '确认'));
     await tester.pumpAndSettle();
     expect(
@@ -205,6 +195,35 @@ void main() {
 
     router.go('/purchase/tracking?all=1');
     await tester.pumpAndSettle();
+    await _captureIfEnabled(tester, '06_tracking_all_statuses');
+    final pendingApplyFilter = find.byKey(
+      const Key('purchase-status-filter-pending_apply'),
+    );
+    final appliedFilter = find.byKey(
+      const Key('purchase-status-filter-applied'),
+    );
+    final purchasingFilter = find.byKey(
+      const Key('purchase-status-filter-purchasing'),
+    );
+    final pendingReceiveFilter = find.byKey(
+      const Key('purchase-status-filter-pending_receive'),
+    );
+    expect(find.byType(FilterChip), findsNWidgets(4));
+    for (final filter in [
+      pendingApplyFilter,
+      appliedFilter,
+      purchasingFilter,
+      pendingReceiveFilter,
+    ]) {
+      expect(tester.widget<FilterChip>(filter).selected, isTrue);
+    }
+    await tester.tap(pendingApplyFilter);
+    await tester.pumpAndSettle();
+    expect(tester.widget<FilterChip>(pendingApplyFilter).selected, isFalse);
+    expect(tester.widget<FilterChip>(appliedFilter).selected, isTrue);
+    await tester.tap(pendingApplyFilter);
+    await tester.pumpAndSettle();
+
     await tester.tap(find.byTooltip('日期筛选'));
     await tester.pumpAndSettle();
     await _captureIfEnabled(tester, '06_tracking_date_menu');
@@ -442,6 +461,11 @@ void main() {
       '/purchase',
       closeDatabase: closeDatabase,
     );
+    router.push('/purchase/pending-receive');
+    await tester.pumpAndSettle();
+    await _captureIfEnabled(tester, '18_partial_receive_list');
+    expect(find.text('入库进度'), findsOneWidget);
+    expect(find.textContaining('部分入库，仍有'), findsOneWidget);
     router.push('/purchase/stock-in/${partial.id}');
     await tester.pumpAndSettle();
     await tester.ensureVisible(find.text('入库日期'));
@@ -479,7 +503,7 @@ void main() {
     await _tapDialogAction(tester, '确认入库');
     await tester.pumpAndSettle();
     expect((await _items(database, partial.id)).first.receivedQuantity, 11);
-    expect(find.byType(PurchaseHomePage), findsOneWidget);
+    expect(find.byType(PurchasePendingReceivePage), findsOneWidget);
     expect(find.textContaining('入库失败'), findsNothing);
 
     final stoppedItem = (await _items(database, stopped.id)).single;
@@ -522,7 +546,7 @@ void main() {
       await database.select(database.purchaseStockEntries).get(),
       isNotEmpty,
     );
-    expect(find.byType(PurchaseHomePage), findsOneWidget);
+    expect(find.byType(PurchasePendingReceivePage), findsOneWidget);
     expect(find.textContaining('入库失败'), findsNothing);
     expect(tester.takeException(), isNull);
     await cleanup();
@@ -698,6 +722,127 @@ void main() {
     );
     expect(find.byType(PurchaseHomePage), findsOneWidget);
     expect(find.textContaining('入库失败'), findsNothing);
+    expect(tester.takeException(), isNull);
+    await cleanup();
+  });
+
+  testWidgets('320窄屏 OA 日期和三个字段可滚动保存或返回取消', (tester) async {
+    final database = AppDatabase.forTesting();
+    final closeDatabase = _closeDatabaseOnExit(database, tester);
+    final cancelId = await _createPendingApplyRequest(database);
+    final saveId = await _createPendingApplyRequest(database);
+    final router = _router();
+    final cleanup = await _mount(
+      tester,
+      database,
+      router,
+      '/purchase/detail/$cancelId',
+      width: 320,
+      height: 740,
+      devicePixelRatio: 1,
+      textScale: 1.3,
+      closeDatabase: closeDatabase,
+    );
+
+    await tester.tap(find.text('确认已申报'));
+    await tester.pumpAndSettle();
+    final cancelSheet = find.byType(BottomSheet).last;
+    final cancelField = _purchaseTextField('OA流程编号（可选）');
+    await _scrollSheetUntilVisible(
+      tester,
+      cancelField,
+      scrollable: find
+          .descendant(of: cancelSheet, matching: find.byType(Scrollable))
+          .first,
+    );
+    await tester.tap(cancelField);
+    await tester.pump();
+    tester.view.viewInsets = const FakeViewPadding(bottom: 260);
+    await tester.pumpAndSettle();
+    await tester.enterText(cancelField, '返回时不应保存');
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+    expect(find.byType(BottomSheet), findsNothing);
+    expect(
+      (await _request(database, cancelId)).status,
+      PurchaseStatus.pendingApply.storageValue,
+    );
+    expect((await _request(database, cancelId)).oaRequestNo, isNull);
+
+    FocusManager.instance.primaryFocus?.unfocus();
+    tester.view.resetViewInsets();
+    router.go('/purchase/detail/$saveId');
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('确认已申报'));
+    await tester.pumpAndSettle();
+    final sheet = find.byType(BottomSheet).last;
+    final sheetScroll = find
+        .descendant(of: sheet, matching: find.byType(Scrollable))
+        .first;
+    Finder datePickerControl() => find.descendant(
+      of: sheet,
+      matching: find.descendant(
+        of: find.byWidgetPredicate(
+          (widget) =>
+              widget is PurchaseLabeledField && widget.label == 'OA申报日期',
+        ),
+        matching: find.byType(InkWell),
+      ),
+    );
+
+    await _scrollSheetUntilVisible(
+      tester,
+      datePickerControl(),
+      scrollable: sheetScroll,
+    );
+    await tester.tap(datePickerControl());
+    await tester.pumpAndSettle();
+    expect(find.byType(DatePickerDialog), findsOneWidget);
+    await tester.tap(find.text('取消').last);
+    await tester.pumpAndSettle();
+
+    const values = {
+      'OA流程编号（可选）': '窄屏-OA-320',
+      'OA流程标题（可选）': '中文标题：窄屏流程申报',
+      'OA流程链接（可选）': 'https://example.test/oa/320',
+    };
+    for (final entry in values.entries) {
+      final field = _purchaseTextField(entry.key);
+      await _scrollSheetUntilVisible(tester, field, scrollable: sheetScroll);
+      await tester.tap(field);
+      await tester.pump();
+      tester.view.viewInsets = const FakeViewPadding(bottom: 260);
+      await tester.pumpAndSettle();
+      await tester.enterText(field, entry.value);
+    }
+
+    FocusManager.instance.primaryFocus?.unfocus();
+    await tester.pumpAndSettle();
+    await _scrollSheetUntilVisible(
+      tester,
+      datePickerControl(),
+      scrollable: sheetScroll,
+    );
+    await tester.tap(datePickerControl());
+    await tester.pumpAndSettle();
+    expect(find.byType(DatePickerDialog), findsOneWidget);
+    await tester.tap(find.text('取消').last);
+    await tester.pumpAndSettle();
+
+    final confirm = find.descendant(
+      of: sheet,
+      matching: find.widgetWithText(FilledButton, '确认'),
+    );
+    await tester.ensureVisible(confirm);
+    expect(confirm.hitTestable(), findsOneWidget);
+    await tester.tap(confirm);
+    await tester.pumpAndSettle();
+    final saved = await _request(database, saveId);
+    expect(saved.status, PurchaseStatus.applied.storageValue);
+    expect(saved.oaRequestNo, values['OA流程编号（可选）']);
+    expect(saved.oaTitle, values['OA流程标题（可选）']);
+    expect(saved.oaUrl, values['OA流程链接（可选）']);
+    expect(saved.appliedDate, isNotNull);
     expect(tester.takeException(), isNull);
     await cleanup();
   });
@@ -937,8 +1082,9 @@ Future<Future<void> Function()> _mount(
   AppDatabase database,
   GoRouter router,
   String location, {
-  double width = 390,
-  double height = 844,
+  double width = 1280 / 3,
+  double height = 2800 / 3,
+  double devicePixelRatio = 3,
   double textScale = 1,
   required Future<void> Function() closeDatabase,
 }) async {
@@ -956,8 +1102,11 @@ Future<Future<void> Function()> _mount(
   }
 
   addTearDown(cleanup);
-  tester.view.devicePixelRatio = 1;
-  tester.view.physicalSize = Size(width, height);
+  tester.view.devicePixelRatio = devicePixelRatio;
+  tester.view.physicalSize = Size(
+    width * devicePixelRatio,
+    height * devicePixelRatio,
+  );
   await tester.pumpWidget(
     ProviderScope(
       overrides: [appDatabaseProvider.overrideWithValue(database)],
@@ -966,10 +1115,12 @@ Future<Future<void> Function()> _mount(
         child: MaterialApp.router(
           routerConfig: router,
           theme: _acceptanceTheme(),
-          builder: (context, child) => MediaQuery(
-            data: MediaQuery.of(context)
-                .copyWith(textScaler: TextScaler.linear(textScale)),
-            child: child!,
+          builder: (context, child) => DesignCanvas(
+            child: MediaQuery(
+              data: MediaQuery.of(context)
+                  .copyWith(textScaler: TextScaler.linear(textScale)),
+              child: child!,
+            ),
           ),
           locale: const Locale('zh', 'CN'),
           supportedLocales: const [Locale('zh', 'CN')],
@@ -985,27 +1136,7 @@ Future<Future<void> Function()> _mount(
 }
 
 ThemeData _acceptanceTheme() {
-  final base = AppTheme.light;
-  final family = _auditFontFamily;
-  return base.copyWith(
-    textTheme: base.textTheme.apply(fontFamily: family),
-    primaryTextTheme: base.primaryTextTheme.apply(fontFamily: family),
-    appBarTheme: base.appBarTheme.copyWith(
-      titleTextStyle: base.appBarTheme.titleTextStyle?.copyWith(
-        fontFamily: family,
-      ),
-      toolbarTextStyle: base.appBarTheme.toolbarTextStyle?.copyWith(
-        fontFamily: family,
-      ),
-    ),
-    inputDecorationTheme: base.inputDecorationTheme.copyWith(
-      labelStyle: base.inputDecorationTheme.labelStyle?.copyWith(
-        fontFamily: family,
-      ),
-      floatingLabelStyle: base.inputDecorationTheme.floatingLabelStyle
-          ?.copyWith(fontFamily: family),
-    ),
-  );
+  return purchaseAcceptanceTheme(AppTheme.light, _auditFontFamily);
 }
 
 Future<void> _captureIfEnabled(WidgetTester tester, String name) async {
@@ -1015,12 +1146,14 @@ Future<void> _captureIfEnabled(WidgetTester tester, String name) async {
     final boundary = tester.renderObject<RenderRepaintBoundary>(
       find.byKey(const Key('purchase-audit-capture-boundary')),
     );
-    final image = await boundary.toImage(pixelRatio: 1);
+    final image = await boundary.toImage(
+      pixelRatio: tester.view.devicePixelRatio,
+    );
     final data = await image.toByteData(format: ui.ImageByteFormat.png);
     image.dispose();
     if (data == null) return;
     final directory = Directory(
-      '${Directory.current.path}${Platform.pathSeparator}docs${Platform.pathSeparator}acceptance${Platform.pathSeparator}ui-reference-audit${Platform.pathSeparator}purchase-20261002',
+      '${Directory.current.path}${Platform.pathSeparator}docs${Platform.pathSeparator}acceptance${Platform.pathSeparator}ui-refactor-20261009${Platform.pathSeparator}purchase',
     )..createSync(recursive: true);
     final bytes = Uint8List.view(
       data.buffer,

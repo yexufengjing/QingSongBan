@@ -25,36 +25,23 @@ import 'package:qingsongban/features/purchase/presentation/purchase_pending_rece
 import 'package:qingsongban/features/purchase/presentation/purchase_stock_in_page.dart';
 import 'package:qingsongban/features/purchase/presentation/purchase_tracking_page.dart';
 import 'package:qingsongban/features/purchase/presentation/widgets/purchase_widgets.dart';
+import 'package:qingsongban/core/widgets/design_canvas.dart';
+
+import 'purchase_test_fonts.dart';
 
 const _capturePurchasePages = bool.fromEnvironment('PURCHASE_CAPTURE_UI');
 String? _testFontFamily;
-const _materialIconsFontFamily = 'MaterialIcons';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   setUpAll(() async {
-    final font = File(r'C:\Windows\Fonts\simhei.ttf');
-    if (font.existsSync()) {
-      final bytes = await font.readAsBytes();
-      const family = 'PurchaseAcceptanceChinese';
-      final loader = FontLoader(family)
-        ..addFont(Future.value(ByteData.sublistView(bytes)));
-      await loader.load();
-      _testFontFamily = family;
-    }
-    final iconsFont = File(
-      r'D:\Flutter\bin\cache\artifacts\material_fonts\materialicons-regular.otf',
+    _testFontFamily = await loadPurchaseTestFonts(
+      requiredForCapture: _capturePurchasePages,
     );
-    if (iconsFont.existsSync()) {
-      final bytes = await iconsFont.readAsBytes();
-      final loader = FontLoader(_materialIconsFontFamily)
-        ..addFont(Future.value(ByteData.sublistView(bytes)));
-      await loader.load();
-    }
   });
 
   testWidgets(
-    'all nine purchase pages render with in-memory records at phone and tablet sizes',
+    'all nine purchase pages render at two phone sizes and large-text pressure width',
     (tester) async {
       final database = AppDatabase.forTesting();
       final defaultDebugDisableShadows = debugDisableShadows;
@@ -207,7 +194,7 @@ void main() {
         ),
         (
           '04_采购跟踪',
-          () => const PurchaseTrackingPage(),
+          () => const PurchaseTrackingPage(showAll: true),
           find.text('OA申报日期：09月12日'),
         ),
         (
@@ -237,129 +224,171 @@ void main() {
           find.byKey(const Key('purchase-repeat-request')),
         ),
       ];
-      final sizes = [
-        const Size(390, 844),
-        const Size(320, 740),
-        const Size(600, 960),
+      final configurations = [
+        (
+          name: 'phone-1280x2800',
+          physicalSize: const Size(1280, 2800),
+          devicePixelRatio: 3.0,
+          textScale: 1.0,
+          capture: true,
+        ),
+        (
+          name: 'phone-1080x2362',
+          physicalSize: const Size(1080, 2362),
+          devicePixelRatio: 3.0,
+          textScale: 1.0,
+          capture: true,
+        ),
+        (
+          name: 'pressure-320dp-fs1p3',
+          physicalSize: const Size(320, 740),
+          devicePixelRatio: 1.0,
+          textScale: 1.3,
+          capture: false,
+        ),
       ];
       expect(purchaseQuantityLabel(0.25), '0.25');
       expect(purchaseQuantityLabel(0.001), '0.001');
 
-      for (final size in sizes) {
-        tester.view.devicePixelRatio = 1;
-        tester.view.physicalSize = size;
-        for (final scale in [1.0, 1.5]) {
-          for (final (index, entry) in screenshots.indexed) {
-            final capture =
-                _capturePurchasePages && size.width == 390 && scale == 1.0;
-            final previousShadowSetting = debugDisableShadows;
-            if (capture) debugDisableShadows = false;
-            await tester.pumpWidget(
-              ProviderScope(
-                overrides: [appDatabaseProvider.overrideWithValue(database)],
-                child: RepaintBoundary(
-                  key: const Key('purchase-screenshot-boundary'),
-                  child: MaterialApp(
-                    debugShowCheckedModeBanner: false,
-                    builder: (context, child) => MediaQuery(
+      for (final configuration in configurations) {
+        tester.view.devicePixelRatio = configuration.devicePixelRatio;
+        tester.view.physicalSize = configuration.physicalSize;
+        final scale = configuration.textScale;
+        for (final (index, entry) in screenshots.indexed) {
+          final capture = _capturePurchasePages && configuration.capture;
+          final previousShadowSetting = debugDisableShadows;
+          if (capture) debugDisableShadows = false;
+          await tester.pumpWidget(
+            ProviderScope(
+              overrides: [appDatabaseProvider.overrideWithValue(database)],
+              child: RepaintBoundary(
+                key: const Key('purchase-screenshot-boundary'),
+                child: MaterialApp(
+                  debugShowCheckedModeBanner: false,
+                  builder: (context, child) => DesignCanvas(
+                    child: MediaQuery(
                       data: MediaQuery.of(context)
                           .copyWith(textScaler: TextScaler.linear(scale)),
                       child: child!,
                     ),
-                    theme: _acceptanceTheme(),
-                    locale: const Locale('zh', 'CN'),
-                    supportedLocales: const [Locale('zh', 'CN')],
-                    localizationsDelegates:
-                        GlobalMaterialLocalizations.delegates,
-                    home: entry.$2(),
                   ),
+                  theme: _acceptanceTheme(),
+                  locale: const Locale('zh', 'CN'),
+                  supportedLocales: const [Locale('zh', 'CN')],
+                  localizationsDelegates: GlobalMaterialLocalizations.delegates,
+                  home: entry.$2(),
                 ),
               ),
+            ),
+          );
+          await tester.pump();
+          for (
+            var retry = 0;
+            retry < 10 && entry.$3.evaluate().isEmpty;
+            retry++
+          ) {
+            await tester.runAsync(
+              () => Future<void>.delayed(const Duration(milliseconds: 50)),
             );
             await tester.pump();
-            for (
-              var retry = 0;
-              retry < 10 && entry.$3.evaluate().isEmpty;
-              retry++
-            ) {
-              await tester.runAsync(
-                () => Future<void>.delayed(const Duration(milliseconds: 50)),
-              );
-              await tester.pump();
-            }
-            expect(
-              find.byKey(const Key('purchase-screenshot-boundary')),
-              findsOneWidget,
+          }
+          expect(
+            find.byKey(const Key('purchase-screenshot-boundary')),
+            findsOneWidget,
+          );
+          if (index == 3) {
+            final trackingList = find.descendant(
+              of: find.byType(ListView).first,
+              matching: find.byType(Scrollable),
             );
+            final position = tester
+                .state<ScrollableState>(trackingList)
+                .position;
+            for (
+              var scrollAttempt = 0;
+              scrollAttempt < 30 && entry.$3.evaluate().isEmpty;
+              scrollAttempt++
+            ) {
+              await tester.drag(trackingList, const Offset(0, -220));
+              await tester.pumpAndSettle();
+            }
+            expect(entry.$3, findsOneWidget, reason: '采购跟踪应显示已申报记录的真实日期');
+            position.jumpTo(position.minScrollExtent);
+            await tester.pumpAndSettle();
+          }
+          if (index != 3) {
             expect(
               entry.$3,
               findsOneWidget,
-              reason: '${entry.$1}, $size, scale=$scale',
+              reason: '${entry.$1}, ${configuration.name}, scale=$scale',
             );
-            expect(
-              tester.takeException(),
-              isNull,
-              reason: '${entry.$1}, $size, scale=$scale',
-            );
-            await tester.pumpAndSettle();
-            if (size.width == 320 && scale == 1.5 && index == 1) {
-              final quantityField = find.byKey(
-                const Key('purchase-item-quantity-0'),
-              );
-              await tester.scrollUntilVisible(
-                quantityField,
-                220,
-                scrollable: find.byType(Scrollable).first,
-              );
-              await tester.enterText(quantityField, '0.001');
-              await tester.pump();
-              expect(
-                tester.widget<TextField>(quantityField).controller!.text,
-                '0.001',
-              );
-            }
-            if (capture) {
-              try {
-                await tester.pumpAndSettle();
-                await tester.runAsync(() => _capture(tester, entry.$1));
-                final lowerAreas = switch (index) {
-                  1 => <(String, Finder)>[
-                    ('下半区', find.textContaining('采购物资（')),
-                  ],
-                  4 => <(String, Finder)>[
-                    ('采购进度', find.text('采购进度')),
-                    ('物资明细', find.text('物资明细')),
-                  ],
-                  7 => <(String, Finder)>[
-                    (
-                      '下半区',
-                      find.byKey(Key('purchase-history-request-$receiveId')),
-                    ),
-                  ],
-                  8 => <(String, Finder)>[('下半区', find.text('历史采购记录'))],
-                  _ => const <(String, Finder)>[],
-                };
-                for (final (suffix, lowerArea) in lowerAreas) {
-                  await tester.scrollUntilVisible(
-                    lowerArea,
-                    280,
-                    scrollable: find.byType(Scrollable).first,
-                  );
-                  await tester.ensureVisible(lowerArea);
-                  await tester.pumpAndSettle();
-                  await tester.runAsync(
-                    () => _capture(tester, '${entry.$1}_$suffix'),
-                  );
-                }
-              } finally {
-                debugDisableShadows = previousShadowSetting;
-                await tester.pump();
-              }
-            }
-            await tester.pumpWidget(const SizedBox.shrink());
-            await tester.pump();
-            await tester.pumpAndSettle();
           }
+          expect(
+            tester.takeException(),
+            isNull,
+            reason: '${entry.$1}, ${configuration.name}, scale=$scale',
+          );
+          await tester.pumpAndSettle();
+          if (configuration.name == 'pressure-320dp-fs1p3' && index == 1) {
+            final quantityField = find.byKey(
+              const Key('purchase-item-quantity-0'),
+            );
+            await tester.scrollUntilVisible(
+              quantityField,
+              220,
+              scrollable: find.byType(Scrollable).first,
+            );
+            await tester.enterText(quantityField, '0.001');
+            await tester.pump();
+            expect(
+              tester.widget<TextField>(quantityField).controller!.text,
+              '0.001',
+            );
+          }
+          if (capture) {
+            try {
+              await tester.pumpAndSettle();
+              await tester.runAsync(
+                () => _capture(tester, '${configuration.name}_${entry.$1}'),
+              );
+              final lowerAreas = switch (index) {
+                1 => <(String, Finder)>[('下半区', find.textContaining('采购物资（'))],
+                4 => <(String, Finder)>[
+                  ('采购进度', find.text('采购进度')),
+                  ('物资明细', find.text('物资明细')),
+                ],
+                7 => <(String, Finder)>[
+                  (
+                    '下半区',
+                    find.byKey(Key('purchase-history-request-$receiveId')),
+                  ),
+                ],
+                8 => <(String, Finder)>[('下半区', find.text('历史采购记录'))],
+                _ => const <(String, Finder)>[],
+              };
+              for (final (suffix, lowerArea) in lowerAreas) {
+                await tester.scrollUntilVisible(
+                  lowerArea,
+                  280,
+                  scrollable: find.byType(Scrollable).first,
+                );
+                await tester.ensureVisible(lowerArea);
+                await tester.pumpAndSettle();
+                await tester.runAsync(
+                  () => _capture(
+                    tester,
+                    '${configuration.name}_${entry.$1}_$suffix',
+                  ),
+                );
+              }
+            } finally {
+              debugDisableShadows = previousShadowSetting;
+              await tester.pump();
+            }
+          }
+          await tester.pumpWidget(const SizedBox.shrink());
+          await tester.pump();
+          await tester.pumpAndSettle();
         }
       }
       tester.view.resetPhysicalSize();
@@ -369,36 +398,7 @@ void main() {
 }
 
 ThemeData _acceptanceTheme() {
-  final base = AppTheme.light;
-  final fontFamily = _testFontFamily;
-  final textTheme = base.textTheme.apply(fontFamily: fontFamily);
-  final primaryTextTheme = base.primaryTextTheme.apply(fontFamily: fontFamily);
-  return base.copyWith(
-    textTheme: textTheme,
-    primaryTextTheme: primaryTextTheme,
-    appBarTheme: base.appBarTheme.copyWith(
-      titleTextStyle: base.appBarTheme.titleTextStyle?.copyWith(
-        fontFamily: fontFamily,
-      ),
-      toolbarTextStyle: base.appBarTheme.toolbarTextStyle?.copyWith(
-        fontFamily: fontFamily,
-      ),
-    ),
-    inputDecorationTheme: base.inputDecorationTheme.copyWith(
-      labelStyle: base.inputDecorationTheme.labelStyle?.copyWith(
-        fontFamily: fontFamily,
-      ),
-      floatingLabelStyle: base.inputDecorationTheme.floatingLabelStyle
-          ?.copyWith(fontFamily: fontFamily),
-    ),
-    navigationBarTheme: base.navigationBarTheme.copyWith(
-      labelTextStyle: WidgetStateProperty.resolveWith(
-        (states) => base.navigationBarTheme.labelTextStyle
-            ?.resolve(states)
-            ?.copyWith(fontFamily: fontFamily),
-      ),
-    ),
-  );
+  return purchaseAcceptanceTheme(AppTheme.light, _testFontFamily);
 }
 
 Future<int> _createMaterial(InventoryRepository repository, String code) =>
@@ -439,12 +439,14 @@ Future<void> _capture(WidgetTester tester, String name) async {
   final boundary = tester.renderObject<RenderRepaintBoundary>(
     find.byKey(const Key('purchase-screenshot-boundary')),
   );
-  final image = await boundary.toImage(pixelRatio: 1);
+  final image = await boundary.toImage(
+    pixelRatio: tester.view.devicePixelRatio,
+  );
   final png = await image.toByteData(format: ui.ImageByteFormat.png);
   image.dispose();
   if (png == null) return;
   final directory = Directory(
-    '${Directory.current.path}${Platform.pathSeparator}docs${Platform.pathSeparator}acceptance${Platform.pathSeparator}ui-reference-audit${Platform.pathSeparator}purchase-20261002',
+    '${Directory.current.path}${Platform.pathSeparator}docs${Platform.pathSeparator}acceptance${Platform.pathSeparator}ui-refactor-20261009${Platform.pathSeparator}purchase',
   )..createSync(recursive: true);
   final filename = '${name.replaceAll('/', '_')}.png';
   await File('${directory.path}${Platform.pathSeparator}$filename')

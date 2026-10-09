@@ -22,7 +22,7 @@ class _ReminderAlertsPageState extends State<ReminderAlertsPage> {
         _selected.where((value) => !_presets.contains(value)).toList()..sort();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('提醒'),
+        title: const Text('提前提醒'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, _selected.toList()..sort()),
@@ -31,26 +31,30 @@ class _ReminderAlertsPageState extends State<ReminderAlertsPage> {
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(20, 8, 20, 28),
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 28),
         child: Column(
           children: [
-            Text(
-              '可设置多个提醒',
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyMedium,
+            SizedBox(
+              width: double.infinity,
+              child: Text(
+                '可设置多个提醒',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
             ),
             const SizedBox(height: 12),
             Card(
               child: Column(
                 children: [
-                  for (final minutes in _presets)
+                  for (var index = 0; index < _presets.length; index++) ...[
                     CheckboxListTile(
-                      key: Key('reminder-alert-$minutes'),
-                      title: Text(ReminderSchedule.alertMinuteLabel(minutes)),
-                      value: _selected.contains(minutes),
+                      key: Key('reminder-alert-${_presets[index]}'),
+                      title: Text(_alertLabel(_presets[index])),
+                      value: _selected.contains(_presets[index]),
                       controlAffinity: ListTileControlAffinity.trailing,
-                      onChanged: (_) => _toggle(minutes),
+                      onChanged: (_) => _toggle(_presets[index]),
                     ),
+                    if (index < _presets.length - 1) const Divider(height: 1),
+                  ],
                 ],
               ),
             ),
@@ -61,7 +65,8 @@ class _ReminderAlertsPageState extends State<ReminderAlertsPage> {
                   children: [
                     for (final minutes in custom)
                       CheckboxListTile(
-                        title: Text(ReminderSchedule.alertMinuteLabel(minutes)),
+                        key: Key('reminder-alert-$minutes'),
+                        title: Text(_alertLabel(minutes)),
                         value: true,
                         controlAffinity: ListTileControlAffinity.trailing,
                         onChanged: (_) => _toggle(minutes),
@@ -92,6 +97,9 @@ class _ReminderAlertsPageState extends State<ReminderAlertsPage> {
           : _selected.add(minutes);
     });
   }
+
+  String _alertLabel(int minutes) =>
+      ReminderSchedule.alertMinuteLabel(minutes).replaceAll(' ', '');
 
   Future<void> _addCustom() async {
     var amount = 1;

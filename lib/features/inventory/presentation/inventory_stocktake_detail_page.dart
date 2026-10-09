@@ -56,22 +56,13 @@ class _InventoryStocktakeDetailPageState
       }
       quantities[item.id] = quantity;
     }
-    final confirmed = await showDialog<bool>(
+    final confirmed = await showInventoryConfirmation(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('确认盘点？'),
-        content: const Text('确认后将按实盘数量更新库存，并为盘盈盘亏生成库存流水。'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('继续核对'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text('确认盘点'),
-          ),
-        ],
-      ),
+      title: '确认盘点？',
+      message: '确认后将按实盘数量更新库存，并为盘盈盘亏生成库存流水。',
+      cancelLabel: '继续核对',
+      confirmLabel: '确认盘点',
+      icon: Icons.info_outline,
     );
     if (confirmed != true || !mounted) return;
     setState(() => _confirming = true);
@@ -146,7 +137,9 @@ class _InventoryStocktakeDetailPageState
         if (snapshot.hasError) {
           return InventoryErrorState(onRetry: () => setState(_load));
         }
-        if (!snapshot.hasData) return const InventoryLoadingState();
+        if (snapshot.connectionState != ConnectionState.done) {
+          return const InventoryLoadingState();
+        }
         final stocktake = snapshot.data;
         if (stocktake == null) {
           return const InventoryEmptyState(title: '盘点记录不存在');
@@ -164,6 +157,18 @@ class _InventoryStocktakeDetailPageState
               children: [
                 Card(
                   child: ListTile(
+                    leading: Container(
+                      width: 44,
+                      height: 44,
+                      decoration: BoxDecoration(
+                        color: AppColors.lightBlue,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Icon(
+                        Icons.inventory_2_outlined,
+                        color: AppColors.primary,
+                      ),
+                    ),
                     title: Text(
                       stocktake.stocktakeNo,
                       style: Theme.of(context).textTheme.titleMedium,
@@ -255,67 +260,111 @@ class _StocktakeItemEditor extends StatelessWidget {
     final differenceColor = difference == 0
         ? AppColors.primary
         : AppColors.danger;
+    final compact =
+        MediaQuery.sizeOf(context).width <= 320 ||
+        MediaQuery.textScalerOf(context).scale(14) > 17;
+    final materialInfo = Row(
+      children: [
+        Container(
+          width: 38,
+          height: 38,
+          decoration: BoxDecoration(
+            color: AppColors.lightBlue,
+            borderRadius: BorderRadius.circular(11),
+          ),
+          child: const Icon(
+            Icons.category_outlined,
+            color: AppColors.primary,
+            size: 20,
+          ),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                item.materialNameSnapshot,
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+              Text(
+                '${item.modelSnapshot ?? '未填型号'} · ${item.unitSnapshot}',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+    final quantityField = SizedBox(
+      width: compact ? double.infinity : 112,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('实盘数量', style: Theme.of(context).textTheme.bodySmall),
+          const SizedBox(height: 4),
+          TextField(
+            key: Key('inventory-stocktake-actual-${item.id}'),
+            controller: controller,
+            enabled: editable,
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            decoration: InputDecoration(
+              isDense: true,
+              filled: !editable,
+              fillColor: editable ? null : const Color(0xFFF1F5F9),
+            ),
+          ),
+        ],
+      ),
+    );
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 11),
+      padding: const EdgeInsets.fromLTRB(8, 14, 8, 10),
       child: Column(
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      item.materialNameSnapshot,
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                    Text(
-                      '${item.modelSnapshot ?? '未填型号'} · ${item.unitSnapshot}',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 10),
-              SizedBox(
-                width: 98,
-                child: TextField(
-                  controller: controller,
-                  enabled: editable,
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
+          if (compact) ...[
+            SizedBox(width: double.infinity, child: materialInfo),
+            const SizedBox(height: 12),
+            quantityField,
+          ] else
+            Row(
+              children: [
+                Expanded(child: materialInfo),
+                const SizedBox(width: 10),
+                quantityField,
+              ],
+            ),
+          const SizedBox(height: 9),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
+            decoration: BoxDecoration(
+              color: const Color(0xFFF6FAFE),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Wrap(
+              spacing: 12,
+              runSpacing: 4,
+              children: [
+                Text('账面数量：${item.bookQuantity}'),
+                Text(
+                  '差异：${difference > 0 ? '+' : ''}$difference',
+                  style: TextStyle(
+                    color: differenceColor,
+                    fontWeight: FontWeight.w700,
                   ),
-                  decoration: const InputDecoration(
-                    labelText: '实盘数量',
-                    isDense: true,
-                  ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 7),
-          Row(
-            children: [
-              Expanded(child: Text('账面数量：${item.bookQuantity}')),
-              Text(
-                '差异：${difference > 0 ? '+' : ''}$difference',
-                style: TextStyle(
-                  color: differenceColor,
-                  fontWeight: FontWeight.w700,
+                InventoryStatusChip(
+                  label: difference == 0
+                      ? '一致'
+                      : difference > 0
+                      ? '盘盈'
+                      : '盘亏',
+                  color: difference == 0 ? AppColors.primary : AppColors.danger,
                 ),
-              ),
-              const SizedBox(width: 10),
-              InventoryStatusChip(
-                label: difference == 0
-                    ? '一致'
-                    : difference > 0
-                    ? '盘盈'
-                    : '盘亏',
-                color: difference == 0 ? AppColors.primary : AppColors.danger,
-              ),
-            ],
+              ],
+            ),
           ),
-          const Divider(height: 20),
+          const Divider(height: 22),
         ],
       ),
     );

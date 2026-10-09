@@ -40,14 +40,26 @@ void main() {
       await (FontLoader('Roboto')..addFont(Future.value(fontBytes))).load();
       _font = 'GardenRepairChinese';
     }
-    final icons = File(
-      r'D:\Flutter\bin\cache\artifacts\material_fonts\MaterialIcons-Regular.otf',
-    );
-    if (icons.existsSync()) {
+    final materialFonts = _findMaterialFontsDirectory();
+    final icons = materialFonts == null
+        ? null
+        : File(
+            '${materialFonts.path}${Platform.pathSeparator}MaterialIcons-Regular.otf',
+          );
+    if (icons == null || !icons.existsSync()) {
+      if (_shouldCapture) {
+        throw StateError('Flutter SDK MaterialIcons-Regular.otf not found');
+      }
+    } else {
       await (FontLoader('MaterialIcons')..addFont(
             Future.value(ByteData.sublistView(await icons.readAsBytes())),
           ))
           .load();
+    }
+    if (_shouldCapture && _font == null) {
+      throw StateError(
+        'Windows Chinese font C:\\Windows\\Fonts\\msyh.ttc not found',
+      );
     }
   });
 
@@ -219,6 +231,27 @@ void main() {
       await tester.pumpAndSettle();
     }
   });
+}
+
+Directory? _findMaterialFontsDirectory() {
+  var directory = Directory(Platform.resolvedExecutable).parent;
+  for (var level = 0; level < 10; level++) {
+    final candidate = Directory(
+      '${directory.path}${Platform.pathSeparator}bin'
+      '${Platform.pathSeparator}cache'
+      '${Platform.pathSeparator}artifacts'
+      '${Platform.pathSeparator}material_fonts',
+    );
+    if (File(
+      '${candidate.path}${Platform.pathSeparator}MaterialIcons-Regular.otf',
+    ).existsSync()) {
+      return candidate;
+    }
+    final parent = directory.parent;
+    if (parent.path == directory.path) return null;
+    directory = parent;
+  }
+  return null;
 }
 
 Future<

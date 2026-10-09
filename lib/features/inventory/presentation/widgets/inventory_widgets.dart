@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../app/theme/app_theme.dart';
+import '../../../../core/database/app_database.dart';
 
 class InventoryFormFooter extends StatelessWidget {
   const InventoryFormFooter({
@@ -38,6 +39,301 @@ class InventoryFormFooter extends StatelessWidget {
       ),
     ),
   );
+}
+
+Future<bool?> showInventoryConfirmation({
+  required BuildContext context,
+  required String title,
+  required String message,
+  required String confirmLabel,
+  String cancelLabel = '取消',
+  IconData? icon,
+}) => showDialog<bool>(
+  context: context,
+  builder: (dialogContext) => AlertDialog(
+    icon: icon == null
+        ? null
+        : Container(
+            width: 54,
+            height: 54,
+            decoration: const BoxDecoration(
+              color: AppColors.lightBlue,
+              shape: BoxShape.circle,
+            ),
+            child: Icon(icon, color: AppColors.primary, size: 28),
+          ),
+    title: Text(title, textAlign: TextAlign.center),
+    content: Text(message, textAlign: TextAlign.center),
+    actionsPadding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
+    actions: [
+      Row(
+        children: [
+          Expanded(
+            child: FilledButton(
+              style: FilledButton.styleFrom(
+                backgroundColor: AppColors.lightBlue,
+                foregroundColor: AppColors.primary,
+              ),
+              onPressed: () => Navigator.pop(dialogContext, false),
+              child: Text(cancelLabel),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: FilledButton(
+              onPressed: () => Navigator.pop(dialogContext, true),
+              child: Text(confirmLabel),
+            ),
+          ),
+        ],
+      ),
+    ],
+  ),
+);
+
+class InventoryMaterialPickerField extends StatelessWidget {
+  const InventoryMaterialPickerField({
+    required this.materials,
+    required this.selectedId,
+    required this.onChanged,
+    super.key,
+  });
+
+  final List<InventoryMaterial> materials;
+  final int? selectedId;
+  final ValueChanged<int> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final selected = materials
+        .where((item) => item.id == selectedId)
+        .firstOrNull;
+    return InkWell(
+      key: const Key('inventory-material-picker'),
+      borderRadius: BorderRadius.circular(10),
+      onTap: () async {
+        final viewInsets = MediaQuery.viewInsetsOf(context);
+        final viewPadding = MediaQuery.viewPaddingOf(context);
+        final material = await showModalBottomSheet<InventoryMaterial>(
+          context: context,
+          isScrollControlled: true,
+          useSafeArea: true,
+          backgroundColor: Colors.transparent,
+          builder: (context) => _InventoryMaterialPickerSheet(
+            materials: materials,
+            safeBottomInset: viewInsets.bottom > 0 ? 0 : viewPadding.bottom,
+          ),
+        );
+        if (material != null && context.mounted) onChanged(material.id);
+      },
+      child: Semantics(
+        button: true,
+        label: '物资，${selected?.materialName ?? '请选择'}',
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('物资', style: Theme.of(context).textTheme.bodyMedium),
+            const SizedBox(height: 6),
+            Container(
+              constraints: const BoxConstraints(minHeight: 48),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: AppColors.divider),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Tooltip(
+                      message: selected?.materialName ?? '选择物资',
+                      child: Text(selected?.materialName ?? '选择物资'),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  const Icon(Icons.search, color: AppColors.body),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _InventoryMaterialPickerSheet extends StatefulWidget {
+  const _InventoryMaterialPickerSheet({
+    required this.materials,
+    required this.safeBottomInset,
+  });
+
+  final List<InventoryMaterial> materials;
+  final double safeBottomInset;
+
+  @override
+  State<_InventoryMaterialPickerSheet> createState() =>
+      _InventoryMaterialPickerSheetState();
+}
+
+class _InventoryMaterialPickerSheetState
+    extends State<_InventoryMaterialPickerSheet> {
+  final _search = TextEditingController();
+  String _query = '';
+
+  @override
+  void dispose() {
+    _search.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final materials = widget.materials;
+    final query = _query.trim().toLowerCase();
+    final filtered = materials.where((material) {
+      if (query.isEmpty) return true;
+      return material.materialName.toLowerCase().contains(query) ||
+          (material.modelSpec ?? '').toLowerCase().contains(query) ||
+          material.materialCode.toLowerCase().contains(query);
+    }).toList();
+    final viewInsets = MediaQuery.viewInsetsOf(context);
+    final bottomInset = viewInsets.bottom;
+    final maxBottomInset = bottomInset > 0
+        ? bottomInset
+        : widget.safeBottomInset;
+    final availableHeight = (MediaQuery.sizeOf(context).height - maxBottomInset)
+        .clamp(0.0, double.infinity)
+        .toDouble();
+    return AnimatedPadding(
+      duration: const Duration(milliseconds: 180),
+      curve: Curves.easeOut,
+      padding: EdgeInsets.only(bottom: bottomInset),
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxHeight: availableHeight * .82),
+        child: DecoratedBox(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 10),
+              Container(
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: AppColors.divider,
+                  borderRadius: BorderRadius.circular(99),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 18, 12, 12),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        '选择库存物资',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                    ),
+                    IconButton(
+                      tooltip: '关闭',
+                      onPressed: () => Navigator.pop(context),
+                      icon: const Icon(Icons.close),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+                child: TextField(
+                  key: const Key('inventory-material-search'),
+                  controller: _search,
+                  onChanged: (value) => setState(() => _query = value),
+                  textInputAction: TextInputAction.search,
+                  decoration: InputDecoration(
+                    hintText: '搜索物资名称、规格或编码',
+                    prefixIcon: const Icon(Icons.search),
+                    suffixIcon: _query.isEmpty
+                        ? null
+                        : IconButton(
+                            tooltip: '清除搜索',
+                            onPressed: () {
+                              _search.clear();
+                              setState(() => _query = '');
+                            },
+                            icon: const Icon(Icons.close),
+                          ),
+                  ),
+                ),
+              ),
+              if (materials.isEmpty)
+                Padding(
+                  padding: EdgeInsets.fromLTRB(
+                    24,
+                    24,
+                    24,
+                    24 + (bottomInset == 0 ? widget.safeBottomInset : 0),
+                  ),
+                  child: const Text('暂无可选物资'),
+                )
+              else if (filtered.isEmpty)
+                Padding(
+                  padding: EdgeInsets.fromLTRB(
+                    24,
+                    24,
+                    24,
+                    24 + (bottomInset == 0 ? widget.safeBottomInset : 0),
+                  ),
+                  child: const Text('没有匹配的物资'),
+                )
+              else
+                Flexible(
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      bottom: bottomInset == 0 ? widget.safeBottomInset : 0,
+                    ),
+                    child: ListView.separated(
+                      key: const Key('inventory-material-results'),
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
+                      keyboardDismissBehavior:
+                          ScrollViewKeyboardDismissBehavior.onDrag,
+                      itemCount: filtered.length,
+                      separatorBuilder: (_, _) => const Divider(height: 1),
+                      itemBuilder: (context, index) {
+                        final material = filtered[index];
+                        return Material(
+                          color: Colors.transparent,
+                          child: ListTile(
+                            key: Key(
+                              'inventory-material-option-${material.id}',
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 4,
+                            ),
+                            title: Text(material.materialName),
+                            subtitle: Text(
+                              '${material.modelSpec ?? '未填规格'} · 库存 ${material.currentStock} ${material.unitName}',
+                            ),
+                            trailing: const Icon(
+                              Icons.add_circle_outline,
+                              color: AppColors.primary,
+                            ),
+                            onTap: () => Navigator.pop(context, material),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 /// Shared blue-and-white sections for the inventory reference pages.

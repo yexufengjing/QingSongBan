@@ -120,143 +120,174 @@ class _PurchaseTrackingPageState extends ConsumerState<PurchaseTrackingPage> {
               ),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 6, 16, 8),
-              child: Column(
-                children: [
-                  TextField(
-                    controller: _searchController,
-                    key: const Key('purchase-tracking-search'),
-                    onChanged: (value) => setState(
-                      () => _filter = _filter.copyWith(keyword: value),
-                    ),
-                    decoration: InputDecoration(
-                      hintText: '搜索物资、OA编号、采购执行人',
-                      prefixIcon: const Icon(Icons.search),
-                      suffixIcon: IconButton(
-                        tooltip: '清除搜索',
-                        onPressed: () {
-                          _searchController.clear();
-                          setState(
-                            () => _filter = _filter.copyWith(keyword: ''),
-                          );
-                        },
-                        icon: const Icon(Icons.close),
+              child: PurchasePanel(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  children: [
+                    TextField(
+                      controller: _searchController,
+                      key: const Key('purchase-tracking-search'),
+                      onChanged: (value) => setState(
+                        () => _filter = _filter.copyWith(keyword: value),
+                      ),
+                      decoration: InputDecoration(
+                        hintText: '搜索物资、OA编号、采购执行人',
+                        prefixIcon: const Icon(Icons.search),
+                        suffixIcon: IconButton(
+                          tooltip: '清除搜索',
+                          onPressed: () {
+                            _searchController.clear();
+                            setState(
+                              () => _filter = _filter.copyWith(keyword: ''),
+                            );
+                          },
+                          icon: const Icon(Icons.close),
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: [
-                      PopupMenuButton<String>(
-                        tooltip: '日期筛选',
-                        onSelected: (value) async {
-                          final now = DateTime.now();
-                          if (value == 'all') {
-                            setState(() {
-                              _filter = _filter.copyWith(clearDates: true);
-                            });
-                          } else if (value == '30') {
-                            setState(() {
-                              _filter = _filter.copyWith(
-                                startDate: now.subtract(
-                                  const Duration(days: 30),
-                                ),
-                                endDate: now,
-                              );
-                            });
-                          } else {
-                            final start = await pickPurchaseDate(
-                              context,
-                              initialDate: _filter.startDate,
-                            );
-                            if (start == null || !context.mounted) return;
-                            final end = await pickPurchaseDate(
-                              context,
-                              initialDate: _filter.endDate ?? now,
-                            );
-                            if (end != null && context.mounted) {
-                              if (end.isBefore(start)) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('结束日期不能早于开始日期')),
-                                );
-                              } else {
-                                setState(
-                                  () => _filter = _filter.copyWith(
-                                    startDate: start,
-                                    endDate: end,
+                    const SizedBox(height: 8),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        PopupMenuButton<String>(
+                          tooltip: '日期筛选',
+                          onSelected: (value) async {
+                            final now = DateTime.now();
+                            if (value == 'all') {
+                              setState(() {
+                                _filter = _filter.copyWith(clearDates: true);
+                              });
+                            } else if (value == '30') {
+                              setState(() {
+                                _filter = _filter.copyWith(
+                                  startDate: now.subtract(
+                                    const Duration(days: 30),
                                   ),
+                                  endDate: now,
                                 );
+                              });
+                            } else {
+                              final start = await pickPurchaseDate(
+                                context,
+                                initialDate: _filter.startDate,
+                              );
+                              if (start == null || !context.mounted) return;
+                              final end = await pickPurchaseDate(
+                                context,
+                                initialDate: _filter.endDate ?? now,
+                              );
+                              if (end != null && context.mounted) {
+                                if (end.isBefore(start)) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('结束日期不能早于开始日期'),
+                                    ),
+                                  );
+                                } else {
+                                  setState(
+                                    () => _filter = _filter.copyWith(
+                                      startDate: start,
+                                      endDate: end,
+                                    ),
+                                  );
+                                }
                               }
                             }
-                          }
-                        },
-                        itemBuilder: (context) => const [
-                          PopupMenuItem(value: 'all', child: Text('全部日期')),
-                          PopupMenuItem(value: '30', child: Text('最近30天')),
-                          PopupMenuItem(value: 'custom', child: Text('自定义日期')),
-                        ],
-                        child: Chip(
-                          avatar: const Icon(
-                            Icons.calendar_month_outlined,
-                            size: 18,
-                          ),
-                          label: Text(
-                            _filter.startDate == null
-                                ? '全部日期'
-                                : '${purchaseShortDateLabel(_filter.startDate)}–${purchaseShortDateLabel(_filter.endDate)}',
+                          },
+                          itemBuilder: (context) => const [
+                            PopupMenuItem(value: 'all', child: Text('全部日期')),
+                            PopupMenuItem(value: '30', child: Text('最近30天')),
+                            PopupMenuItem(
+                              value: 'custom',
+                              child: Text('自定义日期'),
+                            ),
+                          ],
+                          child: Chip(
+                            avatar: const Icon(
+                              Icons.calendar_month_outlined,
+                              size: 18,
+                            ),
+                            label: Text(
+                              _filter.startDate == null
+                                  ? '全部日期'
+                                  : '${purchaseShortDateLabel(_filter.startDate)}–${purchaseShortDateLabel(_filter.endDate)}',
+                            ),
                           ),
                         ),
-                      ),
-                      PopupMenuButton<String>(
-                        tooltip: '采购执行人',
-                        onSelected: (value) => setState(() {
-                          _purchaser = value == '__all__' ? null : value;
-                          _filter = _filter.copyWith(
-                            purchaserName: _purchaser,
-                            clearPurchaser: _purchaser == null,
-                          );
-                        }),
-                        itemBuilder: (context) => [
-                          const PopupMenuItem(
-                            value: '__all__',
-                            child: Text('所有执行人'),
+                        PopupMenuButton<String>(
+                          tooltip: '采购执行人',
+                          onSelected: (value) => setState(() {
+                            _purchaser = value == '__all__' ? null : value;
+                            _filter = _filter.copyWith(
+                              purchaserName: _purchaser,
+                              clearPurchaser: _purchaser == null,
+                            );
+                          }),
+                          itemBuilder: (context) => [
+                            const PopupMenuItem(
+                              value: '__all__',
+                              child: Text('所有执行人'),
+                            ),
+                            for (final person in knownPurchasers)
+                              PopupMenuItem(value: person, child: Text(person)),
+                          ],
+                          child: Chip(
+                            avatar: const Icon(Icons.person_outline, size: 18),
+                            label: Text(_purchaser ?? '执行人'),
                           ),
-                          for (final person in knownPurchasers)
-                            PopupMenuItem(value: person, child: Text(person)),
-                        ],
-                        child: Chip(
-                          avatar: const Icon(Icons.person_outline, size: 18),
-                          label: Text(_purchaser ?? '执行人'),
                         ),
-                      ),
-                      if (widget.showAll)
-                        for (final status in const [
-                          PurchaseStatus.pendingApply,
-                          PurchaseStatus.applied,
-                          PurchaseStatus.purchasing,
-                          PurchaseStatus.pendingReceive,
-                        ])
-                          FilterChip(
-                            label: Text(status.label),
-                            selected: _filter.statuses.contains(status),
-                            onSelected: (selected) => setState(() {
-                              final next = {..._filter.statuses};
-                              selected ? next.add(status) : next.remove(status);
-                              if (next.isEmpty) {
-                                next.addAll(const {
-                                  PurchaseStatus.pendingApply,
-                                  PurchaseStatus.applied,
-                                  PurchaseStatus.purchasing,
-                                  PurchaseStatus.pendingReceive,
-                                });
-                              }
-                              _filter = _filter.copyWith(statuses: next);
-                            }),
-                          ),
-                    ],
-                  ),
-                ],
+                        if (widget.showAll)
+                          for (final status in const [
+                            PurchaseStatus.pendingApply,
+                            PurchaseStatus.applied,
+                            PurchaseStatus.purchasing,
+                            PurchaseStatus.pendingReceive,
+                          ])
+                            FilterChip(
+                              key: Key(
+                                'purchase-status-filter-${status.storageValue}',
+                              ),
+                              visualDensity: const VisualDensity(
+                                horizontal: -3,
+                                vertical: -2,
+                              ),
+                              labelPadding: const EdgeInsets.symmetric(
+                                horizontal: 4,
+                              ),
+                              showCheckmark: true,
+                              checkmarkColor: const Color(0xFF1677FF),
+                              selectedColor: const Color(0xFFE5F3FF),
+                              label: Text(status.label),
+                              labelStyle: TextStyle(
+                                color: _filter.statuses.contains(status)
+                                    ? const Color(0xFF1677FF)
+                                    : const Color(0xFF425D7F),
+                                fontWeight: _filter.statuses.contains(status)
+                                    ? FontWeight.w600
+                                    : FontWeight.normal,
+                              ),
+                              selected: _filter.statuses.contains(status),
+                              onSelected: (selected) => setState(() {
+                                final next = {..._filter.statuses};
+                                selected
+                                    ? next.add(status)
+                                    : next.remove(status);
+                                if (next.isEmpty) {
+                                  next.addAll(const {
+                                    PurchaseStatus.pendingApply,
+                                    PurchaseStatus.applied,
+                                    PurchaseStatus.purchasing,
+                                    PurchaseStatus.pendingReceive,
+                                  });
+                                }
+                                _filter = _filter.copyWith(statuses: next);
+                              }),
+                            ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
             Expanded(
