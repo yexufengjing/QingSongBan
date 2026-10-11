@@ -35,6 +35,10 @@ import 'package:qingsongban/features/reminders/presentation/reminder_form_page.d
 import 'purchase_test_fonts.dart';
 
 const _capturePurchaseUi = bool.fromEnvironment('PURCHASE_CAPTURE_UI');
+const _purchaseCaptureDirectory = String.fromEnvironment(
+  'PURCHASE_CAPTURE_DIR',
+  defaultValue: 'docs/acceptance/ui-refactor-20261009/purchase',
+);
 String? _auditFontFamily;
 
 void main() {
@@ -126,6 +130,13 @@ void main() {
     expect(_purchaseTextField('规格型号（选填）'), findsOneWidget);
     expect(_purchaseTextField('单位'), findsOneWidget);
     expect(_purchaseTextField('申报数量'), findsOneWidget);
+    final cancelAction = find.byKey(const Key('purchase-manual-item-cancel'));
+    final addAction = find.byKey(const Key('purchase-manual-item-add'));
+    expect(
+      (tester.getSize(cancelAction).width - tester.getSize(addAction).width)
+          .abs(),
+      lessThan(1),
+    );
     await tester.enterText(_purchaseTextField('物资名称'), '中文演示手套');
     await tester.enterText(_purchaseTextField('单位'), '双');
     await tester.tap(find.widgetWithText(FilledButton, '添加'));
@@ -209,6 +220,40 @@ void main() {
       const Key('purchase-status-filter-pending_receive'),
     );
     expect(find.byType(FilterChip), findsNWidgets(4));
+    final searchRect = tester.getRect(
+      find.byKey(const Key('purchase-tracking-search')),
+    );
+    final dateRect = tester.getRect(
+      find.byKey(const Key('purchase-tracking-date-filter')),
+    );
+    final purchaserRect = tester.getRect(
+      find.byKey(const Key('purchase-tracking-purchaser-filter')),
+    );
+    expect(searchRect.bottom, lessThan(dateRect.top));
+    expect((dateRect.center.dy - purchaserRect.center.dy).abs(), lessThan(1));
+    expect((dateRect.width - purchaserRect.width).abs(), lessThan(1));
+    final statusRects = [
+      pendingApplyFilter,
+      appliedFilter,
+      purchasingFilter,
+      pendingReceiveFilter,
+    ].map(tester.getRect).toList();
+    expect(
+      statusRects.every(
+        (rect) => rect.center.dy == statusRects.first.center.dy,
+      ),
+      isTrue,
+    );
+    expect(
+      statusRects.every(
+        (rect) => (rect.width - statusRects.first.width).abs() < 1,
+      ),
+      isTrue,
+    );
+    for (final rect in statusRects) {
+      expect(rect.top, greaterThan(dateRect.bottom));
+      expect(rect.height, greaterThanOrEqualTo(48));
+    }
     for (final filter in [
       pendingApplyFilter,
       appliedFilter,
@@ -423,6 +468,30 @@ void main() {
     await tester.tap(find.widgetWithText(PopupMenuItem<String>, '删除采购记录'));
     await tester.pumpAndSettle();
     await _captureIfEnabled(tester, '14_delete_confirmation');
+    final deleteDialog = find.byType(AlertDialog).last;
+    final dialogRect = tester.getRect(deleteDialog);
+    final deleteTitleRect = tester.getRect(find.text('删除采购记录'));
+    expect(
+      (deleteTitleRect.center.dx - dialogRect.center.dx).abs(),
+      lessThan(1),
+    );
+    final cancelDelete = find.byKey(const Key('purchase-delete-dialog-cancel'));
+    final confirmDelete = find.byKey(
+      const Key('purchase-delete-dialog-confirm'),
+    );
+    expect(
+      (tester.getSize(cancelDelete).width - tester.getSize(confirmDelete).width)
+          .abs(),
+      lessThan(1),
+    );
+    expect(
+      find.byKey(const Key('purchase-delete-dialog-top-divider')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const Key('purchase-delete-dialog-center-divider')),
+      findsOneWidget,
+    );
     expect(
       find.descendant(
         of: find.byType(AlertDialog).last,
@@ -1153,7 +1222,7 @@ Future<void> _captureIfEnabled(WidgetTester tester, String name) async {
     image.dispose();
     if (data == null) return;
     final directory = Directory(
-      '${Directory.current.path}${Platform.pathSeparator}docs${Platform.pathSeparator}acceptance${Platform.pathSeparator}ui-refactor-20261009${Platform.pathSeparator}purchase',
+      '${Directory.current.path}${Platform.pathSeparator}${_purchaseCaptureDirectory.replaceAll('/', Platform.pathSeparator)}',
     )..createSync(recursive: true);
     final bytes = Uint8List.view(
       data.buffer,

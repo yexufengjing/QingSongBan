@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../app/theme/app_theme.dart';
 import '../application/purchase_providers.dart';
 import '../domain/purchase_models.dart';
 import '../domain/purchase_status.dart';
@@ -531,16 +532,60 @@ class PurchaseDetailPage extends ConsumerWidget {
       context: context,
       builder: (context) => PurchasePageTheme(
         child: AlertDialog(
-          title: const Text('删除采购记录'),
-          content: const Text('确认将这条未入库采购记录移入回收状态？'),
+          title: const Center(child: Text('删除采购记录')),
+          content: const Text(
+            '确认将这条未入库采购记录移入回收状态？',
+            textAlign: TextAlign.center,
+          ),
+          actionsPadding: EdgeInsets.zero,
+          buttonPadding: EdgeInsets.zero,
           actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context, false),
-              child: const Text('取消'),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.pop(context, true),
-              child: const Text('确认删除'),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Divider(
+                  key: Key('purchase-delete-dialog-top-divider'),
+                  height: 1,
+                  color: AppColors.divider,
+                ),
+                ConstrainedBox(
+                  constraints: const BoxConstraints(minHeight: 54),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextButton(
+                          key: const Key('purchase-delete-dialog-cancel'),
+                          onPressed: () => Navigator.pop(context, false),
+                          style: TextButton.styleFrom(
+                            foregroundColor: AppColors.helper,
+                            shape: const RoundedRectangleBorder(),
+                          ),
+                          child: const Text('取消'),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 28,
+                        child: VerticalDivider(
+                          key: Key('purchase-delete-dialog-center-divider'),
+                          width: 1,
+                          color: AppColors.divider,
+                        ),
+                      ),
+                      Expanded(
+                        child: TextButton(
+                          key: const Key('purchase-delete-dialog-confirm'),
+                          onPressed: () => Navigator.pop(context, true),
+                          style: TextButton.styleFrom(
+                            foregroundColor: AppColors.techBlue,
+                            shape: const RoundedRectangleBorder(),
+                          ),
+                          child: const Text('确认删除'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ],
         ),

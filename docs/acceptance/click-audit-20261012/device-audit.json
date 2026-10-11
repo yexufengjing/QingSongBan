@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-12",
+  "serial": "emulator-5554",
+  "databaseBefore": "830ccbce6fd7d24a1b5f4c9965c67f78b2960d7464564b62c22442a1210324e5",
+  "screen": "Physical size: 1080x2400\r\nOverride size: 1280x2800\r\n",
+  "density": "Physical density: 420\r\nOverride density: 480\r\n",
+  "fontScale": "1.0",
+  "beforeScreenshot": "attendance-device-before.png",
+  "beforeReproduction": "attendance/daily > first employee remark > cancel: framework.dart6281 _dependents.isEmpty",
+  "nativeChecks": [
+    "actual attendance > start registration > employee note > cancel, 3 cycles",
+    "note keyboard/system-back returns to attendance without red screen",
+    "inventory category open/cancel returns without red screen",
+    "inventory edit and adjustment missing records show empty state",
+    "insurance missing employee shows empty state"
+  ],
+  "databaseAfter": "830ccbce6fd7d24a1b5f4c9965c67f78b2960d7464564b62c22442a1210324e5",
+  "databaseUnchanged": true,
+  "apkSha256": "89147d0ec1803809166616a1494ed096e486a384800ad4db4c66a24b457f52bc",
+  "install": "adb install -r: Success",
+  "runtimeIssueLines": 0,
+  "fullTestCount": 269,
+  "routeTargets": 91,
+  "seededRouteVisits": 33,
+  "analysis": {
+    "errors": 0,
+    "warnings": 0,
+    "existingInfo": 9
+  },
+  "limitations": [
+    "native Android checks use an emulator, not physical GT7",
+    "all routes audited; not every button and branch has native-device evidence",
+    "real external OA, file import/export and backup restoration not executed in this batch"
+  ]
+}

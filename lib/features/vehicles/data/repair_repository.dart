@@ -7,9 +7,11 @@ import '../domain/repair_options.dart';
 import 'vehicle_scope.dart';
 
 class RepairRepository {
-  const RepairRepository(this._database);
+  RepairRepository(this._database, {DateTime Function()? clock})
+    : _clock = clock ?? DateTime.now;
 
   final AppDatabase _database;
+  final DateTime Function() _clock;
 
   Stream<List<RepairOrder>> watchOrders({int? vehicleId}) {
     final query = _database.select(_database.repairOrders)
@@ -117,7 +119,7 @@ class RepairRepository {
         throw ArgumentError('维修费用数量和单价无效');
       }
     }
-    final now = DateTime.now();
+    final now = _clock();
     late final int orderId;
     await _database.transaction(() async {
       final existing = id == null ? null : await findById(id);
@@ -134,7 +136,7 @@ class RepairRepository {
               .into(_database.repairOrders)
               .insert(
                 RepairOrdersCompanion.insert(
-                  repairNo: _nextRepairNo(),
+                  repairNo: await _nextRepairNo(now),
                   vehicleId: draft.vehicleId,
                   reportDate: AppDateUtils.dateOnly(draft.reportDate),
                   faultFoundAt: draft.faultFoundAt,
@@ -330,7 +332,19 @@ class RepairRepository {
   int _total(List<RepairCostDraft> costs) =>
       costs.fold(0, (sum, item) => sum + item.subtotalCents);
 
-  String _nextRepairNo() => 'REPAIR-${DateTime.now().microsecondsSinceEpoch}';
+  Future<String> _nextRepairNo(DateTime now) async {
+    final base = 'REPAIR-${now.microsecondsSinceEpoch}';
+    var candidate = base;
+    var suffix = 0;
+    while (await (_database.select(_database.repairOrders)
+              ..where((table) => table.repairNo.equals(candidate)))
+            .getSingleOrNull() !=
+        null) {
+      suffix++;
+      candidate = '$base-$suffix';
+    }
+    return candidate;
+  }
 
   String _recordText(RepairOrderDraft draft) {
     final date = AppDateUtils.formatDate(draft.reportDate);

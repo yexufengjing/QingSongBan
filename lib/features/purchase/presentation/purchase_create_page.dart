@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../app/theme/app_theme.dart';
 import '../../../core/database/app_database.dart';
 import '../../inventory/application/inventory_providers.dart';
 import '../application/purchase_form_notifier.dart';
@@ -545,25 +546,53 @@ class _PurchaseCreatePageState extends ConsumerState<PurchaseCreatePage> {
               ),
             ),
             actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(dialogContext),
-                child: const Text('取消'),
-              ),
-              FilledButton(
-                onPressed: () {
-                  Navigator.pop(
-                    dialogContext,
-                    PurchaseItemDraft(
-                      itemName: name.text.trim(),
-                      specification: specification.text.trim().isEmpty
-                          ? null
-                          : specification.text.trim(),
-                      unit: unit.text.trim(),
-                      requestQuantity: double.tryParse(quantity.text) ?? 0,
+              Row(
+                children: [
+                  Expanded(
+                    child: TextButton(
+                      key: const Key('purchase-manual-item-cancel'),
+                      style: TextButton.styleFrom(
+                        backgroundColor: AppColors.lightBlue,
+                        foregroundColor: AppColors.techBlue,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: () => Navigator.pop(dialogContext),
+                      child: const Text('取消'),
                     ),
-                  );
-                },
-                child: const Text('添加'),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: FilledButton(
+                      key: const Key('purchase-manual-item-add'),
+                      style: FilledButton.styleFrom(
+                        backgroundColor: AppColors.techBlue,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(
+                          dialogContext,
+                          PurchaseItemDraft(
+                            itemName: name.text.trim(),
+                            specification: specification.text.trim().isEmpty
+                                ? null
+                                : specification.text.trim(),
+                            unit: unit.text.trim(),
+                            requestQuantity:
+                                double.tryParse(quantity.text) ?? 0,
+                          ),
+                        );
+                      },
+                      child: const Text('添加'),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

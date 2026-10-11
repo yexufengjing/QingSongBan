@@ -372,6 +372,7 @@ void main() {
           ('purchase_detail', '/purchase/detail/$requestId'),
           ('purchase_stock_in', '/purchase/stock-in/$requestId'),
           ('vehicle_detail', '/vehicles/$vehicleId'),
+          ('vehicle_reminders_current', '/vehicles/$vehicleId?tab=reminder'),
           ('vehicle_repair_form', '/vehicles/$vehicleId/repair/new'),
           ('vehicle_attachments', '/vehicles/$vehicleId/attachments'),
           ('vehicle_reminders', '/vehicles/reminders'),
@@ -403,9 +404,43 @@ void main() {
               !_routeFilter.split(',').contains(route.$1)) {
             continue;
           }
+          if (route.$1 == 'vehicle_reminders_current') {
+            appRouter.go('/vehicles/$vehicleId');
+            await _settle(tester);
+            recordException('/vehicles/$vehicleId before reminder query');
+            expect(
+              find.descendant(
+                of: find.byType(AppBar),
+                matching: find.text('车辆详情'),
+              ),
+              findsOneWidget,
+              reason: 'the query transition starts on this vehicle overview',
+            );
+          }
           appRouter.go(route.$2);
           await _settle(tester);
           recordException(route.$2);
+          if (route.$1 == 'vehicle_reminders_current') {
+            expect(
+              find.text('仅当前车辆'),
+              findsOneWidget,
+              reason: 'the vehicle reminder tab must render its scoped content',
+            );
+            expect(
+              find.descendant(
+                of: find.byType(AppBar),
+                matching: find.text('车辆提醒'),
+              ),
+              findsOneWidget,
+              reason: 'the reminder tab title must be selected',
+            );
+            expect(
+              DefaultTabController.of(tester.element(find.byType(TabBar)))
+                  .index,
+              6,
+              reason: 'the reminder tab controller index must be selected',
+            );
+          }
           if (route.$1 == 'home' && size.$1 == 390) {
             expect(
               tester.getTopLeft(find.byKey(const Key('home-metric-今日请假'))).dy,

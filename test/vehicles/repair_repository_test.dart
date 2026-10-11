@@ -26,6 +26,36 @@ void main() {
 
   tearDown(() => database.close());
 
+  test('generates unique repair numbers when the clock repeats', () async {
+    final fixedNow = DateTime(2026, 10, 12, 9, 30);
+    final fixedClockRepository = RepairRepository(
+      database,
+      clock: () => fixedNow,
+    );
+    RepairOrderDraft draft() => RepairOrderDraft(
+      vehicleId: vehicleId,
+      reportDate: DateTime(2026, 10, 12),
+      faultFoundAt: fixedNow,
+      symptom: '稳定性测试故障',
+      ticketStatus: RepairTicketStatus.notRequired,
+    );
+
+    final first = await fixedClockRepository.save(draft: draft());
+    final second = await RepairRepository(
+      database,
+      clock: () => fixedNow,
+    ).save(draft: draft());
+
+    expect(first.repairNo, 'REPAIR-${fixedNow.microsecondsSinceEpoch}');
+    expect(second.repairNo, 'REPAIR-${fixedNow.microsecondsSinceEpoch}-1');
+    expect(
+      (await database.select(database.repairOrders).get())
+          .map((order) => order.repairNo)
+          .toSet(),
+      {first.repairNo, second.repairNo},
+    );
+  });
+
   test(
     'calculates repair totals from cost items and generates record text',
     () async {
@@ -116,6 +146,7 @@ void main() {
       );
 
       expect(edited.actualAmountCents, 2500);
+      expect(edited.repairNo, first.repairNo);
       expect((await repository.listCosts(first.id)).single.content, '新项目');
       expect(
         (await VehicleRepository(database).findById(vehicleId))?.status,

@@ -10,7 +10,11 @@ import '../application/vehicle_providers.dart';
 import 'vehicle_navigation_bar.dart';
 
 class VehicleReminderPage extends ConsumerStatefulWidget {
-  const VehicleReminderPage({super.key});
+  const VehicleReminderPage({this.vehicleId, super.key});
+
+  /// When set, shows this vehicle's reminders as detail-tab content.
+  /// With no ID, the page remains the full vehicle reminder center.
+  final int? vehicleId;
 
   @override
   ConsumerState<VehicleReminderPage> createState() =>
@@ -26,6 +30,12 @@ class _VehicleReminderPageState extends ConsumerState<VehicleReminderPage> {
   Widget build(BuildContext context) {
     final reminders = ref.watch(reminderItemsProvider);
     final vehicles = ref.watch(allVehiclesProvider);
+    final body = reminders.when(
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (error, _) => Center(child: Text('提醒加载失败：$error')),
+      data: (items) => _content(items, vehicles.valueOrNull ?? const []),
+    );
+    if (widget.vehicleId != null) return body;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -40,11 +50,7 @@ class _VehicleReminderPageState extends ConsumerState<VehicleReminderPage> {
         ],
       ),
       bottomNavigationBar: const VehicleNavigationBar(),
-      body: reminders.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, _) => Center(child: Text('提醒加载失败：$error')),
-        data: (items) => _content(items, vehicles.valueOrNull ?? const []),
-      ),
+      body: body,
     );
   }
 
@@ -53,6 +59,13 @@ class _VehicleReminderPageState extends ConsumerState<VehicleReminderPage> {
         .where(
           (item) =>
               item.links.any((link) => link.entityType == 'vehicle') &&
+              (widget.vehicleId == null ||
+                  item.links.any(
+                    (link) =>
+                        link.entityType == 'vehicle' &&
+                        link.entityId == widget.vehicleId,
+                  )) &&
+              item.reminder.isEnabled &&
               item.isPending,
         )
         .toList();
@@ -76,7 +89,7 @@ class _VehicleReminderPageState extends ConsumerState<VehicleReminderPage> {
           (item) =>
               item.scheduledAt != null &&
               !item.scheduledAt!.isBefore(today) &&
-              !item.scheduledAt!.isAfter(soon),
+              !_dateOnly(item.scheduledAt!).isAfter(soon),
         )
         .length;
     final visible = vehicleItems.where((item) {
@@ -107,6 +120,35 @@ class _VehicleReminderPageState extends ConsumerState<VehicleReminderPage> {
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 30),
       children: [
+        if (widget.vehicleId != null) ...[
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '车辆提醒',
+                      key: const Key('vehicle-reminders-section-title'),
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    const SizedBox(height: 3),
+                    const Text(
+                      '仅当前车辆',
+                      style: TextStyle(color: AppColors.body, fontSize: 14),
+                    ),
+                  ],
+                ),
+              ),
+              TextButton.icon(
+                onPressed: () => context.push('/vehicles/reminders'),
+                icon: const Icon(Icons.open_in_new),
+                label: const Text('全车提醒'),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+        ],
         SizedBox(
           height: 40,
           child: ListView(
@@ -278,10 +320,14 @@ class _VehicleReminderPageState extends ConsumerState<VehicleReminderPage> {
   }
 
   Vehicle? _linkedVehicle(ReminderItem item, List<Vehicle> vehicles) {
-    final id = item.links
+    final vehicleLinks = item.links
         .where((link) => link.entityType == 'vehicle')
-        .firstOrNull
-        ?.entityId;
+        .toList();
+    final id = widget.vehicleId ?? vehicleLinks.firstOrNull?.entityId;
+    if (widget.vehicleId != null &&
+        !vehicleLinks.any((link) => link.entityId == widget.vehicleId)) {
+      return null;
+    }
     return vehicles.where((vehicle) => vehicle.id == id).firstOrNull;
   }
 

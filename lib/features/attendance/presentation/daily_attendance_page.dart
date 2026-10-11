@@ -23,7 +23,17 @@ class DailyAttendancePage extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('每日考勤'),
         actions: [
-          const Tooltip(message: '自动保存', child: Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: Icon(Icons.check_circle_outline, color: AppColors.success, size: 20))),
+          const Tooltip(
+            message: '自动保存',
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8),
+              child: Icon(
+                Icons.check_circle_outline,
+                color: AppColors.success,
+                size: 20,
+              ),
+            ),
+          ),
           IconButton(
             onPressed: () => context.push('/attendance/monthly-roster'),
             icon: const Icon(Icons.calendar_month_outlined),
@@ -168,6 +178,7 @@ class _DailyAttendanceContent extends ConsumerWidget {
   ) async {
     try {
       await ref.read(dailyAttendanceRepositoryProvider).save(draft);
+      if (context.mounted) _showMessage(context, '已自动保存');
     } catch (error) {
       if (context.mounted) _showMessage(context, '保存失败：$error');
     }
@@ -242,6 +253,11 @@ class _DailyAttendanceSelectors extends StatelessWidget {
               Expanded(
                 child: TextButton(
                   key: const Key('daily-attendance-date-button'),
+                  style: TextButton.styleFrom(
+                    minimumSize: const Size(48, 48),
+                    tapTargetSize: MaterialTapTargetSize.padded,
+                    visualDensity: VisualDensity.standard,
+                  ),
                   onPressed: () async {
                     final picked = await showDatePicker(
                       context: context,
@@ -272,8 +288,8 @@ class _DailyAttendanceSelectors extends StatelessWidget {
                 icon: const Icon(Icons.chevron_left),
                 tooltip: '前一天',
                 constraints: const BoxConstraints.tightFor(
-                  width: 30,
-                  height: 32,
+                  width: 48,
+                  height: 48,
                 ),
                 padding: EdgeInsets.zero,
               ),
@@ -282,9 +298,10 @@ class _DailyAttendanceSelectors extends StatelessWidget {
                 onPressed: () =>
                     onDateChanged(AppDateUtils.dateOnly(DateTime.now())),
                 style: TextButton.styleFrom(
-                  minimumSize: const Size(36, 32),
+                  minimumSize: const Size(48, 48),
                   padding: const EdgeInsets.symmetric(horizontal: 3),
-                  visualDensity: VisualDensity.compact,
+                  tapTargetSize: MaterialTapTargetSize.padded,
+                  visualDensity: VisualDensity.standard,
                 ),
                 child: const Text('今天'),
               ),
@@ -296,8 +313,8 @@ class _DailyAttendanceSelectors extends StatelessWidget {
                 icon: const Icon(Icons.chevron_right),
                 tooltip: '后一天',
                 constraints: const BoxConstraints.tightFor(
-                  width: 30,
-                  height: 32,
+                  width: 48,
+                  height: 48,
                 ),
                 padding: EdgeInsets.zero,
               ),
@@ -307,7 +324,7 @@ class _DailyAttendanceSelectors extends StatelessWidget {
       ),
       const SizedBox(height: 6),
       SizedBox(
-        height: 44,
+        height: 48,
         child: ListView.separated(
           scrollDirection: Axis.horizontal,
           itemCount: groups.length,
@@ -370,48 +387,63 @@ class _DailyAttendanceActions extends StatelessWidget {
         AppColors.danger,
       ),
     ];
-    return LayoutBuilder(builder: (context, constraints) {
-      final columns = constraints.maxWidth < 330 || MediaQuery.textScalerOf(context).scale(14) > 17 ? 2 : 4;
-      return Wrap(spacing: 6, runSpacing: 6, children: [
-        for (var index = 0; index < actions.length; index++) ...[
-
-          SizedBox(width: (constraints.maxWidth - (columns - 1) * 6) / columns,
-            child: Material(
-              color: actions[index].$3.withValues(alpha: .1),
-              borderRadius: BorderRadius.circular(12),
-              child: InkWell(
-                key: Key('daily-attendance-action-${actions[index].$1.name}'),
-                onTap: () => onAction(actions[index].$1),
-                borderRadius: BorderRadius.circular(12),
-                child: SizedBox(
-                  height: 78,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        actions[index].$2,
-                        color: actions[index].$3,
-                        size: 22,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final columns =
+            constraints.maxWidth < 330 ||
+                MediaQuery.textScalerOf(context).scale(14) > 17
+            ? 2
+            : 4;
+        return Wrap(
+          spacing: 6,
+          runSpacing: 6,
+          children: [
+            for (var index = 0; index < actions.length; index++) ...[
+              SizedBox(
+                width: (constraints.maxWidth - (columns - 1) * 6) / columns,
+                child: Material(
+                  color: actions[index].$3.withValues(alpha: .1),
+                  borderRadius: BorderRadius.circular(12),
+                  child: InkWell(
+                    key: Key(
+                      'daily-attendance-action-${actions[index].$1.name}',
+                    ),
+                    onTap: () => onAction(actions[index].$1),
+                    borderRadius: BorderRadius.circular(12),
+                    child: SizedBox(
+                      height: 78,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            actions[index].$2,
+                            color: actions[index].$3,
+                            size: 22,
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            DailyAttendanceOptions.actionLabel(
+                              actions[index].$1,
+                            ),
+                            textAlign: TextAlign.center,
+                            maxLines: 2,
+                            style: Theme.of(context).textTheme.bodySmall
+                                ?.copyWith(
+                                  color: AppColors.ink,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        DailyAttendanceOptions.actionLabel(actions[index].$1),
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AppColors.ink,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
-        ],
-      ]);
-    });
+            ],
+          ],
+        );
+      },
+    );
   }
 }
 
@@ -427,59 +459,72 @@ class _DailyAttendanceOverview extends StatelessWidget {
         children: [
           Text('考勤概况', style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: 12),
-          LayoutBuilder(builder: (context, constraints) {
-            final columns = constraints.maxWidth < 290 || MediaQuery.textScalerOf(context).scale(14) > 17 ? 2 : 3;
-            return Wrap(spacing: 8, runSpacing: 8, children: [
-              for (final metric in [
-                (
-                  '名单人数',
-                  '${items.length}人',
-                  Icons.groups_outlined,
-                  AppColors.success,
-                ),
-                (
-                  '上午已登记',
-                  '${items.where((item) => item.morningStatus != AttendanceHalfStatus.unregistered).length}/${items.length}',
-                  Icons.event_available_outlined,
-                  AppColors.techBlue,
-                ),
-                (
-                  '下午已登记',
-                  '${items.where((item) => item.afternoonStatus != AttendanceHalfStatus.unregistered).length}/${items.length}',
-                  Icons.event_available_outlined,
-                  const Color(0xFFE98500),
-                ),
-              ])
-                SizedBox(width: (constraints.maxWidth - (columns - 1) * 8) / columns,
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 3),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 6,
-                      vertical: 12,
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final columns =
+                  constraints.maxWidth < 290 ||
+                      MediaQuery.textScalerOf(context).scale(14) > 17
+                  ? 2
+                  : 3;
+              return Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  for (final metric in [
+                    (
+                      '名单人数',
+                      '${items.length}人',
+                      Icons.groups_outlined,
+                      AppColors.success,
                     ),
-                    decoration: BoxDecoration(
-                      color: AppColors.lightBlue.withValues(alpha: .45),
-                      borderRadius: BorderRadius.circular(8),
+                    (
+                      '上午已登记',
+                      '${items.where((item) => item.morningStatus != AttendanceHalfStatus.unregistered).length}/${items.length}',
+                      Icons.event_available_outlined,
+                      AppColors.techBlue,
                     ),
-                    child: Column(
-                      children: [
-                        Icon(metric.$3, color: metric.$4, size: 20),
-                        const SizedBox(height: 8),
-                        Text(
-                          metric.$1,
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodySmall,
+                    (
+                      '下午已登记',
+                      '${items.where((item) => item.afternoonStatus != AttendanceHalfStatus.unregistered).length}/${items.length}',
+                      Icons.event_available_outlined,
+                      const Color(0xFFE98500),
+                    ),
+                  ])
+                    SizedBox(
+                      width:
+                          (constraints.maxWidth - (columns - 1) * 8) / columns,
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 3),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 6,
+                          vertical: 12,
                         ),
-                        const SizedBox(height: 6),
-                        Text(
-                          metric.$2,
-                          style: Theme.of(context).textTheme.titleLarge,
+                        decoration: BoxDecoration(
+                          color: AppColors.lightBlue.withValues(alpha: .45),
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                      ],
+                        child: Column(
+                          children: [
+                            Icon(metric.$3, color: metric.$4, size: 20),
+                            const SizedBox(height: 8),
+                            Text(
+                              metric.$1,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              metric.$2,
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-            ]); }),
+                ],
+              );
+            },
+          ),
         ],
       ),
     ),
@@ -561,7 +606,8 @@ class _DailyAttendanceEmployeeCardState
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         child: Column(
           children: [
-            if (MediaQuery.sizeOf(context).width < 350 || MediaQuery.textScalerOf(context).scale(14) > 17) ...[
+            if (MediaQuery.sizeOf(context).width < 350 ||
+                MediaQuery.textScalerOf(context).scale(14) > 17) ...[
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -743,42 +789,13 @@ class _DailyAttendanceEmployeeCardState
   }
 
   Future<void> _editRemark() async {
-    final controller = TextEditingController(text: _remarkController.text);
     final result = await showDialog<String>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('考勤备注', textAlign: TextAlign.center),
-        content: TextField(
-          controller: controller,
-          autofocus: true,
-          maxLines: 3,
-          maxLength: 100,
-          decoration: const InputDecoration(hintText: '输入备注'),
-        ),
-        actions: [
-          Row(
-            children: [
-              Expanded(
-                child: TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text('取消'),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: FilledButton(
-                  onPressed: () =>
-                      Navigator.pop(context, controller.text.trim()),
-                  child: const Text('保存备注'),
-                ),
-              ),
-            ],
-          ),
-        ],
+      builder: (context) => _AttendanceRemarkDialog(
+        initialValue: _remarkController.text,
       ),
     );
-    controller.dispose();
-    if (result == null) return;
+    if (!mounted || result == null) return;
     _remarkController.text = result;
     await _save();
     if (mounted) setState(() {});
@@ -814,6 +831,59 @@ class _DailyAttendanceEmployeeCardState
     AttendanceHalfStatus.notEmployed ||
     AttendanceHalfStatus.terminated => AppColors.helper,
   };
+}
+
+class _AttendanceRemarkDialog extends StatefulWidget {
+  const _AttendanceRemarkDialog({required this.initialValue});
+
+  final String initialValue;
+
+  @override
+  State<_AttendanceRemarkDialog> createState() =>
+      _AttendanceRemarkDialogState();
+}
+
+class _AttendanceRemarkDialogState extends State<_AttendanceRemarkDialog> {
+  late final TextEditingController _controller = TextEditingController(
+    text: widget.initialValue,
+  );
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => AlertDialog(
+    title: const Text('考勤备注', textAlign: TextAlign.center),
+    content: TextField(
+      controller: _controller,
+      autofocus: true,
+      maxLines: 3,
+      maxLength: 100,
+      decoration: const InputDecoration(hintText: '输入备注'),
+    ),
+    actions: [
+      Row(
+        children: [
+          Expanded(
+            child: TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('取消'),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: FilledButton(
+              onPressed: () => Navigator.pop(context, _controller.text.trim()),
+              child: const Text('保存备注'),
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
 }
 
 class _DailyAttendanceEmpty extends StatelessWidget {

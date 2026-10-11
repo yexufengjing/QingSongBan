@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:qingsongban/app/theme/app_theme.dart';
 import 'package:qingsongban/core/database/app_database.dart';
 import 'package:qingsongban/core/database/database_enums.dart';
@@ -21,6 +22,7 @@ import 'package:qingsongban/features/reminders/domain/reminder_options.dart';
 import 'package:qingsongban/features/reports/presentation/reports_page.dart';
 import 'package:qingsongban/features/vehicles/data/vehicle_repository.dart';
 import 'package:qingsongban/features/vehicles/domain/vehicle_options.dart';
+import 'package:qingsongban/features/vehicles/presentation/vehicle_detail_page.dart';
 import 'package:qingsongban/features/vehicles/presentation/vehicle_reminder_page.dart';
 
 class _FailOnceAttendanceRepository extends DailyAttendanceRepository {
@@ -66,6 +68,30 @@ Future<void> _pump(
           child: child!,
         ),
         home: page,
+      ),
+    ),
+  );
+  await tester.pumpAndSettle();
+}
+
+Future<void> _pumpWithRouter(
+  WidgetTester tester,
+  AppDatabase db,
+  GoRouter router,
+) async {
+  await tester.pumpWidget(
+    ProviderScope(
+      overrides: [appDatabaseProvider.overrideWithValue(db)],
+      child: MaterialApp.router(
+        theme: AppTheme.light,
+        locale: const Locale('zh', 'CN'),
+        supportedLocales: const [Locale('zh', 'CN')],
+        localizationsDelegates: GlobalMaterialLocalizations.delegates,
+        builder: (context, child) => MediaQuery(
+          data: MediaQuery.of(context).copyWith(disableAnimations: true),
+          child: child!,
+        ),
+        routerConfig: router,
       ),
     ),
   );
@@ -125,18 +151,17 @@ void main() {
         await tester.pumpAndSettle();
         await tester.tap(morning);
         await tester.pumpAndSettle();
-        final option = find.widgetWithText(
-          PopupMenuItem<AttendanceHalfStatus>,
-          '出勤',
-        );
+        final option = find.text('出勤').last;
         expect(option, findsOneWidget);
         await tester.tap(option);
         await tester.pumpAndSettle();
       }
 
       await selectPresent();
-      expect(find.text('保存失败，请重新选择或编辑后重试'), findsOneWidget);
+      expect(find.text('保存失败：Bad state: test write failure'), findsOneWidget);
       expect(await db.select(db.attendanceRecords).get(), isEmpty);
+      await tester.pump(const Duration(seconds: 5));
+      await tester.pumpAndSettle();
       await selectPresent();
       expect(find.text('已自动保存'), findsOneWidget);
       final record = (await db.select(db.attendanceRecords).get()).single;
@@ -249,22 +274,107 @@ void main() {
         ],
       ),
     );
-    await _pump(
-      tester,
-      db,
-      Scaffold(body: VehicleReminderPage(vehicleId: vehicles.first.id)),
+    await ReminderRepository(db).save(
+      draft: ReminderDraft(
+        title: '多车关联提醒',
+        reminderType: 'custom',
+        leadDays: 0,
+        isEnabled: true,
+        dueDate: DateTime(now.year, now.month, now.day + 8, 18),
+        links: [
+          ReminderLinkDraft(
+            entityType: 'vehicle',
+            entityId: vehicles.last.id,
+            displayName: vehicles.last.name,
+          ),
+          ReminderLinkDraft(
+            entityType: 'vehicle',
+            entityId: vehicles.first.id,
+            displayName: vehicles.first.name,
+          ),
+        ],
+      ),
+    );
+    final router = GoRouter(
+      initialLocation: '/vehicles/${vehicles.first.id}?tab=reminder',
+      routes: [
+        GoRoute(
+          path: '/vehicles/reminders',
+          builder: (context, state) => const VehicleReminderPage(),
+        ),
+        GoRoute(
+          path: '/vehicles/:vehicleId',
+          builder: (context, state) => VehicleDetailPage(
+            vehicleId: int.parse(state.pathParameters['vehicleId']!),
+            initialTab: state.uri.queryParameters['tab'],
+          ),
+        ),
+      ],
+    );
+    await _pumpWithRouter(tester, db, router);
+    expect(find.text('UI0001'), findsWidgets);
+    expect(
+      find.byKey(const Key('vehicle-reminders-section-title')),
+      findsOneWidget,
+    );
+    expect(find.text('仅当前车辆'), findsOneWidget);
+    expect(find.text('全车提醒'), findsOneWidget);
+    expect(find.text('2'), findsOneWidget);
+    final remindersScrollable = find
+        .descendant(
+          of: find.byType(VehicleReminderPage),
+          matching: find.byType(Scrollable),
+        )
+        .first;
+    final linkedReminderCard = find.ancestor(
+      of: find.text('多车关联提醒'),
+      matching: find.byType(Card),
+    );
+    await tester.scrollUntilVisible(
+      find.text('多车关联提醒'),
+      240,
+      scrollable: remindersScrollable,
+    );
+    expect(
+      find.descendant(of: linkedReminderCard, matching: find.text('车辆1')),
+      findsOneWidget,
+    );
+    expect(
+      find.descendant(of: linkedReminderCard, matching: find.text('车辆2')),
+      findsNothing,
+    );
+    await tester.scrollUntilVisible(
+      find.text('即将到期'),
+      -240,
+      scrollable: remindersScrollable,
+    );
+    await tester.tap(find.text('即将到期'));
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(
+      find.text('第七天提醒'),
+      240,
+      scrollable: remindersScrollable,
     );
     expect(find.text('车辆1保养'), findsOneWidget);
     expect(find.text('车辆2保养'), findsNothing);
     expect(find.text('停用车辆提醒'), findsNothing);
-    expect(find.text('2'), findsOneWidget);
-    await tester.tap(find.text('即将到期'));
-    await tester.pumpAndSettle();
     expect(find.text('第七天提醒'), findsOneWidget);
     expect(find.byType(NavigationBar), findsNothing);
+    await tester.scrollUntilVisible(
+      find.text('全车提醒'),
+      -240,
+      scrollable: remindersScrollable,
+    );
+    await tester.tap(find.text('全车提醒'));
+    await tester.pumpAndSettle();
+    expect(find.text('提醒中心'), findsOneWidget);
+    expect(find.text('车辆2保养'), findsOneWidget);
+    expect(find.text('停用车辆提醒'), findsNothing);
+    expect(find.byType(NavigationBar), findsOneWidget);
     expect(tester.takeException(), isNull);
     await tester.pumpWidget(const SizedBox.shrink());
     await tester.pumpAndSettle();
+    router.dispose();
   });
 
   testWidgets('personnel no-match state clears the input and filters', (
@@ -279,15 +389,27 @@ void main() {
       ),
     );
     await _pump(tester, db, const PersonnelListPage());
+    await tester.tap(find.text('暂停工作').first);
+    await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField).first, '不存在的姓名');
     await tester.pumpAndSettle();
     expect(find.text('没有匹配的人员'), findsOneWidget);
     expect(find.text('暂无人员档案'), findsNothing);
+    expect(
+      tester
+          .widget<ChoiceChip>(find.widgetWithText(ChoiceChip, '暂停工作'))
+          .selected,
+      isTrue,
+    );
     await tester.tap(find.text('清除搜索与筛选'));
     await tester.pumpAndSettle();
     expect(
       tester.widget<TextField>(find.byType(TextField).first).controller!.text,
       isEmpty,
+    );
+    expect(
+      tester.widget<ChoiceChip>(find.widgetWithText(ChoiceChip, '全部')).selected,
+      isTrue,
     );
     expect(find.text('没有匹配的人员'), findsNothing);
     expect(find.text('测试人员'), findsOneWidget);

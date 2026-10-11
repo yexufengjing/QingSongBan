@@ -13,8 +13,8 @@ import 'vehicle_expense_tab.dart';
 import 'vehicle_fuel_tab.dart';
 import 'vehicle_maintenance_tab.dart';
 import 'vehicle_metric_grid.dart';
-import 'vehicle_navigation_bar.dart';
 import 'vehicle_repair_tab.dart';
+import 'vehicle_reminder_page.dart';
 
 class VehicleDetailPage extends ConsumerWidget {
   const VehicleDetailPage({
@@ -34,7 +34,10 @@ class VehicleDetailPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final vehicle = ref.watch(vehicleProvider(vehicleId));
     return DefaultTabController(
-      length: 6,
+      key: ValueKey<String>(
+        'vehicle-detail-$vehicleId-tab-${_tabIndex(initialTab)}',
+      ),
+      length: 7,
       initialIndex: _tabIndex(initialTab),
       child: Builder(
         builder: (context) {
@@ -63,7 +66,6 @@ class VehicleDetailPage extends ConsumerWidget {
                 ),
               ],
             ),
-            bottomNavigationBar: const VehicleNavigationBar(),
             body: vehicle.when(
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (error, _) => Center(child: Text(error.toString())),
@@ -87,11 +89,12 @@ class VehicleDetailPage extends ConsumerWidget {
                       indicatorColor: AppColors.techBlue,
                       tabs: [
                         Tab(text: '档案'),
-                        Tab(text: '车况'),
                         Tab(text: '维修'),
+                        Tab(text: '费用分析'),
+                        Tab(text: '车况'),
                         Tab(text: '保养/备件'),
                         Tab(text: '油耗'),
-                        Tab(text: '费用分析'),
+                        Tab(text: '提醒'),
                       ],
                     ),
                     Expanded(
@@ -104,15 +107,16 @@ class VehicleDetailPage extends ConsumerWidget {
                               '/vehicles/${item.id}/attachments',
                             ),
                           ),
-                          VehicleConditionTab(vehicle: item),
                           VehicleRepairTab(vehicle: item),
+                          VehicleExpenseTab(vehicle: item),
+                          VehicleConditionTab(vehicle: item),
                           VehicleMaintenanceTab(vehicle: item),
                           VehicleFuelTab(
                             vehicle: item,
                             initialYear: initialFuelYear,
                             initialMonth: initialFuelMonth,
                           ),
-                          VehicleExpenseTab(vehicle: item),
+                          VehicleReminderPage(vehicleId: item.id),
                         ],
                       ),
                     ),
@@ -127,20 +131,22 @@ class VehicleDetailPage extends ConsumerWidget {
   }
 
   int _tabIndex(String? tab) => switch (tab) {
-    'condition' => 1,
-    'repair' => 2,
-    'maintenance' => 3,
-    'fuel' => 4,
-    'expense' => 5,
+    'repair' => 1,
+    'expense' => 2,
+    'condition' => 3,
+    'maintenance' => 4,
+    'fuel' => 5,
+    'reminder' => 6,
     _ => 0,
   };
 
   String _titleForTabIndex(int index) => switch (index) {
-    1 => '车辆车况检查',
-    2 => '车辆维修管理',
-    3 => '车辆保养/备件',
-    4 => '车辆油耗记录',
-    5 => '车辆费用分析',
+    1 => '车辆维修管理',
+    2 => '车辆费用分析',
+    3 => '车辆车况检查',
+    4 => '车辆保养/备件',
+    5 => '车辆油耗记录',
+    6 => '车辆提醒',
     _ => '车辆详情',
   };
 

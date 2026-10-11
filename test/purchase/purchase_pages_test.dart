@@ -30,6 +30,10 @@ import 'package:qingsongban/core/widgets/design_canvas.dart';
 import 'purchase_test_fonts.dart';
 
 const _capturePurchasePages = bool.fromEnvironment('PURCHASE_CAPTURE_UI');
+const _purchaseCaptureDirectory = String.fromEnvironment(
+  'PURCHASE_CAPTURE_DIR',
+  defaultValue: 'docs/acceptance/ui-refactor-20261009/purchase',
+);
 String? _testFontFamily;
 
 void main() {
@@ -329,6 +333,61 @@ void main() {
             reason: '${entry.$1}, ${configuration.name}, scale=$scale',
           );
           await tester.pumpAndSettle();
+          if (index == 3) {
+            final searchRect = tester.getRect(
+              find.byKey(const Key('purchase-tracking-search')),
+            );
+            final dateRect = tester.getRect(
+              find.byKey(const Key('purchase-tracking-date-filter')),
+            );
+            final purchaserRect = tester.getRect(
+              find.byKey(const Key('purchase-tracking-purchaser-filter')),
+            );
+            expect(searchRect.bottom, lessThan(dateRect.top));
+            expect(
+              (dateRect.center.dy - purchaserRect.center.dy).abs(),
+              lessThan(1),
+            );
+            expect((dateRect.width - purchaserRect.width).abs(), lessThan(1));
+            final statusRects =
+                [
+                  'pending_apply',
+                  'applied',
+                  'purchasing',
+                  'pending_receive',
+                ].map((status) {
+                  return tester.getRect(
+                    find.byKey(Key('purchase-status-filter-$status')),
+                  );
+                }).toList();
+            expect(
+              statusRects.every((rect) => rect.top > dateRect.bottom),
+              isTrue,
+            );
+            if (configuration.name == 'phone-1280x2800') {
+              expect(
+                statusRects.every(
+                  (rect) => rect.center.dy == statusRects.first.center.dy,
+                ),
+                isTrue,
+              );
+              expect(
+                statusRects.every(
+                  (rect) => (rect.width - statusRects.first.width).abs() < 1,
+                ),
+                isTrue,
+              );
+            } else {
+              expect(
+                statusRects[0].center.dy,
+                lessThan(statusRects[2].center.dy),
+              );
+              expect(
+                statusRects[1].center.dy,
+                lessThan(statusRects[3].center.dy),
+              );
+            }
+          }
           if (configuration.name == 'pressure-320dp-fs1p3' && index == 1) {
             final quantityField = find.byKey(
               const Key('purchase-item-quantity-0'),
@@ -446,7 +505,7 @@ Future<void> _capture(WidgetTester tester, String name) async {
   image.dispose();
   if (png == null) return;
   final directory = Directory(
-    '${Directory.current.path}${Platform.pathSeparator}docs${Platform.pathSeparator}acceptance${Platform.pathSeparator}ui-refactor-20261009${Platform.pathSeparator}purchase',
+    '${Directory.current.path}${Platform.pathSeparator}${_purchaseCaptureDirectory.replaceAll('/', Platform.pathSeparator)}',
   )..createSync(recursive: true);
   final filename = '${name.replaceAll('/', '_')}.png';
   await File('${directory.path}${Platform.pathSeparator}$filename')

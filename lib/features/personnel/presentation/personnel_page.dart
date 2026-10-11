@@ -59,7 +59,7 @@ class _PersonnelHomeContent extends StatelessWidget {
             children: [
               IconButton(
                 onPressed: () =>
-                    context.canPop() ? context.pop() : context.go('/'),
+                    context.canPop() ? context.pop() : context.go('/home'),
                 icon: const Icon(Icons.chevron_left),
                 tooltip: '返回',
               ),

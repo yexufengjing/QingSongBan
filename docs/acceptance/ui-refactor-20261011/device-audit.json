@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-11",
+  "baselineCommit": "665abda7703d65a0897f98fa1e6a4b94a4f29bc2",
+  "serial": "emulator-5554",
+  "package": "com.yexufengjing.qingsongban",
+  "databasePath": "app_flutter/qingsongban.sqlite",
+  "databaseBefore": "830ccbce6fd7d24a1b5f4c9965c67f78b2960d7464564b62c22442a1210324e5",
+  "screen": "Physical size: 1080x2400\r\nOverride size: 1280x2800",
+  "density": "Physical density: 420\r\nOverride density: 480",
+  "fontScale": "1.0",
+  "note": "Fresh force-stopped device baseline; no demo data injected; main phone preview uses simulated 480dpi, not measured GT7 density",
+  "databaseAfter": "830ccbce6fd7d24a1b5f4c9965c67f78b2960d7464564b62c22442a1210324e5",
+  "databaseUnchanged": true,
+  "apkSha256": "B5A14065635211A6F004257758F3E5FC0D5AA8492D305668485E82D8E365CBA6",
+  "install": "adb install -r: Success",
+  "checks": [
+    "six route screenshots at 1280x2800",
+    "native Excel picker open and cancel; import button enabled",
+    "native reminder keyboard shown, save visible, unsaved form cancelled",
+    "vehicle current reminder and global navigation at 1080x2362"
+  ],
+  "runtimeIssueLines": 0,
+  "limitations": [
+    "simulated emulator sizes and density, not physical GT7",
+    "no real import, backup or restore executed",
+    "no complete 342-state visual acceptance"
+  ]
+}

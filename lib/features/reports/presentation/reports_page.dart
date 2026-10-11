@@ -24,6 +24,14 @@ class ReportsPage extends ConsumerStatefulWidget {
 class _ReportsPageState extends ConsumerState<ReportsPage> {
   bool _exporting = false;
   int _module = 0;
+  final Map<int, DateTime> _moduleMonths = {};
+  late final DateTime _defaultMonth;
+
+  @override
+  void initState() {
+    super.initState();
+    _defaultMonth = ref.read(monthlySummaryMonthProvider);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,8 +81,15 @@ class _ReportsPageState extends ConsumerState<ReportsPage> {
                 ],
                 selected: {_module},
                 showSelectedIcon: false,
-                onSelectionChanged: (value) =>
-                    setState(() => _module = value.first),
+                onSelectionChanged: (value) {
+                  final nextModule = value.first;
+                  setState(() {
+                    _moduleMonths[_module] = month;
+                    _module = nextModule;
+                  });
+                  ref.read(monthlySummaryMonthProvider.notifier).state =
+                      _moduleMonths[nextModule] ?? _defaultMonth;
+                },
               ),
             ),
           ),
@@ -83,8 +98,10 @@ class _ReportsPageState extends ConsumerState<ReportsPage> {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: _SummaryMonthSelector(
               month: month,
-              onChanged: (value) =>
-                  ref.read(monthlySummaryMonthProvider.notifier).state = value,
+              onChanged: (value) {
+                setState(() => _moduleMonths[_module] = value);
+                ref.read(monthlySummaryMonthProvider.notifier).state = value;
+              },
             ),
           ),
           const SizedBox(height: 12),

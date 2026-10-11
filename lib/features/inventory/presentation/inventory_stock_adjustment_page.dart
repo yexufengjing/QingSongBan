@@ -79,7 +79,9 @@ class _InventoryStockAdjustmentPageState
         if (snapshot.hasError) {
           return InventoryErrorState(onRetry: () => setState(() {}));
         }
-        if (!snapshot.hasData) return const InventoryLoadingState();
+        if (snapshot.connectionState != ConnectionState.done) {
+          return const InventoryLoadingState();
+        }
         final material = snapshot.data;
         if (material == null) {
           return const InventoryEmptyState(

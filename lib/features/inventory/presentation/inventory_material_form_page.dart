@@ -42,6 +42,18 @@ class _InventoryMaterialFormPageState
     _material = widget.materialId == null
         ? null
         : ref.read(inventoryServiceProvider).getMaterial(widget.materialId!);
+    final materialFuture = _material;
+    if (materialFuture != null) {
+      materialFuture.then<void>(
+        (material) {
+          if (!mounted || material == null) return;
+          setState(() => _fill(material));
+        },
+        onError: (Object _, StackTrace _) {
+          if (mounted) setState(() {});
+        },
+      );
+    }
   }
 
   @override
@@ -128,30 +140,10 @@ class _InventoryMaterialFormPageState
   }
 
   Future<void> _createCategory() async {
-    final controller = TextEditingController();
     final name = await showDialog<String>(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: const Text('新增物资分类'),
-        content: TextField(
-          controller: controller,
-          autofocus: true,
-          decoration: const InputDecoration(labelText: '分类名称'),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('取消'),
-          ),
-          FilledButton(
-            onPressed: () =>
-                Navigator.pop(dialogContext, controller.text.trim()),
-            child: const Text('新增'),
-          ),
-        ],
-      ),
+      builder: (_) => const _CreateInventoryCategoryDialog(),
     );
-    controller.dispose();
     if (name == null || name.isEmpty || !mounted) return;
     try {
       final id = await ref.read(inventoryServiceProvider).createCategory(name);
@@ -218,7 +210,6 @@ class _InventoryMaterialFormPageState
 
   Widget _materialContent(List<InventoryCategory> groups) {
     Widget formContent(InventoryMaterial? material) {
-      if (material != null) _fill(material);
       if (widget.materialId != null && material == null) {
         return const InventoryEmptyState(
           title: '物资不存在',
@@ -366,14 +357,58 @@ class _InventoryMaterialFormPageState
     return FutureBuilder<InventoryMaterial?>(
       future: _material,
       builder: (context, snapshot) {
+        if (snapshot.connectionState != ConnectionState.done) {
+          return const InventoryLoadingState();
+        }
         if (snapshot.hasError) {
           return InventoryErrorState(onRetry: () => setState(() {}));
         }
-        if (!snapshot.hasData) return const InventoryLoadingState();
+        if (snapshot.data != null && !_initialized) {
+          return const InventoryLoadingState();
+        }
         return formContent(snapshot.data);
       },
     );
   }
+}
+
+class _CreateInventoryCategoryDialog extends StatefulWidget {
+  const _CreateInventoryCategoryDialog();
+
+  @override
+  State<_CreateInventoryCategoryDialog> createState() =>
+      _CreateInventoryCategoryDialogState();
+}
+
+class _CreateInventoryCategoryDialogState
+    extends State<_CreateInventoryCategoryDialog> {
+  final _name = TextEditingController();
+
+  @override
+  void dispose() {
+    _name.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => AlertDialog(
+    title: const Text('新增物资分类'),
+    content: TextField(
+      controller: _name,
+      autofocus: true,
+      decoration: const InputDecoration(labelText: '分类名称'),
+    ),
+    actions: [
+      TextButton(
+        onPressed: () => Navigator.pop(context),
+        child: const Text('取消'),
+      ),
+      FilledButton(
+        onPressed: () => Navigator.pop(context, _name.text.trim()),
+        child: const Text('新增'),
+      ),
+    ],
+  );
 }
 
 String? _required(String? value) =>

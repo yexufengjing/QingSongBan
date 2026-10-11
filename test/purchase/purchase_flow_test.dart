@@ -271,7 +271,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.text('删除采购记录'));
       await tester.pumpAndSettle();
-      await tester.tap(find.widgetWithText(FilledButton, '确认删除'));
+      await tester.tap(find.byKey(const Key('purchase-delete-dialog-confirm')));
       await tester.pumpAndSettle();
       expect(
         (await database.select(database.purchaseRequests).getSingle())

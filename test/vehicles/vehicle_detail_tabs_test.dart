@@ -35,17 +35,22 @@ void main() {
     expect(find.text('车辆详情'), findsOneWidget);
 
     for (final (tab, title) in [
-      ('车况', '车辆车况检查'),
       ('维修', '车辆维修管理'),
+      ('费用分析', '车辆费用分析'),
+      ('车况', '车辆车况检查'),
       ('保养/备件', '车辆保养/备件'),
       ('油耗', '车辆油耗记录'),
-      ('费用分析', '车辆费用分析'),
+      ('提醒', '车辆提醒'),
       ('档案', '车辆详情'),
     ]) {
       await tester.ensureVisible(find.text(tab).first);
       await tester.tap(find.text(tab).first);
       await tester.pumpAndSettle();
-      expect(find.text(title), findsOneWidget, reason: 'tab $tab');
+      expect(
+        find.descendant(of: find.byType(AppBar), matching: find.text(title)),
+        findsOneWidget,
+        reason: 'tab $tab',
+      );
     }
 
     expect(tester.takeException(), isNull);

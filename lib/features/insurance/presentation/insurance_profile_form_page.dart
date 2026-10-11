@@ -51,6 +51,9 @@ class _InsuranceProfileFormPageState
               key: const Key('insurance-profile-save-button'),
               onPressed:
                   _saving ||
+                      _employeeId == null ||
+                      (widget.employeeId != null &&
+                          _employeeId != widget.employeeId) ||
                       ref.watch(allPersonnelProvider).valueOrNull?.isEmpty !=
                           false
                   ? null
@@ -80,6 +83,17 @@ class _InsuranceProfileFormPageState
                 return const Center(child: Text('暂无人员，请先建立人员档案。'));
               }
               final requestedEmployeeId = widget.employeeId;
+              if (requestedEmployeeId != null &&
+                  !employees.any(
+                    (employee) => employee.id == requestedEmployeeId,
+                  )) {
+                return const Center(
+                  child: Text(
+                    '所选人员档案不存在或已删除，无法维护参保信息。',
+                    key: Key('insurance-profile-missing-employee'),
+                  ),
+                );
+              }
               if (requestedEmployeeId != null &&
                   _loadedEmployeeId != requestedEmployeeId) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {

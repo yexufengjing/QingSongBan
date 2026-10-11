@@ -1,0 +1,26 @@
+[
+  {
+    "name": "vehicle-current",
+    "route": "/vehicles/1?tab=reminder"
+  },
+  {
+    "name": "inventory-missing",
+    "route": "/inventory/receipts/999999"
+  },
+  {
+    "name": "daily-attendance",
+    "route": "/attendance/daily"
+  },
+  {
+    "name": "reports",
+    "route": "/reports"
+  },
+  {
+    "name": "purchase-tracking",
+    "route": "/purchase/tracking"
+  },
+  {
+    "name": "excel",
+    "route": "/settings/excel"
+  }
+]

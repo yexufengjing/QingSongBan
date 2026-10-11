@@ -25,6 +25,14 @@ class PersonnelListPage extends ConsumerStatefulWidget {
 }
 
 class _PersonnelListPageState extends ConsumerState<PersonnelListPage> {
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -45,6 +53,7 @@ class _PersonnelListPageState extends ConsumerState<PersonnelListPage> {
     final initialHireMonth = widget.initialHireMonth;
     Future.microtask(() {
       if (!mounted) return;
+      _searchController.clear();
       ref.read(personnelSearchQueryProvider.notifier).state = '';
       ref.read(personnelStatusFilterProvider.notifier).state = initialStatus;
       ref.read(personnelAttendanceGroupFilterProvider.notifier).state = null;
@@ -58,13 +67,21 @@ class _PersonnelListPageState extends ConsumerState<PersonnelListPage> {
   @override
   Widget build(BuildContext context) {
     final employees = ref.watch(personnelListProvider);
+    final allPersonnel = ref.watch(allPersonnelProvider);
+    final hasActiveFilters =
+        ref.watch(personnelSearchQueryProvider).trim().isNotEmpty ||
+        ref.watch(personnelStatusFilterProvider) != null ||
+        ref.watch(personnelAttendanceGroupFilterProvider) != null ||
+        ref.watch(personnelEmploymentTypeFilterProvider) != null ||
+        ref.watch(personnelHireMonthFilterProvider) != null ||
+        ref.watch(personnelShowDeletedProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text('人员名单'), centerTitle: true),
       body: SafeArea(
         child: Column(
           children: [
-            const _PersonnelFilters(),
+            _PersonnelFilters(searchController: _searchController),
             Expanded(
               child: employees.when(
                 loading: () => const Center(child: CircularProgressIndicator()),
@@ -73,8 +90,24 @@ class _PersonnelListPageState extends ConsumerState<PersonnelListPage> {
                 ),
                 data: (items) {
                   if (items.isEmpty) {
-                    return PersonnelEmptyState(
-                      onCreate: () => context.push('/personnel/new'),
+                    if (hasActiveFilters ||
+                        allPersonnel.maybeWhen(
+                          data: (allItems) => allItems.isNotEmpty,
+                          orElse: () => false,
+                        )) {
+                      return _PersonnelNoMatchState(onClear: _clearFilters);
+                    }
+                    return allPersonnel.when(
+                      loading: () =>
+                          const Center(child: CircularProgressIndicator()),
+                      error: (_, _) => PersonnelErrorState(
+                        onRetry: () => ref.invalidate(allPersonnelProvider),
+                      ),
+                      data: (allItems) => allItems.isEmpty
+                          ? PersonnelEmptyState(
+                              onCreate: () => context.push('/personnel/new'),
+                            )
+                          : _PersonnelNoMatchState(onClear: _clearFilters),
                     );
                   }
                   return _EmployeeList(employees: items);
@@ -94,10 +127,49 @@ class _PersonnelListPageState extends ConsumerState<PersonnelListPage> {
       ),
     );
   }
+
+  void _clearFilters() {
+    _searchController.clear();
+    ref.read(personnelSearchQueryProvider.notifier).state = '';
+    ref.read(personnelStatusFilterProvider.notifier).state = null;
+    ref.read(personnelAttendanceGroupFilterProvider.notifier).state = null;
+    ref.read(personnelEmploymentTypeFilterProvider.notifier).state = null;
+    ref.read(personnelHireMonthFilterProvider.notifier).state = null;
+    ref.read(personnelShowDeletedProvider.notifier).state = false;
+  }
+}
+
+class _PersonnelNoMatchState extends StatelessWidget {
+  const _PersonnelNoMatchState({required this.onClear});
+
+  final VoidCallback onClear;
+
+  @override
+  Widget build(BuildContext context) => Center(
+    child: Padding(
+      padding: const EdgeInsets.all(32),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(
+            Icons.search_off_outlined,
+            size: 40,
+            color: AppColors.helper,
+          ),
+          const SizedBox(height: 12),
+          Text('没有匹配的人员', style: Theme.of(context).textTheme.titleLarge),
+          const SizedBox(height: 16),
+          OutlinedButton(onPressed: onClear, child: const Text('清除搜索与筛选')),
+        ],
+      ),
+    ),
+  );
 }
 
 class _PersonnelFilters extends ConsumerWidget {
-  const _PersonnelFilters();
+  const _PersonnelFilters({required this.searchController});
+
+  final TextEditingController searchController;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -127,6 +199,7 @@ class _PersonnelFilters extends ConsumerWidget {
             children: [
               Expanded(
                 child: TextField(
+                  controller: searchController,
                   onChanged: (value) =>
                       ref.read(personnelSearchQueryProvider.notifier).state =
                           value,
@@ -137,13 +210,15 @@ class _PersonnelFilters extends ConsumerWidget {
                     suffixIcon: search.isEmpty
                         ? null
                         : IconButton(
-                            onPressed: () =>
-                                ref
-                                        .read(
-                                          personnelSearchQueryProvider.notifier,
-                                        )
-                                        .state =
-                                    '',
+                            onPressed: () {
+                              searchController.clear();
+                              ref
+                                      .read(
+                                        personnelSearchQueryProvider.notifier,
+                                      )
+                                      .state =
+                                  '';
+                            },
                             icon: const Icon(Icons.clear),
                             tooltip: '清除搜索',
                           ),
