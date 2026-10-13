@@ -501,14 +501,29 @@ void main() {
             }
           }
           if (route.$1 == 'payroll_export') {
-            await tester.tap(find.byKey(const Key('payroll-preview-button')));
+            await tester.runAsync(() async {
+              await tester.tap(find.byKey(const Key('payroll-preview-button')));
+              final deadline = DateTime.now().add(const Duration(seconds: 5));
+              while (find
+                      .byKey(const Key('payroll-image-preview'))
+                      .evaluate()
+                      .isEmpty &&
+                  DateTime.now().isBefore(deadline)) {
+                await Future<void>.delayed(const Duration(milliseconds: 10));
+                await tester.pump();
+              }
+            });
             await _settle(tester);
-            expect(find.text('工资表预览'), findsOneWidget);
+            expect(find.text('工资图片预览'), findsOneWidget);
             recordException('/payroll/表格预览');
             await _snapshot(
               tester,
               'payroll_table_preview_${size.$1.toInt()}_${size.$2}',
             );
+            Navigator.of(
+              tester.element(find.byKey(const Key('payroll-image-preview'))),
+            ).pop();
+            await _settle(tester);
           }
           if (route.$1 == 'payroll_draft' || route.$1 == 'payroll_locked') {
             final draft = route.$1 == 'payroll_draft';

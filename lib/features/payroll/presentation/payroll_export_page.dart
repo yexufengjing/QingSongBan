@@ -1,12 +1,11 @@
 // ignore_for_file: curly_braces_in_flow_control_structures
 
-import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/theme/app_theme.dart';
-import '../../../core/utils/date_utils.dart';
+import 'payroll_image_preview_page.dart';
 import '../application/payroll_providers.dart';
 import '../application/payroll_excel_providers.dart';
 
@@ -23,13 +22,12 @@ class _PayrollExportPageState extends ConsumerState<PayrollExportPage> {
   bool exporting = false;
   bool previewing = false;
   String? exportedPath;
-  List<List<String>>? previewRows;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('导出工资 Excel'),
+        title: const Text('导出工资表'),
         leading: IconButton(
           onPressed: () => context.pop(),
           icon: const Icon(Icons.arrow_back),
@@ -45,7 +43,7 @@ class _PayrollExportPageState extends ConsumerState<PayrollExportPage> {
               SizedBox(
                 width: double.infinity,
                 child: FilledButton.icon(
-                  onPressed: exporting ? null : _export,
+                  onPressed: exporting || previewing ? null : _export,
                   icon: exporting
                       ? const SizedBox(
                           width: 18,
@@ -119,7 +117,7 @@ class _PayrollExportPageState extends ConsumerState<PayrollExportPage> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    '可以在应用内查看工资表预览。',
+                    '完整工资表可放大预览，并保存图片到相册。',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
@@ -131,10 +129,6 @@ class _PayrollExportPageState extends ConsumerState<PayrollExportPage> {
             const SizedBox(height: 16),
             _ExportedFileCard(path: exportedPath!),
           ],
-          if (previewRows != null) ...[
-            const SizedBox(height: 16),
-            _PayrollPreviewCard(rows: previewRows!),
-          ],
         ],
       ),
     );
@@ -143,15 +137,20 @@ class _PayrollExportPageState extends ConsumerState<PayrollExportPage> {
   Future<void> _preview() async {
     setState(() => previewing = true);
     try {
-      final bytes = await ref
+      final snapshot = await ref
           .read(payrollExcelServiceProvider)
-          .exportBytes(batchId: widget.batchId);
-      final workbook = Excel.decodeBytes(bytes);
-      final sheet = workbook['临时工工资'];
-      final rows = sheet.rows
-          .map((row) => row.map(_cellText).toList(growable: false))
-          .toList(growable: false);
-      if (mounted) setState(() => previewRows = rows);
+          .loadSnapshot(batchId: widget.batchId);
+      if (!mounted) return;
+      if (snapshot.rows.isEmpty) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('当前工资批次暂无可导出人员')));
+        return;
+      }
+      await Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          builder: (_) => PayrollImagePreviewPage(snapshot: snapshot),
+        ),
+      );
     } catch (error) {
       if (mounted) {
         ScaffoldMessenger.of(context)
@@ -160,20 +159,6 @@ class _PayrollExportPageState extends ConsumerState<PayrollExportPage> {
     } finally {
       if (mounted) setState(() => previewing = false);
     }
-  }
-
-  String _cellText(Data? data) {
-    final value = data?.value;
-    return switch (value) {
-      null => '',
-      TextCellValue value => value.value.text ?? '',
-      IntCellValue value => value.value.toString(),
-      DoubleCellValue value => value.value.toString(),
-      BoolCellValue value => value.value ? '是' : '否',
-      DateCellValue value => AppDateUtils.formatDate(value.asDateTimeLocal()),
-      DateTimeCellValue value => value.asDateTimeLocal().toString(),
-      _ => value.toString(),
-    };
   }
 
   Future<void> _export() async {
@@ -219,83 +204,6 @@ class _ExportedFileCard extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
             ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _PayrollPreviewCard extends StatelessWidget {
-  const _PayrollPreviewCard({required this.rows});
-
-  final List<List<String>> rows;
-
-  @override
-  Widget build(BuildContext context) {
-    if (rows.isEmpty) return const SizedBox.shrink();
-    final visibleRows = rows.length > 12
-        ? <List<String>>[rows.first, ...rows.skip(1).take(10), rows.last]
-        : rows;
-    final peopleCount = rows.length > 2 ? rows.length - 2 : 0;
-
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(12, 16, 12, 12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('工资表预览', style: Theme.of(context).textTheme.titleLarge),
-            const SizedBox(height: 4),
-            Text(
-              '共 $peopleCount 人，左右滑动查看完整列。',
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-            const SizedBox(height: 12),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Table(
-                defaultColumnWidth: const IntrinsicColumnWidth(),
-                border: TableBorder.all(color: const Color(0xFFE5EAF0)),
-                children: List.generate(
-                  visibleRows.length,
-                  (index) => TableRow(
-                    decoration: BoxDecoration(
-                      color: index == 0
-                          ? const Color(0xFFE8F1FF)
-                          : Colors.white,
-                    ),
-                    children: visibleRows[index]
-                        .map(
-                          (cell) => Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 9,
-                            ),
-                            child: Text(
-                              cell,
-                              style: Theme.of(context).textTheme.bodySmall
-                                  ?.copyWith(
-                                    color: const Color(0xFF0F2746),
-                                    fontWeight: index == 0
-                                        ? FontWeight.w600
-                                        : null,
-                                  ),
-                            ),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                ),
-              ),
-            ),
-            if (rows.length > visibleRows.length) ...[
-              const SizedBox(height: 8),
-              Text(
-                '预览最多显示前 10 条明细，导出文件包含完整数据。',
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            ],
           ],
         ),
       ),

@@ -95,6 +95,40 @@ void main() {
     expect(table.totalLeaveDays, 0.5);
   });
 
+  test('counts a rest half-day in the monthly leave total', () async {
+    final group = await groupRepository.save(
+      draft: const AttendanceGroupDraft(name: '公休汇总测试组'),
+    );
+    final employee = await createEmployee('EMP-M002', '周明远');
+    await rosterRepository.addEmployee(
+      yearMonth: '2026-10',
+      groupId: group.id,
+      employeeId: employee.id,
+    );
+
+    await dailyRepository.save(
+      DailyAttendanceDraft(
+        employeeId: employee.id,
+        attendanceDate: DateTime(2026, 10, 9),
+        morningStatus: AttendanceHalfStatus.present,
+        afternoonStatus: AttendanceHalfStatus.rest,
+      ),
+    );
+
+    final table = await tableRepository
+        .watchTable(yearMonth: '2026-10', groupId: group.id)
+        .first;
+    final row = table.rows.single;
+
+    expect(row.attendanceDays, 0.5);
+    expect(row.leaveDays, 0.5);
+    expect(
+      row.cellForDay(month: DateTime(2026, 10), day: 9).afternoonStatus,
+      AttendanceHalfStatus.rest,
+    );
+    expect(table.totalLeaveDays, 0.5);
+  });
+
   test('reflects daily changes and locks dates before hire', () async {
     final group = await groupRepository.save(
       draft: const AttendanceGroupDraft(name: '同步月表组'),

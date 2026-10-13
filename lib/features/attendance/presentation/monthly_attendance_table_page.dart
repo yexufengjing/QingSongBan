@@ -11,6 +11,9 @@ import '../application/daily_attendance_providers.dart';
 import '../application/monthly_attendance_table_providers.dart';
 import '../domain/daily_attendance_options.dart';
 import '../domain/monthly_attendance_table_options.dart';
+import 'monthly_attendance_image.dart';
+import 'monthly_attendance_image_preview_page.dart';
+import 'monthly_attendance_visuals.dart';
 
 class MonthlyAttendanceTablePage extends ConsumerStatefulWidget {
   const MonthlyAttendanceTablePage({super.key, this.initialMonth});
@@ -50,20 +53,74 @@ class _MonthlyAttendanceTablePageState
     _applyInitialMonth();
     final month = ref.watch(monthlyAttendanceTableMonthProvider);
     final groups = ref.watch(monthlyAttendanceTableGroupsProvider);
+    final selectedGroupId = ref.watch(monthlyAttendanceTableGroupIdProvider);
+    final table = ref.watch(monthlyAttendanceTableProvider);
+    final selectedGroup = groups.asData?.value
+        .where((group) => group.id == selectedGroupId)
+        .firstOrNull;
+    final currentTable = table.asData?.value;
+    final yearMonth =
+        '${month.year.toString().padLeft(4, '0')}-'
+        '${month.month.toString().padLeft(2, '0')}';
+    final canExportImage =
+        !groups.isLoading &&
+        !table.isLoading &&
+        selectedGroup != null &&
+        currentTable != null &&
+        currentTable.yearMonth == yearMonth &&
+        currentTable.rows.isNotEmpty;
     return Scaffold(
       appBar: AppBar(
         title: const Text('月考勤表'),
         actions: [
-          FilledButton.tonalIcon(
+          PopupMenuButton<String>(
             key: const Key('monthly-attendance-export'),
-            onPressed: () => context.push(
-              '/settings/excel?month=${month.year.toString().padLeft(4, '0')}-${month.month.toString().padLeft(2, '0')}',
-            ),
-            icon: const Icon(Icons.download_outlined),
-            label: const Text('导出表格'),
-            style: FilledButton.styleFrom(
-              backgroundColor: AppColors.lightGreen,
-              foregroundColor: AppColors.primary,
+            tooltip: '导出',
+            onSelected: (value) {
+              if (value == 'excel') {
+                context.push('/settings/excel?month=$yearMonth');
+              } else if (canExportImage) {
+                final snapshot = MonthlyAttendanceImageSnapshot(
+                  groupName: selectedGroup.name,
+                  table: currentTable,
+                );
+                Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                    builder: (_) =>
+                        MonthlyAttendanceImagePreviewPage(snapshot: snapshot),
+                  ),
+                );
+              }
+            },
+            itemBuilder: (_) => [
+              const PopupMenuItem(
+                value: 'excel',
+                child: ListTile(
+                  leading: Icon(Icons.table_chart_outlined),
+                  title: Text('导出表格'),
+                  contentPadding: EdgeInsets.zero,
+                ),
+              ),
+              PopupMenuItem(
+                value: 'image',
+                enabled: canExportImage,
+                child: const ListTile(
+                  leading: Icon(Icons.image_outlined),
+                  title: Text('导出图片'),
+                  contentPadding: EdgeInsets.zero,
+                ),
+              ),
+            ],
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 12),
+              child: Row(
+                children: [
+                  Icon(Icons.download_outlined, color: AppColors.primary),
+                  SizedBox(width: 6),
+                  Text('导出', style: TextStyle(color: AppColors.primary)),
+                  Icon(Icons.arrow_drop_down, color: AppColors.primary),
+                ],
+              ),
             ),
           ),
           IconButton(
@@ -696,7 +753,7 @@ class _MonthlyCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final statusColor = _cellColor(cell);
+    final statusColor = monthlyAttendanceCellColor(cell);
     return SizedBox(
       width: _MonthlyAttendanceTable.dayWidth,
       height: _MonthlyAttendanceTable.rowHeight,
@@ -725,26 +782,6 @@ class _MonthlyCell extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Color _cellColor(MonthlyAttendanceCell cell) {
-    if (!cell.isEditable) return AppColors.helper;
-    if (cell.attendanceDays == 1) return AppColors.success;
-    if (cell.attendanceDays > 0) return AppColors.warning;
-    if (cell.leaveDays > 0) return AppColors.danger;
-    if (cell.morningStatus == AttendanceHalfStatus.absent ||
-        cell.afternoonStatus == AttendanceHalfStatus.absent) {
-      return AppColors.danger;
-    }
-    if (cell.morningStatus == AttendanceHalfStatus.rest &&
-        cell.afternoonStatus == AttendanceHalfStatus.rest) {
-      return AppColors.purple;
-    }
-    if (cell.morningStatus == AttendanceHalfStatus.stopped &&
-        cell.afternoonStatus == AttendanceHalfStatus.stopped) {
-      return const Color(0xFFE98500);
-    }
-    return AppColors.helper;
   }
 }
 

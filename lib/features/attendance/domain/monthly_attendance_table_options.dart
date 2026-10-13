@@ -89,8 +89,14 @@ class MonthlyAttendanceTableRow {
     return _records.values.fold<double>(0, (sum, record) {
       if (_isRecordAfterTermination(record)) return sum;
       var value = sum;
-      if (record.morningStatus == AttendanceHalfStatus.leave) value += 0.5;
-      if (record.afternoonStatus == AttendanceHalfStatus.leave) value += 0.5;
+      if (record.morningStatus == AttendanceHalfStatus.leave ||
+          record.morningStatus == AttendanceHalfStatus.rest) {
+        value += 0.5;
+      }
+      if (record.afternoonStatus == AttendanceHalfStatus.leave ||
+          record.afternoonStatus == AttendanceHalfStatus.rest) {
+        value += 0.5;
+      }
       return value;
     });
   }

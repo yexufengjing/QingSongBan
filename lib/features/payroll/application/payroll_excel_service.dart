@@ -8,6 +8,7 @@ import 'package:excel/excel.dart';
 import '../../../core/database/app_database.dart';
 import '../../../core/utils/export_file_writer.dart';
 import '../domain/payroll_calculator.dart';
+import '../domain/payroll_export_snapshot.dart';
 
 class PayrollExcelService {
   const PayrollExcelService(this._database);
@@ -15,84 +16,44 @@ class PayrollExcelService {
   final AppDatabase _database;
 
   Future<File> exportToFile({required int batchId}) async {
-    final batch = await _findBatch(batchId);
+    final snapshot = await loadSnapshot(batchId: batchId);
     return ExportFileWriter.write(
-      fileName: _fileName(batch.payrollMonth),
-      bytes: await exportBytes(batchId: batchId),
+      fileName: _fileName(snapshot.payrollMonth),
+      bytes: encodeSnapshot(snapshot),
     );
   }
 
   Future<Uint8List> exportBytes({required int batchId}) async {
-    final batch = await _findBatch(batchId);
-    final items =
-        await (_database.select(_database.payrollItems)
-              ..where(
-                (table) =>
-                    table.payrollBatchId.equals(batchId) &
-                    table.isManuallyRemoved.equals(false),
-              )
-              ..orderBy([
-                (table) => OrderingTerm(expression: table.displayOrder),
-              ]))
-            .get();
+    return encodeSnapshot(await loadSnapshot(batchId: batchId));
+  }
+
+  Future<PayrollExportSnapshot> loadSnapshot({required int batchId}) =>
+      _database.transaction(() async {
+        final batch = await _findBatch(batchId);
+        final items =
+            await (_database.select(_database.payrollItems)
+                  ..where(
+                    (table) =>
+                        table.payrollBatchId.equals(batchId) &
+                        table.isManuallyRemoved.equals(false),
+                  )
+                  ..orderBy([
+                    (table) => OrderingTerm(expression: table.displayOrder),
+                  ]))
+                .get();
+        return PayrollExportSnapshot.fromBatch(batch, items);
+      });
+
+  Uint8List encodeSnapshot(PayrollExportSnapshot snapshot) {
     final excel = Excel.createExcel();
     excel.delete('Sheet1');
     final sheet = excel['临时工工资'];
-    sheet.appendRow(
-      _row([
-        '序号',
-        '姓名',
-        '工号',
-        '工种',
-        '出勤天数',
-        '日薪',
-        '基础工资',
-        '补助',
-        '保险扣除',
-        '实发工资',
-        '备注',
-      ]),
-    );
-    for (var index = 0; index < items.length; index++) {
-      final item = items[index];
-      final calculation = PayrollCalculator.calculate(
-        attendanceHalfDays: item.attendanceHalfDaysSnapshot,
-        dailyWage: item.dailyWage,
-        subsidy: item.subsidy,
-        insuranceDeduction: item.insuranceDeduction,
-      );
-      sheet.appendRow(
-        _row([
-          index + 1,
-          item.employeeNameSnapshot,
-          item.employeeNoSnapshot,
-          item.jobTypeNameSnapshot ?? '',
-          calculation.attendanceDays,
-          item.dailyWage,
-          calculation.baseWage,
-          item.subsidy,
-          item.insuranceDeduction,
-          calculation.finalWage,
-          item.remark ?? '',
-        ]),
-      );
+    sheet.appendRow(_row(PayrollExportSnapshot.headers));
+    for (final row in snapshot.rows) {
+      sheet.appendRow(_row(row));
     }
-    sheet.appendRow(
-      _row([
-        '合计',
-        '${batch.employeeCount}人',
-        '',
-        '',
-        batch.attendanceHalfDaysTotal / 2,
-        '',
-        batch.baseWageTotal,
-        batch.subsidyTotal,
-        batch.insuranceDeductionTotal,
-        batch.finalWageTotal,
-        '',
-      ]),
-    );
-    _applyNumberFormats(sheet, items.length);
+    sheet.appendRow(_row(snapshot.totalRow));
+    _applyNumberFormats(sheet, snapshot.rows.length);
     final encoded = excel.encode();
     if (encoded == null) throw StateError('工资 Excel 生成失败');
     return Uint8List.fromList(encoded);
