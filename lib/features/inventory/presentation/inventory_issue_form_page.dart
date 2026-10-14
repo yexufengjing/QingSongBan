@@ -170,13 +170,21 @@ class _InventoryIssueFormPageState
             onRetry: () => ref.invalidate(allPersonnelProvider),
           ),
           data: (people) => items.isEmpty
-              ? InventoryEmptyState(
-                  title: '先新增物资档案',
-                  message: '出库单需要关联已有物资。',
-                  action: FilledButton.icon(
-                    onPressed: () => context.push('/inventory/materials/new'),
-                    icon: const Icon(Icons.add),
-                    label: const Text('新增物资'),
+              ? Center(
+                  child: SingleChildScrollView(
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: InventoryEmptyState(
+                        title: '先新增物资档案',
+                        message: '出库单需要关联已有物资。',
+                        action: FilledButton.icon(
+                          onPressed: () =>
+                              context.push('/inventory/materials/new'),
+                          icon: const Icon(Icons.add),
+                          label: const Text('新增物资'),
+                        ),
+                      ),
+                    ),
                   ),
                 )
               : Form(
@@ -395,9 +403,20 @@ class _IssueLineEditorState extends State<_IssueLineEditor> {
             Row(
               children: [
                 Expanded(
-                  child: InventoryMaterialPickerField(
-                    materials: widget.materials,
-                    selectedId: widget.state.materialId,
+                  child: DropdownButtonFormField<int>(
+                    isExpanded: true,
+                    initialValue: widget.state.materialId,
+                    decoration: const InputDecoration(labelText: '物资'),
+                    items: [
+                      for (final material in widget.materials)
+                        DropdownMenuItem(
+                          value: material.id,
+                          child: Text(
+                            material.materialName,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                    ],
                     onChanged: (value) =>
                         setState(() => widget.state.materialId = value),
                   ),

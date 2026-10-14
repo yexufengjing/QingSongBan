@@ -311,8 +311,8 @@ class _SummaryContent extends ConsumerWidget {
           DesignSection(
             title: '考勤汇总',
             trailing: actions,
-            child: SizedBox(
-              height: 280,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: 280),
               child: _SummaryEmpty(onGenerate: onGenerate),
             ),
           ),

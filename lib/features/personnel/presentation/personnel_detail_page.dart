@@ -159,7 +159,7 @@ class _EmployeeDetailContent extends ConsumerWidget {
             title: '基本信息',
             icon: Icons.person_outline,
             iconColor: AppColors.primary,
-            initiallyExpanded: true,
+            initiallyExpanded: false,
             rows: [
               ('姓名', employee.name),
               ('联系电话', PrivacyUtils.maskPhone(employee.phone)),
@@ -183,7 +183,7 @@ class _EmployeeDetailContent extends ConsumerWidget {
             title: '工作信息',
             icon: Icons.work_outline,
             iconColor: AppColors.techBlue,
-            initiallyExpanded: true,
+            initiallyExpanded: false,
             rows: [
               ('入职日期', AppDateUtils.formatDate(employee.hireDate)),
               ('工作区域', employee.workArea ?? '未填写'),
@@ -200,7 +200,7 @@ class _EmployeeDetailContent extends ConsumerWidget {
             title: '保险信息',
             icon: Icons.shield_outlined,
             iconColor: const Color(0xFFE98500),
-            initiallyExpanded: true,
+            initiallyExpanded: false,
             rows: [
               (
                 '是否参保',

@@ -38,57 +38,84 @@ class HomePage extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Semantics(
-              label: '轻松办',
-              image: true,
-              child: Image.asset(
-                'assets/ui/brand_wordmark.png',
-                width: 128,
-                height: 36,
-                fit: BoxFit.contain,
-                alignment: Alignment.centerLeft,
-                excludeFromSemantics: true,
-              ),
-            ),
-            const Text(
-              '有序办理 · 高效管理',
-              style: TextStyle(color: AppColors.body, fontSize: 14),
-            ),
-            const SizedBox(height: 12),
-            Wrap(
-              spacing: 12,
-              runSpacing: 8,
-              crossAxisAlignment: WrapCrossAlignment.center,
+            Row(
               children: [
-                SegmentedButton<bool>(
-                  style: ButtonStyle(
-                    shape: const WidgetStatePropertyAll(StadiumBorder()),
-                    side: const WidgetStatePropertyAll(BorderSide.none),
-                    backgroundColor: WidgetStateProperty.resolveWith(
-                      (states) => states.contains(WidgetState.selected)
-                          ? AppColors.primary
-                          : AppColors.lightBlue,
+                Semantics(
+                  label: '轻松办',
+                  image: true,
+                  child: Image.asset(
+                    'assets/ui/brand_wordmark.png',
+                    width: 128,
+                    height: 36,
+                    fit: BoxFit.contain,
+                    alignment: Alignment.centerLeft,
+                    excludeFromSemantics: true,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                const Expanded(
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      key: Key('home-tagline'),
+                      '有序办理 · 高效管理',
+                      style: TextStyle(color: AppColors.body, fontSize: 14),
                     ),
                   ),
-                  segments: const [
-                    ButtonSegment(value: false, label: Text('概览')),
-                    ButtonSegment(value: true, label: Text('处理')),
-                  ],
-                  selected: {processing},
-                  showSelectedIcon: false,
-                  onSelectionChanged: (value) =>
-                      ref.read(homeProcessingProvider.notifier).state =
-                          value.single,
-                ),
-                Text(
-                  '${today.year}年${today.month}月${today.day}日 周${weekdays[today.weekday - 1]}',
-                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ],
             ),
             const SizedBox(height: 12),
-            const _WelcomeBanner(),
-            const SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    key: const Key('home-date'),
+                    '${today.year}年${today.month}月${today.day}日 周${weekdays[today.weekday - 1]}',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                for (final mode in const [false, true]) ...[
+                  if (mode) const SizedBox(width: 8),
+                  Semantics(
+                    selected: processing == mode,
+                    child: FilledButton(
+                      key: Key(
+                        mode
+                            ? 'home-processing-button'
+                            : 'home-overview-button',
+                      ),
+                      style: FilledButton.styleFrom(
+                        backgroundColor: processing == mode
+                            ? AppColors.primary
+                            : AppColors.lightBlue,
+                        foregroundColor: processing == mode
+                            ? Colors.white
+                            : AppColors.body,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      onPressed: () =>
+                          ref.read(homeProcessingProvider.notifier).state =
+                              mode,
+                      child: Text(mode ? '处理' : '概览'),
+                    ),
+                  ),
+                ],
+              ],
+            ),
+            const SizedBox(height: 12),
+            if (!processing) ...[
+              const _WelcomeBanner(),
+              const SizedBox(height: 16),
+            ],
             if (processing) ...[
               const DesignSection(
                 title: '常用操作',
@@ -148,6 +175,14 @@ class HomePage extends ConsumerWidget {
                 title: '统计口径',
                 child: Column(
                   children: [
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: const DesignIcon(Icons.bar_chart_outlined),
+                      title: const Text('查看汇总'),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () => context.go('/reports'),
+                    ),
+                    const Divider(height: 16),
                     const _ScopeRow(
                       Icons.people_outline,
                       AppColors.success,
@@ -167,14 +202,6 @@ class HomePage extends ConsumerWidget {
                       AppColors.warning,
                       '油量与油费',
                       '上月已录合计',
-                    ),
-                    const SizedBox(height: 12),
-                    ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: const DesignIcon(Icons.bar_chart_outlined),
-                      title: const Text('查看汇总'),
-                      trailing: const Icon(Icons.chevron_right),
-                      onTap: () => context.go('/reports'),
                     ),
                   ],
                 ),
@@ -504,58 +531,77 @@ class _Metric extends StatelessWidget {
   );
 }
 
-class _PendingTasks extends StatelessWidget {
+class _PendingTasks extends StatefulWidget {
   const _PendingTasks({required this.stats});
   final HomeDashboardStats stats;
+
+  @override
+  State<_PendingTasks> createState() => _PendingTasksState();
+}
+
+class _PendingTasksState extends State<_PendingTasks> {
+  bool _expanded = false;
+  HomeDashboardStats get stats => widget.stats;
+
   @override
   Widget build(BuildContext context) => DesignSection(
     title: '待办事项',
-    child: Column(
-      children: [
-        ListTile(
-          key: const Key('home-pending-reminders'),
-          contentPadding: EdgeInsets.zero,
-          leading: const DesignIcon(
-            Icons.notifications_none_outlined,
-            color: AppColors.warning,
-          ),
-          title: const Text('待办提醒'),
-          subtitle: Text(
-            stats.pendingReminders == 0
-                ? '当前没有待处理提醒'
-                : '${stats.pendingReminders} 项待处理',
-          ),
-          trailing: const Icon(Icons.chevron_right),
-          onTap: () => context.push('/settings/reminders'),
-        ),
-        const Divider(),
-        ListTile(
-          key: const Key('home-metric-即将到期'),
-          contentPadding: EdgeInsets.zero,
-          leading: const DesignIcon(
-            Icons.schedule_outlined,
-            color: AppColors.purple,
-          ),
-          title: const Text('即将到期'),
-          subtitle: Text('${stats.upcomingReminders} 项 · 未来30天'),
-          trailing: const Icon(Icons.chevron_right),
-          onTap: () => context.push('/settings/reminders'),
-        ),
-        const Divider(),
-        ListTile(
-          key: const Key('home-metric-本月离职'),
-          contentPadding: EdgeInsets.zero,
-          leading: const DesignIcon(
-            Icons.person_remove_outlined,
-            color: AppColors.danger,
-          ),
-          title: const Text('本月离职'),
-          subtitle: Text('${stats.terminatedEmployees} 人'),
-          trailing: const Icon(Icons.chevron_right),
-          onTap: () => context.push('/attendance/termination'),
-        ),
-      ],
+    padding: EdgeInsets.symmetric(horizontal: 16, vertical: _expanded ? 16 : 8),
+    contentSpacing: _expanded ? 12 : 0,
+    trailing: IconButton(
+      key: const Key('home-pending-toggle'),
+      tooltip: _expanded ? '折叠待办事项' : '展开待办事项',
+      onPressed: () => setState(() => _expanded = !_expanded),
+      icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
     ),
+    child: !_expanded
+        ? const SizedBox.shrink()
+        : Column(
+            children: [
+              ListTile(
+                key: const Key('home-pending-reminders'),
+                contentPadding: EdgeInsets.zero,
+                leading: const DesignIcon(
+                  Icons.notifications_none_outlined,
+                  color: AppColors.warning,
+                ),
+                title: const Text('待办提醒'),
+                subtitle: Text(
+                  stats.pendingReminders == 0
+                      ? '当前没有待处理提醒'
+                      : '${stats.pendingReminders} 项待处理',
+                ),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => context.push('/settings/reminders'),
+              ),
+              const Divider(),
+              ListTile(
+                key: const Key('home-metric-即将到期'),
+                contentPadding: EdgeInsets.zero,
+                leading: const DesignIcon(
+                  Icons.schedule_outlined,
+                  color: AppColors.purple,
+                ),
+                title: const Text('即将到期'),
+                subtitle: Text('${stats.upcomingReminders} 项 · 未来30天'),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => context.push('/settings/reminders'),
+              ),
+              const Divider(),
+              ListTile(
+                key: const Key('home-metric-本月离职'),
+                contentPadding: EdgeInsets.zero,
+                leading: const DesignIcon(
+                  Icons.person_remove_outlined,
+                  color: AppColors.danger,
+                ),
+                title: const Text('本月离职'),
+                subtitle: Text('${stats.terminatedEmployees} 人'),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => context.push('/attendance/termination'),
+              ),
+            ],
+          ),
   );
 }
 

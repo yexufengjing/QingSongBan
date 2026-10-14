@@ -39,9 +39,17 @@ class PurchaseHomePage extends ConsumerWidget {
   }
 }
 
-class _DashboardContent extends StatelessWidget {
+class _DashboardContent extends StatefulWidget {
   const _DashboardContent({required this.data});
   final PurchaseDashboardData data;
+
+  @override
+  State<_DashboardContent> createState() => _DashboardContentState();
+}
+
+class _DashboardContentState extends State<_DashboardContent> {
+  bool _actionRequiredExpanded = false;
+  PurchaseDashboardData get data => widget.data;
 
   @override
   Widget build(BuildContext context) => ListView(
@@ -81,6 +89,7 @@ class _DashboardContent extends StatelessWidget {
               ),
             ])
               PurchaseMetricTile(
+                centered: true,
                 label: metric.label,
                 value: '${metric.value}',
                 color: metric.color,
@@ -122,11 +131,33 @@ class _DashboardContent extends StatelessWidget {
       const SizedBox(height: 12),
       DesignSection(
         title: '需要处理',
-        trailing: TextButton(
-          onPressed: () => context.push('${PurchaseRoutes.tracking}?all=1'),
-          child: const Text('查看全部'),
+        padding: EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: _actionRequiredExpanded ? 16 : 8,
         ),
-        child: data.actionRequired.isEmpty
+        contentSpacing: _actionRequiredExpanded ? 12 : 0,
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextButton(
+              onPressed: () => context.push('${PurchaseRoutes.tracking}?all=1'),
+              child: const Text('查看全部'),
+            ),
+            IconButton(
+              key: const Key('purchase-action-required-toggle'),
+              tooltip: _actionRequiredExpanded ? '折叠' : '展开',
+              onPressed: () => setState(
+                () => _actionRequiredExpanded = !_actionRequiredExpanded,
+              ),
+              icon: Icon(
+                _actionRequiredExpanded ? Icons.expand_less : Icons.expand_more,
+              ),
+            ),
+          ],
+        ),
+        child: !_actionRequiredExpanded
+            ? const SizedBox.shrink()
+            : data.actionRequired.isEmpty
             ? const Padding(
                 padding: EdgeInsets.symmetric(vertical: 64),
                 child: Center(

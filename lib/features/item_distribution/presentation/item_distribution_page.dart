@@ -1271,115 +1271,116 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
                 .map((item) => item.id)
           : existing),
     };
-    final search = TextEditingController();
+    if (!mounted) return;
     final result = await showModalBottomSheet<Set<int>>(
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
-      builder: (sheetContext) => StatefulBuilder(
-        builder: (context, setSheetState) {
-          final visible = candidates
-              .where(
-                (item) =>
-                    search.text.trim().isEmpty ||
-                    item.name.contains(search.text.trim()) ||
-                    item.employeeNo.contains(search.text.trim()),
-              )
-              .toList();
-          return SafeArea(
-            child: SizedBox(
-              height: MediaQuery.sizeOf(context).height * 0.84,
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(
-                  16,
-                  0,
-                  16,
-                  16 + MediaQuery.viewInsetsOf(context).bottom,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '修改$_monthKey临时工福利名单',
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    const SizedBox(height: 4),
-                    const Text('推荐来源：对应福利月份的月度考勤名单'),
-                    const SizedBox(height: 10),
-                    _referenceField(
-                      '搜索姓名或工号',
-                      TextField(
-                        controller: search,
-                        onChanged: (_) => setSheetState(() {}),
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.search),
-                        ),
+      builder: (sheetContext) => _TemporaryRosterSearchScope(
+        builder: (search) => StatefulBuilder(
+          builder: (context, setSheetState) {
+            final visible = candidates
+                .where(
+                  (item) =>
+                      search.text.trim().isEmpty ||
+                      item.name.contains(search.text.trim()) ||
+                      item.employeeNo.contains(search.text.trim()),
+                )
+                .toList();
+            return SafeArea(
+              child: SizedBox(
+                height: MediaQuery.sizeOf(context).height * 0.84,
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(
+                    16,
+                    0,
+                    16,
+                    16 + MediaQuery.viewInsetsOf(context).bottom,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '修改$_monthKey临时工福利名单',
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Text(
-                          '已选择：${selected.length}人',
-                          style: const TextStyle(fontWeight: FontWeight.w700),
-                        ),
-                        const Spacer(),
-                        TextButton(
-                          onPressed: () => setSheetState(
-                            () => selected.addAll(
-                              candidates.map((item) => item.id),
-                            ),
+                      const SizedBox(height: 4),
+                      const Text('推荐来源：对应福利月份的月度考勤名单'),
+                      const SizedBox(height: 10),
+                      _referenceField(
+                        '搜索姓名或工号',
+                        TextField(
+                          controller: search,
+                          onChanged: (_) => setSheetState(() {}),
+                          decoration: const InputDecoration(
+                            prefixIcon: Icon(Icons.search),
                           ),
-                          child: const Text('全选'),
                         ),
-                        TextButton(
-                          onPressed: () => setSheetState(selected.clear),
-                          child: const Text('清空'),
-                        ),
-                      ],
-                    ),
-                    const Divider(height: 1),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: visible.length,
-                        itemBuilder: (context, index) {
-                          final candidate = visible[index];
-                          return CheckboxListTile(
-                            contentPadding: EdgeInsets.zero,
-                            value: selected.contains(candidate.id),
-                            onChanged: (value) => setSheetState(
-                              () => value == true
-                                  ? selected.add(candidate.id)
-                                  : selected.remove(candidate.id),
-                            ),
-                            title: Text(candidate.name),
-                            subtitle: Text(
-                              '${candidate.employeeNo}${candidate.isCurrentlyActive ? ' · 当前在岗' : ' · 当前已离职'}',
-                            ),
-                          );
-                        },
                       ),
-                    ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: FilledButton(
-                        onPressed: () => Navigator.pop(
-                          sheetContext,
-                          Set<int>.from(selected),
-                        ),
-                        child: Text('保存名单 ${selected.length}人'),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          Text(
+                            '已选择：${selected.length}人',
+                            style: const TextStyle(fontWeight: FontWeight.w700),
+                          ),
+                          const Spacer(),
+                          TextButton(
+                            onPressed: () => setSheetState(
+                              () => selected.addAll(
+                                candidates.map((item) => item.id),
+                              ),
+                            ),
+                            child: const Text('全选'),
+                          ),
+                          TextButton(
+                            onPressed: () => setSheetState(selected.clear),
+                            child: const Text('清空'),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
+                      const Divider(height: 1),
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: visible.length,
+                          itemBuilder: (context, index) {
+                            final candidate = visible[index];
+                            return CheckboxListTile(
+                              contentPadding: EdgeInsets.zero,
+                              value: selected.contains(candidate.id),
+                              onChanged: (value) => setSheetState(
+                                () => value == true
+                                    ? selected.add(candidate.id)
+                                    : selected.remove(candidate.id),
+                              ),
+                              title: Text(candidate.name),
+                              subtitle: Text(
+                                '${candidate.employeeNo}${candidate.isCurrentlyActive ? ' · 当前在岗' : ' · 当前已离职'}',
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        child: FilledButton(
+                          onPressed: () => Navigator.pop(
+                            sheetContext,
+                            Set<int>.from(selected),
+                          ),
+                          child: Text('保存名单 ${selected.length}人'),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
-    search.dispose();
-    if (result == null) return;
+    if (!mounted || result == null) return;
     await repo.ensureWelfareBatch(
       month: _monthKey,
       temporaryEmployeeIds: result,
@@ -2017,6 +2018,32 @@ class _ManualDistributionDialogState extends State<_ManualDistributionDialog> {
     if (!mounted) return;
     Navigator.pop(context, true);
   }
+}
+
+// Keep the search controller alive until the modal subtree is unmounted,
+// including when the user dismisses the roster without saving.
+class _TemporaryRosterSearchScope extends StatefulWidget {
+  const _TemporaryRosterSearchScope({required this.builder});
+
+  final Widget Function(TextEditingController search) builder;
+
+  @override
+  State<_TemporaryRosterSearchScope> createState() =>
+      _TemporaryRosterSearchScopeState();
+}
+
+class _TemporaryRosterSearchScopeState
+    extends State<_TemporaryRosterSearchScope> {
+  final _search = TextEditingController();
+
+  @override
+  void dispose() {
+    _search.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => widget.builder(_search);
 }
 
 Widget _referenceField(String label, Widget field) => Column(

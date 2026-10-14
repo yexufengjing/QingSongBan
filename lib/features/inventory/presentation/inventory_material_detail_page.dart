@@ -85,9 +85,7 @@ class _InventoryMaterialDetailPageState
           if (snapshot.hasError) {
             return InventoryErrorState(onRetry: () => setState(_load));
           }
-          if (snapshot.connectionState != ConnectionState.done) {
-            return const InventoryLoadingState();
-          }
+          if (!snapshot.hasData) return const InventoryLoadingState();
           final material = snapshot.data;
           if (material == null) {
             return const InventoryEmptyState(title: '物资不存在');

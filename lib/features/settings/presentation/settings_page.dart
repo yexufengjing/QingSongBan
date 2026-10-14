@@ -36,7 +36,7 @@ class SettingsPage extends StatelessWidget {
         Card(
           child: ExpansionTile(
             key: const Key('settings-data-tools'),
-            initiallyExpanded: true,
+            initiallyExpanded: false,
             shape: const Border(),
             collapsedShape: const Border(),
             tilePadding: const EdgeInsets.symmetric(

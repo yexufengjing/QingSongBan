@@ -227,6 +227,7 @@ class PurchaseMetricTile extends StatelessWidget {
     required this.color,
     this.icon,
     this.onTap,
+    this.centered = false,
     super.key,
   });
 
@@ -235,6 +236,7 @@ class PurchaseMetricTile extends StatelessWidget {
   final Color color;
   final IconData? icon;
   final VoidCallback? onTap;
+  final bool centered;
 
   @override
   Widget build(BuildContext context) => Material(
@@ -244,31 +246,51 @@ class PurchaseMetricTile extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(8),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        padding: EdgeInsets.symmetric(
+          horizontal: centered ? 6 : 10,
+          vertical: 10,
+        ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: centered
+              ? CrossAxisAlignment.stretch
+              : CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Row(
-              children: [
-                if (icon != null) ...[
-                  DesignIcon(icon!, color: color, size: 20),
-                  const SizedBox(width: 6),
-                ],
-                Expanded(
-                  child: Text(
-                    label,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: AppColors.ink,
-                      fontWeight: FontWeight.w500,
+            if (centered) ...[
+              if (icon != null) ...[
+                Center(child: DesignIcon(icon!, color: color, size: 24)),
+                const SizedBox(height: 6),
+              ],
+              Text(
+                label,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: AppColors.ink,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ] else
+              Row(
+                children: [
+                  if (icon != null) ...[
+                    DesignIcon(icon!, color: color, size: 20),
+                    const SizedBox(width: 6),
+                  ],
+                  Expanded(
+                    child: Text(
+                      label,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: AppColors.ink,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
             const SizedBox(height: 5),
             Text(
               value,
+              textAlign: centered ? TextAlign.center : TextAlign.start,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
@@ -286,60 +308,27 @@ class PurchaseLabeledField extends StatelessWidget {
   const PurchaseLabeledField({
     required this.label,
     required this.child,
-    this.inline = false,
-    this.labelWidth = 132,
     super.key,
   });
 
   final String label;
   final Widget child;
-  final bool inline;
-  final double labelWidth;
 
   @override
-  Widget build(BuildContext context) {
-    final labelWidget = Text(
-      label,
-      style: Theme.of(context).textTheme.bodyMedium
-          ?.copyWith(color: AppColors.ink, fontWeight: FontWeight.w600),
-    );
-    if (inline) {
-      return LayoutBuilder(
-        builder: (context, constraints) {
-          final stacked =
-              constraints.maxWidth < 340 ||
-              MediaQuery.textScalerOf(context).scale(14) > 17;
-          if (stacked) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 6),
-                  child: labelWidget,
-                ),
-                child,
-              ],
-            );
-          }
-          return Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(width: labelWidth, child: labelWidget),
-              const SizedBox(width: 10),
-              Expanded(child: child),
-            ],
-          );
-        },
-      );
-    }
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(padding: const EdgeInsets.only(bottom: 6), child: labelWidget),
-        child,
-      ],
-    );
-  }
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Padding(
+        padding: const EdgeInsets.only(bottom: 6),
+        child: Text(
+          label,
+          style: Theme.of(context).textTheme.bodyMedium
+              ?.copyWith(color: AppColors.ink, fontWeight: FontWeight.w600),
+        ),
+      ),
+      child,
+    ],
+  );
 }
 
 String purchaseDateLabel(DateTime? date) {

@@ -46,6 +46,12 @@ class AppTheme {
       useMaterial3: true,
       colorScheme: colorScheme,
       scaffoldBackgroundColor: Colors.transparent,
+      pageTransitionsTheme: PageTransitionsTheme(
+        builders: {
+          ...const PageTransitionsTheme().builders,
+          TargetPlatform.android: const _InstantPageTransitionsBuilder(),
+        },
+      ),
       textTheme: const TextTheme(
         headlineLarge: TextStyle(
           color: AppColors.ink,
@@ -280,4 +286,25 @@ class AppTheme {
       ),
     );
   }
+}
+
+// Transparent pages share a fixed canvas. Switching immediately prevents the
+// outgoing page's text from showing through the incoming page during a fade.
+class _InstantPageTransitionsBuilder extends PageTransitionsBuilder {
+  const _InstantPageTransitionsBuilder();
+
+  @override
+  Duration get transitionDuration => Duration.zero;
+
+  @override
+  Duration get reverseTransitionDuration => Duration.zero;
+
+  @override
+  Widget buildTransitions<T>(
+    PageRoute<T> route,
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) => child;
 }

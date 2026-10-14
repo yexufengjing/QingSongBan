@@ -8,8 +8,15 @@ class DesignCanvas extends StatelessWidget {
   final Widget child;
 
   @override
-  Widget build(BuildContext context) =>
-      CustomPaint(painter: const _CanvasPainter(), child: child);
+  Widget build(BuildContext context) => Stack(
+    children: [
+      // Keep the static canvas independent of route and loading-state repaints.
+      const Positioned.fill(
+        child: RepaintBoundary(child: CustomPaint(painter: _CanvasPainter())),
+      ),
+      child,
+    ],
+  );
 }
 
 class _CanvasPainter extends CustomPainter {

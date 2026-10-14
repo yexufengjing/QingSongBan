@@ -343,6 +343,8 @@ class InventorySection extends StatelessWidget {
     required this.child,
     this.icon = Icons.inventory_2_outlined,
     this.trailing,
+    this.padding = const EdgeInsets.all(16),
+    this.contentSpacing = 14,
     super.key,
   });
 
@@ -350,10 +352,12 @@ class InventorySection extends StatelessWidget {
   final Widget child;
   final IconData icon;
   final Widget? trailing;
+  final EdgeInsetsGeometry padding;
+  final double contentSpacing;
 
   @override
   Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.all(16),
+    padding: padding,
     decoration: BoxDecoration(
       color: Colors.white,
       borderRadius: BorderRadius.circular(12),
@@ -372,7 +376,7 @@ class InventorySection extends StatelessWidget {
             ?trailing,
           ],
         ),
-        const SizedBox(height: 14),
+        SizedBox(height: contentSpacing),
         child,
       ],
     ),

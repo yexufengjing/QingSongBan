@@ -106,11 +106,6 @@ class _ReminderFormPageState extends ConsumerState<ReminderFormPage> {
               displayName: link.displayNameSnapshot,
             ),
       ];
-      _advancedExpanded =
-          _priority != 'normal' ||
-          _category == 'custom' ||
-          _employeeIds.isNotEmpty ||
-          _remarkController.text.isNotEmpty;
       _loading = false;
     });
   }

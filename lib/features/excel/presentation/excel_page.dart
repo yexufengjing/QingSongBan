@@ -21,7 +21,6 @@ class _ExcelPageState extends ConsumerState<ExcelPage> {
   late DateTime _month;
   PersonnelImportPreview? _preview;
   bool _busy = false;
-  String? _busyMessage;
 
   @override
   void initState() {
@@ -39,7 +38,7 @@ class _ExcelPageState extends ConsumerState<ExcelPage> {
         top: false,
         minimum: const EdgeInsets.fromLTRB(16, 8, 16, 12),
         child: OutlinedButton.icon(
-          onPressed: _busy ? null : () => context.pop(),
+          onPressed: () => context.pop(),
           icon: const Icon(Icons.arrow_back),
           label: const Text('返回我的'),
         ),
@@ -47,23 +46,6 @@ class _ExcelPageState extends ConsumerState<ExcelPage> {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 14, 16, 28),
         children: [
-          if (_busy && _busyMessage != null) ...[
-            Card(
-              key: const Key('excel-progress'),
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(_busyMessage!),
-                    const SizedBox(height: 12),
-                    const LinearProgressIndicator(),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 12),
-          ],
           Card(
             color: AppColors.lightBlue,
             child: const Padding(
@@ -166,14 +148,16 @@ class _ExcelPageState extends ConsumerState<ExcelPage> {
                             children: [
                               CircleAvatar(
                                 radius: 14,
-                                backgroundColor: entry.$1 == _activeImportStep
+                                backgroundColor:
+                                    entry.$1 == (_preview == null ? 0 : 1)
                                     ? AppColors.primary
                                     : AppColors.lightBlue,
                                 child: Text(
                                   '${entry.$1 + 1}',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color: entry.$1 == _activeImportStep
+                                    color:
+                                        entry.$1 == (_preview == null ? 0 : 1)
                                         ? Colors.white
                                         : AppColors.body,
                                   ),
@@ -206,49 +190,24 @@ class _ExcelPageState extends ConsumerState<ExcelPage> {
                     child: OutlinedButton.icon(
                       key: const Key('excel-import-button'),
                       onPressed: _busy ? null : _pickImportFile,
-                      icon:
-                          _busy &&
-                              (_busyMessage == '正在选择人员名单文件…' ||
-                                  _busyMessage == '正在核验人员名单…')
-                          ? const SizedBox.square(
-                              dimension: 20,
-                              child: CircularProgressIndicator(strokeWidth: 2),
-                            )
-                          : const Icon(Icons.file_upload_outlined),
-                      label: Text(
-                        _busy &&
-                                (_busyMessage == '正在选择人员名单文件…' ||
-                                    _busyMessage == '正在核验人员名单…')
-                            ? _busyMessage!
-                            : '选择人员名单文件',
-                      ),
+                      icon: const Icon(Icons.file_upload_outlined),
+                      label: const Text('选择人员名单文件'),
                     ),
                   ),
                   if (_preview != null) ...[
                     const SizedBox(height: 14),
                     _PreviewCard(preview: _preview!),
-                    const SizedBox(height: 12),
-                    SizedBox(
-                      width: double.infinity,
-                      child: FilledButton(
-                        key: const Key('excel-confirm-import-button'),
-                        onPressed: _busy || !_preview!.canImport
-                            ? null
-                            : _import,
-                        style: FilledButton.styleFrom(
-                          minimumSize: const Size.fromHeight(52),
+                    if (_preview!.canImport) ...[
+                      const SizedBox(height: 12),
+                      SizedBox(
+                        width: double.infinity,
+                        child: FilledButton(
+                          key: const Key('excel-confirm-import-button'),
+                          onPressed: _busy ? null : _import,
+                          child: Text('确认导入 ${_preview!.rows.length} 人'),
                         ),
-                        child: _busy && _busyMessage == '正在导入人员…'
-                            ? const SizedBox.square(
-                                dimension: 20,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  color: Colors.white,
-                                ),
-                              )
-                            : Text('确认导入 ${_preview!.rows.length} 人'),
                       ),
-                    ),
+                    ],
                   ],
                 ],
               ),
@@ -260,18 +219,8 @@ class _ExcelPageState extends ConsumerState<ExcelPage> {
     );
   }
 
-  int get _activeImportStep => _busy && _busyMessage == '正在导入人员…'
-      ? 2
-      : _preview == null
-      ? 0
-      : 1;
-
   Future<void> _export(String yearMonth) async {
-    if (_busy) return;
-    setState(() {
-      _busy = true;
-      _busyMessage = '正在生成 Excel…';
-    });
+    setState(() => _busy = true);
     try {
       final file = await ref
           .read(excelServiceProvider)
@@ -285,60 +234,41 @@ class _ExcelPageState extends ConsumerState<ExcelPage> {
             .showSnackBar(SnackBar(content: Text('导出失败：$error')));
       }
     } finally {
-      if (mounted) {
-        setState(() {
-          _busy = false;
-          _busyMessage = null;
-        });
-      }
+      if (mounted) setState(() => _busy = false);
     }
   }
 
   Future<void> _pickImportFile() async {
-    if (_busy) return;
-    setState(() {
-      _busy = true;
-      _busyMessage = '正在选择人员名单文件…';
-    });
+    final files = await FilePicker.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['xlsx'],
+    );
+    if (files.isEmpty) return;
+    final bytes = await files.first.readAsBytes();
+    setState(() => _busy = true);
     try {
-      final files = await FilePicker.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['xlsx'],
-      );
-      if (!mounted || files.isEmpty) return;
-      setState(() => _busyMessage = '正在核验人员名单…');
-      final bytes = await files.first.readAsBytes();
       final preview = await ref
           .read(excelServiceProvider)
           .previewPersonnelImport(bytes);
       if (mounted) setState(() => _preview = preview);
     } catch (error) {
       if (mounted) {
-        setState(() {
-          _busyMessage = null;
-          _preview = PersonnelImportPreview(
+        setState(
+          () => _preview = PersonnelImportPreview(
             rows: const [],
             issues: [PersonnelImportIssue(rowNumber: 1, message: '$error')],
-          );
-        });
+          ),
+        );
       }
     } finally {
-      if (mounted) {
-        setState(() {
-          _busy = false;
-          _busyMessage = null;
-        });
-      }
+      if (mounted) setState(() => _busy = false);
     }
   }
 
   Future<void> _import() async {
     final preview = _preview;
-    if (_busy || preview == null || !preview.canImport) return;
-    setState(() {
-      _busy = true;
-      _busyMessage = '正在导入人员…';
-    });
+    if (preview == null || !preview.canImport) return;
+    setState(() => _busy = true);
     try {
       final count = await ref
           .read(excelServiceProvider)
@@ -353,12 +283,7 @@ class _ExcelPageState extends ConsumerState<ExcelPage> {
             .showSnackBar(SnackBar(content: Text('导入失败：$error')));
       }
     } finally {
-      if (mounted) {
-        setState(() {
-          _busy = false;
-          _busyMessage = null;
-        });
-      }
+      if (mounted) setState(() => _busy = false);
     }
   }
 }
@@ -370,14 +295,7 @@ class _PreviewCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = preview.issues.isEmpty
-        ? AppColors.success
-        : AppColors.warning;
-    final status = preview.issues.isNotEmpty
-        ? '发现 ${preview.issues.length} 个问题，暂不能导入'
-        : preview.rows.isEmpty
-        ? '没有可导入的人员记录'
-        : '校验通过，可导入 ${preview.rows.length} 人';
+    final color = preview.issues.isEmpty ? AppColors.primary : Colors.orange;
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
@@ -388,26 +306,11 @@ class _PreviewCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Icon(
-                preview.issues.isEmpty
-                    ? preview.rows.isEmpty
-                          ? Icons.info_outline
-                          : Icons.check_circle_outline
-                    : Icons.error_outline,
-                color: color,
-                size: 20,
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  status,
-                  style: TextStyle(color: color, fontWeight: FontWeight.w700),
-                ),
-              ),
-            ],
+          Text(
+            preview.issues.isEmpty
+                ? '校验通过，可导入 ${preview.rows.length} 人'
+                : '发现 ${preview.issues.length} 个问题，暂不能导入',
+            style: TextStyle(color: color, fontWeight: FontWeight.w700),
           ),
           if (preview.issues.isNotEmpty) ...[
             const SizedBox(height: 8),

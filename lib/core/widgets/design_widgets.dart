@@ -9,12 +9,14 @@ class DesignSection extends StatelessWidget {
     this.title,
     this.trailing,
     this.padding = const EdgeInsets.all(16),
+    this.contentSpacing = 12,
     super.key,
   });
   final Widget child;
   final String? title;
   final Widget? trailing;
   final EdgeInsetsGeometry padding;
+  final double contentSpacing;
 
   @override
   Widget build(BuildContext context) => Card(
@@ -35,7 +37,7 @@ class DesignSection extends StatelessWidget {
                 ?trailing,
               ],
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: contentSpacing),
           ],
           child,
         ],

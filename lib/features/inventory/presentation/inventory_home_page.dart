@@ -18,6 +18,7 @@ class InventoryHomePage extends ConsumerStatefulWidget {
 
 class _InventoryHomePageState extends ConsumerState<InventoryHomePage> {
   DateTime _selectedMonth = DateTime(DateTime.now().year, DateTime.now().month);
+  bool _recentRecordsExpanded = false;
 
   Future<void> _selectMonth() async {
     final selected = await showDatePicker(
@@ -194,33 +195,39 @@ class _InventoryHomePageState extends ConsumerState<InventoryHomePage> {
                 error: (_, _) => InventoryErrorState(
                   onRetry: () => ref.invalidate(inventoryOverviewProvider),
                 ),
-                data: (data) => DesignGrid(
-                  columns: 3,
-                  minimumCellWidth: 96,
+                data: (data) => Row(
                   children: [
-                    _OverviewMetric(
-                      label: '当前物资',
-                      value: '${data.totalMaterialCount}种',
-                      icon: Icons.inventory_2_outlined,
-                    ),
-                    _OverviewMetric(
-                      key: const Key('inventory-home-warning-count'),
-                      label: '库存预警',
-                      value: warnings.when(
-                        data: (rows) => '${rows.length}',
-                        loading: () => '加载中',
-                        error: (_, _) => '加载失败',
+                    Expanded(
+                      child: _OverviewMetric(
+                        label: '当前物资',
+                        value: '${data.totalMaterialCount}种',
+                        icon: Icons.inventory_2_outlined,
                       ),
-                      icon: Icons.warning_amber_rounded,
-                      color: AppColors.warning,
-                      onTap: () => context.push('/inventory/warnings'),
                     ),
-                    _OverviewMetric(
-                      label: '待补充',
-                      value: '${data.pendingReplenishmentCount}',
-                      icon: Icons.shopping_cart_outlined,
-                      color: AppColors.success,
-                      onTap: () => context.push('/inventory/replenishment'),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: _OverviewMetric(
+                        key: const Key('inventory-home-warning-count'),
+                        label: '库存预警',
+                        value: warnings.when(
+                          data: (rows) => '${rows.length}',
+                          loading: () => '加载中',
+                          error: (_, _) => '加载失败',
+                        ),
+                        icon: Icons.warning_amber_rounded,
+                        color: AppColors.warning,
+                        onTap: () => context.push('/inventory/warnings'),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: _OverviewMetric(
+                        label: '待补充',
+                        value: '${data.pendingReplenishmentCount}',
+                        icon: Icons.shopping_cart_outlined,
+                        color: AppColors.success,
+                        onTap: () => context.push('/inventory/replenishment'),
+                      ),
                     ),
                   ],
                 ),
@@ -292,40 +299,68 @@ class _InventoryHomePageState extends ConsumerState<InventoryHomePage> {
             InventorySection(
               title: '最近记录',
               icon: Icons.schedule_rounded,
-              trailing: TextButton.icon(
-                onPressed: () => context.push('/inventory/transactions'),
-                icon: const Icon(Icons.chevron_right),
-                label: const Text('全部记录'),
+              padding: EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: _recentRecordsExpanded ? 16 : 8,
               ),
-              child: transactions.when(
-                loading: () => const InventoryLoadingState(),
-                error: (_, _) => InventoryErrorState(
-                  onRetry: () => ref.invalidate(inventoryTransactionsProvider),
-                ),
-                data: (rows) => rows.isEmpty
-                    ? const InventoryEmptyState(
-                        title: '暂无库存流水',
-                        message: '入库、出库、盘点或调整后会在这里显示。',
-                      )
-                    : Column(
-                        children: [
-                          for (final transaction
-                              in rows
-                                  .where(
-                                    (item) => _inSelectedMonth(item.occurredAt),
-                                  )
-                                  .take(3))
-                            _RecentTransactionCard(transaction: transaction),
-                          if (!rows.any(
-                            (item) => _inSelectedMonth(item.occurredAt),
-                          ))
-                            const InventoryEmptyState(
-                              title: '本月暂无记录',
-                              message: '选择其他月份查看库存变化。',
-                            ),
-                        ],
+              contentSpacing: _recentRecordsExpanded ? 14 : 0,
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextButton.icon(
+                    onPressed: () => context.push('/inventory/transactions'),
+                    icon: const Icon(Icons.chevron_right),
+                    label: const Text('全部记录'),
+                  ),
+                  IconButton(
+                    key: const Key('inventory-recent-records-toggle'),
+                    tooltip: _recentRecordsExpanded ? '折叠最近记录' : '展开最近记录',
+                    onPressed: () => setState(
+                      () => _recentRecordsExpanded = !_recentRecordsExpanded,
+                    ),
+                    icon: Icon(
+                      _recentRecordsExpanded
+                          ? Icons.expand_less
+                          : Icons.expand_more,
+                    ),
+                  ),
+                ],
+              ),
+              child: !_recentRecordsExpanded
+                  ? const SizedBox.shrink()
+                  : transactions.when(
+                      loading: () => const InventoryLoadingState(),
+                      error: (_, _) => InventoryErrorState(
+                        onRetry: () =>
+                            ref.invalidate(inventoryTransactionsProvider),
                       ),
-              ),
+                      data: (rows) => rows.isEmpty
+                          ? const InventoryEmptyState(
+                              title: '暂无库存流水',
+                              message: '入库、出库、盘点或调整后会在这里显示。',
+                            )
+                          : Column(
+                              children: [
+                                for (final transaction
+                                    in rows
+                                        .where(
+                                          (item) =>
+                                              _inSelectedMonth(item.occurredAt),
+                                        )
+                                        .take(3))
+                                  _RecentTransactionCard(
+                                    transaction: transaction,
+                                  ),
+                                if (!rows.any(
+                                  (item) => _inSelectedMonth(item.occurredAt),
+                                ))
+                                  const InventoryEmptyState(
+                                    title: '本月暂无记录',
+                                    message: '选择其他月份查看库存变化。',
+                                  ),
+                              ],
+                            ),
+                    ),
             ),
             const SizedBox(height: 14),
             receipts.when(
@@ -522,23 +557,19 @@ class _OverviewMetric extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 6),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Row(
-              children: [
-                DesignIcon(icon, color: color, size: 26),
-                const SizedBox(width: 4),
-                Expanded(
-                  child: Text(
-                    label,
-                    style: const TextStyle(fontSize: 12, color: AppColors.body),
-                  ),
-                ),
-              ],
+            Center(child: DesignIcon(icon, color: color, size: 26)),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 12, color: AppColors.body),
             ),
             const SizedBox(height: 6),
             Text(
               value,
+              textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleLarge
                   ?.copyWith(fontSize: 22),
             ),
