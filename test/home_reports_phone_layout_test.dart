@@ -80,7 +80,57 @@ void main() {
       expect(tester.takeException(), isNull);
       await tester.tap(processing);
       await tester.pumpAndSettle();
-      expect(find.text('常用操作'), findsOneWidget);
+      expect(find.text('常用入口'), findsOneWidget);
+      expect(find.text('待办提醒'), findsNothing);
+      final common = find.text('常用入口');
+      final business = find.text('业务模块');
+      final registration = find.text('登记与查询');
+      expect(
+        tester.getTopLeft(find.text('待办事项')).dy,
+        lessThan(tester.getTopLeft(common).dy),
+      );
+      final entryCard = tester.widget<Card>(
+        find.ancestor(of: common, matching: find.byType(Card)),
+      );
+      for (final heading in [business, registration]) {
+        expect(
+          tester.widget<Card>(
+            find.ancestor(of: heading, matching: find.byType(Card)),
+          ),
+          same(entryCard),
+        );
+      }
+      for (final label in [
+        '每日考勤',
+        '车辆管理',
+        '库存出库',
+        '采购管理',
+        '人员管理',
+        '考勤管理',
+        '车辆档案',
+        '库存管理',
+        '物品领取',
+        '采购跟踪',
+        '器械维修',
+        '工资管理',
+        '新增人员',
+        '请假登记',
+        '加班登记',
+        '离职登记',
+        '保险变更',
+        '新建提醒',
+        '年度油耗',
+      ]) {
+        expect(find.text(label), findsOneWidget);
+      }
+      await tester.ensureVisible(find.byKey(const Key('home-pending-toggle')));
+      await tester.tap(find.byKey(const Key('home-pending-toggle')));
+      await tester.pumpAndSettle();
+      expect(find.text('待办提醒'), findsOneWidget);
+      await tester.tap(find.byKey(const Key('home-pending-toggle')));
+      await tester.pumpAndSettle();
+      expect(find.text('待办提醒'), findsNothing);
+      await tester.ensureVisible(overview);
       await tester.tap(overview);
       await tester.pumpAndSettle();
       expect(find.text('关键指标'), findsOneWidget);

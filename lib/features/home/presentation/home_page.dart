@@ -117,40 +117,6 @@ class HomePage extends ConsumerWidget {
               const SizedBox(height: 16),
             ],
             if (processing) ...[
-              const DesignSection(
-                title: '常用操作',
-                child: DesignGrid(
-                  children: [
-                    _Action(
-                      '每日考勤',
-                      Icons.calendar_month_outlined,
-                      '/attendance/daily',
-                      AppColors.primary,
-                      actionKey: 'home-action-今日考勤',
-                    ),
-                    _Action(
-                      '车辆管理',
-                      Icons.local_shipping_outlined,
-                      '/vehicles',
-                      AppColors.success,
-                      actionKey: 'home-action-车辆管理',
-                    ),
-                    _Action(
-                      '库存出库',
-                      Icons.outbox_outlined,
-                      '/inventory/issues/new',
-                      AppColors.warning,
-                    ),
-                    _Action(
-                      '采购管理',
-                      Icons.shopping_cart_outlined,
-                      '/purchase',
-                      AppColors.purple,
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 12),
               dashboard.when(
                 loading: () => const _Loading(),
                 error: (_, _) => _LoadError(
@@ -159,9 +125,18 @@ class HomePage extends ConsumerWidget {
                 data: (stats) => _PendingTasks(stats: stats),
               ),
               const SizedBox(height: 12),
-              const _BusinessActions(),
-              const SizedBox(height: 12),
-              const _RegistrationActions(),
+              const DesignSection(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _FrequentActions(),
+                    SizedBox(height: 24),
+                    _BusinessActions(),
+                    SizedBox(height: 24),
+                    _RegistrationActions(),
+                  ],
+                ),
+              ),
             ] else ...[
               dashboard.when(
                 loading: () => const _Loading(),
@@ -312,8 +287,8 @@ class _Dashboard extends ConsumerWidget {
         textDirection: TextDirection.ltr,
         textScaler: MediaQuery.textScalerOf(context),
       )..layout();
-      if (painter.width + 4 > minimumCellWidth) {
-        minimumCellWidth = painter.width + 4;
+      if (painter.width + 12 > minimumCellWidth) {
+        minimumCellWidth = painter.width + 12;
       }
       painter.dispose();
     }
@@ -329,40 +304,25 @@ class _Dashboard extends ConsumerWidget {
                 '当前在岗',
                 '${stats.activeEmployees}',
                 '人',
-                Icons.person_outline,
-                AppColors.success,
                 '/personnel/list?status=active',
               ),
               _Metric(
                 '本月新增',
                 '${stats.newEmployees}',
                 '人',
-                Icons.person_add_alt_1_outlined,
-                AppColors.techBlue,
                 '/personnel/list?hireMonth=${now.year}-${now.month.toString().padLeft(2, '0')}',
               ),
               _Metric(
                 '今日出勤',
                 '${stats.todayAttendance}',
                 '人',
-                Icons.fact_check_outlined,
-                AppColors.warning,
                 '/attendance/daily',
               ),
-              _Metric(
-                '今日请假',
-                '${stats.todayLeave}',
-                '人',
-                Icons.event_busy_outlined,
-                AppColors.danger,
-                '/attendance/leave',
-              ),
+              _Metric('今日请假', '${stats.todayLeave}', '人', '/attendance/leave'),
               _Metric(
                 '本月维修费用',
                 repairTotal(now),
                 '元',
-                Icons.build_outlined,
-                AppColors.purple,
                 '/vehicles/repairs',
                 amount: true,
                 onRetry: expenses.hasError
@@ -373,8 +333,6 @@ class _Dashboard extends ConsumerWidget {
                 '上月维修费用',
                 repairTotal(previous),
                 '元',
-                Icons.receipt_long_outlined,
-                AppColors.techBlue,
                 '/vehicles/repairs',
                 amount: true,
                 onRetry: expenses.hasError
@@ -385,8 +343,6 @@ class _Dashboard extends ConsumerWidget {
                 '上月油耗量',
                 fuelState ?? fuelMonth!.totalLiters.toStringAsFixed(2),
                 'L',
-                Icons.local_gas_station_outlined,
-                AppColors.success,
                 '/vehicles/fuel-summary',
                 amount: true,
                 onRetry: fuel.hasError
@@ -399,8 +355,6 @@ class _Dashboard extends ConsumerWidget {
                 fuelState ??
                     (fuelMonth!.totalAmountCents / 100).toStringAsFixed(2),
                 '元',
-                Icons.payments_outlined,
-                AppColors.warning,
                 '/vehicles/fuel-summary',
                 amount: true,
                 onRetry: fuel.hasError
@@ -433,15 +387,11 @@ class _Metric extends StatelessWidget {
     this.label,
     this.value,
     this.unit,
-    this.icon,
-    this.color,
     this.route, {
     this.amount = false,
     this.onRetry,
   });
   final String label, value, unit, route;
-  final IconData icon;
-  final Color color;
   final bool amount;
   final VoidCallback? onRetry;
   @override
@@ -456,7 +406,7 @@ class _Metric extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         onTap: onRetry ?? () => context.push(route),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -464,21 +414,15 @@ class _Metric extends StatelessWidget {
                 constraints: BoxConstraints(
                   minHeight: MediaQuery.textScalerOf(context).scale(12) * 2.8,
                 ),
-                child: Row(
-                  children: [
-                    DesignIcon(icon, color: color, size: 26),
-                    const SizedBox(width: 2),
-                    Expanded(
-                      child: Text(
-                        label,
-                        style: const TextStyle(
-                          color: AppColors.body,
-                          fontSize: 12,
-                          height: 1.4,
-                        ),
-                      ),
-                    ),
-                  ],
+                child: Text(
+                  label.length > 4
+                      ? '${label.substring(0, 2)}\n${label.substring(2)}'
+                      : label,
+                  style: const TextStyle(
+                    color: AppColors.body,
+                    fontSize: 12,
+                    height: 1.4,
+                  ),
                 ),
               ),
               const SizedBox(height: 6),
@@ -605,11 +549,65 @@ class _PendingTasksState extends State<_PendingTasks> {
   );
 }
 
+class _ActionGroup extends StatelessWidget {
+  const _ActionGroup({required this.title, required this.child});
+  final String title;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(title, style: Theme.of(context).textTheme.titleMedium),
+      const SizedBox(height: 12),
+      child,
+    ],
+  );
+}
+
+class _FrequentActions extends StatelessWidget {
+  const _FrequentActions();
+  @override
+  Widget build(BuildContext context) => const _ActionGroup(
+    title: '常用入口',
+    child: DesignGrid(
+      children: [
+        _Action(
+          '每日考勤',
+          Icons.calendar_month_outlined,
+          '/attendance/daily',
+          AppColors.primary,
+          actionKey: 'home-action-今日考勤',
+        ),
+        _Action(
+          '车辆管理',
+          Icons.local_shipping_outlined,
+          '/vehicles',
+          AppColors.success,
+          actionKey: 'home-action-车辆管理',
+        ),
+        _Action(
+          '库存出库',
+          Icons.outbox_outlined,
+          '/inventory/issues/new',
+          AppColors.warning,
+        ),
+        _Action(
+          '采购管理',
+          Icons.shopping_cart_outlined,
+          '/purchase',
+          AppColors.purple,
+        ),
+      ],
+    ),
+  );
+}
+
 class _BusinessActions extends StatelessWidget {
   const _BusinessActions();
   @override
-  Widget build(BuildContext context) => const DesignSection(
-    title: '全部业务',
+  Widget build(BuildContext context) => const _ActionGroup(
+    title: '业务模块',
     child: DesignGrid(
       children: [
         _Action('人员管理', Icons.groups_outlined, '/personnel', AppColors.success),
@@ -668,8 +666,8 @@ class _BusinessActions extends StatelessWidget {
 class _RegistrationActions extends StatelessWidget {
   const _RegistrationActions();
   @override
-  Widget build(BuildContext context) => const DesignSection(
-    title: '快捷操作',
+  Widget build(BuildContext context) => const _ActionGroup(
+    title: '登记与查询',
     child: DesignGrid(
       children: [
         _Action(

@@ -38,7 +38,10 @@ class _VehicleReminderPageState extends ConsumerState<VehicleReminderPage> {
     if (widget.vehicleId != null) return body;
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        leading: BackButton(
+          onPressed: () =>
+              context.canPop() ? context.pop() : context.go('/vehicles'),
+        ),
         title: const Text('提醒中心'),
         actions: [
           TextButton.icon(

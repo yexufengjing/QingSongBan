@@ -29,7 +29,10 @@ class _VehiclePageState extends ConsumerState<VehiclePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('车辆管理'),
-        automaticallyImplyLeading: false,
+        leading: BackButton(
+          onPressed: () =>
+              context.canPop() ? context.pop() : context.go('/home'),
+        ),
         actions: [
           IconButton(
             tooltip: '年度油耗汇总',
@@ -65,6 +68,7 @@ class _VehiclePageState extends ConsumerState<VehiclePage> {
               ),
               const SizedBox(height: 16),
               Card(
+                margin: EdgeInsets.zero,
                 child: Padding(
                   padding: const EdgeInsets.all(10),
                   child: _VehicleSearchAndFilters(ref: ref),
@@ -212,11 +216,9 @@ class _VehicleSearchAndFilters extends ConsumerWidget {
           ),
         ),
         const SizedBox(height: 12),
-        SizedBox(
-          height: 48,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: [
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final pills = <_FilterPill>[
               _FilterPill(
                 label: '全部',
                 selected: selectedType == null && selectedStatus == null,
@@ -225,7 +227,6 @@ class _VehicleSearchAndFilters extends ConsumerWidget {
                   ref.read(vehicleStatusFilterProvider.notifier).state = null;
                 },
               ),
-              const SizedBox(width: 8),
               _FilterPill(
                 label: '扫路车',
                 selected: selectedType == VehicleType.sweeper,
@@ -236,7 +237,6 @@ class _VehicleSearchAndFilters extends ConsumerWidget {
                     ? null
                     : VehicleType.sweeper,
               ),
-              const SizedBox(width: 8),
               _FilterPill(
                 label: '洒水车',
                 selected: selectedType == VehicleType.waterTruck,
@@ -247,7 +247,6 @@ class _VehicleSearchAndFilters extends ConsumerWidget {
                     ? null
                     : VehicleType.waterTruck,
               ),
-              const _FilterDivider(),
               for (final status in [
                 VehicleStatus.normal,
                 VehicleStatus.pendingRepair,
@@ -261,10 +260,38 @@ class _VehicleSearchAndFilters extends ConsumerWidget {
                       ref.read(vehicleStatusFilterProvider.notifier).state =
                           selectedStatus == status ? null : status,
                 ),
-                const SizedBox(width: 8),
               ],
-            ],
-          ),
+            ];
+            final widths = [
+              for (final pill in pills)
+                _textWidth(
+                      context,
+                      pill.label,
+                      const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ) +
+                    8,
+            ];
+            final cellWidth =
+                (constraints.maxWidth - 4 * (pills.length - 1)) / pills.length;
+            final singleRow =
+                cellWidth >= 48 && widths.every((width) => width <= cellWidth);
+            return Wrap(
+              spacing: 4,
+              runSpacing: 4,
+              children: [
+                for (var index = 0; index < pills.length; index++)
+                  SizedBox(
+                    width: singleRow
+                        ? cellWidth
+                        : widths[index].clamp(48.0, constraints.maxWidth),
+                    child: pills[index],
+                  ),
+              ],
+            );
+          },
         ),
       ],
     );
@@ -301,19 +328,27 @@ class _FilterPill extends StatelessWidget {
       backgroundColor: Colors.white.withValues(alpha: 0.72),
       selectedColor: color == null ? AppColors.techBlue : accent,
       shape: const StadiumBorder(),
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+      padding: EdgeInsets.zero,
+      labelPadding: const EdgeInsets.symmetric(horizontal: 2),
+      materialTapTargetSize: MaterialTapTargetSize.padded,
+      visualDensity: VisualDensity.standard,
     );
   }
 }
 
-class _FilterDivider extends StatelessWidget {
-  const _FilterDivider();
-
-  @override
-  Widget build(BuildContext context) => const Padding(
-    padding: EdgeInsets.symmetric(horizontal: 10),
-    child: Center(child: SizedBox(height: 22, child: VerticalDivider())),
-  );
+double _textWidth(BuildContext context, String text, TextStyle style) {
+  final painter = TextPainter(
+    text: TextSpan(
+      text: text,
+      style: DefaultTextStyle.of(context).style.merge(style),
+    ),
+    textDirection: Directionality.of(context),
+    textScaler: MediaQuery.textScalerOf(context),
+    maxLines: 1,
+  )..layout();
+  final width = painter.width;
+  painter.dispose();
+  return width;
 }
 
 class _VehicleStats extends ConsumerWidget {
@@ -375,9 +410,6 @@ class _VehicleStats extends ConsumerWidget {
             padding: const EdgeInsets.all(8),
             child: LayoutBuilder(
               builder: (context, constraints) {
-                final compact =
-                    constraints.maxWidth < 330 ||
-                    MediaQuery.textScalerOf(context).scale(14) > 18;
                 final costs = [
                   _TopCost(
                     label: '本月维修费',
@@ -396,6 +428,27 @@ class _VehicleStats extends ConsumerWidget {
                     color: Colors.orange,
                   ),
                 ];
+                final availableWidth = (constraints.maxWidth - 8) / 2;
+                final compact = costs.any(
+                  (cost) =>
+                      _textWidth(
+                                context,
+                                cost.label,
+                                const TextStyle(fontSize: 13),
+                              ) +
+                              52 >
+                          availableWidth ||
+                      _textWidth(
+                                context,
+                                '${cost.value} 元',
+                                const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ) +
+                              24 >
+                          availableWidth,
+                );
                 return compact
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -418,51 +471,48 @@ class _VehicleStats extends ConsumerWidget {
         ),
         const SizedBox(height: 12),
         Card(
-          child: Padding(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('车辆统计', style: Theme.of(context).textTheme.titleLarge),
-                const SizedBox(height: 12),
-                LayoutBuilder(
-                  builder: (context, constraints) {
-                    final columns =
-                        constraints.maxWidth >= 320 &&
-                            MediaQuery.textScalerOf(context).scale(14) <= 18
-                        ? 4
-                        : 2;
-                    return Column(
-                      children: [
-                        for (
-                          var start = 0;
-                          start < values.length;
-                          start += columns
-                        ) ...[
-                          if (start > 0) const SizedBox(height: 8),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              for (
-                                var index = start;
-                                index < values.length &&
-                                    index < start + columns;
-                                index++
-                              ) ...[
-                                if (index > start) const SizedBox(width: 6),
-                                Expanded(
-                                  child: _StatTile(value: values[index]),
-                                ),
-                              ],
+          child: ExpansionTile(
+            initiallyExpanded: false,
+            tilePadding: const EdgeInsets.symmetric(horizontal: 12),
+            childrenPadding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+            shape: const Border(),
+            collapsedShape: const Border(),
+            title: Text('车辆统计', style: Theme.of(context).textTheme.titleLarge),
+            children: [
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  final columns =
+                      constraints.maxWidth >= 320 &&
+                          MediaQuery.textScalerOf(context).scale(14) <= 18
+                      ? 4
+                      : 2;
+                  return Column(
+                    children: [
+                      for (
+                        var start = 0;
+                        start < values.length;
+                        start += columns
+                      ) ...[
+                        if (start > 0) const SizedBox(height: 8),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            for (
+                              var index = start;
+                              index < values.length && index < start + columns;
+                              index++
+                            ) ...[
+                              if (index > start) const SizedBox(width: 6),
+                              Expanded(child: _StatTile(value: values[index])),
                             ],
-                          ),
-                        ],
+                          ],
+                        ),
                       ],
-                    );
-                  },
-                ),
-              ],
-            ),
+                    ],
+                  );
+                },
+              ),
+            ],
           ),
         ),
       ],
@@ -1037,10 +1087,13 @@ class _SectionTitle extends StatelessWidget {
   final Widget trailing;
 
   @override
-  Widget build(BuildContext context) => Row(
+  Widget build(BuildContext context) => Wrap(
+    alignment: WrapAlignment.spaceBetween,
+    crossAxisAlignment: WrapCrossAlignment.center,
+    spacing: 12,
+    runSpacing: 8,
     children: [
       Text(title, style: Theme.of(context).textTheme.headlineMedium),
-      const Spacer(),
       trailing,
     ],
   );

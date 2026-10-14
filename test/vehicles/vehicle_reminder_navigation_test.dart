@@ -57,6 +57,29 @@ void main() {
 
       expect(find.text('备忘提醒'), findsOneWidget);
       expect(tester.takeException(), isNull);
+
+      // Direct entry has no previous route: use the business parent.
+      appRouter.go('/vehicles/reminders');
+      await tester.pumpAndSettle();
+      await tester.tap(find.byType(BackButton));
+      await tester.pumpAndSettle();
+      expect(find.text('车辆管理'), findsOneWidget);
+      await tester.tap(find.byType(BackButton));
+      await tester.pumpAndSettle();
+      expect(appRouter.routeInformationProvider.value.uri.path, '/home');
+
+      // Normal navigation returns to the actual previous page.
+      appRouter.push('/vehicles');
+      await tester.pumpAndSettle();
+      appRouter.push('/vehicles/reminders');
+      await tester.pumpAndSettle();
+      await tester.tap(find.byType(BackButton));
+      await tester.pumpAndSettle();
+      expect(find.text('车辆管理'), findsOneWidget);
+      await tester.tap(find.byType(BackButton));
+      await tester.pumpAndSettle();
+      expect(appRouter.routeInformationProvider.value.uri.path, '/home');
+      expect(tester.takeException(), isNull);
     } finally {
       await tester.pumpWidget(const SizedBox.shrink());
       await tester.idle();
