@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/theme/app_theme.dart';
 import '../../../core/platform/app_restart.dart';
+import '../../../core/utils/export_file_writer.dart';
 import '../application/backup_providers.dart';
 
 class BackupPage extends ConsumerStatefulWidget {
@@ -93,9 +94,30 @@ class _BackupPageState extends ConsumerState<BackupPage> {
       final file = await ref
           .read(backupServiceProvider)
           .createBackup(password: password);
-      if (mounted) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('备份已创建：${file.path}')));
+      try {
+        final exportedFile = await ExportFileWriter.write(
+          fileName: file.uri.pathSegments.last,
+          bytes: await file.readAsBytes(),
+          mimeType: 'application/octet-stream',
+        );
+        if (mounted) {
+          final exportedToDownloads = exportedFile.path.contains('/Download/');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(exportedToDownloads
+                  ? '加密备份已创建并导出到下载目录：${file.uri.pathSegments.last}'
+                  : '加密备份已创建；导出文件位置：${exportedFile.path}'),
+            ),
+          );
+        }
+      } catch (error) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('加密备份已创建在应用私有目录，但导出到下载目录失败：$error'),
+            ),
+          );
+        }
       }
     } catch (error) {
       if (mounted) {
@@ -173,54 +195,80 @@ class _BackupPageState extends ConsumerState<BackupPage> {
   }
 
   Future<String?> _requestPassword({bool confirm = false}) async {
-    final passwordController = TextEditingController();
-    final confirmationController = TextEditingController();
-    final result = await showDialog<String>(
+    return showDialog<String>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(confirm ? '设置备份密码' : '输入备份密码'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: passwordController,
-              obscureText: true,
-              autofocus: true,
-              decoration: const InputDecoration(labelText: '密码（至少 8 个字符）'),
-            ),
-            if (confirm)
-              TextField(
-                controller: confirmationController,
-                obscureText: true,
-                decoration: const InputDecoration(labelText: '再次输入密码'),
-              ),
-          ],
-        ),
-        actions: [
-          TextButton(onPressed: () => context.pop(), child: const Text('取消')),
-          FilledButton(
-            onPressed: () {
-              final password = passwordController.text;
-              if (password.length < 8 ||
-                  (confirm && password != confirmationController.text)) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      confirm ? '密码至少 8 个字符且两次输入必须一致' : '密码至少需要 8 个字符',
-                    ),
-                  ),
-                );
-                return;
-              }
-              context.pop(password);
-            },
-            child: const Text('继续'),
+      builder: (_) => _BackupPasswordDialog(confirm: confirm),
+    );
+  }
+}
+
+class _BackupPasswordDialog extends StatefulWidget {
+  const _BackupPasswordDialog({required this.confirm});
+
+  final bool confirm;
+
+  @override
+  State<_BackupPasswordDialog> createState() => _BackupPasswordDialogState();
+}
+
+class _BackupPasswordDialogState extends State<_BackupPasswordDialog> {
+  final _passwordController = TextEditingController();
+  final _confirmationController = TextEditingController();
+
+  @override
+  void dispose() {
+    _passwordController.dispose();
+    _confirmationController.dispose();
+    super.dispose();
+  }
+
+  void _submit() {
+    final password = _passwordController.text;
+    if (password.length < 8 ||
+        (widget.confirm && password != _confirmationController.text)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            widget.confirm ? '密码至少 8 个字符且两次输入必须一致' : '密码至少需要 8 个字符',
           ),
+        ),
+      );
+      return;
+    }
+    context.pop(password);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(widget.confirm ? '设置备份密码' : '输入备份密码'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextField(
+            controller: _passwordController,
+            obscureText: true,
+            autofocus: true,
+            decoration: const InputDecoration(labelText: '密码（至少 8 个字符）'),
+          ),
+          if (widget.confirm)
+            TextField(
+              controller: _confirmationController,
+              obscureText: true,
+              decoration: const InputDecoration(labelText: '再次输入密码'),
+            ),
         ],
       ),
+      actions: [
+        TextButton(
+          onPressed: () => context.pop(),
+          child: const Text('取消'),
+        ),
+        FilledButton(
+          onPressed: _submit,
+          child: const Text('继续'),
+        ),
+      ],
     );
-    passwordController.dispose();
-    confirmationController.dispose();
-    return result;
   }
 }

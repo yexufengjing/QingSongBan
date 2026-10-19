@@ -11,11 +11,14 @@ class ExportFileWriter {
   static Future<File> write({
     required String fileName,
     required Uint8List bytes,
+    String mimeType =
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   }) async {
     if (Platform.isAndroid) {
       final uri = await _channel.invokeMethod<String>('saveToDownloads', {
         'fileName': fileName,
         'bytes': bytes,
+        'mimeType': mimeType,
       });
       if (uri != null && uri.isNotEmpty) {
         return File('/storage/emulated/0/Download/$fileName');

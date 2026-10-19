@@ -10,6 +10,8 @@ import 'package:qingsongban/core/database/demo_data_seeder.dart';
 import 'package:qingsongban/core/database/inventory_demo_data_seeder.dart';
 import 'package:qingsongban/core/database/purchase_demo_data_seeder.dart';
 import 'package:qingsongban/core/database/vehicle_demo_data_seeder.dart';
+import 'package:qingsongban/features/assistant/application/assistant_providers.dart';
+import 'package:qingsongban/features/assistant/domain/assistant_models.dart';
 import 'package:qingsongban/features/garden_tool_repairs/data/garden_tool_repair_repository.dart';
 import 'package:qingsongban/features/garden_tool_repairs/domain/repair_models.dart';
 import 'package:qingsongban/features/home/presentation/home_page.dart';
@@ -195,8 +197,8 @@ void main() {
   testWidgets('production router renders missing and seeded-record states', (
     tester,
   ) async {
-    expect(appRouteCases, hasLength(91));
-    expect(appRouteCases.map((route) => route.name).toSet(), hasLength(91));
+    expect(appRouteCases, hasLength(93));
+    expect(appRouteCases.map((route) => route.name).toSet(), hasLength(93));
     tester.view.physicalSize = const Size(1170, 2532);
     tester.view.devicePixelRatio = 3;
     addTearDown(() {
@@ -230,7 +232,12 @@ void main() {
 
       await tester.pumpWidget(
         ProviderScope(
-          overrides: [appDatabaseProvider.overrideWithValue(database)],
+          overrides: [
+            appDatabaseProvider.overrideWithValue(database),
+            assistantKeyStoreProvider.overrideWithValue(
+              _RouteAssistantKeyStore(),
+            ),
+          ],
           child: const QingSongBanApp(),
         ),
       );
@@ -257,6 +264,7 @@ void main() {
           stateLabel: 'seeded-record',
         );
       }
+
     } catch (error, stackTrace) {
       testError = error;
       testStackTrace = stackTrace;
@@ -290,4 +298,18 @@ void main() {
       Error.throwWithStackTrace(capturedError, capturedStackTrace);
     }
   });
+}
+
+class _RouteAssistantKeyStore implements AssistantKeyStore {
+  @override
+  Future<bool> hasKey() async => false;
+
+  @override
+  Future<String?> readKey() async => null;
+
+  @override
+  Future<void> removeKey() async {}
+
+  @override
+  Future<void> saveKey(String key) async {}
 }

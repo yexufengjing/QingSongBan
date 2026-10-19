@@ -15,20 +15,36 @@ import '../../reminders/domain/reminder_options.dart';
 import 'vehicle_metric_grid.dart';
 
 class VehicleExpenseTab extends ConsumerStatefulWidget {
-  const VehicleExpenseTab({required this.vehicle, super.key});
+  const VehicleExpenseTab({
+    required this.vehicle,
+    this.initialYear,
+    this.onYearChanged,
+    super.key,
+  });
 
   final Vehicle vehicle;
+  final int? initialYear;
+  final ValueChanged<int>? onYearChanged;
 
   @override
   ConsumerState<VehicleExpenseTab> createState() => _VehicleExpenseTabState();
 }
 
 class _VehicleExpenseTabState extends ConsumerState<VehicleExpenseTab> {
-  late int _year = DateTime.now().year;
+  late int _year = widget.initialYear ?? DateTime.now().year;
 
   @override
   Widget build(BuildContext context) {
     final vehicle = widget.vehicle;
+    final availableYears = <int>{
+      for (
+        var year = DateTime.now().year - 10;
+        year <= DateTime.now().year + 1;
+        year++
+      )
+        year,
+      _year,
+    }.toList()..sort();
     final items = ref.watch(
       vehicleExpenseItemsForYearProvider((vehicle.id, _year)),
     );
@@ -44,15 +60,14 @@ class _VehicleExpenseTabState extends ConsumerState<VehicleExpenseTab> {
               value: _year,
               underline: const SizedBox.shrink(),
               items: [
-                for (
-                  var year = DateTime.now().year - 10;
-                  year <= DateTime.now().year + 1;
-                  year++
-                )
+                for (final year in availableYears)
                   DropdownMenuItem(value: year, child: Text('$year 年')),
               ],
               onChanged: (year) {
-                if (year != null) setState(() => _year = year);
+                if (year != null) {
+                  setState(() => _year = year);
+                  widget.onYearChanged?.call(year);
+                }
               },
             ),
           ],

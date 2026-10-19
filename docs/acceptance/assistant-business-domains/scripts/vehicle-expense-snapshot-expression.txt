@@ -1,0 +1,18 @@
+(() {
+  final messages = this.state.messages;
+  final replies = messages.where((m) => !m.isUser).toList();
+  final last = replies.isEmpty ? null : replies.last;
+  final answer = last?.answer;
+  final analysis = answer?.vehicleExpenseAnalysis;
+  final query = last?.expenseQuery;
+  final metrics = last?.metrics;
+  final tools = analysis?.executedTools.map((v) => '"${v.name}"').join(',') ?? '';
+  final ranges = analysis?.periods.map((p) => '"${p.startInclusive.toIso8601String().substring(0,10)}..${p.endExclusive.toIso8601String().substring(0,10)}"').join(',') ?? '';
+  final repairAmountCents = analysis?.periods
+          .expand((p) => p.categories)
+          .where((c) => c.category.name == 'repair')
+          .fold<int>(0, (sum, category) => sum + category.amountCents) ??
+      0;
+  final pageMatch = this._pageContext?.vehicleId == null ? 'null' : (analysis?.vehicleId == this._pageContext?.vehicleId).toString();
+  return '{"phase":"${this.state.phase.name}","messageCount":${messages.length},"businessType":"${this.state.session.lastBusinessType.name}","lastError":"${last?.error?.name ?? analysis?.failure?.name ?? answer?.error?.name ?? ''}","hasAnswer":${answer != null},"hasExpenseAnalysis":${analysis != null},"stopped":${analysis?.stopped ?? false},"candidateCount":${(last?.candidates.length ?? 0)+(last?.vehicleCandidates.length ?? 0)},"scope":"${query?.scope.name ?? ''}","period":"${query?.period.name ?? ''}","yearMonth":"${query?.yearMonth ?? ''}","providerCalls":${metrics?.providerCalls ?? 0},"inputTokens":${metrics?.inputTokens?.toString() ?? 'null'},"outputTokens":${metrics?.outputTokens?.toString() ?? 'null'},"elapsedMs":${metrics?.elapsed?.inMilliseconds.toString() ?? 'null'},"executedTools":[$tools],"periodRanges":[$ranges],"repairAmountCents":$repairAmountCents,"evidenceCount":${analysis?.evidence.length ?? 0},"peerComparisonCount":${analysis?.peerComparisons.length ?? 0},"monthlyRecordCount":${analysis?.periods.fold<int>(0,(sum,p)=>sum+p.fuelMonths.length) ?? 0},"matchesPageVehicle":$pageMatch,"hasVehicleSummary":${answer?.vehicleSummary != null},"hasVehicleRanking":${answer?.vehicleRanking != null},"attendanceDays":${answer?.attendanceDays?.toString() ?? 'null'},"leaveAndRestDays":${answer?.leaveAndRestDays?.toString() ?? 'null'},"overtimeMinutes":${answer?.overtimeMinutes?.toString() ?? 'null'}}';
+})()

@@ -118,18 +118,19 @@ class GardenToolRepairRepository {
   }
 
   Stream<List<GardenToolRepairLedgerGroup>> watchMonth(DateTime month) {
-    final query = _database.select(_database.gardenToolRepairGroups)
-      ..where(
-        (table) =>
-            table.repairMonth.equals(repairMonthKey(month)) &
-            table.deletedAt.isNull(),
-      )
-      ..orderBy([
-        (table) => OrderingTerm(expression: table.repairDate),
-        (table) => OrderingTerm(expression: table.createdAt),
-        (table) => OrderingTerm(expression: table.id),
-      ]);
-    return query.watch().asyncMap(_withItems);
+    return _database
+        .customSelect(
+          'SELECT id FROM garden_tool_repair_groups '
+          'WHERE repair_month = ? AND deleted_at IS NULL',
+          variables: [Variable.withString(repairMonthKey(month))],
+          readsFrom: {
+            _database.gardenToolRepairGroups,
+            _database.gardenToolRepairItems,
+            _database.gardenToolRepairAttachments,
+          },
+        )
+        .watch()
+        .asyncMap((_) => loadMonth(month));
   }
 
   Future<List<GardenToolRepairLedgerGroup>> loadMonth(DateTime month) async {

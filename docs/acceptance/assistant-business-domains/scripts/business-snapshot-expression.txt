@@ -1,0 +1,25 @@
+(() {
+  final messages = this.state.messages;
+  final replies = messages.where((m) => !m.isUser).toList();
+  final last = replies.isEmpty ? null : replies.last;
+  final answer = last?.answer;
+  final result = answer?.businessResult;
+  final query = last?.businessQuery;
+  final yearMonthValue = answer?.yearMonth.isNotEmpty == true
+      ? answer!.yearMonth
+      : query?.yearMonth ?? '';
+  final lastErrorValue = last?.error?.name ?? answer?.error?.name ?? '';
+  String safeRoute(String? path) =>
+      path == null ? '' : Uri.parse(path).replace(path: Uri.parse(path).path.replaceAll(RegExp(r'/\d+'), '/:id')).toString();
+  final factSources = result?.facts
+      .map((f) => safeRoute(f.sourcePage))
+      .where((s) => s.isNotEmpty)
+      .toSet()
+      .toList() ?? const <String>[];
+  const expectedFacts = __EXPECTED_FACTS__;
+  final factsMatched = expectedFacts.isEmpty ||
+      expectedFacts.every((expected) => result?.facts.any((f) => '${f.label} ${f.value} ${f.explanation ?? ''}'.contains(expected)) ?? false);
+  final summaryMatched = __EXPECTED_SUMMARY__.isEmpty ||
+      (result?.summary.contains(__EXPECTED_SUMMARY__) ?? false);
+  return '{"phase":"${this.state.phase.name}","messageCount":${messages.length},"domain":"${result?.domain.name ?? this.state.session.lastBusinessType.name}","yearMonth":"$yearMonthValue","attendanceDays":${answer?.attendanceDays ?? -1},"hasAnswer":${answer != null},"hasBusinessResult":${result != null},"factCount":${result?.facts.length ?? 0},"hasNonEmptyFacts":${result?.facts.isNotEmpty ?? false},"factsMatched":$factsMatched,"summaryMatched":$summaryMatched,"source":"${safeRoute(result?.sourcePage)}","factSources":"${factSources.join('|')}","sourceRulePresent":${result?.sourceRule.isNotEmpty ?? false},"lastError":"$lastErrorValue"}';
+})()

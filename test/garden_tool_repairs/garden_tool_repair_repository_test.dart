@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qingsongban/core/database/app_database.dart';
 import 'package:qingsongban/features/garden_tool_repairs/data/garden_tool_repair_repository.dart';
@@ -377,6 +379,48 @@ void main() {
             .every((attachment) => attachment.deletedAt != null),
         isTrue,
       );
+    },
+  );
+
+  test(
+    'watchMonth refreshes the attachment count on insert and delete',
+    () async {
+      final unit = await repository.saveUnit(
+        name: '特钢',
+        sortOrder: 0,
+        isActive: true,
+      );
+      final group = await repository.saveGroup(
+        _draft(unitId: unit.id, repairerName: '张三'),
+      );
+      final updates = StreamIterator(repository.watchMonth(DateTime(2026, 9)));
+      try {
+        expect(
+          await updates.moveNext().timeout(const Duration(seconds: 2)),
+          isTrue,
+        );
+        expect(updates.current.single.attachmentCount, 0);
+
+        final attachment = await repository.addAttachment(
+          groupId: group.id,
+          attachmentType: 'receipt',
+          filePath: 'garden_tool_repairs/${group.id}/receipt.jpg',
+        );
+        expect(
+          await updates.moveNext().timeout(const Duration(seconds: 2)),
+          isTrue,
+        );
+        expect(updates.current.single.attachmentCount, 1);
+
+        await repository.softDeleteAttachment(attachment.id);
+        expect(
+          await updates.moveNext().timeout(const Duration(seconds: 2)),
+          isTrue,
+        );
+        expect(updates.current.single.attachmentCount, 0);
+      } finally {
+        await updates.cancel();
+      }
     },
   );
 }

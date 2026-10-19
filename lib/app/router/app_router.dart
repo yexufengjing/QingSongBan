@@ -53,6 +53,10 @@ import '../../features/purchase/presentation/purchase_stock_in_page.dart';
 import '../../features/purchase/presentation/purchase_tracking_page.dart';
 import '../../features/purchase/domain/purchase_status.dart';
 import '../../features/settings/presentation/settings_page.dart';
+import '../../features/assistant/domain/assistant_models.dart';
+import '../../features/assistant/application/assistant_overlay_state.dart';
+import '../../features/assistant/presentation/assistant_page.dart';
+import '../../features/assistant/presentation/assistant_settings_page.dart';
 import '../../features/vehicles/application/vehicle_providers.dart';
 import '../../features/vehicles/presentation/vehicle_detail_page.dart';
 import '../../features/vehicles/presentation/vehicle_archive_page.dart';
@@ -75,6 +79,7 @@ import 'app_shell.dart';
 
 final GoRouter appRouter = GoRouter(
   initialLocation: '/home',
+  observers: [assistantOverlayModalObserver],
   routes: [
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
@@ -82,6 +87,7 @@ final GoRouter appRouter = GoRouter(
       },
       branches: [
         StatefulShellBranch(
+          observers: [AssistantOverlayModalObserver()],
           routes: [
             GoRoute(
               path: '/home',
@@ -91,6 +97,7 @@ final GoRouter appRouter = GoRouter(
           ],
         ),
         StatefulShellBranch(
+          observers: [AssistantOverlayModalObserver()],
           routes: [
             GoRoute(
               path: '/personnel',
@@ -181,6 +188,7 @@ final GoRouter appRouter = GoRouter(
           ],
         ),
         StatefulShellBranch(
+          observers: [AssistantOverlayModalObserver()],
           routes: [
             GoRoute(
               path: '/attendance',
@@ -207,6 +215,9 @@ final GoRouter appRouter = GoRouter(
                     }
                     return MonthlyAttendanceTablePage(
                       initialMonth: initialMonth,
+                      initialGroupId: int.tryParse(
+                        state.uri.queryParameters['groupId'] ?? '',
+                      ),
                     );
                   },
                 ),
@@ -348,6 +359,7 @@ final GoRouter appRouter = GoRouter(
           ],
         ),
         StatefulShellBranch(
+          observers: [AssistantOverlayModalObserver()],
           routes: [
             GoRoute(
               path: '/reports',
@@ -421,6 +433,7 @@ final GoRouter appRouter = GoRouter(
           ],
         ),
         StatefulShellBranch(
+          observers: [AssistantOverlayModalObserver()],
           routes: [
             GoRoute(
               path: '/settings',
@@ -537,6 +550,22 @@ final GoRouter appRouter = GoRouter(
     ),
     ...inventoryRoutes(),
     GoRoute(
+      path: '/assistant',
+      name: 'assistant',
+      builder: (context, state) => AssistantPage(
+        pageContext: state.extra is AssistantPageContext
+            ? state.extra! as AssistantPageContext
+            : null,
+      ),
+      routes: [
+        GoRoute(
+          path: 'settings',
+          name: 'assistant-settings',
+          builder: (context, state) => const AssistantSettingsPage(),
+        ),
+      ],
+    ),
+    GoRoute(
       path: '/purchase',
       name: 'purchase-home',
       builder: (context, state) => const PurchaseHomePage(),
@@ -613,7 +642,14 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/items',
       name: 'item-distribution',
-      builder: (context, state) => const ItemDistributionPage(),
+      builder: (context, state) {
+        final year = int.tryParse(state.uri.queryParameters['year'] ?? '');
+        final month = int.tryParse(state.uri.queryParameters['month'] ?? '');
+        final initialMonth = year != null && month != null && month >= 1 && month <= 12
+            ? DateTime(year, month)
+            : null;
+        return ItemDistributionPage(initialMonth: initialMonth);
+      },
     ),
     GoRoute(
       path: '/garden-tool-repairs',
@@ -770,11 +806,13 @@ final GoRouter appRouter = GoRouter(
               return const Scaffold(body: Center(child: Text('无效的车辆编号')));
             }
             final query = state.uri.queryParameters;
+            final expenseYear = int.tryParse(query['expenseYear'] ?? '');
             final fuelYear = int.tryParse(query['year'] ?? '');
             final fuelMonth = int.tryParse(query['month'] ?? '');
             return VehicleDetailPage(
               vehicleId: vehicleId,
               initialTab: query['tab'],
+              initialExpenseYear: expenseYear,
               initialFuelYear: fuelYear,
               initialFuelMonth:
                   fuelMonth != null && fuelMonth >= 1 && fuelMonth <= 12

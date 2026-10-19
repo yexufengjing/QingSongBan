@@ -6,6 +6,7 @@ import '../../../app/theme/app_theme.dart';
 import '../../../core/widgets/design_widgets.dart';
 import '../../../core/database/app_database.dart';
 import '../application/reminder_providers.dart';
+import '../application/notification_service.dart';
 import '../domain/reminder_options.dart';
 import '../domain/reminder_schedule.dart';
 
@@ -742,6 +743,12 @@ class _NotificationCheck extends StatelessWidget {
           if (context.mounted) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(const SnackBar(content: Text('已发送测试通知')));
+          }
+        } on NotificationPermissionDeniedException {
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('通知权限未开启，未发送测试通知')),
+            );
           }
         } catch (error) {
           if (context.mounted) {

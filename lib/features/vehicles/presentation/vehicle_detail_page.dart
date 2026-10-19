@@ -8,6 +8,8 @@ import '../../../core/database/database_enums.dart';
 import '../application/vehicle_providers.dart';
 import '../data/maintenance_repository.dart';
 import '../domain/vehicle_options.dart';
+import '../../assistant/application/assistant_overlay_state.dart';
+import '../../assistant/domain/assistant_models.dart';
 import 'vehicle_condition_tab.dart';
 import 'vehicle_expense_tab.dart';
 import 'vehicle_fuel_tab.dart';
@@ -16,10 +18,11 @@ import 'vehicle_metric_grid.dart';
 import 'vehicle_repair_tab.dart';
 import 'vehicle_reminder_page.dart';
 
-class VehicleDetailPage extends ConsumerWidget {
+class VehicleDetailPage extends ConsumerStatefulWidget {
   const VehicleDetailPage({
     required this.vehicleId,
     this.initialTab,
+    this.initialExpenseYear,
     this.initialFuelYear,
     this.initialFuelMonth,
     super.key,
@@ -27,18 +30,37 @@ class VehicleDetailPage extends ConsumerWidget {
 
   final int vehicleId;
   final String? initialTab;
+  final int? initialExpenseYear;
   final int? initialFuelYear;
   final int? initialFuelMonth;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<VehicleDetailPage> createState() => _VehicleDetailPageState();
+}
+
+class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
+  late int _selectedExpenseYear =
+      widget.initialExpenseYear ?? DateTime.now().year;
+
+  @override
+  void didUpdateWidget(covariant VehicleDetailPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.initialExpenseYear != widget.initialExpenseYear &&
+        widget.initialExpenseYear != null) {
+      _selectedExpenseYear = widget.initialExpenseYear!;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final vehicleId = widget.vehicleId;
     final vehicle = ref.watch(vehicleProvider(vehicleId));
     return DefaultTabController(
       key: ValueKey<String>(
-        'vehicle-detail-$vehicleId-tab-${_tabIndex(initialTab)}',
+        'vehicle-detail-$vehicleId-tab-${_tabIndex(widget.initialTab)}',
       ),
       length: 7,
-      initialIndex: _tabIndex(initialTab),
+      initialIndex: _tabIndex(widget.initialTab),
       child: Builder(
         builder: (context) {
           final tabController = DefaultTabController.of(context);
@@ -50,6 +72,22 @@ class VehicleDetailPage extends ConsumerWidget {
                     Text(_titleForTabIndex(tabController.index)),
               ),
               actions: [
+                IconButton(
+                  tooltip: '问助手这辆车',
+                  onPressed: () => ref
+                      .read(assistantOverlayStateProvider)
+                      .show(
+                        pageContext: AssistantPageContext(
+                          module: 'vehicles',
+                          page: 'vehicle-detail',
+                          vehicleId: vehicleId,
+                          year: tabController.index == 2
+                              ? _selectedExpenseYear
+                              : DateTime.now().year,
+                        ),
+                      ),
+                  icon: const Icon(Icons.forum_outlined),
+                ),
                 IconButton(
                   tooltip: '附件资料',
                   onPressed: () =>
@@ -108,13 +146,18 @@ class VehicleDetailPage extends ConsumerWidget {
                             ),
                           ),
                           VehicleRepairTab(vehicle: item),
-                          VehicleExpenseTab(vehicle: item),
+                          VehicleExpenseTab(
+                            vehicle: item,
+                            initialYear: widget.initialExpenseYear,
+                            onYearChanged: (year) =>
+                                _selectedExpenseYear = year,
+                          ),
                           VehicleConditionTab(vehicle: item),
                           VehicleMaintenanceTab(vehicle: item),
                           VehicleFuelTab(
                             vehicle: item,
-                            initialYear: initialFuelYear,
-                            initialMonth: initialFuelMonth,
+                            initialYear: widget.initialFuelYear,
+                            initialMonth: widget.initialFuelMonth,
                           ),
                           VehicleReminderPage(vehicleId: item.id),
                         ],

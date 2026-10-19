@@ -9,6 +9,7 @@ import '../../../core/widgets/design_widgets.dart';
 import '../application/home_providers.dart';
 import '../../vehicles/application/vehicle_providers.dart';
 import '../../vehicles/domain/expense_options.dart';
+import '../../assistant/application/assistant_overlay_state.dart';
 
 final homeProcessingProvider = StateProvider<bool>((ref) => false);
 
@@ -53,6 +54,13 @@ class HomePage extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(width: 8),
+                IconButton(
+                  key: const Key('home-assistant-entry'),
+                  tooltip: '打开智能助手',
+                  onPressed: () =>
+                      ref.read(assistantOverlayStateProvider).show(),
+                  icon: const Icon(Icons.forum_outlined),
+                ),
                 const Expanded(
                   child: FittedBox(
                     fit: BoxFit.scaleDown,

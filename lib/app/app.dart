@@ -5,6 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'router/app_router.dart';
 import 'theme/app_theme.dart';
 import '../core/widgets/design_canvas.dart';
+import '../features/assistant/presentation/assistant_overlay_host.dart';
 
 class QingSongBanApp extends StatelessWidget {
   const QingSongBanApp({super.key});
@@ -20,7 +21,9 @@ class QingSongBanApp extends StatelessWidget {
       theme: AppTheme.light,
       builder: (context, child) => AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.dark,
-        child: DesignCanvas(child: child!),
+        child: DesignCanvas(
+          child: AssistantOverlayHost(router: appRouter, child: child!),
+        ),
       ),
       routerConfig: appRouter,
     );

@@ -37,8 +37,12 @@ class NotificationService {
   }
 
   Future<void> requestPermission() async {
+    await _requestNotificationPermission();
+  }
+
+  Future<bool?> _requestNotificationPermission() async {
     await initialize();
-    await _plugin
+    return _plugin
         .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin
         >()
@@ -130,7 +134,10 @@ class NotificationService {
   }
 
   Future<void> showTestNotification() async {
-    await requestPermission();
+    final permissionGranted = await _requestNotificationPermission();
+    if (permissionGranted == false) {
+      throw const NotificationPermissionDeniedException();
+    }
     await _plugin.show(
       2147483000,
       '轻松办提醒测试',
@@ -163,4 +170,8 @@ class NotificationService {
       return tz.local;
     }
   }
+}
+
+class NotificationPermissionDeniedException implements Exception {
+  const NotificationPermissionDeniedException();
 }

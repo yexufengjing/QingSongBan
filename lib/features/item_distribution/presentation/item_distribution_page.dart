@@ -8,9 +8,10 @@ import '../data/item_distribution_repository.dart';
 import '../domain/item_distribution_models.dart';
 
 class ItemDistributionPage extends ConsumerStatefulWidget {
-  const ItemDistributionPage({super.key, this.fromHomeShortcut = false});
+  const ItemDistributionPage({super.key, this.fromHomeShortcut = false, this.initialMonth});
 
   final bool fromHomeShortcut;
+  final DateTime? initialMonth;
 
   @override
   ConsumerState<ItemDistributionPage> createState() =>
@@ -27,7 +28,9 @@ class _ItemDistributionPageState extends ConsumerState<ItemDistributionPage> {
   void initState() {
     super.initState();
     final now = DateTime.now();
-    _month = DateTime(now.year, now.month - 1, 1);
+    _month = widget.initialMonth == null
+        ? DateTime(now.year, now.month - 1, 1)
+        : DateTime(widget.initialMonth!.year, widget.initialMonth!.month, 1);
   }
 
   String get _monthKey =>

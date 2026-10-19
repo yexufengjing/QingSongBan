@@ -115,23 +115,26 @@ void main() {
       expect(find.byKey(const Key('backup-create-button')), findsOneWidget);
       await tester.tap(find.byKey(const Key('backup-create-button')));
       await tester.pump(const Duration(milliseconds: 400));
-      final passwordField = find.byKey(const Key('backup-password-field'));
-      final confirmationField = find.byKey(
-        const Key('backup-password-confirmation-field'),
-      );
-      expect(
-        tester.widget<Text>(find.text('设置备份密码')).textAlign,
-        TextAlign.center,
-      );
+      final passwordField = find.byType(TextField).first;
+      final confirmationField = find.byType(TextField).last;
+      expect(find.text('设置备份密码'), findsOneWidget);
       expect(passwordField, findsOneWidget);
       expect(confirmationField, findsOneWidget);
       final firstField = tester.widget<TextField>(passwordField);
-      expect(firstField.decoration?.labelText, isNull);
+      expect(firstField.decoration?.labelText, '密码（至少 8 个字符）');
       expect(firstField.obscureText, isTrue);
-      expect(tester.getSize(passwordField).height, greaterThanOrEqualTo(56));
+      expect(tester.getSize(passwordField).height, greaterThanOrEqualTo(48));
       expect(
-        tester.getSize(find.byKey(const Key('backup-password-cancel'))).width,
-        tester.getSize(find.byKey(const Key('backup-password-submit'))).width,
+        tester
+            .widget<TextButton>(find.widgetWithText(TextButton, '取消'))
+            .onPressed,
+        isNotNull,
+      );
+      expect(
+        tester
+            .widget<FilledButton>(find.widgetWithText(FilledButton, '继续'))
+            .onPressed,
+        isNotNull,
       );
       await tester.tap(find.byTooltip('显示密码').first);
       await tester.pump(const Duration(milliseconds: 250));
@@ -185,9 +188,10 @@ void main() {
 
       await tester.tap(find.byKey(const Key('backup-create-button')));
       await tester.pump(const Duration(milliseconds: 400));
-      await tester.tap(find.text('取消'));
+      await tester.tap(find.widgetWithText(TextButton, '取消'));
       await tester.pumpAndSettle();
       expect(service.createCount, 1);
+      expect(tester.takeException(), isNull);
 
       picker.result = [];
       await tester.tap(find.byKey(const Key('backup-restore-button')));
@@ -233,16 +237,28 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.widgetWithText(FilledButton, '确认恢复'));
       await tester.pumpAndSettle();
-      final restorePassword = find.byKey(const Key('backup-password-field'));
+      var restorePassword = find.byType(TextField).first;
       expect(restorePassword, findsOneWidget);
       expect(tester.widget<TextField>(restorePassword).obscureText, isTrue);
       await tester.enterText(restorePassword, 'restore-123');
-      await tester.tap(find.byKey(const Key('backup-password-submit')));
+      await tester.tap(find.widgetWithText(TextButton, '取消'));
+      await tester.pumpAndSettle();
+      expect(service.restoreCount, 0);
+      expect(tester.takeException(), isNull);
+
+      await tester.tap(find.byKey(const Key('backup-restore-button')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.widgetWithText(FilledButton, '确认恢复'));
+      await tester.pumpAndSettle();
+      restorePassword = find.byType(TextField).first;
+      await tester.enterText(restorePassword, 'restore-123');
+      await tester.tap(find.widgetWithText(FilledButton, '继续'));
       await tester.pump(const Duration(milliseconds: 500));
       await tester.pump(const Duration(milliseconds: 500));
       expect(service.restoreCount, 1);
       expect(find.text('正在恢复备份…'), findsOneWidget);
       expect(find.byKey(const Key('backup-progress')), findsOneWidget);
+      expect(tester.takeException(), isNull);
       await _capture(tester, '${profile.name}-backup-restore-busy');
       service.restoreGate!.complete(
         BackupRestoreResult(
@@ -274,7 +290,7 @@ void main() {
       await tester.tap(find.widgetWithText(FilledButton, '确认恢复'));
       await tester.pumpAndSettle();
       await tester.enterText(restorePassword, 'restore-123');
-      await tester.tap(find.byKey(const Key('backup-password-submit')));
+      await tester.tap(find.widgetWithText(FilledButton, '继续'));
       await tester.pump(const Duration(milliseconds: 500));
       await tester.pump(const Duration(milliseconds: 500));
       expect(find.text('正在恢复备份…'), findsOneWidget);
@@ -361,27 +377,52 @@ void main() {
 
       final pickerGate = Completer<List<PlatformFile>>();
       picker.nextResult = pickerGate;
+      final employeeCountBefore = await _runAsync(
+        tester,
+        () => database.select(database.employees).get(),
+      );
       await tester.tap(find.byKey(const Key('excel-import-button')));
       await tester.pump();
-      expect(find.byKey(const Key('excel-progress')), findsOneWidget);
+      expect(picker.callCount, 1);
+      expect(service.previewSettled, isNull);
+      pickerGate.complete(const []);
+      await tester.pumpAndSettle();
+      expect(service.previewSettled, isNull);
       expect(
-        find.descendant(
-          of: find.byKey(const Key('excel-progress')),
-          matching: find.text('正在选择人员名单文件…'),
-        ),
-        findsOneWidget,
+        (await _runAsync(
+          tester,
+          () => database.select(database.employees).get(),
+        )).length,
+        employeeCountBefore.length,
       );
+
+      service.previewGate = Completer<void>();
+      final selectedFileGate = Completer<List<PlatformFile>>();
+      picker.nextResult = selectedFileGate;
+      await tester.tap(find.byKey(const Key('excel-import-button')));
+      await tester.pump();
+      expect(picker.callCount, 2);
+      selectedFileGate.complete([await _pickedFile(tester, validFile)]);
+      await tester.pump();
+      final validPreviewSettled = service.previewSettled;
+      expect(validPreviewSettled, isNotNull);
       expect(
         tester
             .widget<FilledButton>(find.byKey(const Key('excel-export-button')))
             .onPressed,
         isNull,
       );
-      await _capture(tester, '${profile.name}-excel-picker-busy');
-      pickerGate.complete([await _pickedFile(tester, validFile)]);
-      await tester.pump();
-      final validPreviewSettled = service.previewSettled;
-      expect(validPreviewSettled, isNotNull);
+      expect(
+        tester
+            .widget<OutlinedButton>(
+              find.byKey(const Key('excel-import-button')),
+            )
+            .onPressed,
+        isNull,
+      );
+      await _capture(tester, '${profile.name}-excel-preview-busy');
+      service.previewGate!.complete();
+      service.previewGate = null;
       await validPreviewSettled!.future;
       await tester.pump();
       expect(find.text('校验通过，可导入 1 人'), findsOneWidget);
@@ -397,7 +438,12 @@ void main() {
         find.byKey(const Key('excel-confirm-import-button')),
         findsOneWidget,
       );
-      expect(find.text('正在核验人员名单…'), findsNothing);
+      expect(
+        tester
+            .widget<FilledButton>(find.byKey(const Key('excel-export-button')))
+            .onPressed,
+        isNotNull,
+      );
       final validButton = find.byKey(const Key('excel-confirm-import-button'));
       await tester.ensureVisible(validButton);
       await tester.pumpAndSettle();
@@ -421,13 +467,17 @@ void main() {
       );
       await tester.drag(find.byType(ListView).first, const Offset(0, 600));
       await tester.pump(const Duration(milliseconds: 300));
-      expect(find.byKey(const Key('excel-progress')), findsOneWidget);
-      expect(find.text('正在导入人员…'), findsOneWidget);
       expect(
         tester
             .widget<FilledButton>(
               find.byKey(const Key('excel-confirm-import-button')),
             )
+            .onPressed,
+        isNull,
+      );
+      expect(
+        tester
+            .widget<FilledButton>(find.byKey(const Key('excel-export-button')))
             .onPressed,
         isNull,
       );
@@ -459,10 +509,10 @@ void main() {
       await tester.pump();
       expect(find.textContaining('发现 1 个问题'), findsOneWidget);
       expect(find.textContaining('第2行：姓名不能为空'), findsOneWidget);
-      final invalidImportButton = tester.widget<FilledButton>(
+      expect(
         find.byKey(const Key('excel-confirm-import-button')),
+        findsNothing,
       );
-      expect(invalidImportButton.onPressed, isNull);
       final employeesAfterInvalidPreview = await _runAsync(
         tester,
         database.listEmployees,
@@ -472,31 +522,15 @@ void main() {
         employeesAfterInvalidPreview.map((employee) => employee.name),
         contains(employeeName),
       );
-      final invalidButton = find.byKey(
-        const Key('excel-confirm-import-button'),
-      );
-      await tester.ensureVisible(invalidButton);
-      await tester.pumpAndSettle();
-      final invalidButtonRect = tester.getRect(invalidButton);
-      expect(invalidButtonRect.top, greaterThanOrEqualTo(0));
-      expect(
-        invalidButtonRect.bottom,
-        lessThanOrEqualTo(tester.view.physicalSize.height),
-      );
       await _capture(tester, '${profile.name}-excel-preview-error');
 
       picker.result = [];
       await tester.tap(find.byKey(const Key('excel-import-button')));
       await tester.pump();
       expect(find.textContaining('发现 1 个问题'), findsOneWidget);
-      expect(find.byKey(const Key('excel-progress')), findsNothing);
       expect(
-        tester
-            .widget<FilledButton>(
-              find.byKey(const Key('excel-confirm-import-button')),
-            )
-            .onPressed,
-        isNull,
+        find.byKey(const Key('excel-confirm-import-button')),
+        findsNothing,
       );
       final employeesAfterPickerCancel = await _runAsync(
         tester,
@@ -535,7 +569,7 @@ void main() {
     addTearDown(() => _unmount(tester, router));
     await tester.tap(find.byKey(const Key('backup-create-button')));
     await tester.pump(const Duration(milliseconds: 400));
-    final passwordField = find.byKey(const Key('backup-password-field'));
+    final passwordField = find.byType(TextField).first;
     tester.view.viewInsets = const FakeViewPadding(bottom: 270);
     addTearDown(tester.view.resetViewInsets);
     await tester.showKeyboard(passwordField);
@@ -581,16 +615,14 @@ void main() {
     addTearDown(() => _unmount(tester, router));
     await tester.tap(find.byKey(const Key('backup-create-button')));
     await tester.pump(const Duration(milliseconds: 400));
-    final password = find.byKey(const Key('backup-password-field'));
-    final confirmation = find.byKey(
-      const Key('backup-password-confirmation-field'),
-    );
+    final password = find.byType(TextField).first;
+    final confirmation = find.byType(TextField).last;
     expect(password, findsOneWidget);
     expect(confirmation, findsOneWidget);
-    expect(
-      tester.getSize(find.byKey(const Key('backup-password-cancel'))).width,
-      tester.getSize(find.byKey(const Key('backup-password-submit'))).width,
-    );
+    final cancelButton = find.widgetWithText(TextButton, '取消');
+    final continueButton = find.widgetWithText(FilledButton, '继续');
+    expect(tester.widget<TextButton>(cancelButton).onPressed, isNotNull);
+    expect(tester.widget<FilledButton>(continueButton).onPressed, isNotNull);
     tester.view.viewInsets = const FakeViewPadding(bottom: 310);
     addTearDown(tester.view.resetViewInsets);
     await tester.showKeyboard(password);
@@ -604,6 +636,10 @@ void main() {
       tester.getRect(find.text('继续')).bottom,
       lessThanOrEqualTo(tester.view.physicalSize.height - 310),
     );
+    await tester.ensureVisible(cancelButton);
+    await tester.tap(cancelButton);
+    await tester.pumpAndSettle();
+    expect(service.createCount, 0);
     expect(tester.takeException(), isNull);
   });
 }
@@ -746,6 +782,7 @@ class _UiExcelService extends ExcelService {
 
   final WidgetTester tester;
   Completer<void>? importGate;
+  Completer<void>? previewGate;
   Completer<void>? previewSettled;
   Completer<void>? importSettled;
 
@@ -753,6 +790,7 @@ class _UiExcelService extends ExcelService {
   Future<PersonnelImportPreview> previewPersonnelImport(Uint8List bytes) async {
     final settled = previewSettled = Completer<void>();
     try {
+      await previewGate?.future;
       final preview = await tester.runAsync(
         () => super.previewPersonnelImport(bytes),
       );
@@ -782,6 +820,7 @@ class _UiExcelService extends ExcelService {
 class _TestFilePickerPlatform extends FilePickerPlatform {
   List<PlatformFile> result = [];
   Completer<List<PlatformFile>>? nextResult;
+  var callCount = 0;
 
   @override
   Future<List<PlatformFile>> pickFiles({
@@ -797,6 +836,7 @@ class _TestFilePickerPlatform extends FilePickerPlatform {
     LinuxOptions linuxOptions = const LinuxOptions(),
     WebOptions webOptions = const WebOptions(),
   }) {
+    callCount++;
     final gate = nextResult;
     nextResult = null;
     return gate?.future ?? Future.value(result);

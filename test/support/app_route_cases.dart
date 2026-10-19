@@ -17,6 +17,8 @@ class AppRouteCase {
 
 const appRouteCases = <AppRouteCase>[
   AppRouteCase('/home', 'home'),
+  AppRouteCase('/assistant', 'assistant'),
+  AppRouteCase('/assistant/settings', 'assistant-settings'),
   AppRouteCase('/personnel', 'personnel'),
   AppRouteCase(
     '/personnel/list?status=active&hireMonth=2026-10',

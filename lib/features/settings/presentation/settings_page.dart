@@ -34,6 +34,25 @@ class SettingsPage extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         Card(
+          child: ListTile(
+            key: const Key('settings-assistant-entry'),
+            contentPadding: const EdgeInsets.all(16),
+            leading: const DesignIcon(
+              Icons.forum_outlined,
+              color: AppColors.primary,
+              size: 48,
+            ),
+            title: const Text(
+              '智能助手（验证版）',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+            ),
+            subtitle: const Text('查询人员、工资、库存、采购、福利与维修'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push('/assistant'),
+          ),
+        ),
+        const SizedBox(height: 16),
+        Card(
           child: ExpansionTile(
             key: const Key('settings-data-tools'),
             initiallyExpanded: false,

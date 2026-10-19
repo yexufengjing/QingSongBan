@@ -69,7 +69,8 @@ class MainActivity : FlutterActivity() {
                     put(MediaStore.Downloads.DISPLAY_NAME, fileName)
                     put(
                         MediaStore.Downloads.MIME_TYPE,
-                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        call.argument<String>("mimeType")
+                            ?: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                     )
                     put(MediaStore.Downloads.IS_PENDING, 1)
                 }

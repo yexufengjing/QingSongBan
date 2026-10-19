@@ -10,15 +10,21 @@ import '../../../core/database/database_enums.dart';
 import '../application/daily_attendance_providers.dart';
 import '../application/monthly_attendance_table_providers.dart';
 import '../domain/daily_attendance_options.dart';
+import '../../assistant/domain/assistant_models.dart';
 import '../domain/monthly_attendance_table_options.dart';
 import 'monthly_attendance_image.dart';
 import 'monthly_attendance_image_preview_page.dart';
 import 'monthly_attendance_visuals.dart';
 
 class MonthlyAttendanceTablePage extends ConsumerStatefulWidget {
-  const MonthlyAttendanceTablePage({super.key, this.initialMonth});
+  const MonthlyAttendanceTablePage({
+    super.key,
+    this.initialMonth,
+    this.initialGroupId,
+  });
 
   final DateTime? initialMonth;
+  final int? initialGroupId;
 
   @override
   ConsumerState<MonthlyAttendanceTablePage> createState() =>
@@ -27,6 +33,8 @@ class MonthlyAttendanceTablePage extends ConsumerStatefulWidget {
 
 class _MonthlyAttendanceTablePageState
     extends ConsumerState<MonthlyAttendanceTablePage> {
+  var _initialGroupHandled = false;
+
   void _applyInitialMonth() {
     final initialMonth = widget.initialMonth;
     if (initialMonth == null) return;
@@ -48,11 +56,30 @@ class _MonthlyAttendanceTablePageState
     });
   }
 
+  void _applyInitialGroupId(List<AttendanceGroup>? groups) {
+    final initialGroupId = widget.initialGroupId;
+    if (initialGroupId == null ||
+        groups == null ||
+        _initialGroupHandled ||
+        !groups.any((group) => group.id == initialGroupId)) {
+      return;
+    }
+    _initialGroupHandled = true;
+    final current = ref.read(monthlyAttendanceTableGroupIdProvider);
+    if (current == initialGroupId) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      ref.read(monthlyAttendanceTableGroupIdProvider.notifier).state =
+          initialGroupId;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     _applyInitialMonth();
     final month = ref.watch(monthlyAttendanceTableMonthProvider);
     final groups = ref.watch(monthlyAttendanceTableGroupsProvider);
+    _applyInitialGroupId(groups.asData?.value);
     final selectedGroupId = ref.watch(monthlyAttendanceTableGroupIdProvider);
     final table = ref.watch(monthlyAttendanceTableProvider);
     final selectedGroup = groups.asData?.value
@@ -124,6 +151,19 @@ class _MonthlyAttendanceTablePageState
             ),
           ),
           IconButton(
+            tooltip: '问助手',
+            onPressed: () => context.push(
+              '/assistant',
+              extra: AssistantPageContext(
+                module: 'attendance',
+                page: 'monthly-table',
+                yearMonth: yearMonth,
+                groupId: selectedGroupId,
+              ),
+            ),
+            icon: const Icon(Icons.forum_outlined),
+          ),
+          IconButton(
             onPressed: () => context.push('/attendance/daily'),
             icon: const Icon(Icons.fact_check_outlined),
             tooltip: '每日考勤',
@@ -157,16 +197,20 @@ class _MonthlyAttendanceTableContent extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final month = ref.watch(monthlyAttendanceTableMonthProvider);
     final selectedId = ref.watch(monthlyAttendanceTableGroupIdProvider);
+    final selectedIdAtBuild = selectedId;
     final selectedGroup = groups.firstWhere(
       (group) => group.id == selectedId,
       orElse: () => groups.first,
     );
     if (selectedId != selectedGroup.id) {
+      final defaultGroupId = groups.first.id;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (ref.read(monthlyAttendanceTableGroupIdProvider) !=
-            selectedGroup.id) {
+        if (!context.mounted) return;
+        final currentId = ref.read(monthlyAttendanceTableGroupIdProvider);
+        final currentIsValid = groups.any((group) => group.id == currentId);
+        if (currentId == selectedIdAtBuild || !currentIsValid) {
           ref.read(monthlyAttendanceTableGroupIdProvider.notifier).state =
-              selectedGroup.id;
+              defaultGroupId;
         }
       });
     }
