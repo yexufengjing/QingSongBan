@@ -37,3 +37,9 @@
 ## 发布范围和状态
 
 发布选中的生产代码、必要Android配置、测试、执行计划和进度文本；通过已授权GitHub API写入 `yexufengjing/QingSongBan`。排除APK、截图、设计图、数据库/行hash摘要、加密备份、Key、源码zip及无关历史文档删除。远端main须重新读取，使用原始字节创建blob、非强制更新ref，并按路径核对最终SHA。当前尚未声明本次发布成功，最终以子代理核实的提交与路径比对结果为准。
+
+## GitHub API 发布回执
+
+- 2026-10-21，已通过 GitHub API 将主提交 [083b255296955e104621b66f919aef052b93ca33](https://github.com/yexufengjing/QingSongBan/commit/083b255296955e104621b66f919aef052b93ca33) 发布到 main。
+- 主提交核验：selected=100，changed=37，missing=0，mismatch=0，truncated=false；新增22项、更新15项、删除0项。
+- 发布未清理、提交、重置本地工作区；本地修改均予保留。
