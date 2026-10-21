@@ -110,24 +110,20 @@ if ($Action -eq 'verify-download-mime') {
       [string]::IsNullOrWhiteSpace($ExpectedMimeType)) {
     throw 'Provide a safe Downloads basename and an allowed expected MIME type.'
   }
-  # Pass double quotes through adb so the remote shell removes only the outer
-  # quoting and preserves the SQL string literal's single quotes.
-  $Query = "`"_display_name='$Text'`""
   $Rows = Invoke-Adb @(
     'shell', 'content', 'query',
     '--uri', 'content://media/external/downloads',
-    '--projection', '_display_name:mime_type',
-    '--where', $Query
+    '--projection', '_display_name:mime_type'
   )
-  $NameMatches = @($Rows | Where-Object {
-    $RowText = [string]$_
-    $RowText -match [regex]::Escape("_display_name=$Text")
-  }).Count
-  $MimeMatches = @($Rows | Where-Object {
-    $RowText = [string]$_
-    $RowText -match [regex]::Escape("mime_type=$ExpectedMimeType")
-  }).Count
-  $MatchesExpected = $NameMatches -eq 1 -and $MimeMatches -eq 1
+  $ExactNameRows = @($Rows | Where-Object {
+    ([string]$_) -match ("(?:^|[,\s])_display_name=" + [regex]::Escape($Text) + '(?:[,\s]|$)')
+  })
+  $MatchingRows = @($ExactNameRows | Where-Object {
+    ([string]$_) -match ("(?:^|[,\s])mime_type=" + [regex]::Escape($ExpectedMimeType) + '(?:[,\s]|$)')
+  })
+  $NameMatches = $ExactNameRows.Count
+  $MimeMatches = $MatchingRows.Count
+  $MatchesExpected = $MatchingRows.Count -eq 1
   Write-Output ('Download MIME match: ' + [string]$MatchesExpected +
     '; exactNameRows=' + $NameMatches + '; expectedMimeRows=' + $MimeMatches)
   if (-not $MatchesExpected) { exit 1 }

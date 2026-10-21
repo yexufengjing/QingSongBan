@@ -3,10 +3,13 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true)]
-    [ValidateSet('Snapshot', 'Fill', 'Submit')]
+    [ValidateSet('Snapshot', 'Fill', 'FillFocusedField', 'Submit', 'Navigate')]
     [string] $Action,
 
     [string] $Text,
+
+    [ValidateSet('purchase', 'payroll', 'garden', 'reminders', 'inventory')]
+    [string] $BusinessRoute,
 
     [string] $ExpectedDomain,
 
@@ -227,7 +230,11 @@ function Invoke-VmEvaluate {
         'identityHashCode(this)' { 'page-identity' }
         'ModalRoute.of(this.context)?.isCurrent == true' { 'route-current' }
         default {
-            if ($Expression.StartsWith('(() {')) { 'snapshot' }
+            if ($Expression -match 'widget\.controller\.text\s*==') { 'focused-field-verification' }
+            elseif ($Expression -match 'updateEditingValue\(') { 'focused-field-write' }
+            elseif ($Expression -match 'widget\.focusNode\.hasFocus') { 'focused-field-inspection' }
+            elseif ($Expression -match 'widget\.obscureText') { 'focused-field-password-check' }
+            elseif ($Expression.StartsWith('(() {')) { 'snapshot' }
             else { 'other-readonly' }
         }
     }
@@ -487,7 +494,7 @@ try {
             $null -ne $_ -and -not [string]::IsNullOrWhiteSpace([string]$_)
         }
     )
-    if ($Action -in @('Fill', 'Submit') -and [string]::IsNullOrWhiteSpace($Text)) {
+    if ($Action -in @('Fill', 'FillFocusedField', 'Submit') -and [string]::IsNullOrWhiteSpace($Text)) {
         throw "$Action action requires -Text."
     }
 
@@ -543,7 +550,108 @@ try {
     }
     Open-VmWebSocket $endpoint
 
-    if ($Action -in @('Fill', 'Submit')) {
+    if ($Action -eq 'FillFocusedField') {
+        $vm = Invoke-VmRpc 'getVM'
+        $focusedFields = @()
+        $seenEditableStateIdentities = @{}
+        foreach ($isolate in @(Get-JsonPropertyValue $vm 'isolates')) {
+            $isolateId = [string] (Get-JsonPropertyValue $isolate 'id')
+            if ([string]::IsNullOrWhiteSpace($isolateId)) { continue }
+            $isolateObject = Invoke-VmRpc 'getIsolate' @{ isolateId = $isolateId }
+            foreach ($library in @(Get-JsonPropertyValue $isolateObject 'libraries')) {
+                $libraryUri = [string] (Get-JsonPropertyValue $library 'uri')
+                if ($libraryUri -notmatch '(?:^|/)editable_text\.dart$') { continue }
+                $libraryId = [string] (Get-JsonPropertyValue $library 'id')
+                if ([string]::IsNullOrWhiteSpace($libraryId)) { continue }
+                $libraryObject = Get-VmObject $isolateId $libraryId
+                foreach ($classReference in @(Get-JsonPropertyValue $libraryObject 'classes')) {
+                    if ((Get-VmClassName $classReference) -ne 'EditableTextState') { continue }
+                    foreach ($instance in (Get-Instances $isolateId (Get-VmClassId $classReference))) {
+                        $targetId = Get-InstanceRefId $instance
+                        if ([string]::IsNullOrWhiteSpace($targetId)) { continue }
+                        $identity = Invoke-VmEvaluate $isolateId $targetId 'identityHashCode(this)'
+                        $identityHash = [string] (Get-JsonPropertyValue $identity 'valueAsString')
+                        if ([string]::IsNullOrWhiteSpace($identityHash) -or
+                            $seenEditableStateIdentities.ContainsKey($identityHash)) { continue }
+                        $seenEditableStateIdentities[$identityHash] = $true
+                        $focused = Invoke-VmEvaluate $isolateId $targetId `
+                            'mounted == true && this.widget.focusNode.hasFocus == true && (this.context as Element).debugIsActive && this.context.findRenderObject()?.attached == true'
+                        if ((Get-JsonPropertyValue $focused 'valueAsString') -ne 'true') { continue }
+                        $obscure = Invoke-VmEvaluate $isolateId $targetId 'this.widget.obscureText == true'
+                        $focusedFields += @{
+                            isolateId = $isolateId
+                            targetId = $targetId
+                            obscureText = (Get-JsonPropertyValue $obscure 'valueAsString') -eq 'true'
+                        }
+                    }
+                }
+            }
+        }
+        if ($focusedFields.Count -ne 1) {
+            throw ("Focused text field selection failed: count={0}; passwordFieldRejected=false." -f $focusedFields.Count)
+        }
+        if ($focusedFields[0].obscureText) {
+            throw 'Focused text field selection failed: count=1; passwordFieldRejected=true.'
+        }
+        $dartText = ConvertTo-DartStringLiteral $Text
+        $target = $focusedFields[0]
+        $expression = "(() { WidgetsBinding.instance.addPostFrameCallback((_) { if (this.mounted && this.widget.focusNode.hasFocus && !this.widget.obscureText && (this.context as Element).debugIsActive && this.context.findRenderObject()?.attached == true) this.updateEditingValue(TextEditingValue(text: $dartText, selection: TextSelection.collapsed(offset: $dartText.length))); }); WidgetsBinding.instance.scheduleFrame(); return true; })()"
+        $null = Invoke-VmEvaluate $target.isolateId $target.targetId $expression
+        $applied = $false
+        $fillDeadline = [DateTime]::UtcNow.AddSeconds(2)
+        while (-not $applied -and [DateTime]::UtcNow -lt $fillDeadline) {
+            Start-Sleep -Milliseconds 20
+            $verified = Invoke-VmEvaluate $target.isolateId $target.targetId "this.mounted && this.widget.focusNode.hasFocus && !this.widget.obscureText && this.widget.controller.text == $dartText"
+            $applied = (Get-JsonPropertyValue $verified 'valueAsString') -eq 'true'
+        }
+        if (-not $applied) {
+            throw 'Focused text field write was not confirmed.'
+        }
+        [pscustomobject] @{
+            action = $Action
+            filledFocusedFieldCount = 1
+            textApplied = $true
+            passwordFieldRejected = $false
+        } | ConvertTo-Json -Compress
+    }
+    elseif ($Action -eq 'Navigate') {
+        $routePath = @{
+            purchase = '/purchase'
+            payroll = '/reports/payroll'
+            garden = '/garden-tool-repairs'
+            reminders = '/settings/reminders'
+            inventory = '/inventory'
+        }[$BusinessRoute]
+        if ([string]::IsNullOrWhiteSpace($routePath)) {
+            throw 'A whitelisted business route must be selected.'
+        }
+        $dartRoute = ConvertTo-DartStringLiteral $routePath
+        $vm = Invoke-VmRpc 'getVM'
+        $isolates = @(Get-JsonPropertyValue $vm 'isolates')
+        $navigationLibraryCount = 0
+        foreach ($isolate in $isolates) {
+            $isolateId = [string] (Get-JsonPropertyValue $isolate 'id')
+            if ([string]::IsNullOrWhiteSpace($isolateId)) { continue }
+            $isolateObject = Invoke-VmRpc 'getIsolate' @{ isolateId = $isolateId }
+            foreach ($library in @(Get-JsonPropertyValue $isolateObject 'libraries')) {
+                $libraryUri = [string] (Get-JsonPropertyValue $library 'uri')
+                if ($libraryUri -notmatch '(?:^|/)app_router\.dart$') { continue }
+                $libraryId = [string] (Get-JsonPropertyValue $library 'id')
+                if ([string]::IsNullOrWhiteSpace($libraryId)) { continue }
+                $null = Invoke-VmEvaluate $isolateId $libraryId "appRouter.go($dartRoute)"
+                $navigationLibraryCount++
+            }
+        }
+        if ($navigationLibraryCount -eq 0) {
+            throw 'The app router library was not found in the active VM isolate.'
+        }
+        [pscustomobject] @{
+            action = $Action
+            route = $BusinessRoute
+            navigatedPageCount = $navigationLibraryCount
+        } | ConvertTo-Json -Compress
+    }
+    elseif ($Action -in @('Fill', 'Submit')) {
         $pages = Get-CurrentPages
         $dartText = ConvertTo-DartStringLiteral $Text
         # Return from debugger evaluation before notifying input listeners.

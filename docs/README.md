@@ -5,7 +5,9 @@
 ## 当前开发
 
 - [常用业务智能助手开发执行方案（2026-10-19）](AI/常用业务智能助手开发执行方案_20261019.md)
-- [常用业务助手交付检查](acceptance/assistant-business-domains/checks.md)（开发中）
+- [下一阶段任务优先级与交付计划](AI/下一阶段任务优先级与交付计划_20261021.md)（采用第二方案，按业务域交付）
+- [常用业务助手交付检查](acceptance/assistant-business-domains/checks.md)（工程交付及待验范围见最新记录）
+- [本次续接与发布进度](acceptance/assistant-business-domains/continuation-progress-20261021.md)
 
 ## 已有助手阶段
 

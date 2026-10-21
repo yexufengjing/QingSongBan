@@ -313,7 +313,9 @@ void main() {
     );
     await tester.ensureVisible(keyPrompt);
     await tester.pumpAndSettle();
-    await tester.tap(keyPrompt);
+    final keyPromptTitle = find.text('需要先配置 DeepSeek API Key');
+    expect(keyPromptTitle.hitTestable(), findsOneWidget);
+    await tester.tap(keyPromptTitle);
     await tester.pumpAndSettle();
     expect(find.text('智能助手设置'), findsOneWidget);
     await tester.enterText(find.byType(TextField), 'test-key-value');

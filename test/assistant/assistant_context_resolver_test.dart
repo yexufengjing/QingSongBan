@@ -198,6 +198,95 @@ void main() {
     expect(resolved.groupId, isNull);
   });
 
+  test(
+    'personnel and payroll context carries employee and month to attendance',
+    () {
+      for (final domain in [
+        AssistantBusinessType.personnel,
+        AssistantBusinessType.payroll,
+      ]) {
+        final resolved = resolver.resolveContext(
+          const AttendanceIntent(
+            action: AttendanceAction.queryAttendance,
+            yearReference: YearReference.inherit,
+          ),
+          AssistantSessionContext(
+            lastBusinessType: domain,
+            lastBusinessQuery: AssistantBusinessQuery(
+              domain: domain,
+              question: '查询张三的业务信息',
+              yearMonth: '2025-09',
+              subject: '张三',
+            ),
+          ),
+          null,
+          DateTime(2026, 10, 17),
+        );
+
+        expect(resolved.businessType, AssistantBusinessType.attendance);
+        expect(resolved.employeeText, '张三', reason: '$domain subject');
+        expect(resolved.yearMonth, '2025-09', reason: '$domain month');
+        expect(resolved.yearMonthSource, AssistantFieldSource.turn);
+        expect(resolved.employeeId, isNull);
+        expect(resolved.groupId, isNull);
+      }
+    },
+  );
+
+  test(
+    'attendance honors a new employee instead of inherited person subject',
+    () {
+      final resolved = resolver.resolveContext(
+        const AttendanceIntent(
+          action: AttendanceAction.queryAttendance,
+          employeeText: '李四',
+          month: 6,
+          yearReference: YearReference.inherit,
+        ),
+        const AssistantSessionContext(
+          lastBusinessType: AssistantBusinessType.payroll,
+          lastBusinessQuery: AssistantBusinessQuery(
+            domain: AssistantBusinessType.payroll,
+            question: '查询张三的工资',
+            yearMonth: '2025-09',
+            subject: '张三',
+          ),
+        ),
+        null,
+        DateTime(2026, 10, 17),
+      );
+
+      expect(resolved.employeeText, '李四');
+      expect(resolved.yearMonth, '2025-06');
+      expect(resolved.employeeId, isNull);
+      expect(resolved.groupId, isNull);
+    },
+  );
+
+  test('unrelated business subject does not leak into attendance', () {
+    final resolved = resolver.resolveContext(
+      const AttendanceIntent(
+        action: AttendanceAction.queryAttendance,
+        yearReference: YearReference.inherit,
+      ),
+      const AssistantSessionContext(
+        lastBusinessType: AssistantBusinessType.inventory,
+        lastBusinessQuery: AssistantBusinessQuery(
+          domain: AssistantBusinessType.inventory,
+          question: '查询绿篱刀片库存',
+          subject: '绿篱刀片',
+        ),
+      ),
+      null,
+      DateTime(2026, 10, 17),
+    );
+
+    expect(resolved.employeeText, isNull);
+    expect(resolved.employeeId, isNull);
+    expect(resolved.groupId, isNull);
+    expect(resolved.yearMonth, isNull);
+  });
+
   test('rejects invalid explicit month and inconsistent relative year', () {
     final invalidMonth = resolver.resolveContext(
       const AttendanceIntent(

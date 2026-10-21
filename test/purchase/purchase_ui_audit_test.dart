@@ -916,6 +916,11 @@ void main() {
     );
     final foldButton = find.byKey(const Key('purchase-action-required-toggle'));
     await tester.ensureVisible(foldButton);
+    expect(createReminderButton, findsNothing);
+    await tester.tap(foldButton);
+    await tester.pumpAndSettle();
+    expect(createReminderButton, findsOneWidget);
+    expect(find.byTooltip('折叠'), findsOneWidget);
     await tester.tap(foldButton);
     await tester.pumpAndSettle();
     expect(createReminderButton, findsNothing);

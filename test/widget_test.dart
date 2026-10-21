@@ -366,6 +366,10 @@ void main() {
       await pumpApp(tester);
       await tester.tap(find.text('处理'));
       await tester.pumpAndSettle();
+      final pendingToggle = find.byKey(const Key('home-pending-toggle'));
+      await tester.ensureVisible(pendingToggle);
+      await tester.tap(pendingToggle);
+      await tester.pumpAndSettle();
       final viewport = tester.getRect(find.byType(SingleChildScrollView).first);
       final reminderHeading = tester.getRect(find.text('待办提醒'));
       expect(viewport.contains(reminderHeading.topLeft), isTrue);
@@ -465,6 +469,12 @@ void main() {
       await tester.ensureVisible(find.text(mode));
       await tester.tap(find.text(mode));
       await tester.pumpAndSettle();
+      if (mode == '处理') {
+        final pendingToggle = find.byKey(const Key('home-pending-toggle'));
+        await tester.ensureVisible(pendingToggle);
+        await tester.tap(pendingToggle);
+        await tester.pumpAndSettle();
+      }
       final metric = find.byKey(Key('home-metric-${entry.key}'));
       expect(metric, findsOneWidget);
       await tester.ensureVisible(metric);
@@ -999,6 +1009,10 @@ void main() {
 
     appRouter.go('/settings');
     await tester.pumpAndSettle();
+    final dataTools = find.byKey(const Key('settings-data-tools'));
+    await tester.ensureVisible(dataTools);
+    await tester.tap(dataTools);
+    await tester.pumpAndSettle();
     final excelEntry = find.text('导入导出');
     await tester.ensureVisible(excelEntry);
     await tester.tap(excelEntry);
@@ -1039,6 +1053,10 @@ void main() {
 
     appRouter.go('/settings');
     await tester.pumpAndSettle();
+    final dataTools = find.byKey(const Key('settings-data-tools'));
+    await tester.ensureVisible(dataTools);
+    await tester.tap(dataTools);
+    await tester.pumpAndSettle();
     final backupEntry = find.text('备份与恢复');
     await tester.ensureVisible(backupEntry);
     await tester.tap(backupEntry);
@@ -1053,6 +1071,10 @@ void main() {
     await pumpApp(tester);
 
     appRouter.go('/settings');
+    await tester.pumpAndSettle();
+    final dataTools = find.byKey(const Key('settings-data-tools'));
+    await tester.ensureVisible(dataTools);
+    await tester.tap(dataTools);
     await tester.pumpAndSettle();
     final logEntry = find.text('操作日志');
     await tester.ensureVisible(logEntry);

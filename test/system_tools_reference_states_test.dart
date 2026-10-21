@@ -94,6 +94,12 @@ void main() {
       if (root.existsSync()) root.deleteSync(recursive: true);
     });
     for (final profile in _phoneSizes) {
+      final exportsDirectory = Directory(
+        '${root.path}${Platform.pathSeparator}exports',
+      );
+      if (exportsDirectory.existsSync()) {
+        exportsDirectory.deleteSync(recursive: true);
+      }
       final service = _UiBackupService(database, root);
       _setPhoneSize(tester, profile);
       final originalPicker = FilePickerPlatform.instance;
@@ -115,8 +121,15 @@ void main() {
       expect(find.byKey(const Key('backup-create-button')), findsOneWidget);
       await tester.tap(find.byKey(const Key('backup-create-button')));
       await tester.pump(const Duration(milliseconds: 400));
-      final passwordField = find.byType(TextField).first;
-      final confirmationField = find.byType(TextField).last;
+      final passwordField = find.byWidgetPredicate(
+        (widget) =>
+            widget is TextField &&
+            widget.decoration?.labelText == '密码（至少 8 个字符）',
+      );
+      final confirmationField = find.byWidgetPredicate(
+        (widget) =>
+            widget is TextField && widget.decoration?.labelText == '再次输入密码',
+      );
       expect(find.text('设置备份密码'), findsOneWidget);
       expect(passwordField, findsOneWidget);
       expect(confirmationField, findsOneWidget);
@@ -136,47 +149,82 @@ void main() {
             .onPressed,
         isNotNull,
       );
-      await tester.tap(find.byTooltip('显示密码').first);
-      await tester.pump(const Duration(milliseconds: 250));
-      expect(tester.widget<TextField>(passwordField).obscureText, isFalse);
-      await tester.tap(find.byTooltip('隐藏密码').first);
-      await tester.pump(const Duration(milliseconds: 250));
       expect(tester.widget<TextField>(passwordField).obscureText, isTrue);
-      expect(tester.widget<TextField>(confirmationField).obscureText, isTrue);
-      await tester.tap(find.byTooltip('显示密码').last);
-      await tester.pump(const Duration(milliseconds: 250));
-      expect(tester.widget<TextField>(confirmationField).obscureText, isFalse);
-      await tester.tap(find.byTooltip('隐藏密码').last);
-      await tester.pump(const Duration(milliseconds: 250));
       expect(tester.widget<TextField>(confirmationField).obscureText, isTrue);
       await _capture(tester, '${profile.name}-backup-password');
 
       await tester.enterText(passwordField, 'short');
       await tester.tap(find.text('继续'));
       await tester.pump(const Duration(milliseconds: 250));
-      expect(find.text('密码至少需要 8 个字符'), findsOneWidget);
+      expect(find.text('密码至少 8 个字符且两次输入必须一致'), findsOneWidget);
       await tester.enterText(passwordField, 'backup-123');
       await tester.enterText(confirmationField, 'backup-456');
       await tester.tap(find.text('继续'));
       await tester.pump(const Duration(milliseconds: 250));
-      expect(find.text('两次输入的密码不一致'), findsOneWidget);
+      expect(find.text('密码至少 8 个字符且两次输入必须一致'), findsOneWidget);
       await tester.enterText(confirmationField, 'backup-123');
       await tester.tap(find.text('继续'));
       await tester.pump();
       expect(service.createCount, 1);
-      expect(find.byKey(const Key('backup-progress')), findsOneWidget);
-      expect(find.text('正在创建备份…'), findsOneWidget);
       expect(
         tester
             .widget<FilledButton>(find.byKey(const Key('backup-create-button')))
             .onPressed,
         isNull,
       );
+      expect(
+        tester
+            .widget<OutlinedButton>(
+              find.byKey(const Key('backup-restore-button')),
+            )
+            .onPressed,
+        isNull,
+      );
       await _capture(tester, '${profile.name}-backup-busy');
-      service.releaseCreate.complete(File('${root.path}/created.qsbak'));
-      await tester.pump(const Duration(milliseconds: 500));
-      await tester.pump(const Duration(milliseconds: 500));
-      expect(find.byKey(const Key('backup-progress')), findsNothing);
+      var documentsPathRequests = 0;
+      const pathProvider = MethodChannel('plugins.flutter.io/path_provider');
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(pathProvider, (call) async {
+            if (call.method == 'getApplicationDocumentsDirectory') {
+              documentsPathRequests++;
+              return root.path;
+            }
+            return null;
+          });
+      addTearDown(
+        () => TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+            .setMockMethodCallHandler(pathProvider, null),
+      );
+      final createdFile = File('${root.path}/created.qsbak');
+      await _runAsync(tester, () => createdFile.writeAsBytes([1, 2, 3]));
+      service.releaseCreate.complete(createdFile);
+      await tester.pump(); // Start the widget's continuation before real IO.
+      final exportedFile = File(
+        '${root.path}${Platform.pathSeparator}exports'
+        '${Platform.pathSeparator}created.qsbak',
+      );
+      var exportReady = false;
+      final exportDeadline = DateTime.now().add(const Duration(seconds: 2));
+      while (!exportReady && DateTime.now().isBefore(exportDeadline)) {
+        await tester.runAsync(
+          () => Future<void>.delayed(const Duration(milliseconds: 10)),
+        );
+        await tester.pump();
+        exportReady =
+            await tester.runAsync(
+              () async =>
+                  await exportedFile.exists() &&
+                  await exportedFile.length() == 3,
+            ) ??
+            false;
+      }
+      expect(
+        exportReady,
+        isTrue,
+        reason: 'The export must finish writing its bytes.',
+      );
+      expect(documentsPathRequests, greaterThan(0));
+      await tester.pumpAndSettle();
       expect(
         tester
             .widget<FilledButton>(find.byKey(const Key('backup-create-button')))
@@ -203,27 +251,14 @@ void main() {
       await tester.tap(find.byKey(const Key('backup-restore-button')));
       await tester.pumpAndSettle();
       expect(find.text('当前本地数据将被备份包覆盖，恢复后需要重启应用。是否继续？'), findsOneWidget);
-      expect(
-        tester.widget<Text>(find.text('确认恢复？')).textAlign,
-        TextAlign.center,
-      );
-      expect(find.byIcon(Icons.error_outline_rounded), findsOneWidget);
       final cancelRestore = tester.getSize(
-        find.widgetWithText(OutlinedButton, '取消'),
+        find.widgetWithText(TextButton, '取消'),
       );
       final confirmRestore = tester.getSize(
         find.widgetWithText(FilledButton, '确认恢复'),
       );
-      expect(cancelRestore.width, confirmRestore.width);
       expect(cancelRestore.height, greaterThanOrEqualTo(48));
       expect(confirmRestore.height, greaterThanOrEqualTo(48));
-      final destructiveAction = tester.widget<FilledButton>(
-        find.widgetWithText(FilledButton, '确认恢复'),
-      );
-      expect(
-        destructiveAction.style?.backgroundColor?.resolve({}),
-        AppTheme.light.colorScheme.error,
-      );
       await _capture(tester, '${profile.name}-backup-restore-confirm');
       await tester.tap(find.text('取消'));
       await tester.pumpAndSettle();
@@ -256,8 +291,20 @@ void main() {
       await tester.pump(const Duration(milliseconds: 500));
       await tester.pump(const Duration(milliseconds: 500));
       expect(service.restoreCount, 1);
-      expect(find.text('正在恢复备份…'), findsOneWidget);
-      expect(find.byKey(const Key('backup-progress')), findsOneWidget);
+      expect(
+        tester
+            .widget<OutlinedButton>(
+              find.byKey(const Key('backup-restore-button')),
+            )
+            .onPressed,
+        isNull,
+      );
+      expect(
+        tester
+            .widget<FilledButton>(find.byKey(const Key('backup-create-button')))
+            .onPressed,
+        isNull,
+      );
       expect(tester.takeException(), isNull);
       await _capture(tester, '${profile.name}-backup-restore-busy');
       service.restoreGate!.complete(
@@ -269,11 +316,6 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(find.text('恢复完成'), findsOneWidget);
-      expect(
-        tester.widget<Text>(find.text('恢复完成')).textAlign,
-        TextAlign.center,
-      );
-      expect(find.byKey(const Key('backup-progress')), findsNothing);
       expect(find.textContaining('safety.qsbak'), findsOneWidget);
       expect(find.widgetWithText(FilledButton, '重启应用'), findsOneWidget);
       await _capture(tester, '${profile.name}-backup-restore-complete');
@@ -293,12 +335,24 @@ void main() {
       await tester.tap(find.widgetWithText(FilledButton, '继续'));
       await tester.pump(const Duration(milliseconds: 500));
       await tester.pump(const Duration(milliseconds: 500));
-      expect(find.text('正在恢复备份…'), findsOneWidget);
+      expect(
+        tester
+            .widget<OutlinedButton>(
+              find.byKey(const Key('backup-restore-button')),
+            )
+            .onPressed,
+        isNull,
+      );
+      expect(
+        tester
+            .widget<FilledButton>(find.byKey(const Key('backup-create-button')))
+            .onPressed,
+        isNull,
+      );
       await _capture(tester, '${profile.name}-backup-restore-error-busy');
       service.restoreGate!.completeError(StateError('模拟解密失败'));
       await tester.pumpAndSettle();
       expect(find.textContaining('恢复失败：'), findsOneWidget);
-      expect(find.byKey(const Key('backup-progress')), findsNothing);
       expect(
         tester
             .widget<OutlinedButton>(

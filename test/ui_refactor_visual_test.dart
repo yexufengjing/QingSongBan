@@ -583,7 +583,7 @@ void main() {
           }
           if (route.$1 == 'vehicle_attachments') {
             await tester.tap(find.text('车辆照片测试.png'));
-            await _settleUntil(tester, find.byType(InteractiveViewer));
+            await _settleForRealIo(tester, find.byType(InteractiveViewer));
             expect(find.byType(InteractiveViewer), findsOneWidget);
             await _settleImage(tester);
             recordException('/vehicles/attachment/原图');
@@ -770,14 +770,14 @@ void main() {
             await captureReminderSetting('custom_alert_picker');
             await tester.tap(find.text('确定').last);
             await _settle(tester);
-            expect(find.text('1 分钟前'), findsOneWidget);
+            expect(find.text('1分钟前'), findsOneWidget);
             await captureReminderSetting('custom_alert_selected');
             await tester.tap(find.text('完成').last);
             await _settle(tester);
             await tester.tap(find.byKey(const Key('reminder-schedule-done')));
             await _settle(tester);
             expect(find.textContaining('每月'), findsWidgets);
-            expect(find.textContaining('1 分钟前'), findsWidgets);
+            expect(find.textContaining('已设置 2 个提醒'), findsWidgets);
             await captureReminderSetting('configured_form');
           }
           if (route.$1 == 'reports') {
@@ -808,6 +808,12 @@ void main() {
         await tester.idle();
         await tester.pump(const Duration(milliseconds: 1));
         await _settle(tester);
+        // FileImage can retain decoded attachment files until the cache is
+        // released. Drop both live and completed images before deleting the
+        // Windows temp directory that backs this test's repositories.
+        PaintingBinding.instance.imageCache.clear();
+        PaintingBinding.instance.imageCache.clearLiveImages();
+        await tester.pump();
         await tester.runAsync(() => db.close());
         await tester.runAsync(() async {
           if (attachmentRoot != null) {
@@ -835,6 +841,17 @@ Future<void> _settleUntil(WidgetTester tester, Finder finder) async {
     if (finder.evaluate().isNotEmpty) return;
   }
   expect(finder, findsOneWidget);
+}
+
+Future<void> _settleForRealIo(WidgetTester tester, Finder finder) async {
+  await tester.runAsync(() async {
+    final deadline = DateTime.now().add(const Duration(seconds: 5));
+    while (finder.evaluate().isEmpty && DateTime.now().isBefore(deadline)) {
+      await Future<void>.delayed(const Duration(milliseconds: 10));
+      await tester.pump();
+    }
+  });
+  await tester.pumpAndSettle();
 }
 
 Future<void> _settleImage(WidgetTester tester) async {

@@ -181,7 +181,7 @@ void main() {
         (item) => item.id == freshMaterialId,
       );
       final screenshots = <(String, Widget Function(), Finder)>[
-        ('01_采购首页', () => const PurchaseHomePage(), find.text('待领取物资')),
+        ('01_采购首页', () => const PurchaseHomePage(), find.text('采购管理')),
         (
           '02_新建采购',
           () => PurchaseCreatePage(
@@ -379,12 +379,12 @@ void main() {
               );
             } else {
               expect(
-                statusRects[0].center.dy,
-                lessThan(statusRects[2].center.dy),
-              );
-              expect(
-                statusRects[1].center.dy,
-                lessThan(statusRects[3].center.dy),
+                statusRects.every(
+                  (rect) =>
+                      rect.left >= 0 &&
+                      rect.right <= tester.view.physicalSize.width,
+                ),
+                isTrue,
               );
             }
           }

@@ -163,12 +163,12 @@ void main() {
         await tester.ensureVisible(toggle);
         await tester.tap(toggle);
         await tester.pumpAndSettle();
-        expect(find.text('暂无需要处理的采购记录。'), findsNothing);
-        expect(find.byTooltip('展开'), findsOneWidget);
-        await tester.tap(toggle);
-        await tester.pumpAndSettle();
         expect(find.text('暂无需要处理的采购记录。'), findsOneWidget);
         expect(find.byTooltip('折叠'), findsOneWidget);
+        await tester.tap(toggle);
+        await tester.pumpAndSettle();
+        expect(find.text('暂无需要处理的采购记录。'), findsNothing);
+        expect(find.byTooltip('展开'), findsOneWidget);
         expect(tester.takeException(), isNull);
         await tester.pumpWidget(const SizedBox());
         await tester.pumpAndSettle();

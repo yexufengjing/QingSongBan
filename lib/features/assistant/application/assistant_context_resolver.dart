@@ -23,12 +23,27 @@ class AssistantContextResolver {
     final previousBusiness = session.lastBusinessType == businessType
         ? session.lastBusinessQuery
         : null;
-    final contextMonth = previousBusiness?.yearMonth ?? previousMonth;
+    final relatedPersonContext =
+        _isPersonBusinessType(businessType) &&
+        _isPersonBusinessType(session.lastBusinessType);
+    final priorPersonBusiness = relatedPersonContext &&
+            session.lastBusinessType != AssistantBusinessType.attendance
+        ? session.lastBusinessQuery
+        : null;
+    final contextMonth =
+        previousBusiness?.yearMonth ??
+        priorPersonBusiness?.yearMonth ??
+        previousMonth;
     final businessOperation = intent.businessOperation == 'inherit'
         ? previousBusiness?.operation ?? 'summary'
         : intent.businessOperation;
-    final resolvedBusinessSubject = intent.businessSubject ??
-        (intent.businessOperation == 'inherit' ? previousBusiness?.subject : null);
+    final inheritedBusinessSubject =
+        previousBusiness?.subject ?? priorPersonBusiness?.subject;
+    final resolvedBusinessSubject =
+        intent.businessSubject ??
+        (intent.businessOperation == 'inherit'
+            ? inheritedBusinessSubject
+            : null);
 
     String? yearMonth;
     var source = AssistantFieldSource.none;
@@ -120,7 +135,7 @@ class AssistantContextResolver {
     }
 
     final employeeText = businessType == AssistantBusinessType.attendance
-        ? _nonEmpty(intent.employeeText)
+        ? _nonEmpty(intent.employeeText) ?? priorPersonBusiness?.subject
         : null;
     final inheritedEmployee = employeeText == null ? previous?.employee : null;
     final employeeId = employeeText != null
@@ -221,6 +236,13 @@ class AssistantContextResolver {
     AssistantBusinessType.vehicleMaintenance ||
     AssistantBusinessType.vehicleReminders ||
     AssistantBusinessType.gardenRepair => true,
+    _ => false,
+  };
+
+  bool _isPersonBusinessType(AssistantBusinessType type) => switch (type) {
+    AssistantBusinessType.attendance ||
+    AssistantBusinessType.personnel ||
+    AssistantBusinessType.payroll => true,
     _ => false,
   };
 
