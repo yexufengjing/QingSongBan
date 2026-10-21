@@ -294,9 +294,10 @@ enum AssistantTurnPhase { idle, parsing, resolving, reading, explaining }
 enum AssistantResolutionPath { localFollowUp, modelParsed }
 
 class AssistantProviderException implements Exception {
-  const AssistantProviderException(this.code);
+  const AssistantProviderException(this.code, {this.httpStatus});
 
   final AssistantErrorCode code;
+  final int? httpStatus;
 }
 
 enum AttendanceCompleteness { notEvaluated, partial, complete }

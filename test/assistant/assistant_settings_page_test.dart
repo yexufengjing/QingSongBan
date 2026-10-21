@@ -9,6 +9,57 @@ import 'package:qingsongban/features/assistant/domain/assistant_models.dart';
 import 'package:qingsongban/features/assistant/presentation/assistant_settings_page.dart';
 
 void main() {
+  for (final status in [401, 402, 403]) {
+    testWidgets(
+      'connection check distinguishes HTTP $status without exposing response',
+      (tester) async {
+        final keyStore = _MemoryKeyStore()..value = 'fake-saved-key';
+        final provider = DeepSeekProvider(
+          keyStore: keyStore,
+          transport:
+              ({
+                required uri,
+                required headers,
+                required body,
+                required connectionTimeout,
+                required requestTimeout,
+                required token,
+              }) async {
+                expect(
+                  uri.toString(),
+                  'https://api.deepseek.com/chat/completions',
+                );
+                expect(headers['authorization'], 'Bearer fake-saved-key');
+                return DeepSeekHttpResponse(
+                  statusCode: status,
+                  body: 'private-provider-response',
+                );
+              },
+        );
+        await tester.pumpWidget(
+          ProviderScope(
+            overrides: [
+              assistantKeyStoreProvider.overrideWithValue(keyStore),
+              deepSeekProvider.overrideWithValue(provider),
+            ],
+            child: const MaterialApp(home: AssistantSettingsPage()),
+          ),
+        );
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('测试连接'));
+        await tester.pumpAndSettle();
+        final expected = switch (status) {
+          401 => 'DeepSeek 认证失败（HTTP 401）。请在官方平台新建 API Key，重新粘贴并保存后测试。',
+          402 => 'DeepSeek API 余额不足（HTTP 402）。请检查官方平台的 API 账户余额。',
+          _ => '访问被拒绝（HTTP 403）。暂不能判定 Key 无效；请切换手机网络后重试，并检查平台账户的访问权限。',
+        };
+        expect(find.text(expected), findsOneWidget);
+        expect(find.textContaining('private-provider-response'), findsNothing);
+        expect(find.textContaining('fake-saved-key'), findsNothing);
+      },
+    );
+  }
+
   testWidgets('saves a key without showing it and tests only on tap', (
     tester,
   ) async {

@@ -654,14 +654,21 @@ class DeepSeekProvider
       }
       if (response.statusCode == HttpStatus.unauthorized ||
           response.statusCode == HttpStatus.forbidden) {
-        throw const AssistantProviderException(AssistantErrorCode.unauthorized);
+        throw AssistantProviderException(
+          AssistantErrorCode.unauthorized,
+          httpStatus: response.statusCode,
+        );
       }
       if (response.statusCode == HttpStatus.tooManyRequests) {
-        throw const AssistantProviderException(AssistantErrorCode.rateLimited);
+        throw AssistantProviderException(
+          AssistantErrorCode.rateLimited,
+          httpStatus: response.statusCode,
+        );
       }
       if (response.statusCode < 200 || response.statusCode >= 300) {
-        throw const AssistantProviderException(
+        throw AssistantProviderException(
           AssistantErrorCode.providerUnavailable,
+          httpStatus: response.statusCode,
         );
       }
       final decoded = _decodeObject(response.body);

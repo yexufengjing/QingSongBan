@@ -85,7 +85,7 @@ class _AssistantSettingsPageState extends ConsumerState<AssistantSettingsPage> {
         success: result.success,
       );
     } on AssistantProviderException catch (error) {
-      _setStatus(_providerErrorText(error.code), success: false);
+      _setStatus(_providerErrorText(error), success: false);
     } catch (_) {
       _setStatus('连接测试失败，请检查网络后重试。', success: false);
     } finally {
@@ -197,14 +197,24 @@ class _AssistantSettingsPageState extends ConsumerState<AssistantSettingsPage> {
   );
 }
 
-String _providerErrorText(AssistantErrorCode code) => switch (code) {
-  AssistantErrorCode.missingApiKey => '尚未配置 DeepSeek API Key。',
-  AssistantErrorCode.unauthorized => 'API Key 无效或无权访问该模型。',
-  AssistantErrorCode.rateLimited => '请求过于频繁，请稍后重试。',
-  AssistantErrorCode.timeout => '连接超时，请检查网络后重试。',
-  AssistantErrorCode.network => '网络连接失败，请检查网络后重试。',
-  AssistantErrorCode.invalidProviderResponse => 'DeepSeek 返回内容无法读取。',
-  AssistantErrorCode.providerUnavailable => 'DeepSeek 服务暂时不可用。',
-  AssistantErrorCode.cancelled => '已停止本次请求。',
-  _ => '连接测试失败，请检查配置后重试。',
-};
+String _providerErrorText(AssistantProviderException error) {
+  switch (error.httpStatus) {
+    case 401:
+      return 'DeepSeek 认证失败（HTTP 401）。请在官方平台新建 API Key，重新粘贴并保存后测试。';
+    case 402:
+      return 'DeepSeek API 余额不足（HTTP 402）。请检查官方平台的 API 账户余额。';
+    case 403:
+      return '访问被拒绝（HTTP 403）。暂不能判定 Key 无效；请切换手机网络后重试，并检查平台账户的访问权限。';
+  }
+  return switch (error.code) {
+    AssistantErrorCode.missingApiKey => '尚未配置 DeepSeek API Key。',
+    AssistantErrorCode.unauthorized => 'API Key 无效或无权访问该模型。',
+    AssistantErrorCode.rateLimited => '请求过于频繁，请稍后重试。',
+    AssistantErrorCode.timeout => '连接超时，请检查网络后重试。',
+    AssistantErrorCode.network => '网络连接失败，请检查网络后重试。',
+    AssistantErrorCode.invalidProviderResponse => 'DeepSeek 返回内容无法读取。',
+    AssistantErrorCode.providerUnavailable => 'DeepSeek 服务暂时不可用。',
+    AssistantErrorCode.cancelled => '已停止本次请求。',
+    _ => '连接测试失败，请检查配置后重试。',
+  };
+}
