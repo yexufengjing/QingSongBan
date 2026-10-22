@@ -179,6 +179,66 @@ void main() {
       await tester.runAsync(database.close);
     }
   });
+
+  testWidgets(
+    'payroll warning source opens from assistant above the existing shell and returns',
+    (tester) async {
+      final database = AppDatabase.forTesting();
+      final notifier = _StaticBusinessSourceNotifier();
+      try {
+        appRouter.go('/home');
+        await tester.pumpWidget(
+          ProviderScope(
+            overrides: [
+              appDatabaseProvider.overrideWithValue(database),
+              assistantControllerProvider.overrideWith(() => notifier),
+            ],
+            child: const QingSongBanApp(),
+          ),
+        );
+        await _pumpRouteFrames(tester);
+        appRouter.push<void>('/assistant');
+        await _pumpRouteFrames(tester);
+        notifier.showSource(
+          const _SourceCase(
+            domain: AssistantBusinessType.payroll,
+            source: '/reports/payroll',
+            routeName: 'payroll',
+          ),
+        );
+        await tester.pump();
+        await tester.ensureVisible(find.text('查看工资待核对来源'));
+        await tester.tap(find.text('查看工资待核对来源'));
+        await _pumpRouteFrames(tester);
+        expect(tester.takeException(), isNull);
+        expect(find.byType(ErrorWidget), findsNothing);
+        expect(find.text('临时工薪资'), findsOneWidget);
+        await tester.tap(find.byTooltip('工种与日薪设置'));
+        await _pumpRouteFrames(tester);
+        expect(appRouter.state.name, 'payroll-settings');
+        expect(tester.takeException(), isNull);
+        appRouter.pop();
+        await _pumpRouteFrames(tester);
+        expect(find.text('临时工薪资'), findsOneWidget);
+        appRouter.pop();
+        await _pumpRouteFrames(tester);
+        expect(find.text('查看工资待核对来源'), findsOneWidget);
+        expect(tester.takeException(), isNull);
+        await tester.ensureVisible(find.text('查看工资待核对来源'));
+        await tester.tap(find.text('查看工资待核对来源'));
+        await _pumpRouteFrames(tester);
+        expect(find.text('临时工薪资'), findsOneWidget);
+        expect(tester.takeException(), isNull);
+        appRouter.pop();
+        await _pumpRouteFrames(tester);
+        expect(find.text('查看工资待核对来源'), findsOneWidget);
+      } finally {
+        await tester.pumpWidget(const SizedBox.shrink());
+        await tester.pump(const Duration(milliseconds: 1));
+        await tester.runAsync(database.close);
+      }
+    },
+  );
 }
 
 Future<void> _pumpRouteFrames(WidgetTester tester) async {
@@ -217,7 +277,8 @@ class _StaticBusinessSourceNotifier extends AssistantSessionNotifier {
       sourcePage: target.source,
       facts: [
         AssistantBusinessFact(
-          label: '测试记录',
+          label: target.source == '/reports/payroll' ? '工资待核对' : '测试记录',
+          isWarning: target.source == '/reports/payroll',
           value: '4500.00 元',
           sourcePage: target.source,
         ),

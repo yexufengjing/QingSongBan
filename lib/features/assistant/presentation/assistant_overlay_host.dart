@@ -1,3 +1,5 @@
+import '../application/assistant_chat.dart';
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -103,6 +105,7 @@ class _AssistantOverlayHostState extends ConsumerState<AssistantOverlayHost>
         state == AppLifecycleState.hidden ||
         state == AppLifecycleState.detached) {
       ref.read(assistantControllerProvider.notifier).cancelCurrentTask();
+      ref.read(assistantChatProvider.notifier).stop();
     }
   }
 

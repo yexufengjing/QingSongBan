@@ -1023,39 +1023,41 @@ class _NoMonthlyTableGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 76,
-              height: 76,
-              decoration: const BoxDecoration(
-                color: AppColors.lightBlue,
-                shape: BoxShape.circle,
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 76,
+                height: 76,
+                decoration: const BoxDecoration(
+                  color: AppColors.lightBlue,
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.groups_outlined,
+                  color: AppColors.techBlue,
+                  size: 38,
+                ),
               ),
-              child: const Icon(
-                Icons.groups_outlined,
-                color: AppColors.techBlue,
-                size: 38,
+              const SizedBox(height: 18),
+              Text('暂无考勤组', style: Theme.of(context).textTheme.titleLarge),
+              const SizedBox(height: 8),
+              Text(
+                '先建立考勤组和月度名单，再查看月考勤表。',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
-            ),
-            const SizedBox(height: 18),
-            Text('暂无考勤组', style: Theme.of(context).textTheme.titleLarge),
-            const SizedBox(height: 8),
-            Text(
-              '先建立考勤组和月度名单，再查看月考勤表。',
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            const SizedBox(height: 18),
-            FilledButton.icon(
-              onPressed: onManage,
-              icon: const Icon(Icons.settings_outlined),
-              label: const Text('去管理考勤组'),
-            ),
-          ],
+              const SizedBox(height: 18),
+              FilledButton.icon(
+                onPressed: onManage,
+                icon: const Icon(Icons.settings_outlined),
+                label: const Text('去管理考勤组'),
+              ),
+            ],
+          ),
         ),
       ),
     );

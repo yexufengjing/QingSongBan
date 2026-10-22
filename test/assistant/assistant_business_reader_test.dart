@@ -30,6 +30,20 @@ void main() {
 
   tearDown(() async => database.close());
 
+  test('payroll empty scope is displayed as missing records rather than zero salary', () async {
+    final employeeId = await database.into(database.employees).insert(EmployeesCompanion.insert(employeeNo: 'EMPTY-001', name: '明细为空人员', hireDate: DateTime(2020)));
+    await database.into(database.payrollBatches).insert(PayrollBatchesCompanion.insert(payrollMonth: '2026-10', name: '空明细批次'));
+    final before = await _snapshotBusinessTables(database);
+    final result = await reader.read(AssistantBusinessQuery(domain: AssistantBusinessType.payroll, question: '查询工资', yearMonth: '2026-10', employeeId: employeeId));
+    expect(result.scopeLabel, '明细为空人员 · EMPTY-001');
+    expect(result.emptyMessage, contains('没有匹配的工资明细'));
+    expect(result.metrics.first.value, '暂无明细');
+    expect(result.metrics.first.unit, isEmpty);
+    expect(result.metrics.last.value, '0');
+    expect(result.summary, contains('实发合计 0.00 元，0 人'));
+    expect(await _snapshotBusinessTables(database), before);
+  });
+
   test('payroll reports a persisted validation warning and attendance basis read-only', () async {
     final groupId = await database.into(database.attendanceGroups).insert(
       AttendanceGroupsCompanion.insert(name: '工资只读依据组'),
@@ -94,6 +108,8 @@ void main() {
     );
 
     expect(result.domain, AssistantBusinessType.payroll);
+    expect(result.metrics.map((metric) => metric.value), ['4500.00', '1']);
+    expect(result.metrics.map((metric) => metric.unit), ['元', '人']);
     expect(result.facts.map((fact) => fact.value), contains(contains('4500.00')));
     expect(result.facts.map((fact) => fact.value), isNot(contains(contains('99999'))));
     final subsidyWarning = result.facts.firstWhere(
@@ -101,6 +117,8 @@ void main() {
           fact.label == '工资待核对' && fact.value.contains('补助高于基础工资'),
     );
     expect(subsidyWarning.sourcePage, '/reports/payroll/item/$septemberItemId');
+    expect(subsidyWarning.isWarning, isTrue);
+    expect(subsidyWarning.details, contains(contains('补助高于基础工资')));
     expect(result.relatedReads, hasLength(1));
     expect(result.relatedReads.single.domain, AssistantBusinessType.attendance);
     expect(result.relatedReads.single.title, contains('2026-09'));
@@ -511,6 +529,101 @@ void main() {
     expect(result.facts.single.sourcePage, '/vehicles/repairs/$targetRepair');
     expect(result.sourcePage, '/vehicles/repairs/$targetRepair');
     expect(_matchesProductionRoute(result.facts.single.sourcePage!), isTrue);
+    expect(await _snapshotBusinessTables(database), before);
+  });
+
+  test('vehicle maintenance filters by report month and sums selected live orders', () async {
+    final targetVehicle = await database.into(database.vehicles).insert(
+      VehiclesCompanion.insert(name: '月度维修车', vehicleNo: 'TEST-MONTH-01'),
+    );
+    final otherVehicle = await database.into(database.vehicles).insert(
+      VehiclesCompanion.insert(name: '其他月度维修车', vehicleNo: 'TEST-MONTH-02'),
+    );
+
+    Future<void> insertOrder({
+      required String repairNo,
+      required int vehicleId,
+      required DateTime reportDate,
+      required int amountCents,
+      bool isDeleted = false,
+    }) async {
+      await database.into(database.repairOrders).insert(
+        RepairOrdersCompanion.insert(
+          repairNo: repairNo,
+          vehicleId: vehicleId,
+          reportDate: reportDate,
+          faultFoundAt: reportDate,
+          symptom: '月度维修测试',
+          ticketStatus: RepairTicketStatus.notRequired,
+          actualAmountCents: Value(amountCents),
+          status: const Value(VehicleRepairStatus.repairing),
+          isDeleted: Value(isDeleted),
+        ),
+      );
+    }
+
+    await insertOrder(
+      repairNo: 'TEST-MONTH-SEP',
+      vehicleId: targetVehicle,
+      reportDate: DateTime(2026, 9, 15),
+      amountCents: 4500,
+    );
+    await insertOrder(
+      repairNo: 'TEST-MONTH-OCT-A',
+      vehicleId: targetVehicle,
+      reportDate: DateTime(2026, 10, 2),
+      amountCents: 12500,
+    );
+    await insertOrder(
+      repairNo: 'TEST-MONTH-OCT-B',
+      vehicleId: targetVehicle,
+      reportDate: DateTime(2026, 10, 8),
+      amountCents: 7250,
+    );
+    await insertOrder(
+      repairNo: 'TEST-MONTH-OTHER',
+      vehicleId: otherVehicle,
+      reportDate: DateTime(2026, 10, 3),
+      amountCents: 99000,
+    );
+    await insertOrder(
+      repairNo: 'TEST-MONTH-DELETED',
+      vehicleId: targetVehicle,
+      reportDate: DateTime(2026, 10, 4),
+      amountCents: 88000,
+      isDeleted: true,
+    );
+    final before = await _snapshotBusinessTables(database);
+
+    Future<AssistantBusinessReadResult> readMonth(String month) => reader.read(
+      AssistantBusinessQuery(
+        domain: AssistantBusinessType.vehicleMaintenance,
+        question: '查询车辆月度维修',
+        yearMonth: month,
+        vehicleId: targetVehicle,
+        now: DateTime(2026, 11, 1),
+      ),
+    );
+
+    final october = await readMonth('2026-10');
+    expect(october.title, contains('2026-10'));
+    expect(october.summary, contains('找到 2 条维修记录'));
+    expect(october.summary, contains('登记实际费用合计 197.50 元'));
+    expect(october.facts.map((fact) => fact.label), [
+      '月度维修车 · TEST-MONTH-OCT-B',
+      '月度维修车 · TEST-MONTH-OCT-A',
+    ]);
+    final octoberLabels = october.facts.map((fact) => fact.label).join('\n');
+    expect(octoberLabels, isNot(contains('TEST-MONTH-OTHER')));
+    expect(octoberLabels, isNot(contains('TEST-MONTH-DELETED')));
+
+    final september = await readMonth('2026-09');
+    expect(september.title, contains('2026-09'));
+    expect(september.summary, contains('找到 1 条维修记录'));
+    expect(september.summary, contains('登记实际费用合计 45.00 元'));
+    expect(september.facts.map((fact) => fact.label), [
+      '月度维修车 · TEST-MONTH-SEP',
+    ]);
     expect(await _snapshotBusinessTables(database), before);
   });
 }

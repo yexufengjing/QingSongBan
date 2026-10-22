@@ -56,11 +56,12 @@ void main() {
         await tester.enterText(find.byType(TextField), '查王敏9月考勤');
         await tester.tap(find.byTooltip('发送'));
         await tester.pumpAndSettle();
-        expect(find.textContaining('王敏在'), findsOneWidget);
+        expect(find.text('王敏'), findsOneWidget);
 
         const draft = '返回后继续编辑';
         await tester.enterText(find.byType(TextField), draft);
         await tester.ensureVisible(find.text('打开月考勤表'));
+        await tester.pumpAndSettle();
         await tester.tap(find.text('打开月考勤表'));
         await tester.pumpAndSettle();
 
@@ -77,7 +78,7 @@ void main() {
         await tester.pumpAndSettle();
 
         expect(find.text('智能助手'), findsOneWidget);
-        expect(find.textContaining('王敏在'), findsOneWidget);
+        expect(find.text('王敏'), findsOneWidget);
         expect(
           tester.widget<TextField>(find.byType(TextField)).controller!.text,
           draft,
@@ -122,7 +123,7 @@ void main() {
         );
         await tester.tap(find.byTooltip('发送'));
         await tester.pumpAndSettle();
-        expect(find.textContaining('王敏在'), findsOneWidget);
+        expect(find.text('王敏'), findsOneWidget);
 
         const draft = '浮窗来源返回后继续编辑';
         await tester.enterText(
@@ -130,6 +131,7 @@ void main() {
           draft,
         );
         await tester.ensureVisible(find.text('打开月考勤表'));
+        await tester.pumpAndSettle();
         await tester.tap(find.text('打开月考勤表'));
         await tester.pumpAndSettle();
 

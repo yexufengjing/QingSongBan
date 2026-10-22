@@ -54,8 +54,11 @@ dependencies:
   rrule: ^0.2.18
   flutter_timezone: ^5.1.0
   flutter_secure_storage: 11.2.0
+  flutter_markdown_plus: 1.0.12
 
 dev_dependencies:
+  integration_test:
+    sdk: flutter
   flutter_test:
     sdk: flutter
 

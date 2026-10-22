@@ -70,12 +70,16 @@ class AssistantBusinessReader
     String month,
     String? subject,
   ) async {
+    final selectedEmployee = query.employeeId == null ? null : await _db.findEmployeeById(query.employeeId!);
+    final scopeLabel = selectedEmployee == null
+        ? subject ?? (query.employeeId == null ? '全部匹配人员' : '所选人员')
+        : '${selectedEmployee.name} · ${selectedEmployee.employeeNo}';
     final batch = await (_db.select(_db.payrollBatches)
           ..where((r) => r.payrollMonth.equals(month) & r.isDeleted.equals(false)))
         .getSingleOrNull();
     if (batch == null) {
       return _result(query.domain, '工资查询 · $month', now, 'payroll_batch_month_v1', '/reports/payroll',
-          '$month 没有工资批次。', const []);
+          '$month 没有工资批次。', const [], scopeLabel: scopeLabel, emptyMessage: '该月份尚未生成工资批次。');
     }
     final items = (await (_db.select(_db.payrollItems)
               ..where((r) => r.payrollBatchId.equals(batch.id)))
@@ -119,6 +123,8 @@ class AssistantBusinessReader
           AssistantBusinessFact(
             label: '工资待核对',
             value: entry.value.join('；'),
+            isWarning: true,
+            details: List.unmodifiable(entry.value),
             explanation: '按照工资校验规则核对；查询不会修改工资批次或提醒。',
             sourcePage: allItems
                     .where((item) => item.employeeId == entry.key)
@@ -128,7 +134,13 @@ class AssistantBusinessReader
           ),
     ];
     final result = _result(query.domain, '工资查询 · $month', now, 'payroll_items_sum_and_attendance_snapshot_v1', items.length == 1 ? '/reports/payroll/item/${items.single.id}' : '/reports/payroll',
-        '$month 实发合计 ${_money(total)} 元，${items.length} 人；按工资明细的出勤快照、基本工资、补贴和扣款解释构成。', facts);
+        '$month 实发合计 ${_money(total)} 元，${items.length} 人；按工资明细的出勤快照、基本工资、补贴和扣款解释构成。', facts,
+        scopeLabel: scopeLabel,
+        emptyMessage: items.isEmpty ? '该月份没有匹配的工资明细，请到工资页面核对。' : null,
+        metrics: [
+          AssistantResultMetric(label: '已登记实发合计', value: items.isEmpty ? '暂无明细' : _money(total), unit: items.isEmpty ? '' : '元'),
+          AssistantResultMetric(label: '匹配工资人数', value: '${items.length}', unit: '人'),
+        ]);
     if (items.length != 1) return result;
     final employee = await (_db.select(_db.employees)..where((r) => r.id.equals(items.single.employeeId))).getSingleOrNull();
     if (employee == null) return result;
@@ -149,7 +161,7 @@ class AssistantBusinessReader
       facts: [if (attendance.attendanceDays != null) AssistantBusinessFact(label: '出勤天数', value: '${attendance.attendanceDays} 天')],
       error: attendance.error,
     );
-    return AssistantBusinessReadResult(domain: result.domain, title: result.title, summary: result.summary, queriedAt: result.queriedAt, sourceRule: result.sourceRule, sourcePage: result.sourcePage, facts: result.facts, relatedReads: [related]);
+    return AssistantBusinessReadResult(domain: result.domain, title: result.title, summary: result.summary, queriedAt: result.queriedAt, sourceRule: result.sourceRule, sourcePage: result.sourcePage, facts: result.facts, relatedReads: [related], metrics: result.metrics, scopeLabel: result.scopeLabel, emptyMessage: result.emptyMessage);
   }
 
   Future<AssistantBusinessReadResult> _inventory(AssistantBusinessQuery query, DateTime now, String? subject) async {
@@ -171,7 +183,8 @@ class AssistantBusinessReader
         ),
     ];
     final result = _result(query.domain, '库存与补货', now, 'inventory_current_stock_vs_min_v1', displayRows.length == 1 ? '/inventory/materials/${displayRows.single.id}' : '/inventory/materials',
-      rows.isEmpty ? '没有找到匹配的有效库存物资。' : '当前查询 ${rows.length} 种物资，其中 ${low.length} 种低于或达到预警下限。', facts);
+      rows.isEmpty ? '没有找到匹配的有效库存物资。' : '当前查询 ${rows.length} 种物资，其中 ${low.length} 种低于或达到预警下限。', facts,
+      metrics: [AssistantResultMetric(label: '低库存物资', value: '${low.length}', unit: '种'), AssistantResultMetric(label: '查询物资', value: '${rows.length}', unit: '种')]);
     if (low.isEmpty) return result;
     final materialIds = low.map((r) => r.id).toSet();
     final requests = (await _db.select(_db.purchaseRequests).get()).where((r) => !r.isDeleted).toList();
@@ -182,7 +195,7 @@ class AssistantBusinessReader
       matching.isEmpty ? '低库存物资没有匹配到采购明细。' : '找到 ${matching.length} 个相关采购单：${matching.map((r) => '${r.title}（${_purchaseStatus(r.status)}）').join('；')}。', [
         for (final row in matching.take(5)) AssistantBusinessFact(label: row.title, value: _purchaseStatus(row.status), sourcePage: '/purchase/detail/${row.id}'),
       ]);
-    return AssistantBusinessReadResult(domain: result.domain, title: result.title, summary: result.summary, queriedAt: result.queriedAt, sourceRule: result.sourceRule, sourcePage: result.sourcePage, facts: result.facts, relatedReads: [linked]);
+    return AssistantBusinessReadResult(domain: result.domain, title: result.title, summary: result.summary, queriedAt: result.queriedAt, sourceRule: result.sourceRule, sourcePage: result.sourcePage, facts: result.facts, relatedReads: [linked], metrics: result.metrics);
   }
 
   Future<AssistantBusinessReadResult> _purchase(AssistantBusinessQuery query, DateTime now, String? subject) async {
@@ -212,7 +225,8 @@ class AssistantBusinessReader
       final lines = items.where((i) => i.requestId == row.id).toList();
       facts.add(AssistantBusinessFact(label: row.title, value: _purchaseStatus(row.status), explanation: lines.map((i) => '${i.itemName} ${_qty(i.receivedQuantity)}/${_qty(i.requestQuantity)} ${i.unit}').join('；'), sourcePage: '/purchase/detail/${row.id}'));
     }
-    return _result(query.domain, '采购进度', now, 'purchase_status_items_received_v1', requests.length == 1 ? '/purchase/detail/${requests.single.id}' : '/purchase', requests.isEmpty ? '没有找到匹配的采购记录。' : '找到 ${requests.length} 个采购单；按每种物资分别展示申请与入库数量。采购申请没有可靠的实际总额字段。', facts);
+    return _result(query.domain, '采购进度', now, 'purchase_status_items_received_v1', requests.length == 1 ? '/purchase/detail/${requests.single.id}' : '/purchase', requests.isEmpty ? '没有找到匹配的采购记录。' : '找到 ${requests.length} 个采购单；按每种物资分别展示申请与入库数量。采购申请没有可靠的实际总额字段。', facts,
+      metrics: [AssistantResultMetric(label: query.operation == 'pending' ? '待到货采购' : query.operation == 'partial' ? '部分到货采购' : '匹配采购单', value: '${requests.length}', unit: '单')]);
   }
 
   Future<AssistantBusinessReadResult> _distribution(AssistantBusinessQuery query, DateTime now, String? subject) async {
@@ -248,19 +262,27 @@ class AssistantBusinessReader
           sourcePage: '/items?year=${month.substring(0, 4)}&month=${month.substring(5, 7)}',
         ),
     ];
-    return _result(query.domain, '福利领取 · $month', now, 'welfare_distribution_entries_status_month_v1', '/items?year=${month.substring(0, 4)}&month=${month.substring(5, 7)}', selected.isEmpty ? '$month 没有符合条件的福利领取记录。' : '$month 找到 ${selected.length} 条福利记录：已领取 $received 条，未领取 $notReceived 条。', facts);
+    return _result(query.domain, '福利领取 · $month', now, 'welfare_distribution_entries_status_month_v1', '/items?year=${month.substring(0, 4)}&month=${month.substring(5, 7)}', selected.isEmpty ? '$month 没有符合条件的福利领取记录。' : '$month 找到 ${selected.length} 条福利记录：已领取 $received 条，未领取 $notReceived 条。', facts,
+      metrics: [AssistantResultMetric(label: '已领取记录', value: '$received', unit: '条'), AssistantResultMetric(label: '未领取记录', value: '$notReceived', unit: '条')]);
   }
 
   Future<AssistantBusinessReadResult> _vehicleMaintenance(AssistantBusinessQuery query, DateTime now, String? subject) async {
+    final month = query.yearMonth;
     final orders = (await _db.select(_db.repairOrders).get()).where((r) => !r.isDeleted).toList();
     final vehicles = await _db.select(_db.vehicles).get();
     final selected = orders.where((r) {
       final vehicle = _firstOrNull(vehicles.where((v) => v.id == r.vehicleId));
-      return (query.vehicleId == null || r.vehicleId == query.vehicleId) && _matches(subject, '${r.repairNo} ${r.symptom} ${r.project ?? ''} ${vehicle?.name ?? ''} ${vehicle?.vehicleNo ?? ''} ${vehicle?.licensePlate ?? ''}');
+      return vehicle != null && !vehicle.isDeleted &&
+          (month == null || _month(r.reportDate) == month) &&
+          (query.vehicleId == null || r.vehicleId == query.vehicleId) && _matches(subject, '${r.repairNo} ${r.symptom} ${r.project ?? ''} ${vehicle.name} ${vehicle.vehicleNo} ${vehicle.licensePlate ?? ''}');
     }).toList()..sort((a,b) => b.reportDate.compareTo(a.reportDate));
     final facts = [for (final row in selected.take(6))
       AssistantBusinessFact(label: '${_firstOrNull(vehicles.where((v)=>v.id==row.vehicleId))?.name ?? '车辆'} · ${row.repairNo}', value: '${_repairStatus(row.status.name)} · 报修 ${_date(row.reportDate)}${row.completedAt == null ? '' : ' · 完成 ${_date(row.completedAt!)}'}', explanation: '${row.symptom}；${row.actualAmountCents > 0 ? '实际费用 ${_money(row.actualAmountCents / 100)} 元' : '尚无实际费用'}', sourcePage: '/vehicles/repairs/${row.id}')];
-    return _result(query.domain, '车辆维修进度', now, 'vehicle_repair_order_status_v1', selected.length == 1 ? '/vehicles/repairs/${selected.single.id}' : '/vehicles/repairs', selected.isEmpty ? '没有找到匹配的车辆维修单。' : '找到 ${selected.length} 条维修记录，展示最近 ${facts.length} 条。', facts);
+    final totalCents = selected.fold<int>(0, (total, row) => total + row.actualAmountCents);
+    final scopeVehicle = _firstOrNull(vehicles.where((v) => v.id == query.vehicleId));
+    return _result(query.domain, '车辆维修进度${month == null ? '' : ' · $month'}', now, 'vehicle_repair_order_status_v1', selected.length == 1 ? '/vehicles/repairs/${selected.single.id}' : '/vehicles/repairs', selected.isEmpty ? '${month == null ? '' : '$month 按报修日期筛选，'}没有找到匹配的车辆维修单。' : '${month == null ? '' : '$month 按报修日期筛选，'}找到 ${selected.length} 条维修记录，登记实际费用合计 ${_money(totalCents / 100)} 元，展示最近 ${facts.length} 条。', facts,
+      scopeLabel: scopeVehicle == null ? subject : '${scopeVehicle.name} · ${scopeVehicle.licensePlate ?? scopeVehicle.vehicleNo}',
+      metrics: [AssistantResultMetric(label: '登记实际费用', value: _money(totalCents / 100), unit: '元'), AssistantResultMetric(label: '匹配维修单', value: '${selected.length}', unit: '单')]);
   }
 
   Future<AssistantBusinessReadResult> _vehicleReminders(AssistantBusinessQuery query, DateTime now, String? subject) async {
@@ -333,7 +355,7 @@ class AssistantBusinessReader
     return _result(query.domain, '园林工具维修与价格', now, 'garden_repair_price_by_project_spec_unit_v1', '/garden-tool-repairs/analysis?year=${month.substring(0, 4)}&month=${month.substring(5, 7)}', selected.isEmpty ? '$month 没有找到匹配的园林维修项目。' : query.operation == 'comparePrice' ? '在$previousMonth与$month间，按项目、规格和计价单位比较登记单价。' : '展示$month匹配项目的登记单价。', facts);
   }
 
-  AssistantBusinessReadResult _result(AssistantBusinessType domain, String title, DateTime now, String rule, String page, String summary, List<AssistantBusinessFact> facts) => AssistantBusinessReadResult(domain: domain, title: title, summary: summary, queriedAt: now, sourceRule: rule, sourcePage: page, facts: facts);
+  AssistantBusinessReadResult _result(AssistantBusinessType domain, String title, DateTime now, String rule, String page, String summary, List<AssistantBusinessFact> facts, {List<AssistantResultMetric> metrics = const [], String? scopeLabel, String? emptyMessage}) => AssistantBusinessReadResult(domain: domain, title: title, summary: summary, queriedAt: now, sourceRule: rule, sourcePage: page, facts: facts, metrics: metrics, scopeLabel: scopeLabel, emptyMessage: emptyMessage);
   AssistantBusinessReadResult _empty(AssistantBusinessType domain, DateTime now, String summary, String page) => _result(domain, '业务查询', now, 'unsupported_business_domain_v1', page, summary, const []);
 
   bool _matches(String? subject, String haystack) => subject == null || subject.isEmpty || haystack.contains(subject);

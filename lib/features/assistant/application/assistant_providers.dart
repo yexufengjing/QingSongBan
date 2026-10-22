@@ -7,6 +7,7 @@ import '../data/assistant_key_store.dart';
 import '../data/assistant_vehicle_expense_reader.dart';
 import '../data/deepseek_provider.dart';
 import '../domain/assistant_models.dart';
+import '../domain/assistant_quick_query.dart';
 import 'assistant_controller.dart';
 
 final assistantKeyStoreProvider = Provider<AssistantKeyStore>(
@@ -61,6 +62,19 @@ class AssistantSessionNotifier extends Notifier<AssistantState> {
   }
 
   Future<void> submit(String utterance) => _controller.submit(utterance);
+
+  Future<void> runQuickQuery(AssistantQuickQuery query) =>
+      _controller.runQuickQuery(query);
+
+  Future<void> runFollowUp(
+    int messageId, {
+    String? yearMonth,
+    String? operation,
+  }) => _controller.runFollowUp(
+    messageId,
+    yearMonth: yearMonth,
+    operation: operation,
+  );
 
   Future<void> selectCandidate(String candidateRef) =>
       _controller.selectCandidate(candidateRef);

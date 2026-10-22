@@ -77,7 +77,10 @@ import '../../features/garden_tool_repairs/presentation/garden_tool_repair_price
 import '../../features/garden_tool_repairs/presentation/garden_tool_repair_units_page.dart';
 import 'app_shell.dart';
 
+final _rootNavigatorKey = GlobalKey<NavigatorState>();
+
 final GoRouter appRouter = GoRouter(
+  navigatorKey: _rootNavigatorKey,
   initialLocation: '/home',
   observers: [assistantOverlayModalObserver],
   routes: [
@@ -369,11 +372,16 @@ final GoRouter appRouter = GoRouter(
                 GoRoute(
                   path: 'payroll',
                   name: 'payroll',
-                  builder: (context, state) => const PayrollHomePage(),
+                  // Assistant can sit above an existing shell. Open payroll on
+                  // the root navigator instead of pushing a second shell page.
+                  parentNavigatorKey: _rootNavigatorKey,
+                  builder: (context, state) =>
+                      const Scaffold(body: PayrollHomePage()),
                   routes: [
                     GoRoute(
                       path: 'edit/:batchId',
                       name: 'payroll-edit',
+                      parentNavigatorKey: _rootNavigatorKey,
                       builder: (context, state) {
                         final batchId = int.tryParse(
                           state.pathParameters['batchId'] ?? '',
@@ -383,12 +391,15 @@ final GoRouter appRouter = GoRouter(
                             body: Center(child: Text('无效的工资批次编号')),
                           );
                         }
-                        return PayrollEditorPage(batchId: batchId);
+                        return Scaffold(
+                          body: PayrollEditorPage(batchId: batchId),
+                        );
                       },
                     ),
                     GoRoute(
                       path: 'item/:itemId',
                       name: 'payroll-item-detail',
+                      parentNavigatorKey: _rootNavigatorKey,
                       builder: (context, state) {
                         final itemId = int.tryParse(
                           state.pathParameters['itemId'] ?? '',
@@ -404,16 +415,21 @@ final GoRouter appRouter = GoRouter(
                     GoRoute(
                       path: 'history',
                       name: 'payroll-history',
-                      builder: (context, state) => const PayrollHistoryPage(),
+                      parentNavigatorKey: _rootNavigatorKey,
+                      builder: (context, state) =>
+                          const Scaffold(body: PayrollHistoryPage()),
                     ),
                     GoRoute(
                       path: 'settings',
                       name: 'payroll-settings',
-                      builder: (context, state) => const WageJobSettingsPage(),
+                      parentNavigatorKey: _rootNavigatorKey,
+                      builder: (context, state) =>
+                          const Scaffold(body: WageJobSettingsPage()),
                     ),
                     GoRoute(
                       path: 'export/:batchId',
                       name: 'payroll-export',
+                      parentNavigatorKey: _rootNavigatorKey,
                       builder: (context, state) {
                         final batchId = int.tryParse(
                           state.pathParameters['batchId'] ?? '',

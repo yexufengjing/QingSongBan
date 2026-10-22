@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/theme/app_theme.dart';
+import 'assistant_chat_settings.dart';
 import '../application/assistant_providers.dart';
 import '../domain/assistant_models.dart';
 
@@ -114,7 +115,7 @@ class _AssistantSettingsPageState extends ConsumerState<AssistantSettingsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'DeepSeek API Key',
+                  '模型连接 · DeepSeek API Key',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 8),
@@ -180,6 +181,8 @@ class _AssistantSettingsPageState extends ConsumerState<AssistantSettingsPage> {
             ),
           ),
         ),
+        const SizedBox(height: 12),
+        const AssistantChatSettingsPanel(),
         const SizedBox(height: 12),
         const Card(
           child: Padding(

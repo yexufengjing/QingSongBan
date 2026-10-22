@@ -8,6 +8,14 @@ import '../../attendance/presentation/monthly_attendance_table_page.dart';
 import '../application/assistant_overlay_state.dart';
 import '../application/assistant_providers.dart';
 import '../domain/assistant_models.dart';
+import '../domain/assistant_quick_query.dart';
+import 'assistant_quick_queries.dart';
+import 'assistant_chat_view.dart';
+import '../application/assistant_chat.dart';
+import 'assistant_result_content.dart';
+import 'deepseek_pricing_badge.dart';
+
+final assistantFreeChatModeProvider = StateProvider<bool?>((ref) => null);
 
 class AssistantPage extends ConsumerStatefulWidget {
   const AssistantPage({
@@ -28,6 +36,8 @@ class AssistantPage extends ConsumerStatefulWidget {
 class _AssistantPageState extends ConsumerState<AssistantPage> {
   final _input = TextEditingController();
   final _scrollController = ScrollController();
+  final _messageKeys = <int, GlobalKey>{};
+  final _candidateKeys = <int, GlobalKey>{};
 
   @override
   void initState() {
@@ -76,22 +86,70 @@ class _AssistantPageState extends ConsumerState<AssistantPage> {
         if (!mounted || !_scrollController.hasClients) return;
         final position = _scrollController.position;
         final target = position.maxScrollExtent;
-        if (position.pixels >= target - 1) return;
+        if (position.pixels >= target - 1) break;
         await _scrollController.animateTo(
           target,
           duration: const Duration(milliseconds: 180),
           curve: Curves.easeOut,
         );
+        WidgetsBinding.instance.scheduleFrame();
         await WidgetsBinding.instance.endOfFrame;
       }
+      if (!mounted) return;
+      final messages = ref.read(assistantControllerProvider).messages;
+      if (messages.isEmpty) return;
+      final latestContext =
+          (messages.last.candidates.isNotEmpty
+              ? _candidateKeys[messages.last.id]?.currentContext
+              : null) ??
+          _messageKeys[messages.last.id]?.currentContext;
+      if (latestContext != null && latestContext.mounted) {
+        await Scrollable.ensureVisible(
+          latestContext,
+          alignment: 0,
+          duration: const Duration(milliseconds: 180),
+        );
+      }
     });
+  }
+
+  Future<void> _runQuickQuery(AssistantQuickQuery query) async {
+    await ref.read(assistantControllerProvider.notifier).runQuickQuery(query);
+    _scrollToLatestMessage();
+  }
+
+  void _openQuickQueries() {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      builder: (sheetContext) => SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: AssistantQuickQueries(
+          pageContext: widget.floating
+              ? ref.read(assistantOverlayStateProvider).nextPageContext
+              : widget.pageContext,
+          onRun: (query) {
+            Navigator.pop(sheetContext);
+            _runQuickQuery(query);
+          },
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(assistantControllerProvider);
     final notifier = ref.read(assistantControllerProvider.notifier);
+    final chatSettings = ref.watch(assistantChatSettingsProvider).valueOrNull;
+    final freeChat =
+        ref.watch(assistantFreeChatModeProvider) ??
+        chatSettings?.defaultFreeChat ??
+        false;
     return Scaffold(
+      // The floating host has already subtracted the keyboard inset.
+      resizeToAvoidBottomInset: !widget.floating,
       appBar: AppBar(
         toolbarHeight: widget.floating ? 48 : null,
         leading: widget.floating
@@ -102,7 +160,7 @@ class _AssistantPageState extends ConsumerState<AssistantPage> {
                 icon: const Icon(Icons.keyboard_arrow_down),
               )
             : null,
-        title: const Text('智能助手'),
+        title: const Text('智能助手', maxLines: 1, overflow: TextOverflow.ellipsis),
         actions: [
           if (widget.floating)
             IconButton(
@@ -118,11 +176,36 @@ class _AssistantPageState extends ConsumerState<AssistantPage> {
               onPressed: () => ref.read(assistantOverlayStateProvider).hide(),
               icon: const Icon(Icons.close),
             ),
+          if (!freeChat || chatSettings != null)
+            DeepSeekPricingBadge(
+              baseUrl: freeChat
+                  ? chatSettings!.baseUrl
+                  : 'https://api.deepseek.com',
+              model: freeChat ? chatSettings!.model : 'deepseek-flash',
+            ),
           PopupMenuButton<String>(
             tooltip: '更多',
-            onSelected: (value) {
-              if (value == 'settings') context.push('/assistant/settings');
-              if (value == 'clear') notifier.clearSession();
+            onSelected: (value) async {
+              if (value == 'settings') {
+                context.push('/assistant/settings');
+                return;
+              }
+              if (value == 'clear') {
+                if (freeChat) {
+                  try {
+                    await ref.read(assistantChatProvider.notifier).newSession();
+                  } catch (_) {
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('新对话保存失败，请重试。')),
+                      );
+                    }
+                  }
+                } else {
+                  notifier.clearSession();
+                }
+                return;
+              }
               final overlay = ref.read(assistantOverlayStateProvider);
               if (value == 'move-left') {
                 overlay.setPosition(Offset(0, overlay.normalizedPosition.dy));
@@ -133,7 +216,10 @@ class _AssistantPageState extends ConsumerState<AssistantPage> {
             },
             itemBuilder: (_) => [
               const PopupMenuItem(value: 'settings', child: Text('AI 设置')),
-              const PopupMenuItem(value: 'clear', child: Text('清空当前对话')),
+              PopupMenuItem(
+                value: 'clear',
+                child: Text(freeChat ? '新建自由对话' : '清空当前对话'),
+              ),
               if (widget.floating) ...[
                 const PopupMenuDivider(),
                 const PopupMenuItem(value: 'move-left', child: Text('悬浮入口靠左')),
@@ -143,115 +229,176 @@ class _AssistantPageState extends ConsumerState<AssistantPage> {
           ),
         ],
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: state.messages.isEmpty
-                  ? const _AssistantWelcome()
-                  : ListView.builder(
-                      controller: _scrollController,
-                      padding: const EdgeInsets.fromLTRB(16, 12, 16, 20),
-                      itemCount: state.messages.length,
-                      itemBuilder: (context, index) => _AssistantMessageView(
-                        message: state.messages[index],
-                        onSelectCandidate: (candidateRef) async {
-                          await notifier.selectCandidate(candidateRef);
-                          _scrollToLatestMessage();
-                        },
-                        onLoadMoreRanking: notifier.loadNextVehicleRankingPage,
-                        onOpenRankedVehicle: notifier.openRankedVehicle,
-                        onSelectMonth: (yearMonth) async {
-                          await notifier.selectClarificationMonth(yearMonth);
-                          _scrollToLatestMessage();
-                        },
-                        onRefresh: notifier.refreshResult,
-                        onExplain: notifier.explainAnswer,
-                      ),
+      body: Column(
+        children: [
+          if (MediaQuery.viewInsetsOf(context).bottom == 0)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
+              child: SizedBox(
+                width: double.infinity,
+                child: SegmentedButton<bool>(
+                  segments: const [
+                    ButtonSegment(
+                      value: false,
+                      icon: Icon(Icons.business_center_outlined),
+                      label: Text('业务查询'),
                     ),
-            ),
-            if (state.isBusy)
-              _BusyIndicator(
-                phase: state.phase,
-                progress: state.agentProgress,
-                onStop: notifier.cancelCurrentTask,
+                    ButtonSegment(
+                      value: true,
+                      icon: Icon(Icons.chat_bubble_outline),
+                      label: Text('自由对话'),
+                    ),
+                  ],
+                  selected: {freeChat},
+                  onSelectionChanged: (selection) {
+                    notifier.cancelCurrentTask();
+                    ref.read(assistantChatProvider.notifier).stop();
+                    ref.read(assistantFreeChatModeProvider.notifier).state =
+                        selection.single;
+                  },
+                ),
               ),
-            _Composer(
-              controller: _input,
-              isBusy: state.isBusy,
-              onChanged: (value) =>
-                  ref.read(assistantOverlayStateProvider).setDraft(value),
-              onSubmit: _submit,
-              onStop: notifier.cancelCurrentTask,
             ),
-          ],
-        ),
+          Expanded(
+            child: freeChat
+                ? const AssistantChatView()
+                : SafeArea(
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: state.messages.isEmpty
+                              ? _AssistantWelcome(
+                                  pageContext: widget.floating
+                                      ? ref
+                                            .read(assistantOverlayStateProvider)
+                                            .nextPageContext
+                                      : widget.pageContext,
+                                  onRun: _runQuickQuery,
+                                )
+                              : ListView.builder(
+                                  controller: _scrollController,
+                                  padding: const EdgeInsets.fromLTRB(
+                                    16,
+                                    12,
+                                    16,
+                                    20,
+                                  ),
+                                  itemCount: state.messages.length,
+                                  itemBuilder: (context, index) =>
+                                      _AssistantMessageView(
+                                        key: _messageKeys.putIfAbsent(
+                                          state.messages[index].id,
+                                          () => GlobalKey(),
+                                        ),
+                                        message: state.messages[index],
+                                        candidateAnchorKey: _candidateKeys
+                                            .putIfAbsent(
+                                              state.messages[index].id,
+                                              () => GlobalKey(),
+                                            ),
+                                        onSelectCandidate:
+                                            (candidateRef) async {
+                                              await notifier.selectCandidate(
+                                                candidateRef,
+                                              );
+                                              _scrollToLatestMessage();
+                                            },
+                                        onLoadMoreRanking:
+                                            notifier.loadNextVehicleRankingPage,
+                                        onOpenRankedVehicle:
+                                            notifier.openRankedVehicle,
+                                        onSelectMonth: (yearMonth) async {
+                                          await notifier
+                                              .selectClarificationMonth(
+                                                yearMonth,
+                                              );
+                                          _scrollToLatestMessage();
+                                        },
+                                        onRefresh: notifier.refreshResult,
+                                        onExplain: notifier.explainAnswer,
+                                        onFollowUp:
+                                            (yearMonth, operation) async {
+                                              await notifier.runFollowUp(
+                                                state.messages[index].id,
+                                                yearMonth: yearMonth,
+                                                operation: operation,
+                                              );
+                                              _scrollToLatestMessage();
+                                            },
+                                        isBusy: state.isBusy,
+                                      ),
+                                ),
+                        ),
+                        if (state.isBusy)
+                          _BusyIndicator(
+                            phase: state.phase,
+                            progress: state.agentProgress,
+                            onStop: notifier.cancelCurrentTask,
+                          ),
+                        if (state.messages.isNotEmpty &&
+                            MediaQuery.viewInsetsOf(context).bottom == 0)
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: TextButton.icon(
+                              onPressed: state.isBusy
+                                  ? null
+                                  : _openQuickQueries,
+                              icon: const Icon(Icons.bolt_outlined),
+                              label: const Text('快捷查询与收藏'),
+                            ),
+                          ),
+                        _Composer(
+                          controller: _input,
+                          isBusy: state.isBusy,
+                          onChanged: (value) => ref
+                              .read(assistantOverlayStateProvider)
+                              .setDraft(value),
+                          onSubmit: _submit,
+                          onStop: notifier.cancelCurrentTask,
+                        ),
+                      ],
+                    ),
+                  ),
+          ),
+        ],
       ),
     );
   }
 }
 
 class _AssistantWelcome extends ConsumerWidget {
-  const _AssistantWelcome();
+  const _AssistantWelcome({required this.onRun, this.pageContext});
+  final ValueChanged<AssistantQuickQuery> onRun;
+  final AssistantPageContext? pageContext;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) => ListView(
     padding: const EdgeInsets.fromLTRB(22, 36, 22, 24),
     children: [
-      const Icon(Icons.forum_outlined, size: 38, color: AppColors.primary),
-      const SizedBox(height: 16),
-      Text(
-        '查询常用业务信息',
-        textAlign: TextAlign.center,
-        style: Theme.of(context).textTheme.titleLarge,
-      ),
+      Text('今天想查什么？', style: Theme.of(context).textTheme.titleLarge),
       const SizedBox(height: 8),
       Text(
-        '可查询人员档案、考勤与工资、库存和采购、福利领取、车辆维修与提醒、园林维修。业务记录由本地查询和计算；人员、物资及维修明细不会发送给模型。',
-        textAlign: TextAlign.center,
+        '选择快捷查询，或在下方输入业务问题。业务记录由本地查询和计算。',
         style: Theme.of(context).textTheme.bodyMedium
             ?.copyWith(color: AppColors.body),
       ),
       const SizedBox(height: 22),
-      const _ExamplePrompt('例如：演示员工本月工资和考勤依据是什么？'),
-      const _ExamplePrompt('例如：演示绿篱刀片库存和关联采购到货多少？'),
-      const _ExamplePrompt('例如：本月哪些人领了劳保福利？'),
-      const _ExamplePrompt('例如：比较北区绿篱养护本月和上月的维修价格'),
-      const _ExamplePrompt('例如：这辆车维修到哪一步、花了多少钱？'),
+      AssistantQuickQueries(pageContext: pageContext, onRun: onRun),
       const SizedBox(height: 14),
       if (ref.watch(assistantKeyConfiguredProvider).valueOrNull != true)
         Card(
           color: AppColors.lightOrange,
           child: ListTile(
             leading: const Icon(Icons.key_outlined, color: AppColors.warning),
-            title: const Text('需要先配置 DeepSeek API Key'),
-            subtitle: const Text('问题文本会发送给 DeepSeek；本地人员与车辆数据由 App 查询。'),
+            title: const Text('输入自然语言问题需配置 DeepSeek'),
+            subtitle: const Text(
+              '快捷查询可直接使用。输入的问题文本会发送给 DeepSeek，本地业务明细不会自动附加。',
+            ),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => context.push('/assistant/settings'),
           ),
         ),
     ],
-  );
-}
-
-class _ExamplePrompt extends StatelessWidget {
-  const _ExamplePrompt(this.text);
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(bottom: 8),
-    child: DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.lightBlue,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-        child: Text(text, style: const TextStyle(color: AppColors.ink)),
-      ),
-    ),
   );
 }
 
@@ -361,16 +508,21 @@ class _Composer extends StatelessWidget {
 
 class _AssistantMessageView extends StatelessWidget {
   const _AssistantMessageView({
+    super.key,
     required this.message,
     required this.onSelectCandidate,
+    this.candidateAnchorKey,
     required this.onLoadMoreRanking,
     required this.onOpenRankedVehicle,
     required this.onSelectMonth,
     required this.onRefresh,
     required this.onExplain,
+    required this.onFollowUp,
+    required this.isBusy,
   });
 
   final AssistantMessage message;
+  final GlobalKey? candidateAnchorKey;
   final ValueChanged<String> onSelectCandidate;
   final Future<void> Function(String resultRef, String cursor)
   onLoadMoreRanking;
@@ -379,6 +531,8 @@ class _AssistantMessageView extends StatelessWidget {
   final ValueChanged<String> onSelectMonth;
   final ValueChanged<String> onRefresh;
   final ValueChanged<String> onExplain;
+  final void Function(String? yearMonth, String? operation) onFollowUp;
+  final bool isBusy;
 
   @override
   Widget build(BuildContext context) {
@@ -404,14 +558,20 @@ class _AssistantMessageView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  answer?.vehicleExpenseAnalysis?.summaryText.isNotEmpty == true
-                      ? answer!.vehicleExpenseAnalysis!.summaryText
-                      : message.text,
-                  style: TextStyle(
-                    color: message.isUser ? Colors.white : AppColors.ink,
+                if (answer?.businessResult == null &&
+                    (answer == null ||
+                        answer.vehicleExpenseAnalysis != null ||
+                        answer.vehicleSummary != null ||
+                        answer.vehicleRanking != null))
+                  Text(
+                    answer?.vehicleExpenseAnalysis?.summaryText.isNotEmpty ==
+                            true
+                        ? answer!.vehicleExpenseAnalysis!.summaryText
+                        : message.text,
+                    style: TextStyle(
+                      color: message.isUser ? Colors.white : AppColors.ink,
+                    ),
                   ),
-                ),
                 if (answer?.vehicleExpenseAnalysis != null)
                   _VehicleExpenseAnalysisActions(
                     analysis: answer!.vehicleExpenseAnalysis!,
@@ -430,19 +590,32 @@ class _AssistantMessageView extends StatelessWidget {
                 else if (answer?.businessResult != null)
                   _BusinessResultActions(
                     result: answer!.businessResult!,
+                    explanation: answer.explanation,
+                    isBusy: isBusy,
                     messageId: message.id.toString(),
                     onRefresh: onRefresh,
                     onExplain: onExplain,
                   )
-                else if (answer != null)
+                else if (answer != null) ...[
+                  _AttendanceResultSummary(answer: answer),
                   _AnswerActions(
                     message: message,
                     onRefresh: onRefresh,
                     onExplain: onExplain,
                   ),
+                ],
+                if (answer != null &&
+                    (answer.error == null ||
+                        answer.error == AssistantErrorCode.notInRoster))
+                  _QuickFollowUps(
+                    message: message,
+                    onFollowUp: onFollowUp,
+                    isBusy: isBusy,
+                  ),
                 if (message.candidates.isNotEmpty) ...[
                   const SizedBox(height: 10),
                   _CandidateChoices(
+                    key: candidateAnchorKey,
                     candidates: message.candidates,
                     onSelected: onSelectCandidate,
                   ),
@@ -479,88 +652,164 @@ class _AssistantMessageView extends StatelessWidget {
   }
 }
 
+class _AttendanceResultSummary extends StatelessWidget {
+  const _AttendanceResultSummary({required this.answer});
+  final AssistantAnswer answer;
+
+  @override
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      AssistantResultHeading(
+        title: '考勤查询 · ${answer.yearMonth}',
+        scope: answer.employeeLabel,
+        status: answer.error == null ? '按月考勤表统计' : '需要核对考勤来源',
+        warning: answer.error != null,
+      ),
+      const SizedBox(height: 16),
+      if (answer.error != null)
+        Text(answer.text, style: const TextStyle(height: 1.5))
+      else
+        AssistantResultMetrics(
+          metrics: [
+            if (answer.attendanceDays != null)
+              AssistantResultMetric(
+                label: '出勤',
+                value: _daysValue(answer.attendanceDays!),
+                unit: '天',
+              ),
+            if (answer.leaveAndRestDays != null)
+              AssistantResultMetric(
+                label: '请假与休息',
+                value: _daysValue(answer.leaveAndRestDays!),
+                unit: '天',
+              ),
+            if (answer.overtimeMinutes != null)
+              AssistantResultMetric(
+                label: '加班',
+                value: '${answer.overtimeMinutes}',
+                unit: '分钟',
+              ),
+          ],
+        ),
+    ],
+  );
+}
+
+String _daysValue(double days) =>
+    days == days.roundToDouble() ? days.toInt().toString() : days.toString();
+
+class _QuickFollowUps extends StatelessWidget {
+  const _QuickFollowUps({
+    required this.message,
+    required this.onFollowUp,
+    required this.isBusy,
+  });
+  final AssistantMessage message;
+  final void Function(String? yearMonth, String? operation) onFollowUp;
+  final bool isBusy;
+
+  @override
+  Widget build(BuildContext context) {
+    final business = message.businessQuery;
+    final month = message.localQuery?.yearMonth ?? business?.yearMonth;
+    final monthly =
+        message.localQuery != null ||
+        (business != null &&
+            const {
+              AssistantBusinessType.payroll,
+              AssistantBusinessType.distribution,
+              AssistantBusinessType.vehicleMaintenance,
+            }.contains(business.domain));
+    final date = month == null ? null : DateTime.tryParse('$month-01');
+    return Wrap(
+      spacing: 8,
+      runSpacing: 4,
+      children: [
+        if (monthly && date != null) ...[
+          ActionChip(
+            label: const Text('查前一个月'),
+            onPressed: isBusy
+                ? null
+                : () => onFollowUp(
+                    assistantMonth(DateTime(date.year, date.month - 1)),
+                    null,
+                  ),
+          ),
+          if (month != assistantMonth(DateTime.now()))
+            ActionChip(
+              label: const Text('查本月'),
+              onPressed: isBusy
+                  ? null
+                  : () => onFollowUp(assistantMonth(DateTime.now()), null),
+            ),
+        ],
+        if (business?.domain == AssistantBusinessType.distribution) ...[
+          ActionChip(
+            label: const Text('只看未领取'),
+            onPressed: isBusy ? null : () => onFollowUp(null, 'notReceived'),
+          ),
+          ActionChip(
+            label: const Text('只看已领取'),
+            onPressed: isBusy ? null : () => onFollowUp(null, 'received'),
+          ),
+          if (business?.operation != 'summary')
+            ActionChip(
+              label: const Text('全部领取状态'),
+              onPressed: isBusy ? null : () => onFollowUp(null, 'summary'),
+            ),
+        ],
+        if (business?.domain == AssistantBusinessType.purchase) ...[
+          ActionChip(
+            label: const Text('只看部分到货'),
+            onPressed: isBusy ? null : () => onFollowUp(null, 'partial'),
+          ),
+          ActionChip(
+            label: const Text('查看待到货'),
+            onPressed: isBusy ? null : () => onFollowUp(null, 'pending'),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
 class _BusinessResultActions extends StatelessWidget {
   const _BusinessResultActions({
     required this.result,
     required this.messageId,
     required this.onRefresh,
     required this.onExplain,
+    required this.isBusy,
+    this.explanation,
   });
-
   final AssistantBusinessReadResult result;
   final String messageId;
   final ValueChanged<String> onRefresh;
   final ValueChanged<String> onExplain;
+  final bool isBusy;
+  final String? explanation;
 
   @override
-  Widget build(BuildContext context) => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      _AnswerActions(
-        message: _businessMessage(messageId, result),
-        onRefresh: onRefresh,
-        onExplain: onExplain,
-      ),
-      for (var index = 0; index < result.facts.length; index++)
-        if (result.facts[index].sourcePage != null)
-          Align(
-            alignment: Alignment.centerLeft,
-            child: TextButton.icon(
-              key: ValueKey('assistant_business_fact_source_${result.domain.name}_$index'),
-              onPressed: () => _openBusinessSource(context, result.facts[index].sourcePage!),
-              icon: const Icon(Icons.open_in_new, size: 16),
-              label: Text('查看${result.facts[index].label}来源'),
-            ),
-          ),
-      for (var index = 0; index < result.relatedReads.length; index++)
-        Padding(
-          padding: const EdgeInsets.only(top: 6),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(result.relatedReads[index].title, style: const TextStyle(fontWeight: FontWeight.w600)),
-              Text(result.relatedReads[index].summary),
-              TextButton.icon(
-                key: ValueKey('assistant_business_related_source_${result.domain.name}_$index'),
-                onPressed: () => _openBusinessSource(context, result.relatedReads[index].sourcePage),
-                icon: const Icon(Icons.open_in_new, size: 16),
-                label: Text('打开${result.relatedReads[index].title}来源'),
-              ),
-              for (var factIndex = 0; factIndex < result.relatedReads[index].facts.length; factIndex++)
-                if (result.relatedReads[index].facts[factIndex].sourcePage != null)
-                  TextButton.icon(
-                    key: ValueKey('assistant_business_related_fact_source_${result.domain.name}_${index}_$factIndex'),
-                    onPressed: () => _openBusinessSource(context, result.relatedReads[index].facts[factIndex].sourcePage!),
-                    icon: const Icon(Icons.open_in_new, size: 16),
-                    label: Text('查看${result.relatedReads[index].facts[factIndex].label}来源'),
-                  ),
-            ],
-          ),
-        ),
-    ],
+  Widget build(BuildContext context) => AssistantBusinessResultContent(
+    result: result,
+    explanation: explanation,
+    ruleLabel: _businessRuleLabel(result.sourceRule),
+    onOpenSource: (path) => _openBusinessSource(context, path),
+    onRefresh: isBusy ? null : () => onRefresh(messageId),
+    onExplain: isBusy || result.error != null
+        ? null
+        : () => onExplain(messageId),
   );
-
-  AssistantMessage _businessMessage(String id, AssistantBusinessReadResult result) {
-    final parsedId = int.tryParse(id) ?? 0;
-    final answer = AssistantAnswer(
-      text: result.summary,
-      employeeLabel: result.title,
-      yearMonth: '',
-      queriedAt: result.queriedAt,
-      completeness: AttendanceCompleteness.notEvaluated,
-      yearMonthSource: AssistantFieldSource.none,
-      sourceRule: result.sourceRule,
-      sourcePage: result.sourcePage,
-      businessResult: result,
-    );
-    return AssistantMessage(id: parsedId, text: result.summary, isUser: false, answer: answer);
-  }
 }
 
 Future<void> _openBusinessSource(BuildContext context, String path) async {
-  final overlay = ProviderScope.containerOf(context, listen: false)
-      .read(assistantOverlayStateProvider);
-  final restoreFloatingAssistant = overlay.mode == AssistantOverlayMode.expanded;
+  final overlay = ProviderScope.containerOf(
+    context,
+    listen: false,
+  ).read(assistantOverlayStateProvider);
+  final restoreFloatingAssistant =
+      overlay.mode == AssistantOverlayMode.expanded;
   if (restoreFloatingAssistant) overlay.hide();
   try {
     await context.push<void>(path);
@@ -651,7 +900,8 @@ class _AnswerActions extends StatelessWidget {
               label: const Text('刷新本地结果'),
             ),
             TextButton.icon(
-              onPressed: answer.businessResult == null && answer.attendanceDays == null
+              onPressed:
+                  answer.businessResult == null && answer.attendanceDays == null
                   ? null
                   : () => onExplain(id),
               icon: const Icon(Icons.auto_awesome_outlined, size: 18),
@@ -1446,7 +1696,11 @@ String _previousYearMonth() {
 }
 
 class _CandidateChoices extends StatefulWidget {
-  const _CandidateChoices({required this.candidates, required this.onSelected});
+  const _CandidateChoices({
+    super.key,
+    required this.candidates,
+    required this.onSelected,
+  });
 
   final List<EmployeeCandidate> candidates;
   final ValueChanged<String> onSelected;

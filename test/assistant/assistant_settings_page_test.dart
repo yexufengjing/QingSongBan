@@ -130,7 +130,10 @@ void main() {
     await tester.pumpAndSettle();
     expect(requestCount, 0);
 
-    await tester.enterText(find.byType(TextField), 'sk-sensitive-test');
+    await tester.enterText(
+      find.widgetWithText(TextField, '粘贴 API Key'),
+      'sk-sensitive-test',
+    );
     await tester.tap(find.text('保存'));
     await tester.pumpAndSettle();
     expect(await keyStore.readKey(), 'sk-sensitive-test');

@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_initializing_formals
 
 import '../domain/assistant_models.dart';
+import '../domain/assistant_quick_query.dart';
 import 'assistant_answer_formatter.dart';
 import 'assistant_context_resolver.dart';
 import 'assistant_vehicle_expense_runner.dart';
@@ -242,6 +243,255 @@ class AssistantController implements AssistantActions {
       );
     }
   }
+
+  /// Runs a saved shortcut through the same local readers as resolved intents.
+  /// The scope is taken only from [query], never from chat or page context.
+  Future<void> runQuickQuery(AssistantQuickQuery query) async {
+    if (_state.isBusy) return;
+    _clearPendingContexts();
+    final startedAt = _clock();
+    _emit(
+      _copyState(
+        messages: [
+          ..._state.messages,
+          AssistantMessage(
+            id: _nextMessageId++,
+            text: query.title,
+            isUser: true,
+          ),
+        ],
+      ),
+    );
+    final token = _newToken();
+    final month =
+        query.yearMonth ?? _formatMonth(startedAt.year, startedAt.month);
+    if (_isMonthKind(query.kind) && !_validYearMonth(month)) {
+      _appendError(
+        AssistantErrorCode.invalidArgument,
+        '月份无效，请重新选择。',
+        AssistantResolutionPath.localFollowUp,
+        startedAt,
+        token: token,
+      );
+      return;
+    }
+    if ((query.kind == AssistantQuickQueryKind.attendance ||
+            query.kind == AssistantQuickQueryKind.payroll) &&
+        query.employeeId == null) {
+      _appendPrompt(
+        '请先选择一位人员。',
+        AssistantResolutionPath.localFollowUp,
+        startedAt,
+        0,
+        null,
+        token,
+      );
+      return;
+    }
+    if (query.kind == AssistantQuickQueryKind.vehicleRepair &&
+        query.vehicleId == null) {
+      _appendPrompt(
+        '请先选择一辆车。',
+        AssistantResolutionPath.localFollowUp,
+        startedAt,
+        0,
+        null,
+        token,
+      );
+      return;
+    }
+
+    _activeBusinessQuestion = query.title;
+    final intent = switch (query.kind) {
+      AssistantQuickQueryKind.attendance => ResolvedIntent(
+        action: AttendanceAction.queryAttendance,
+        yearMonth: month,
+        yearMonthSource: query.yearMonth == null
+            ? AssistantFieldSource.currentYear
+            : AssistantFieldSource.input,
+        employeeId: query.employeeId,
+        businessType: AssistantBusinessType.attendance,
+      ),
+      AssistantQuickQueryKind.payroll => ResolvedIntent(
+        action: AttendanceAction.queryBusiness,
+        yearMonth: month,
+        yearMonthSource: query.yearMonth == null
+            ? AssistantFieldSource.currentYear
+            : AssistantFieldSource.input,
+        employeeId: query.employeeId,
+        businessType: AssistantBusinessType.payroll,
+        businessQuestion: query.title,
+        businessOperation: 'summary',
+      ),
+      AssistantQuickQueryKind.inventoryLowStock => ResolvedIntent(
+        action: AttendanceAction.queryBusiness,
+        yearMonth: null,
+        yearMonthSource: AssistantFieldSource.none,
+        businessType: AssistantBusinessType.inventory,
+        businessQuestion: query.title,
+        businessOperation: 'lowStock',
+      ),
+      AssistantQuickQueryKind.purchasePending => ResolvedIntent(
+        action: AttendanceAction.queryBusiness,
+        yearMonth: null,
+        yearMonthSource: AssistantFieldSource.none,
+        businessType: AssistantBusinessType.purchase,
+        businessQuestion: query.title,
+        businessOperation: 'pending',
+      ),
+      AssistantQuickQueryKind.distribution => ResolvedIntent(
+        action: AttendanceAction.queryBusiness,
+        yearMonth: month,
+        yearMonthSource: query.yearMonth == null
+            ? AssistantFieldSource.currentYear
+            : AssistantFieldSource.input,
+        businessType: AssistantBusinessType.distribution,
+        businessQuestion: query.title,
+        businessOperation: 'summary',
+      ),
+      AssistantQuickQueryKind.vehicleRepair => ResolvedIntent(
+        action: AttendanceAction.queryBusiness,
+        yearMonth: month,
+        yearMonthSource: query.yearMonth == null
+            ? AssistantFieldSource.currentYear
+            : AssistantFieldSource.input,
+        vehicleId: query.vehicleId,
+        businessType: AssistantBusinessType.vehicleMaintenance,
+        businessQuestion: query.title,
+        businessOperation: 'summary',
+      ),
+    };
+    await _runResolvedIntent(
+      intent,
+      path: AssistantResolutionPath.localFollowUp,
+      token: token,
+      startedAt: startedAt,
+    );
+  }
+
+  /// Re-runs a query from the selected result message, retaining that result's
+  /// subject and domain even when the conversation has moved on.
+  Future<void> runFollowUp(
+    int messageId, {
+    String? yearMonth,
+    String? operation,
+  }) async {
+    if (_state.isBusy || yearMonth != null && !_validYearMonth(yearMonth)) {
+      return;
+    }
+    final message = _state.messages
+        .where(
+          (item) => item.id == messageId && !item.isUser && item.answer != null,
+        )
+        .firstOrNull;
+    if (message == null) return;
+    if (message.businessQuery case final original?) {
+      if (!_supportsDeterministicBusinessFollowUp(original.domain)) return;
+    }
+    if (message.localQuery == null &&
+        message.businessQuery == null &&
+        message.vehicleQuery == null) {
+      return;
+    }
+    _clearPendingContexts();
+    final startedAt = _clock();
+    final token = _newToken();
+    if (message.localQuery case final original?) {
+      final updated = ResolvedAttendanceQuery(
+        employee: original.employee,
+        yearMonth: yearMonth ?? original.yearMonth,
+        yearMonthSource: yearMonth == null
+            ? original.yearMonthSource
+            : AssistantFieldSource.input,
+        groupId: original.groupId,
+      );
+      await _readAndAnswer(
+        updated,
+        token,
+        startedAt,
+        path: AssistantResolutionPath.localFollowUp,
+      );
+      return;
+    }
+    if (message.businessQuery case final original?) {
+      final domain = original.domain;
+      final query = AssistantBusinessQuery(
+        domain: domain,
+        question: original.question,
+        now: _clock(),
+        yearMonth: yearMonth ?? original.yearMonth,
+        subject: original.subject,
+        operation: operation ?? original.operation,
+        employeeId: original.employeeId,
+        vehicleId: original.vehicleId,
+      );
+      _activeBusinessQuestion = original.question;
+      await _readBusinessAndAnswer(
+        ResolvedIntent(
+          action: AttendanceAction.queryBusiness,
+          yearMonth: query.yearMonth,
+          yearMonthSource: yearMonth == null
+              ? AssistantFieldSource.turn
+              : AssistantFieldSource.input,
+          businessType: query.domain,
+          businessQuestion: query.question,
+          businessOperation: query.operation,
+          businessSubject: query.subject,
+          employeeId: query.employeeId,
+          vehicleId: query.vehicleId,
+        ),
+        token: token,
+        startedAt: startedAt,
+        path: AssistantResolutionPath.localFollowUp,
+      );
+      return;
+    }
+    if (message.vehicleQuery case final original?) {
+      final year = yearMonth == null
+          ? original.year
+          : int.parse(yearMonth.substring(0, 4));
+      await _readVehicleAndAnswer(
+        ResolvedVehicleAnnualRepairQuery(vehicle: original.vehicle, year: year),
+        token,
+        startedAt,
+        path: AssistantResolutionPath.localFollowUp,
+      );
+    }
+  }
+
+  void _clearPendingContexts() {
+    _pendingIntent = null;
+    _pendingResolutionPath = null;
+    _awaitingEmployeeReply = false;
+    _pendingPageVehicleSelection = null;
+    _pendingCandidateRefs.clear();
+    _pendingVehicleCandidateRefs.clear();
+  }
+
+  bool _isMonthKind(AssistantQuickQueryKind kind) => switch (kind) {
+    AssistantQuickQueryKind.attendance ||
+    AssistantQuickQueryKind.payroll ||
+    AssistantQuickQueryKind.distribution ||
+    AssistantQuickQueryKind.vehicleRepair => true,
+    AssistantQuickQueryKind.inventoryLowStock ||
+    AssistantQuickQueryKind.purchasePending => false,
+  };
+
+  bool _supportsDeterministicBusinessFollowUp(AssistantBusinessType domain) =>
+      switch (domain) {
+        AssistantBusinessType.attendance ||
+        AssistantBusinessType.payroll ||
+        AssistantBusinessType.inventory ||
+        AssistantBusinessType.purchase ||
+        AssistantBusinessType.distribution ||
+        AssistantBusinessType.vehicleMaintenance => true,
+        AssistantBusinessType.vehicleAnnualRepair ||
+        AssistantBusinessType.vehicleAnnualRanking ||
+        AssistantBusinessType.vehicleExpenseAnalysis ||
+        AssistantBusinessType.personnel ||
+        AssistantBusinessType.vehicleReminders ||
+        AssistantBusinessType.gardenRepair => false,
+      };
 
   @override
   Future<void> selectCandidate(String candidateRef) async {

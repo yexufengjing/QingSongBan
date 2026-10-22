@@ -287,6 +287,9 @@ void main() {
 
       tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
       expect(controller.cancelCalls, 1);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.hidden);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.inactive);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
       expect(tester.takeException(), isNull);
     } finally {
       await _disposeApp(tester, database);
@@ -377,6 +380,122 @@ void main() {
         expect(tester.takeException(), isNull);
       } finally {
         controller.releaseFirstSubmit();
+        await _disposeApp(tester, database);
+      }
+    },
+  );
+
+  testWidgets(
+    'floating assistant runs an attendance shortcut while nested pickers keep the host mounted',
+    (tester) async {
+      appRouter.go('/home');
+      tester.view.physicalSize = const Size(960, 2160);
+      tester.view.devicePixelRatio = 3;
+      tester.platformDispatcher.textScaleFactorTestValue = 1.3;
+      addTearDown(() {
+        tester.view.resetPhysicalSize();
+        tester.view.resetDevicePixelRatio();
+        tester.platformDispatcher.clearTextScaleFactorTestValue();
+      });
+
+      final database = AppDatabase.forTesting();
+      try {
+        final seededEmployeeId = await database
+            .into(database.employees)
+            .insert(
+              EmployeesCompanion.insert(
+                employeeNo: 'FLOAT-EMP-001',
+                name: '浮窗考勤员工',
+                hireDate: DateTime(2020),
+              ),
+            );
+        await _pumpApp(tester, database);
+        await tester.tap(find.byKey(const Key('home-assistant-entry')));
+        await tester.pumpAndSettle();
+        expect(
+          find.byKey(const Key('assistant-floating-page')),
+          findsOneWidget,
+        );
+        expect(find.byType(TextField), findsOneWidget); // The composer only.
+
+        await tester.ensureVisible(find.text('考勤查询'));
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('考勤查询'));
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('选择人员'));
+        await tester.pumpAndSettle();
+        expect(find.text('浮窗考勤员工 · FLOAT-EMP-001'), findsOneWidget);
+        await tester.tap(find.text('浮窗考勤员工 · FLOAT-EMP-001'));
+        await tester.pumpAndSettle();
+        expect(
+          find.byKey(const Key('assistant-floating-page')),
+          findsOneWidget,
+        );
+
+        await tester.ensureVisible(find.textContaining(' 月').first);
+        await tester.pumpAndSettle();
+        await tester.tap(find.textContaining(' 月').first);
+        await tester.pumpAndSettle();
+        expect(find.byType(DatePickerDialog), findsOneWidget);
+        await tester.tap(
+          find
+              .descendant(
+                of: find.byType(DatePickerDialog),
+                matching: find.byType(TextButton),
+              )
+              .first,
+        );
+        await tester.pumpAndSettle();
+        expect(
+          find.byKey(const Key('assistant-floating-page')),
+          findsOneWidget,
+        );
+
+        await tester.ensureVisible(find.text('查询本地数据'));
+        await tester.tap(find.text('查询本地数据'));
+        await tester.pumpAndSettle();
+        expect(
+          find.byKey(const Key('assistant-floating-page')),
+          findsOneWidget,
+        );
+        final scope = ProviderScope.containerOf(
+          tester.element(find.byKey(const Key('assistant-floating-page'))),
+          listen: false,
+        );
+        final replies = scope
+            .read(assistantControllerProvider)
+            .messages
+            .where((message) => !message.isUser);
+        expect(replies, isNotEmpty);
+        expect(replies.last.text, contains('浮窗考勤员工'));
+        expect(replies.last.localQuery?.employee.employeeId, seededEmployeeId);
+        final previousMonth = DateTime(
+          DateTime.now().year,
+          DateTime.now().month - 1,
+        );
+        final expectedMonth =
+            '${previousMonth.year.toString().padLeft(4, '0')}-${previousMonth.month.toString().padLeft(2, '0')}';
+        expect(find.text('查前一个月'), findsOneWidget);
+        await tester.ensureVisible(find.text('查前一个月'));
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('查前一个月'));
+        await tester.pumpAndSettle();
+
+        final followUpReplies = scope
+            .read(assistantControllerProvider)
+            .messages
+            .where((message) => !message.isUser);
+        expect(
+          followUpReplies.last.localQuery?.employee.employeeId,
+          seededEmployeeId,
+        );
+        expect(followUpReplies.last.localQuery?.yearMonth, expectedMonth);
+        expect(
+          find.byKey(const Key('assistant-floating-page')),
+          findsOneWidget,
+        );
+        expect(tester.takeException(), isNull);
+      } finally {
         await _disposeApp(tester, database);
       }
     },

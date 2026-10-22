@@ -1035,12 +1035,28 @@ class AssistantBusinessFact {
     required this.value,
     this.explanation,
     this.sourcePage,
+    this.isWarning = false,
+    this.details = const [],
   });
 
   final String label;
   final String value;
   final String? explanation;
   final String? sourcePage;
+  final bool isWarning;
+  final List<String> details;
+}
+
+/// Display values are formatted by the local reader, never inferred from prose.
+class AssistantResultMetric {
+  const AssistantResultMetric({
+    required this.label,
+    required this.value,
+    this.unit = '',
+  });
+  final String label;
+  final String value;
+  final String unit;
 }
 
 class AssistantBusinessReadResult {
@@ -1054,6 +1070,9 @@ class AssistantBusinessReadResult {
     this.facts = const [],
     this.relatedReads = const [],
     this.error,
+    this.metrics = const [],
+    this.scopeLabel,
+    this.emptyMessage,
   });
 
   final AssistantBusinessType domain;
@@ -1065,6 +1084,9 @@ class AssistantBusinessReadResult {
   final List<AssistantBusinessFact> facts;
   final List<AssistantBusinessReadResult> relatedReads;
   final AssistantErrorCode? error;
+  final List<AssistantResultMetric> metrics;
+  final String? scopeLabel;
+  final String? emptyMessage;
 }
 
 class AssistantMessage {

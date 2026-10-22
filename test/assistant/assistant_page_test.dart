@@ -31,16 +31,20 @@ void main() {
       await tester.tap(find.byTooltip('发送'));
       await tester.pumpAndSettle();
 
+      expect(find.text('考勤查询 · ${DateTime.now().year}-09'), findsOneWidget);
       expect(
-        find.textContaining('王敏在 ${DateTime.now().year} 年 09 月'),
+        find.descendant(
+          of: find.byKey(const ValueKey('assistant_metric_出勤')),
+          matching: find.text('20'),
+        ),
         findsOneWidget,
       );
-      expect(find.textContaining('出勤 20 天'), findsOneWidget);
       expect(provider.parseCalls, 1);
       expect(attendance.readCalls, 1);
       expect(tester.takeException(), isNull);
 
       await tester.ensureVisible(find.text('查看本地明细'));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('查看本地明细'));
       await tester.pumpAndSettle();
       expect(find.textContaining('9/1  上午'), findsOneWidget);
@@ -70,7 +74,13 @@ void main() {
       await tester.tap(find.text('重复姓名 · 编号 1001 · 一组'));
       await tester.pumpAndSettle();
 
-      expect(find.textContaining('出勤 20 天'), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('assistant_metric_出勤')),
+          matching: find.text('20'),
+        ),
+        findsOneWidget,
+      );
       expect(provider.parseCalls, 1);
       expect(attendance.candidateCalls, 1);
       expect(attendance.readCalls, 1);
@@ -137,6 +147,7 @@ void main() {
 
       final details = find.text('查看本地明细').last;
       await tester.ensureVisible(details);
+      await tester.pumpAndSettle();
       await tester.tap(details);
       await tester.pumpAndSettle();
 
@@ -146,7 +157,7 @@ void main() {
       await tester.tap(find.text('重复姓名 · 编号 1001 · 一组'));
       await tester.pumpAndSettle();
 
-      expect(find.textContaining('重复姓名在').hitTestable(), findsOneWidget);
+      expect(find.text('重复姓名').hitTestable(), findsOneWidget);
       expect(provider.parseCalls, 9);
       expect(attendance.readCalls, 9);
       expect(tester.takeException(), isNull);
@@ -190,9 +201,11 @@ void main() {
 
       final details = find.text('查看本地明细').last;
       await tester.ensureVisible(details);
+      await tester.pumpAndSettle();
       await tester.tap(details);
       await tester.pumpAndSettle();
       await tester.ensureVisible(find.text('打开月考勤表').last);
+      await tester.pumpAndSettle();
       await tester.tap(find.text('打开月考勤表').last);
       await tester.pumpAndSettle();
       expect(find.text('月考勤表'), findsOneWidget);
@@ -235,7 +248,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(attendance.lastQuery?.yearMonth, _currentYearMonth());
-    expect(find.textContaining('王敏在'), findsOneWidget);
+    expect(find.text('王敏'), findsOneWidget);
     expect(provider.parseCalls, 1);
   });
 
@@ -265,7 +278,7 @@ void main() {
     await tester.enterText(find.byType(TextField), '查王敏9月考勤');
     await tester.tap(find.byTooltip('发送'));
     await tester.pumpAndSettle();
-    final answerText = '王敏在 ${DateTime.now().year} 年 09 月';
+    final answerText = '考勤查询 · ${DateTime.now().year}-09';
     expect(find.textContaining(answerText), findsOneWidget);
 
     const draft = '这段草稿不应发送';
@@ -305,20 +318,23 @@ void main() {
       keyStore: keyStore,
       router: router,
     );
-    expect(find.text('需要先配置 DeepSeek API Key'), findsOneWidget);
+    expect(find.text('输入自然语言问题需配置 DeepSeek'), findsOneWidget);
 
     final keyPrompt = find.ancestor(
-      of: find.text('需要先配置 DeepSeek API Key'),
+      of: find.text('输入自然语言问题需配置 DeepSeek'),
       matching: find.byType(ListTile),
     );
     await tester.ensureVisible(keyPrompt);
     await tester.pumpAndSettle();
-    final keyPromptTitle = find.text('需要先配置 DeepSeek API Key');
+    final keyPromptTitle = find.text('输入自然语言问题需配置 DeepSeek');
     expect(keyPromptTitle.hitTestable(), findsOneWidget);
     await tester.tap(keyPromptTitle);
     await tester.pumpAndSettle();
     expect(find.text('智能助手设置'), findsOneWidget);
-    await tester.enterText(find.byType(TextField), 'test-key-value');
+    await tester.enterText(
+      find.widgetWithText(TextField, '粘贴 API Key'),
+      'test-key-value',
+    );
     await tester.tap(find.text('保存'));
     await tester.pumpAndSettle();
     expect(keyStore.value, 'test-key-value');
@@ -327,7 +343,7 @@ void main() {
     await tester.pageBack();
     await tester.pumpAndSettle();
     expect(find.text('智能助手设置'), findsNothing);
-    expect(find.text('需要先配置 DeepSeek API Key'), findsNothing);
+    expect(find.text('输入自然语言问题需配置 DeepSeek'), findsNothing);
 
     await tester.tap(find.byTooltip('更多'));
     await tester.pumpAndSettle();
@@ -339,7 +355,7 @@ void main() {
 
     await tester.pageBack();
     await tester.pumpAndSettle();
-    expect(find.text('需要先配置 DeepSeek API Key'), findsOneWidget);
+    expect(find.text('输入自然语言问题需配置 DeepSeek'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
@@ -369,7 +385,7 @@ void main() {
       await tester.tap(find.text('清空当前对话'));
       await tester.pumpAndSettle();
 
-      expect(find.text('查询常用业务信息'), findsOneWidget);
+      expect(find.text('今天想查什么？'), findsOneWidget);
       expect(keyStore.value, 'retained-test-key');
       expect(keyStore.removeCalls, 0);
       expect(attendance.readCalls, readsBeforeClear);
@@ -443,6 +459,7 @@ void main() {
     await tester.tap(find.byTooltip('发送'));
     await tester.pumpAndSettle();
     await tester.ensureVisible(find.text('打开月考勤表'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('打开月考勤表'));
     await tester.pumpAndSettle();
 
@@ -466,9 +483,12 @@ Future<void> _pumpAssistant(
   EdgeInsets viewInsets = EdgeInsets.zero,
   _FakeKeyStore? keyStore,
 }) async {
+  final database = AppDatabase.forTesting();
+  addTearDown(database.close);
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
+        appDatabaseProvider.overrideWithValue(database),
         assistantAIProvider.overrideWithValue(provider),
         assistantAttendanceReaderProvider.overrideWithValue(attendance),
         assistantVehicleExpenseReaderProvider.overrideWithValue(
@@ -501,10 +521,12 @@ Future<void> _pumpAssistantRouter(
   required GoRouter router,
   AppDatabase? database,
 }) async {
+  final effectiveDatabase = database ?? AppDatabase.forTesting();
+  if (database == null) addTearDown(effectiveDatabase.close);
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
-        if (database != null) appDatabaseProvider.overrideWithValue(database),
+        appDatabaseProvider.overrideWithValue(effectiveDatabase),
         assistantAIProvider.overrideWithValue(provider),
         assistantAttendanceReaderProvider.overrideWithValue(attendance),
         assistantVehicleExpenseReaderProvider.overrideWithValue(
