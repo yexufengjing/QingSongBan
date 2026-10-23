@@ -1,4 +1,5 @@
 import '../../../core/database/app_database.dart';
+import 'reminder_schedule.dart';
 
 abstract final class ReminderOptions {
   static const types = <String>[
@@ -40,6 +41,7 @@ class ReminderDraft {
     this.priority = 'normal',
     this.category = 'general',
     this.timezoneId,
+    this.isAllDay = false,
     this.links = const <ReminderLinkDraft>[],
   });
 
@@ -55,6 +57,7 @@ class ReminderDraft {
   final String priority;
   final String category;
   final String? timezoneId;
+  final bool isAllDay;
   final List<ReminderLinkDraft> links;
 }
 
@@ -80,6 +83,20 @@ class ReminderItem {
   final Reminder reminder;
   final ReminderOccurrence? occurrence;
   final List<ReminderLink> links;
+
+  /// Reminder row id, also used by existing notification scheduling.
+  int get id => reminder.id;
+
+  /// Stable identity of one recurring occurrence, when this item is an
+  /// occurrence rather than the reminder's single base execution.
+  int? get occurrenceId => occurrence?.id;
+
+  bool get isRepeating => ReminderSchedule.decode(
+    reminder.repeatRule,
+    legacyLeadDays: reminder.leadDays,
+  ).repeats;
+
+  bool get isAllDay => reminder.isAllDay;
 
   DateTime? get scheduledAt => occurrence?.scheduledAt ?? reminder.dueDate;
   String get status =>

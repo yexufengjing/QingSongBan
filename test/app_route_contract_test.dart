@@ -22,8 +22,8 @@ void main() {
   testWidgets('all production route patterns resolve to their named pages', (
     tester,
   ) async {
-    expect(appRouteCases, hasLength(93));
-    expect(appRouteCases.map((route) => route.name).toSet(), hasLength(93));
+    expect(appRouteCases, hasLength(94));
+    expect(appRouteCases.map((route) => route.name).toSet(), hasLength(94));
 
     final database = AppDatabase.forTesting();
     try {

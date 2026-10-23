@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
+import 'package:drift/drift.dart' show Value;
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -100,9 +101,39 @@ void main() {
   test(
     'restores through staged files and creates an encrypted safety backup',
     () async {
+      final entryId = await database
+          .into(database.dailyEntries)
+          .insert(
+            DailyEntriesCompanion.insert(
+              recordDate: '2026-10-23',
+              content: '备份往返的日记录',
+            ),
+          );
+      final reminderId = await database
+          .into(database.reminders)
+          .insert(
+            RemindersCompanion.insert(
+              title: '全天备份事项',
+              reminderType: 'custom',
+              dueDate: const Value(null),
+              isAllDay: const Value(true),
+              isEnabled: const Value(false),
+            ),
+          );
       final backupBytes = await service.createBackupBytes(
         password: 'backup-123',
       );
+      await (database.update(
+        database.dailyEntries,
+      )..where((table) => table.id.equals(entryId))).write(
+        const DailyEntriesCompanion(
+          recordDate: Value('2026-10-24'),
+          content: Value('恢复前修改的内容'),
+        ),
+      );
+      await (database.update(database.reminders)
+            ..where((table) => table.id.equals(reminderId)))
+          .write(const RemindersCompanion(isAllDay: Value(false)));
       final backupFile = File(
         '${root.path}${Platform.pathSeparator}incoming.qsbak',
       );
@@ -123,6 +154,17 @@ void main() {
             .exists(),
         completion(isFalse),
       );
+      database = AppDatabase.forTesting(executor: NativeDatabase(databaseFile));
+      final restoredEntry = await (database.select(
+        database.dailyEntries,
+      )..where((table) => table.id.equals(entryId))).getSingle();
+      final restoredReminder = await (database.select(
+        database.reminders,
+      )..where((table) => table.id.equals(reminderId))).getSingle();
+      expect(restoredEntry.content, '备份往返的日记录');
+      expect(restoredEntry.recordDate, '2026-10-23');
+      expect(restoredReminder.isAllDay, isTrue);
+      expect(restoredReminder.isEnabled, isFalse);
     },
   );
 

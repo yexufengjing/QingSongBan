@@ -18,6 +18,8 @@ class ReminderFormPage extends ConsumerStatefulWidget {
     this.reminderId,
     this.initialTitle,
     this.initialRemark,
+    this.initialDate,
+    this.initialIsAllDay = false,
     this.sourceEntityType,
     this.sourceEntityId,
   });
@@ -25,6 +27,8 @@ class ReminderFormPage extends ConsumerStatefulWidget {
   final int? reminderId;
   final String? initialTitle;
   final String? initialRemark;
+  final DateTime? initialDate;
+  final bool initialIsAllDay;
   final String? sourceEntityType;
   final int? sourceEntityId;
 
@@ -40,6 +44,7 @@ class _ReminderFormPageState extends ConsumerState<ReminderFormPage> {
   String _priority = 'normal';
   String _category = 'general';
   bool _isEnabled = true;
+  bool _isAllDay = false;
   bool _advancedExpanded = false;
   bool _loading = false;
   bool _saving = false;
@@ -59,6 +64,8 @@ class _ReminderFormPageState extends ConsumerState<ReminderFormPage> {
     } else {
       _titleController.text = widget.initialTitle ?? '';
       _remarkController.text = widget.initialRemark ?? '';
+      _dueDate = widget.initialDate ?? _defaultDueDate();
+      _isAllDay = widget.initialIsAllDay;
     }
   }
 
@@ -90,6 +97,7 @@ class _ReminderFormPageState extends ConsumerState<ReminderFormPage> {
       _priority = reminder.priority;
       _category = reminder.category;
       _isEnabled = reminder.isEnabled;
+      _isAllDay = reminder.isAllDay;
       _sourceEntityType = reminder.sourceEntityType;
       _sourceEntityId = reminder.sourceEntityId;
       _employeeIds.addAll(
@@ -175,6 +183,13 @@ class _ReminderFormPageState extends ConsumerState<ReminderFormPage> {
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                       const SizedBox(height: 8),
+                      SwitchListTile(
+                        key: const Key('reminder-all-day'),
+                        contentPadding: EdgeInsets.zero,
+                        title: const Text('全天'),
+                        value: _isAllDay,
+                        onChanged: (value) => setState(() => _isAllDay = value),
+                      ),
                       DecoratedBox(
                         decoration: BoxDecoration(
                           border: Border.all(color: AppColors.divider),
@@ -183,7 +198,11 @@ class _ReminderFormPageState extends ConsumerState<ReminderFormPage> {
                         child: ListTile(
                           key: const Key('reminder-custom-time'),
                           leading: const DesignIcon(Icons.event_note_outlined),
-                          title: Text(_fullDateLabel(_dueDate)),
+                          title: Text(
+                            _isAllDay
+                                ? _dateOnlyLabel(_dueDate)
+                                : _fullDateLabel(_dueDate),
+                          ),
                           subtitle: Text(
                             '${_schedule.repeatLabel(_dueDate)} · ${_schedule.alertLabel}',
                           ),
@@ -451,6 +470,7 @@ class _ReminderFormPageState extends ConsumerState<ReminderFormPage> {
               priority: _priority,
               category: _category,
               timezoneId: timezoneId,
+              isAllDay: _isAllDay,
               sourceEntityType: _sourceEntityType,
               sourceEntityId: _sourceEntityId,
               links: [
@@ -488,7 +508,7 @@ class _ReminderFormPageState extends ConsumerState<ReminderFormPage> {
               : '采购状态已更新，但领取提醒创建失败，可稍后重新设置。',
         );
       } else {
-        _showMessage('保存失败：$error');
+        _showMessage(reminderSaved ? '事项已保存，提醒更新失败' : '保存失败：$error');
       }
     }
   }
@@ -518,6 +538,9 @@ DateTime _defaultDueDate() {
   final value = DateTime.now().add(const Duration(hours: 1));
   return DateTime(value.year, value.month, value.day, value.hour, 0);
 }
+
+String _dateOnlyLabel(DateTime value) =>
+    '${value.year}年${value.month}月${value.day}日 · 全天';
 
 String _fullDateLabel(DateTime value) =>
     '${value.year}年${value.month}月${value.day}日 '

@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>轻松办 · 日历交互原型</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;color:#0F172A;background:#F1F8FE;font-synthesis:none}*{box-sizing:border-box}body{margin:0;background:#F1F8FE}.shell{width:min(100%,390px);min-height:100vh;margin:0 auto;background:#F1F8FE;padding:12px 16px calc(24px + env(safe-area-inset-bottom))}.topline{font-size:12px;color:#64748B;margin:2px 0 10px}.head,.monthbar,.section-head,.row,.record-head{display:flex;align-items:center;justify-content:space-between;gap:8px}.head h1{font-size:23px;margin:0;font-weight:700}.btn{font:inherit;border:1px solid #E2E8F0;background:white;border-radius:8px;padding:8px 12px;color:#0F172A;cursor:pointer;min-height:48px}.btn:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,.day:focus-visible,summary:focus-visible,.text-button:focus-visible{outline:3px solid #93C5FD;outline-offset:2px}.btn.primary{background:#2563EB;color:#fff;border-color:#2563EB}.btn.icon{width:48px;padding:0;font-size:19px}.monthbar{margin:14px 0 8px}.monthtitle{font-weight:650;font-size:17px;cursor:pointer}.monthbar select{max-width:120px}.calendar{background:white;border:1px solid #E2E8F0;border-radius:12px;padding:8px}.week,.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));text-align:center}.week span{font-size:12px;color:#64748B;padding:4px 0 7px}.day{height:52px;min-height:48px;margin:1px;border:1px solid transparent;border-radius:8px;background:white;color:#0F172A;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;font:inherit;padding:2px;min-width:0}.day.out{color:#94A3B8}.day.today{border-color:#2563EB}.day.selected{background:#2563EB;color:white}.day .mark{height:5px;display:flex;align-items:center;gap:3px}.dot{width:5px;height:5px;border-radius:50%;background:#2563EB}.day.selected .dot{background:white}.line-mark{width:12px;height:2px;background:#64748B;border-radius:2px}.day.selected .line-mark{background:#DBEAFE}.checkmark{font-size:11px;color:#16A34A;line-height:1}.day.selected .checkmark{color:white}.legend{display:flex;gap:14px;font-size:11px;color:#64748B;margin:8px 4px 2px}.legend span{display:inline-flex;align-items:center;gap:5px}.selected-date{margin:16px 0 10px}.selected-date strong{font-size:17px}.muted{color:#64748B;font-size:13px}.section{margin-top:12px}.section-head{margin-bottom:6px}.section-head h2{font-size:15px;margin:0}.count{font-size:12px;color:#64748B}.item{background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:10px;margin-bottom:7px}.item-title{font-weight:550;line-height:1.4;overflow-wrap:anywhere}.row-main{display:flex;align-items:center;gap:9px;min-width:0;flex:1}.check-label{width:48px;height:48px;display:flex;align-items:center;justify-content:center;flex:0 0 48px;cursor:pointer}.check{accent-color:#2563EB;width:20px;height:20px;margin:0}.text-button{padding:0;border:0;background:none;color:inherit;text-align:left;font:inherit;cursor:pointer;min-width:0}.item-meta{font-size:12px;color:#64748B;margin:4px 0 0 57px}.actions{display:flex;gap:4px}.small{font-size:12px;padding:5px 8px;min-height:48px}.actions summary{list-style:none;display:flex;align-items:center;justify-content:center;cursor:pointer}.actions summary::-webkit-details-marker{display:none}.actions details button{width:100%}.done .item-title{text-decoration:line-through;color:#64748B}.record-body{font-size:14px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin:7px 0;width:100%;min-height:48px}.record-body.expanded{display:block}.field-error{display:block;color:#B91C1C;font-size:12px;margin-top:4px;min-height:0}.empty{color:#64748B;font-size:13px;padding:12px 2px}.note{font-size:12px;color:#64748B;line-height:1.5;margin:14px 0}.veil{position:fixed;inset:0;background:#0F172A66;display:none;align-items:flex-end;justify-content:center;z-index:5}.veil.open{display:flex}.dialog{background:white;width:min(100%,430px);max-height:94dvh;overflow:auto;border-radius:16px 16px 0 0;padding:18px 18px calc(20px + env(safe-area-inset-bottom));box-shadow:0 -8px 30px #0F172A22}.dialog h2{font-size:19px;margin:0 0 14px}.field{margin:12px 0}.field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}.field input,.field textarea,.field select{width:100%;font:inherit;border:1px solid #CBD5E1;border-radius:8px;padding:10px;background:white;color:#0F172A;min-height:48px}.field textarea{resize:vertical;min-height:100px}.dialog-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.error{color:#B91C1C;font-size:13px;margin-top:10px}.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#0F172A;color:white;border-radius:8px;padding:10px 14px;font-size:13px;display:none;z-index:9;max-width:calc(100vw - 32px)}.toast.show{display:block}.wide-note{display:none}@media(min-width:700px){.shell{margin:24px auto;border:1px solid #E2E8F0;border-radius:16px}.wide-note{display:block;position:fixed;left:calc(50% + 220px);top:40px;width:240px;font-size:13px;line-height:1.6;color:#64748B}}
+.record-head{flex-wrap:wrap;min-width:0}.record-head .muted{min-width:0;overflow-wrap:anywhere;flex:1 1 100%}
+@media(min-width:700px){.wide-note{display:none}}
+@media(min-width:1100px){.wide-note{display:block;position:fixed;left:calc(50% + 220px);top:40px;width:min(220px,calc(50vw - 250px));font-size:13px;line-height:1.6;color:#64748B}}
+</style>
+</head>
+<body>
+<main class="shell">
+<div class="topline">交互原型 · 数据仅保存在本浏览器</div>
+<header class="head"><h1>日历</h1><button class="btn" id="todayBtn">今日</button></header>
+<div class="monthbar"><button class="btn icon" id="prev" aria-label="上个月">‹</button><button class="text-button monthtitle" id="monthTitle" aria-label="选择年月"></button><button class="btn icon" id="next" aria-label="下个月">›</button></div>
+<div class="field" id="monthPicker" hidden style="margin:0 0 8px"><label for="monthInput">选择年月</label><input id="monthInput" type="month"></div>
+<section class="calendar" aria-label="月历"><div class="week" aria-hidden="true"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div><div class="days" id="days"></div></section>
+<div class="legend"><span><i class="dot"></i>未完成待办</span><span><i class="line-mark"></i>日记录</span><span>✓ 全部完成</span></div>
+<div class="row selected-date"><div><strong id="dateHeading"></strong><div class="muted" id="dateSummary"></div></div><button class="btn primary" id="addBtn">新增</button></div>
+<section class="section"><div class="section-head"><h2>待办</h2><span class="count" id="todoCount"></span></div><div id="todos"></div><div id="doneWrap" hidden><button class="btn small" id="toggleDone"></button><div id="doneList" hidden></div></div></section>
+<section class="section"><div class="section-head"><h2>日记录</h2><span class="count" id="recordCount"></span></div><div id="records"></div></section>
+<p class="note">原型仅支持单次事项；正式版本复用备忘提醒。示例数据不会自动载入。</p><button class="btn small" id="demoBtn">载入演示数据</button>
+</main><aside class="wide-note">评审范围：月历标记、所选日期的待办与日记录，以及本地保存交互。所有数据仅写入专用浏览器存储键。</aside>
+<div class="veil" id="veil" role="presentation"><section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle"><div class="row"><h2 id="dialogTitle">新增</h2><button class="btn icon" id="closeDialog" aria-label="关闭">×</button></div><form id="form"><div id="formFields"></div><div class="error" id="formError" role="alert"></div><div class="dialog-actions"><button type="button" class="btn" id="cancelDialog">取消</button><button class="btn primary" type="submit">保存</button></div></form></section></div><div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(() => {
+  'use strict';
+
+  // Schema: { todos: [{ id, title, date, time, notes, done, createdAt, updatedAt }], records: [{ id, date, body, createdAt, updatedAt }] }
+  const KEY = 'qingsongban.calendar.prototype.v1';
+  const $ = (selector) => document.querySelector(selector);
+  const MIN_YEAR = 1;
+  const MAX_YEAR = 9999;
+
+  function localDate(year, monthIndex, day = 1) {
+    const date = new Date(0);
+    date.setHours(0, 0, 0, 0);
+    date.setFullYear(year, monthIndex, day);
+    return date;
+  }
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const iso = (date) => `${String(date.getFullYear()).padStart(4, '0')}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+  const parseDate = (value) => {
+    const [year, month, day] = value.split('-').map(Number);
+    return localDate(year, month - 1, day);
+  };
+  const formatDate = (value) => {
+    const date = parseDate(value);
+    return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+  };
+
+  let data = { todos: [], records: [] };
+  let view = localDate(today.getFullYear(), today.getMonth());
+  let selected = iso(today);
+  let showDone = false;
+  let mode = 'todo';
+  let editing = null;
+  let returnFocus = null;
+  let toastTimer;
+
+  function toast(message) {
+    const element = $('#toast');
+    element.textContent = message;
+    element.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => element.classList.remove('show'), 2600);
+  }
+
+  function load() {
+    try {
+      const stored = JSON.parse(localStorage.getItem(KEY) || 'null');
+      if (stored && Array.isArray(stored.todos) && Array.isArray(stored.records)) data = stored;
+    } catch {
+      toast('读取本地数据失败，当前仍可继续操作');
+    }
+  }
+
+  function persist() {
+    try {
+      localStorage.setItem(KEY, JSON.stringify(data));
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  function monthMove(amount) {
+    const day = parseDate(selected).getDate();
+    const target = localDate(view.getFullYear(), view.getMonth() + amount);
+    if (target.getFullYear() < MIN_YEAR || target.getFullYear() > MAX_YEAR) return;
+    view = target;
+    selected = iso(localDate(target.getFullYear(), target.getMonth(), Math.min(day, localDate(target.getFullYear(), target.getMonth() + 1, 0).getDate())));
+    render();
+  }
+
+  function render() {
+    $('#monthTitle').textContent = `${view.getFullYear()}年${view.getMonth() + 1}月`;
+    $('#monthInput').value = `${String(view.getFullYear()).padStart(4, '0')}-${String(view.getMonth() + 1).padStart(2, '0')}`;
+    const first = localDate(view.getFullYear(), view.getMonth());
+    const offset = (first.getDay() + 6) % 7;
+    const start = localDate(first.getFullYear(), first.getMonth(), first.getDate() - offset);
+    const daysInMonth = localDate(view.getFullYear(), view.getMonth() + 1, 0).getDate();
+    const count = Math.ceil((offset + daysInMonth) / 7) * 7;
+    const box = $('#days');
+    box.replaceChildren();
+
+    for (let index = 0; index < count; index += 1) {
+      const date = localDate(start.getFullYear(), start.getMonth(), start.getDate() + index);
+      const key = iso(date);
+      const todos = data.todos.filter((item) => item.date === key);
+      const pending = todos.filter((item) => !item.done).length;
+      const recordCount = data.records.filter((item) => item.date === key).length;
+      const button = document.createElement('button');
+      const isToday = key === iso(today);
+      const isSelected = key === selected;
+      button.className = `day${date.getMonth() !== view.getMonth() ? ' out' : ''}${isToday ? ' today' : ''}${isSelected ? ' selected' : ''}`;
+      button.setAttribute('aria-label', `${formatDate(key)}${isToday ? '，今天' : ''}${isSelected ? '，已选中' : ''}，${pending}条未完成待办，${todos.length - pending}条已完成待办，${recordCount}条日记录`);
+      button.setAttribute('aria-pressed', String(isSelected));
+      button.disabled = date.getFullYear() < MIN_YEAR || date.getFullYear() > MAX_YEAR;
+      button.innerHTML = `<span>${date.getDate()}</span><span class="mark">${pending ? '<i class="dot"></i>' : ''}${recordCount ? '<i class="line-mark"></i>' : ''}${todos.length && !pending ? '<b class="checkmark">✓</b>' : ''}</span>`;
+      button.onclick = () => {
+        selected = key;
+        if (date.getMonth() !== view.getMonth()) view = localDate(date.getFullYear(), date.getMonth());
+        render();
+      };
+      box.append(button);
+    }
+
+    $('#dateHeading').textContent = `${formatDate(selected)} 星期${'日一二三四五六'[parseDate(selected).getDay()]}`;
+    const todos = data.todos.filter((item) => item.date === selected);
+    const pending = todos.filter((item) => !item.done).sort(sortTodo);
+    const done = todos.filter((item) => item.done).sort(sortTodo);
+    const records = data.records.filter((item) => item.date === selected).sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+    $('#dateSummary').textContent = `${pending.length} 条未完成`;
+    $('#todoCount').textContent = `${pending.length} 未完成`;
+    $('#recordCount').textContent = `${records.length} 条`;
+
+    const todoList = $('#todos');
+    todoList.replaceChildren();
+    pending.forEach((item) => todoList.append(todoNode(item)));
+    $('#doneWrap').hidden = !done.length;
+    $('#toggleDone').textContent = `${showDone ? '收起' : '展开'}已完成（${done.length}）`;
+    $('#doneList').hidden = !showDone;
+    $('#doneList').replaceChildren();
+    done.forEach((item) => $('#doneList').append(todoNode(item)));
+    if (!pending.length && !done.length) todoList.innerHTML = '<div class="empty">当天没有待办</div>';
+
+    const recordList = $('#records');
+    recordList.replaceChildren();
+    if (!records.length) {
+      recordList.innerHTML = '<div class="empty">当天没有日记录</div>';
+      const createRecord = document.createElement('button');
+      createRecord.className = 'btn small';
+      createRecord.textContent = '写一条记录';
+      createRecord.onclick = () => openForm('record');
+      recordList.append(createRecord);
+    }
+    records.forEach((item) => recordList.append(recordNode(item)));
+  }
+
+  function sortTodo(a, b) {
+    return (a.time || '99:99').localeCompare(b.time || '99:99') || a.createdAt.localeCompare(b.createdAt);
+  }
+
+  function actions(item, type) {
+    const box = document.createElement('div');
+    box.className = 'actions';
+    const more = document.createElement('details');
+    const summary = document.createElement('summary');
+    summary.className = 'btn small';
+    summary.textContent = '更多';
+    const remove = document.createElement('button');
+    remove.className = 'btn small';
+    remove.textContent = '删除';
+    remove.onclick = () => {
+      more.open = false;
+      const title = type === 'todo' ? item.title : item.body.slice(0, 24);
+      if (confirm(`确定删除“${title}”吗？`)) removeItem(type, item.id);
+    };
+    more.append(summary, remove);
+    box.append(more);
+    return box;
+  }
+
+  function todoNode(item) {
+    const article = document.createElement('article');
+    article.className = `item${item.done ? ' done' : ''}`;
+    const row = document.createElement('div');
+    row.className = 'row';
+    const main = document.createElement('div');
+    main.className = 'row-main';
+    const label = document.createElement('label');
+    label.className = 'check-label';
+    label.setAttribute('aria-label', item.done ? `恢复待办：${item.title}` : `完成待办：${item.title}`);
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.className = 'check';
+    checkbox.checked = item.done;
+    checkbox.setAttribute('aria-label', item.done ? `恢复待办：${item.title}` : `完成待办：${item.title}`);
+    checkbox.onchange = () => toggle(item);
+    label.append(checkbox);
+    const title = document.createElement('button');
+    title.className = 'text-button item-title';
+    title.textContent = item.title;
+    title.onclick = () => openForm('todo', item);
+    main.append(label, title);
+    row.append(main, actions(item, 'todo'));
+    article.append(row);
+    const meta = document.createElement('div');
+    meta.className = 'item-meta';
+    meta.textContent = (item.time || '全天') + (item.notes ? ` · ${item.notes}` : '');
+    article.append(meta);
+    return article;
+  }
+
+  function recordNode(item) {
+    const article = document.createElement('article');
+    article.className = 'item';
+    const row = document.createElement('div');
+    row.className = 'record-head';
+    const dates = document.createElement('span');
+    dates.className = 'muted';
+    dates.textContent = `创建 ${new Date(item.createdAt).toLocaleString('zh-CN', { hour12: false })} · 更新 ${new Date(item.updatedAt).toLocaleString('zh-CN', { hour12: false })}`;
+    const edit = document.createElement('button');
+    edit.className = 'btn small';
+    edit.textContent = '编辑';
+    edit.onclick = () => openForm('record', item);
+    row.append(dates, edit, actions(item, 'record'));
+    const body = document.createElement('button');
+    body.type = 'button';
+    body.className = 'record-body text-button';
+    body.textContent = item.body;
+    body.setAttribute('aria-expanded', 'false');
+    body.setAttribute('aria-label', '展开日记录正文');
+    body.onclick = () => {
+      const expanded = body.classList.toggle('expanded');
+      body.setAttribute('aria-expanded', String(expanded));
+      body.setAttribute('aria-label', expanded ? '收起日记录正文' : '展开日记录正文');
+    };
+    article.append(row, body);
+    return article;
+  }
+
+  function toggle(item) {
+    const previousDone = item.done;
+    const previousUpdatedAt = item.updatedAt;
+    item.done = !previousDone;
+    item.updatedAt = new Date().toISOString();
+    if (!persist()) {
+      item.done = previousDone;
+      item.updatedAt = previousUpdatedAt;
+      toast('保存失败，状态已恢复');
+      render();
+      return;
+    }
+    render();
+    toast(item.done ? '已完成' : '已恢复');
+  }
+
+  function removeItem(type, id) {
+    const key = type === 'todo' ? 'todos' : 'records';
+    const previous = data[key];
+    data[key] = previous.filter((item) => item.id !== id);
+    if (!persist()) {
+      data[key] = previous;
+      toast('保存失败，删除未生效');
+      return;
+    }
+    render();
+    toast('已删除');
+  }
+
+  function field(labelText, name, type = 'input', value = '') {
+    const wrap = document.createElement('div');
+    wrap.className = 'field';
+    const label = document.createElement('label');
+    label.htmlFor = `f_${name}`;
+    label.textContent = labelText;
+    const control = document.createElement(type === 'textarea' ? 'textarea' : type === 'select' ? 'select' : 'input');
+    control.id = `f_${name}`;
+    control.name = name;
+    if (type === 'input') control.type = name === 'date' ? 'date' : name === 'time' ? 'time' : 'text';
+    control.value = value || '';
+    if (name === 'date') {
+      control.min = '0001-01-01';
+      control.max = '9999-12-31';
+    }
+    wrap.append(label, control);
+    const error = document.createElement('span');
+    error.className = 'field-error';
+    error.setAttribute('aria-live', 'polite');
+    wrap.append(error);
+    return wrap;
+  }
+
+  function openForm(type, item = null) {
+    mode = type;
+    editing = item;
+    returnFocus = document.activeElement;
+    $('#dialogTitle').textContent = `${item ? '编辑' : '新增'}${type === 'todo' ? '待办' : '日记录'}`;
+    $('#formError').textContent = '';
+    const fields = $('#formFields');
+    fields.replaceChildren();
+    if (!item) {
+      const selectorWrap = field('类型', 'kind', 'select');
+      const selector = selectorWrap.querySelector('select');
+      selector.innerHTML = '<option value="todo">待办</option><option value="record">日记录</option>';
+      selector.value = type;
+      selector.onchange = () => {
+        const oldMode = mode;
+        const oldValues = Object.fromEntries(new FormData($('#form')));
+        if ($('#form').dataset.dirty === '1' && !confirm('切换类型会清空当前填写内容，继续吗？')) {
+          selector.value = oldMode;
+          return;
+        }
+        mode = selector.value;
+        $('#dialogTitle').textContent = `新增${mode === 'todo' ? '待办' : '日记录'}`;
+        drawFields(oldValues.date || selected, selectorWrap);
+        $('#form').dataset.dirty = '0';
+      };
+      fields.append(selectorWrap);
+    }
+    drawFields(editing?.date || selected, fields.querySelector('[name="kind"]')?.closest('.field'));
+    $('#form').dataset.dirty = '0';
+    $('#veil').classList.add('open');
+    setTimeout(() => fields.querySelector('input,textarea,select')?.focus(), 20);
+  }
+
+  function drawFields(dateValue, selectorWrap = null) {
+    const fields = $('#formFields');
+    fields.replaceChildren();
+    if (selectorWrap) fields.append(selectorWrap);
+    const date = field('日期（必填）', 'date', 'input', dateValue);
+    fields.append(date);
+    if (mode === 'todo') {
+      const title = field('标题（必填）', 'title', 'input', editing?.title);
+      fields.append(title, field('时间（可选）', 'time', 'input', editing?.time), field('备注（可选）', 'notes', 'textarea', editing?.notes));
+    } else {
+      const body = field('正文（必填）', 'body', 'textarea', editing?.body);
+      fields.append(body);
+    }
+  }
+
+  function closeForm(force = false) {
+    if (!force && $('#form').dataset.dirty === '1' && !confirm('内容尚未保存，确定关闭吗？')) return;
+    $('#veil').classList.remove('open');
+    $('#form').dataset.dirty = '0';
+    if (returnFocus?.isConnected && returnFocus.focus) returnFocus.focus();
+    else $('#addBtn').focus();
+  }
+
+  $('#form').addEventListener('input', (event) => {
+    $('#form').dataset.dirty = '1';
+    const error = event.target.closest('.field')?.querySelector('.field-error');
+    if (error) error.textContent = '';
+  });
+  $('#form').onsubmit = (event) => {
+    event.preventDefault();
+    const values = new FormData(event.currentTarget);
+    const date = String(values.get('date') || '');
+    const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date);
+    if (!match || Number(match[1]) < MIN_YEAR || Number(match[1]) > MAX_YEAR || iso(parseDate(date)) !== date) {
+      $('#formError').textContent = '请输入有效日期（年份 0001–9999）';
+      return;
+    }
+    const now = new Date().toISOString();
+    const previousSelected = selected;
+    const key = mode === 'todo' ? 'todos' : 'records';
+    const previous = data[key];
+    let next;
+    if (mode === 'todo') {
+      const title = String(values.get('title') || '').trim();
+      if (!title) {
+        $('#f_title').closest('.field').querySelector('.field-error').textContent = '请填写待办标题';
+        $('#f_title').focus();
+        return;
+      }
+      next = { ...(editing || {}), id: editing?.id || crypto.randomUUID(), title, date, time: values.get('time') || '', notes: String(values.get('notes') || '').trim(), done: editing?.done || false, createdAt: editing?.createdAt || now, updatedAt: now };
+    } else {
+      const body = String(values.get('body') || '').trim();
+      if (!body) {
+        $('#f_body').closest('.field').querySelector('.field-error').textContent = '请填写日记录正文';
+        $('#f_body').focus();
+        return;
+      }
+      next = { ...(editing || {}), id: editing?.id || crypto.randomUUID(), date, body, createdAt: editing?.createdAt || now, updatedAt: now };
+    }
+    data[key] = editing ? previous.map((item) => item.id === editing.id ? next : item) : [...previous, next];
+    if (!persist()) {
+      data[key] = previous;
+      $('#formError').textContent = '保存失败，请检查浏览器本地存储后重试';
+      return;
+    }
+    selected = date;
+    view = localDate(parseDate(date).getFullYear(), parseDate(date).getMonth());
+    closeForm(true);
+    render();
+    toast(previousSelected !== date ? '已保存，已切换到新日期' : '保存成功');
+  };
+
+  $('#prev').onclick = () => monthMove(-1);
+  $('#next').onclick = () => monthMove(1);
+  $('#todayBtn').onclick = () => {
+    selected = iso(today);
+    view = localDate(today.getFullYear(), today.getMonth());
+    render();
+  };
+  $('#monthTitle').onclick = () => { $('#monthPicker').hidden = !$('#monthPicker').hidden; };
+  $('#monthInput').min = '0001-01';
+  $('#monthInput').max = '9999-12';
+  $('#monthInput').onchange = (event) => {
+    if (!event.target.value) return;
+    const [year, month] = event.target.value.split('-').map(Number);
+    const day = parseDate(selected).getDate();
+    view = localDate(year, month - 1);
+    selected = iso(localDate(year, month - 1, Math.min(day, localDate(year, month, 0).getDate())));
+    render();
+  };
+  $('#addBtn').onclick = () => openForm('todo');
+  $('#toggleDone').onclick = () => { showDone = !showDone; render(); };
+  $('#closeDialog').onclick = () => closeForm();
+  $('#cancelDialog').onclick = () => closeForm();
+  $('#veil').onclick = (event) => { if (event.target === $('#veil')) closeForm(); };
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && $('#veil').classList.contains('open')) closeForm();
+    if (event.key !== 'Tab' || !$('#veil').classList.contains('open')) return;
+    const controls = [...$('#veil').querySelectorAll('button,input,textarea,select')].filter((item) => !item.disabled && item.offsetParent);
+    if (event.shiftKey && document.activeElement === controls[0]) { event.preventDefault(); controls.at(-1).focus(); }
+    else if (!event.shiftKey && document.activeElement === controls.at(-1)) { event.preventDefault(); controls[0].focus(); }
+  });
+
+  let touchStart = null;
+  $('#days').addEventListener('touchstart', (event) => {
+    const touch = event.changedTouches[0];
+    touchStart = { x: touch.clientX, y: touch.clientY };
+  }, { passive: true });
+  $('#days').addEventListener('touchend', (event) => {
+    if (!touchStart) return;
+    const touch = event.changedTouches[0];
+    const dx = touch.clientX - touchStart.x;
+    const dy = touch.clientY - touchStart.y;
+    touchStart = null;
+    if (Math.abs(dx) > 65 && Math.abs(dx) > Math.abs(dy) * 1.3) monthMove(dx < 0 ? 1 : -1);
+  }, { passive: true });
+
+  $('#demoBtn').onclick = () => {
+    if ((data.todos.length || data.records.length) && !confirm('载入示例会替换当前原型数据，继续吗？')) return;
+    const previous = data;
+    const date = iso(today);
+    const now = new Date().toISOString();
+    data = {
+      todos: [
+        { id: crypto.randomUUID(), title: '确认本周排班', date, time: '09:30', notes: '与同事核对', done: false, createdAt: now, updatedAt: now },
+        { id: crypto.randomUUID(), title: '提交门店日报', date, time: '', notes: '', done: false, createdAt: now, updatedAt: now },
+      ],
+      records: [{ id: crypto.randomUUID(), date, body: '今天完成了门店盘点，发现两项库存需要复核。\n明早联系仓库确认。', createdAt: now, updatedAt: now }],
+    };
+    if (!persist()) {
+      data = previous;
+      toast('存储失败，未载入示例');
+      return;
+    }
+    selected = date;
+    view = localDate(today.getFullYear(), today.getMonth());
+    render();
+    toast('已载入示例数据');
+  };
+
+  load();
+  render();
+})();
+</script></body></html>

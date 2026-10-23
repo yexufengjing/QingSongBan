@@ -166,55 +166,67 @@ class ReminderSchedule {
 
   List<DateTime> upcoming(DateTime start, {int limit = 12}) {
     if (!repeats) return <DateTime>[start];
-    final utcStart = DateTime.utc(
-      start.year,
-      start.month,
-      start.day,
-      start.hour,
-      start.minute,
-    );
-    final rule = RecurrenceRule(
-      frequency: switch (repeatUnit!) {
-        ReminderRepeatUnit.day => Frequency.daily,
-        ReminderRepeatUnit.week => Frequency.weekly,
-        ReminderRepeatUnit.month => Frequency.monthly,
-        ReminderRepeatUnit.year => Frequency.yearly,
-      },
-      interval: interval,
-      byWeekDays: repeatUnit == ReminderRepeatUnit.week
-          ? (weekdays.isEmpty ? {start.weekday} : weekdays)
-                .map(ByWeekDayEntry.new)
-                .toList()
-          : const [],
-      byMonthDays: repeatUnit == ReminderRepeatUnit.month
-          ? (monthDays.isEmpty ? <int>[start.day] : monthDays.toList())
-          : const [],
-      until: repeatEnd == ReminderRepeatEnd.date && endDate != null
-          ? DateTime.utc(
-              endDate!.year,
-              endDate!.month,
-              endDate!.day,
-              23,
-              59,
-              59,
-            )
-          : null,
-      count: repeatEnd == ReminderRepeatEnd.count ? endCount : null,
-    );
-    return rule
-        .getInstances(start: utcStart)
+    return _rule(start)
+        .getInstances(start: _utc(start))
         .take(limit)
-        .map(
-          (value) => DateTime(
-            value.year,
-            value.month,
-            value.day,
-            value.hour,
-            value.minute,
-          ),
-        )
+        .map(_local)
         .toList();
   }
+
+  /// Generate instances whose scheduled time is in [from, until), while
+  /// evaluating RRULE count/end constraints from the original series start.
+  List<DateTime> between(DateTime seriesStart, DateTime from, DateTime until) {
+    if (until.isBefore(from) || until.isAtSameMomentAs(from)) {
+      return const <DateTime>[];
+    }
+    if (!repeats) {
+      return !seriesStart.isBefore(from) && seriesStart.isBefore(until)
+          ? <DateTime>[seriesStart]
+          : const <DateTime>[];
+    }
+    return _rule(seriesStart)
+        .getInstances(
+          start: _utc(seriesStart),
+          after: _utc(from),
+          includeAfter: true,
+          before: _utc(until),
+        )
+        .map(_local)
+        .toList();
+  }
+
+  RecurrenceRule _rule(DateTime start) => RecurrenceRule(
+    frequency: switch (repeatUnit!) {
+      ReminderRepeatUnit.day => Frequency.daily,
+      ReminderRepeatUnit.week => Frequency.weekly,
+      ReminderRepeatUnit.month => Frequency.monthly,
+      ReminderRepeatUnit.year => Frequency.yearly,
+    },
+    interval: interval,
+    byWeekDays: repeatUnit == ReminderRepeatUnit.week
+        ? (weekdays.isEmpty ? {start.weekday} : weekdays)
+              .map(ByWeekDayEntry.new)
+              .toList()
+        : const [],
+    byMonthDays: repeatUnit == ReminderRepeatUnit.month
+        ? (monthDays.isEmpty ? <int>[start.day] : monthDays.toList())
+        : const [],
+    until: repeatEnd == ReminderRepeatEnd.date && endDate != null
+        ? DateTime.utc(endDate!.year, endDate!.month, endDate!.day, 23, 59, 59)
+        : null,
+    count: repeatEnd == ReminderRepeatEnd.count ? endCount : null,
+  );
+
+  DateTime _utc(DateTime value) => DateTime.utc(
+    value.year,
+    value.month,
+    value.day,
+    value.hour,
+    value.minute,
+  );
+
+  DateTime _local(DateTime value) =>
+      DateTime(value.year, value.month, value.day, value.hour, value.minute);
 
   String _weekdaySuffix(DateTime start) {
     const labels = ['一', '二', '三', '四', '五', '六', '日'];

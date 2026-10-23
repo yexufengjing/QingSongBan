@@ -74,7 +74,7 @@ void main() {
               .map((row) => row.read<String>('name'))
               .toSet();
 
-      expect(upgraded.schemaVersion, 23);
+      expect(upgraded.schemaVersion, 24);
       expect(
         names,
         containsAll([

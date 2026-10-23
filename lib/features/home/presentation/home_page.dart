@@ -528,6 +528,19 @@ class _PendingTasksState extends State<_PendingTasks> {
               ),
               const Divider(),
               ListTile(
+                key: const Key('home-calendar'),
+                contentPadding: EdgeInsets.zero,
+                leading: const DesignIcon(
+                  Icons.calendar_month_outlined,
+                  color: AppColors.primary,
+                ),
+                title: const Text('日历与记录'),
+                subtitle: const Text('按日期查看待办与日记录'),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => context.push('/settings/reminders/calendar'),
+              ),
+              const Divider(),
+              ListTile(
                 key: const Key('home-metric-即将到期'),
                 contentPadding: EdgeInsets.zero,
                 leading: const DesignIcon(

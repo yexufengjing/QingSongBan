@@ -82,7 +82,17 @@ class ReminderRepository {
   Future<ReminderItem?> findItemById(int id) async {
     final reminder = await findById(id);
     if (reminder == null) return null;
-    return (await _hydrateItems([reminder])).single;
+    final items = await _hydrateItems([reminder]);
+    if (items.isEmpty) return null;
+    final dueDate = reminder.dueDate;
+    if (dueDate != null) {
+      for (final item in items) {
+        if (item.scheduledAt?.isAtSameMomentAs(dueDate) ?? false) return item;
+      }
+    }
+    // A reminder can own many occurrences. The full editor is for the series,
+    // so return one deterministic representative instead of assuming `.single`.
+    return items.first;
   }
 
   Future<List<DateTime>> listPendingOccurrenceTimes(int reminderId) async {
@@ -137,6 +147,7 @@ class ReminderRepository {
         priority: Value(draft.priority),
         category: Value(draft.category),
         dueDate: Value(draft.dueDate),
+        isAllDay: Value(draft.isAllDay),
         leadDays: Value(draft.leadDays),
         repeatRule: Value(_nullable(draft.repeatRule)),
         timezoneId: Value(_nullable(draft.timezoneId)),
@@ -181,6 +192,7 @@ class ReminderRepository {
                   priority: Value(draft.priority),
                   category: Value(draft.category),
                   dueDate: Value(draft.dueDate),
+                  isAllDay: Value(draft.isAllDay),
                   leadDays: Value(draft.leadDays),
                   repeatRule: Value(_nullable(draft.repeatRule)),
                   timezoneId: Value(_nullable(draft.timezoneId)),

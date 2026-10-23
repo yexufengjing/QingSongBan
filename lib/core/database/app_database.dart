@@ -50,6 +50,7 @@ part 'app_database.g.dart';
     DictionaryItems,
     AppSettings,
     Reminders,
+    DailyEntries,
     ReminderOccurrences,
     ReminderAlertRules,
     ReminderLinks,
@@ -82,13 +83,17 @@ class AppDatabase extends _$AppDatabase {
     : super(executor ?? NativeDatabase.memory());
 
   @override
-  int get schemaVersion => 23;
+  int get schemaVersion => 24;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
     onCreate: (m) async {
       await m.createAll();
       await _createItemDistributionTables();
+      await customStatement('''
+        CREATE INDEX IF NOT EXISTS idx_daily_entries_record_date
+        ON daily_entries(record_date, is_deleted)
+      ''');
     },
     onUpgrade: (m, from, to) async {
       // Version 1 is the initial schema. Version 2 adds independent leave
@@ -278,6 +283,22 @@ class AppDatabase extends _$AppDatabase {
             await m.createIndex(index);
           }
         }
+      }
+      if (from < 24 && to >= 24) {
+        if (await _tableExists('reminders')) {
+          await _addColumnIfMissing(
+            'reminders',
+            'is_all_day',
+            'INTEGER NOT NULL DEFAULT 0',
+          );
+        }
+        if (!await _tableExists('daily_entries')) {
+          await m.createTable(dailyEntries);
+        }
+        await customStatement('''
+          CREATE INDEX IF NOT EXISTS idx_daily_entries_record_date
+          ON daily_entries(record_date, is_deleted)
+        ''');
       }
     },
     beforeOpen: (details) async {

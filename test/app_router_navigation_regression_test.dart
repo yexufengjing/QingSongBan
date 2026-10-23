@@ -51,6 +51,23 @@ void main() {
         await _pumpNavigationFrames(tester);
       }
 
+      await tester.tap(find.text('我的').last);
+      await _pumpNavigationFrames(tester);
+      await tester.tap(find.text('备忘提醒').first);
+      await _pumpNavigationFrames(tester);
+      await tester.tap(find.byKey(const Key('reminder-open-calendar')));
+      await _pumpNavigationFrames(tester);
+      expect(find.text('日历与记录'), findsOneWidget);
+      expect(find.byType(NavigationBar), findsNothing);
+      await tester.binding.handlePopRoute();
+      await _pumpNavigationFrames(tester);
+      expect(find.text('备忘提醒'), findsWidgets);
+      expect(find.byType(NavigationBar), findsNothing);
+      await tester.tap(find.byTooltip('返回').first);
+      await _pumpNavigationFrames(tester);
+      expect(find.text('我的'), findsWidgets);
+      expect(find.byType(NavigationBar), findsOneWidget);
+
       appRouter.go('/personnel');
       await _pumpNavigationFrames(tester);
       expect(find.byType(PersonnelPage), findsOneWidget);

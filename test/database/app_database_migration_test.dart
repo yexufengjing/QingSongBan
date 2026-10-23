@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:drift/drift.dart' show Value;
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qingsongban/core/database/app_database.dart';
@@ -41,7 +42,7 @@ void main() {
         )
         .getSingle();
 
-    expect(upgraded.schemaVersion, 23);
+    expect(upgraded.schemaVersion, 24);
     expect(repairOrder.read<int>('is_settled'), 0);
     expect(repairOrder.read<int>('is_paid'), 0);
     expect(
@@ -127,7 +128,7 @@ void main() {
         )
         .getSingle();
 
-    expect(upgraded.schemaVersion, 23);
+    expect(upgraded.schemaVersion, 24);
     expect(row.read<int>('is_settled'), 0);
     expect(row.read<int?>('settled_at'), isNull);
     expect(row.read<int>('is_paid'), 0);
@@ -225,7 +226,7 @@ void main() {
         1,
         DateTime(2026, 9, 1),
       );
-      expect(upgraded.schemaVersion, 23);
+      expect(upgraded.schemaVersion, 24);
       expect(await upgraded.select(upgraded.vehicles).get(), isEmpty);
       expect(
         await upgraded.select(upgraded.gardenToolRepairUnits).get(),
@@ -303,12 +304,78 @@ void main() {
         .select(upgraded.reminderOccurrences)
         .getSingle();
     final rule = await upgraded.select(upgraded.reminderAlertRules).getSingle();
-    expect(upgraded.schemaVersion, 23);
+    expect(upgraded.schemaVersion, 24);
     expect(occurrence.status, 'completed');
     expect(rule.offsetMinutes, -4320);
     await upgraded.close();
     await directory.delete(recursive: true);
   });
+
+  test(
+    'upgrades schema 23 reminders and preserves their time and status',
+    () async {
+      final directory = await Directory.systemTemp.createTemp(
+        'qsb-v23-migration-',
+      );
+      final file = File(
+        '${directory.path}${Platform.pathSeparator}legacy.sqlite',
+      );
+      final initial = AppDatabase.forTesting(executor: NativeDatabase(file));
+      final dueDate = DateTime(2026, 10, 23, 15, 45);
+      final reminderId = await initial
+          .into(initial.reminders)
+          .insert(
+            RemindersCompanion.insert(
+              title: '旧时刻提醒',
+              reminderType: 'custom',
+              dueDate: Value(dueDate),
+              isCompleted: const Value(true),
+              createdAt: Value(DateTime(2026, 10, 1)),
+              updatedAt: Value(DateTime(2026, 10, 22)),
+            ),
+          );
+      await initial
+          .into(initial.reminderOccurrences)
+          .insert(
+            ReminderOccurrencesCompanion.insert(
+              reminderId: reminderId,
+              scheduledAt: dueDate,
+              status: const Value('completed'),
+              completedAt: Value(DateTime(2026, 10, 22, 20)),
+            ),
+          );
+      await initial.close();
+
+      final legacy = AppDatabase.forTesting(
+        executor: NativeDatabase(
+          file,
+          enableMigrations: false,
+          setup: (raw) {
+            raw.execute('ALTER TABLE reminders DROP COLUMN is_all_day');
+            raw.execute('DROP TABLE daily_entries');
+            raw.execute('PRAGMA user_version = 23');
+          },
+        ),
+      );
+      await legacy.customSelect('PRAGMA user_version').get();
+      await legacy.close();
+
+      final upgraded = AppDatabase.forTesting(executor: NativeDatabase(file));
+      final reminder = await upgraded.select(upgraded.reminders).getSingle();
+      final occurrence = await upgraded
+          .select(upgraded.reminderOccurrences)
+          .getSingle();
+      expect(upgraded.schemaVersion, 24);
+      expect(reminder.dueDate, dueDate);
+      expect(reminder.isAllDay, isFalse);
+      expect(reminder.isCompleted, isTrue);
+      expect(occurrence.scheduledAt, dueDate);
+      expect(occurrence.status, 'completed');
+      expect(occurrence.completedAt, DateTime(2026, 10, 22, 20));
+      await upgraded.close();
+      await directory.delete(recursive: true);
+    },
+  );
 }
 
 int _unixSeconds(DateTime value) => value.millisecondsSinceEpoch ~/ 1000;

@@ -197,8 +197,8 @@ void main() {
   testWidgets('production router renders missing and seeded-record states', (
     tester,
   ) async {
-    expect(appRouteCases, hasLength(93));
-    expect(appRouteCases.map((route) => route.name).toSet(), hasLength(93));
+    expect(appRouteCases, hasLength(94));
+    expect(appRouteCases.map((route) => route.name).toSet(), hasLength(94));
     tester.view.physicalSize = const Size(1170, 2532);
     tester.view.devicePixelRatio = 3;
     addTearDown(() {

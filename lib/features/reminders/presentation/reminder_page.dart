@@ -40,6 +40,12 @@ class _ReminderPageState extends ConsumerState<ReminderPage> {
         title: const Text('备忘提醒'),
         actions: [
           IconButton(
+            key: const Key('reminder-open-calendar'),
+            tooltip: '日历与记录',
+            onPressed: () => context.push('/settings/reminders/calendar'),
+            icon: const Icon(Icons.calendar_month_outlined),
+          ),
+          IconButton(
             tooltip: '新建提醒',
             onPressed: () => context.push('/settings/reminders/new'),
             icon: const Icon(Icons.add),
@@ -746,9 +752,8 @@ class _NotificationCheck extends StatelessWidget {
           }
         } on NotificationPermissionDeniedException {
           if (context.mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('通知权限未开启，未发送测试通知')),
-            );
+            ScaffoldMessenger.of(context)
+                .showSnackBar(const SnackBar(content: Text('通知权限未开启，未发送测试通知')));
           }
         } catch (error) {
           if (context.mounted) {

@@ -79,6 +79,7 @@ const appRouteCases = <AppRouteCase>[
   ),
   AppRouteCase('/settings/excel?month=2026-10', 'excel'),
   AppRouteCase('/settings/reminders', 'reminders'),
+  AppRouteCase('/settings/reminders/calendar', 'reminders-calendar'),
   AppRouteCase('/settings/reminders/new?title=route-audit', 'reminder-new'),
   AppRouteCase(
     '/settings/reminders/:id/edit',

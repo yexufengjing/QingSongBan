@@ -25,6 +25,7 @@ import '../../features/insurance/presentation/insurance_profile_form_page.dart';
 import '../../features/excel/presentation/excel_page.dart';
 import '../../features/reminders/presentation/reminder_form_page.dart';
 import '../../features/reminders/presentation/reminder_page.dart';
+import '../../features/calendar/presentation/calendar_page.dart';
 import '../../features/backup/presentation/backup_page.dart';
 import '../../features/operation_logs/presentation/operation_log_page.dart';
 import '../../features/personnel/presentation/personnel_page.dart';
@@ -525,6 +526,11 @@ final GoRouter appRouter = GoRouter(
                   builder: (context, state) => const ReminderPage(),
                   routes: [
                     GoRoute(
+                      path: 'calendar',
+                      name: 'reminders-calendar',
+                      builder: (context, state) => const CalendarPage(),
+                    ),
+                    GoRoute(
                       path: 'new',
                       name: 'reminder-new',
                       builder: (context, state) => ReminderFormPage(
@@ -661,7 +667,8 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) {
         final year = int.tryParse(state.uri.queryParameters['year'] ?? '');
         final month = int.tryParse(state.uri.queryParameters['month'] ?? '');
-        final initialMonth = year != null && month != null && month >= 1 && month <= 12
+        final initialMonth =
+            year != null && month != null && month >= 1 && month <= 12
             ? DateTime(year, month)
             : null;
         return ItemDistributionPage(initialMonth: initialMonth);

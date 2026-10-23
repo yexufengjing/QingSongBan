@@ -1127,6 +1127,8 @@ class Reminders extends Table {
 
   DateTimeColumn get dueDate => dateTime().nullable()();
 
+  BoolColumn get isAllDay => boolean().withDefault(const Constant(false))();
+
   IntColumn get leadDays => integer().withDefault(const Constant(0))();
 
   TextColumn get repeatRule => text().nullable()();
@@ -1157,6 +1159,24 @@ class Reminders extends Table {
   DateTimeColumn get archivedAt => dateTime().nullable()();
 
   BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+}
+
+/// User-authored daily notes, independent from reminders and business logs.
+class DailyEntries extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  TextColumn get recordDate => text()();
+
+  TextColumn get content => text()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+
+  @override
+  List<Set<Column>> get uniqueKeys => const [];
 }
 
 /// One planned execution of a reminder series. A recurring reminder never
