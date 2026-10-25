@@ -1048,7 +1048,7 @@ class _CalendarLoadError extends StatelessWidget {
 DateTime _dateOnly(DateTime value) =>
     DateTime(value.year, value.month, value.day);
 DateTime _gridDate(DateTime month, int firstWeekday, int week, int weekday) =>
-    DateTime(month.year, month.month, 1 - firstWeekday + week * 7 + weekday);
+    DateTime(month.year, month.month, 2 - firstWeekday + week * 7 + weekday);
 bool _sameDay(DateTime a, DateTime b) =>
     a.year == b.year && a.month == b.month && a.day == b.day;
 String _fullDate(DateTime value) =>

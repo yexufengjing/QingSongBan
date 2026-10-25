@@ -220,6 +220,10 @@ class _ChatSettingsFormState extends ConsumerState<_ChatSettingsForm> {
               ExpansionTile(
                 tilePadding: EdgeInsets.zero,
                 title: const Text('高级参数'),
+                childrenPadding: EdgeInsets.only(
+                  top: MediaQuery.textScalerOf(context).scale(12),
+                  bottom: 8,
+                ),
                 children: [
                   DropdownButtonFormField<int>(
                     initialValue: _settings.contextTurns,

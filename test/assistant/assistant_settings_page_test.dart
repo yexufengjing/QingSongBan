@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qingsongban/features/assistant/application/assistant_providers.dart';
+import 'package:qingsongban/features/assistant/application/assistant_chat.dart';
+import 'package:qingsongban/features/assistant/application/assistant_favorites.dart';
+import 'package:qingsongban/features/assistant/domain/assistant_chat_models.dart';
 import 'package:qingsongban/features/assistant/data/deepseek_provider.dart';
 import 'package:qingsongban/features/assistant/domain/assistant_models.dart';
 import 'package:qingsongban/features/assistant/presentation/assistant_settings_page.dart';
@@ -41,6 +44,10 @@ void main() {
             overrides: [
               assistantKeyStoreProvider.overrideWithValue(keyStore),
               deepSeekProvider.overrideWithValue(provider),
+              assistantChatSettingsProvider.overrideWith(
+                _ReadyChatSettings.new,
+              ),
+              assistantQueryFavoritesProvider.overrideWith(_EmptyFavorites.new),
             ],
             child: const MaterialApp(home: AssistantSettingsPage()),
           ),
@@ -123,6 +130,8 @@ void main() {
         overrides: [
           assistantKeyStoreProvider.overrideWithValue(keyStore),
           deepSeekProvider.overrideWithValue(provider),
+          assistantChatSettingsProvider.overrideWith(_ReadyChatSettings.new),
+          assistantQueryFavoritesProvider.overrideWith(_EmptyFavorites.new),
         ],
         child: const MaterialApp(home: AssistantSettingsPage()),
       ),
@@ -157,6 +166,16 @@ void main() {
     expect(provider.usageForRequest(requestIds[1]).parseCalls, 1);
     expect(provider.usageForRequest(requestIds[1]).connectionChecks, 0);
   });
+}
+
+class _ReadyChatSettings extends AssistantChatSettingsNotifier {
+  @override
+  Future<AssistantChatSettings> build() async => const AssistantChatSettings();
+}
+
+class _EmptyFavorites extends AssistantQueryFavoritesNotifier {
+  @override
+  Future<List<AssistantQueryFavorite>> build() async => const [];
 }
 
 class _MemoryKeyStore implements AssistantKeyStore {

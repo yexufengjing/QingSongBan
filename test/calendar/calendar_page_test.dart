@@ -27,6 +27,54 @@ Future<void> _unmount(WidgetTester tester) async {
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
+  testWidgets('calendar dates align with Monday-first weekday columns', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(800, 1600);
+    tester.view.devicePixelRatio = 2;
+    final database = AppDatabase.forTesting();
+    addTearDown(() async {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+      await database.close();
+    });
+    try {
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [appDatabaseProvider.overrideWithValue(database)],
+          child: const MaterialApp(home: CalendarPage()),
+        ),
+      );
+      await tester.pumpAndSettle();
+      final now = DateTime.now();
+      for (var offset = 0; offset < 3; offset++) {
+        final month = DateTime(now.year, now.month + offset);
+        final last = DateTime(month.year, month.month + 1, 0).day;
+        for (var day = 1; day <= last; day++) {
+          final date = DateTime(month.year, month.month, day);
+          final cell = find.byKey(
+            Key('calendar-date-${date.year}-${date.month}-${date.day}'),
+          );
+          expect(cell, findsOneWidget);
+          final header = find.text(
+            const ['一', '二', '三', '四', '五', '六', '日'][date.weekday - 1],
+          );
+          expect(
+            tester.getCenter(cell).dx,
+            closeTo(tester.getCenter(header).dx, 0.5),
+            reason: '$date must appear under its weekday',
+          );
+        }
+        if (offset < 2) {
+          await tester.tap(find.byTooltip('下个月'));
+          await tester.pumpAndSettle();
+        }
+      }
+    } finally {
+      await _unmount(tester);
+    }
+  });
+
   testWidgets('creates, completes, edits, and deletes calendar items', (
     tester,
   ) async {
